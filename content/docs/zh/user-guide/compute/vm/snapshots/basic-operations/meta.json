@@ -1,0 +1,12 @@
+{
+  "title": "快照基础操作",
+  "pages": [
+    "index",
+    "create",
+    "restore",
+    "create-vm",
+    "view",
+    "delete"
+  ],
+  "pagesIndex": "index"
+}

@@ -1,0 +1,73 @@
+---
+title: "获取虚拟机USB重定向开关状态"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/{uuid}/usbredirect">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/4b9d28c1d35f4f14b8ba1bb982500c50/usbredirect
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |2.1|
+|systemTags \(可选\)|List|query| | |2.1|
+|userTags \(可选\)|List|query| | |2.1|
+
+## API返回
+返回示例
+
+```
+{
+  "enable": true
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|enable|boolean|usb redirect 开关是否开启|0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_qxp_kdq_s1b)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|2.1|
+|description|String|错误的概要描述|2.1|
+|details|String|错误的详细信息|2.1|
+|elaboration|String|保留字段，默认为null|2.1|
+|opaque|LinkedHashMap|保留字段，默认为null|2.1|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|2.1|
+
+## SDK示例
+Java SDK
+
+```
+GetVmUsbRedirectAction action = new GetVmUsbRedirectAction();
+action.uuid = "c58671c58dd147e29d4bc263feafa04d";
+action.sessionId = "e173648fdca94fd3ae720473a305ce4c";
+GetVmUsbRedirectAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetVmUsbRedirectAction action = GetVmUsbRedirectAction()
+action.uuid = "08efac4de45a4f6789d1009afa9e295e"
+action.sessionId = "3f5a7473758d4c8ab3cc4664461500a4"
+GetVmUsbRedirectAction.Result res = action.call()
+```
+
+</APIPage>

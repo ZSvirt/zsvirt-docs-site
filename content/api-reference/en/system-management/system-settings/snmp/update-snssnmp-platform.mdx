@@ -1,0 +1,117 @@
+---
+title: "Update SNS SNMP Platform"
+---
+
+<APIPage method="PUT" path="/v1/sns/application-platforms/snmp/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateSNSSnmpPlatform": {
+    "snmpAddress": "127.0.0.1",
+    "snmpPort": 161,
+    "name": "snmp platform name"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+The `systemTags` and `userTags` fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateSNSSnmpPlatform":{"snmpAddress":"127.0.0.1","snmpPort":161,"name":"snmp platform name"}}' http://localhost:8080/zstack/v1/sns/application-platforms/snmp/cbd548888e9d37b594bc99c1892589ed
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|snmpAddress|String|body \(contained in the **updateSNSSnmpPlatform** structure\)|SNMP server address| |4.10.0|
+|snmpPort|Integer|body \(contained in the **updateSNSSnmpPlatform** structure\)|SNMP server port| |4.10.0|
+|uuid|String|url|Resource UUID. Uniquely identifies the resource| |4.10.0|
+|name \(optional\)|String|body \(contained in the **updateSNSSnmpPlatform** structure\)|Resource name| |4.10.0|
+|description \(optional\)|String|body \(contained in the **updateSNSSnmpPlatform** structure\)|Detailed description of the resource| |4.10.0|
+|systemTags \(optional\)|List|body|System tags| |4.10.0|
+|userTags \(optional\)|List|body|User tags| |4.10.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "38c619bf4e7a4cdaa04fcb44d85d5fc9",
+    "name": "email platform",
+    "description": "example description",
+    "state": "Enabled",
+    "type": "Email",
+    "createDate": "Sep 28, 2023 4:32:51 PM",
+    "lastOpDate": "Sep 28, 2023 4:32:51 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.10.0|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_bcl_x1v_m1b)|4.10.0|
+|inventory|SNSApplicationPlatformInventory|See [inventory](#p_nqg_y1v_m1b)|4.10.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. A globally unique identifier for the error, e.g., SYS.1000, HOST.1001|4.10.0|
+|description|String|Brief description of the error|4.10.0|
+|details|String|Detailed error information|4.10.0|
+|elaboration|String|Reserved field. Defaults to null|4.10.0|
+|opaque|LinkedHashMap|Reserved field. Defaults to null|4.10.0|
+|cause|ErrorCode|Root error. The source error that caused this error. Null if no root cause exists|4.10.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name|4.10.0|
+|uuid|String|Resource UUID. Uniquely identifies the resource|4.10.0|
+|description|String|Detailed description of the resource|4.10.0|
+|type|String|Type|4.10.0|
+|createDate|Timestamp|Creation time|4.10.0|
+|lastOpDate|Timestamp|Last modification time|4.10.0|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateSNSSnmpPlatformAction action = new UpdateSNSSnmpPlatformAction();
+action.snmpAddress = "127.0.0.1";
+action.snmpPort = 161;
+action.uuid = "cbd548888e9d37b594bc99c1892589ed";
+action.name = "snmp platform name";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateSNSSnmpPlatformAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateSNSSnmpPlatformAction action = UpdateSNSSnmpPlatformAction()
+action.snmpAddress = "127.0.0.1"
+action.snmpPort = 161
+action.uuid = "cbd548888e9d37b594bc99c1892589ed"
+action.name = "snmp platform name"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateSNSSnmpPlatformAction.Result res = action.call()
+```
+
+</APIPage>

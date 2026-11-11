@@ -1,0 +1,317 @@
+---
+title: "Get Local Raid Physical Drive SMART"
+---
+
+<APIPage method="GET" path="/v1/storage-devices/local-raid/physical-drives/{uuid}/smart">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X GET http://localhost:8080/zstack/v1/storage-devices/local-raid/physical-drives/4608455038ef362b809cf8aff74e0131/smart
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|UUID of the resource. Uniquely identifies the resource.| |3.6|
+|systemTags \(Optional\)|List|query| | |3.6|
+|userTags \(Optional\)|List|query| | |3.6|
+
+## API Response
+Response Example
+
+```
+{
+  "result": [
+    {
+      "id": 1,
+      "attributeName": "Raw_Read_Error_Rate",
+      "flag": "0x002f",
+      "value": 200,
+      "worst": 200,
+      "thresh": 41,
+      "type": "Pre-fail",
+      "updated": "Always",
+      "whenFailed": "-",
+      "rawValue": 0
+    },
+    {
+      "id": 3,
+      "attributeName": "Spin_Up_Time",
+      "flag": "0x0027",
+      "value": 142,
+      "worst": 142,
+      "thresh": 17,
+      "type": "Pre-fail",
+      "updated": "Always",
+      "whenFailed": "-",
+      "rawValue": 3866
+    },
+    {
+      "id": 4,
+      "attributeName": "Start_Stop_Count",
+      "flag": "0x0032",
+      "value": 100,
+      "worst": 100,
+      "thresh": 0,
+      "type": "Old_age",
+      "updated": "Always",
+      "whenFailed": "-",
+      "rawValue": 22
+    },
+    {
+      "id": 5,
+      "attributeName": "Reallocated_Sector_Ct",
+      "flag": "0x0033",
+      "value": 200,
+      "worst": 200,
+      "thresh": 140,
+      "type": "Pre-fail",
+      "updated": "Always",
+      "whenFailed": "-",
+      "rawValue": 0
+    },
+    {
+      "id": 7,
+      "attributeName": "Seek_Error_Rate",
+      "flag": "0x002e",
+      "value": 200,
+      "worst": 200,
+      "thresh": 0,
+      "type": "Old_age",
+      "updated": "Always",
+      "whenFailed": "-",
+      "rawValue": 0
+    },
+    {
+      "id": 9,
+      "attributeName": "Power_On_Hours",
+      "flag": "0x0032",
+      "value": 97,
+      "worst": 97,
+      "thresh": 0,
+      "type": "Old_age",
+      "updated": "Always",
+      "whenFailed": "-",
+      "rawValue": 2585
+    },
+    {
+      "id": 10,
+      "attributeName": "Spin_Retry_Count",
+      "flag": "0x0032",
+      "value": 100,
+      "worst": 253,
+      "thresh": 0,
+      "type": "Old_age",
+      "updated": "Always",
+      "whenFailed": "-",
+      "rawValue": 0
+    },
+    {
+      "id": 11,
+      "attributeName": "Calibration_Retry_Count",
+      "flag": "0x0032",
+      "value": 100,
+      "worst": 253,
+      "thresh": 0,
+      "type": "Old_age",
+      "updated": "Always",
+      "whenFailed": "-",
+      "rawValue": 0
+    },
+    {
+      "id": 12,
+      "attributeName": "Power_Cycle_Count",
+      "flag": "0x0032",
+      "value": 100,
+      "worst": 100,
+      "thresh": 0,
+      "type": "Old_age",
+      "updated": "Always",
+      "whenFailed": "-",
+      "rawValue": 22
+    },
+    {
+      "id": 16,
+      "attributeName": "Unknown_Attribute",
+      "flag": "0x0022",
+      "value": 0,
+      "worst": 200,
+      "thresh": 0,
+      "type": "Old_age",
+      "updated": "Always",
+      "whenFailed": "-",
+      "rawValue": 34516442916
+    },
+    {
+      "id": 183,
+      "attributeName": "Runtime_Bad_Block",
+      "flag": "0x0032",
+      "value": 100,
+      "worst": 100,
+      "thresh": 0,
+      "type": "Old_age",
+      "updated": "Always",
+      "whenFailed": "-",
+      "rawValue": 0
+    },
+    {
+      "id": 192,
+      "attributeName": "Power-Off_Retract_Count",
+      "flag": "0x0032",
+      "value": 200,
+      "worst": 200,
+      "thresh": 0,
+      "type": "Old_age",
+      "updated": "Always",
+      "whenFailed": "-",
+      "rawValue": 20
+    },
+    {
+      "id": 193,
+      "attributeName": "Load_Cycle_Count",
+      "flag": "0x0032",
+      "value": 200,
+      "worst": 200,
+      "thresh": 0,
+      "type": "Old_age",
+      "updated": "Always",
+      "whenFailed": "-",
+      "rawValue": 4
+    },
+    {
+      "id": 194,
+      "attributeName": "Temperature_Celsius",
+      "flag": "0x0022",
+      "value": 112,
+      "worst": 106,
+      "thresh": 0,
+      "type": "Old_age",
+      "updated": "Always",
+      "whenFailed": "-",
+      "rawValue": 31
+    },
+    {
+      "id": 196,
+      "attributeName": "Reallocated_Event_Count",
+      "flag": "0x0032",
+      "value": 200,
+      "worst": 200,
+      "thresh": 0,
+      "type": "Old_age",
+      "updated": "Always",
+      "whenFailed": "-",
+      "rawValue": 0
+    },
+    {
+      "id": 197,
+      "attributeName": "Current_Pending_Sector",
+      "flag": "0x0032",
+      "value": 200,
+      "worst": 200,
+      "thresh": 0,
+      "type": "Old_age",
+      "updated": "Always",
+      "whenFailed": "-",
+      "rawValue": 0
+    },
+    {
+      "id": 198,
+      "attributeName": "Offline_Uncorrectable",
+      "flag": "0x0030",
+      "value": 200,
+      "worst": 200,
+      "thresh": 0,
+      "type": "Old_age",
+      "updated": "Offline",
+      "whenFailed": "-",
+      "rawValue": 0
+    },
+    {
+      "id": 199,
+      "attributeName": "UDMA_CRC_Error_Count",
+      "flag": "0x0032",
+      "value": 200,
+      "worst": 200,
+      "thresh": 0,
+      "type": "Old_age",
+      "updated": "Always",
+      "whenFailed": "-",
+      "rawValue": 0
+    },
+    {
+      "id": 200,
+      "attributeName": "Multi_Zone_Error_Rate",
+      "flag": "0x08",
+      "value": 200,
+      "worst": 200,
+      "thresh": 0,
+      "type": "Old_age",
+      "updated": "Offline",
+      "whenFailed": "-",
+      "rawValue": 0
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See [error](#p_ggg_hzl_s2c) for details|3.6|
+|result|List|See [result](#p_y2v_dgs_s2c) for details|3.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. Globally unique identifier of the error, for example SYS.1000, HOST.1001.|0.6|
+|description|String|Brief error description|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause error. The error that caused the current error. If there is no original error, this field is null.|0.6|
+
+### result
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|id|Integer|Id|3.6|
+|attributeName|String|Attribute name|3.6|
+|flag|String|Flag|3.6|
+|value|Integer|Current normalized value|3.6|
+|worst|Integer|Worst normalized value|3.6|
+|thresh|Integer|Threshold|3.6|
+|type|String|Type|3.6|
+|updated|String|Update|3.6|
+|whenFailed|String|When failed|3.6|
+|rawValue|Long|Raw value|3.6|
+|state|String|Health status|3.6|
+
+## SDK Examples
+Java SDK
+
+```
+GetLocalRaidPhysicalDriveSmartAction action = new GetLocalRaidPhysicalDriveSmartAction();
+action.uuid = "4608455038ef362b809cf8aff74e0131";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetLocalRaidPhysicalDriveSmartAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetLocalRaidPhysicalDriveSmartAction action = GetLocalRaidPhysicalDriveSmartAction()
+action.uuid = "4608455038ef362b809cf8aff74e0131"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetLocalRaidPhysicalDriveSmartAction.Result res = action.call()
+```
+
+</APIPage>

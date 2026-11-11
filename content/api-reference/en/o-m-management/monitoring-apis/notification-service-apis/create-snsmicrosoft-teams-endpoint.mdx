@@ -1,0 +1,120 @@
+---
+title: "Create a Microsoft Teams Endpoint"
+---
+
+<APIPage method="POST" path="/v1/sns/application-endpoints/microsoft-teams">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "url": "http://teams-robot-url",
+    "name": "Microsofo teams"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, the **systemTags** and **userTags** fields are optional. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"url":"http://teams-robot-url","name":"Microsoft teams"}}' http://localhost:8080/zstack/v1/sns/application-endpoints/microsoft-teams
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|url|String|body \(contained in the **params** structure\)|Connector URL| |3.10.0|
+|name|String|body \(contained in the **params** structure\)|Resource name| |3.10.0|
+|description \(optional\)|String|body \(contained in the **params** structure\)|Detailed description of the resource| |3.10.0|
+|platformUuid \(optional\)|String|body \(contained in the **params** structure\)| | |3.10.0|
+|resourceUuid \(optional\)|String|body \(contained in the **params** structure\)|Resource UUID| |3.10.0|
+|tagUuids \(optional\)|List|body \(contained in the **params** structure\)|Tag UUID list| |3.10.0|
+|systemTags \(optional\)|List|body|System tags| |3.10.0|
+|userTags \(optional\)|List|body|User tags| |3.10.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "url": "http://teams-robot-url",
+    "name": "example",
+    "uuid": "917fe66f76b241f0843dfbd6be685fc1",
+    "description": "description example",
+    "type": "Email",
+    "state": "Enabled",
+    "platformUuid": "4eb0ceebf95b452585ebeacd647d9f35",
+    "createDate": "Mar 26, 2024 2:44:53 AM",
+    "lastOpDate": "Mar 26, 2024 2:44:53 AM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |5.0.0|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_jqc_j4w_jjb)|3.10.0|
+|inventory|SNSMicrosoftTeamsEndpointInventory|For details, see [inventory](#p_zv4_j4w_jjb)|3.10.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001.|3.10.0|
+|description|String|A brief description of the error|3.10.0|
+|details|String|Detailed information about the error|3.10.0|
+|elaboration|String|Reserved field. Default is null.|3.10.0|
+|opaque|LinkedHashMap|Reserved field. Default is null.|3.10.0|
+|cause|ErrorCode|The root error. The source error that caused the current error. If there is no root error, this field is null.|3.10.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|url|String|Connector URL|3.10.0|
+|name|String|Resource name|3.10.0|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource.|3.10.0|
+|description|String|Detailed description of the resource|3.10.0|
+|type|String| |3.10.0|
+|state|String| |3.10.0|
+|platformUuid|String| |3.10.0|
+|createDate|Timestamp|Creation time|3.10.0|
+|lastOpDate|Timestamp|Last modification time|3.10.0|
+
+## SDK Examples
+Java SDK
+
+```
+CreateSNSMicrosoftTeamsEndpointAction action = new CreateSNSMicrosoftTeamsEndpointAction();
+action.url = "http://teams-robot-url";
+action.name = "Microsofo teams";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateSNSMicrosoftTeamsEndpointAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateSNSMicrosoftTeamsEndpointAction action = CreateSNSMicrosoftTeamsEndpointAction()
+action.url = "http://teams-robot-url"
+action.name = "Microsofo teams"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateSNSMicrosoftTeamsEndpointAction.Result res = action.call()
+```
+
+</APIPage>

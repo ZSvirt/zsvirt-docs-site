@@ -1,0 +1,13 @@
+{
+  "title": "System Global",
+  "pages": [
+    "progress-bar",
+    "available-resource-query",
+    "garbage-collection",
+    "license",
+    "long-job-interfaces",
+    "error-code-interfaces",
+    "search-interfaces"
+  ],
+  "pagesIndex": "index"
+}

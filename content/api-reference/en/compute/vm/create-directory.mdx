@@ -1,0 +1,124 @@
+---
+title: "Create Resource Group Directory"
+---
+
+<APIPage method="POST" path="/v1/create/directory">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "directory",
+    "parentUuid": "a76994f58191389da72d093afdad61c7",
+    "zoneUuid": "64a7b0eae75d336cb6954c6efedc79dc",
+    "type": "default"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"directory","parentUuid":"a76994f58191389da72d093afdad61c7","zoneUuid":"64a7b0eae75d336cb6954c6efedc79dc","type":"default"}}' http://localhost:8080/zstack/v1/create/directory
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|name|String|body\(contained in **params** structure\)|Resource Name| |4.6.0|
+|parentUuid \(optional\)|String|body\(contained in **params** structure\)|Parent Directory UUID| |4.6.0|
+|zoneUuid|String|body\(contained in **params** structure\)|Data Center UUID| |4.6.0|
+|type|String|body\(contained in **params** structure\)| | |4.6.0|
+|resourceUuid \(optional\)|String|body\(contained in **params** structure\)|Resource UUID| |4.6.0|
+|tagUuids \(optional\)|List|body\(contained in **params** structure\)|Tag UUID List| |4.6.0|
+|systemTags \(optional\)|List|body|System Tags| |4.6.0|
+|userTags \(optional\)|List|body|User Tags| |4.6.0|
+
+## API Response
+Return Example
+
+```
+{
+  "inventory": {
+    "uuid": "ac818da023833bcd83728b6374c2a4f0",
+    "name": "test",
+    "groupName": "admin/first/second",
+    "parentUuid": "d6e5792bd4ef374ba99948ae83d3a7c3",
+    "rootDirectoryUuid": "cf6a11447d5f38dd95a91cc392105b16",
+    "zoneUuid": "3714f0cd0f3233dc96dc5fec67886c29",
+    "type": "default"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.6.0|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. For details, see [error](#p_rx5_n2s_zz)|4.6.0|
+|inventory|VmInstanceInventory|For details, see [inventory](#p_e23_42s_zz)|4.6.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|4.6.0|
+|description|String|Brief description of the error|4.6.0|
+|details|String|Detailed error information|4.6.0|
+|elaboration|String|Reserved field, defaults to null|4.6.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|4.6.0|
+|cause|ErrorCode|Root cause: the source error that triggered the current error. If there is no original error, this field is null|4.6.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, a unique identifier for the resource|4.6.0|
+|name|String|Resource Name|4.6.0|
+|groupName|String|Group|4.6.0|
+|parentUuid|String|Parent Directory UUID|4.6.0|
+|rootDirectoryUuid|String|Root Directory UUID|4.6.0|
+|zoneUuid|String|Data Center UUID|4.6.0|
+|type|String|Directory Type|4.6.0|
+|createDate|Timestamp|Creation Time|4.6.0|
+|lastOpDate|Timestamp|Last Operation Date|4.6.0|
+
+## SDK Examples
+Java SDK
+
+```
+CreateDirectoryAction action = new CreateDirectoryAction();
+action.name = "directory";
+action.parentUuid = "a76994f58191389da72d093afdad61c7";
+action.zoneUuid = "64a7b0eae75d336cb6954c6efedc79dc";
+action.type = "default";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateDirectoryAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateDirectoryAction action = CreateDirectoryAction()
+action.name = "directory"
+action.parentUuid = "a76994f58191389da72d093afdad61c7"
+action.zoneUuid = "64a7b0eae75d336cb6954c6efedc79dc"
+action.type = "default"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateDirectoryAction.Result res = action.call()
+```
+
+</APIPage>

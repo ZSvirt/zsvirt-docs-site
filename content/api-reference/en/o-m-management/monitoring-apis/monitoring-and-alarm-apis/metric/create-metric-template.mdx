@@ -1,0 +1,151 @@
+---
+title: "Create a Metric Template"
+---
+
+<APIPage method="POST" path="/v1/zwatch/metrics/httpreceivers/templates">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "receiverUuid": "7c10e325f9e232e489062a190cc1dc2a",
+    "template": "{  \"metricName\":\"${METRIC_NAME}\",\n  \"regionId\":\"cn-shanghai\",\n  \"instanceId\":\"${RESOURCE_UUID}\",\n  \"resource\":\"vm/${RESOURCE_NAME}\",\n  \"dimensions\":{\n      \"instanceId\":\"${METRIC_LABLES.get('VMUuid')}\",\n      \"device\":\"${METRIC_LABLES.get('DiskDeviceLetter')}\"\n  },\n  \"value\":${METRIC_VALUE},\n  \"ts\":${METRIC_TIME}\n}",
+    "namespace": "ZStack/VM",
+    "metricName": "DiskReadOps",
+    "labelsJsonStr": "['VMUuid=95e5885772de4f2bb3e05eba98a43cd0']"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The **systemTags** and **userTags** fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"receiverUuid":"7c10e325f9e232e489062a190cc1dc2a","template":"{  \"metricName\":\"${METRIC_NAME}\",\n  \"regionId\":\"cn-shanghai\",\n  \"instanceId\":\"${RESOURCE_UUID}\",\n  \"resource\":\"vm/${RESOURCE_NAME}\",\n  \"dimensions\":{\n      \"instanceId\":\"${METRIC_LABLES.get('VMUuid')}\",\n      \"device\":\"${METRIC_LABLES.get('DiskDeviceLetter')}\"\n  },\n  \"value\":${METRIC_VALUE},\n  \"ts\":${METRIC_TIME}\n}","namespace":"ZStack/VM","metricName":"DiskReadOps","labelsJsonStr":"['VMUuid=95e5885772de4f2bb3e05eba98a43cd0']"}}' \
+http://localhost:8080/zstack/v1/zwatch/metrics/httpreceivers/templates
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|receiverUuid|String|body \(included in the `params` structure\)| | |0.6|
+|template|String|body \(included in the `params` structure\)| | |0.6|
+|namespace|String|body \(included in the `params` structure\)| | |0.6|
+|metricName|String|body \(included in the `params` structure\)| | |0.6|
+|labelsJsonStr \(optional\)|String|body \(included in the `params` structure\)| | |0.6|
+|description \(optional\)|String|body \(included in the `params` structure\)|Detailed description of the resource| |0.6|
+|resourceUuid \(optional\)|String|body \(included in the `params` structure\)|Resource UUID| |0.6|
+|tagUuids \(optional\)|List|body \(included in the `params` structure\)|Tag UUID list| |3.4.0|
+|systemTags \(optional\)|List|body|System tags| |0.6|
+|userTags \(optional\)|List|body|User tags| |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "b143e113525d3fbaa56bf9be7fa15ccf",
+    "receiverUuid": "95d0c874bdec350cbb963f97ae9f3a13",
+    "template": "{  \"metricName\":\"${METRIC_NAME}\",\n  \"regionId\":\"cn-shanghai\",\n  \"instanceId\":\"${RESOURCE_UUID}\",\n  \"resource\":\"vm/${RESOURCE_NAME}\",\n  \"dimensions\":{\n      \"instanceId\":\"${METRIC_LABLES.get('VMUuid')}\",\n      \"device\":\"${METRIC_LABLES.get('DiskDeviceLetter')}\"\n  },\n  \"value\":${METRIC_VALUE},\n  \"ts\":${METRIC_TIME}\n}",
+    "namespace": "ZStack/VM",
+    "metricName": "DiskReadOps",
+    "labelsJsonStr": "['VMUuid=95e5885772de4f2bb3e05eba98a43cd0']",
+    "createDate": "Nov 14, 2017 2:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|inventory|MetricTemplateInventory|For details, see [inventory](#p_wtr_2n1_w2c)|0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_rys_dn1_w2c)|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID. Uniquely identifies the resource|0.6|
+|receiverUuid|String| |0.6|
+|template|String| |0.6|
+|namespace|String| |0.6|
+|metricName|String| |0.6|
+|labelsJsonStr|String| |0.6|
+|description|String|Detailed description of the resource|0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code. The globally unique error identifier, for example, SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field. Default is null|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null|0.6|
+|cause|ErrorCode|Root error. The source error that caused the current error. This field is null if no root error exists|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+CreateMetricTemplateAction action = new CreateMetricTemplateAction();
+action.receiverUuid = "7c10e325f9e232e489062a190cc1dc2a";
+action.template = "{  "metricName":"${METRIC_NAME}",
+  "regionId":"cn-shanghai",
+  "instanceId":"${RESOURCE_UUID}",
+  "resource":"vm/${RESOURCE_NAME}",
+  "dimensions":{
+      "instanceId":"${METRIC_LABLES.get('VMUuid')}",
+      "device":"${METRIC_LABLES.get('DiskDeviceLetter')}"
+  },
+  "value":${METRIC_VALUE},
+  "ts":${METRIC_TIME}
+}";
+action.namespace = "ZStack/VM";
+action.metricName = "DiskReadOps";
+action.labelsJsonStr = "['VMUuid=95e5885772de4f2bb3e05eba98a43cd0']";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateMetricTemplateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateMetricTemplateAction action = CreateMetricTemplateAction()
+action.receiverUuid = "7c10e325f9e232e489062a190cc1dc2a"
+action.template = "{  "metricName":"${METRIC_NAME}",
+  "regionId":"cn-shanghai",
+  "instanceId":"${RESOURCE_UUID}",
+  "resource":"vm/${RESOURCE_NAME}",
+  "dimensions":{
+      "instanceId":"${METRIC_LABLES.get('VMUuid')}",
+      "device":"${METRIC_LABLES.get('DiskDeviceLetter')}"
+  },
+  "value":${METRIC_VALUE},
+  "ts":${METRIC_TIME}
+}"
+action.namespace = "ZStack/VM"
+action.metricName = "DiskReadOps"
+action.labelsJsonStr = "['VMUuid=95e5885772de4f2bb3e05eba98a43cd0']"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateMetricTemplateAction.Result res = action.call()
+```
+
+</APIPage>

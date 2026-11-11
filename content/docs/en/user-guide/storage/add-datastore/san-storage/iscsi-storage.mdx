@@ -1,0 +1,35 @@
+---
+title: 'Add an iSCSI Storage'
+---
+
+iSCSI storage is a SAN storage that uses the iSCSI protocol for data transmission.
+
+You have allocated and mapped the LUNs on the storage side.
+
+1.  In the navigation pane, choose **Inventory** &gt; **Data Storage**.
+
+2.  Select the target data center and click **Storage Target**.
+
+3.  On the Storage Target tab, select **iSCSI Storage**.
+
+4.  Click **Add iSCSI Storage**.
+
+5.  In the Add iSCSI Storage dialog, set the following parameters:
+
+    -   **Name**: Name of the iSCSI storage.
+    -   **IP Address**: IP address of the iSCSI storage server.
+    -   **Port**: Target port for the iSCSI storage. Default: 3260.
+    -   **Cluster**: The cluster where the iSCSI storage will be attached. You can also attach the iSCSI storage to a cluster after the addition.
+
+        <Callout type="info">
+        If you want to use the LUNs provided by the iSCSI storage, you need to attach the iSCSI storage to the cluster where the SAN storage is attached.
+        </Callout>
+
+    -   **CHAP Username**: CHAP authentication username.
+    -   **CHAP Password**: CHAP authentication password.
+6.  Review the configuration and click **OK**.
+
+You can add iSCSI LUNs as SAN storage or pass through them to a virtual machine. LUNs that have been added as SAN storage cannot be passed through to a virtual machine.
+
+-   [To add iSCSI LUNs as SAN storage, see Add a SAN Storage](/en/docs/user-guide/storage/add-datastore/san-storage).
+-   To pass through LUNs to a virtual machine through RDM disks, see Create a New Virtual Machine.

@@ -1,0 +1,163 @@
+---
+title: "刷新NVMe设备"
+---
+
+<APIPage method="POST" path="/v1/storage-devices/nvme/controllers">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "zoneUuid": "7a7b52cf91933070af3c8273f30ef458"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"zoneUuid":"7a7b52cf91933070af3c8273f30ef458"}}' \
+http://localhost:8080/zstack/v1/storage-devices/nvme/controllers
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|zoneUuid|String|body\(包含在**params**结构中\)| |数据中心UUID|4.6.21|
+|nvmeLunUuids \(可选\)|List|body\(包含在**params**结构中\)| |NVMe磁盘UUID|4.6.21|
+|systemTags \(可选\)|List|body| |系统标签|4.6.21|
+|userTags \(可选\)|List|body| |用户标签|4.6.21|
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "88ed12f1c3d7329c9b3fd00a87ce999e",
+      "state": "Enabled",
+      "nvmeLuns": [
+        {
+          "nvmeTargetUuid": "88ed12f1c3d7329c9b3fd00a87ce999e",
+          "nvmeLunHostRefs": [
+            {
+              "id": 1,
+              "nvmeLunUuid": "3adbd21bfa483cb2bc48b91c1438c788",
+              "hostUuid": "8c26dfd50d963292b8a51ddc0f9957f5",
+              "createDate": "Nov 14, 2017 10:20:57 PM",
+              "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+            }
+          ],
+          "name": "nvme-lun-36b083fe000daf018000022905ba35d8f",
+          "uuid": "3adbd21bfa483cb2bc48b91c1438c788",
+          "wwid": "uuid.48daeab7-7f15-405e-8481-7152cb9b0aca",
+          "wwn": "uuid.48daeab7-7f15-405e-8481-7152cb9b0aca",
+          "serial": "3d87eca1686c1782",
+          "type": "disk",
+          "path": "nvme-uuid.48daeab7-7f15-405e-8481-7152cb9b0aca ",
+          "size": 5497558138880
+        }
+      ],
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.6.21|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_mwx_kwd_nfb)|4.6.21|
+|inventories|List|详情参考[inventories](#p_xhf_lwd_nfb)|4.6.21|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.6.21|
+|description|String|错误的概要描述|4.6.21|
+|details|String|错误的详细信息|4.6.21|
+|elaboration|String|保留字段，默认为null|4.6.21|
+|opaque|LinkedHashMap|保留字段，默认为null|4.6.21|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.6.21|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.6.21|
+|name|String|资源名称|4.6.21|
+|nqn|String|NVMe限定名称|4.6.21|
+|state|String|状态|4.6.21|
+|createDate|Timestamp|创建时间|4.6.21|
+|lastOpDate|Timestamp|最后一次修改时间|4.6.21|
+|nvmeLuns|List|详情参考[nvmeLuns](#p_h1l_gj1_dxb).|4.6.21|
+
+### nvmeLuns
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|nvmeTargetUuid|String|所属NVMe设备UUID|4.6.21|
+|name|String|资源名称|4.6.21|
+|uuid|String|资源的UUID，唯一标示该资源|4.6.21|
+|wwid|String|全局唯一标识|4.6.21|
+|vendor|String|供应商|4.6.21|
+|model|String|型号|4.6.21|
+|wwn|String| |4.6.21|
+|serial|String|序列号|4.6.21|
+|type|String|类型|4.6.21|
+|hctl|String| |4.6.21|
+|path|String|路径|4.6.21|
+|state|String|状态|4.6.21|
+|size|Long|大小|4.6.21|
+|multipathDeviceUuid|String|多路径设备UUID|4.6.21|
+|source|String|磁盘来源，NVMe|4.6.21|
+|createDate|Timestamp|创建时间|4.6.21|
+|lastOpDate|Timestamp|最后一次修改时间|4.6.21|
+|nvmeLunHostRefs|List|详情参考[nvmeLunHostRefs](#p_gxn_lwd_nfb).|4.6.21|
+
+### nvmeLunHostRefs
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|nvmeLunUuid|List|NVme磁盘UUID|4.6.21|
+|hostUuid|String|主机UUID|4.6.21|
+|path|String|磁盘路径|4.6.21|
+|hctl|String|磁盘HCTL|4.6.21|
+|createDate|Timestamp|创建时间|4.6.21|
+|lastOpDate|Timestamp|最后一次修改时间|4.6.21|
+
+## SDK示例
+Java SDK
+
+```
+QueryNvmeTargetAction action = new QueryNvmeTargetAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryNvmeTargetAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryNvmeTargetAction action = QueryNvmeTargetAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryNvmeTargetAction.Result res = action.call()
+```
+
+</APIPage>

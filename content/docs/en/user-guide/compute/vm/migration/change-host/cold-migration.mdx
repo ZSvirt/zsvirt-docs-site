@@ -1,0 +1,26 @@
+---
+title: 'Cold Migration'
+---
+
+Cold migration migrates a powered-off virtual machine.
+
+-   The virtual machine's data storage is local storage.
+-   Before you cold migrate a virtual machine, detach the data disks, ISOs, or peripheral devices (if any) from the virtual machine first.
+
+    <Callout type="info">
+    If the virtual machine uses a local storage, you can cold migrate the virtual machine with local data disks attached.
+    </Callout>
+
+-   If the selected virtual machine has associated with VM scheduling policies, modify these policies based on your business needs to avoid policy conflicts.
+
+1.  In the navigation pane, choose **Inventory** &gt; **VM and Host**.
+
+2.  Select the target virtual machine and click **Shut Down**.
+
+3.  After shutdown, click **Actions** &gt; **Migration Management** &gt; **Change Host**.
+
+4.  In the Change Host dialog, choose a destination host.
+
+5.  Review the configuration and click **OK**.
+
+After the migration, you can re-attach those data disks, ISOs, or peripheral devices to the virtual machine.

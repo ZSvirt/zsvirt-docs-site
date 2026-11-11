@@ -1,0 +1,71 @@
+---
+title: 'zsphere_image_storages'
+description: 'List all Image storages, or query Image storages by exact name match, or query Image storages by name pattern fuzzy match.'
+---
+
+<HistoricalNamingNote locale="en" />
+
+# zsphere_image_storages (Data Source)
+
+List all Image storages, or query Image storages by exact name match, or query Image storages by name pattern fuzzy match.
+
+## Example Usage
+
+```terraform
+data "zsphere_image_storages" "test" {
+}
+
+output "zstack_secs" {
+  value = data.zsphere_image_storages.test
+}
+
+# example output:
+# zstack_secs = {
+#   "filter" = tolist([])
+#   "image_storages" = tolist([
+#     {
+#       "available_capacity" = 263827959808
+#       "name" = "Host-1"
+#       "state" = "Enabled"
+#       "status" = "Connected"
+#       "total_capacity" = 312423686144
+#       "uuid" = "e3f8b6038e274f0c9354962a78f46177"
+#     },
+#   ])
+#   "name" = tostring(null)
+#   "name_pattern" = tostring(null)
+# }
+```
+
+## Schema
+
+### Optional
+
+- `filter` (Block List) Filter resources based on any field in the schema. For example, to filter by status, use `name = "status"` and `values = ["Ready"]`. (see [below for nested schema](#nestedblock--filter))
+- `name` (String) Exact name for searching Image storage.
+- `name_pattern` (String) Pattern for fuzzy name search, similar to MySQL LIKE. Use % for multiple characters and _ for exactly one character.
+
+### Read-Only
+
+- `image_storages` (Attributes List) List of Image storage entries (see [below for nested schema](#nestedatt--image_storages))
+
+<a id="nestedblock--filter"></a>
+### Nested Schema for `filter`
+
+Required:
+
+- `name` (String) Name of the field to filter by (e.g., status, state).
+- `values` (Set of String) Values to filter by. Multiple values will be treated as an OR condition.
+
+
+<a id="nestedatt--image_storages"></a>
+### Nested Schema for `image_storages`
+
+Read-Only:
+
+- `available_capacity` (Number) Available capacity of the Image storage in bytes
+- `name` (String) Name of the Image storage
+- `state` (String) State of the Image storage (Enabled or Disabled)
+- `status` (String) Readiness status of the Image storage
+- `total_capacity` (Number) Total capacity of the Image storage in bytes
+- `uuid` (String) UUID identifier of the Image storage

@@ -1,0 +1,12 @@
+---
+title: "Host loses connection"
+---
+
+## Symptom
+The host loses connection with the error: `no qemu-kvm-ev-mn repo found, cannot update kvmagent dependencies`.
+
+## Cause
+An unexpected power loss caused file loss on the host.
+
+## Solution
+-   Copy the `/etc/yum.repos.d/qemu-kvm-ev-mn` file from a working host to the affected host, then reconnect the host.

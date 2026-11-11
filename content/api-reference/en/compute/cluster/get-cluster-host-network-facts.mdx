@@ -1,0 +1,255 @@
+---
+title: "Get Cluster Host Physical Network Information"
+---
+
+<APIPage method="GET" path="/v1/cluster/hosts-network-facts/{clusterUuid}?hostUuid={hostUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/cluster/hosts-network-facts/811d04aa12e3390cb29cb7664862e1f2?limit=1000&start=0
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|hostUuid|String|url|Cluster UUID| |4.3.6|
+|limit \(optional\)|Integer|query| | |4.3.6|
+|start \(optional\)|Integer|query| | |4.3.6|
+|systemTags \(optional\)|List|query| | |4.3.6|
+|userTags \(optional\)|List|query| | |4.3.6|
+
+## API Response
+Response Example
+
+```
+{
+  "bondings": [
+    {
+      "uuid": "23d8ef3080f3379887097e816463d1cf",
+      "hostUuid": "46ee6624a6a8307295c583884340d5c2",
+      "bondingName": "bond0",
+      "mode": "active-backup 1",
+      "xmitHashPolicy": "layer2 0",
+      "miiStatus": "up",
+      "mac": "ac:1f:6b:93:6c:8c",
+      "ipAddresses": [
+        "172.20.0.116/16"
+      ],
+      "miimon": 100,
+      "allSlavesActive": true,
+      "createDate": "Nov 14, 2017 2:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 2:20:57 PM",
+      "slaves": [
+        {
+          "uuid": "79bae81259b83a5989d9f7664ea033ba",
+          "hostUuid": "46ee6624a6a8307295c583884340d5c2",
+          "bondingUuid": "23d8ef3080f3379887097e816463d1cf",
+          "interfaceName": "eno1",
+          "interfaceType": "bondingSlave",
+          "speed": 1000,
+          "slaveActive": true,
+          "carrierActive": true,
+          "mac": "ac:1f:6b:93:6c:8c",
+          "createDate": "Nov 14, 2017 2:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+        },
+        {
+          "uuid": "197768d887cf3f2a985f58d0e10a48b4",
+          "hostUuid": "46ee6624a6a8307295c583884340d5c2",
+          "bondingUuid": "23d8ef3080f3379887097e816463d1cf",
+          "interfaceName": "eno2",
+          "interfaceType": "bondingSlave",
+          "speed": 1000,
+          "slaveActive": false,
+          "carrierActive": false,
+          "mac": "ac:1f:6b:93:6c:8c",
+          "createDate": "Nov 14, 2017 2:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+        }
+      ]
+    }
+  ],
+  "nics": [
+    {
+      "uuid": "79bae81259b83a5989d9f7664ea033ba",
+      "hostUuid": "46ee6624a6a8307295c583884340d5c2",
+      "bondingUuid": "23d8ef3080f3379887097e816463d1cf",
+      "interfaceName": "eno1",
+      "interfaceType": "bondingSlave",
+      "speed": 1000,
+      "slaveActive": true,
+      "carrierActive": true,
+      "mac": "ac:1f:6b:93:6c:8c",
+      "createDate": "Nov 14, 2017 2:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+    },
+    {
+      "uuid": "197768d887cf3f2a985f58d0e10a48b4",
+      "hostUuid": "46ee6624a6a8307295c583884340d5c2",
+      "bondingUuid": "23d8ef3080f3379887097e816463d1cf",
+      "interfaceName": "eno2",
+      "interfaceType": "bondingSlave",
+      "speed": 1000,
+      "slaveActive": false,
+      "carrierActive": false,
+      "mac": "ac:1f:6b:93:6c:8c",
+      "createDate": "Nov 14, 2017 2:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+    },
+    {
+      "uuid": "2b43c44d63b03009a52cd95dbceccc21",
+      "hostUuid": "46ee6624a6a8307295c583884340d5c2",
+      "interfaceName": "ens2f0",
+      "interfaceType": "noMaster",
+      "speed": 1000,
+      "slaveActive": true,
+      "carrierActive": true,
+      "ipAddresses": [
+        "169.254.0.115/24"
+      ],
+      "mac": "98:03:9b:00:ea:f2",
+      "createDate": "Nov 14, 2017 2:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+    },
+    {
+      "uuid": "3071fef136fa3102b7289c3e3c461da1",
+      "hostUuid": "46ee6624a6a8307295c583884340d5c2",
+      "interfaceName": "ens2f1",
+      "interfaceType": "bridgeSlave",
+      "speed": 1000,
+      "slaveActive": false,
+      "carrierActive": false,
+      "mac": "98:03:9b:00:ea:f3",
+      "createDate": "Nov 14, 2017 2:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.3.6|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See details [error](#p_p5t_225_zfb)|4.3.6|
+|bondings|List|See details [bondings](#p_wdy_cb5_q2c)|4.3.6|
+|nics|List|See details [nics](#p_p54_2b5_q2c)|4.3.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, e.g. SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, default is null|0.6|
+|opaque|LinkedHashMap|Reserved field, default is null|0.6|
+|cause|ErrorCode|Root cause, the error that caused the current error. If there is no original error, this field is null|0.6|
+
+### bondings
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|3.5.0|
+|hostUuid|String|Host UUID|3.5.0|
+|bondingName|String|Bond name|3.5.0|
+|bondingType|String|Bond application status, can be noBridge, bridgeSlave|4.7.0|
+|speed|Long|Bond speed|4.7.0|
+|mode|String|Bond mode|3.5.0|
+|xmitHashPolicy|String|Hash policy|3.5.0|
+|miiStatus|String|MII status|3.5.0|
+|mac|String|MAC address|3.5.0|
+|ipAddresses|List|IP addresses|3.5.0|
+|gateway|String|Gateway address|4.7.0|
+|callBackIp|String|Callback address|4.7.0|
+|miimon|Long|MII monitor interval|3.5.0|
+|type|String|Bond type|4.7.0|
+|allSlavesActive|Boolean| |3.5.0|
+|description|String|Resource description|4.7.0|
+|createDate|Timestamp|Creation time|3.5.0|
+|lastOpDate|Timestamp|Last modification time|3.5.0|
+|slaves|List|See details [slaves](#p_q3v_db5_q2c)|3.5.0|
+
+### slaves
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|3.5.0|
+|hostUuid|String|Host UUID|3.5.0|
+|bondingUuid|String|Bond UUID|3.5.0|
+|interfaceModel|String|Network card model|4.7.11|
+|vendorId|String|Vendor ID|4.7.11|
+|deviceId|String|Device ID|4.7.11|
+|subvendorId|String|Sub-vendor ID|4.7.11|
+|subdeviceId|String|Sub-device ID|4.7.11|
+|interfaceName|String|Network card name|3.5.0|
+|interfaceType|String|Network card application status, can be noMaster, bridgeSlave, bondSlave|3.5.0|
+|speed|Long|Network card speed|3.5.0|
+|slaveActive|Boolean|Bond link status|3.5.0|
+|carrierActive|Boolean|Physical link status|3.5.0|
+|ipAddresses|List|IP addresses|3.5.0|
+|gateway|String|Gateway address|4.7.0|
+|mac|String|MAC address|3.5.0|
+|callBackIp|String|Callback address|4.7.0|
+|pciDeviceAddress|String|Network card PCI address|3.5.0|
+|offloadStatus|String| |4.7.0|
+|description|String|Resource description|4.7.0|
+|createDate|Timestamp|Creation time|3.5.0|
+|lastOpDate|Timestamp|Last modification time|3.5.0|
+
+### nics
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|3.5.0|
+|hostUuid|String|Host UUID|3.5.0|
+|bondingUuid|String|Bond UUID|3.5.0|
+|interfaceModel|String|Network card model|4.7.11|
+|vendorId|String|Vendor ID|4.7.11|
+|deviceId|String|Device ID|4.7.11|
+|subvendorId|String|Sub-vendor ID|4.7.11|
+|subdeviceId|String|Sub-device ID|4.7.11|
+|interfaceName|String|Network card name|3.5.0|
+|interfaceType|String|Network card application status, can be noMaster, bridgeSlave, bondSlave|3.5.0|
+|speed|Long|Network card speed|3.5.0|
+|slaveActive|Boolean|Bond link status|3.5.0|
+|carrierActive|Boolean|Physical link status|3.5.0|
+|ipAddresses|List|IP addresses|3.5.0|
+|gateway|String|Gateway address|4.7.0|
+|mac|String|MAC address|3.5.0|
+|callBackIp|String|Callback address|4.7.0|
+|pciDeviceAddress|String|Network card PCI address|3.5.0|
+|offloadStatus|String| |4.7.0|
+|description|String|Resource description|4.7.0|
+|createDate|Timestamp|Creation time|3.5.0|
+|lastOpDate|Timestamp|Last modification time|3.5.0|
+
+## SDK Examples
+Java SDK
+
+```
+GetClusterHostNetworkFactsAction action = new GetClusterHostNetworkFactsAction();
+action.clusterUuid = "811d04aa12e3390cb29cb7664862e1f2";
+action.limit = 1000;
+action.start = 0;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetClusterHostNetworkFactsAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetClusterHostNetworkFactsAction action = GetClusterHostNetworkFactsAction()
+action.clusterUuid = "811d04aa12e3390cb29cb7664862e1f2"
+action.limit = 1000
+action.start = 0
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetClusterHostNetworkFactsAction.Result res = action.call()
+```
+
+</APIPage>

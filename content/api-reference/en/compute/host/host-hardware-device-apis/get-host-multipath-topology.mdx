@@ -1,0 +1,60 @@
+---
+title: "Get Host Multipath Topology"
+---
+
+<APIPage method="GET" path="/v1/storage-devices/multipath/topology">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/storage-devices/multipath/topology
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|hostUuid|String|query|Host UUID| |5.0.0|
+|lunUuids|List|query| | |5.0.0|
+|systemTags \(Optional\)|List|query|System Tags| |0.6|
+|userTags \(Optional\)|List|query|User Tags| |0.6|
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+GetHostMultipathTopologyAction action = new GetHostMultipathTopologyAction();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetHostMultipathTopologyAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetHostMultipathTopologyAction action = GetHostMultipathTopologyAction()
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetHostMultipathTopologyAction.Result res = action.call()
+```
+
+</APIPage>

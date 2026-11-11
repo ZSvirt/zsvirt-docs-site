@@ -1,0 +1,384 @@
+---
+title: "Create Cluster DRS"
+---
+
+<APIPage method="POST" path="/v1/clusters/{clusterUuid}/drs">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "test",
+    "automationLevel": "Automatic",
+    "thresholds": [
+      {
+        "thresholdName": "cpuUsedPercentThreshold",
+        "thresholdValue": "90",
+        "operator": ">="
+      }
+    ],
+    "thresholdDuration": 10,
+    "defaultEnable": true
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the `systemTags` and `userTags` fields can be omitted. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"test","automationLevel":"Automatic","thresholds":[{"thresholdName":"cpuUsedPercentThreshold","thresholdValue":"90","operator":">="}],"thresholdDuration":10,"defaultEnable":true}}' \
+http://localhost:8080/zstack/v1/clusters/ff0bcb94de7a3567b641d3fde2329d00/drs
+```
+
+Parameter List
+
+<table id="table_zqz_gjb_w2c"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+name
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(included in the `params` structure\)
+
+</td><td>
+
+The resource name
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.0.0
+
+</td></tr><tr><td>
+
+description \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(included in the `params` structure\)
+
+</td><td>
+
+The detailed description of the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.0.0
+
+</td></tr><tr><td>
+
+clusterUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+The Cluster UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.0.0
+
+</td></tr><tr><td>
+
+automationLevel
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(included in the `params` structure\)
+
+</td><td>
+
+Whether scheduling is triggered manually or automatically
+
+</td><td>
+
+-   Automatic
+-   Manual
+
+</td><td>
+
+4.0.0
+
+</td></tr><tr><td>
+
+thresholds
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(included in the `params` structure\)
+
+</td><td>
+
+The threshold criteria
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.0.0
+
+</td></tr><tr><td>
+
+thresholdDuration
+
+</td><td>
+
+Integer
+
+</td><td>
+
+body\(included in the `params` structure\)
+
+</td><td>
+
+The threshold evaluation duration. The system queries the workload data for the period from the current time back to thresholdDuration, calculates the result, and compares it with the threshold to determine whether the Cluster requires scheduling.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.0.0
+
+</td></tr><tr><td>
+
+defaultEnable \(Optional\)
+
+</td><td>
+
+boolean
+
+</td><td>
+
+body\(included in the `params` structure\)
+
+</td><td>
+
+The enabled state of the Cluster DRS upon creation
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.0.0
+
+</td></tr><tr><td>
+
+resourceUuid \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(included in the `params` structure\)
+
+</td><td>
+
+The resource UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.0.0
+
+</td></tr><tr><td>
+
+tagUuids \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(included in the `params` structure\)
+
+</td><td>
+
+The list of tag UUIDs
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.4.0
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.0.0
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.0.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+CreateClusterDRSAction action = new CreateClusterDRSAction();
+action.name = "test";
+action.clusterUuid = "ff0bcb94de7a3567b641d3fde2329d00";
+action.automationLevel = "Automatic";
+action.thresholds = asList([thresholdName:cpuUsedPercentThreshold, thresholdValue:90, operator:>=]);
+action.thresholdDuration = 10;
+action.defaultEnable = true;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateClusterDRSAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateClusterDRSAction action = CreateClusterDRSAction()
+action.name = "test"
+action.clusterUuid = "ff0bcb94de7a3567b641d3fde2329d00"
+action.automationLevel = "Automatic"
+action.thresholds = [[thresholdName:cpuUsedPercentThreshold, thresholdValue:90, operator:>=]]
+action.thresholdDuration = 10
+action.defaultEnable = true
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateClusterDRSAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,10 @@
+{
+  "title": "Install Management Node",
+  "pages": [
+    "index",
+    "bond-deployment",
+    "single-nic-deployment",
+    "tui-installation"
+  ],
+  "pagesIndex": "index"
+}

@@ -1,0 +1,87 @@
+---
+title: "扫描数据存储上的虚拟机元数据"
+---
+
+<APIPage method="GET" path="/v1/primary-storage/vm-instances/metadata/scan">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/primary-storage/vm-instances/metadata/scan?uuid=44c3fde4ec863d679803d06c0cbc12f1
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|query|存储的UUID| |5.0.0|
+|systemTags \(可选\)|List|query|系统标签| |5.0.0|
+|userTags \(可选\)|List|query|用户标签| |5.0.0|
+
+## API返回
+返回示例
+
+```
+{
+  "vmInstanceMetadata": []
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean|操作是否成功|5.0.0|
+|vmInstanceMetadata|List|详情参考[vmInstanceMetadata](#p_adm_54f_2jc)|5.0.0|
+|error|ErrorCode|详情参考[error](#p_qnb_1nf_2jc)|5.0.0|
+
+### vmInstanceMetadata
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|vmUuid|String| |5.0.0|
+|vmName|String| |5.0.0|
+|vmCategory|String| |5.0.0|
+|architecture|String| |5.0.0|
+|schemaVersion|String| |5.0.0|
+|metadataPath|String| |5.0.0|
+|hostUuid|String| |5.0.0|
+|sizeBytes|Long| |5.0.0|
+|lastUpdateTime|Long| |5.0.0|
+|incomplete|boolean| |5.0.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+ScanVmInstanceMetadataFromPrimaryStorageAction action = new ScanVmInstanceMetadataFromPrimaryStorageAction();
+action.uuid = "44c3fde4ec863d679803d06c0cbc12f1";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ScanVmInstanceMetadataFromPrimaryStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = ScanVmInstanceMetadataFromPrimaryStorageAction()
+action.uuid = "44c3fde4ec863d679803d06c0cbc12f1"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

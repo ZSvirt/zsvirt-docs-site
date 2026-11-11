@@ -1,0 +1,79 @@
+---
+title: "Get LDAP/AD Entries"
+---
+
+<APIPage method="GET" path="/v1/ldap/entry">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/ldap/entry?ldapFilter=(cn=user_xxx)&limit=2500
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|ldapFilter|String|query|Query filter| |4.3.0|
+|ldapServerUuid \(Optional\)|String|query|UUID of the LDAP server used for the query. If not specified, the system uses the UUID of the currently active LDAP server.| |4.3.0|
+|systemTags \(Optional\)|List|query|System tags| |4.3.0|
+|userTags \(Optional\)|List|query|User tags| |4.3.0|
+|limit \(Optional\)|Integer|query|Maximum number of records to return, similar to MySQL limit| |4.3.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": []
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.3.0|
+|inventories|List| |4.3.0|
+|error|ErrorCode|Error code. If not null, the operation has failed. This field is null when the operation succeeds. For details, see [error](#p_afb_djg_fcc)|4.3.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. The globally unique identifier of the error, for example, SYS.1000 or HOST.1001.|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Default is null.|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null.|0.6|
+|cause|ErrorCode|Root error. The source error that caused the current error. This field is null if no root error exists.|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+GetLdapEntryAction action = new GetLdapEntryAction();
+action.ldapFilter = "(cn=user_xxx)";
+action.limit = 2500;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetLdapEntryAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+GetLdapEntryAction action = GetLdapEntryAction()
+action.ldapFilter = "(cn=user_xxx)"
+action.limit = 2500
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetLdapEntryAction.Result res = action.call()
+
+```
+
+</APIPage>

@@ -1,0 +1,86 @@
+---
+title: "Delete Image"
+---
+
+<APIPage method="DELETE" path="/v1/images/{uuid}?backupStorageUuids={backupStorageUuids}&deleteMode={deleteMode}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "backupStorageUuids": [
+      "2499cd48fc33450a8737efff67ccb920"
+    ],
+    "deleteMode": "Permissive"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/images/f92e888c970c4f739d91e59f6dd94b1e?backupStorageUuids=b5a48099da3e3423a8e41bf25b073ce0&deleteMode=Permissive
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|UUID of the image, uniquely identifies the sub-resource| |0.6|
+|backupStorageUuids \(Optional\)|List|body|List of image storage UUIDs| |0.6|
+|deleteMode \(Optional\)|String|body|Delete mode \(Permissive or Enforcing, default is Permissive\)| |0.6|
+|systemTags \(Optional\)|List|body|System tags| |0.6|
+|userTags \(Optional\)|List|body|User tags| |0.6|
+
+## API Response
+This API returns an empty JSON structure **`{}`** on success. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DeleteImageAction action = new DeleteImageAction();
+action.uuid = "22850dff70934ffdaa839a950cb5a470";
+action.backupStorageUuids = asList("32974c8955cd4ed79d13458e41490883");
+action.deleteMode = "Permissive";
+action.sessionId = "517a458b87ca49cf80bf26e6000bc611";
+DeleteImageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteImageAction action = DeleteImageAction()
+action.uuid = "5bbd892e048b48b283e5d2f49a6a4e94"
+action.backupStorageUuids = [fd127191bf504e3daf5292800c1ea2d8]
+action.deleteMode = "Permissive"
+action.sessionId = "cf5cf2689379496aaa4449fd14dc8330"
+DeleteImageAction.Result res = action.call()
+```
+
+</APIPage>

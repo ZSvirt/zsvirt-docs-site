@@ -1,0 +1,287 @@
+---
+title: "设置网卡型号"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/{vmInstanceUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateVmNicDriver": {
+    "vmNicUuid": "1954794b830e32edbcf17f36344bbd14",
+    "driverType": "e1000"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateVmNicDriver":{"vmNicUuid":"1954794b830e32edbcf17f36344bbd14","driverType":"e1000"}}' http://localhost:8080/zstack/v1/vm-instances/ca775a57e8d73a3ca85f490b53647b80/actions
+```
+
+参数列表
+
+<table id="table_ytl_zf1_llb"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+vmInstanceUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+虚拟机UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.9.0
+
+</td></tr><tr><td>
+
+vmNicUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+虚拟机网卡UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.9.0
+
+</td></tr><tr><td>
+
+driverType
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+虚拟机网卡型号类型
+
+</td><td>
+
+-   virtio
+-   e1000
+-   rtl8139
+
+</td><td>
+
+3.9.0
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.9.0
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.9.0
+
+</td></tr></tbody>
+</table>
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "b6af955c36b23be693fca2db0df03737",
+    "vmInstanceUuid": "ed3f3ea119883726b1a97ec3cc4b1583",
+    "usedIpUuid": "78b119bae906373d825fa7e68faf6a0b",
+    "l3NetworkUuid": "307365f47f933bf09ff951cb67b52c5b",
+    "ip": "192.168.1.10",
+    "mac": "00:0c:29:bd:99:fc",
+    "netmask": "255.255.255.0",
+    "gateway": "192.168.1.1",
+    "driverType": "e1000",
+    "deviceId": 0,
+    "state": "enable"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_est_fg1_llb)|3.9.0|
+|inventory|VmNicInventory|详情参考[inventory](#p_u33_fg1_llb)|3.9.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.9.0|
+|description|String|错误的概要描述|3.9.0|
+|details|String|错误的详细信息|3.9.0|
+|elaboration|String|保留字段，默认为null|3.9.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.9.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.9.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.9.0|
+|vmInstanceUuid|String|虚拟机UUID|3.9.0|
+|l3NetworkUuid|String|分布式端口组UUID|3.9.0|
+|ip|String| |3.9.0|
+|mac|String| |3.9.0|
+|hypervisorType|String| |4.7.13|
+|netmask|String| |3.9.0|
+|gateway|String| |3.9.0|
+|metaData|String| |3.9.0|
+|ipVersion|Integer|ip协议号|3.9.0|
+|driverType|String| |4.7.13|
+|internalName|String| |4.7.13|
+|deviceId|Integer| |3.9.0|
+|type|String| |4.7.13|
+|state|String|网卡状态|4.7.13|
+|createDate|Timestamp|创建时间|3.9.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.9.0|
+|usedIps|List|详情参考[usedIps](#p_m35_2g1_llb)|3.9.0|
+
+### usedIps
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.9.0|
+|ipRangeUuid|String|IP段UUID|3.9.0|
+|l3NetworkUuid|String|分布式端口组UUID|3.9.0|
+|ipVersion|Integer|IP协议号|3.9.0|
+|ip|String|IP地址|3.9.0|
+|netmask|String|网络掩码|3.9.0|
+|gateway|String|网关地址|3.9.0|
+|usedFor|String| |3.9.0|
+|ipInLong|long| |3.9.0|
+|vmNicUuid|String|虚拟机网卡UUID|3.9.0|
+|createDate|Timestamp|创建时间|3.9.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.9.0|
+
+## SDK示例
+Java SDK
+
+```
+UpdateVmNicDriverAction action = new UpdateVmNicDriverAction();
+action.vmInstanceUuid = "ca775a57e8d73a3ca85f490b53647b80";
+action.vmNicUuid = "1954794b830e32edbcf17f36344bbd14";
+action.driverType = "e1000";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateVmNicDriverAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = UpdateVmNicDriverAction()
+action.vmInstanceUuid = "ca775a57e8d73a3ca85f490b53647b80"
+action.vmNicUuid = "1954794b830e32edbcf17f36344bbd14"
+action.driverType = "e1000"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

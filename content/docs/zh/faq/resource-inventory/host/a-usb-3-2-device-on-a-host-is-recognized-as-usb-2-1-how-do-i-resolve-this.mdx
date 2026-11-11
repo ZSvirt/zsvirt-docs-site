@@ -1,0 +1,24 @@
+---
+title: "主机上USB设备3.2版本被识别为2.1版本，怎么解决？"
+---
+
+## 现象
+USB设备3.2版本在主机上被识别为2.1版本。
+
+## 原因
+主机BIOS里未开启USB3.0支持。
+
+## 解决方案
+1.  登录主机，执行`lsusb`命令检查主机是否正常识别USB设备。
+
+2.  确认主机的USB插口是否正确。
+
+3.  将主机上的虚拟机迁移后，重启主机并检查主机的BIOS配置是否开启USB3.0支持。
+
+    如[Figure 1](#fig_bpp_cxc_5xb)和[Figure 2](#fig_f4q_nxc_5xb)所示：
+
+    ![检查USB配置1](/docs/faq/images/ZStack_FAQ_Summary_0012_49_1.png)
+
+    ![检查USB配置2](/docs/faq/images/ZStack_FAQ_Summary_0012_49_2.png)
+
+4.  将XHCI USB3.0 Port设置为Enable后，主机正常识别USB设备版本。

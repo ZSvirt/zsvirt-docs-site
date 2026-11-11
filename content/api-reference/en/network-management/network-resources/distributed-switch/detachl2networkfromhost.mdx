@@ -1,0 +1,96 @@
+---
+title: "DetachL2NetworkFromHost"
+---
+
+<APIPage method="DELETE" path="/v1/l2-networks/{l2NetworkUuid}/hosts/{hostUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Sample
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/l2-networks/65509f36186c339d8fa85fe0b632c61f/hosts/99d5e85e897a317780ed520e3dafdf0c
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|l2NetworkUuid|String|url|The port group Distributed Switch UUID.| |4.1.0|
+|hostUuid|String|url|The host UUID.| |4.1.0|
+|systemTags \(Optional\)|List|body|Optional. The system tags.| |4.1.0|
+|userTags \(Optional\)|List|body|Optional. The user tags.| |4.1.0|
+
+## API Response
+Sample Response
+
+```
+{
+  "inventory": {
+    "vlan": 10,
+    "name": "Test-Net",
+    "description": "Test",
+    "zoneUuid": "5b03d97878c536a6bedfb1ac1931ef2c",
+    "physicalInterface": "eth0",
+    "type": "L2VlanNetwork"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.1.0|
+|inventory|L2NetworkInventory|See [inventory](#p_lpn_vlw_51c).|4.1.0|
+|error|ErrorCode|The error code. If not null, the operation fails, or vice versa. For more information, see [error](#p_wfd_jmw_51c).|4.1.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The resource UUID.|4.1.0|
+|name|String|The resource name.|4.1.0|
+|description|String|The detailed description of the resource.|4.1.0|
+|zoneUuid|String|The Data Center UUID.|4.1.0|
+|physicalInterface|String|The physical NIC.|4.1.0|
+|type|String|The Distributed Switch type.|4.1.0|
+|createDate|Timestamp|The creation date.|4.1.0|
+|lastOpDate|Timestamp|The last operation date.|4.1.0|
+|attachedClusterUuids|List|The list of attached Cluster UUIDs.|4.1.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code, which is a numbered or alphanumeric code that specifies an error. For example, SYS.1000, HOST.1001.|4.1.0|
+|description|String|The brief description of the error.|4.1.0|
+|details|String|The details about the error.|4.1.0|
+|elaboration|String|The reserved field. Default value: null.|4.1.0|
+|opaque|LinkedHashMap|The reserved field. Default value: null.|4.1.0|
+|cause|ErrorCode|The root error, which is the associated root cause of the current error. If no root error exists, this parameter is null.|4.1.0|
+
+## SDK Sample
+Java SDK
+
+```
+DetachL2NetworkFromHostAction action = new DetachL2NetworkFromHostAction();
+action.l2NetworkUuid = "65509f36186c339d8fa85fe0b632c61f";
+action.hostUuid = "99d5e85e897a317780ed520e3dafdf0c";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DetachL2NetworkFromHostAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DetachL2NetworkFromHostAction action = DetachL2NetworkFromHostAction()
+action.l2NetworkUuid = "65509f36186c339d8fa85fe0b632c61f"
+action.hostUuid = "99d5e85e897a317780ed520e3dafdf0c"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DetachL2NetworkFromHostAction.Result res = action.call()
+```
+
+</APIPage>

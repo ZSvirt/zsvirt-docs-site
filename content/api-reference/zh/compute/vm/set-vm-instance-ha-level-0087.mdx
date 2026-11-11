@@ -1,0 +1,199 @@
+---
+title: "设置虚拟机高可用级别"
+---
+
+<APIPage method="POST" path="/v1/vm-instances/{uuid}/ha-levels">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "level": "NeverStop"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"level":"NeverStop"}}' \
+http://localhost:8080/zstack/v1/vm-instances/76d39c6862b840a3aa4568d83db99022/ha-levels
+```
+
+参数列表
+
+<table id="table_itn_rtw_k1b"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+虚拟机的资源Uuid
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+level
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+虚拟机高可用级别：-   NeverStop
+
+永不停机
+
+
+</td><td>
+
+-   NeverStop
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr></tbody>
+</table>
+
+## API返回
+该API成功时返回一个空的JSON结构**`{}`**，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+SetVmInstanceHaLevelAction action = new SetVmInstanceHaLevelAction();
+action.uuid = "76d39c6862b840a3aa4568d83db99022";
+action.level = "NeverStop";
+action.sessionId = "673a3db55e4a43739aa2b701462547f3";
+SetVmInstanceHaLevelAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SetVmInstanceHaLevelAction action = SetVmInstanceHaLevelAction()
+action.uuid = "76d39c6862b840a3aa4568d83db99022"
+action.level = "NeverStop"
+action.sessionId = "f631227267ef445a9d8066e163c6618a"
+SetVmInstanceHaLevelAction.Result res = action.call()
+```
+
+</APIPage>

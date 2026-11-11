@@ -1,0 +1,66 @@
+---
+title: "Delete Role"
+---
+
+<APIPage method="DELETE" path="/v1/identities/roles/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/identities/roles/6576d603b86634d68d49e9df50443e7f
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|The UUID of the role, uniquely identifying this resource| |4.10.0|
+|deleteMode \(Optional\)|String|body|Delete mode. 'Permissive' is the pre-deletion check mode. If the role is still bound to accounts, the deletion fails. 'Enforcing' is the forced deletion mode. If the role is still bound to accounts, those accounts are automatically unbound from the role| |4.10.0|
+|system Tags \(Optional\)|List|body|System tags| |4.10.0|
+|userTags \(Optional\)|List|body|User tags| |4.10.0|
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DeleteRoleAction action = new DeleteRoleAction();
+action.uuid = "6576d603b86634d68d49e9df50443e7f";
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteRoleAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+DeleteRoleAction action = DeleteRoleAction()
+action.uuid = "6576d603b86634d68d49e9df50443e7f"
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DeleteRoleAction.Result res = action.call()
+
+```
+
+</APIPage>

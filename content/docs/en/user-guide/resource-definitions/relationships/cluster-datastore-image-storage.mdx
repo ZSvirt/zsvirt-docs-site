@@ -1,0 +1,84 @@
+---
+title: 'Cluster|Data Storage|Image Storage Relationship'
+---
+
+## Cluster and Data Storage
+Clusters and data storage are both sub-resources under a data center, and they share a sibling relationship. Data storage must be attached to a cluster before it can provide storage services to the virtual machines within the cluster. The number of data storage devices that can be attached to a cluster varies depending on the storage type.
+
+<table className="doc-feature-table">
+  <thead>
+    <tr>
+      <th>Resource A</th>
+      <th>Resource B</th>
+      <th>Quantitative Relationship</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowSpan="6">Cluster</td>
+      <td>Local Storage</td>
+      <td>1:n</td>
+    </tr>
+    <tr>
+      <td>NFS Storage</td>
+      <td>1:n</td>
+    </tr>
+    <tr>
+      <td>SAN Storage</td>
+      <td>1:n</td>
+    </tr>
+    <tr>
+      <td>Local Storage + NFS Storage</td>
+      <td>1:(1 Local Storage + 1 NFS Storage)</td>
+    </tr>
+    <tr>
+      <td>Local Storage + SAN Storage</td>
+      <td>1:(n Local Storage + n SAN Storage)</td>
+    </tr>
+    <tr>
+      <td>NFS Storage + SAN Storage</td>
+      <td>1:(n NFS Storage + n SAN Storage)</td>
+    </tr>
+  </tbody>
+</table>
+
+## Image Storage and Data Storage
+Once an image storage is attached to the data center, it will provide image storage services to the clusters within the data center. Different types of image storage must be paired with corresponding types of data storage to support operations such as creating new virtual machines within the cluster. The following table outlines the specific combination restrictions.
+
+<table className="doc-feature-table">
+  <thead>
+    <tr>
+      <th>Image Storage Type</th>
+      <th>Data Storage Type</th>
+      <th>Support New VMs</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowSpan="3">Standalone Image Storage</td>
+      <td>Local Storage</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>NFS Storage</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>SAN Storage</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td rowSpan="3">Distributed Image Storage</td>
+      <td>Local Storage</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>NFS Storage</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>SAN Storage</td>
+      <td>No</td>
+    </tr>
+  </tbody>
+</table>

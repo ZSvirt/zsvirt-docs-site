@@ -1,0 +1,17 @@
+---
+title: "主机修改业务网卡名称后重启，网卡名称会还原且乱序，如何解决？"
+---
+
+## 解决方案
+1.  可通过以下步骤解决：
+2.  修改`grub.cfg`文件的kernel配置，增加*net.ifnames=0 biosdevname=0*：
+
+    ```
+    # 查看修改后的grub.cfg文件
+    cat /boot/grub2/grub.cfg
+          ... crashkernel=auto rhgb quiet LANG=en_US.UTF-8 net.ifnames=0 biosdevname=0
+    ```
+
+3.  确认主机未修改名称的业务网卡名称，进入对应网卡的配置文件`/etc/sysconfig/network-scripts/ifcfg-$xx`，将文件中记录的网卡名字和MAC地址对应的关系添加至`/etc/udev/rules.d/70-persistent-net.rule`文件。
+
+4.  重启主机以使配置生效。

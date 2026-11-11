@@ -1,0 +1,84 @@
+---
+title: "Move Resources to Group Directory"
+---
+
+<APIPage method="PUT" path="/v1/move/resources/directory">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "moveResourcesToDirectory": {
+    "resourceUuids": [
+      "4330b08677e93bdb9c02f2e62d5e1136",
+      "1cba5c53426e34118c3b35821d9fcfa6"
+    ],
+    "directoryUuid": "192dda86ccb3388c97a272775b9d292e"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"moveResourcesToDirectory":{"resourceUuids":["4330b08677e93bdb9c02f2e62d5e1136","1cba5c53426e34118c3b35821d9fcfa6"],"directoryUuid":"192dda86ccb3388c97a272775b9d292e"}}' http://localhost:8080/zstack/v1/move/resources/directory
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|resourceUuids|List|body\(contained in **params** structure\)|Batch Resource UUID| |4.6.0|
+|directoryUuid|String|body\(contained in **params** structure\)|Directory UUID| |4.6.0|
+|systemTags \(optional\)|List|body|System Tags| |4.6.0|
+|userTags \(optional\)|List|body|User Tags| |4.6.0|
+
+## API Response
+This API returns an empty JSON structure **`{}`** on success. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+MoveResourcesToDirectoryAction action = new MoveResourcesToDirectoryAction();
+action.resourceUuids = asList("4330b08677e93bdb9c02f2e62d5e1136","1cba5c53426e34118c3b35821d9fcfa6");
+action.directoryUuid = "192dda86ccb3388c97a272775b9d292e";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+MoveResourcesToDirectoryAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+MoveResourcesToDirectoryAction action = MoveResourcesToDirectoryAction()
+action.resourceUuids = [4330b08677e93bdb9c02f2e62d5e1136, 1cba5c53426e34118c3b35821d9fcfa6]
+action.directoryUuid = "192dda86ccb3388c97a272775b9d292e"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+MoveResourcesToDirectoryAction.Result res = action.call()
+```
+
+</APIPage>

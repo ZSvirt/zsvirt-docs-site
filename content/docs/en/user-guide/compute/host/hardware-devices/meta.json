@@ -1,0 +1,13 @@
+{
+  "title": "Host Hardware Device",
+  "pages": [
+    "index",
+    "numa-topology",
+    "block-devices",
+    "nics",
+    "gpu-devices",
+    "usb-devices",
+    "pcie-devices"
+  ],
+  "pagesIndex": "index"
+}

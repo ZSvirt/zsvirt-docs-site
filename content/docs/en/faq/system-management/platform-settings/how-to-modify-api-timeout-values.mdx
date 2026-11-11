@@ -1,0 +1,42 @@
+---
+title: "How to modify API timeout values"
+---
+
+<HistoricalNamingNote locale="en" />
+
+## Solution
+-   The virtualization platform provides preset API timeout values for various resource operations. This section describes how to modify API timeout values for core virtual machine resources and operations.
+
+    Before modifying an API timeout value, you can run the `QueryGlobalConfig category=apiTimeout name=$resourceName` command to query the default timeout for the relevant resource operation.
+
+-   Set the snapshot deletion timeout to 24 hours:
+
+    1.  Set the batch snapshot deletion timeout:
+
+        ```
+        UpdateGlobalConfig category=apiTimeout name=org.zstack.header.storage.snapshot.APIBatchDeleteVolumeSnapshotMsg value=24h
+        ```
+
+    2.  Set the single snapshot deletion timeout:
+
+        ```
+         UpdateGlobalConfig category=apiTimeout name=org.zstack.header.storage.snapshot.APIDeleteVolumeSnapshotMsg value=24h
+        ```
+
+-   Set the host reconnection timeout to two hours:
+
+    ```
+    UpdateGlobalConfig category=apiTimeout name=org.zstack.header.host.APIReconnectHostMsg value=2h
+    ```
+
+-   Set the Management Node startup timeout to 20 minutes:
+
+    ```
+    zstack-ctl start_node --timeout 1200
+    ```
+
+-   Set the backup task timeout to 120 hours:
+
+    ```
+    UpdateGlobalConfig category=apiTimeout name=org.zstack.header.storage.volume.backup.APICreateVolumeBackupMsg value=120h
+    ```

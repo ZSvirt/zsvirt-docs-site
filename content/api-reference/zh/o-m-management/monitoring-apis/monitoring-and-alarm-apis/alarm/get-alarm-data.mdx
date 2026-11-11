@@ -1,0 +1,119 @@
+---
+title: "获取资源报警器历史"
+---
+
+<APIPage method="GET" path="/v1/zwatch/alarm-histories">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zwatch/alarm-histories?startTime=1.596444525E9&endTime=1.596530925E9&limit=200.0&count=false&excludeOtherAccount=false&start=0.0
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|startTime \(可选\)|Long|query|起始时间| |2.3|
+|endTime \(可选\)|Long|query|结束时间| |2.3|
+|limit \(可选\)|Integer|query|返回记录条数数量| |2.3|
+|conditions \(可选\)|List|query|条件列表，用于过滤结果| |2.3|
+|count \(可选\)|boolean|query|是否查询消息数量| |3.3.0|
+|excludeOtherAccount \(可选\)|boolean|query|是否排除非当前账号的消息（只对SystemAdmin生效）| |3.3.0|
+|endpointUuid \(可选\)|String|query|接收端Uuid| |3.10.0|
+|systemTags \(可选\)|List|query|系统标签| |2.3|
+|userTags \(可选\)|List|query|用户标签| |2.3|
+
+## API返回
+返回示例
+
+```
+{
+  "histories": [
+    {
+      "alarmUuid": "143b24a12d193c1992c4774dc3b34fda",
+      "namespace": "ZStack/VM",
+      "metricName": "CPUUsedUtilization",
+      "accountUuid": "90aea7a1dfe93cf7bd3379254dddbdf9",
+      "resourceUuid": "4e6bb5390d3938cb9ce830a4766ee4d8",
+      "resourceType": "VmInstanceVO",
+      "alarmStatus": "Alarm",
+      "alarmName": "test-alarm",
+      "threshold": 90.0,
+      "labels": "VMUuid Equal 4e6bb5390d3938cb9ce830a4766ee4d8, CPUNum Equal 2",
+      "metricValue": 10.0,
+      "comparisonOperator": "LessThan",
+      "time": 1510669257141.0
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_u5h_w2s_l2b)|2.3|
+|histories|List|详情参考[histories](#p_knd_x2s_l2b)|2.3|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|2.3|
+|description|String|错误的概要描述|2.3|
+|details|String|错误的详细信息|2.3|
+|elaboration|String|保留字段，默认为null|2.3|
+|opaque|LinkedHashMap|保留字段，默认为null|2.3|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|2.3|
+
+### histories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|alarmUuid|String|报警器UUID|2.3|
+|namespace|String|名字空间名称|2.3|
+|metricName|String|监控项名称|2.3|
+|accountUuid|String|账户UUID|2.3|
+|resourceUuid|String|资源UUID|2.3|
+|resourceType|String|资源类型|2.3|
+|alarmStatus|String|报警器状态|2.3|
+|alarmName|String|报警器名称|2.3|
+|threshold|Double|报警阈值|2.3|
+|period|Integer|阈值持续周期|2.3|
+|labels|String|标签列表|2.3|
+|metricValue|Double|监控项当时值|2.3|
+|time|long|报警纪录生成时间|2.3|
+
+## SDK示例
+Java SDK
+
+```
+GetAlarmDataAction action = new GetAlarmDataAction();
+action.startTime = 1.530856218E9;
+action.endTime = 1.530942618E9;
+action.limit = 200.0;
+action.count = false;
+action.excludeOtherAccount = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetAlarmDataAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetAlarmDataAction action = GetAlarmDataAction()
+action.startTime = 1.530856218E9
+action.endTime = 1.530942618E9
+action.limit = 200.0
+action.count = false;
+action.excludeOtherAccount = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetAlarmDataAction.Result res = action.call()
+```
+
+</APIPage>

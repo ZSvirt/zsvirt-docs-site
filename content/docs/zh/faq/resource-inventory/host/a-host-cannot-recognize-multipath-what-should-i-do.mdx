@@ -1,0 +1,18 @@
+---
+title: "主机无法识别多路径，怎么办？"
+---
+
+## 现象
+登录主机执行`multipath -ll`命令，无法识别多路径。
+
+## 原因
+主机多路径配置文件异常。
+
+## 解决方案
+1.  检查该主机`/etc/multipath.conf`文件是否与正常主机存在差异。
+
+2.  在主机系统内执行以下命令，从正常主机中拷贝`/etc/multipath.conf`多路径配置文件至故障主机：
+
+    ```
+    [root@localhost ~]# scp /etc/multipath.conf root@IP:/etc/
+    ```

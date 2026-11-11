@@ -1,0 +1,33 @@
+---
+title: "虚拟机无法打开控制台，出现“Too many open files”报错，如何解决？"
+---
+
+## 解决方案
+1.  可尝试参考以下步骤解决：
+2.  进入虚拟机所在主机系统。
+
+3.  执行以下命令，查看系统最大打开文件数：
+
+    ```
+    [root@localhost ~]# ulimit -n  //默认输出1024
+    ```
+
+4.  执行以下命令，进入`limits.conf`配置文件，并添加如下内容，将最大打开文件数设置为262144：
+
+    ```
+    [root@localhost ~]# vim /etc/security/limits.conf
+    ...
+    soft nofile 262144
+    hard nofile 262144
+    soft nproc 10240
+    hard nproc 10240
+    ```
+
+5.  执行以下命令，重启libvirtd和virtlogd服务：
+
+    ```
+    [root@localhost ~]# service libvirtd restart
+    [root@localhost ~]# service virtlogd restart
+    ```
+
+6.  待主机重连成功后，打开虚拟机控制台即可成功。

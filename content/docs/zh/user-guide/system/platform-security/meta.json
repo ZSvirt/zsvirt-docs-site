@@ -1,0 +1,10 @@
+{
+  "title": "平台安全",
+  "pages": [
+    "index",
+    "ip-allow-deny-list",
+    "certificates",
+    "security-settings"
+  ],
+  "pagesIndex": "index"
+}

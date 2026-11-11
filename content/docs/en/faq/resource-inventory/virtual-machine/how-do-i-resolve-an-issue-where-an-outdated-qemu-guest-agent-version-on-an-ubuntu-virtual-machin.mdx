@@ -1,0 +1,18 @@
+---
+title: "How do I resolve an issue where an outdated qemu-guest-agent version on an Ubuntu virtual machine prevents online password changes?"
+---
+
+## Solution
+1.  Download the qemu-ga offline deb package for version 2.5.
+
+    Download URL: [Click here](http://launchpadlibrarian.net/254585564/qemu-guest-agent_2.5+dfsg-5ubuntu10_amd64.deb)
+
+2.  Upload the package to the `/root` directory of the virtual machine.
+
+3.  Log in to the virtual machine and run the following command to install the qemu-ga offline deb package for version 2.5:
+
+    ```
+    [root@localhost ~]# dpkg -i <package.deb>  //<package.deb> is the downloaded qemu-ga offline deb package for version 2.5
+    ```
+
+4.  Log in to the virtualization platform and try changing the password again.

@@ -1,0 +1,55 @@
+---
+title: "Linux 虚拟机导入 User Data"
+---
+
+-   导入 User Data 前，确保虚拟机镜像已安装 cloud-init，推荐版本：0.7.9、17.1、19.4 以及 19.4 以后版本。
+-   若通过 User Data 方式设置主机名和 SSH 登录密码，请勿在平台上重复设置主机名和密码，以避免冲突。
+-   若使用已安装 cloud-init 的虚拟机镜像新建 Linux 虚拟机，必须导入 User Data，否则 cloud-init 任务会等待直到超时。
+
+1.  准备所需实现功能的 User Data 脚本。
+
+    脚本示例：
+
+    ```
+    #cloud-config
+    users:
+     - name: test
+       shell: /bin/bash
+       groups: users
+       sudo: ['ALL=(ALL) NOPASSWD:ALL']
+       ssh-authorized-keys:
+           - ssh-rsa AAAAB3NzaC1LXCJfjroD1lT root@10-0-0-18
+    bootcmd:
+     - mkdir /tmp/temp 
+    write_files:
+     - path: /tmp/Cloud_config
+       content: |
+           Hello,world!
+       permissions: '0755'
+    fqdn: Perf-test
+    disable_root: false
+    ssh_pwauth: yes
+    chpasswd:
+      list: |
+          root:word
+      expire: False
+    runcmd:
+     - echo ls -l / &gt;/root/list.sh
+    ```
+
+    上述示例实现以下功能：
+
+    1.  新建虚拟机时，创建用户 test，使用 ssh-key。
+    2.  开机写入文件`/etc/hosts`，创建`/tmp/temp`目录，并创建文件写入内容。
+    3.  设置 hostname，开启 root 用户，允许 ssh 密码登录，修改 root 密码。
+    4.  执行`echo ls -l /`命令。
+
+2.  在导航栏中，选择**资源清单**。
+
+3.  在资源清单中，右键单击集群、主机或镜像，然后点击**新建虚拟机**。
+
+4.  在新建虚拟机弹窗中，选择**高级设置** > **常规选项**。
+
+5.  在**User Data**输入框中粘贴脚本。
+
+6.  完成虚拟机新建流程，即可导入 User Data。

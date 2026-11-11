@@ -1,0 +1,86 @@
+---
+title: "Sync Image from Backup Storage Metadata"
+---
+
+<APIPage method="PUT" path="/v1/backup-storage/image-store/{imageStoreUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "syncImage": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"syncImage":{}}' \
+http://localhost:8080/zstack/v1/backup-storage/image-store/81f447310d194ef5a8c0f7bbdcdc8401/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|imageStoreUuid|String|url|Image Storage UUID| |4.7.11|
+|systemTags \(Optional\)|List|body|System tags| |4.7.11|
+|userTags \(Optional\)|List|body|User tags| |4.7.11|
+
+## API Response
+This API returns an empty JSON structure `{}` on success. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier, for example SYS.1000, HOST.1001|4.7.11|
+|description|String|Brief description of the error|4.7.11|
+|details|String|Detailed error information|4.7.11|
+|elaboration|String|Reserved field, defaults to null|4.7.11|
+|opaque|LinkedHashMap|Reserved field, defaults to null|4.7.11|
+|cause|ErrorCode|Root cause. The source error that triggered the current error. This field is null if there is no original error|4.7.11|
+
+## SDK Examples
+Java SDK
+
+```
+SyncImageAction action = new SyncImageAction();
+action.imageStoreUuid = "cff07127e2134fe28396a1aaeb70a1cf";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+SyncImageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SyncImageAction action = SyncImageAction()
+action.imageStoreUuid = "8a1247ffe8354566adb6ccae56aa1db3"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+SyncImageAction.Result res = action.call()
+```
+
+</APIPage>

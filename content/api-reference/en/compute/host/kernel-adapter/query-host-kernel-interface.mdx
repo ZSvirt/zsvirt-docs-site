@@ -1,0 +1,100 @@
+---
+title: "Query Host Kernel Interface"
+---
+
+<APIPage method="GET" path="/v1/l2-networks/kernel-interfaces" altPaths={["/v1/l2-networks/kernel-interfaces/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/l2-networks/kernel-interfaces
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/l2-networks/kernel-interfaces/2eeff10481233dd48b1ffc6ed7c3d4fc
+```
+
+Queryable Fields
+
+Run the CLI command tool, enter `QueryHostKernelInterface` and press Tab to view all queryable fields and resource names that support cross-table queries.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "7be0a19c5d083b52abaf98205478c7e2",
+      "name": "test-kernel",
+      "description": "test-kernel",
+      "hostUuid": "3f79834ddf6f3e118dcb5abaa33489cc",
+      "l2NetworkUuid": "4a9e06dbe8d6375a8f8f002ea50b7121",
+      "l3NetworkUuid": "7cec7a1b63c732498be3d7a45c7076a5",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.1.0|
+|inventory|List|See [inventory](#p_mh4_sbk_51c)|4.1.0|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_m5s_sbk_51c)|4.1.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifies the resource|4.1.0|
+|name|String|Resource name|4.1.0|
+|description|String|Resource description|4.1.0|
+|hostUuid|String|Host UUID|4.1.0|
+|l2PortGroupUuid|String|Port group UUID|4.1.0|
+|l3NetworkUuid|String|Distributed Port Group UUID|4.1.0|
+|usedIps|List|IP configuration|4.1.0|
+|trafficTypes|List|Traffic type|4.1.0|
+|createDate|Timestamp|Create date|4.1.0|
+|lastOpDate|Timestamp|Last update date|4.1.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code, a globally unique identifier of the error, e.g. SYS.1000, HOST.1001|4.1.0|
+|description|String|Brief description of the error|4.1.0|
+|details|String|Detailed error information|4.1.0|
+|elaboration|String|Reserved field, defaults to null|4.1.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|4.1.0|
+|cause|ErrorCode|Root cause, the source error that caused the current error, null if no original error|4.1.0|
+
+## SDK Examples
+Java SDK
+
+```
+QueryHostKernelInterfaceAction action = new QueryHostKernelInterfaceAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryHostKernelInterfaceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryHostKernelInterfaceAction action = QueryHostKernelInterfaceAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryHostKernelInterfaceAction.Result res = action.call()
+```
+
+</APIPage>

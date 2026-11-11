@@ -1,0 +1,104 @@
+---
+title: "发送测试HTTP请求"
+---
+
+<APIPage method="POST" path="/v1/sns/application-endpoints/http/test-connection">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "url": "https://open.feishu.cn/open-apis/bot/v2/hook/006879a3-0898-4428-aad4-3221db3daf81",
+    "username": "admin",
+    "password": "password",
+    "endpointUuid": "1c201c27a81740ddadbc5d2f3f38a5e4"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"url":"https://open.feishu.cn/open-apis/bot/v2/hook/006879a3-0898-4428-aad4-3221db3daf81","username":"admin","password":"password","endpointUuid":"1c201c27a81740ddadbc5d2f3f38a5e4"}}' \
+http://localhost:8080/zstack/v1/sns/application-endpoints/http/test-connection
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|url \(可选\)|String|body\(包含在`params`结构中\)|webhook url| |4.10.0|
+|username \(可选\)|String|body\(包含在`params`结构中\)|Basic Auth 用户名| |4.10.0|
+|password \(可选\)|String|body\(包含在`params`结构中\)|Basic Auth 密码| |4.10.0|
+|endpointUuid \(可选\)|String|body\(包含在`params`结构中\)|端点uuid| |4.10.0|
+|systemTags \(可选\)|List|body|系统标签| |4.10.0|
+|userTags \(可选\)|List|body|用户标签| |4.10.0|
+
+## API返回
+返回示例
+
+```
+{
+  "connected": true,
+  "webhookResp": "{'result': 'success'}"
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.10.0|
+|connected|boolean|发送结果|4.10.0|
+|webhookResp|Object|对端响应结果|4.10.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_iwx_hcj_p2b)|4.10.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+SNSHttpTestConnectionAction action = new SNSHttpTestConnectionAction();
+action.url = "https://open.feishu.cn/open-apis/bot/v2/hook/006879a3-0898-4428-aad4-3221db3daf81";
+action.username = "admin";
+action.password = "password";
+action.endpointUuid = "1c201c27a81740ddadbc5d2f3f38a5e4";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+SNSHttpTestConnectionAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SNSHttpTestConnectionAction action = SNSHttpTestConnectionAction()
+action.url = "https://open.feishu.cn/open-apis/bot/v2/hook/006879a3-0898-4428-aad4-3221db3daf81"
+action.username = "admin"
+action.password = "password"
+action.endpointUuid = "1c201c27a81740ddadbc5d2f3f38a5e4"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+SNSHttpTestConnectionAction.Result res = action.call()
+```
+
+</APIPage>

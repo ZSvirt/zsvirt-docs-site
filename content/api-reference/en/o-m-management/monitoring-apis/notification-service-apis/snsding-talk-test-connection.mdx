@@ -1,0 +1,115 @@
+---
+title: "Test DingTalk Connection"
+---
+
+<APIPage method="POST" path="/v1/sns/application-endpoints/ding-talk/test-connection">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "url": "https://example.invalid/webhook",
+    "atAll": true,
+    "atPersonPhoneNumbers": [
+      "13062689903",
+      "13062689901"
+    ],
+    "secret": "YOUR_WEBHOOK_SECRET",
+    "testMsg": "hello world",
+    "endpointUuid": "1c201c27a81740ddadbc5d2f3f38a5e4"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding example, the **systemTags** and **userTags** fields are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"url":"https://example.invalid/webhook","atAll":true,"atPersonPhoneNumbers":["13062689903","13062689901"],"secret":"YOUR_WEBHOOK_SECRET","testMsg":"hello world","endpointUuid":"1c201c27a81740ddadbc5d2f3f38a5e4"}}' \
+http://localhost:8080/zstack/v1/sns/application-endpoints/ding-talk/test-connection
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|testMsg|String|body \(Contained in the **params** structure\)|Test message| |4.2.0|
+|endpointUuid \(Optional\)|String|body \(Contained in the **params** structure\)|DingTalk endpoint UUID| |4.2.0|
+|systemTags \(Optional\)|List|body|System tags| |4.2.0|
+|userTags \(Optional\)|List|body|User tags| |4.2.0|
+|url \(Optional\)|String|body \(Contained in the **params** structure\)|webhook url| |4.2.0|
+|atAll \(Optional\)|Boolean|body \(Contained in the **params** structure\)|@ all members| |4.2.0|
+|atPersonPhoneNumbers \(Optional\)|List|body \(Contained in the **params** structure\)|@ phone numbers| |4.2.0|
+|secret \(Optional\)|String|body \(Contained in the **params** structure\)|DingTalk secret| |4.2.0|
+
+## API Response
+Response example
+
+```
+{
+  "connected": true,
+  "webhookResp": {}
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.2.0|
+|connected|boolean|Webhook URL connectivity indicator \(only indicates whether the connection can be established\)|4.2.0|
+|webhookResp|LinkedHashMap|Response from the remote end after sending a test message to the Webhook URL \([https://open.dingtalk.com/document/robots/custom-robot-access\#title-7ur-3ok-s1a](https://open.dingtalk.com/document/robots/custom-robot-access#title-7ur-3ok-s1a)\)|4.2.0|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_kzq_vpx_bdb)|4.2.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number, a globally unique identifier for the error, for example, SYS.1000 or HOST.1001|5.0.0|
+|description|String|A brief description of the error|5.0.0|
+|details|String|Detailed information about the error|5.0.0|
+|elaboration|String|Reserved field. Defaults to null|5.0.0|
+|opaque|LinkedHashMap|Reserved field. Defaults to null|5.0.0|
+|cause|ErrorCode|The root error that caused the current error. This field is null if there is no root cause|5.0.0|
+
+## SDK Examples
+Java SDK
+
+```
+SNSDingTalkTestConnectionAction action = new SNSDingTalkTestConnectionAction();
+action.url = "https://example.invalid/webhook";
+action.atAll = true;
+action.atPersonPhoneNumbers = asList("13062689903","13062689901");
+action.secret = "YOUR_WEBHOOK_SECRET";
+action.testMsg = "hello world";
+action.endpointUuid = "1c201c27a81740ddadbc5d2f3f38a5e4";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+SNSDingTalkTestConnectionAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SNSDingTalkTestConnectionAction action = SNSDingTalkTestConnectionAction()
+action.url = "https://example.invalid/webhook"
+action.atAll = true
+action.atPersonPhoneNumbers = [13062689903, 13062689901]
+action.secret = "YOUR_WEBHOOK_SECRET"
+action.testMsg = "hello world"
+action.endpointUuid = "1c201c27a81740ddadbc5d2f3f38a5e4"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+SNSDingTalkTestConnectionAction.Result res = action.call()
+```
+
+</APIPage>

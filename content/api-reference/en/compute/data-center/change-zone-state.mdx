@@ -1,0 +1,228 @@
+---
+title: "Change Data Center Availability State"
+---
+
+<APIPage method="PUT" path="/v1/zones/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "changeZoneState": {
+    "stateEvent": "enable"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"changeZoneState":{"stateEvent":"enable"}}' \
+http://localhost:8080/zstack/v1/zones/af28b8e014ba35619ab68739fe72c2a3/actions
+```
+
+Parameter List
+
+<table id="table_mlz_nrs_l1b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+Resource UUID, uniquely identifies the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+stateEvent
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **changeZoneState** structure\)
+
+</td><td>
+
+State trigger event
+
+</td><td>
+
+-   enable
+-   disable
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+systemTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tag
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+userTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tag
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "5ea6fdd8a3a24fa2b17b1b89ad29da6b",
+    "name": "TestZone",
+    "description": "Test",
+    "state": "Enabled",
+    "type": "zstack",
+    "createDate": "Jun 7, 2017 9:21:08 PM",
+    "lastOpDate": "Jun 7, 2017 9:21:08 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See details [error](#p_h2s_1xs_l1b)|0.6|
+|inventory|ZoneInventory|See details [inventory](#p_xgm_1xs_l1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, e.g. SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, default is null|0.6|
+|opaque|LinkedHashMap|Reserved field, default is null|0.6|
+|cause|ErrorCode|Root cause, the error that caused the current error. If there is no original error, this field is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|name|String|Resource name|0.6|
+|description|String|Resource description|0.6|
+|state|String| |0.6|
+|type|String| |0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+ChangeZoneStateAction action = new ChangeZoneStateAction();
+action.uuid = "61defcb978894aec8839a099bd0eb1a2";
+action.stateEvent = "enable";
+action.sessionId = "166c291cd367487c9032f4f23531863c";
+ChangeZoneStateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ChangeZoneStateAction action = ChangeZoneStateAction()
+action.uuid = "8feaadcae6f847a7b7fe707d150b7fef"
+action.stateEvent = "enable"
+action.sessionId = "b6988f47cb2e4a13abe7b2116d3a2a78"
+ChangeZoneStateAction.Result res = action.call()
+```
+
+</APIPage>

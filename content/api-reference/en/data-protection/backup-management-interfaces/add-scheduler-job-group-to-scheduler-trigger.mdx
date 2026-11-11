@@ -1,0 +1,105 @@
+---
+title: "Add Scheduler Job Group to Scheduler Trigger"
+---
+
+<APIPage method="POST" path="/v1/scheduler/jobgroups/{schedulerJobGroupUuid}/scheduler/triggers/{schedulerTriggerUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "triggerNow": false
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The **systemTags** and **userTags** fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"triggerNow":false}}' http://localhost:8080/zstack/v1/scheduler/jobgroups/997c126bb3db39f6bbda1ffe90008f51/scheduler/triggers/78341d4e8f683a3291527f4944fa6831
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|schedulerJobGroupUuid|String|url|Scheduler job group UUID| |3.4.0|
+|schedulerTriggerUuid|String|url|Trigger UUID| |3.4.0|
+|triggerNow \(Optional\)|boolean|body \(Contained in the **params** structure\)|Whether to trigger immediately| |3.4.0|
+|systemTags \(Optional\)|List|body|System tag list| |3.4.0|
+|userTags \(Optional\)|List|body|User tag list| |3.4.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "schedulerJobGroupUuid": "ec8d2952f8f13747bbbf24f93585a63d",
+    "schedulerTriggerUuid": "4b5bc56b58623324afe0a57951a96064"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null on success. For details, see[error](#p_eck_wcy_dhb)|3.4.0|
+|inventory|SchedulerJobGroupSchedulerTriggerRefInventory|For details, see[inventory](#p_ptp_wcy_dhb)|3.4.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|3.4.0|
+|description|String|A brief description of the error|3.4.0|
+|details|String|The detailed error information|3.4.0|
+|elaboration|String|Reserved field. Default is null|3.4.0|
+|opaque|LinkedHashMap|Reserved field. Default is null|3.4.0|
+|cause|ErrorCode|The root error. The source error that caused the current error. This field is null if there is no root error|3.4.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|schedulerJobGroupUuid|String|Scheduler job group UUID|3.4.0|
+|schedulerTriggerUuid|String|Trigger UUID|3.4.0|
+|createDate|Timestamp|Creation time|3.4.0|
+|lastOpDate|Timestamp|Last modification time|3.4.0|
+
+## SDK Examples
+Java SDK
+
+```
+AddSchedulerJobGroupToSchedulerTriggerAction action = new AddSchedulerJobGroupToSchedulerTriggerAction();
+action.schedulerJobGroupUuid = "997c126bb3db39f6bbda1ffe90008f51";
+action.schedulerTriggerUuid = "78341d4e8f683a3291527f4944fa6831";
+action.triggerNow = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddSchedulerJobGroupToSchedulerTriggerAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddSchedulerJobGroupToSchedulerTriggerAction action = AddSchedulerJobGroupToSchedulerTriggerAction()
+action.schedulerJobGroupUuid = "997c126bb3db39f6bbda1ffe90008f51"
+action.schedulerTriggerUuid = "78341d4e8f683a3291527f4944fa6831"
+action.triggerNow = false
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddSchedulerJobGroupToSchedulerTriggerAction.Result res = action.call()
+```
+
+</APIPage>

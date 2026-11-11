@@ -1,0 +1,905 @@
+---
+title: "从虚拟机备份创建虚拟机"
+---
+
+<APIPage method="POST" path="/v1/vm-instances/from/vm-backups/{groupUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "vm1",
+    "instanceOfferingUuid": "7d608371542b3ab5960823c1b57bfa0c",
+    "l3NetworkUuids": [
+      "6ab4d28582d232708ed2912c1c3eb1ef"
+    ],
+    "clusterUuid": "84a216b8b0323b87bf9d2b32abc635a3",
+    "description": "this is a vm",
+    "diskAOs": [
+      {
+        "boot": false,
+        "primaryStorageUuid": "2b7a5bd210ed3b1ea9d746f714a79eaf",
+        "size": 0,
+        "sourceUuid": "b205ac85f069349eafe837afadd173df"
+      }
+    ],
+    "strategy": "InstantStart"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"vm1","instanceOfferingUuid":"7d608371542b3ab5960823c1b57bfa0c","l3NetworkUuids":["6ab4d28582d232708ed2912c1c3eb1ef"],"clusterUuid":"84a216b8b0323b87bf9d2b32abc635a3","description":"this is a vm","strategy":"InstantStart"}}' \
+http://localhost:8080/zstack/v1/vm-instances/from/vm-backups/04ac2beae2b03def881dea125299498c
+```
+
+参数列表
+
+<table id="table_pjd_41z_nfb"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+name
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+资源名称
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+groupUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+虚拟机备份组UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+backupStorageUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+镜像存储UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+instanceOfferingUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+计算规格UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+l3NetworkUuids（可选）
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+一组分布式端口组的UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+vmNicParams \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+网卡信息
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+type \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+虚拟机类型
+
+</td><td>
+
+-   UserVm
+-   ApplianceVm
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+zoneUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+数据中心UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+clusterUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+集群UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+hostUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+主机UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+primaryStorageUuidForRootVolume \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+根硬盘数据存储UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+primaryStorageUuidForDataVolume \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+数据盘数据存储UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+description \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+资源的详细描述
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+rootVolumeSystemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+根硬盘系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+dataVolumeSystemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+数据盘系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+diskAOs \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+按云盘维度传递参数，DiskAO.sourceUuid 与备份对应的原始云盘UUID \(VolumeBackupVO.volumeUuid\) 绑定；可为每块云盘单独指定 primaryStorageUuid、systemTags 等。注意：diskAOs 与 primaryStorageUuidForRootVolume/primaryStorageUuidForDataVolume、rootVolumeSystemTags/dataVolumeSystemTags 互斥，不能同时指定
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+defaultL3NetworkUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+默认分布式端口组的UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+resourceUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+tagUuids \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+标签UUID列表
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.4.0
+
+</td></tr><tr><td>
+
+strategy \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+虚拟机创建策略
+
+</td><td>
+
+-   InstantStart
+-   JustCreate
+-   CreateStopped
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+cpuNum \(可选\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+memorySize \(可选\)
+
+</td><td>
+
+Long
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+reservedMemorySize \(可选\)
+
+</td><td>
+
+Long
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr></tbody>
+</table>
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "a1c07d683f693f6e9f2d7f9a499c7840",
+    "name": "Test-VM",
+    "description": "web server VM",
+    "zoneUuid": "1e48b41ec4b63660b38a72d271c0164b",
+    "clusterUuid": "f29498f04b1e3c319bdaeb6b3f8259f3",
+    "imageUuid": "5c07704333c532e8b402b6b3ddb89315",
+    "hostUuid": "e18cf66eedb3306686a1d4685bbb63af",
+    "lastHostUuid": "4834161c409a34b6a84e40d71d85f714",
+    "instanceOfferingUuid": "f53ad9f147203b499dfbd93ce41b7a8e",
+    "rootVolumeUuid": "24b9fcb69f123ad6b3ddfffed96d2882",
+    "platform": "Linux",
+    "defaultL3NetworkUuid": "d50554f493153be78f6740e18e598046",
+    "type": "UserVm",
+    "hypervisorType": "KVM",
+    "memorySize": 8589934592,
+    "cpuNum": 1,
+    "allocatorStrategy": "LastHostPreferredAllocatorStrategy",
+    "createDate": "Nov 14, 2017 9:20:57 AM",
+    "lastOpDate": "Nov 14, 2017 9:20:57 AM",
+    "state": "Running",
+    "vmNics": [
+      {
+        "uuid": "9856d36e40783d669b9e4f1de41d1a17",
+        "vmInstanceUuid": "a1c07d683f693f6e9f2d7f9a499c7840",
+        "usedIpUuid": "be02105c2a223492a91fb09ba664ecb1",
+        "l3NetworkUuid": "d50554f493153be78f6740e18e598046",
+        "ip": "192.168.1.10",
+        "mac": "00:0c:29:bd:99:fc",
+        "netmask": "255.255.255.0",
+        "gateway": "192.168.1.1",
+        "deviceId": 0,
+        "state": "enable",
+        "createDate": "Nov 14, 2017 9:20:57 AM",
+        "lastOpDate": "Nov 14, 2017 9:20:57 AM"
+      }
+    ],
+    "allVolumes": [
+      {
+        "uuid": "24b9fcb69f123ad6b3ddfffed96d2882",
+        "name": "Root-Volume-For-VM-a1c07d683f693f6e9f2d7f9a499c7840",
+        "primaryStorageUuid": "ae47a25fd7cf3a349035d01060a8a224",
+        "vmInstanceUuid": "a1c07d683f693f6e9f2d7f9a499c7840",
+        "rootImageUuid": "5c07704333c532e8b402b6b3ddb89315",
+        "installPath": "/zstack_ps/rootVolumes/acct-36c27e8ff05c4780bf6d2fa65700f22e/vol-24b9fcb69f123ad6b3ddfffed96d2882/24b9fcb69f123ad6b3ddfffed96d2882.qcow2",
+        "type": "Root",
+        "format": "qcow2",
+        "size": 107374182400,
+        "actualSize": 21474836480,
+        "deviceId": 0,
+        "state": "Enabled",
+        "status": "Ready",
+        "createDate": "Nov 14, 2017 9:20:57 AM",
+        "lastOpDate": "Nov 14, 2017 9:20:57 AM"
+      }
+    ]
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |3.0.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_z4p_y1z_nfb)|3.0.0|
+|inventory|VmInstanceInventory|详情参考[inventory](#p_yfp_1bz_nfb)|3.0.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.0.0|
+|description|String|错误的概要描述|3.0.0|
+|details|String|错误的详细信息|3.0.0|
+|elaboration|String|保留字段，默认为null|3.0.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.0.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.0.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.0.0|
+|name|String|资源名称|3.0.0|
+|description|String|资源的详细描述|3.0.0|
+|zoneUuid|String|数据中心UUID|3.0.0|
+|clusterUuid|String|集群UUID|3.0.0|
+|imageUuid|String|镜像UUID|3.0.0|
+|hostUuid|String|主机UUID|3.0.0|
+|lastHostUuid|String| |3.0.0|
+|instanceOfferingUuid|String|计算规格UUID|3.0.0|
+|rootVolumeUuid|String|根硬盘UUID|3.0.0|
+|platform|String| |3.0.0|
+|architecture|String| |5.1.0|
+|defaultL3NetworkUuid|String| |3.0.0|
+|type|String| |3.0.0|
+|hypervisorType|String| |3.0.0|
+|memorySize|Long| |3.0.0|
+|cpuNum|Integer| |3.0.0|
+|cpuSpeed|Long| |3.0.0|
+|allocatorStrategy|String| |3.0.0|
+|createDate|Timestamp|创建时间|3.0.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.0.0|
+|state|String| |3.0.0|
+|guestOsType|String| |4.1.2|
+|vmNics|List|详情参考[vmNics](#p_t12_bbz_nfb)|3.0.0|
+|allVolumes|List|详情参考[allVolumes](#p_l4j_cbz_nfb)|3.0.0|
+|vmCdRoms|List|详情参考[vmCdRoms](#p_xhh_cwl_2bc)|0.6|
+
+### vmNics
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.7.13|
+|vmInstanceUuid|String|虚拟机UUID|4.7.13|
+|l3NetworkUuid|String|分布式端口组UUID|4.7.13|
+|ip|String| |4.7.13|
+|mac|String| |4.7.13|
+|hypervisorType|String| |4.7.13|
+|netmask|String| |4.7.13|
+|gateway|String| |4.7.13|
+|metaData|String| |4.7.13|
+|ipVersion|Integer| |4.7.13|
+|driverType|String| |4.7.13|
+|internalName|String| |4.7.13|
+|deviceId|Integer| |4.7.13|
+|type|String| | |
+|state|String|网卡状态|4.7.13|
+|createDate|Timestamp|创建时间|4.7.13|
+|lastOpDate|Timestamp|最后一次修改时间|4.7.13|
+|usedIps|List|详情参考[usedIps](#p_g3t_bdl_2bc)|4.7.13|
+
+### usedIps
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|5.0.0|
+|ipRangeUuid|String|IP段UUID|5.0.0|
+|l3NetworkUuid|String|分布式端口组UUID|5.0.0|
+|ipVersion|Integer| |5.0.0|
+|ip|String| |5.0.0|
+|netmask|String| |5.0.0|
+|gateway|String| |5.0.0|
+|usedFor|String| |5.0.0|
+|ipInLong|long| |5.0.0|
+|vmNicUuid|String|虚拟机网卡UUID|5.0.0|
+|createDate|Timestamp|创建时间|5.0.0|
+|lastOpDate|Timestamp|最后一次修改时间|5.0.0|
+
+### allVolumes
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.0.0|
+|name|String|资源名称|3.0.0|
+|description|String|资源的详细描述|3.0.0|
+|primaryStorageUuid|String|数据存储UUID|3.0.0|
+|vmInstanceUuid|String|虚拟机UUID|3.0.0|
+|diskOfferingUuid|String|硬盘规格UUID|3.0.0|
+|rootImageUuid|String| |3.0.0|
+|installPath|String| |3.0.0|
+|type|String| |3.0.0|
+|format|String| |3.0.0|
+|size|Long| |3.0.0|
+|actualSize|Long| |3.0.0|
+|deviceId|Integer| |3.0.0|
+|state|String| |3.0.0|
+|status|String| |3.0.0|
+|createDate|Timestamp|创建时间|3.0.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.0.0|
+|isShareable|Boolean| |3.0.0|
+|volumeQos|String| |4.7.13|
+|lastDetachDate|Timestamp| |4.7.13|
+|lastVmInstanceUuid|String| |4.7.13|
+
+### vmCdRoms
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.7.13|
+|vmInstanceUuid|String|虚拟机UUID|4.7.13|
+|deviceId|Integer| |4.7.13|
+|isoUuid|String| |4.7.13|
+|isoInstallPath|String| |4.7.13|
+|name|String|资源名称|4.7.13|
+|description|String|资源的详细描述|4.7.13|
+|createDate|Timestamp|创建时间|4.7.13|
+|lastOpDate|Timestamp|最后一次修改时间|4.7.13|
+
+## SDK示例
+Java SDK
+
+```
+CreateVmFromVmBackupAction action = new CreateVmFromVmBackupAction();
+action.name = "vm1";
+action.groupUuid = "04ac2beae2b03def881dea125299498c";
+action.instanceOfferingUuid = "7d608371542b3ab5960823c1b57bfa0c";
+action.l3NetworkUuids = asList("6ab4d28582d232708ed2912c1c3eb1ef");
+action.clusterUuid = "84a216b8b0323b87bf9d2b32abc635a3";
+action.description = "this is a vm";
+action.diskAOs = asList([boot:false, primaryStorageUuid:2b7a5bd210ed3b1ea9d746f714a79eaf, size:0, sourceUuid:b205ac85f069349eafe837afadd173df]);
+action.strategy = "InstantStart";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateVmFromVmBackupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = CreateVmFromVmBackupAction()
+action.name = "vm1"
+action.groupUuid = "04ac2beae2b03def881dea125299498c"
+action.instanceOfferingUuid = "7d608371542b3ab5960823c1b57bfa0c"
+action.l3NetworkUuids = [6ab4d28582d232708ed2912c1c3eb1ef]
+action.clusterUuid = "84a216b8b0323b87bf9d2b32abc635a3"
+action.description = "this is a vm"
+action.diskAOs = [[boot:false, primaryStorageUuid:2b7a5bd210ed3b1ea9d746f714a79eaf, size:0, sourceUuid:b205ac85f069349eafe837afadd173df]]
+action.strategy = "InstantStart"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

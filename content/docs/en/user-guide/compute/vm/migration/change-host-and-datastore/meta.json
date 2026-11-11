@@ -1,0 +1,10 @@
+{
+  "title": "Change Host and Data Storage",
+  "pages": [
+    "index",
+    "same-type-hot",
+    "cross-type-hot",
+    "same-type-cold"
+  ],
+  "pagesIndex": "index"
+}

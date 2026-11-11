@@ -1,0 +1,76 @@
+---
+title: "UninstallSoftwarePackage"
+---
+
+<APIPage method="PUT" path="/v1/software-package/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "uninstallSoftwarePackage": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding sample, both `systemTags` and `userTags` are optional. These two fields can be included in the body structure.
+</Callout>
+
+Curl Sample
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"uninstallSoftwarePackage":{}}' \
+http://localhost:8080/zstack/v1/software-package/ff04e1736ec6391f9a1f023b524d0a00/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|The software package UUID.| |4.10.20|
+|systemTags \(Optional\)|List|body|The system tags.| |4.10.20|
+|userTags \(Optional\)|List|body|The user tags.| |4.10.20|
+
+## API Response
+This API returns an empty JSON structure `{}` on success, and returns a JSON structure containing an error field on failure. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Sample
+Java SDK
+
+```
+UninstallSoftwarePackageAction action = new UninstallSoftwarePackageAction();
+action.uuid = "ff04e1736ec6391f9a1f023b524d0a00";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UninstallSoftwarePackageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = UninstallSoftwarePackageAction()
+action.uuid = "ff04e1736ec6391f9a1f023b524d0a00"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

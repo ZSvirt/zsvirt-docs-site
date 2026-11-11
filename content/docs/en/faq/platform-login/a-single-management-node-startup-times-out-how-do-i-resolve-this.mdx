@@ -1,0 +1,15 @@
+---
+title: "A single Management Node startup times out. How do I resolve this?"
+---
+
+<HistoricalNamingNote locale="en" />
+
+## Cause
+The Management Node has insufficient performance, causing the startup to time out.
+
+## Solution
+-   Run the following command on the Management Node to set the startup timeout to 3600 seconds:
+
+    ```
+    [root@localhost ~]# zstack-ctl start_node --timeout=3600
+    ```

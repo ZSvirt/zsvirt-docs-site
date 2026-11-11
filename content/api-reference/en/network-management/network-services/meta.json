@@ -1,0 +1,12 @@
+{
+  "title": "Network Services",
+  "pages": [
+    "getnetworkservicetypes",
+    "querynetworkserviceprovider",
+    "querynetworkservicel3networkref",
+    "attachnetworkservicetol3network",
+    "detachnetworkservicefroml3network",
+    "security-group"
+  ],
+  "pagesIndex": "getnetworkservicetypes"
+}

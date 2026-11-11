@@ -1,0 +1,11 @@
+{
+  "title": "证书管理",
+  "pages": [
+    "index",
+    "import-third-party",
+    "import-self-signed",
+    "update-certificate",
+    "switch-http-login"
+  ],
+  "pagesIndex": "index"
+}

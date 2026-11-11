@@ -1,0 +1,67 @@
+---
+title: 'zsphere_datacenters'
+description: 'Fetches a list of datacenters and their associated attributes from the ZSvirt environment.'
+---
+
+<HistoricalNamingNote locale="en" />
+
+# zsphere_datacenters (Data Source)
+
+Fetches a list of datacenters and their associated attributes from the ZSvirt environment.
+
+## Example Usage
+
+```terraform
+data "zsphere_datacenters" "test" {
+}
+
+output "zstack_secs" {
+  value = data.zsphere_datacenters.test
+}
+
+# example out:
+# zstack_secs = {
+#   "data_centers" = tolist([
+#     {
+#       "name" = "Datacenter-1"
+#       "state" = "Enabled"
+#       "type" = "zstack"
+#       "uuid" = "86643f5442164890b8b71de5b582dc9f"
+#     },
+#   ])
+#   "filter" = tolist([])
+#   "name" = tostring(null)
+#   "name_pattern" = tostring(null)
+# }
+```
+
+## Schema
+
+### Optional
+
+- `filter` (Block List) Filter resources based on any field in the schema. For example, to filter by status, use `name = "status"` and `values = ["Ready"]`. (see [below for nested schema](#nestedblock--filter))
+- `name` (String) Exact name for Searching  data centers
+- `name_pattern` (String) Pattern for fuzzy name search, similar to MySQL LIKE. Use % for multiple characters and _ for exactly one character.
+
+### Read-Only
+
+- `data_centers` (Attributes List) (see [below for nested schema](#nestedatt--data_centers))
+
+<a id="nestedblock--filter"></a>
+### Nested Schema for `filter`
+
+Required:
+
+- `name` (String) Name of the field to filter by (e.g., status, state).
+- `values` (Set of String) Values to filter by. Multiple values will be treated as an OR condition.
+
+
+<a id="nestedatt--data_centers"></a>
+### Nested Schema for `data_centers`
+
+Read-Only:
+
+- `name` (String)
+- `state` (String)
+- `type` (String)
+- `uuid` (String)

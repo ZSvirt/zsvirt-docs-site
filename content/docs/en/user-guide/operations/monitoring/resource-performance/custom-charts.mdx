@@ -1,0 +1,227 @@
+---
+title: 'Customize Monitoring Charts'
+---
+
+You can customize monitoring charts to view more monitoring data.
+
+-   **Details**: Hover the mouse over the chart to display detailed information about the relevant data points.
+-   **Custom Time Span**: By default, it displays monitoring data for the past 15 minutes. Valid values include 15 minutes, 1 hour, 6 hours, 1 day, 1 week, 1 month, 1 year, and custom.
+-   **Custom Monitoring Items**: Flexibly select the monitoring metrics you want to focus on based on your business needs.
+-   **Custom Monitoring Objects**: Display data for all or specified monitoring objects.
+-   **Custom Chart Position**: Freely drag and rearrange the position of monitoring charts.
+
+## Appendix of Monitoring Items
+<table className="doc-feature-table" id="table_mll_5sm_vcc"><thead><tr><th>
+
+Object
+
+</th><th>
+
+Metric
+
+</th><th>
+
+Item and Description
+
+</th></tr></thead><tbody><tr><td>
+
+Cluster
+
+</td><td>
+
+-   CPU
+-   Memory
+-   Disk
+-   NIC
+
+</td><td>
+
+-   CPU Utilization Sum
+-   Memory Usage Percentage
+-   Disk IOPS Sum
+-   NIC Data Transfer Rate Sum
+
+</td></tr><tr><td rowSpan="4">
+
+Host
+
+</td><td>
+
+CPU
+
+</td><td>
+
+-   **CPU Utilization**: The proportion of time the CPU is in a non-idle state.
+-   **CPU Idle Rate**: The proportion of time the CPU is in an idle state.
+-   **CPU Occupancy Rate (System Process)**: The proportion of time the CPU spends in kernel space, performing typical operations such as memory allocation, I/O operations, and creating child processes.
+-   **CPU Occupancy Rate (User Process)**: The proportion of time the CPU spends in user space, running typical user-space programs such as shells, databases, and web servers.
+-   **CPU Occupancy Rate Average (Waiting)**: The proportion of time the CPU spends waiting for the hard disk drive to load data into memory after initiating a read or write operation.
+
+</td></tr><tr><td>
+
+Memory
+
+</td><td>
+
+**Memory usage**: The amount of used and free resource memory.
+
+</td></tr><tr><td>
+
+Disk
+
+</td><td>
+
+-   **Disk Speed**: The read and write speed of the resource disk.
+-   **Disk IOPS**: The read and write IOPS of the resource disk.
+-   **Disk Latency**: The latency of the resource disk.
+-   **Total Disk Usage Ratio**: The percentage of used capacity across all host disks.
+-   **Total Disk Usage**: The amount of used capacity across all host disks.
+-   **Disk Usage Ratio of Platform System Files**: The percentage of disk capacity occupied by the platform system files.
+-   **Disk Usage of Platform System Files**: The amount of disk capacity occupied by the platform system files.
+
+</td></tr><tr><td>
+
+NIC
+
+</td><td>
+
+-   **NIC Data Transfer Rate**: The current send and receive rate of the resource's NIC.
+-   **NIC Packet Rate**: The current send and receive packet rate of the resource's NIC.
+-   **NIC Packet Discard Rate**: The current packet drop rate for outgoing and incoming packets on the resource's NIC.
+
+</td></tr><tr><td rowSpan="4">
+
+Virtual Machine
+
+</td><td>
+
+CPU
+
+</td><td>
+
+-   **CPU Utilization**: The proportion of time the CPU is in a non-idle state.
+-   **CPU Idle Rate**: The proportion of time the CPU is in an idle state.
+-   **CPU Occupancy Rate (System Process)**: The proportion of time the CPU spends in kernel space, performing typical operations such as memory allocation, I/O operations, and creating child processes.
+-   **CPU Occupancy Rate (User Process)**: The proportion of time the CPU spends in user space, running typical user-space programs such as shells, databases, and web servers.
+-   **CPU Occupancy Rate Average (Waiting)**: The proportion of time the CPU spends waiting for the hard disk drive to load data into memory after initiating a read or write operation.
+
+</td></tr><tr><td>
+
+Memory
+
+</td><td>
+
+-   **Memory Usage**: The amount of used and free resource memory.
+-   **Available Memory Capacity**: The available amount of resource memory that can be used.
+-   **Free Memory Capacity**: The amount of free resource memory.
+-   **Total Memory Capacity**: The total amount of resource memory.
+-   **Memory Idle Rate**: The percentage of resource memory currently in an idle state.
+-   **Memory Utilization**: The percentage of resource memory that is currently in use.
+
+</td></tr><tr><td>
+
+Disk
+
+</td><td>
+
+-   **Disk Speed**: The read and write speed of the resource disk.
+-   **Disk IOPS**: The read and write IOPS of the resource disk.
+-   **Disk Utilization**: The percentage of used capacity on the resource disk.
+-   **Disk Idle Rate**: The percentage of idle capacity on the resource disk.
+-   **Disk Usage Capacity**: The amount of used capacity on the resource disk.
+-   **Disk Idle Capacity**: The amount of free capacity on the resource disk.
+
+</td></tr><tr><td>
+
+NIC
+
+</td><td>
+
+-   **NIC Data Transfer Rate**: The current send and receive rate of the resource's NIC.
+-   **NIC Packet Rate**: The current send and receive packet rate of the resource's NIC.
+-   **NIC Packet Discard Rate**: The current packet drop rate for outgoing and incoming packets on the resource's NIC.
+
+</td></tr><tr><td>
+
+Data Storage
+
+</td><td>
+
+Capacity
+
+</td><td>
+
+**Capacity Percent Used**: The percentage of capacity currently used by the resource.
+
+</td></tr><tr><td>
+
+Image Storage - Standalone Image Storage/Distributed Image Storage
+
+</td><td>
+
+Capacity
+
+</td><td>
+
+**Capacity Percent Used**: The percentage of capacity currently used by the resource.
+
+</td></tr><tr><td rowSpan="4">
+
+Image Storage - Standalone Image Storage
+
+</td><td>
+
+CPU
+
+</td><td>
+
+-   **CPU Utilization**: The proportion of time the CPU is in a non-idle state.
+-   **CPU Idle Rate**: The proportion of time the CPU is in an idle state.
+-   **CPU Occupancy Rate (System Process)**: The proportion of time the CPU spends in kernel space, performing typical operations such as memory allocation, I/O operations, and creating child processes.
+-   **CPU Occupancy Rate (User Process)**: The proportion of time the CPU spends in user space, running typical user-space programs such as shells, databases, and web servers.
+-   **CPU Occupancy Rate Average (Waiting)**: The proportion of time the CPU spends waiting for the hard disk drive to load data into memory after initiating a read or write operation.
+
+</td></tr><tr><td>
+
+Disk
+
+</td><td>
+
+-   **Disk Speed**: The read and write speed of the resource disk.
+-   **Disk IOPS**: The read and write IOPS of the resource disk.
+
+</td></tr><tr><td>
+
+Memory
+
+</td><td>
+
+**Memory Usage**: The amount of used and free resource memory.
+
+</td></tr><tr><td>
+
+NIC
+
+</td><td>
+
+-   **NIC Data Transfer Rate**: The current send and receive rate of the resource's NIC.
+-   **NIC Packet Rate**: The current send and receive packet rate of the resource's NIC.
+-   **NIC Packet Discard Rate**: The current packet drop rate for outgoing and incoming packets on the resource's NIC.
+
+</td></tr><tr><td>
+
+Distributed Port Group
+
+</td><td>
+
+IP
+
+</td><td>
+
+-   **Used IP Percentage (IPv4)**: The percentage of IPv4 addresses currently used by the resource.
+-   **Available IP Percentage (IPv4)**: The percentage of remaining available IPv4 addresses on the resource.
+
+</td></tr></tbody>
+</table>
+
+**Parent topic:**[Resource Performance Monitoring](/en/docs/user-guide/operations/monitoring/resource-performance)

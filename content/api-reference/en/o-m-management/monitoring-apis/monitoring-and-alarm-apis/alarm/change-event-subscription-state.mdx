@@ -1,0 +1,197 @@
+---
+title: "Change Event Subscription State"
+---
+
+<APIPage method="PUT" path="/v1/zwatch/change/eventSubscription/{uuid}/state">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "changeEventSubscriptionState": {
+    "state": "Disabled"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the **systemTags** and **userTags** fields can be omitted. They are listed here to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" /
+-H "Authorization: OAuth YOUR_SESSION_UUID" /
+-X PUT -d '{"changeEventSubscriptionState":{"state":"Disabled"}}' http://localhost:8080/zstack/v1/zwatch/change/eventSubscription/2140655d1d183a6690c0eecdbc721ec0/state
+```
+
+Parameter List
+
+<table id="table_zbn_lsb_3cb"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+The UUID of the resource. Uniquely identifies the resource.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+state
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **changeEventSubscriptionState** structure\)
+
+</td><td>
+
+Event alarm state.
+
+</td><td>
+
+-   Enabled
+-   Disabled
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On failure, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+ChangeEventSubscriptionStateAction action = new ChangeEventSubscriptionStateAction();
+action.uuid = "2140655d1d183a6690c0eecdbc721ec0";
+action.state = "Disabled";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ChangeEventSubscriptionStateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ChangeEventSubscriptionStateAction action = ChangeEventSubscriptionStateAction()
+action.uuid = "2140655d1d183a6690c0eecdbc721ec0"
+action.state = "Disabled"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ChangeEventSubscriptionStateAction.Result res = action.call()
+```
+
+</APIPage>

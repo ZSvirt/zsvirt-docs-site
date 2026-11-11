@@ -1,0 +1,16 @@
+---
+title: "Creating a Distributed Port Group failed with a CIDR conflict error. How do I resolve this?"
+---
+
+## Symptom
+Creating a Distributed Port Group failed with an error indicating a conflict with an existing network CIDR.
+
+## Cause
+A Distributed Port Group using this CIDR already exists on the Distributed Switch. Distributed Port Groups on the same Distributed Switch cannot have overlapping CIDRs.
+
+## Solution
+1.  Plan IP addresses carefully to avoid CIDR conflicts.
+
+    <Callout type="info">
+    You cannot create two Distributed Port Groups with the same CIDR on the same Distributed Switch.
+    </Callout>

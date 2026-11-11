@@ -1,0 +1,26 @@
+---
+title: "概述"
+---
+
+添加本地备份存储，用于存放本地虚拟机或平台数据库的定时备份数据。支持本地备份存储主备无缝切换，有效保障业务连续性。
+
+当发生本地数据误删或数据损坏等情况，可将本地备份存储中的备份数据还原至本地。
+
+当本地数据中心发生灾难时，完全可以依赖本地备份存储重建数据中心并恢复业务。
+
+您可以选择以下任意一种方式来添加本地备份存储：
+
+-   复用现有镜像存储资源来存储备份数据。有关更多信息，请参阅 [复用镜像存储](/docs/user-guide/backup/backup-storage/local/reuse-image-storage)。
+-   复用现有主机资源，利用主机空闲容量存储备份数据。有关更多信息，请参阅 [复用主机](/docs/user-guide/backup/backup-storage/local/reuse-host)。
+-   添加专用备份节点，利用节点空闲硬盘或本地目录存储备份数据。有关更多信息，请参阅 [专用备份存储](/docs/user-guide/backup/backup-storage/local/dedicated-backup-storage)。
+
+您可以根据实际业务需要灵活配置本地备份存储数量。
+
+-   **[复用镜像存储](/docs/user-guide/backup/backup-storage/local/reuse-image-storage)**  
+    复用现有镜像存储资源来存储本地备份数据。
+
+-   **[复用主机](/docs/user-guide/backup/backup-storage/local/reuse-host)**  
+    复用现有主机资源，利用主机空闲容量存储本地备份数据。
+
+-   **[专用备份存储](/docs/user-guide/backup/backup-storage/local/dedicated-backup-storage)**  
+    添加专用备份节点，利用节点空闲硬盘或本地目录存储备份数据。

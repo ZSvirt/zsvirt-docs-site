@@ -1,0 +1,19 @@
+---
+title: "Known Limitations"
+description: "Provider capabilities that differ from the ZSvirt UI."
+---
+
+## Compared to ZSvirt UI
+
+### From image creation
+
+- **Disk QoS**: IOPS and bandwidth limits are not yet supported
+- **Disk provisioning strategy**: Thin/thick provisioning is not yet supported
+- **Cache mode**: Disk cache mode configuration is not yet supported
+- **AIO mode**: Asynchronous I/O mode configuration is not yet supported
+
+### From template creation
+
+- **Batch creation**: Not supported (Terraform is declarative, not procedural)
+- **Disk create types**: Only `new` type is supported in `disk_aos` (the UI supports `new`, `image`, `created`, and `rdm`)
+- **Advanced network configuration**: MAC address, SR-IOV, bandwidth limits, and security groups are not yet supported

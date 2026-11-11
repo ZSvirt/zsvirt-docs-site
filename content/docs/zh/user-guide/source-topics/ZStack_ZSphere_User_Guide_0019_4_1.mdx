@@ -1,0 +1,55 @@
+---
+title: "模板语法规则"
+---
+
+裸金属模板包含基础的系统变量和自定义变量，满足从简单到复杂的无人值守部署场景。
+
+系统预配置模板仅包含系统变量。自定义模板除了包含基础的系统变量，您还可按需自定义变量。
+
+系统变量示例（要求全大写，连接符使用下划线）：
+
+```
+REPO_URL  
+# 使用所选ISO镜像创建的安装源地址
+# 可注释，并手动指定`--url`指向其它源
+
+USERNAME  
+# 系统用户名
+# 操作系统为RHEL/CentOS系列、或SUSE/openSUSE系列，系统默认用户名为root，仅需指定密码
+# 操作系统为Debian/Ubuntu系列，需自定义用户名和密码
+
+PASSWORD  
+# 与系统用户名相应的密码
+
+NETWORK_CFGS 
+# 用户在UI上输入的网卡UUID和网络UUID
+# 执行分配算法（或用户指定IP）后替换
+
+FORCE_INSTALL  
+# 部署过程中是否自动覆盖磁盘原始数据
+
+PRE_SCRIPTS  
+# 部署前执行脚本
+
+POST_SCRIPTS  
+# 部署后执行脚本
+```
+
+自定义变量示例（要求全小写，连接符使用下划线）：
+
+```
+hostname  
+# 主机名
+
+keyboard  
+# 键盘
+
+timezone  
+# 时区
+```
+
+不同类型的模板需遵循不同的语法规则：
+
+-   对于 kickstart 类型模板：参考 Red Hat 官方文档。
+-   对于 preseed 或 autoinstall 类型模板：参考 Ubuntu 官方文档。
+-   对于 autoyast 类型模板：参考 SUSE 官方文档。

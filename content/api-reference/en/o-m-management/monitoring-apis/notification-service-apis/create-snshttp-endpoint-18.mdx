@@ -1,0 +1,94 @@
+---
+title: "Create an HTTP Endpoint"
+---
+
+<APIPage method="POST" path="/v1/sns/application-endpoints/http">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "url": "http://127.0.0.1:6666/test-url",
+    "username": "username",
+    "password": "password",
+    "name": "http"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, the **systemTags** and **userTags** fields are optional. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"url":"http://127.0.0.1:6666/test-url","username":"username","password":"password","name":"http"}}' \
+http://localhost:8080/zstack/v1/sns/application-endpoints/http
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|url|String|body \(contained in the **params** structure\)|HTTP URL| |5.0.0|
+|username \(optional\)|String|body \(contained in the **params** structure\)|Username| |5.0.0|
+|password \(optional\)|String|body \(contained in the **params** structure\)|Password| |5.0.0|
+|name|String|body \(contained in the **params** structure\)|Resource name| |5.0.0|
+|description \(optional\)|String|body \(contained in the **params** structure\)|Detailed description of the resource| |5.0.0|
+|resourceUuid \(optional\)|String|body \(contained in the **params** structure\)| | |5.0.0|
+|systemTags \(optional\)|List|body|System tags| |5.0.0|
+|userTags \(optional\)|List|body|User tags| |5.0.0|
+|platformUuid \(optional\)|String|body \(contained in the **params** structure\)| | |5.0.0|
+|tagUuids \(optional\)|List|body \(contained in the **params** structure\)|Tag UUID list| |5.0.0|
+
+## API Response
+Response Example
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+CreateSNSHttpEndpointAction action = new CreateSNSHttpEndpointAction();
+action.url = "http://127.0.0.1:6666/test-url";
+action.username = "username";
+action.password = "password";
+action.name = "http";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateSNSHttpEndpointAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateSNSHttpEndpointAction action = CreateSNSHttpEndpointAction()
+action.url = "http://127.0.0.1:6666/test-url"
+action.username = "username"
+action.password = "password"
+action.name = "http"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateSNSHttpEndpointAction.Result res = action.call()
+```
+
+</APIPage>

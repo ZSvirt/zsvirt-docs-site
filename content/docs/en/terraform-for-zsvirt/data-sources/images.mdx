@@ -1,0 +1,73 @@
+---
+title: 'zsphere_images'
+description: 'Fetches a list of images and their associated attributes from the ZSvirt environment.'
+---
+
+<HistoricalNamingNote locale="en" />
+
+# zsphere_images (Data Source)
+
+Fetches a list of images and their associated attributes from the ZSvirt environment.
+
+## Example Usage
+
+```terraform
+data "zsphere_images" "test" {
+}
+
+output "zstack_secs" {
+  value = data.zsphere_images.test
+}
+
+# example output:
+# zstack_secs = {
+#   "filter" = tolist([])
+#   "images" = tolist([
+#     {
+#       "architecture" = "x86_64"
+#       "format" = "qcow2"
+#       "name" = "Image-1"
+#       "platform" = ""
+#       "state" = "Enabled"
+#       "status" = "Ready"
+#       "uuid" = "8c00337d47e94acab448e88afdc5c872"
+#     },
+#   ])
+#   "name" = tostring(null)
+#   "name_pattern" = tostring(null)
+# }
+```
+
+## Schema
+
+### Optional
+
+- `filter` (Block List) Filter resources based on any field in the schema. For example, to filter by status, use `name = "status"` and `values = ["Ready"]`. (see [below for nested schema](#nestedblock--filter))
+- `name` (String) Exact name for searching images
+- `name_pattern` (String) Pattern for fuzzy name search, similar to MySQL LIKE. Use % for multiple characters and _ for exactly one character.
+
+### Read-Only
+
+- `images` (Attributes List) List of Images (see [below for nested schema](#nestedatt--images))
+
+<a id="nestedblock--filter"></a>
+### Nested Schema for `filter`
+
+Required:
+
+- `name` (String) Name of the field to filter by (e.g., status, state).
+- `values` (Set of String) Values to filter by. Multiple values will be treated as an OR condition.
+
+
+<a id="nestedatt--images"></a>
+### Nested Schema for `images`
+
+Read-Only:
+
+- `architecture` (String) CPU architecture of the image, such as x86_64, aarch64, mips64, or longarch64
+- `format` (String) Format of the image, such as qcow2, iso, vmdk, or raw
+- `name` (String) Name of the image
+- `platform` (String) Platform of the image, such as Linux, Windows, or Other
+- `state` (String) State of the image, indicating if it is Enabled or Disabled
+- `status` (String) Readiness status of the image (e.g., Ready or Not Ready)
+- `uuid` (String) UUID identifier of the image

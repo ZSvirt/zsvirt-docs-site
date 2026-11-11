@@ -1,0 +1,59 @@
+---
+title: 'VM Resource Contention'
+---
+
+ZSvirt provides the following three configurations to enhance a virtual machine's resource contention capability:
+
+-   [CPU NUMA Binding Configuration](#section_dvc_s4q_zyb)
+-   [EmulatorPin Configuration](#section_yxt_fpq_zyb)
+-   [Configure CPU and Memory Resource Priorities](#section_ohk_cpq_zyb)
+
+## CPU NUMA Binding Configuration
+CPU NUMA binding configuration: CPU pinning assigns the virtual CPUs (vCPUs) of a virtual machine to specific physical CPUs (pCPUs) of the host, which improves VM performance.
+
+If you encounter either of the following two business scenarios, consider using the CPU binding feature to enhance VM performance:
+
+-   CPU-intensive small application scenario:
+
+    CPU-intensive applications have a high demand for CPU resources. If numerous such applications run on VMs, it can lead to competition for CPU resources. CPU binding ensures each application runs on specific physical CPUs, thus avoiding resource contention and improving system performance.
+
+-   Uneven pressure on multi-core CPU scenario:
+
+    For cases where multiple applications concentrate on one or a few CPUs, you can manually adjust the load on each CPU through CPU binding, with changes taking effect immediately.
+
+To configure CPU binding, follow these steps:
+
+1.  On the target VM page, click **Shut Down** to power off the VM.
+2.  Click **Modify Configuration**, then select **Hardware Information** &gt; **CPU** &gt; **CPU NUMA Binding**, choose between automatic intelligent binding or manual binding as needed:
+
+    -   **Automatic Intelligent Binding**: Binds the VM's vCPUs to pCPUs within pNUMA nodes in descending order of pNUMA node ID. When all pCPUs in a pNUMA node are bound by the VM's vCPUs, it will proceed to bind vCPUs to pCPUs in the next pNUMA node. If all pCPUs are bound but there are still unbound vCPUs, it will cycle back to the first bound pNUMA node to continue binding.
+    -   **Manual Binding**: Manually bind vCPUs to pCPUs according to the host's pNUMA topology, ensuring all vCPUs are bound.
+        -   A single vCPU can be bound to one or more pCPUs, and a single pCPU can be bound by one or more vCPUs, provided that all pCPUs bound to a single vCPU reside within the same pNUMA node.
+        -   Displays the average usage rate of each pCPU over the past 15 minutes to assist in selecting the optimal pCPU for binding.
+    <Callout type="info">
+    -   If you have set up CPU overcommitment, the number of vCPUs may exceed the number of pCPUs. In this case, it is recommended not to have more vCPUs than bound pCPUs, as this could significantly impact VM performance.
+    -   After binding the CPU NUMA, if you change the number of virtual machine CPU cores, the CPU NUMA binding will be automatically canceled.
+    </Callout>
+3.  After clicking **OK**, the CPU NUMA binding will be completed. You can then click **Power On** to restart the VM.
+
+## EmulatorPin Configuration
+EmulatorPin configuration: EmulatorPin assigns all other threads than virtual CPU (vCPU) threads and IO threads of a virtual machine to physical CPUs (pCPUs) of the host so that these threads run on assigned pCPUs.
+
+If you encounter the following business scenario, consider using EmulatorPin:
+
+-   Parallel multi-business scenario:
+
+    In a scenario where multiple VMs run on a single host with different services on each VM, this can lead to varying degrees of resource consumption. EmulatorPin achieves isolation of primary service processes across different VMs by binding the QEMU main thread of each VM to specific pCPUs, ensuring relatively stable system performance.
+
+To configure EmulatorPin binding, follow these steps:
+
+1.  On the target VM page, click **Actions** &gt; **Advanced Settings** &gt; **Modify Other Options**, and select **EmulatorPin**: bind the threads other than vCPU and IO threads in the VM to the host's pCPUs according to the host's pNUMA structure.
+2.  After clicking **OK**, the EmulatorPin binding will be completed.
+
+## Configure CPU and Memory Resource Priorities
+If Virtual Machine A shares the CPU and memory resources of Host A with other virtual machines, and its business importance and priority are higher than those of other virtual machines. In scenarios where resources are tight, such as when the host's load rate is too high, these virtual machines may compete for host resources. In this case, you can set the CPU resource priority and memory resource priority of Virtual Machine A to **High**, while others remain at **Normal**, to enhance Virtual Machine A's capability to acquire resources.
+
+To configure resource priority, follow these steps:
+
+1.  In the target virtual machine page, click **Modify Configuration**, then choose **Hardware Information** &gt; **CPU** &gt; **CPU Resource Priority**.
+2.  Click **OK** to complete configuration.

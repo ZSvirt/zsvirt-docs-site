@@ -1,0 +1,241 @@
+---
+title: "Get ISO Attachable VM List"
+---
+
+<APIPage method="GET" path="/v1/images/iso/{isoUuid}/vm-candidates">
+
+Get the list of Virtual Machines to which an ISO can be attached.
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/images/iso/282f9e4e21a43ebd82296f5f9a31e6a0/vm-candidates
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|isoUuid|String|url|ISO UUID| |0.6|
+|systemTags \(optional\)|List|query|System Tags| |0.6|
+|userTags \(optional\)|List|query|User Tags| |0.6|
+
+## API Response
+Return Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "f95bdc72e9963a05b8f19b8817f09d9d",
+      "name": "Test-VM",
+      "description": "web server VM",
+      "zoneUuid": "389fb59c478b3a9fbe08e0cb0cbb4e4f",
+      "clusterUuid": "f1c45e63860e3e17b068db42533f008b",
+      "imageUuid": "5ccbd867873f36318f72cd32c74ee540",
+      "hostUuid": "73ebd6bff3aa3745a0dffd978edaf561",
+      "lastHostUuid": "1e1c43855d9c3998bf9d1c237a36dcaa",
+      "instanceOfferingUuid": "6ef7a28c90b93a5ebe659644e6a956fc",
+      "rootVolumeUuid": "5a5ebf77b9d23ecb9034e6d64a9c3d51",
+      "platform": "Linux",
+      "defaultL3NetworkUuid": "d9a2bfe33f6831098b35adb8022c3d3c",
+      "type": "UserVm",
+      "hypervisorType": "KVM",
+      "memorySize": 8589934592,
+      "cpuNum": 1,
+      "allocatorStrategy": "LastHostPreferredAllocatorStrategy",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM",
+      "state": "Stopped",
+      "vmNics": [
+        {
+          "uuid": "cfdc9377501d3ed180572e8093aff0e0",
+          "vmInstanceUuid": "f95bdc72e9963a05b8f19b8817f09d9d",
+          "usedIpUuid": "a8a2f1fd54f83c41bab8d7c169776dd9",
+          "l3NetworkUuid": "d9a2bfe33f6831098b35adb8022c3d3c",
+          "ip": "192.168.1.10",
+          "mac": "00:0c:29:bd:99:fc",
+          "hypervisorType": "KVM",
+          "netmask": "255.255.255.0",
+          "gateway": "192.168.1.1",
+          "deviceId": 0,
+          "state": "enable",
+          "createDate": "Nov 14, 2017 10:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+        }
+      ],
+      "allVolumes": [
+        {
+          "uuid": "5a5ebf77b9d23ecb9034e6d64a9c3d51",
+          "name": "Root-Volume-For-VM-f95bdc72e9963a05b8f19b8817f09d9d",
+          "primaryStorageUuid": "092c642a80cf3f11886a57c50fc54fec",
+          "vmInstanceUuid": "f95bdc72e9963a05b8f19b8817f09d9d",
+          "diskOfferingUuid": "8f0377c24026357693b8ba14fa368d08",
+          "rootImageUuid": "5ccbd867873f36318f72cd32c74ee540",
+          "installPath": "/zstack_ps/rootVolumes/acct-36c27e8ff05c4780bf6d2fa65700f22e/vol-5a5ebf77b9d23ecb9034e6d64a9c3d51/5a5ebf77b9d23ecb9034e6d64a9c3d51.qcow2",
+          "type": "Root",
+          "format": "qcow2",
+          "size": 107374182400,
+          "actualSize": 21474836480,
+          "deviceId": 0,
+          "state": "Enabled",
+          "status": "Ready",
+          "createDate": "Nov 14, 2017 10:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+        }
+      ]
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, indicates operation failure. This field is null when the operation succeeds. See [error](#p_dgg_1zb_k1b)|0.6|
+|inventories|List|See [inventories](#p_r1m_1zb_k1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause, the source error that triggered the current error. If there is no original error, this field is null|0.6|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|name|String|Resource name|0.6|
+|description|String|Resource description|0.6|
+|zoneUuid|String|Data Center UUID|0.6|
+|clusterUuid|String|Cluster UUID|0.6|
+|imageUuid|String|Image UUID|0.6|
+|hostUuid|String|Host UUID|0.6|
+|lastHostUuid|String| |0.6|
+|instanceOfferingUuid|String|Instance Offering UUID|0.6|
+|rootVolumeUuid|String|Root Volume UUID|0.6|
+|platform|String| |0.6|
+|architecture|String| |0.6|
+|defaultL3NetworkUuid|String| |0.6|
+|type|String| |0.6|
+|hypervisorType|String| |0.6|
+|memorySize|Long| |0.6|
+|cpuNum|Integer| |0.6|
+|cpuSpeed|Long| |0.6|
+|allocatorStrategy|String| |0.6|
+|createDate|Timestamp|Creation Time|0.6|
+|lastOpDate|Timestamp|Last Operation Date|0.6|
+|state|String| |0.6|
+|guestOsType|String| |4.1.2|
+|vmNics|List|See [vmNics](#p_o1t_1zb_k1b)|0.6|
+|allVolumes|List|See [allVolumes](#p_i1y_1zb_k1b)|0.6|
+|vmCdRoms|List|See [vmCdRoms](#p_uxn_jjf_y1c)|0.6|
+
+### vmNics
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|vmInstanceUuid|String|Virtual Machine UUID|0.6|
+|l3NetworkUuid|String|Distributed Port Group UUID|0.6|
+|ip|String| |0.6|
+|mac|String| |0.6|
+|hypervisorType|String| |4.7.13|
+|netmask|String| |0.6|
+|gateway|String| |0.6|
+|metaData|String| |0.6|
+|ipVersion|Integer|IP Protocol Number|3.1.0|
+|driverType|String| |4.7.13|
+|internalName|String| |4.7.13|
+|deviceId|Integer| |0.6|
+|type|String| |4.7.13|
+|state|String|NIC Status|4.7.13|
+|createDate|Timestamp|Creation Time|0.6|
+|lastOpDate|Timestamp|Last Operation Date|0.6|
+|usedIps|List|See [usedIps](#p_qdd_3bc_pfb)|0.6|
+
+### usedIps
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|ipRangeUuid|String|IP Range UUID|0.6|
+|l3NetworkUuid|String|Distributed Port Group UUID|0.6|
+|ipVersion|Integer|IP Protocol Number|3.1.0|
+|ip|String|IP Address|0.6|
+|netmask|String|Netmask|0.6|
+|gateway|String|Gateway Address|0.6|
+|usedFor|String| |0.6|
+|ipInLong|long| |0.6|
+|vmNicUuid|String|VM NIC UUID|3.1.0|
+|createDate|Timestamp|Creation Time|0.6|
+|lastOpDate|Timestamp|Last Operation Date|0.6|
+
+### allVolumes
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|name|String|Resource name|0.6|
+|description|String|Resource description|0.6|
+|primaryStorageUuid|String|Data Storage UUID|0.6|
+|vmInstanceUuid|String|Virtual Machine UUID|0.6|
+|diskOfferingUuid|String|Disk Offering UUID|0.6|
+|rootImageUuid|String| |0.6|
+|installPath|String| |0.6|
+|type|String| |0.6|
+|format|String| |0.6|
+|size|Long| |0.6|
+|actualSize|Long| |0.6|
+|deviceId|Integer| |0.6|
+|state|String| |0.6|
+|status|String| |0.6|
+|createDate|Timestamp|Creation Time|0.6|
+|lastOpDate|Timestamp|Last Operation Date|0.6|
+|isShareable|Boolean| |0.6|
+|volumeQos|String| |4.7.13|
+|lastDetachDate|Timestamp| |4.7.13|
+|lastVmInstanceUuid|String| |4.7.13|
+
+### vmCdRoms
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|4.7.13|
+|vmInstanceUuid|String|Virtual Machine UUID|4.7.13|
+|deviceId|Integer| |4.7.13|
+|isoUuid|String| |4.7.13|
+|isoInstallPath|String| |4.7.13|
+|name|String|Resource name|4.7.13|
+|description|String|Resource description|4.7.13|
+|createDate|Timestamp|Creation Time|4.7.13|
+|lastOpDate|Timestamp|Last Operation Date|4.7.13|
+
+## SDK Examples
+Java SDK
+
+```
+GetCandidateVmForAttachingIsoAction action = new GetCandidateVmForAttachingIsoAction();
+action.isoUuid = "c7824c614de74f908bc7d82e6f16ebe7";
+action.sessionId = "24b72cf532ce4e87be824b510dfe8289";
+GetCandidateVmForAttachingIsoAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = GetCandidateVmForAttachingIsoAction()
+action.isoUuid = "282f9e4e21a43ebd82296f5f9a31e6a0"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

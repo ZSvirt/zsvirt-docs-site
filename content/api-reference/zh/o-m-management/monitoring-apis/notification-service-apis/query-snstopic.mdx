@@ -1,0 +1,94 @@
+---
+title: "查询SNS主题"
+---
+
+<APIPage method="GET" path="/v1/sns/topics" altPaths={["/v1/sns/topics/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/sns/topics?q=name=api
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/sns/topics/b47d348c8c4a3559af1b09f31f7c26eb
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QuerySNSTopic`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "8a1b79536c3341559d4538c96f87381e",
+      "name": "new name",
+      "state": "Enabled",
+      "locale": "zh_CN",
+      "createDate": "Mar 26, 2024 2:45:29 AM",
+      "lastOpDate": "Mar 26, 2024 2:45:29 AM"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |5.0.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_s12_cjx_bdb)|2.3|
+|inventories|List|详情参考[inventories](#p_by1_1kx_bdb)|2.3|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|2.3|
+|name|String|资源名称|2.3|
+|description|String|资源的详细描述|2.3|
+|state|String|状态|2.3|
+|createDate|Timestamp|创建时间|2.3|
+|lastOpDate|Timestamp|最后一次修改时间|2.3|
+
+## SDK示例
+Java SDK
+
+```
+QuerySNSTopicAction action = new QuerySNSTopicAction();
+action.conditions = asList("name=api");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QuerySNSTopicAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QuerySNSTopicAction action = QuerySNSTopicAction()
+action.conditions = ["name=api"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QuerySNSTopicAction.Result res = action.call()
+```
+
+</APIPage>

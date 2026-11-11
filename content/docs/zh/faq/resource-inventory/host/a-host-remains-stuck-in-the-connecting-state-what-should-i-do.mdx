@@ -1,0 +1,95 @@
+---
+title: "主机一直处于连接中，怎么办？"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+主机一直处于连接中一般有以下五种原因，可根据原因分类，尝试参考解决方案进行排查解决：
+
+## 原因一
+双管理节点授权容量不一致，导致主机一直处于连接中。
+
+## 解决方案
+1.  登录双管理节点，执行以下命令清理授权：
+
+    ```
+    [root@localhost ~]# zstack-ctl clear_license
+    ```
+
+2.  通过虚拟IP登录虚拟化平台，点击许可证管理界面右上角的**上传许可证**，弹出上传许可证界面，将获得的新许可证由本地上传即可。
+
+## 原因二
+主机系统根磁盘写满。
+
+## 解决方案
+1.  登录主机，执行以下命令检查主机磁盘使用情况：
+
+    ```
+    # 检查根目录使用情况
+    [root@localhost ~]# du -sh
+    # 检查根目录详细使用情况
+    [root@localhost ~]# du -h / --max-depth=1
+    ```
+
+2.  适当删除`/var/log`目录下的日志文件。
+
+3.  适当清理`/var/lib/zstack/prometheus/data2`目录下的大文件。该目录为虚拟化平台监控数据。
+
+## 原因三
+主机底层修改过密码，未在UI界面同步更新密码。
+
+## 解决方案
+-   登录虚拟化平台，点击**资源清单** &gt; **主机与虚拟机**，进入主机界面。选中主机点击**操作** &gt; **更新SSH信息**。
+
+-   在数据存储中更新监控节点root密码。
+
+-   在镜像存储中更新本地镜像存储密码，若为ceph类型镜像存储，需更新监控节点root密码。
+
+## 原因四
+管理节点队列问题。
+
+## 解决方案
+1.  登录管理节点，依次执行以下命令，查看任务情况并判断有无卡队列现象，分析**management-server.log**日志，搜索DUMP关键字，查询当前的消息队列情况，检查**PENDING TASK NUMBER**中是否存在等待执行的任务。
+
+    ```
+    [root@localhost ~]# zstack-cli
+    admin >>>LogInByAccount accountName=admin password=$password
+    # 打开debug模式
+    admin >>>DebugSignal signals=DumpTaskQueue
+    admin >>>exit
+    ```
+
+2.  执行以下命令，重启管理节点服务：
+
+    ```
+    # 判断管理节点模式，有输入为双管理节点
+    [root@localhost ~]# zsha2 status
+    # 单管理节点
+    [root@localhost ~]# zstack-ctl stop_node;zstack start_node
+    # 双管理节点
+    [root@localhost ~]# zsha2 stop-node;zsha2 start-node
+    ```
+
+## 原因五
+主机重连，出现`Too many open files`报错。可能是由于主机打开的文件数过多。
+
+## 解决方案
+1.  在主机系统内修改`/etc/security/limits.conf`配置文件，执行以下命令添加如下内容：
+
+    ```
+    [root@localhost ~]# vim /etc/security/limits.conf
+    * soft nofile 262144
+    * hard nofile 262144
+    * soft nproc 10240
+    * hard nproc 10240
+    ```
+
+2.  执行`ulimit -n 262144`命令，使其临时生效。依次执行以下命令：
+
+    ```
+    [root@localhost ~]# kill -HUP `pgrep collectdmon`
+    [root@localhost ~]# service virtlogd restart
+    [root@localhost ~]# service libvirtd restart
+    [root@localhost ~]# service zstack-kvmagent restart
+    
+    ```

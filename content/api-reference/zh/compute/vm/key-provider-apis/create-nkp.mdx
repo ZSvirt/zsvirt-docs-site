@@ -1,0 +1,311 @@
+---
+title: "创建原生密钥提供程序"
+---
+
+<APIPage method="POST" path="/v1/key-providers/nkp">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "kdf": "HKDF-SHA256",
+    "saltPolicy": "providerName",
+    "name": "kp-nkp",
+    "description": "example"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"kdf":"HKDF-SHA256","saltPolicy":"providerName","name":"kp-nkp","description":"example"}}' \
+http://localhost:8080/zstack/v1/key-providers/nkp
+```
+
+参数列表
+
+<table id="table_dxx_xr2_2jc"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+kdf \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+密钥派生函数
+
+</td><td>
+
+-   HKDF-SHA256
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+saltPolicy \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+加盐策略
+
+</td><td>
+
+-   providerName
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+name
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+资源名称
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+description \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+资源的详细描述
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+type \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+密钥提供程序类型
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+resourceUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+资源UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+tagUuids \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+标签UUID列表
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr></tbody>
+</table>
+
+## SDK示例
+Java SDK
+
+```
+CreateNkpAction action = new CreateNkpAction();
+action.kdf = "HKDF-SHA256";
+action.saltPolicy = "providerName";
+action.name = "kp-nkp";
+action.description = "example";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateNkpAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = CreateNkpAction()
+action.kdf = "HKDF-SHA256"
+action.saltPolicy = "providerName"
+action.name = "kp-nkp"
+action.description = "example"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

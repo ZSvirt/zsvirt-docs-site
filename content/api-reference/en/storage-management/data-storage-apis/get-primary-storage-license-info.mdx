@@ -1,0 +1,77 @@
+---
+title: "Get Data Storage License Information"
+---
+
+<APIPage method="GET" path="/v1/primary-storage/{uuid}/license">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/primary-storage/9b624d6e4ca53a4aa10bfc341281d0ef/license
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Data Storage UUID| |3.6.0|
+|systemTags \(Optional\)|List|query| | |3.6.0|
+|userTags \(Optional\)|List|query| | |3.6.0|
+
+## API Response
+Response Example
+
+```
+{
+  "uuid": "28d49729434c388b987efbb84b5b0ee6",
+  "name": "Ceph",
+  "expireTime": ""
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String| |3.6.0|
+|name|String| |3.6.0|
+|expireTime|String| |3.6.0|
+|success|boolean| |3.6.0|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation succeeds, this field is null. See [error](#p_gxy_yw4_v3b)|3.6.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|3.6.0|
+|description|String|Brief description of the error|3.6.0|
+|details|String|Detailed error information|3.6.0|
+|elaboration|String|Reserved field, defaults to null|3.6.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|3.6.0|
+|cause|ErrorCode|Root cause, the source error that caused the current error. If there is no original error, this field is null|3.6.0|
+
+## SDK Examples
+Java SDK
+
+```
+GetPrimaryStorageLicenseInfoAction action = new GetPrimaryStorageLicenseInfoAction();
+action.uuid = "9b624d6e4ca53a4aa10bfc341281d0ef";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetPrimaryStorageLicenseInfoAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetPrimaryStorageLicenseInfoAction action = GetPrimaryStorageLicenseInfoAction()
+action.uuid = "9b624d6e4ca53a4aa10bfc341281d0ef"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetPrimaryStorageLicenseInfoAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,11 @@
+{
+  "title": "报警服务",
+  "pages": [
+    "overview",
+    "notification-targets",
+    "message-templates",
+    "alarm-rules",
+    "alarm-messages"
+  ],
+  "pagesIndex": "overview"
+}

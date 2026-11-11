@@ -1,0 +1,30 @@
+---
+title: 'Overview'
+---
+
+Tags serve as markers for resources. You can assign different tag definitions based on various business needs and purposes. By customizing and attaching tags to resources, you can quickly filter out the required resources and improve search efficiency.
+
+## User Permissions
+Tags are divided into admin tags and user tags, and you can determine their type by the **owner**.
+
+-   **Admin Tags**: Created by the admin and owned by the admin.
+-   **User Tags**: Created by regular users and owned by regular users.
+
+<Callout type="info">
+Changing the owner of a tag is not supported.
+</Callout>
+
+Admin can detach or delete tags created by regular users. When the ownership of a resource changes, all user tags on it will automatically be detached, while admin tags remain unaffected.
+
+## Resources That Support Tagging
+|Resource|Supports Tagging|Supports Tagging at Creation|
+|--------|----------------|----------------------------|
+|Host|Yes|Yes|
+|Virtual Machine|Yes|Yes|
+|Bare Metal Instance|Yes|No|
+
+## Tag Limitations
+-   Tags must be unique. Users with the same role can create only one tag with the same name and color.
+-   Tag names must not exceed 20 characters in length.
+-   You can attach admin tags to hosts, virtual machines, and bare metal instances.
+-   You can attach user tags to virtual machines.

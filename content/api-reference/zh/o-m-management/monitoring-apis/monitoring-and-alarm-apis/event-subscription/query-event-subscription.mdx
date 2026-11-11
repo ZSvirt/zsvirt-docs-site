@@ -1,0 +1,139 @@
+---
+title: "查询事件订阅"
+---
+
+<APIPage method="GET" path="/v1/zwatch/events/subscriptions" altPaths={["/v1/zwatch/events/subscriptions/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zwatch/events/subscriptions?q=name=test
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zwatch/events/subscriptions/57618e9763ce3b7e990870c3a7ae8c53
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryEventSubscription`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "9404fe697a6b4d7dbac98065af20dc57",
+      "namespace": "ZStack/VM",
+      "eventName": "org.zstack.zwatch.datatype.EventFamily@80723ca",
+      "state": "Enabled",
+      "actions": [
+        {
+          "subscriptionUuid": "650cf6a269284671a42f93631c87dfec",
+          "actionType": "sns",
+          "actionUuid": "fe296dcbc31c4afa9f76494b1930c8cc"
+        }
+      ],
+      "labels": [
+        {
+          "uuid": "d29fe54ca47540a9b20b308429f21434",
+          "key": "DestinationHostUuid",
+          "operator": "Equal",
+          "value": "733509c8c5684c678ffe99f59d4aba21"
+        }
+      ],
+      "lastOpDate": "Jul 6, 2018 1:51:00 PM",
+      "createDate": "Jul 6, 2018 1:51:00 PM"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_xlp_1wk_p2b)|2.3.1|
+|inventories|List|详情参考[inventories](#p_tvd_cwk_p2b)|2.3.1|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|2.3.1|
+|description|String|错误的概要描述|2.3.1|
+|details|String|错误的详细信息|2.3.1|
+|elaboration|String|保留字段，默认为null|2.3.1|
+|opaque|LinkedHashMap|保留字段，默认为null|2.3.1|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|2.3.1|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|2.3.1|
+|name|String|资源名称|3.0.0|
+|namespace|String|名字空间|2.3.1|
+|eventName|String|事件名|2.3.1|
+|lastOpDate|Timestamp|最后一次修改时间|2.3.1|
+|createDate|Timestamp|创建时间|2.3.1|
+|state|EventSubscriptionState|详情参考[state](#p_esw_2wk_p2b)|2.3.1|
+|actions|List|详情参考[actions](#p_vk1_gwk_p2b)|2.3.1|
+|labels|List|详情参考[labels](#p_rk4_hwk_p2b)|2.3.1|
+
+### state
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|name|String|资源名称|2.3.1|
+|ordinal|int| |2.3.1|
+
+### actions
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|subscriptionUuid|String|事件订阅UUID|2.3.1|
+|actionType|String|动作类型|2.3.1|
+|actionUuid|String|动作UUID|2.3.1|
+
+### labels
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|2.3.1|
+|key|String|标签名|2.3.1|
+|value|String|标签值|2.3.1|
+|operator|Operator|详情参考[operator](#p_bmw_3wk_p2b)|2.3.1|
+
+### operator
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|op|String| |2.3.1|
+|name|String|资源名称|2.3.1|
+|ordinal|int| |2.3.1|
+
+## SDK示例
+Java SDK
+
+```
+QueryEventSubscriptionAction action = new QueryEventSubscriptionAction();
+action.conditions = asList("name=test");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryEventSubscriptionAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryEventSubscriptionAction action = QueryEventSubscriptionAction()
+action.conditions = ["name=test"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryEventSubscriptionAction.Result res = action.call()
+```
+
+</APIPage>

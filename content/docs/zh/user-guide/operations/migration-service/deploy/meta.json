@@ -1,0 +1,9 @@
+{
+  "title": "安装部署迁移服务",
+  "pages": [
+    "index",
+    "upload-package",
+    "install-service"
+  ],
+  "pagesIndex": "index"
+}

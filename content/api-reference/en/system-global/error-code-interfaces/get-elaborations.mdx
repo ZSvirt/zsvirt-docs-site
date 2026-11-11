@@ -1,0 +1,99 @@
+---
+title: "Get Elaborations"
+---
+
+<APIPage method="GET" path="/v1/errorcode/elaborations">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/errorcode/elaborations?category=BS&regex=certificate has expired or is not yet valid
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|category \(Optional\)|String|query|The category of the error code, pointing to a resource or service category, such as HOST| |3.3.0|
+|regex \(Optional\)|String|query|Error code keyword| |3.3.0|
+|code \(Optional\)|String|query|Error code, used together with category| |3.6.0|
+|systemTags \(Optional\)|List|query|System tags| |3.3.0|
+|userTags \(Optional\)|List|query|User tags| |3.3.0|
+
+## API Response
+Response example
+
+```
+{
+  "contents": [
+    {
+      "category": "HOST",
+      "code": "1003",
+      "regex": "host[uuid:%s, name:%s] is in status[%s], cannot perform required operation",
+      "message_cn": "主机正处于[停止]状态，不能进行该操作",
+      "message_en": "Host is in status[Stopped], cannot perform required operation",
+      "source": "zstack",
+      "method": "regex",
+      "distance": 0.0
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_zhf_xkk_w3b)|3.3.0|
+|contents|List|For details, see [contents](#p_cwz_wkk_w3b)|3.3.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, such as SYS.1000, HOST.1001.|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|The detailed error information|0.6|
+|elaboration|String|A reserved field. Default is null.|0.6|
+|opaque|LinkedHashMap|A reserved field. Default is null.|0.6|
+|cause|ErrorCode|The root error. The source error that caused the current error. This field is null if there is no root error.|0.6|
+
+### contents
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|category|String|The category to which the error code belongs|3.3.0|
+|code|String|The error code identifier|3.3.0|
+|regex|String|The error code matching keyword|3.3.0|
+|message\_cn|String|The error code message in Chinese|3.3.0|
+|message\_en|String|The error code message in English|3.3.0|
+|source|String|The error source|3.3.0|
+|method|String|The matching method: distance \(string comparison\) or regex \(regular expression\)|3.6.0|
+|distance|Double|If the distance matching method is used, this is the accuracy \(1 is the most accurate\)|3.6.0|
+
+## SDK Examples
+Java SDK
+
+```
+GetElaborationsAction action = new GetElaborationsAction();
+action.category = "BS";
+action.regex = "certificate has expired or is not yet valid";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetElaborationsAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetElaborationsAction action = GetElaborationsAction()
+action.category = "BS"
+action.regex = "certificate has expired or is not yet valid"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetElaborationsAction.Result res = action.call()
+```
+
+</APIPage>

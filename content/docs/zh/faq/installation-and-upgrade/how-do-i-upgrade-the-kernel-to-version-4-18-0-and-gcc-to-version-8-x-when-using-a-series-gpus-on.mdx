@@ -1,0 +1,62 @@
+---
+title: "虚拟化平台使用A系列显卡，需保证Kernel版本为4.18.0和GCC版本为8.x，如何升级Kernel和GCC版本？"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+## 解决方案
+1.  登录虚拟化平台，点击**可靠服务** &gt; **业务可靠** &gt; **高可用策略**，在高可用策略详情页中将高可用策略停用。分别登录两个管理节点的控制台，执行以下命令备份数据库和升级脚本：
+
+    ```
+    #备份主管理节点数据库
+    zstack-ctl dump_mysql --file-namezstack-db-backup-master-20230309
+    #备份备管理节点数据库
+    zstack-ctl dump_mysql --file-namezstack-db-backup-slave-20230309
+    cp /usr/local/bin/zstack-upgrade/root/zstack-upgrade-bk
+    
+    ```
+
+2.  执行以下命令升级kernel，在此场景下UUID为集群的UUID：
+
+    ```
+    [root@localhost~] zstack-cli
+    - >> LogInByAccount accountName=admin password=password
+    - >> UpdateGlobalConfig name="zstack.experimental.repo" value=true category=cluster
+    - >> UpdateClusterOS excludePackages=python2-crypto updatePackages=kernel uuid=28b4539b024341ac91af401e0aec46c5
+    ```
+
+3.  通过以下方式之一确认kernel是否升级成功：
+
+    -   执行`cat /boot/grub2/grubenv`命令，查看grubenv文件是否有以下参数，若有以下参数，则升级成功：
+
+        ```
+        saved_entry=Helix Linux(4.18.0-240.22.1.1.gd6dbaa7.el7.x86_64) 7 (Core)
+        ```
+
+    -   执行`cat /boot/grub2/grub.cfg`命令，查看grub.cfg文件是否有以下参数，若有以下参数，则升级成功：
+
+        ```
+        menuentry 'Helix Linux(4.18.0-240.22.1.1.gd6dbaa7.el7.x86_64) 7 (Core)'
+        ```
+
+4.  执行`vim /boot/grub2/grubenv`命令，添加以下内容到grubenv文件并重启主机：
+
+    ```
+    saved_entry=Helix Linux(4.18.0-240.22.1.1.gd6dbaa7.el7.x86_64) 7 (Core)
+    ```
+
+5.  执行`gcc -v cat /proc/version`命令查看GCC版本。
+
+6.  执行如下命令安装centos-release-scl：
+
+    ```
+    wget -O /etc/yum.repos.d/CentOS-Base.repo [https://mirrors.aliyun.com/repo/Centos-7.repo](https://mirrors.aliyun.com/repo/Centos-7.repo)
+    yum makecache fast
+    yum -y install centos-release-scl
+    ```
+
+7.  执行`sudo yum install devtoolset-8-gcc*`命令安装devtoolset。
+
+8.  执行`scl enable devtoolset-8 bash`命令切换GCC版本。
+
+9.  登录虚拟化平台，点击**可靠服务** &gt; **业务可靠** &gt; **高可用策略**，在高可用策略详情页中将高可用策略开启。

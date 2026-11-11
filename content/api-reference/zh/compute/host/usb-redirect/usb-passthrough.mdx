@@ -1,0 +1,198 @@
+---
+title: "设置虚拟机USB重定向开关"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "setVmUsbRedirect": {
+    "enable": true
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"setVmUsbRedirect":{"enable":true}}' \
+http://localhost:8080/zstack/v1/vm-instances/ceeca8ab8c6b33fab9bdc143dec13211/actions
+```
+
+参数列表
+
+<table id="table_swm_nrn_r1b"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+资源的UUID，唯一标示该资源
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.1
+
+</td></tr><tr><td>
+
+enable
+
+</td><td>
+
+boolean
+
+</td><td>
+
+body\(包含在**setVmUsbRedirect**结构中\)
+
+</td><td>
+
+设置为true代表开关开启，设置为false代表开关关闭
+
+</td><td>
+
+-   true
+-   false
+
+</td><td>
+
+2.1
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.1
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.1
+
+</td></tr></tbody>
+</table>
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+SetVmUsbRedirectAction action = new SetVmUsbRedirectAction();
+action.uuid = "ceeca8ab8c6b33fab9bdc143dec13211";
+action.enable = true;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+SetVmUsbRedirectAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SetVmUsbRedirectAction action = SetVmUsbRedirectAction()
+action.uuid = "ceeca8ab8c6b33fab9bdc143dec13211"
+action.enable = true
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+SetVmUsbRedirectAction.Result res = action.call()
+```
+
+</APIPage>

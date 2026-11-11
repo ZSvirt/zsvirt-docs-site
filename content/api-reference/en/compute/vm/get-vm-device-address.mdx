@@ -1,0 +1,85 @@
+---
+title: "Get VM Device Address"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/devices">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/devices?uuid=a761ac08ca483af4a81d9ed3d9930ef4&resourceTypes=VolumeVO
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|query|Virtual Machine UUID| |3.10.0|
+|resourceTypes|List|query|Resource type|VolumeVO|3.10.0|
+|systemTags \(Optional\)|List|query|System Tag| |3.10.0|
+|userTags \(Optional\)|List|query|User Tag| |3.10.0|
+
+## API Response
+Response Example
+
+```
+{
+  "addresses": {
+    "VolumeVO": [
+      {
+        "address": "0000:01:00:0",
+        "addressType": "pci",
+        "deviceType": "disk",
+        "resourceType": "VolumeVO"
+      }
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|addresses|Map|Device address details|3.10.0|
+|success|boolean| |3.10.0|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation succeeds, this field is null. For details, see [error](#p_pvc_gz1_mjb)|3.10.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier of the error, for example SYS.1000, HOST.1001|3.10.0|
+|description|String|Brief description of the error|3.10.0|
+|details|String|Detailed error information|3.10.0|
+|elaboration|String|Reserved field, defaults to null|3.10.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|3.10.0|
+|cause|ErrorCode|Root cause. The error that triggered the current error. If there is no original error, this field is null|3.10.0|
+
+## SDK Examples
+Java SDK
+
+```
+GetVmDeviceAddressAction action = new GetVmDeviceAddressAction();
+action.uuid = "a761ac08ca483af4a81d9ed3d9930ef4";
+action.resourceTypes = asList("VolumeVO");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetVmDeviceAddressAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetVmDeviceAddressAction action = GetVmDeviceAddressAction()
+action.uuid = "a761ac08ca483af4a81d9ed3d9930ef4"
+action.resourceTypes = [VolumeVO]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetVmDeviceAddressAction.Result res = action.call()
+```
+
+</APIPage>

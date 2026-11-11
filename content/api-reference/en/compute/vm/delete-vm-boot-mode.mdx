@@ -1,0 +1,64 @@
+---
+title: "Delete VM Boot Mode"
+---
+
+<APIPage method="DELETE" path="/v1/vm-instances/{uuid}/bootmode">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/vm-instances/fd62d4c5cdc6365889ac4cf477339c10/bootmode
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Resource UUID, uniquely identifies the resource| |4.2.0|
+|deleteMode \(Optional\)|String|body| | |4.2.0|
+|systemTags \(Optional\)|List|body| | |4.2.0|
+|userTags \(Optional\)|List|body| | |4.2.0|
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On error, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DeleteVmBootModeAction action = new DeleteVmBootModeAction();
+action.uuid = "fd62d4c5cdc6365889ac4cf477339c10";
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteVmBootModeAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteVmBootModeAction action = DeleteVmBootModeAction()
+action.uuid = "fd62d4c5cdc6365889ac4cf477339c10"
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DeleteVmBootModeAction.Result res = action.call()
+```
+
+</APIPage>

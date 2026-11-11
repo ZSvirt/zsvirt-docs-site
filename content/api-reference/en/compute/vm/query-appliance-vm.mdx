@@ -1,0 +1,229 @@
+---
+title: "Query Appliance VM"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/appliances" altPaths={["/v1/vm-instances/appliances/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/appliances?q=uuid=196ec86bc2b938269bbdb0b71ee243a3
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/appliances/dd3ac9d62495348c9847813f0eb03de8
+```
+
+Queryable Fields
+
+Run the CLI command tool, enter `QueryApplianceVm` and press Tab to view all queryable fields and resource names that can be queried across tables.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "9d5ba25ced2f3106b8f6c1d2cad6868b",
+      "name": "Test-VM",
+      "description": "Appliance VM",
+      "zoneUuid": "2b3ade89a8253561b530b6b26af48bd0",
+      "clusterUuid": "e61e93ca52513dbc86f6bed8de647cc8",
+      "imageUuid": "b9fd97aa16ee3ecf96e37088c6901d43",
+      "hostUuid": "8cc44e980a1b39e296e632685e498d0b",
+      "lastHostUuid": "9ab572c252443f0eb56853f7de7c8038",
+      "instanceOfferingUuid": "4deab96d493c37029730f462723433d8",
+      "rootVolumeUuid": "ca52bec1f50c34609a4c6d917b1b495a",
+      "platform": "Linux",
+      "defaultL3NetworkUuid": "3bf0235846c73b8c9064a471f7ee77bd",
+      "type": "UserVm",
+      "hypervisorType": "KVM",
+      "memorySize": 8589934592,
+      "cpuNum": 1,
+      "allocatorStrategy": "LastHostPreferredAllocatorStrategy",
+      "createDate": "Nov 14, 2017 2:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 2:20:57 PM",
+      "state": "Running",
+      "vmNics": [
+        {
+          "uuid": "9a0e8ddd64563bd09874fc9a1a963502",
+          "vmInstanceUuid": "9d5ba25ced2f3106b8f6c1d2cad6868b",
+          "usedIpUuid": "5148e4d9a8cb3108891e34b259f8497c",
+          "l3NetworkUuid": "3bf0235846c73b8c9064a471f7ee77bd",
+          "ip": "192.168.1.10",
+          "mac": "00:0c:29:bd:99:fc",
+          "hypervisorType": "KVM",
+          "netmask": "255.255.255.0",
+          "gateway": "192.168.1.1",
+          "deviceId": 0,
+          "createDate": "Nov 14, 2017 2:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+        }
+      ],
+      "allVolumes": [
+        {
+          "uuid": "ca52bec1f50c34609a4c6d917b1b495a",
+          "name": "Root-Volume-For-VM-9d5ba25ced2f3106b8f6c1d2cad6868b",
+          "primaryStorageUuid": "506ea93cc7fb30c58dc4762b88c0ae2d",
+          "vmInstanceUuid": "9d5ba25ced2f3106b8f6c1d2cad6868b",
+          "diskOfferingUuid": "8e86322e84aa3ed795c0a07db9c2ea42",
+          "rootImageUuid": "b9fd97aa16ee3ecf96e37088c6901d43",
+          "installPath": "/zstack_ps/rootVolumes/acct-36c27e8ff05c4780bf6d2fa65700f22e/vol-ca52bec1f50c34609a4c6d917b1b495a/ca52bec1f50c34609a4c6d917b1b495a.qcow2",
+          "type": "Root",
+          "format": "qcow2",
+          "size": 107374182400,
+          "actualSize": 21474836480,
+          "deviceId": 0,
+          "state": "Enabled",
+          "status": "Ready",
+          "createDate": "Nov 14, 2017 2:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+        }
+      ]
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation is successful, this field is null. For details, see [error](#p_xj2_1fm_lhc)|0.6|
+|inventories|List|For details, see [inventories](#p_ts1_1fm_lhc)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, default is null|0.6|
+|opaque|LinkedHashMap|Reserved field, default is null|0.6|
+|cause|ErrorCode|Root cause: the source error that triggered the current error. If there is no original error, this field is null|0.6|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|applianceVmType|String| |0.6|
+|managementNetworkUuid|String| |0.6|
+|defaultRouteL3NetworkUuid|String| |0.6|
+|status|String| |0.6|
+|agentPort|Integer| |0.6|
+|uuid|String|UUID of the resource, uniquely identifying the resource|0.6|
+|name|String|Resource name|0.6|
+|description|String|Detailed description of the resource|0.6|
+|zoneUuid|String|Data Center UUID|0.6|
+|clusterUuid|String|Cluster UUID|0.6|
+|imageUuid|String|Image UUID|0.6|
+|hostUuid|String|Host UUID|0.6|
+|lastHostUuid|String| |0.6|
+|instanceOfferingUuid|String|Instance Offering UUID|0.6|
+|rootVolumeUuid|String|Root Disk UUID|0.6|
+|platform|String| |0.6|
+|defaultL3NetworkUuid|String| |0.6|
+|type|String| |0.6|
+|hypervisorType|String| |0.6|
+|memorySize|Long| |0.6|
+|cpuNum|Integer| |0.6|
+|cpuSpeed|Long| |0.6|
+|allocatorStrategy|String| |0.6|
+|createDate|Timestamp|Create time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+|state|String| |0.6|
+|vmNics|List|For details, see [vmNics](#p_v4g_dfm_lhc)|0.6|
+|allVolumes|List|For details, see [allVolumes](#p_i2c_ml4_mhc)|0.6|
+
+### vmNics
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifying the resource|3.17.13|
+|vmInstanceUuid|String|Virtual Machine UUID|3.17.13|
+|l3NetworkUuid|String|Distributed Port Group UUID|3.17.13|
+|ip|String| |3.17.13|
+|mac|String| |3.17.13|
+|hypervisorType|String| |3.17.13|
+|netmask|String| |3.17.13|
+|gateway|String| |3.17.13|
+|metaData|String| |3.17.13|
+|ipVersion|Integer| |3.17.13|
+|driverType|String| |3.17.13|
+|internalName|String| |3.17.13|
+|deviceId|Integer| |3.17.13|
+|type|String| |3.17.13|
+|state|String|NIC state|3.17.13|
+|createDate|Timestamp|Create time|3.17.13|
+|lastOpDate|Timestamp|Last modification time|3.17.13|
+|usedIps|List|For details, see [usedIps](#p_iqy_ll4_mhc)|3.17.13|
+
+### usedIps
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifying the resource|4.10.0|
+|ipRangeUuid|String|IP Range UUID|4.10.0|
+|l3NetworkUuid|String|Distributed Port Group UUID|4.10.0|
+|ipVersion|Integer|IP protocol number|4.10.0|
+|ip|String|IP address|4.10.0|
+|netmask|String|Subnet mask|4.10.0|
+|gateway|String|Gateway address|4.10.0|
+|usedFor|String|Allocation reason|4.10.0|
+|ipInLong|long|Long stored IP address, only valid for ipv4|4.10.0|
+|vmNicUuid|String|Virtual Machine NIC UUID|4.10.0|
+|createDate|Timestamp|Create time|4.10.0|
+|lastOpDate|Timestamp|Last modification time|4.10.0|
+
+### allVolumes
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifying the resource|3.17.13|
+|name|String|Resource name|3.17.13|
+|description|String|Detailed description of the resource|3.17.13|
+|primaryStorageUuid|String|Data Storage UUID|3.17.13|
+|vmInstanceUuid|String|Virtual Machine UUID|3.17.13|
+|diskOfferingUuid|String|Disk Offering UUID|3.17.13|
+|rootImageUuid|String| |3.17.13|
+|installPath|String| |3.17.13|
+|type|String| |3.17.13|
+|format|String| |3.17.13|
+|size|Long| |3.17.13|
+|actualSize|Long| |3.17.13|
+|deviceId|Integer| |3.17.13|
+|state|String| |3.17.13|
+|status|String| |3.17.13|
+|createDate|Timestamp|Create time|3.17.13|
+|lastOpDate|Timestamp|Last modification time|3.17.13|
+|isShareable|Boolean| |3.17.13|
+|volumeQos|String| |3.17.13|
+|lastDetachDate|Timestamp| |3.17.13|
+|lastVmInstanceUuid|String| |3.17.13|
+
+## SDK Examples
+Java SDK
+
+```
+QueryApplianceVmAction action = new QueryApplianceVmAction();
+action.conditions = asList("uuid=c8d629196291364e95d3dd54f55578b7");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryApplianceVmAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = QueryApplianceVmAction()
+action.conditions = ["uuid=17dacda0557e3e3b8532e21194369fd9"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

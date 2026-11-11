@@ -1,0 +1,15 @@
+---
+title: "How do I troubleshoot a virtual machine on Local Storage that keeps restarting but fails to start?"
+---
+
+## Solution
+-   Try the following methods to troubleshoot the issue:
+-   If a virtual machine fails to start, the host may have insufficient CPU, memory, or network IP resources. Check the error messages to determine whether any of these resources are exhausted on the host.
+
+-   For Local Storage, also check the XFS file system fragmentation level. Use the following steps to check and repair it:
+
+    1.  Log in to the virtual machine and run `xfs_db -c frag -r /dev/XXX` to check the fragmentation level of each disk. If the output shows a result such as *actual 93133, ideal 8251, fragmentation factor 91.14%*, run `xfs_fsr /dev/XXX` to defragment the XFS file system.
+
+        XXX is the disk device name, such as vda1.
+
+    2.  If severe fragmentation causes a deadlock that hangs the virtual machine, restart the host to resolve the deadlock.

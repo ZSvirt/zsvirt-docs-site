@@ -1,0 +1,149 @@
+---
+title: "查询主机网卡信息"
+---
+
+<APIPage method="GET" path="/v1/hosts/nics">
+
+```
+GET zstack/v1/hosts/nics/{uuid}
+```
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/hosts/nics
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/hosts/nics/df5b59fdb3c9388297fd89c5fa6dea65
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryHostNetworkInterface`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "310ca8ce7010363ca7ac83d37373238f",
+      "hostUuid": "7f8d05522f01397e97f60d84f5ffa2b9",
+      "bondingUuid": "6fbe88605eed35ba95399687585be3d1",
+      "interfaceName": "eno1",
+      "interfaceType": "bondingSlave",
+      "speed": 1000.0,
+      "slaveActive": true,
+      "carrierActive": true,
+      "mac": "98:03:9b:00:ea:f1",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    },
+    {
+      "uuid": "3213802883d13c72b54c084233c4de2a",
+      "hostUuid": "7f8d05522f01397e97f60d84f5ffa2b9",
+      "bondingUuid": "6fbe88605eed35ba95399687585be3d1",
+      "interfaceName": "eno2",
+      "interfaceType": "bondingSlave",
+      "speed": 1000.0,
+      "slaveActive": false,
+      "carrierActive": false,
+      "mac": "98:03:9b:00:ea:f1",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    },
+    {
+      "uuid": "3015b6b0c74d316699ebe09dc60e1001",
+      "hostUuid": "7f8d05522f01397e97f60d84f5ffa2b9",
+      "interfaceName": "ens2f0",
+      "interfaceType": "noMaster",
+      "speed": 1000.0,
+      "slaveActive": true,
+      "carrierActive": true,
+      "ipAddresses": [
+        "169.254.0.115/24"
+      ],
+      "mac": "98:03:9b:00:ea:f2",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    },
+    {
+      "uuid": "e3b513e177a1313a93b32b290643f849",
+      "hostUuid": "7f8d05522f01397e97f60d84f5ffa2b9",
+      "interfaceName": "ens2f1",
+      "interfaceType": "bridgeSlave",
+      "speed": 1000.0,
+      "slaveActive": false,
+      "carrierActive": false,
+      "mac": "98:03:9b:00:ea:f3",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_z5m_lnk_mlb)|3.9.0|
+|inventories|List|详情参考[inventories](#p_n1w_knk_mlb)|3.9.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.9.0|
+|description|String|错误的概要描述|3.9.0|
+|details|String|错误的详细信息|3.9.0|
+|elaboration|String|保留字段，默认为null|3.9.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.9.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.9.0|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.9.0|
+|hostUuid|String|主机UUID|3.9.0|
+|bondingUuid|String|Bond UUID|3.9.0|
+|interfaceName|String|网卡名称|3.9.0|
+|interfaceType|String|网卡应用状态，有nomaster、bridgeSlave、bondSlave|3.9.0|
+|speed|Long|网卡速率|3.9.0|
+|slaveActive|Boolean|Bond链路状态|3.9.0|
+|carrierActive|Boolean|物理链路状态|3.9.0|
+|ipAddresses|List|IP地址|3.9.0|
+|mac|String|MAC地址|3.9.0|
+|pciDeviceAddress|String|网卡PCI地址|3.9.0|
+|createDate|Timestamp|创建时间|3.9.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.9.0|
+
+## SDK示例
+Java SDK
+
+```
+QueryHostNetworkInterfaceAction action = new QueryHostNetworkInterfaceAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryHostNetworkInterfaceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryHostNetworkInterfaceAction action = QueryHostNetworkInterfaceAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryHostNetworkInterfaceAction.Result res = action.call()
+```
+
+</APIPage>

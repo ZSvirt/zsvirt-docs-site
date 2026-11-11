@@ -1,0 +1,10 @@
+{
+  "title": "虚拟机规范篇",
+  "pages": [
+    "index",
+    "create-windows",
+    "create-linux",
+    "manage"
+  ],
+  "pagesIndex": "index"
+}

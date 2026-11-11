@@ -1,0 +1,16 @@
+---
+title: "如何手动切换Bond主备网卡？"
+---
+
+## 解决方案
+1.  执行以下命令，确认当前主网卡，查看主备网卡状态是否均为up：
+
+    ```
+    [root@localhost ~]# cat /proc/net/bonding/bond0  //bond0为环境bond名称
+    ```
+
+2.  执行以下命令切换主备网卡：
+
+    ```
+    [root@localhost ~]# ifenslave -c bond0 eth0  //bond0为环境bond名称，eth0为bond中备网卡名称
+    ```

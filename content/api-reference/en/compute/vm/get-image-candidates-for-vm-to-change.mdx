@@ -1,0 +1,126 @@
+---
+title: "Get Image Candidates For VM To Change"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/{vmInstanceUuid}/image-candidates">
+
+Get the list of candidate images for modifying the Virtual Machine root disk.
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/54f0aebe7a2536978aafb9eb7a95003e/image-candidates
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|vmInstanceUuid \(Optional\)|String|url|Virtual Machine UUID| |2.2|
+|systemTags \(Optional\)|List|query|System Tag| |2.2|
+|userTags \(Optional\)|List|query|User Tag| |2.2|
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "2354990ad5ee343eba48bb07851a1423",
+      "name": "TinyLinux",
+      "url": "http://192.168.1.20/share/images/tinylinux.qcow2",
+      "mediaType": "RootVolumeTemplate",
+      "platform": "Linux",
+      "format": "qcow2",
+      "backupStorageRefs": [
+        {
+          "id": 0.0,
+          "imageUuid": "2354990ad5ee343eba48bb07851a1423",
+          "backupStorageUuid": "a03a78dbdab23444bb109d67a5059389",
+          "installPath": "ceph://zs-images/f0b149e053b34c7eb7fe694b182ebffd",
+          "status": "Ready"
+        }
+      ]
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation succeeds, this field is null. For details, see [error](#p_v34_5xx_bcb)|2.2|
+|inventories|List|For details, see [inventories](#p_rvs_5xx_bcb)|2.2|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier of the error, for example SYS.1000, HOST.1001|2.2|
+|description|String|Brief description of the error|2.2|
+|details|String|Detailed error information|2.2|
+|elaboration|String|Reserved field, defaults to null|2.2|
+|opaque|LinkedHashMap|Reserved field, defaults to null|2.2|
+|cause|ErrorCode|Root cause. The error that triggered the current error. If there is no original error, this field is null|2.2|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|2.2|
+|name|String|Resource name|2.2|
+|description|String|Resource description|2.2|
+|state|String| |2.2|
+|status|String| |2.2|
+|size|Long| |2.2|
+|actualSize|Long| |2.2|
+|md5Sum|String| |2.2|
+|url|String| |2.2|
+|mediaType|String| |2.2|
+|guestOsType|String| |2.2|
+|type|String| |2.2|
+|platform|String| |2.2|
+|format|String| |2.2|
+|system|Boolean| |2.2|
+|createDate|Timestamp|Create time|2.2|
+|lastOpDate|Timestamp|Last update time|2.2|
+|backupStorageRefs|List|For details, see [backupStorageRefs](#p_ryt_pxx_bcb)|2.2|
+
+### backupStorageRefs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|imageUuid|String|Image UUID|2.2|
+|backupStorageUuid|String|Backup Storage UUID|2.2|
+|installPath|String| |2.2|
+|exportUrl|String| |2.2|
+|exportMd5Sum|String| |2.2|
+|status|String| |2.2|
+|createDate|Timestamp|Create time|2.2|
+|lastOpDate|Timestamp|Last update time|2.2|
+
+## SDK Examples
+Java SDK
+
+```
+GetImageCandidatesForVmToChangeAction action = new GetImageCandidatesForVmToChangeAction();
+action.vmInstanceUuid = "54f0aebe7a2536978aafb9eb7a95003e";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetImageCandidatesForVmToChangeAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetImageCandidatesForVmToChangeAction action = GetImageCandidatesForVmToChangeAction()
+action.vmInstanceUuid = "54f0aebe7a2536978aafb9eb7a95003e"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetImageCandidatesForVmToChangeAction.Result res = action.call()
+```
+
+</APIPage>

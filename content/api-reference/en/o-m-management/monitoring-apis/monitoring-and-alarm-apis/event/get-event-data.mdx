@@ -1,0 +1,118 @@
+---
+title: "Get Event Data"
+---
+
+<APIPage method="GET" path="/v1/zwatch/events">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zwatch/events?startTime=1.596444516295E12&limit=10.0&conditions=HostUuid=99ca12b945a8489c93a3412cbc744193&count=false&start=0.0
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|startTime \(Optional\)|Long|query|The start time.| |2.3|
+|endTime \(Optional\)|Long|query|The end time.| |2.3|
+|limit \(Optional\)|Integer|query|The maximum number of returned results.| |2.3|
+|offsetAheadOfCurrentTime \(Optional\)|Long|query|The number of milliseconds before the current time. For example, to query messages from the last hour, pass in 3600000.| |3.3.0|
+|conditions \(Optional\)|List|query|The query conditions.| |3.3.0|
+|count \(Optional\)|boolean|query|Whether to query the event count.| |3.3.0|
+|endpointUuid \(Optional\)|String|query|The endpoint UUID.| |3.10.0|
+|systemTags \(Optional\)|List|query|System tags.| |2.3|
+|userTags \(Optional\)|List|query|User tags.| |2.3|
+
+## API Response
+Response Example
+
+```
+{
+  "events": [
+    {
+      "namespace": "ZStack/VM",
+      "name": "org.zstack.zwatch.datatype.EventFamily@2c24d960",
+      "labels": {},
+      "emergencyLevel": "Normal",
+      "resourceId": "b7bbe5fb9ab049c5a36bf8a646471cff",
+      "resourceName": "VmInstanceVO",
+      "time": 1596444516324.0
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|total|Long|The number of events.|3.3.0|
+|success|boolean| |3.3.0|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_tgs_xrh_kgb) for details.|2.3|
+|events|List|See [events](#p_ltt_yrh_kgb) for details.|2.3|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, e.g., SYS.1000, HOST.1001.|2.3|
+|description|String|A brief description of the error.|2.3|
+|details|String|The detailed error information.|2.3|
+|elaboration|String|A reserved field. Default is null.|2.3|
+|opaque|LinkedHashMap|A reserved field. Default is null.|2.3|
+|cause|ErrorCode|The root error. The source error that caused the current error. This field is null if there is no root cause.|2.3|
+
+### events
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|namespace|String|The namespace.|2.3|
+|name|String|The event name.|2.3|
+|labels|Map|The labels.|2.3|
+|resourceId|String|The ID of the resource that generated the event. If it is a ZSvirt resource, this is the resource UUID.|2.3|
+|resourceName|String|The resource name.|2.3|
+|error|String|If the event represents an error, this field contains the error details.|2.3|
+|time|long|The time when the event occurred.|2.3|
+|dataUuid|String|The message UUID.|3.3|
+|accountUuid|String|The account UUID.|3.3|
+|emergencyLevel|EmergencyLevel|See [emergencyLevel](#p_cf5_zrh_kgb) for details.|2.3|
+
+### emergencyLevel
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|The resource name.|2.3|
+|ordinal|int| |2.3|
+
+## SDK Examples
+Java SDK
+
+```
+GetEventDataAction action = new GetEventDataAction();
+action.startTime = 1.596444516404E12;
+action.limit = 10.0;
+action.conditions = asList("HostUuid=00d80d7c47124d6d8e2c7736e9af1c34");
+action.count = false;
+action.start = 0.0;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetEventDataAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetEventDataAction action = GetEventDataAction()
+action.startTime = 1.596444516405E12
+action.limit = 10.0
+action.conditions = [HostUuid=7581302347d0439fbdde32b914e2449a]
+action.count = false
+action.start = 0.0
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetEventDataAction.Result res = action.call()
+```
+
+</APIPage>

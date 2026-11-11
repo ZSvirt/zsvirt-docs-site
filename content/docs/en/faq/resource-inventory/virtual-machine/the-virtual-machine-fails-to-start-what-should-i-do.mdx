@@ -1,0 +1,47 @@
+---
+title: "The virtual machine fails to start. What should I do?"
+---
+
+<HistoricalNamingNote locale="en" />
+
+Virtual machine startup failures can manifest in several ways. Identify the applicable symptom and cause, then follow the corresponding solution to resolve the issue.
+
+## Symptom
+Virtual machine startup failures may present as the following four symptoms:
+
+-   Symptom 1: After entering the Linux virtual machine, the following error appears: `welcome to emergency mode! After logging in, type "journalctl -x b" to view system logs, "systemctl reboot"to reboot, "systemctl default"to try again to boot into default mode. Give root password for maintenance`.
+-   Symptom 2: The virtual machine fails to start with the error: `stderr:exec of\"/usr/local/zstack/dnsmasq\"failed:No such file or directory\n","location":"`.
+-   Symptom 3: The virtual machine console displays a black screen.
+
+## Cause 1
+Symptom 1 may result from either of the following causes:
+
+-   Automatic Data Disk mounting at startup fails.
+-   An unexpected host power outage causes file system corruption.
+
+## Solution
+-   If automatic Data Disk mounting at startup fails, follow these steps:
+
+    1.  Log in to the virtual machine and remove or comment out the Data Disk mount command in the `/etc/fstab` configuration file.
+
+    2.  Edit the `/etc/rc.d/rc.local` configuration file to configure automatic Data Disk mounting at startup using the disk UUID.
+
+-   If file system corruption results from a host power outage, follow this step:
+
+    Use a file system repair tool or a third-party livecd tool to boot and repair the file system.
+
+## Cause 2
+Symptom 2 may occur because a host power outage caused the `dnsmasq` file to be lost.
+
+## Solution
+1.  Use the `scp` command to copy the `/usr/local/zstack/dnsmasq` file from a healthy host node to the affected host.
+
+2.  Reconnect the host.
+
+3.  Restart the virtual machine.
+
+## Cause 3
+Symptom 3 may occur because an `SElinux` configuration file load error prevents the system from starting normally.
+
+## Solution
+-   Boot into single-user mode and check the `SElinux` configuration file for parameter errors. If errors are found, correct them and restart the virtual machine.

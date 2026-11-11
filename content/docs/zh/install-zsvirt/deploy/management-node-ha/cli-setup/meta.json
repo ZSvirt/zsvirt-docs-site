@@ -1,0 +1,11 @@
+{
+  "title": "使用命令行设置",
+  "pages": [
+    "index",
+    "step-1-install-os",
+    "step-2-management-network",
+    "step-3-business-network",
+    "step-4-ha-suite"
+  ],
+  "pagesIndex": "index"
+}

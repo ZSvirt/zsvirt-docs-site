@@ -1,0 +1,152 @@
+---
+title: "获取可选择的数据存储"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/candidate-storages">
+
+获取创建虚拟机可选择的数据存储。用户可通过指定虚拟机参数，来获取当前参数下可选择的数据存储。
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/candidate-storages?imageUuid=5f977e1354aa300bb27e0584d52bb09a&l3NetworkUuids=0276c5ffc04731d6b671c972272bd10a&dataDiskOfferingUuids=0b2b7ff196113ed79dad6bf815a6033e&dataDiskOfferingUuids=cfad76f5d345387d9215773fcd5389c5&clusterUuid=90fac86c000b335396f995bef052fb41
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|imageUuid|String|query|镜像UUID| |2.1|
+|l3NetworkUuids|List|query|分布式端口组UUID| |2.1|
+|rootDiskOfferingUuid \(可选\)|String|query|根硬盘使用的硬盘规格UUID，镜像类型为ISO时可选且必选| |2.1|
+|rootDiskSize \(可选\)|Long|query|自定义根硬盘大小。仅在`imageUuid`指定的镜像是ISO时且`rootDiskOfferingUuid`为空需要指定| |4.3.12|
+|dataDiskOfferingUuids \(可选\)|List|query|数据硬盘使用的硬盘规格UUID| |2.1|
+|dataDiskSizes \(可选\)|List|query|自定义数据硬盘大小| |4.3.12|
+|zoneUuid \(可选\)|String|query|数据中心UUID| |2.1|
+|clusterUuid \(可选\)|String|query|集群UUID| |2.1|
+|defaultL3NetworkUuid \(可选\)|String|query|默认分布式端口组UUID| |2.1|
+|systemTags \(可选\)|List|query|系统标签| |2.1|
+|userTags \(可选\)|List|query|用户标签| |2.1|
+
+## API返回
+返回示例
+
+```
+{
+  "rootVolumePrimaryStorages": [
+    {
+      "uuid": "90087c635c70381baf16eb6dd5f8cfdc",
+      "name": "example",
+      "url": "/zstack_ps",
+      "description": "example",
+      "totalCapacity": 322122547200,
+      "availableCapacity": 214748364800,
+      "totalPhysicalCapacity": 322122547200,
+      "availablePhysicalCapacity": 214748364800,
+      "type": "LocalStorage",
+      "state": "Enabled",
+      "status": "Connected",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM",
+      "attachedClusterUuids": [
+        "f1d9f91b4b8b35f7b4435f86b79793be"
+      ]
+    }
+  ],
+  "dataVolumePrimaryStorages": {
+    "d180546cd56b3677bffd7d338ba2666c": [
+      {
+        "uuid": "b5e92f8dbf223a1eac8fd101f63112b6",
+        "name": "example",
+        "url": "/opt/zstack/nfsprimarystorage/prim-b5e92f8dbf223a1eac8fd101f63112b6",
+        "description": "example",
+        "totalCapacity": 322122547200,
+        "availableCapacity": 214748364800,
+        "totalPhysicalCapacity": 322122547200,
+        "availablePhysicalCapacity": 214748364800,
+        "type": "NFS",
+        "state": "Enabled",
+        "status": "Connected",
+        "createDate": "Nov 14, 2017 10:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 10:20:57 PM",
+        "attachedClusterUuids": [
+          "1d76e995472839f989472c71dbb450c0"
+        ]
+      }
+    ]
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|dataVolumePrimaryStorages|Map|数据硬盘可选数据存储，分别对应每一个数据硬盘规格（2.1 以后）或自定义数据硬盘大小（4.3.12 以后）|2.1|
+|success|boolean|操作是否成功|2.1|
+|rootVolumePrimaryStorages|List|详情参考[rootVolumePrimaryStorages](#p_nlh_rsf_vbb)|2.1|
+|error|ErrorCode|详情参考[error](#p_sg4_rsf_vbb)|2.1|
+
+### rootVolumePrimaryStorages
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|2.1|
+|zoneUuid|String|数据中心UUID|2.1|
+|name|String|资源名称|2.1|
+|url|String| |2.1|
+|description|String|资源的详细描述|2.1|
+|totalCapacity|Long| |2.1|
+|availableCapacity|Long| |2.1|
+|totalPhysicalCapacity|Long| |2.1|
+|availablePhysicalCapacity|Long| |2.1|
+|systemUsedCapacity|Long| |2.1|
+|type|String| |2.1|
+|state|String| |2.1|
+|status|String| |2.1|
+|mountPath|String| |2.1|
+|createDate|Timestamp|创建时间|2.1|
+|lastOpDate|Timestamp|最后一次修改时间|2.1|
+|attachedClusterUuids|List| |2.1|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|2.1|
+|description|String|错误的概要描述|2.1|
+|details|String|错误的详细信息|2.1|
+|elaboration|String|保留字段，默认为null|2.1|
+|opaque|LinkedHashMap|保留字段，默认为null|2.1|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|2.1|
+
+## SDK示例
+Java SDK
+
+```
+GetCandidatePrimaryStoragesForCreatingVmAction action = new GetCandidatePrimaryStoragesForCreatingVmAction();
+action.imageUuid = "5f977e1354aa300bb27e0584d52bb09a";
+action.l3NetworkUuids = asList("0276c5ffc04731d6b671c972272bd10a");
+action.dataDiskOfferingUuids = asList("0b2b7ff196113ed79dad6bf815a6033e","cfad76f5d345387d9215773fcd5389c5");
+action.clusterUuid = "90fac86c000b335396f995bef052fb41";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetCandidatePrimaryStoragesForCreatingVmAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetCandidatePrimaryStoragesForCreatingVmAction action = GetCandidatePrimaryStoragesForCreatingVmAction()
+action.imageUuid = "5f977e1354aa300bb27e0584d52bb09a"
+action.l3NetworkUuids = [0276c5ffc04731d6b671c972272bd10a]
+action.dataDiskOfferingUuids = [0b2b7ff196113ed79dad6bf815a6033e, cfad76f5d345387d9215773fcd5389c5]
+action.clusterUuid = "90fac86c000b335396f995bef052fb41"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetCandidatePrimaryStoragesForCreatingVmAction.Result res = action.call()
+```
+
+</APIPage>

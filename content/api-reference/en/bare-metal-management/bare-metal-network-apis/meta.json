@@ -1,0 +1,8 @@
+{
+  "title": "Bare Metal Network APIs",
+  "pages": [
+    "create-baremetal-bonding",
+    "query-baremetal-bonding"
+  ],
+  "pagesIndex": "index"
+}

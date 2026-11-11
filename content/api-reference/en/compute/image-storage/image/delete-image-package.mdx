@@ -1,0 +1,181 @@
+---
+title: "Delete Image Package"
+---
+
+<APIPage method="DELETE" path="/v1/image-packages/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/image-packages/e7660c815f483befb15905bf6c776781?
+```
+
+Parameter List
+
+<table id="table_jd1_4md_l1b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+Resource UUID, uniquely identifies the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.4.6
+
+</td></tr><tr><td>
+
+deleteMode \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body
+
+</td><td>
+
+Delete mode
+
+</td><td>
+
+-   Permissive
+-   Enforcing
+
+</td><td>
+
+4.4.6
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System Tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.4.6
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User Tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.4.6
+
+</td></tr></tbody>
+</table>
+
+## API Response
+This API returns an empty JSON object **`{}`** on success. On error, the returned JSON contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DeleteImagePackageAction action = new DeleteImagePackageAction();
+action.uuid = "e7660c815f483befb15905bf6c776781";
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteImagePackageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteImagePackageAction action = DeleteImagePackageAction()
+action.uuid = "e7660c815f483befb15905bf6c776781"
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DeleteImagePackageAction.Result res = action.call()
+```
+
+</APIPage>

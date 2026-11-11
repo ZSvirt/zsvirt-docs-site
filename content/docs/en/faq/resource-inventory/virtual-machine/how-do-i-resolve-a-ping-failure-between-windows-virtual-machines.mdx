@@ -1,0 +1,17 @@
+---
+title: "How do I resolve a ping failure between Windows virtual machines?"
+---
+
+## Cause
+The Windows Advanced Firewall rule for ICMP is not enabled.
+
+## Solution
+1.  Verify that the virtual machine network configuration is correct.
+
+2.  Open a cmd command window as Administrator and run the following command:
+
+    ```
+    C:\Users\1> netsh firewall set icmpsetting 8
+    ```
+
+3.  Use the `Ping` command to verify that the network is working correctly.

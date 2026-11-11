@@ -1,0 +1,52 @@
+---
+title: "添加 SAN 存储"
+---
+
+若您希望使用共享 LUN 设备来构建存储资源，可参考本节进行操作。
+
+-   SAN 存储使用的 LUN 设备由 iSCSI 存储、FC 存储或 NVMe 存储提供。有关更多信息，请参阅 [添加 iSCSI 存储](/docs/user-guide/source-topics/ZStack_ZSphere_User_Guide_0010_1_5)、[同步 FC 存储](/docs/user-guide/source-topics/ZStack_ZSphere_User_Guide_0010_1_6)、[添加 NVMe 存储](/docs/user-guide/source-topics/ZStack_ZSphere_User_Guide_0010_1_7)。
+-   确认集群与所要加载的数据存储之间的数量和类型限制。有关更多信息，请参阅 [集群与数据存储](/docs/user-guide/source-topics/ZStack_ZSphere_User_Guide_0007_14)。
+
+1.  在导航栏中，选择**资源清单** > **数据存储**。
+
+2.  选择目标数据中心，然后点击**操作** > **添加数据存储**。
+
+3.  在添加数据存储弹窗中，参考以下示例完成配置：
+
+    **基本信息**
+
+    -   **名称**：SAN 存储名称
+    -   **简介**：可选项，可备注相关信息
+    -   **类型**：选择 **SAN 存储**。
+    -   **数据中心**：SAN 存储所在数据中心位置
+
+    **配置信息**
+
+    -   **集群**：SAN 存储加载的集群
+    -   **存储空间默认置备方式**：硬盘存储空间的分配方式，支持厚置备和精简置备两种置备方式，默认为厚置备
+        -   厚置备：预先分配需要的存储空间，提供充足的存储容量，保证存储性能
+        -   精简置备：按照实际使用情况分配存储空间，实现更高的存储利用率
+    -   **存储网络**：指定共享存储的存储网络，平台将使用此存储网络来判断虚拟机的健康状态
+    -   **存储添加方式**：选择存储添加方式
+        -   新建：创建一个全新的数据存储，将未使用的 LUN 初始化为平台可用的数据存储。添加时可选择是否清理 LUN 设备中已有的数据
+        -   注册：将已存在数据的 LUN （如从其他平台迁移或灾备复制后的存储）导入平台，平台将识别其 SAN 存储结构并修复元数据。注册时将自动添加该 SAN 存储下的所有 LUN 设备
+    -   **LUN 设备**：选择 LUN 设备，支持选择由 iSCSI 存储、FC 存储或 NVMe 存储提供的 LUN 设备
+    -   **清理 LUN 设备**：选择是否强制清理 LUN 设备中已有的数据，如文件系统、RAID 或分区表中的标签等，默认不清理
+
+        <Callout type="info">
+        若 LUN 设备中存有数据或分区，将导致添加 LUN 设备或加载数据存储失败。
+        </Callout>
+
+    -   **存储UUID**：选择**注册**为存储添加方式时，需指定存储UUID
+        -   保留：保留 SAN 存储原有 UUID 不变。
+        -   重置：为 SAN 存储重新生成 UUID。适用于克隆或快照后 UUID 冲突、或进行灾备演练时需要与生产环境解耦的场景。重置后，原 UUID 将失效，若其他主机仍在使用原 UUID 访问该存储，将出现 I/O 错误。
+
+4.  确认配置无误后，点击**确定**。
+
+-   **[添加 iSCSI 存储](/docs/user-guide/source-topics/ZStack_ZSphere_User_Guide_0010_1_5)**  
+
+-   **[同步 FC 存储](/docs/user-guide/source-topics/ZStack_ZSphere_User_Guide_0010_1_6)**  
+    基于 FC 协议构建的 SAN 存储。
+
+-   **[添加 NVMe 存储](/docs/user-guide/source-topics/ZStack_ZSphere_User_Guide_0010_1_7)**  
+    基于 NVMe-oF 协议构建的存储阵列。

@@ -1,0 +1,115 @@
+---
+title: "Update DingTalk @ User"
+---
+
+<APIPage method="PUT" path="/v1/sns/application-endpoints/ding-talk/at-persons/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateAtPersonOfAtDingTalkEndpoint": {
+    "endpointUuid": "d7be4980da0a308380b761afd3f36687",
+    "phoneNumber": "13062689903",
+    "remark": "jack"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding example, the **systemTags** and **userTags** fields are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateAtPersonOfAtDingTalkEndpoint":{"endpointUuid":"d7be4980da0a308380b761afd3f36687","phoneNumber":"13062689903","remark":"jack"}}' \
+http://localhost:8080/zstack/v1/sns/application-endpoints/ding-talk/at-persons/c42464333dce35db9fbc8816f22b1d31/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|The UUID of the resource, uniquely identifying this resource| |4.2.0|
+|endpointUuid|String|body \(Contained in the **updateAtPersonOfAtDingTalkEndpoint** structure\)|DingTalk endpoint UUID| |4.2.0|
+|phoneNumber \(Optional\)|String|body \(Contained in the **updateAtPersonOfAtDingTalkEndpoint** structure\)|Mobile phone number| |4.2.0|
+|systemTags \(Optional\)|List|body|System tags| |4.2.0|
+|userTags \(Optional\)|List|body|User tags| |4.2.0|
+|remark|String|body \(Contained in the **updateAtPersonOfAtDingTalkEndpoint** structure\)|Remark| |4.2.0|
+
+## API Response
+Response example
+
+```
+{
+  "inventory": {
+    "uuid": "905f0806f0e64bd5b8dcedcb64e7987d",
+    "phoneNumber": "18988887777",
+    "endpointUuid": "70cc64ef75e3432d9851dc4fa767972b",
+    "createDate": "Mar 26, 2024 2:45:35 AM",
+    "lastOpDate": "Mar 26, 2024 2:45:35 AM",
+    "remark": "jack"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.2.0|
+|inventory|SNSDingTalkAtPersonInventory|For details, see [inventory](#p_amz_jnx_bdb)|4.2.0|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_q55_jnx_bdb)|4.2.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource, uniquely identifying this resource|4.2.0|
+|phoneNumber|String|Mobile phone number|4.2.0|
+|endpointUuid|String|DingTalk endpoint UUID|4.2.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number, a globally unique identifier for the error, for example, SYS.1000 or HOST.1001|5.0.0|
+|description|String|A brief description of the error|5.0.0|
+|details|String|Detailed information about the error|5.0.0|
+|elaboration|String|Reserved field. Defaults to null|5.0.0|
+|opaque|LinkedHashMap|Reserved field. Defaults to null|5.0.0|
+|cause|ErrorCode|The root error that caused the current error. This field is null if there is no root cause|5.0.0|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateAtPersonOfAtDingTalkEndpointAction action = new UpdateAtPersonOfAtDingTalkEndpointAction();
+action.uuid = "c42464333dce35db9fbc8816f22b1d31";
+action.endpointUuid = "d7be4980da0a308380b761afd3f36687";
+action.phoneNumber = "13062689903";
+action.remark = "jack";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateAtPersonOfAtDingTalkEndpointAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateAtPersonOfAtDingTalkEndpointAction action = UpdateAtPersonOfAtDingTalkEndpointAction()
+action.uuid = "c42464333dce35db9fbc8816f22b1d31"
+action.endpointUuid = "d7be4980da0a308380b761afd3f36687"
+action.phoneNumber = "13062689903"
+action.remark = "jack"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateAtPersonOfAtDingTalkEndpointAction.Result res = action.call()
+```
+
+</APIPage>

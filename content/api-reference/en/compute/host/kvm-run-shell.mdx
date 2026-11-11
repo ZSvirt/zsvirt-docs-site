@@ -1,0 +1,120 @@
+---
+title: "Run Shell Command on KVM"
+---
+
+<APIPage method="PUT" path="/v1/hosts/kvm/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "kvmRunShell": {
+    "hostUuids": [
+      "d987c37b69e14c0fbc02e32f0689e81e",
+      "6d47a55252504d49a5c8f344190a578c"
+    ],
+    "script": "ls"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+    -H "Authorization: OAuth YOUR_SESSION_UUID" \
+    -X PUT -d '{"kvmRunShell":{"hostUuids":["7b474bb39b14397b97bc7d8d0bdd8854","580f2a7f2ca23af6aa1c93e88d4a788e"],"script":"ls"}}' \
+http://localhost:8080/zstack/v1/hosts/kvm/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|hostUuids|Set|body \(contained in **kvmRunShell** structure\)|Target Host UUIDs| |0.6|
+|script|String|body \(contained in **kvmRunShell** structure\)|Script| |0.6|
+|systemTags \(optional\)|List|body|System tag| |0.6|
+|userTags \(optional\)|List|body|User tag| |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "8903b4b7fa694c149d932bc53ee716df": {
+      "returnCode": 100.0,
+      "stdout": "hello",
+      "errorCode": {}
+    }
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See details [error](#p_tpm_dcw_m1b)|0.6|
+|inventory|Map|See details [inventory](#p_ywc_bcw_m1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, e.g. SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, default is null|0.6|
+|opaque|LinkedHashMap|Reserved field, default is null|0.6|
+|cause|ErrorCode|Root cause, the error that caused the current error. If there is no original error, this field is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|returnCode|int| |0.6|
+|stdout|String| |0.6|
+|stderr|String| |0.6|
+|errorCode|ErrorCode|See details [errorCode](#p_myc_ccw_m1b)|0.6|
+
+### errorCode
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, e.g. SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, default is null|0.6|
+|opaque|LinkedHashMap|Reserved field, default is null|0.6|
+|cause|ErrorCode|Root cause, the error that caused the current error. If there is no original error, this field is null|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+KvmRunShellAction action = new KvmRunShellAction();
+action.hostUuids = asList("f3349fddda414ee0b64c5f32635ff76e","624ca9859a044fbe909f2aeef4e95b3e");
+action.script = "ls";
+action.sessionId = "c5e92dd1ca554dd781a50961fd8121ac";
+KvmRunShellAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+KvmRunShellAction action = KvmRunShellAction()
+action.hostUuids = [b0e1155a97644eb1a756dd8d3de8eb3b, 04a502bd377e4763850d7a94ba4ffb43]
+action.script = "ls"
+action.sessionId = "72425e0cb8d8425f96114b5760d9a495"
+KvmRunShellAction.Result res = action.call()
+```
+
+</APIPage>

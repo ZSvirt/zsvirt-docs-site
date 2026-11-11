@@ -1,0 +1,45 @@
+---
+title: 'Compute Resource|Data Center & Cluster & Host'
+---
+
+This section introduces the following three resources:
+
+-   [Data Center](#section_wrp_gnk_vyb)
+-   [Cluster](#section_msr_4xd_czb)
+-   [Host](#section_tdb_ffv_znb)
+
+## Data Center
+Data Center: A data center is the largest resource namespace within a virtualization platform, including resources such as clusters, hosts, data storage, distributed switches, and distributed port groups.
+
+A data center include the following core resources:
+
+-   Cluster: A logical collection of a group of hosts (compute nodes).
+-   Host: A host is an x86 or ARM physical server running a KVM virtualization hypervisor, providing resources such as computing, networking, and storage to virtual machines.
+-   Virtual Machine: A virtual machine is a virtualized host running on a physical host, capable of running an operation system and applications just like a physical host.
+-   Data Storage: A data storage is a virtualized resource that provides storage space for virtual machines and their application data. A data storage can be categorized into local storage and network shared storage.
+-   Distributed Switch: A virtual switching device that provides unified virtual network management and monitoring for virtual machines within a cluster.
+-   Distributed Port Group: A logical grouping of ports on a distributed switch, used for port configuration.
+
+Through the use of data centers, you can divide the platform resources into multiple largest management domains, offering three main advantages:
+
+-   Achieve resource isolation at the data center level. Physical sub-resources such as data storage and hosts within different data centers can be isolated from each other, ensuring maximum stability and fault tolerance.
+-   Data centers can be flexibly deployed based on data center construction, reducing network latency and improving access speeds.
+-   Each data center's resource usage can be monitored independently.
+
+## Cluster
+As mentioned above, a cluster is a collection of hosts (with no limit on the number) organized according to business logic under a data center. To provide complete services for virtual machines, it must be combined with data storage and distributed switches. Therefore, when planning a cluster, ensure that:
+
+-   All hosts within the cluster have the same operating system.
+-   All hosts within the cluster have identical network configurations.
+-   All hosts within the cluster can access the same data storage.
+-   The cluster must be equipped with data storage and distributed switches.
+
+Clusters enable the management and isolation of physical computing resources. Below are some of the functional characteristics of clusters:
+
+-   ZSvirt supports clusters for both x86 and ARM architectures, managing hosts of x86 and ARM architecture respectively.
+-   It supports dynamic resource scheduling at the cluster level, monitoring CPU or memory load conditions of hosts within the cluster, and dynamically adjusting the services of virtual machines running on the hosts to balance the cluster load and improve platform stability.
+-   It supports overcommitment ratio configuration for CPU and memory resources at the cluster level, enabling over-provisioning to increase the utilization rate of cluster computing resources.
+-   It supports configuring dedicated networks for clusters based on business scenarios, such as VDI networks and VM migration networks.
+
+## Host
+As mentioned above, a host is a physical server that provides CPU, memory, local storage, and network resources to virtual machines.

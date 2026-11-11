@@ -1,0 +1,23 @@
+---
+title: "添加主机失败，报错：pip uninstall -y virtualenv failed!，怎么办？"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+## 现象
+在虚拟化平台上添加主机时出现以下报错信息：
+
+```
+stderr: ERROR: [ HOST: xx.xx.xx.xxx] ERROR: run shell command: pip uninstall -y virtualenv failed!stdout:  error: Cannot uninstall requirement virtualenv, not installed 
+```
+
+## 解决方案
+1.  登录添加失败的主机控制台，执行以下命令：
+
+    ```
+    # mn_ip为管理节点的VIP。
+    pip install -i http://{mn_ip}:8080/zstack/static/pypi/simple --trusted-host {mn_ip} --ignore-installed virtualenv  
+    
+    ```
+
+2.  登录虚拟化平台重新添加主机即可成功安装主机。

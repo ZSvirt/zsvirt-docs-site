@@ -1,0 +1,16 @@
+{
+  "title": "资源清单",
+  "pages": [
+    "virtual-machine",
+    "disk",
+    "host",
+    "data-storage",
+    "image-storage",
+    "image",
+    "distributed-switch",
+    "distributed-port-group",
+    "security-group",
+    "bare-metal-management"
+  ],
+  "pagesIndex": "index"
+}

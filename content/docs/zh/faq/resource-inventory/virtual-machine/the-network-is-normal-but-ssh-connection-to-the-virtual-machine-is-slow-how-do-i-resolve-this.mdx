@@ -1,0 +1,48 @@
+---
+title: "网络无异常但虚拟机SSH连接慢，如何解决？"
+---
+
+## 现象
+在网络正常的情况下，通过SSH连接虚拟机，连接速度慢。
+
+## 原因
+可能的原因有以下几点：
+
+-   SSH反向DNS解析被开启，此解析过程耗时较长。
+-   GSS（Generic Security Services）验证被开启，此验证过程耗时较长。
+-   NSS（Name Service Switch）名称解析耗时较长。
+
+## 解决方案
+1.  关闭SSH反向DNS解析。
+
+    执行以下命令，关闭SSH反向DNS解析：
+
+    ```
+    [root@localhost~]#vi /etc/ssh/sshd_config
+    # 进入sshd_config文件编辑模式，修改如下配置
+    UseDNS=no
+    ```
+
+2.  关闭GSS验证。
+
+    执行以下命令，关闭GSS验证：
+
+    ```
+    [root@localhost~]#vi /etc/ssh/sshd_config
+    # 进入sshd_config文件编辑模式，修改如下配置
+    GSSAPIAuthentication no
+    ```
+
+    <Callout type="info">
+    GSS 认证方法设置为`gssapi-with-mic`时，每次SSH连接虚拟机都会进行GSSAPI身份验证，此过程耗时较长，因此关闭GSS认证可以提高SSH连接速度。
+    </Callout>
+
+3.  修改虚拟机的nsswitch.conf文件。
+
+    执行以下命令，修改虚拟机的nsswitch.conf文件：
+
+    ```
+    #vi /etc/nsswitch.conf
+    # 进入nsswitch.conf文件编辑模式，修改如下配置
+    hosts：files
+    ```

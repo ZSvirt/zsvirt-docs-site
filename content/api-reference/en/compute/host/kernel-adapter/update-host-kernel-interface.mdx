@@ -1,0 +1,341 @@
+---
+title: "Update Host Kernel Interface"
+---
+
+<APIPage method="PUT" path="/v1/l2-networks/kernel-interfaces/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateHostKernelInterface": {
+    "name": "test2",
+    "description": "test2-descrption",
+    "requiredIp": "172.16.100.100",
+    "netmask": "255.255.255.0",
+    "trafficTypes": [
+      "Management"
+    ]
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The **systemTags** and **userTags** fields can be omitted in the above example. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X PUT -d '{"updateHostKernelInterface":{"name":"test2","description":"test2-descrption","requiredIp":"172.16.100.100","netmask":"255.255.255.0","trafficTypes":["Management"]}}' http://localhost:8080/zstack/v1/l2-networks/kernel-interfaces/6a57407c26ed39838c25650452da1526/actions
+```
+
+Parameter List
+
+<table id="table_ekq_xkq_51c"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+UUID of the resource, uniquely identifies the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+name
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in `updateHostKernelInterface` structure\)
+
+</td><td>
+
+Resource name
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+description \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in `updateHostKernelInterface` structure\)
+
+</td><td>
+
+Resource description
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+requiredIp \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in `updateHostKernelInterface` structure\)
+
+</td><td>
+
+Required IP
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+netmask \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in `updateHostKernelInterface` structure\)
+
+</td><td>
+
+Netmask
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+trafficTypes \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(contained in `updateHostKernelInterface` structure\)
+
+</td><td>
+
+Traffic type
+
+</td><td>
+
+-   Management
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "d8704bf64eb3387c9eaddd22c28258ed",
+    "name": "test-kernel",
+    "description": "test-kernel",
+    "hostUuid": "925a0c209777387e92203118f48359d0",
+    "l2NetworkUuid": "e36292d8f0d4366f88224b5c725927f7",
+    "l3NetworkUuid": "981959800846388e8e3be6bf91a85d01",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.1.0|
+|inventory|HostKernelInterfaceInventory|See [inventory](#p_mh4_sbk_51c)|4.1.0|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_m5s_sbk_51c)|4.1.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifies the resource|4.1.0|
+|name|String|Resource name|4.1.0|
+|description|String|Resource description|4.1.0|
+|hostUuid|String|Host UUID|4.1.0|
+|l2PortGroupUuid|String|Port group UUID|4.1.0|
+|l3NetworkUuid|String|Distributed Port Group UUID|4.1.0|
+|usedIps|List|IP configuration|4.1.0|
+|trafficTypes|List|Traffic type|4.1.0|
+|createDate|Timestamp|Create date|4.1.0|
+|lastOpDate|Timestamp|Last update date|4.1.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code, a globally unique identifier of the error, e.g. SYS.1000, HOST.1001|4.1.0|
+|description|String|Brief description of the error|4.1.0|
+|details|String|Detailed error information|4.1.0|
+|elaboration|String|Reserved field, defaults to null|4.1.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|4.1.0|
+|cause|ErrorCode|Root cause, the source error that caused the current error, null if no original error|4.1.0|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateHostKernelInterfaceAction action = new UpdateHostKernelInterfaceAction();
+action.uuid = "6a57407c26ed39838c25650452da1526";
+action.name = "test2";
+action.description = "test2-descrption";
+action.requiredIp = "172.16.100.100";
+action.netmask = "255.255.255.0";
+action.trafficTypes = asList("Management");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateHostKernelInterfaceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateHostKernelInterfaceAction action = UpdateHostKernelInterfaceAction()
+action.uuid = "6a57407c26ed39838c25650452da1526"
+action.name = "test2"
+action.description = "test2-descrption"
+action.requiredIp = "172.16.100.100"
+action.netmask = "255.255.255.0"
+action.trafficTypes = [Management]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateHostKernelInterfaceAction.Result res = action.call()
+```
+
+</APIPage>

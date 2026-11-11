@@ -1,0 +1,123 @@
+---
+title: "Create Custom Attribute Key"
+---
+
+<APIPage method="POST" path="/v1/resource-attributes">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "Operations personnel"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the **systemTags** and **userTags** fields can be omitted. They are listed to show that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"Operations personnel"}}' \
+http://localhost:8080/zstack/v1/resource-attributes
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|name|String|body \(contained in the `params` structure\)|Custom attribute key name| |4.10.16|
+|description \(optional\)|String|body \(contained in the `params` structure\)|Detailed description of the resource| |4.10.16|
+|resourceTypes \(optional\)|List|body \(contained in the `params` structure\)|List of resource types supported by this attribute. Defaults to all supported types| |4.10.16|
+|constraints \(optional\)|List|body \(contained in the `params` structure\)|Attribute constraint list| |4.10.16|
+|resourceUuid \(optional\)|String|body \(contained in the `params` structure\)|Resource UUID| |4.10.16|
+|tagUuids \(optional\)|List|body \(contained in the `params` structure\)|Tag UUID list| |4.10.16|
+|systemTags \(optional\)|List|body|System tags| |4.10.16|
+|userTags \(optional\)|List|body|User tags| |4.10.16|
+
+## API Response
+Response example
+
+```
+{
+  "inventory": {
+    "uuid": "ff03a2b491023030bf58b1b35ea9cd00",
+    "name": "OperationsPersonnel",
+    "description": "Kinny",
+    "resourceTypes": [
+      "VmInstanceVO"
+    ],
+    "createDate": "Nov 14, 2017 2:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 2:20:57 PM",
+    "constraints": [
+      {
+        "id": 1,
+        "keyUuid": "ff03a2b491023030bf58b1b35ea9cd00",
+        "type": "option",
+        "parameter": "Kinny",
+        "createDate": "Nov 14, 2017 2:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+      }
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean|Whether the creation succeeded|4.10.16|
+|inventory|ResourceAttributeKeyInventory|For details, see [inventory](#p_d44_5mk_l1b)|4.10.16|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_xm1_vmk_l1b)|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Custom attribute key UUID|4.10.16|
+|name|String|Custom attribute key name|4.10.16|
+|description|String|Detailed description of the resource|4.10.16|
+|createDate|Timestamp|Creation time|4.10.16|
+|lastOpDate|Timestamp|Last modification time|4.10.16|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|ode|String|The error code number, a globally unique identifier for the error, e.g., SYS.1000, HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|The detailed error information|0.6|
+|elaboration|String|Reserved field. Defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field. Defaults to null|0.6|
+|cause|ErrorCode|The root error, the cause of the current error. This field is null if there is no root error|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+CreateResourceAttributeKeyAction action = new CreateResourceAttributeKeyAction();
+action.name = "Operations personnel";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateResourceAttributeKeyAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = CreateResourceAttributeKeyAction()
+action.name = "Operations personnel"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

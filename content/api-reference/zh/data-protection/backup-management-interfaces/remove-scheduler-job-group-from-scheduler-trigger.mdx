@@ -1,0 +1,64 @@
+---
+title: "定时任务组解绑触发器"
+---
+
+<APIPage method="DELETE" path="/v1/scheduler/jobgroups/{schedulerJobGroupUuid}/scheduler/triggers/{schedulerTriggerUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/scheduler/jobgroups/769b8cc2ba343736a919f4a849663fdb/scheduler/triggers/e0f1e497653b39639ff6eac7f6cd2e48?
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|schedulerJobGroupUuid|String|url|定时任务组UUID| |3.4.0|
+|schedulerTriggerUuid|String|url|触发器UUID| |3.4.0|
+|systemTags \(可选\)|List|body|系统标签列表| |3.4.0|
+|userTags \(可选\)|List|body|用户标签列表| |3.4.0|
+
+## API返回
+该API成功时返回一个空的JSON结构**`{}`**，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+RemoveSchedulerJobGroupFromSchedulerTriggerAction action = new RemoveSchedulerJobGroupFromSchedulerTriggerAction();
+action.schedulerJobGroupUuid = "769b8cc2ba343736a919f4a849663fdb";
+action.schedulerTriggerUuid = "e0f1e497653b39639ff6eac7f6cd2e48";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RemoveSchedulerJobGroupFromSchedulerTriggerAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+RemoveSchedulerJobGroupFromSchedulerTriggerAction action = RemoveSchedulerJobGroupFromSchedulerTriggerAction()
+action.schedulerJobGroupUuid = "769b8cc2ba343736a919f4a849663fdb"
+action.schedulerTriggerUuid = "e0f1e497653b39639ff6eac7f6cd2e48"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+RemoveSchedulerJobGroupFromSchedulerTriggerAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,88 @@
+---
+title: "Query DingTalk @ User"
+---
+
+<APIPage method="GET" path="/v1/sns/application-endpoints/ding-talk/at-persons" altPaths={["/v1/sns/application-endpoints/ding-talk/at-persons/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/sns/application-endpoints/ding-talk/at-persons?q=uuid=bc09a0f65270322da363ad99552b234e&q=endpointUuid=a4e3535bc4663b15832d7cc091855e13
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/sns/application-endpoints/ding-talk/at-persons/38f8430ba7c9331d9d6d920072d7bf27
+```
+
+Queryable Fields
+
+Run the CLI tool, enter `QuerySNSDingTalkAtPerson` and press Tab to view all queryable fields and cross-table queryable resource names.
+
+## API Response
+On success, this API returns an empty JSON structure **`{}`**. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "234f8735703a38ecb840cfe9042bc945",
+      "phoneNumber": "13062689903",
+      "endpointUuid": "9488e18c34b933f5a06d1f45301c7f20"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.2.0|
+|inventories|List|For details, see [inventories](#p_ywy_chy_p1b)|4.2.0|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_b1q_chy_p1b)|4.2.0|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource, uniquely identifying this resource|4.2.0|
+|phoneNumber|String|Mobile phone number|4.2.0|
+|endpointUuid|String|DingTalk endpoint UUID|4.2.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number, a globally unique identifier for the error, for example, SYS.1000 or HOST.1001|5.0.0|
+|description|String|A brief description of the error|5.0.0|
+|details|String|Detailed information about the error|5.0.0|
+|elaboration|String|Reserved field. Defaults to null|5.0.0|
+|opaque|LinkedHashMap|Reserved field. Defaults to null|5.0.0|
+|cause|ErrorCode|The root error that caused the current error. This field is null if there is no root cause|5.0.0|
+
+## SDK Examples
+Java SDK
+
+```
+QuerySNSDingTalkAtPersonAction action = new QuerySNSDingTalkAtPersonAction();
+action.conditions = asList("uuid=3806b82167a33673b5067831090f317d","endpointUuid=c36e1b34d3e73db7a53e067da95de3d5");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QuerySNSDingTalkAtPersonAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QuerySNSDingTalkAtPersonAction action = QuerySNSDingTalkAtPersonAction()
+action.conditions = ["uuid=b836d745aa623217838bc9d0ecb3bb1f","endpointUuid=dc9f00eecd1837e484bde65bf53f45a1"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QuerySNSDingTalkAtPersonAction.Result res = action.call()
+```
+
+</APIPage>

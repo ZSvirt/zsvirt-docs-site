@@ -1,0 +1,89 @@
+---
+title: "查询IP访问控制规则"
+---
+
+<APIPage method="GET" path="/v1/login-control/access-control/rules">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X GET http://localhost:8080/zstack/v1/login-control/access-control/rules?q=uuid=4f41ad1c52ac3ba690282ede3d1ebb2a
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryAccessControlRule`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "rule": "192.168.10.0/24"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_t4n_wqv_j3b)|3.5.1|
+|inventories|List|详情参考[inventories](#p_u3g_wqv_j3b)|3.5.1|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.5.1|
+|description|String|错误的概要描述|3.5.1|
+|details|String|错误的详细信息|3.5.1|
+|elaboration|String|保留字段，默认为null|3.5.1|
+|opaque|LinkedHashMap|保留字段，默认为null|3.5.1|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.5.1|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.5.1|
+|name|String|资源名称|3.5.1|
+|description|String|资源的详细描述|3.5.1|
+|rule|String| |3.5.1|
+|createDate|Timestamp|创建时间|3.5.1|
+|lastOpDate|Timestamp|最后一次修改时间|3.5.1|
+|strategy|ControlStrategy|详情参考[strategy](#p_isw_vqv_j3b)|3.5.1|
+
+### strategy
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|ACCEPT|ControlStrategy| |3.5.1|
+|REJECT|ControlStrategy| |3.5.1|
+
+## SDK示例
+Java SDK
+
+```
+QueryAccessControlRuleAction action = new QueryAccessControlRuleAction();
+action.conditions = asList("uuid=b4cae0f6a9ac3cd686ba36c81291d197");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryAccessControlRuleAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryAccessControlRuleAction action = QueryAccessControlRuleAction()
+action.conditions = ["uuid=4b3f7d2f1fda3f1d8089b4d037364bf9"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryAccessControlRuleAction.Result res = action.call()
+```
+
+</APIPage>

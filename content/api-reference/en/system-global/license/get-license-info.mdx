@@ -1,0 +1,93 @@
+---
+title: "Get License Info"
+---
+
+<APIPage method="GET" path="/v1/licenses">
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-X GET http://localhost:8080/zstack/v1/licenses
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|additionSession \(Optional\)|String|query|Additional information, a JSON string| |4.1.0|
+|systemTags \(Optional\)|List|query|System tags| |0.6|
+|userTags \(Optional\)|List|query|User tags| |0.6|
+
+-   ZSvirt supports retrieving the virtualization platform ID when getting license info. The **SystemTags** parameter adds the **platformId** option.
+    -   The option format is: `platformId::{%s}`. Where \{%s\} is the first 10 characters of the request code MD5 value.
+    -   For example: `platformId::a95d3ee34r`
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "licenseType": "Free",
+    "licenseRequest": "example request",
+    "issuedDate": "2017-01-19 14:31:06",
+    "user": "example",
+    "hostNum": 10.0,
+    "expired": true,
+    "managementNodeUuid": "00898b3538e53e70bb7521e54ff80276"
+  },
+  "additions": []
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_vx2_tjr_zdb) for details|0.6|
+|inventory|LicenseInventory|See [inventory](#p_xtx_sjr_zdb) for details|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|The detailed error information|0.6|
+|elaboration|String|Reserved field. Default is null|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null|0.6|
+|cause|ErrorCode|The root error that caused the current error. If no root error exists, this field is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource|4.1.0|
+|licenseType|String| |0.6|
+|licenseRequest|String| |0.6|
+|expiredDate|String| |0.6|
+|issuedDate|String| |0.6|
+|user|String| |0.6|
+|prodInfo|String|License product name|4.1.0|
+|hostNum|Integer| |0.6|
+|cpuNum|Integer| |0.6|
+|vmNum|Integer| |4.1.0|
+|availableHostNum|Integer| |0.6|
+|availableCpuNum|Integer| |0.6|
+|availableVmNum|Integer| |4.1.0|
+|expired|boolean| |0.6|
+|managementNodeUuid|String| |4.1.0|
+
+## SDK Examples
+Java SDK
+
+```
+GetLicenseInfoAction action = new GetLicenseInfoAction();
+GetLicenseInfoAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetLicenseInfoAction action = GetLicenseInfoAction()
+GetLicenseInfoAction.Result res = action.call()
+```
+
+</APIPage>

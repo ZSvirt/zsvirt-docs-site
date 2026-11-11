@@ -1,0 +1,130 @@
+---
+title: 'zsphere_port_groups'
+description: '查询 ZSvirt 端口组列表及其属性。'
+---
+
+<HistoricalNamingNote locale="zh" />
+
+
+# zsphere_port_groups（数据源）
+
+查询 ZSvirt 端口组列表及其属性。
+
+## 示例用法
+```terraform
+data "zsphere_port_groups" "test" {
+}
+
+output "zstack_secs" {
+  value = data.zsphere_port_groups.test
+}
+
+# 示例输出：
+# zstack_secs = {
+#   "filter" = tolist([])
+#   "name" = tostring(null)
+#   "name_pattern" = tostring(null)
+#   "port_groups" = tolist([
+#     {
+#       "category" = "Private"
+#       "dns" = tolist([])
+#       "free_ips" = tolist([
+#         {
+#           "gateway" = "192.168.1.1"
+#           "ip" = "192.168.1.100"
+#           "ip_range_uuid" = "9199704321e94de98f60eb06ba563b53"
+#           "netmask" = "255.255.255.0"
+#         },
+#         {
+#           "gateway" = "192.168.1.1"
+#           "ip" = "192.168.1.101"
+#           "ip_range_uuid" = "9199704321e94de98f60eb06ba563b53"
+#           "netmask" = "255.255.255.0"
+#         },
+#         {
+#           "gateway" = "192.168.1.1"
+#           "ip" = "192.168.1.102"
+#           "ip_range_uuid" = "9199704321e94de98f60eb06ba563b53"
+#           "netmask" = "255.255.255.0"
+#         },
+#       ])
+#       "ip_range" = tolist([
+#         {
+#           "cidr" = "192.168.1.0/24"
+#           "end_ip" = "192.168.1.102"
+#           "gateway" = "192.168.1.1"
+#           "ip_range_name" = "192.168.1.100-192.168.1.102"
+#           "netmask" = "255.255.255.0"
+#           "start_ip" = "192.168.1.100"
+#         },
+#       ])
+#       "name" = "Port-group-1"
+#       "uuid" = "5cc7cd5963fd45149901336116a261a6"
+#     },
+#   ])
+# }
+```
+
+## 参数说明
+
+### 可选参数
+
+- `filter`（块列表）（参见下方嵌套结构）
+- `name`（字符串）按精确名称查询
+- `name_pattern`（字符串）按名称模糊查询，类似 MySQL LIKE。`%` 匹配多个字符，`_` 匹配单个字符
+
+### 只读属性
+
+- `port_groups`（属性列表）（参见下方嵌套结构）
+
+<a id="nestedblock--filter"></a>
+### `filter` 嵌套结构
+
+必填参数：
+
+- `name`（字符串）用于过滤的字段名。
+- `values`（字符串集合）过滤值，多个值之间为 OR 关系。
+
+
+<a id="nestedatt--port_groups"></a>
+### `port_groups` 嵌套结构
+
+只读属性：
+
+- `category`（字符串）三层网络类别。
+- `dns`（属性列表）（参见下方嵌套结构）
+- `free_ips`（属性列表）（参见下方嵌套结构）
+- `ip_range`（属性列表）（参见下方嵌套结构）
+- `name`（字符串）三层网络名称
+- `uuid`（字符串）三层网络 UUID。
+
+<a id="nestedatt--port_groups--dns"></a>
+### `port_groups.dns` 嵌套结构
+
+只读属性：
+
+- `dns_model`（字符串）DNS 服务器地址。
+
+
+<a id="nestedatt--port_groups--free_ips"></a>
+### `port_groups.free_ips` 嵌套结构
+
+只读属性：
+
+- `gateway`（字符串）空闲 IP 的网关。
+- `ip`（字符串）空闲 IP 地址。
+- `ip_range_uuid`（字符串）包含该空闲 IP 的地址段 UUID。
+- `netmask`（字符串）空闲 IP 的子网掩码。
+
+
+<a id="nestedatt--port_groups--ip_range"></a>
+### `port_groups.ip_range` 嵌套结构
+
+只读属性：
+
+- `cidr`（字符串）IP 地址段的 CIDR 表示。
+- `end_ip`（字符串）IP 地址段结束地址。
+- `gateway`（字符串）IP 地址段网关。
+- `ip_range_name`（字符串）IP 地址段名称。
+- `netmask`（字符串）IP 地址段子网掩码。
+- `start_ip`（字符串）IP 地址段起始地址。

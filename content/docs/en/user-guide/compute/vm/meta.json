@@ -1,0 +1,22 @@
+{
+  "title": "Virtual Machine",
+  "defaultOpen": true,
+  "pages": [
+    "index",
+    "basic-operations",
+    "group-management",
+    "vmtools",
+    "troubleshooting",
+    "time-sync",
+    "user-data",
+    "templates",
+    "specifications",
+    "migration",
+    "performance",
+    "snapshots",
+    "scheduling",
+    "high-availability",
+    "security"
+  ],
+  "pagesIndex": "index"
+}

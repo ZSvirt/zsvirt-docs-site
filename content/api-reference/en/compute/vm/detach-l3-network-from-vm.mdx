@@ -1,0 +1,237 @@
+---
+title: "Detach L3 Network from VM"
+---
+
+<APIPage method="DELETE" path="/v1/vm-instances/nics/{vmNicUuid}">
+
+Detach a network from a Running or Stopped Virtual Machine.
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/vm-instances/nics/e8c694f7dcaa3a48860312d86d77fcde
+```
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|vmNicUuid|String|url|VM NIC UUID. The network to which this NIC belongs will be detached from the Virtual Machine.| |0.6|
+|systemTags \(optional\)|List|body|System Tags| |0.6|
+|userTags \(optional\)|List|body|User Tags| |0.6|
+
+## API Response
+Return Example
+
+```
+{
+  "inventory": {
+    "uuid": "536d4140e0ee332bbca18b95fa02eab6",
+    "name": "Test-VM",
+    "description": "web server VM",
+    "zoneUuid": "30930c14b63634b4a879f7a974b3eb25",
+    "clusterUuid": "26e01d57f1f731e09d8c0733afd31b2d",
+    "imageUuid": "4f2ef2b98a643a11bde6b8b6ac0fad7c",
+    "hostUuid": "a8143ab421663d22809e7c9bfbad77d9",
+    "lastHostUuid": "60d6576190e93cd89dd070cac6b600ea",
+    "instanceOfferingUuid": "51d49dbc54d4332b89f1077177d9d9dc",
+    "rootVolumeUuid": "d39f1a3944473cd8b97932cbd72fb9dd",
+    "platform": "Linux",
+    "defaultL3NetworkUuid": "3becf336fc1b31a397452ab8adee8766",
+    "type": "UserVm",
+    "hypervisorType": "KVM",
+    "memorySize": 8589934592,
+    "cpuNum": 1,
+    "allocatorStrategy": "LastHostPreferredAllocatorStrategy",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM",
+    "state": "Running",
+    "vmNics": [
+      {
+        "uuid": "6275ccc0b6ff3ce2af43841dea667729",
+        "vmInstanceUuid": "536d4140e0ee332bbca18b95fa02eab6",
+        "usedIpUuid": "4c213f2ea325325496282e9e9493ddc7",
+        "l3NetworkUuid": "3becf336fc1b31a397452ab8adee8766",
+        "ip": "192.168.1.10",
+        "mac": "00:0c:29:bd:99:fc",
+        "hypervisorType": "KVM",
+        "netmask": "255.255.255.0",
+        "gateway": "192.168.1.1",
+        "deviceId": 0,
+        "state": "enable",
+        "createDate": "Nov 14, 2017 10:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+      }
+    ],
+    "allVolumes": [
+      {
+        "uuid": "d39f1a3944473cd8b97932cbd72fb9dd",
+        "name": "Root-Volume-For-VM-536d4140e0ee332bbca18b95fa02eab6",
+        "primaryStorageUuid": "be341d00a19539698a454cc8ec423c35",
+        "vmInstanceUuid": "536d4140e0ee332bbca18b95fa02eab6",
+        "diskOfferingUuid": "7844548a5f2e33cb8a8779f2bd5a94a3",
+        "rootImageUuid": "4f2ef2b98a643a11bde6b8b6ac0fad7c",
+        "installPath": "/zstack_ps/rootVolumes/acct-36c27e8ff05c4780bf6d2fa65700f22e/vol-d39f1a3944473cd8b97932cbd72fb9dd/d39f1a3944473cd8b97932cbd72fb9dd.qcow2",
+        "type": "Root",
+        "format": "qcow2",
+        "size": 107374182400,
+        "actualSize": 21474836480,
+        "deviceId": 0,
+        "state": "Enabled",
+        "status": "Ready",
+        "createDate": "Nov 14, 2017 10:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+      }
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, indicates operation failure. This field is null when the operation succeeds. See [error](#p_w1k_qpj_zz)|0.6|
+|inventory|VmInstanceInventory|See [inventory](#p_irr_qpj_zz)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause, the source error that triggered the current error. If there is no original error, this field is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|name|String|Resource name|0.6|
+|description|String|Resource description|0.6|
+|zoneUuid|String|Data Center UUID|0.6|
+|clusterUuid|String|Cluster UUID|0.6|
+|imageUuid|String|Image UUID|0.6|
+|hostUuid|String|Host UUID|0.6|
+|lastHostUuid|String| |0.6|
+|instanceOfferingUuid|String|Instance Offering UUID|0.6|
+|rootVolumeUuid|String|Root Volume UUID|0.6|
+|platform|String| |0.6|
+|architecture|String| |0.6|
+|defaultL3NetworkUuid|String| |0.6|
+|type|String| |0.6|
+|hypervisorType|String| |0.6|
+|memorySize|Long| |0.6|
+|cpuNum|Integer| |0.6|
+|cpuSpeed|Long| |0.6|
+|allocatorStrategy|String| |0.6|
+|createDate|Timestamp|Creation Time|0.6|
+|lastOpDate|Timestamp|Last Operation Date|0.6|
+|state|String| |0.6|
+|guestOsType|String| |4.1.2|
+|vmNics|List|See [vmNics](#p_unz_qpj_zz)|0.6|
+|allVolumes|List|See [allVolumes](#p_hjh_rpj_zz)|0.6|
+|vmCdRoms|List|See [vmCdRoms](#p_uyq_zh1_y1c)|0.6|
+
+### vmNics
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|vmInstanceUuid|String|Virtual Machine UUID|0.6|
+|l3NetworkUuid|String|L3 Network UUID|0.6|
+|ip|String| |0.6|
+|mac|String| |0.6|
+|hypervisorType|String| |4.7.13|
+|netmask|String| |0.6|
+|gateway|String| |0.6|
+|metaData|String| |0.6|
+|ipVersion|Integer|IP Protocol Number|3.1.0|
+|driverType|String| |4.7.13|
+|internalName|String| |4.7.13|
+|deviceId|Integer| |0.6|
+|type|String| |4.7.13|
+|state|String|NIC Status|4.7.13|
+|createDate|Timestamp|Creation Time|0.6|
+|lastOpDate|Timestamp|Last Operation Date|0.6|
+|usedIps|List|See [usedIps](#p_qdd_3bc_pfb)|0.6|
+
+### usedIps
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|ipRangeUuid|String|IP Range UUID|0.6|
+|l3NetworkUuid|String|L3 Network UUID|0.6|
+|ipVersion|Integer|IP Protocol Number|3.1.0|
+|ip|String|IP Address|0.6|
+|netmask|String|Netmask|0.6|
+|gateway|String|Gateway Address|0.6|
+|usedFor|String| |0.6|
+|ipInLong|long| |0.6|
+|vmNicUuid|String|VM NIC UUID|3.1.0|
+|createDate|Timestamp|Creation Time|0.6|
+|lastOpDate|Timestamp|Last Operation Date|0.6|
+
+### allVolumes
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|name|String|Resource name|0.6|
+|description|String|Resource description|0.6|
+|primaryStorageUuid|String|Data Storage UUID|0.6|
+|vmInstanceUuid|String|Virtual Machine UUID|0.6|
+|diskOfferingUuid|String|Disk Offering UUID|0.6|
+|rootImageUuid|String| |0.6|
+|installPath|String| |0.6|
+|type|String| |0.6|
+|format|String| |0.6|
+|size|Long| |0.6|
+|actualSize|Long| |0.6|
+|deviceId|Integer| |0.6|
+|state|String| |0.6|
+|status|String| |0.6|
+|createDate|Timestamp|Creation Time|0.6|
+|lastOpDate|Timestamp|Last Operation Date|0.6|
+|isShareable|Boolean| |0.6|
+|volumeQos|String| |4.7.13|
+|lastDetachDate|Timestamp| |4.7.13|
+|lastVmInstanceUuid|String| |4.7.13|
+
+### vmCdRoms
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|4.7.13|
+|vmInstanceUuid|String|Virtual Machine UUID|4.7.13|
+|deviceId|Integer| |4.7.13|
+|isoUuid|String| |4.7.13|
+|isoInstallPath|String| |4.7.13|
+|name|String|Resource name|4.7.13|
+|description|String|Resource description|4.7.13|
+|createDate|Timestamp|Creation Time|4.7.13|
+|lastOpDate|Timestamp|Last Operation Date|4.7.13|
+
+## SDK Examples
+Java SDK
+
+```
+DetachL3NetworkFromVmAction action = new DetachL3NetworkFromVmAction();
+action.vmNicUuid = "e8c694f7dcaa3a48860312d86d77fcde";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DetachL3NetworkFromVmAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = DetachL3NetworkFromVmAction()
+action.vmNicUuid = "e8c694f7dcaa3a48860312d86d77fcde"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

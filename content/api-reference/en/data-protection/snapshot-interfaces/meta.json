@@ -1,0 +1,17 @@
+{
+  "title": "Snapshot Interfaces",
+  "pages": [
+    "create-volume-snapshot-group",
+    "delete-volume-snapshot-group",
+    "update-volume-snapshot-group",
+    "query-volume-snapshot-group",
+    "check-volume-snapshot-group-availability",
+    "revert-vm-from-snapshot-group",
+    "ungroup-volume-snapshot-group",
+    "get-memory-snapshot-group-reference",
+    "validate-volume-snapshot-chain",
+    "undo-snapshot-creation",
+    "check-memory-snapshot-group-conflict"
+  ],
+  "pagesIndex": "index"
+}

@@ -1,0 +1,10 @@
+{
+  "title": "Distributed Port Group",
+  "pages": [
+    "index",
+    "create",
+    "modify",
+    "delete"
+  ],
+  "pagesIndex": "index"
+}

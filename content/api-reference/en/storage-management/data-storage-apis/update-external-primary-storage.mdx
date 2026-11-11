@@ -1,0 +1,377 @@
+---
+title: "Update External Primary Storage"
+---
+
+<APIPage method="PUT" path="/v1/primary-storage/addon/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateExternalPrimaryStorage": {
+    "config": "{\"pools\":[{\"name\":\"pool1\",\"aliasName\":\"pool-high\"}]}",
+    "defaultProtocol": "Vhost",
+    "name": "My Primary Storage",
+    "description": "New description"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateExternalPrimaryStorage":{"config":"{\"pools\":[{\"name\":\"pool1\",\"aliasName\":\"pool-high\"}]}","defaultProtocol":"Vhost","name":"My Primary Storage","description":"New description"}}' \
+http://localhost:8080/zstack/v1/primary-storage/addon/6275cc909e313b63a00acf1eea7a7e18/actions
+```
+
+Parameter List
+
+<table id="table_dfg_pw4_v3b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+config \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in `updateExternalPrimaryStorage` structure\)
+
+</td><td>
+
+Configuration
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+defaultProtocol \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in `updateExternalPrimaryStorage` structure\)
+
+</td><td>
+
+Default Protocol
+
+</td><td>
+
+-   Vhost
+-   Scsi
+-   Nvme
+-   Curve
+-   file
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+Resource UUID, uniquely identifies the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+name \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in `updateExternalPrimaryStorage` structure\)
+
+</td><td>
+
+Resource Name
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+description \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in `updateExternalPrimaryStorage` structure\)
+
+</td><td>
+
+Resource Description
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+url \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in `updateExternalPrimaryStorage` structure\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System Tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User Tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "identity": "expon",
+    "config": {
+      "pools": [
+        {
+          "name": "pool1",
+          "aliasName": "pool-high"
+        },
+        {
+          "name": "pool2"
+        }
+      ]
+    },
+    "addonInfo": {
+      "pools": [
+        {
+          "name": "pool1",
+          "availableCapacity": 100,
+          "totalCapacity": 200
+        },
+        {
+          "name": "pool2",
+          "availableCapacity": 100,
+          "totalCapacity": 200
+        }
+      ]
+    },
+    "uuid": "f40dbde502013ea98a7fe9a30bac95a3",
+    "url": "http://operator:*****@172.25.1.5:80",
+    "totalCapacity": 107374182400,
+    "availableCapacity": 53687091200,
+    "createDate": "Nov 14, 2017 2:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |5.0.0|
+|inventory|ExternalPrimaryStorageInventory|See [inventory](#p_ocg_p2m_s2c)|5.0.0|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation succeeds, this field is null. See [error](#p_gxy_yw4_v3b)|5.0.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|identity|String|Storage Identity|5.0.0|
+|config|String|Configuration|5.0.0|
+|addonInfo|String|Additional Information|5.0.0|
+|outputProtocols|List|Output Protocols|5.0.0|
+|defaultProtocol|String|Default Protocol|5.0.0|
+|uuid|String|Resource UUID, uniquely identifies the resource|5.0.0|
+|zoneUuid|String|Data Center UUID|5.0.0|
+|name|String|Resource Name|5.0.0|
+|url|String| |5.0.0|
+|description|String|Resource Description|5.0.0|
+|totalCapacity|Long| |5.0.0|
+|availableCapacity|Long| |5.0.0|
+|totalPhysicalCapacity|Long| |5.0.0|
+|availablePhysicalCapacity|Long| |5.0.0|
+|systemUsedCapacity|Long| |5.0.0|
+|type|String|Type|5.0.0|
+|state|String| |5.0.0|
+|status|String| |5.0.0|
+|mountPath|String| |5.0.0|
+|createDate|Timestamp|Create Time|5.0.0|
+|lastOpDate|Timestamp|Last Modification Time|5.0.0|
+|attachedClusterUuids|List| |5.0.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause, the source error that caused the current error. If there is no original error, this field is null|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateExternalPrimaryStorageAction action = new UpdateExternalPrimaryStorageAction();
+action.config = "{"pools":[{"name":"pool1","aliasName":"pool-high"}]}";
+action.defaultProtocol = "Vhost";
+action.uuid = "6275cc909e313b63a00acf1eea7a7e18";
+action.name = "My Primary Storage";
+action.description = "New description";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateExternalPrimaryStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateExternalPrimaryStorageAction action = UpdateExternalPrimaryStorageAction()
+action.config = "{"pools":[{"name":"pool1","aliasName":"pool-high"}]}"
+action.defaultProtocol = "Vhost"
+action.uuid = "6275cc909e313b63a00acf1eea7a7e18"
+action.name = "My Primary Storage"
+action.description = "New description"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateExternalPrimaryStorageAction.Result res = action.call()
+```
+
+</APIPage>

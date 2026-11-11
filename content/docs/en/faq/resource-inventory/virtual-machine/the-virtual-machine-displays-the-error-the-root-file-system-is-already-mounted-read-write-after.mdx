@@ -1,0 +1,22 @@
+---
+title: "The virtual machine displays the error \"The root file system is already mounted read-write.\" after startup. What should I do?"
+---
+
+## Symptom
+The virtual machine displays the error "The root file system is already mounted read-write." after startup.
+
+As shown in [Figure 1](#fig_vm2_b14_txb):
+
+![Virtual machine startup error message](/docs/en/faq/images/ZStack_FAQ_Summary_0001_97_1.png)
+
+## Cause
+The disk device name has changed, preventing the virtual machine from booting normally.
+
+## Solution
+1.  Log in to the virtual machine console and run the `blkid` command to query and record the disk UUID.
+
+2.  Run the `vim /etc/fstab` command to open the fstab file for editing and mount the disk to the corresponding partition using the UUID.
+
+    As shown in [Figure 2](#fig_tk4_zhs_txb):
+
+    ![Add UUID information](/docs/en/faq/images/ZStack_FAQ_Summary_0001_97_2.png)

@@ -1,0 +1,129 @@
+---
+title: "更新报警消息模板"
+---
+
+<APIPage method="PUT" path="/v1/zwatch/alarms/sns/text-templates/{uuid}/actions">
+
+更新报警消息模板。
+
+Headers
+
+```
+
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateSNSTextTemplate": {
+    "name": "email template",
+    "template": "Alarm ${ALARM_NAME} changes status to ${ALARM_CURRENT_STATUS}",
+    "recoveryTemplate": "Alarm ${ALARM_NAME} Resource ${ALARM_RESOURCE_NAME} changes status to ${ALARM_CURRENT_STATUS}",
+    "defaultTemplate": true
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateSNSTextTemplate":{"name":"email template","template":"Alarm ${ALARM_NAME} changes status to ${ALARM_CURRENT_STATUS}","recoveryTemplate":"Alarm ${ALARM_NAME} Resource ${ALARM_RESOURCE_NAME} changes status to ${ALARM_CURRENT_STATUS}","defaultTemplate":true}}' http://localhost:8080/zstack/v1/zwatch/alarms/sns/text-templates/108482a9d3153463abd49712701ad937/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |2.3|
+|name \(可选\)|String|body\(包含在**updateSNSTextTemplate**结构中\)|资源名称| |2.3|
+|description \(可选\)|String|body\(包含在**updateSNSTextTemplate**结构中\)|资源的详细描述| |2.3|
+|template \(可选\)|String|body\(包含在**updateSNSTextTemplate**结构中\)|报警消息模板文本| |2.3|
+|recoveryTemplate \(可选\)|String|body\(包含在**updateSNSTextTemplate**结构中\)|恢复报警消息模板文本| |3.4.0|
+|defaultTemplate \(可选\)|Boolean|body\(包含在**updateSNSTextTemplate**结构中\)|是否为默认模板| |2.3|
+|systemTags \(可选\)|List|body|系统标签| |2.3|
+|userTags \(可选\)|List|body|用户标签| |2.3|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "cc881c03f4c04ea9a0e0dda61f4c2f00",
+    "name": "email template",
+    "applicationPlatformType": "Email",
+    "template": "Alarm ${ALARM_NAME} changes status to ${ALARM_CURRENT_STATUS}",
+    "recoveryTemplate": "Alarm ${ALARM_NAME} Resource ${ALARM_RESOURCE_NAME} changes status to ${ALARM_CURRENT_STATUS}",
+    "defaultTemplate": false,
+    "createDate": "Jul 6, 2018 1:51:22 PM",
+    "lastOpDate": "Jul 6, 2018 1:51:22 PM"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_r1p_rf2_l2b)|2.3|
+|inventory|SNSTextTemplateInventory|详情参考[inventory](#p_d1w_sf2_l2b)|2.3|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|2.3|
+|description|String|错误的概要描述|2.3|
+|details|String|错误的详细信息|2.3|
+|elaboration|String|保留字段，默认为null|2.3|
+|opaque|LinkedHashMap|保留字段，默认为null|2.3|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|2.3|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|2.3|
+|name|String|资源名称|2.3|
+|description|String|资源的详细描述|2.3|
+|applicationPlatformType|String|应用平台类型|2.3|
+|template|String|模板文本|2.3|
+|recoveryTemplate|String|模板文本|3.4.0|
+|defaultTemplate|Boolean|是否为默认模板|2.3|
+|createDate|Timestamp|创建时间|2.3|
+|lastOpDate|Timestamp|最后一次修改时间|2.3|
+
+## SDK示例
+Java SDK
+
+```
+UpdateSNSTextTemplateAction action = new UpdateSNSTextTemplateAction();
+action.uuid = "108482a9d3153463abd49712701ad937";
+action.name = "email template";
+action.template = "Alarm ${ALARM_NAME} changes status to ${ALARM_CURRENT_STATUS}";
+action.recoveryTemplate = "Alarm ${ALARM_NAME} Resource ${ALARM_RESOURCE_NAME} changes status to ${ALARM_CURRENT_STATUS}";
+action.defaultTemplate = true;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateSNSTextTemplateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateSNSTextTemplateAction action = UpdateSNSTextTemplateAction()
+action.uuid = "108482a9d3153463abd49712701ad937"
+action.name = "email template"
+action.template = "Alarm ${ALARM_NAME} changes status to ${ALARM_CURRENT_STATUS}"
+action.recoveryTemplate = "Alarm ${ALARM_NAME} Resource ${ALARM_RESOURCE_NAME} changes status to ${ALARM_CURRENT_STATUS}"
+action.defaultTemplate = true
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateSNSTextTemplateAction.Result res = action.call()
+```
+
+</APIPage>

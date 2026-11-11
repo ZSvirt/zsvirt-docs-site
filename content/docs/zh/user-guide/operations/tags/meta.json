@@ -1,0 +1,11 @@
+{
+  "title": "标签管理",
+  "pages": [
+    "overview",
+    "create",
+    "bind-unbind",
+    "delete",
+    "search-resources"
+  ],
+  "pagesIndex": "overview"
+}

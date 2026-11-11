@@ -1,0 +1,397 @@
+---
+title: "Update PCI Device"
+---
+
+## API Request
+URL
+
+```
+PUT zstack/v1/pci-device/pci-devices/{uuid}/actions
+```
+
+Header
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updatePciDevice": {
+    "state": "Disabled",
+    "name": "test pci",
+    "description": "test pci",
+    "metaData": "key1:value1;key2:value2"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, the **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updatePciDevice":{"state":"Disabled","name":"test pci","description":"test pci","metaData":"key1:value1;key2:value2"}}' \
+http://localhost:8080/zstack/v1/pci-device/pci-devices/4bec7e7c2c1e337599e0455165906fd5/actions
+```
+
+Parameter List
+
+<table id="table_v4s_5ms_qcb"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+UUID of the resource, uniquely identifies the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.1
+
+</td></tr><tr><td>
+
+state \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **updatePciDevice** structure\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+-   Enabled
+-   Disabled
+
+</td><td>
+
+2.1
+
+</td></tr><tr><td>
+
+description \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **updatePciDevice** structure\)
+
+</td><td>
+
+Resource description
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.1
+
+</td></tr><tr><td>
+
+metaData \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **updatePciDevice** structure\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.1
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.1
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.1
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "description": "test pci",
+    "hostUuid": "47c749c4520c3c5ba2ddcb6bf725cc40",
+    "vmInstanceUuid": "8452e9231dd339158054902001b453d0",
+    "type": "GPU_Video_Controller",
+    "state": "Disabled",
+    "status": "Active",
+    "vendorId": "10de",
+    "deviceId": "0e0f",
+    "subvendorId": "10de",
+    "subdeviceId": "118b",
+    "pciDeviceAddress": "0000:06:00.1",
+    "metaData": {
+      "metaData": "render:Equal:true;anime:Equal:true",
+      "metaDataEntries": [
+        {
+          "key": "render",
+          "op": "Equal",
+          "value": "true"
+        },
+        {
+          "key": "anime",
+          "op": "Equal",
+          "value": "true"
+        }
+      ]
+    }
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_abf_dwf_xhb)|2.1|
+|inventory|PciDeviceInventory|See [inventory](#p_gwz_cwf_xhb)|2.1|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code, a globally unique identifier of the error, e.g. SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause, the source error that caused the current error, null if no original error|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifies the resource|2.1|
+|name|String|Resource name|3.5.0|
+|description|String|Resource description|2.1|
+|hostUuid|String|Host UUID|2.1|
+|parentUuid|String|Physical PCI device UUID|3.5.0|
+|vmInstanceUuid|String|Virtual Machine UUID|2.1|
+|pciSpecUuid|String|PCI device offering UUID|3.5.0|
+|vendorId|String|Vendor ID|2.1|
+|deviceId|String|Device ID|2.1|
+|subvendorId|String|Sub-vendor ID|2.1|
+|subdeviceId|String|Sub-device ID|2.1|
+|pciDeviceAddress|String|PCI device address|2.1|
+|createDate|Timestamp|Create date|2.1|
+|lastOpDate|Timestamp|Last update date|2.1|
+|type|PciDeviceType|See [type](#p_hxs_cwf_xhb)|2.1|
+|state|PciDeviceState|See [state](#p_xzn_cwf_xhb)|2.1|
+|status|PciDeviceStatus|See [status](#p_w2k_cwf_xhb)|2.1|
+|virtStatus|PciDeviceVirtStatus|See [virtStatus](#p_v2g_cwf_xhb)|3.5.0|
+|chooser|PciDeviceChooser|See [chooser](#p_uqc_rbn_y1c)|4.1.0|
+|metaData|PciDeviceMetaData|See [metaData](#p_thb_cwf_xhb)|2.1|
+|matchedPciDeviceOfferingRef|List|See [matchedPciDeviceOfferingRef](#p_e34_bwf_xhb)|2.1|
+|mdevSpecRefs|List|See [mdevSpecRefs](#p_udj_bwf_xhb)|3.5.0|
+
+### type
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|GPU\_Video\_Controller|PciDeviceType|GPU video controller|2.1|
+|GPU\_Audio\_Controller|PciDeviceType|GPU audio controller|2.1|
+|GPU\_3D\_Controller|PciDeviceType|GPU 3D controller|2.1|
+|Moxa\_Device|PciDeviceType|MOXA card|2.1|
+|Generic|PciDeviceType|Generic device|2.1|
+
+### state
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Enabled|PciDeviceState|Enabled|2.1|
+|Disabled|PciDeviceState|Disabled|2.1|
+
+### status
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Active|PciDeviceStatus|Ready|2.1|
+|Attached|PciDeviceStatus|Attached|2.1|
+|System|PciDeviceStatus|System|2.1|
+
+### virtStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|UNVIRTUALIZABLE|PciDeviceVirtStatus|Unvirtualizable|3.5.0|
+|SRIOV\_VIRTUALIZABLE|PciDeviceVirtStatus|SRIOV virtualizable|3.5.0|
+|VFIO\_MDEV\_VIRTUALIZABLE|PciDeviceVirtStatus|VFIO\_MDEV virtualizable|3.5.0|
+|SRIOV\_VIRTUALIZED|PciDeviceVirtStatus|SRIOV virtualized|3.5.0|
+|VFIO\_MDEV\_VIRTUALIZED|PciDeviceVirtStatus|VFIO\_MDEV virtualized|3.5.0|
+|SRIOV\_VIRTUAL|PciDeviceVirtStatus|SRIOV virtual device|3.5.0|
+|UNKNOWN|PciDeviceVirtStatus|Unknown|3.5.0|
+
+### chooser
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|None|PciDeviceChooser| |4.8.0|
+|Device|PciDeviceChooser| |4.8.0|
+|Spec|PciDeviceChooser| |4.8.0|
+
+### metaData
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|metaData|String| |2.1|
+|metaDataEntries|List|See [metaDataEntries](#p_i1x_bwf_xhb)|2.1|
+
+### metaDataEntries
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|key|String|Key|2.1|
+|value|String|Value|2.1|
+|op|PciDeviceMetaDataOperator|See [op](#p_xls_bwf_xhb)|2.1|
+
+### op
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Equal|PciDeviceMetaDataOperator|Equal|2.1|
+|Unequal|PciDeviceMetaDataOperator|Unequal|2.1|
+
+### matchedPciDeviceOfferingRef
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|pciDeviceUuid|String| |2.1|
+|pciDeviceOfferingUuid|String| |2.1|
+
+### mdevSpecRefs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|pciDeviceUuid|String|PCI device UUID|3.5.0|
+|mdevSpecUuid|String|MDEV device offering UUID|3.5.0|
+|effective|Boolean|Whether the current MDEV specification is used to partition this PCI device|3.5.0|
+|createDate|Timestamp|Create date|3.5.0|
+|lastOpDate|Timestamp|Last update date|3.5.0|
+
+## SDK Examples
+Java SDK
+
+```
+UpdatePciDeviceAction action = new UpdatePciDeviceAction();
+action.uuid = "4bec7e7c2c1e337599e0455165906fd5";
+action.state = "Disabled";
+action.name = "test pci";
+action.description = "test pci";
+action.metaData = "key1:value1;key2:value2";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdatePciDeviceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdatePciDeviceAction action = UpdatePciDeviceAction()
+action.uuid = "4bec7e7c2c1e337599e0455165906fd5"
+action.state = "Disabled"
+action.name = "test pci"
+action.description = "test pci"
+action.metaData = "key1:value1;key2:value2"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdatePciDeviceAction.Result res = action.call()
+```

@@ -1,0 +1,64 @@
+---
+title: "退订SNS主题"
+---
+
+<APIPage method="DELETE" path="/v1/sns/topics/{topicUuid}/endpoints/{endpointUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/sns/topics/bd6c49ad623a3740880ca6d3ed3bb793/endpoints/36d6eb53f7c23fbca1ac72008940efc8?
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|topicUuid|String|url|主题UUID| |2.3|
+|endpointUuid|String|url|终端UUID| |2.3|
+|systemTags \(可选\)|List|body|系统标签| |2.3|
+|userTags \(可选\)|List|body|用户标签| |2.3|
+
+## API返回
+该API成功时返回一个空的JSON结构**`{}`**，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+UnsubscribeSNSTopicAction action = new UnsubscribeSNSTopicAction();
+action.topicUuid = "bd6c49ad623a3740880ca6d3ed3bb793";
+action.endpointUuid = "36d6eb53f7c23fbca1ac72008940efc8";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UnsubscribeSNSTopicAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UnsubscribeSNSTopicAction action = UnsubscribeSNSTopicAction()
+action.topicUuid = "bd6c49ad623a3740880ca6d3ed3bb793"
+action.endpointUuid = "36d6eb53f7c23fbca1ac72008940efc8"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UnsubscribeSNSTopicAction.Result res = action.call()
+```
+
+</APIPage>

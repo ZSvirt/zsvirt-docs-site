@@ -1,0 +1,85 @@
+---
+title: "List VM UUIDs by Scheduling Rule UUID and Scheduling State"
+---
+
+<APIPage method="POST" path="/v1/list/vms/from/executeState">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "ruleUuid": "ff0e4855dd0f309f8b8e4914edbcbf00",
+    "executeStates": [
+      "SCHEDULED",
+      "EXECUTING"
+    ]
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The `systemTags` and `userTags` fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"ruleUuid":"ff0e4855dd0f309f8b8e4914edbcbf00","executeStates":["SCHEDULED","EXECUTING"]}}' \
+http://localhost:8080/zstack/v1/list/vms/from/executeState
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|ruleUuid|String|body \(contained in the `params` structure\)|Scheduling rule UUID| |4.6.0|
+|executeStates|List|body \(contained in the `params` structure\)|Scheduling state \(Conflict, Normal, Invalid\)| |4.6.0|
+|systemTags \(optional\)|List|body|System tags| |4.6.0|
+|userTags \(optional\)|List|body|User tags| |4.6.0|
+
+## API Response
+This API returns an empty JSON structure `{}` on success. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+ListVmsFromSchedulingStateAction action = new ListVmsFromSchedulingStateAction();
+action.ruleUuid = "ff0e4855dd0f309f8b8e4914edbcbf00";
+action.executeStates = asList("SCHEDULED","EXECUTING");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ListVmsFromSchedulingStateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ListVmsFromSchedulingStateAction action = ListVmsFromSchedulingStateAction()
+action.ruleUuid = "ff0e4855dd0f309f8b8e4914edbcbf00"
+action.executeStates = [SCHEDULED, EXECUTING]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ListVmsFromSchedulingStateAction.Result res = action.call()
+```
+
+</APIPage>

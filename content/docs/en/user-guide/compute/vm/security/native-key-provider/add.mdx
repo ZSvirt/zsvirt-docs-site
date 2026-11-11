@@ -1,0 +1,29 @@
+---
+title: 'Add a Native Key Provider'
+---
+
+ZSvirt provides a native key provider that allows you to enable encryption-related features without a third-party KMS.
+
+1.  In the navigation pane, select **Inventory** &gt; **VM and Host**.
+
+2.  Select the root node.
+
+3.  On the root node details page, click **Key Providers**.
+
+4.  On the Key Providers tab, click **Add Key Provider**.
+
+5.  In the Add Key Provider dialog, set the following parameters:
+
+    -   **Name**: Enter a name for the key provider.
+
+        <Callout type="info">
+        The name of each key provider serves as its identifier. Ensure the name is globally unique.
+        </Callout>
+
+    -   **Description**: Enter a brief description for the key provider.
+    -   **Type**: Select **native Key Provider**.
+6.  Click **OK**.
+
+    After the key provider is added successfully, its status shows as "Not Backed Up".
+
+After you add a native key provider, you must back it up before use. For more information, see [Back Up the Native Key Provider](/en/docs/user-guide/compute/vm/security/native-key-provider/backup).

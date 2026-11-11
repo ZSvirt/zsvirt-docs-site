@@ -1,0 +1,129 @@
+---
+title: "Add Log Server Configuration"
+---
+
+<APIPage method="POST" path="/v1/log/configurations">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "syslog",
+    "type": "log4j2",
+    "configuration": "{\n\"appenderType\": \"Syslog\",\n\"configuration\": {\n\"hostname\": \"192.168.0.11\",\n\"port\": \"514\",\n\"protocol\": \"UDP\",\n\"facility\": \"LOCAL5\"\n}\n}"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The **systemTags** and **userTags** fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"syslog","type":"log4j2","configuration":"{\n\"appenderType\": \"Syslog\",\n\"configuration\": {\n\"hostname\": \"192.168.0.11\",\n\"port\": \"514\",\n\"protocol\": \"UDP\",\n\"facility\": \"LOCAL5\"\n}\n}"}}' http://localhost:8080/zstack/v1/log/configurations
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|name|String|body \(contained in the **params** structure\)|Resource name| |3.10.0|
+|description \(optional\)|String|body \(contained in the **params** structure\)|Detailed description of the resource| |3.10.0|
+|type|String|body \(contained in the **params** structure\)| | |3.10.0|
+|configuration|String|body \(contained in the **params** structure\)| | |3.10.0|
+|resourceUuid \(optional\)|String|body \(contained in the **params** structure\)|Resource UUID| |3.10.0|
+|tagUuids \(optional\)|List|body \(contained in the **params** structure\)|Tag UUID list| |3.10.0|
+|systemTags \(optional\)|List|body|System tags| |3.10.0|
+|userTags \(optional\)|List|body|User tags| |3.10.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "id": 0.0,
+    "labelKey": "log4j2-f2828a4c39af4605a86a94a36b8f7865",
+    "labelValue": "{\n\"appenderType\": \"Syslog\",\n\"configuration\": {\n\"hostname\": \"192.168.0.11\",\n\"port\": \"514\",\n\"protocol\": \"UDP\",\n\"facility\": \"LOCAL5\"\n}\n}"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_jhy_25y_g2b)|3.10.0|
+|inventory|ResourceStackInventory|See [inventory](#p_zzf_f5y_g2b)|3.10.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. A globally unique identifier for the error, e.g., SYS.1000, HOST.1001|3.10.0|
+|description|String|Brief description of the error|3.10.0|
+|details|String|Detailed error information|3.10.0|
+|elaboration|String|Reserved field. Defaults to null|3.10.0|
+|opaque|LinkedHashMap|Reserved field. Defaults to null|3.10.0|
+|cause|ErrorCode|Root error. The source error that caused this error. Null if no root cause exists|3.10.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|id|long| |3.10.0|
+|labelKey|String| |3.10.0|
+|labelValue|String| |3.10.0|
+|resourceUuid|String|Resource UUID|3.10.0|
+|createDate|Timestamp|Creation time|3.10.0|
+|lastOpDate|Timestamp|Last modification time|3.10.0|
+
+## SDK Examples
+Java SDK
+
+```
+AddLogConfigurationAction action = new AddLogConfigurationAction();
+action.name = "syslog";
+action.type = "log4j2";
+action.configuration = "{
+"appenderType": "Syslog",
+"configuration": {
+"hostname": "192.168.0.11",
+"port": "514",
+"protocol": "UDP",
+"facility": "LOCAL5"
+}
+}";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddLogConfigurationAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddLogConfigurationAction action = AddLogConfigurationAction()
+action.name = "syslog"
+action.type = "log4j2"
+action.configuration = "{
+"appenderType": "Syslog",
+"configuration": {
+"hostname": "192.168.0.11",
+"port": "514",
+"protocol": "UDP",
+"facility": "LOCAL5"
+}
+}"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddLogConfigurationAction.Result res = action.call()
+```
+
+</APIPage>

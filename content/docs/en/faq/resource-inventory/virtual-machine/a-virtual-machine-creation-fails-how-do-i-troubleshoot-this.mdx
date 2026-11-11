@@ -1,0 +1,21 @@
+---
+title: "A Virtual Machine creation fails. How do I troubleshoot this?"
+---
+
+## Solution
+-   Check the creation failure error message in the operation log to identify the cause. If the creation still fails, check the following:
+-   Verify that the Image Storage is available and that the link for downloading images to Data Storage is functioning normally.
+
+-   Verify that the Data Storage is attached to the Cluster and has sufficient capacity.
+
+-   Verify that the Host is available and has sufficient CPU and memory resources.
+
+-   Verify that the Cluster has the corresponding Distributed Switch attached.
+
+-   Verify that the Distributed Port Group has available IP addresses.
+
+-   Verify that the platform license is within its validity period.
+
+-   Verify that the libvirtd and kvmagent services on the Host are running normally.
+
+-   If the Virtual Machine status remains "Starting," verify whether a large image is causing a long image cache download time.

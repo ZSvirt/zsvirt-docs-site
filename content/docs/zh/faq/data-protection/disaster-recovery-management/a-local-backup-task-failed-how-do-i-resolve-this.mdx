@@ -1,0 +1,25 @@
+---
+title: "本地备份任务失败，如何解决？"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+## 原因
+进程打开的文件数超过限制。
+
+## 解决方案
+1.  登录本地备份服务器，执行以下命令查看连接数：
+
+    ```
+    [root@localhost ~]# lsof -p `pgrep zstore`|wc -l
+    ```
+
+    <Callout type="info">
+    **max open files**参数值为**4096**。若返回的连接数大于4096，表示进程打开的文件数超过了限制。
+    </Callout>
+
+2.  执行以下命令，重启zstore服务释放连接数：
+
+    ```
+    [root@localhost ~]#  systemctl restart zstack-imagestorebackupstorage.service
+    ```

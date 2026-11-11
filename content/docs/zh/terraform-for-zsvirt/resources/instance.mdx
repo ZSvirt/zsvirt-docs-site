@@ -1,0 +1,356 @@
+---
+title: 'zsphere_instance'
+description: '管理 ZSvirt 云主机（VM）实例，可配置 CPU、内存、磁盘、网卡等属性。'
+---
+
+<HistoricalNamingNote locale="zh" />
+
+
+# zsphere_instance（资源）
+
+管理 ZSvirt 云主机（VM）实例，可配置 CPU、内存、磁盘、网卡等属性。
+
+## 示例用法
+```terraform
+data "zsphere_images" "images" {
+  name = "image_from_terraform"
+}
+
+data "zsphere_port_groups" "networks" {
+  name = "port_group_from_terraform"
+}
+
+# Example 1: Basic VM creation from image
+resource "zsphere_instance" "vm_basic" {
+  name        = "vm_basic_from_terraform"
+  description = "create a basic vm from terraform"
+  image_uuid  = data.zsphere_images.images.images.0.uuid
+  memory_size = 1024
+  cpu_num     = 2
+
+  # Platform configuration
+  platform      = "Linux"
+  guest_os_type = "CentOS 7"
+  architecture  = "x86_64"
+
+  root_disk = {
+    size = 5 * 1024 * 1024 * 1024 # 5 GB in bytes
+  }
+
+  data_disks = [
+    {
+      size = 2 * 1024 * 1024 * 1024 # 2 GB in bytes
+    }
+  ]
+
+  network_interfaces = [
+    {
+      port_group_uuid = data.zsphere_port_groups.networks.port_groups.0.uuid
+      default_l3      = true
+    }
+  ]
+}
+
+# Example 2: Advanced VM with UEFI boot and custom disk bus types
+resource "zsphere_instance" "vm_advanced" {
+  name        = "vm_advanced_from_terraform"
+  description = "create an advanced vm from terraform"
+  image_uuid  = data.zsphere_images.images.images.0.uuid
+  memory_size = 1024
+  cpu_num     = 2
+
+  # Platform configuration
+  platform      = "Linux"
+  guest_os_type = "CentOS 7"
+  architecture  = "x86_64"
+
+  # Boot configuration
+  boot_mode       = "UEFI"
+  vm_machine_type = "q35"
+  cpu_mode        = "host-model"
+
+  # Hostname configuration
+  hostname = "my-server.example.com"
+
+  # Root disk with virtio bus
+  root_disk = {
+    size     = 4 * 1024 * 1024 * 1024 # 4 GB in bytes
+    name     = "root-disk"
+    bus_type = "virtio"
+  }
+
+  # Data disks with different bus types
+  data_disks = [
+    {
+      size     = 2 * 1024 * 1024 * 1024 # 2 GB in bytes
+      bus_type = "virtio-scsi"
+    },
+    {
+      size     = 1 * 1024 * 1024 * 1024 # 1 GB in bytes
+      bus_type = "scsi"
+    }
+  ]
+
+  network_interfaces = [
+    {
+      port_group_uuid = data.zsphere_port_groups.networks.port_groups.0.uuid
+      default_l3      = true
+      static_ip       = "192.168.1.100"
+    }
+  ]
+
+  netmask = "255.255.255.0"
+  gateway = "192.168.1.1"
+
+  strategy   = "InstantStart"
+  never_stop = false
+  user_data  = "#!/bin/bash\necho 'Hello World'"
+}
+
+# Example 3: VM from template
+
+resource "zsphere_instance" "vm_from_template" {
+  name          = "vm_from_template"
+  description   = "create a vm from template"
+  template_uuid = "template uuid"
+  expunge       = true
+  memory_size   = 1024
+  cpu_num       = 2
+
+  network_interfaces = [
+    {
+      port_group_uuid = data.zsphere_port_groups.networks.port_groups.0.uuid
+      default_l3      = true
+    }
+  ]
+}
+
+output "zsphere_instance_basic" {
+  value     = zsphere_instance.vm_basic
+  sensitive = true
+}
+
+output "zsphere_instance_advanced" {
+  value     = zsphere_instance.vm_advanced
+  sensitive = true
+}
+
+output "zsphere_instance_from_template" {
+  value     = zsphere_instance.vm_from_template
+  sensitive = true
+}
+```
+
+## 参数说明
+
+### 必填参数
+
+- `name`（字符串）云主机实例名称。
+
+### 可选参数
+
+- `affinity_group_uuid`（字符串）UUID of the affinity group for the VM.
+- `architecture`（字符串）Architecture of the VM instance. Default is 'x86_64'.
+- `auto_release_gpu_device`（布尔值）Whether to auto-release GPU device when VM stops.
+- `bios_time_sync`（布尔值）Whether to sync VM time with BIOS time.
+- `boot_menu_splash_timeout`（字符串）Timeout for boot menu splash screen.
+- `boot_mode`（字符串）Boot mode for the VM instance. Valid values are 'Legacy' and 'UEFI'.
+- `boot_orders`（字符串列表）Boot order for the VM (e.g., CdRom, HardDisk, Network).
+- `cdrom_list`（属性列表）（参见下方嵌套结构）
+- `clock_sync_after_resume`（布尔值）Whether to sync clock after VM resume.
+- `clock_sync_interval`（数字）Clock sync interval in seconds.
+- `clock_track`（字符串）Clock track mode for the VM.
+- `cluster_uuid`（字符串）云主机实例所在集群 UUID。
+- `console_mode`（字符串）Console mode for the VM (vnc, spice).
+- `console_password`（字符串，敏感）Password for VM console access.
+- `cpu_bind_list_by_vcpu`（属性列表）（参见下方嵌套结构）
+- `cpu_bind_type`（字符串）CPU binding type.
+- `cpu_hide_kvm_mark`（布尔值）Whether to hide KVM mark from VM CPU.
+- `cpu_mode`（字符串）CPU mode for the VM. Valid values are 'host-model', 'host-passthrough', or 'custom'.
+- `cpu_num`（数字）The number of CPUs allocated to the VM instance.  When used together with `memory_size`, the `instance_offering_uuid` is not required.
+- `cpu_quota`（数字）CPU quota for the VM.
+- `cpu_resource_level`（字符串）CPU resource level (Normal, CpuHigh).
+- `data_disks`（属性列表）（参见下方嵌套结构）
+- `datacenter_uuid`（字符串）云主机实例所在区域 UUID。
+- `description`（字符串）A description of the VM instance.
+- `disk_aos`（属性列表）（参见下方嵌套结构）
+- `emulate_hyperv`（布尔值）Whether to emulate Hyper-V for the VM.
+- `emulator_pinning`（字符串）Emulator pinning configuration.
+- `expunge`（布尔值）是否 the instance should be expunged after deletion.
+- `fault_strategy`（字符串）Fault handling strategy for the VM.
+- `gateway`（字符串）Gateway for the VM's network interface (used with static IP).
+- `gpu_device_uuid_list`（字符串列表）List of GPU device UUIDs.
+- `gpu_type`（字符串）Type of GPU (e.g., qxl, vga).
+- `group`（字符串）VM group identifier.
+- `guest_os_type`（字符串）GuestOsimage,类型 如 Linux, Windows, or Other
+- `ha_stick_strategy`（布尔值）Whether to enable HA stick strategy.
+- `host_uuid`（字符串）运行云主机实例的物理主机 UUID。
+- `hostname`（字符串）Hostname to be set for the VM instance after creation (requires VMtools).
+- `hot_plug_enabled`（布尔值）Whether hot-plug is enabled for PCI devices.
+- `image_uuid`（字符串）创建云主机实例所用镜像 UUID。`image_uuid` 与 `template_uuid` 须指定其一。
+- `memory_resource_level`（字符串）Memory resource level (Normal, High).
+- `memory_size`（数字）The memory size allocated to the VM instance in megabytes (MB). When used together with `cpu_num`, the `instance_offering_uuid` is not required.
+- `migrate_auto_converge`（布尔值）Whether to enable auto-converge for VM migration.
+- `motherboard_type`（字符串）Type of motherboard (e.g., q35, pc).
+- `netmask`（字符串）Netmask for the VM's network interface (used with static IP).
+- `network_interfaces`（属性列表）（参见下方嵌套结构）
+- `never_stop`（布尔值）Whether the VM instance should never stop automatically.
+- `platform`（字符串）Platform of the image, 如 Linux, Windows, or Other
+- `root_disk`（Attributes）（参见下方嵌套结构）
+- `root_password`（字符串，敏感）Root password for the VM (used with user_data).
+- `root_username`（字符串）Root username for the VM (default is root for Linux, Administrator for Windows).
+- `se`（布尔值）Whether security element is enabled.
+- `socked_num`（数字）Number of CPU sockets.
+- `sound_card`（字符串）Type of sound card (e.g., ich6, ac97).
+- `spice_streaming_mode`（字符串）Spice streaming mode for the VM.
+- `ssh_key`（字符串）SSH public key for VM access.
+- `strategy`（字符串）The deployment strategy for the VM instance.
+- `template_uuid`（字符串）用于创建云主机的模板实例 UUID。`image_uuid` 与 `template_uuid` 须指定其一。
+- `total_gpu_memory`（数字）Total GPU memory in MB.
+- `usb_redirect`（布尔值）Whether USB redirect is enabled.
+- `user_data`（字符串）User data injected into the VM instance at boot time.
+- `vdi_monitor_number`（数字）Number of VDI monitors.
+- `vgpu_device`（Attributes）（参见下方嵌套结构）
+- `vm_cpuid_vendor`（字符串）Custom CPUID vendor string for the VM.
+- `vm_group_uuid`（字符串）UUID of the VM scheduling group.
+- `vm_machine_type`（字符串）VM machine type. For UEFI boot mode, 'q35' is recommended.
+- `vm_nic_config`（属性列表）（参见下方嵌套结构）
+- `vm_nic_params`（字符串）JSON string of VM NIC parameters for template creation. Used for advanced NIC configuration.
+- `vm_port_off`（布尔值）Whether to turn off VM ports.
+- `vm_usb_config`（属性列表）（参见下方嵌套结构）
+- `vnuma_enabled`（布尔值）Whether vNUMA is enabled.
+
+### 只读属性
+
+- `uuid`（字符串）唯一标识符，由 ZSvirt 管理。 VM instance.
+- `vm_nics`（属性列表）（参见下方嵌套结构）
+
+<a id="nestedatt--cdrom_list"></a>
+### `cdrom_list` 嵌套结构
+
+必填参数：
+
+- `cdrom`（字符串）CD-ROM identifier.
+
+可选参数：
+
+- `iso_uuid`（字符串）UUID of the ISO image (Empty for empty CD-ROM).
+
+
+<a id="nestedatt--cpu_bind_list_by_vcpu"></a>
+### `cpu_bind_list_by_vcpu` 嵌套结构
+
+必填参数：
+
+- `pcpu_list`（字符串列表）List of physical CPUs to bind.
+- `vcpu`（字符串）vCPU identifier.
+
+
+<a id="nestedatt--data_disks"></a>
+### `data_disks` 嵌套结构
+
+可选参数：
+
+- `boot`（布尔值）Whether this disk is the boot disk.
+- `bus_type`（字符串）Bus type of the disk, 如 virtio, ide, virtio-scsi, scsi.
+- `primary_storage_uuid`（字符串）数据盘所在主存储 UUID。
+- `size`（数字）The size of the data disk in bytes.
+
+只读属性：
+
+- `name`（字符串）The name of the data disk. Auto-generated as \{vm-name\}-1, \{vm-name\}-2, etc., matching the frontend naming convention.
+
+
+<a id="nestedatt--disk_aos"></a>
+### `disk_aos` 嵌套结构
+
+可选参数：
+
+- `boot`（布尔值）Whether this is the boot disk.
+- `bus_type`（字符串）Bus type of the disk (virtio, ide, virtio-scsi, scsi).
+- `name`（字符串）disk.名称
+- `primary_storage_uuid`（字符串）UUID of the primary storage.
+- `size`（数字）Size of the disk in bytes.
+- `source_type`（字符串）Source type of the disk (e.g., TemplatedVmInstanceVO, VolumeVO).
+- `source_uuid`（字符串）Source UUID of the disk.
+- `system_tags`（字符串列表）System tags for the disk.
+
+
+<a id="nestedatt--network_interfaces"></a>
+### `network_interfaces` 嵌套结构
+
+必填参数：
+
+- `default_l3`（布尔值）Whether this NIC is the default route NIC.
+- `port_group_uuid`（字符串）网卡所属三层网络 UUID。
+
+可选参数：
+
+- `static_ip`（字符串）Static IP address to assign. The format will be converted to system tag `staticIp::<l3_uuid>::<ip>`.
+
+
+<a id="nestedatt--root_disk"></a>
+### `root_disk` 嵌套结构
+
+可选参数：
+
+- `boot`（布尔值）Whether this disk is the boot disk.
+- `bus_type`（字符串）Bus type of the disk, 如 virtio, ide, virtio-scsi, scsi.
+- `name`（字符串）The name of the root disk.
+- `primary_storage_uuid`（字符串）根盘所在主存储 UUID。
+- `size`（数字）The size of the root disk in bytes.
+
+
+<a id="nestedatt--vgpu_device"></a>
+### `vgpu_device` 嵌套结构
+
+必填参数：
+
+- `type`（字符串）vGPU类型 device (e.g., MdevDevice).
+- `uuid`（字符串）UUID of the vGPU device.
+
+
+<a id="nestedatt--vm_nic_config"></a>
+### `vm_nic_config` 嵌套结构
+
+必填参数：
+
+- `l3_network_uuid`（字符串）三层网络 UUID。
+
+可选参数：
+
+- `custom_mac`（字符串）Custom MAC address.
+- `driver_type`（字符串）Driver type for the NIC (e.g., virtio, e1000).
+- `inbound_bandwidth`（数字）Inbound bandwidth limit.
+- `ipv4_gateway`（字符串）IPv4 gateway.
+- `ipv4_netmask`（字符串）IPv4 netmask.
+- `ipv6_gateway`（字符串）IPv6 gateway.
+- `ipv6_prefix`（数字）IPv6 prefix length.
+- `multi_queue_num`（字符串）Number of multi-queues for the NIC.
+- `outbound_bandwidth`（数字）Outbound bandwidth limit.
+- `state`（字符串）State of the NIC (enable/disable).
+- `static_ip`（字符串）Static IPv4 address.
+- `static_ipv6`（字符串）Static IPv6 address.
+
+
+<a id="nestedatt--vm_usb_config"></a>
+### `vm_usb_config` 嵌套结构
+
+必填参数：
+
+- `usb_device_uuid`（字符串）UUID of the USB device.
+
+可选参数：
+
+- `attach_type`（字符串）Attachment type for the USB device. 可选值： PassThrough (direct connection, requires USB device on same host), Redirect (forwarding, allows USB device on any host in same datacenter).
+
+
+<a id="nestedatt--vm_nics"></a>
+### `vm_nics` 嵌套结构
+
+只读属性：
+
+- `gateway`（字符串）The gateway of the network.
+- `ip`（字符串）网络分配的 IP 地址。
+- `netmask`（字符串）The netmask of the network.
+- `uuid`（字符串）网络 UUID。

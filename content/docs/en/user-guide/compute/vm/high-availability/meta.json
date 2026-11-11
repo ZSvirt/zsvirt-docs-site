@@ -1,0 +1,9 @@
+{
+  "title": "VM HA",
+  "pages": [
+    "overview",
+    "basic-operations",
+    "best-practices"
+  ],
+  "pagesIndex": "overview"
+}

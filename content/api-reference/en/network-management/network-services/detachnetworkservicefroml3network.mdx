@@ -1,0 +1,57 @@
+---
+title: "DetachNetworkServiceFromL3Network"
+---
+
+<APIPage method="DELETE" path="/v1/l3-networks/{l3NetworkUuid}/network-services" altPaths={["/v1/l3-networks/{l3NetworkUuid}/network-services/{service}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|l3NetworkUuid|String|url|The Distributed Port Group UUID| |0.6|
+|networkServices \(Optional\)|Map|query|Network services| |0.6|
+|systemTags \(Optional\)|List|query|System tags| |0.6|
+|userTags \(Optional\)|List|query|User tags| |0.6|
+|service \(Optional\)|String|query|The service type| |4.10.16|
+
+## API Response
+This API returns a null JSON object `{}` when it succeeds, and returns a JSON object containing an `error` field when it fails. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DetachNetworkServiceFromL3NetworkAction action = new DetachNetworkServiceFromL3NetworkAction();
+action.l3NetworkUuid = "ce1dedf370494cd4b49c1dd1c845c96b";
+action.networkServices = [76b66ca373834d0e8f4011f84dbf6006:[PortForwarding, EIP]];
+action.sessionId = "095d243ad49d4717b99b49c6151c25c8";
+DetachNetworkServiceFromL3NetworkAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DetachNetworkServiceFromL3NetworkAction action = DetachNetworkServiceFromL3NetworkAction()
+action.l3NetworkUuid = "a679835ba20342c5809e1be8ddf5e5c8"
+action.networkServices = [b78e8e4ca36b4eefa5c38140c7611ef3:[PortForwarding, EIP]]
+action.sessionId = "73aa0dad7996453f80331b833df6f320"
+DetachNetworkServiceFromL3NetworkAction.Result res = action.call()
+```
+
+</APIPage>

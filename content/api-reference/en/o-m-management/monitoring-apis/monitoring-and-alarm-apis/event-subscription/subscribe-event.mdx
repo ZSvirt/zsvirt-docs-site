@@ -1,0 +1,361 @@
+---
+title: "Subscribe to Event"
+---
+
+<APIPage method="POST" path="/v1/zwatch/events/subscriptions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "namespace": "ZStack/VM",
+    "eventName": "VMUuid",
+    "actions": [
+      {
+        "actionUuid": "2fbeae18082445d09c890fa076ff9fd9",
+        "actionType": "sns"
+      }
+    ],
+    "labels": [
+      {
+        "key": "VMUuid",
+        "value": "0c60949d81964f23a0d860b30472c51b",
+        "op": "Equal"
+      }
+    ]
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the **systemTags** and **userTags** fields can be omitted. They are listed here to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"namespace":"ZStack/VM","eventName":"VMUuid","actions":[{"actionUuid":"c7b1b7e054494aeab843a9c7371cdfc4","actionType":"sns"}],"labels":[{"key":"VMUuid","value":"47056270f2ea45409a419f1165f83945","op":"Equal"}]}}' \
+http://localhost:8080/zstack/v1/zwatch/events/subscriptions
+```
+
+Parameter List
+
+<table id="table_cjn_ymk_p2b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+namespace
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+Namespace.
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+eventName
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+Event name.
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+actions \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+Event actions.
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+labels \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+Event labels.
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+resourceUuid \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags.
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags.
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+name \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+Resource name.
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+emergencyLevel \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+Alarm level.
+
+</td><td>
+
+-   Emergent
+-   Important
+-   Normal
+
+</td><td>
+
+3.8.0
+
+</td></tr><tr><td>
+
+tagUuids \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+List of tag UUIDs.
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.8.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On failure, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+SubscribeEventAction action = new SubscribeEventAction();
+action.namespace = "ZStack/VM";
+action.eventName = "VMUuid";
+action.actions = asList([actionUuid:08a502ad6e944ceb8c70f523b69385e3, actionType:sns]);
+action.labels = asList([key:VMUuid, value:896391b873dc41288c0841b5fe8cb71b, op:Equal]);
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+SubscribeEventAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SubscribeEventAction action = SubscribeEventAction()
+action.namespace = "ZStack/VM"
+action.eventName = "VMUuid"
+action.actions = [[actionUuid:393df28f2bab49aba01fc229dae849c8, actionType:sns]]
+action.labels = [[key:VMUuid, value:abd2e73d08d248b6be73e31eb6a97e82, op:Equal]]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+SubscribeEventAction.Result res = action.call()
+```
+
+</APIPage>

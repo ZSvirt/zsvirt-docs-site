@@ -1,0 +1,316 @@
+---
+title: "更新交换机上行链路组"
+---
+
+<APIPage method="PUT" path="/v1/l2-networks/virtual-switch/{uuid}/uplink-group">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateVirtualSwitchUplinkGroup": {
+    "hostUuid": "922a7e4c781638ddb37d2098540530d8",
+    "slaveNames": [
+      "eth0"
+    ],
+    "type": "LinuxBonding"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateVirtualSwitchUplinkGroup":{"hostUuid":"922a7e4c781638ddb37d2098540530d8","slaveNames":["eth0"],"type":"LinuxBonding"}}' \
+http://localhost:8080/zstack/v1/l2-networks/virtual-switch/6614ce3ef02330cf8fcc734edd07da58/uplink-group
+```
+
+参数列表
+
+<table id="table_adn_pk2_hcc"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+资源的UUID，唯一标示该资源
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+hostUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`updateVirtualSwitchUplinkGroup`结构中\)
+
+</td><td>
+
+主机UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+slaveUuids \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(包含在`updateVirtualSwitchUplinkGroup`结构中\)
+
+</td><td>
+
+slave网卡UUID列表
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+slaveNames \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(包含在`updateVirtualSwitchUplinkGroup`结构中\)
+
+</td><td>
+
+slave网卡名称列表
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+type \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`updateVirtualSwitchUplinkGroup`结构中\)
+
+</td><td>
+
+绑定类型
+
+</td><td>
+
+-   LinuxBonding
+-   OvsBonding
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr></tbody>
+</table>
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "interfaceName": "eth0",
+    "type": "PhysicalInterface",
+    "interfaceUuid": "5d98a3ee3da1373e87b5f559c43da1e7",
+    "hostUuid": "ec5f7039252633748d29cb55ebcca73c",
+    "l2NetworkUuid": "d3357c017b793f21b6ec9e36f6f163e5"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.3.0|
+|inventory|UplinkGroupInventory|详情参考[inventory](#p_lpn_vlw_51c)|4.3.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_wfd_jmw_51c)|4.3.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|interfaceName|String|接口名称|4.3.0|
+|bondingUuid|String|绑定UUID|4.3.0|
+|interfaceUuid|String|接口UUID|4.3.0|
+|hostUuid|String|主机UUID|4.3.0|
+|l2NetworkUuid|String|分布式交换机UUID|4.3.0|
+|l2ProviderType|String|分布式交换机实现类型|4.3.0|
+|bridgeName|String|网桥名称|4.3.0|
+|createDate|Timestamp|创建时间|4.3.0|
+|lastOpDate|Timestamp|最后一次修改时间|4.3.0|
+|type|UplinkGroupType|详情参考[type](#p_ppv_pj2_hcc)|4.3.0|
+
+### type
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|PhysicalInterface|UplinkGroupType|物理网卡|4.3.0|
+|Bonding|UplinkGroupType|绑定|4.3.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+UpdateVirtualSwitchUplinkGroupAction action = new UpdateVirtualSwitchUplinkGroupAction();
+action.uuid = "6614ce3ef02330cf8fcc734edd07da58";
+action.hostUuid = "922a7e4c781638ddb37d2098540530d8";
+action.slaveNames = asList("eth0");
+action.type = "LinuxBonding";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateVirtualSwitchUplinkGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateVirtualSwitchUplinkGroupAction action = UpdateVirtualSwitchUplinkGroupAction()
+action.uuid = "6614ce3ef02330cf8fcc734edd07da58"
+action.hostUuid = "922a7e4c781638ddb37d2098540530d8"
+action.slaveNames = [eth0]
+action.type = "LinuxBonding"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateVirtualSwitchUplinkGroupAction.Result res = action.call()
+```
+
+</APIPage>

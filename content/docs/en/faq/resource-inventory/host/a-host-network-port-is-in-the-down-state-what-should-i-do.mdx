@@ -1,0 +1,18 @@
+---
+title: "A host network port is in the down state. What should I do?"
+---
+
+## Cause
+The issue may be caused by a hardware failure, a faulty optical module, or a faulty NIC.
+
+## Solution
+1.  Log in to the host and run the following commands to check system logs for errors:
+
+    ```
+    [root@localhost ~]# dmesg -T |grep -i error|failed
+    [root@localhost ~]# vim /var/log/message
+    ```
+
+2.  Log in to the server's out-of-band management interface and check for hardware alarms.
+
+3.  If a hardware failure is identified, follow the standard power-down procedure to power off the server and replace the faulty component.

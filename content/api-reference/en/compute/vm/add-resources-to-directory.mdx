@@ -1,0 +1,84 @@
+---
+title: "Add Resources to Group Directory"
+---
+
+<APIPage method="POST" path="/v1/add/resources/directory">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "resourceUuids": [
+      "ac852a8d7c8f3e15811e8f647f24d0f7",
+      "5bde5466936638648574ac73fa0abeb0"
+    ],
+    "directoryUuid": "1eb4cb0f7ed33305aba79b4af9ac4594"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"resourceUuids":["ac852a8d7c8f3e15811e8f647f24d0f7","5bde5466936638648574ac73fa0abeb0"],"directoryUuid":"1eb4cb0f7ed33305aba79b4af9ac4594"}}' http://localhost:8080/zstack/v1/add/resources/directory
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|resourceUuids|List|body\(contained in **params** structure\)|Batch Resource UUID| |4.6.0|
+|directoryUuid|String|body\(contained in **params** structure\)|Directory UUID| |4.6.0|
+|systemTags \(optional\)|List|body|System Tags| |4.6.0|
+|userTags \(optional\)|List|body|User Tags| |4.6.0|
+
+## API Response
+This API returns an empty JSON structure **`{}`** on success. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+AddResourcesToDirectoryAction action = new AddResourcesToDirectoryAction();
+action.resourceUuids = asList("ac852a8d7c8f3e15811e8f647f24d0f7","5bde5466936638648574ac73fa0abeb0");
+action.directoryUuid = "1eb4cb0f7ed33305aba79b4af9ac4594";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddResourcesToDirectoryAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddResourcesToDirectoryAction action = AddResourcesToDirectoryAction()
+action.resourceUuids = [ac852a8d7c8f3e15811e8f647f24d0f7, 5bde5466936638648574ac73fa0abeb0]
+action.directoryUuid = "1eb4cb0f7ed33305aba79b4af9ac4594"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddResourcesToDirectoryAction.Result res = action.call()
+```
+
+</APIPage>

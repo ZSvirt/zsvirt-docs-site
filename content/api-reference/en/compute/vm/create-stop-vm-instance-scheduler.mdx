@@ -1,0 +1,141 @@
+---
+title: "Create Stop Virtual Machine Scheduler"
+---
+
+<APIPage method="POST" path="/v1/vm-instances/{vmUuid}/schedulers/stopping">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "schedulerName": "vm-scheduler",
+    "schedulerDescription": "for test stop vm scheduler",
+    "type": "simple",
+    "interval": 5.0,
+    "repeatCount": 10.0,
+    "startTime": 0.0
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST http://localhost:8080/zstack/v1/vm-instances/09b1ee5bddea44a5bb56c471deae95d5/schedulers/stopping?
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|vmUuid|String|url|Virtual Machine UUID| |0.6|
+|schedulerName|String|body\(contained in the **params** structure\)|Scheduler name| |1.6|
+|schedulerDescription \(Optional\)|String|body\(contained in the **params** structure\)|Scheduler description| |1.6|
+|type|String|body\(contained in the **params** structure\)|Scheduler type, simple or cron|simplecron|1.6|
+|interval \(Optional\)|Integer|body\(contained in the **params** structure\)|Scheduler interval in seconds| |1.6|
+|repeatCount \(Optional\)|Integer|body\(contained in the **params** structure\)|Repeat count for the scheduler, only applies to simple type scheduler| |1.6|
+|startTime \(Optional\)|Long|body\(contained in the **params** structure\)|Scheduler start time, must follow unix timestamp format, 0 means start immediately| |1.6|
+|cron \(Optional\)|String|body\(contained in the **params** structure\)|Cron expression, must follow Java Quartz cron format standard| |1.6|
+|resourceUuid \(Optional\)|String|body\(contained in the **params** structure\)|User can specify the UUID used for creating the Scheduler| |0.6|
+|systemTags \(Optional\)|List|body|System Tag| |0.6|
+|userTags \(Optional\)|List|body|User Tag| |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "1c1b66d878494610aab6833dde9c6c04",
+    "targetResourceUuid": "f1dd6bd2ae484bd5b3375c7579756e48",
+    "schedulerName": "Test",
+    "schedulerType": "simple",
+    "repeatCount": 10.0,
+    "startTime": "May 11, 2017 1:22:53 PM",
+    "createDate": "May 11, 2017 1:22:53 PM",
+    "lastOpDate": "May 11, 2017 1:22:53 PM",
+    "jobClassName": "StopVmInstanceJob",
+    "state": "Enabled"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation is successful. For details, see [error](#p_tc3_qxv_k1b)|1.6|
+|inventory|SchedulerInventory|For details, see [inventory](#p_agn_qxv_k1b)|1.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause. The source error that caused the current error. If there is no original error, this field is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifying the resource|0.6|
+|targetResourceUuid|String| |0.6|
+|schedulerName|String| |0.6|
+|schedulerJob|String| |0.6|
+|schedulerType|String| |0.6|
+|schedulerInterval|Integer| |0.6|
+|repeatCount|Integer| |0.6|
+|cronScheduler|String| |0.6|
+|startTime|Timestamp| |0.6|
+|stopTime|Timestamp| |0.6|
+|createDate|Timestamp|Create date|0.6|
+|lastOpDate|Timestamp|Last update date|0.6|
+|state|String| |0.6|
+
+## SDK Examples
+Java SDK
+
+```
+CreateStopVmInstanceSchedulerAction action = new CreateStopVmInstanceSchedulerAction();
+action.vmUuid = "12cd4882e5784a81967a314be5f10a55";
+action.schedulerName = "vm-scheduler";
+action.schedulerDescription = "for test stop vm scheduler";
+action.type = "simple";
+action.interval = 5.0;
+action.repeatCount = 10.0;
+action.startTime = 0.0;
+action.sessionId = "256f557f46ff499aad22d7b1776a7567";
+CreateStopVmInstanceSchedulerAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateStopVmInstanceSchedulerAction action = CreateStopVmInstanceSchedulerAction()
+action.vmUuid = "3043caa47c6a4a0aa498f903ee5a3cbf"
+action.schedulerName = "vm-scheduler"
+action.schedulerDescription = "for test stop vm scheduler"
+action.type = "simple"
+action.interval = 5.0
+action.repeatCount = 10.0
+action.startTime = 0.0
+action.sessionId = "3bdb1579024b433895943d4ff6278d15"
+CreateStopVmInstanceSchedulerAction.Result res = action.call()
+```
+
+</APIPage>

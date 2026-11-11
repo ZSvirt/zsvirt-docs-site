@@ -1,0 +1,26 @@
+---
+title: "许可证提示异常，如何解决？"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+## 现象
+虚拟化平台上传许可证时，提示新上传的许可证的签发时间早于当前许可证。
+
+## 原因
+服务器时间不准确，导致在UI界面无法上传许可证。
+
+## 解决方案
+1.  登录管理节点，执行以下命令手动清理许可证：
+
+    ```
+    [root@localhost ~]# zstack-ctl clear_license
+    ```
+
+2.  执行以下命令，手动导入许可证：
+
+    ```
+    [root@localhost ~]# zstack-ctl install_license -f lincense-file  //许可证文件名
+    ```
+
+3.  导入成功后，刷新UI界面即可。

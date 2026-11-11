@@ -1,0 +1,202 @@
+---
+title: 'Create a New Virtual Machine'
+---
+
+A new virtual machine that you'll be able to customize CPU, memory, storage, and network.
+
+-   The platform provides system parameters for VMs to control default settings globally. Before creating a VM, you can customize VM-related settings in the system parameters to control the default VM features. For more information, see System Parameters.
+-   The platform provides default capacity and feature configurations for VMs, such as **CPU**, **Memory**, **Disk 1**, **NIC 1**, **Other Hardware**, and **Advanced Settings**. You can quickly create a virtual machine based on the default platform configurations.
+-   You can create VMs without an OS image. You can add the disk 1 by creating a new disk. A CD/DVD drive is optional.
+-   You can create VMs without NICs and configure NICs and their feature later.
+
+1.  In the left navigation pane, right-click the target cluster, host, or image, and then click **New Virtual Machine**.
+
+2.  In the Select VM Creation Type dialog, select **New VM**, and then click **Next**.
+
+3.  In the New Virtual Machine dialog, set the following parameters to complete the VM basic information:
+
+    -   **Name**: Virtual machine name.
+    -   **Quantity**: Number of virtual machines to create.
+    -   **Group**: VM group. Uses default group if not specified.
+    -   **Location**: Host or cluster where the VM resides.
+    -   **OS**: VM operating system. Supports mainstream OS including Linux and Windows.
+    -   **HA**: [Automatic restart mechanism after abnormal shutdown. For more information, see VM HA](/en/docs/user-guide/compute/vm/high-availability).
+    -   **Power Status**: Whether to power on the VM after creation. Default: enabled.
+4.  Set the following parameters to complete the VM hardware configurations:
+
+    1.  CPU: Customize the VM CPU cores and features.
+
+        -   **Cores**: Number of CPU cores in the VM.
+        -   **Cores per Socket**: Number of CPU cores allocated per socket in the VM.
+        -   **CPU Mode**: Whether to match VM CPU model with host CPU model to inherit host CPU features. Default: [None. For more information, see VM CPU](/en/docs/user-guide/compute/vm/performance/cpu-features)
+        -   **CPU Resource Priority**: For critical VMs, set to High to gain higher CPU contention capability when host is overloaded. For more information, see [VM Resource Contention](/en/docs/user-guide/compute/vm/performance/resource-contention).
+        -   **CPU Clock Speed Limit**: Set the upper limit of host CPU resources that a VM can occupy. Valid range: 1% to 100%. 100% or blank means no limit.
+        -   **CPU NUMA Binding**: Bind the virtual machine's CPU (vCPU) to the host's CPU (pCPU) to improve its performance. [For more information, see VM Resource Contention](/en/docs/user-guide/compute/vm/performance/resource-contention).
+        -   **CPU Hot Plug**: Whether to support online CPU modification. Default: enabled. CPU hot-plugging and memory hot-plugging must be enabled or disabled together.
+
+            <Callout type="info">
+            Only some operating systems support hot-plugging. You can click **View** to check supported OS list.
+            </Callout>
+
+        -   **CPU Hypervisor Tag**: Whether to enable the virtualization (hypervisor) flag. If disabled, skips the VM virtualization environment detection by applications. Default: enabled.
+    2.  Memory: Customize the VM memory capacity and features.
+
+        -   **Memory**: VM memory capacity.
+        -   **Memory Resource Priority**: For critical VMs, set to High to gain higher memory contention capability when host is overloaded. For more information, see [VM Resource Contention](/en/docs/user-guide/compute/vm/performance/resource-contention).
+        -   **Memory Hot Plug**: Whether to support online memory modification. Default: enabled. CPU hot-plugging and memory hot-plugging must be enabled or disabled together.
+
+            <Callout type="info">
+            Only some operating systems support hot-plugging. You can click **View** to check supported OS list.
+            </Callout>
+
+    3.  Disk 1: Customize the storage location, capacity, and features of the virtual machine's system disk. You can create a new disk or choose an existing system image.
+
+        -   **Storage Location**: Data storage location for VM disk. Uses automatic allocation if not specified.
+        -   **Capacity**: System disk capacity when creating a new disk.
+        -   **System Image**: Select a system image when using system image. Supported format: raw and qcow2.
+        -   **Bus Type**: Specify the bus type for a virtual machine's disk. Options include Virtio, IDE, Virtio SCSI, and SCSI. By default, Disk 1 uses Virtio bus type on Linux systems, and IDE bus type on Windows and Other systems.
+        -   **Provision Method**: Choose how to allocate disk storage space when using SAN storage. Default: thin provisioning.
+            -   Thin Provisioning: Allocates storage space based on actual usage, achieving higher storage utilization.
+            -   Thick Provisioning: Pre-allocates the required storage space when creating the disk, providing sufficient storage capacity and ensuring storage performance.
+        -   **Caching Mode**: Whether to use host page cache for write operation and if used, whether the data is written to the storage device before returning success. Default: none.
+        -   **AIO Acceleration**: Whether to enable asynchronous I/O (AIO) acceleration in the VM kernel. Default: disabled.
+
+            <Callout type="info">
+            To enable AIO acceleration, make sure the cache mode is set to none.
+            </Callout>
+
+        -   **QoS**: Whether to set read/write bandwidth and IOPS limits. Default: no limit. [For more information, see VM QoS](/en/docs/user-guide/compute/vm/performance/qos).
+        Disks other than Disk 1 are data disks, such as Disk 2. Add data disks by clicking **Add Hardware** &gt; **Disk**. A single virtual machine can support up to 24 disks (including Disk 1).
+
+        -   Data disk addition methods: new disk, disk image, existing disk, and RDM disk.
+        -   By default, data disks use Virtio bus type on Linux and Windows systems, while only IDE is supported for Other systems.
+        -   When the storage location is ZHPS distributed storage, the data disk's bus type only supports Virtio.
+        -   You can share a disk when the storage location is ZCE distributed storage and the bus type is Virtio SCSI.
+        -   You can share a disk when the storage location is SAN storage, the bus type is Virtio SCSI, and the provision method is thick provision.
+        -   You cannot modify the bus type or QoS of a shared disk.
+    4.  NIC 1: Customize the VM NIC IP address and features.
+
+        -   **NIC Model**: Set the NIC model. Supported models: e1000, rtl8139, virtio, and SR-IOV.
+        -   **Port Group**: The port group of the distributed switch for the VM NIC.
+        -   **State**: Whether to automatically enable NIC when VM powers on.
+        -   **NIC Queue Number**: Use multiple queues to send and receive network packets to improve network PPS and bandwidth performance.
+        -   **MAC Address**: Specify a MAC address. Default: Auto Generated.
+        -   **Specify IP Address**: Specify an IP address. Default: automatically assigned.
+
+            If the selected distributed port group has DHCP service disabled, you can use VMTools to specify an IP address for the virtual machine For more information, see [Virtual Machine VMTools](/en/docs/user-guide/compute/vm/vmtools).
+
+        -   **Assign DNS**: Specify a DNS address. Default: Auto Allocated.
+        -   **Security Group**: Associate security groups with the VM NIC to control east-west traffic. The smaller the number on the left side of the associated security group, the higher the priority for taking effect. For more information, see Security Group
+
+            <Callout type="info">
+            Configure carefully to avoid rule conflicts between security groups.
+            </Callout>
+
+        -   **QoS**: Whether to set bandwidth limits on packet transmission for the VM NIC. Default: no limit. [For more information, see VM QoS](/en/docs/user-guide/compute/vm/performance/qos).
+        Add multiple NICs by clicking **Add Hardware** &gt; **NIC**.
+
+    5.  CD/DVD Drive 1: Mount an ISO system image file to boot VM from a CD/DVD drive.
+
+        Add multiple CD/DVD drives by clicking **Add Hardware** &gt; **CD/DVD Drive**. You can add a maximum of three CD/DVD drives to a virtual machine.
+
+    6.  GPU Device 1: Attach a GPU device to the VM.
+
+        Supports physical GPUs and vGPUs. Add multiple GPU devices by clicking **Add Hardware** &gt; **GPU Device**.
+
+    7.  USB Device 1: Attach a USB device to the VM.
+
+        Supports direct connection and redirection. Add multiple USB devices by clicking **Add Hardware** &gt; **USB Device**. You can add a maximum of one USB device to a virtual machine.
+
+    8.  PCIe Device 1: Attach a PCIe device for the virtual machine.
+
+        You can load a PCIe device that has been switched to pass-through mode on the host. To add a PCIe device, click **Add Hardware** &gt; **PCIe Device**.
+
+    9.  TPM: Attach a virtual Trusted Platform Module (vTPM) for the virtual machine to provide enhanced security for the virtual machine operating system.
+
+        You must first add an available key provider and set the virtual machine boot mode to UEFI. To add a TPM device, click **Add Hardware** &gt; **TPM**. A single virtual machine supports a maximum of one TPM device.
+
+    10. Other Hardware: Configure graphics and audio devices for the VM.
+
+        -   **Graphics Card Type**: Specify the default graphics card type when powering on a virtual machine. Supports vga, virtio, qxl, and cirrus, providing basic/high-definition/high-performance video functionality experiences. Default: vga for x86 VMs and virtio only for ARM VMs.
+        -   **Total Graphics Memory**: Fixed at 16 MB for vga or cirrus. Configurable for qxl.
+        -   **Audio Card Type**: Specify the default audio card type when powering on a virtual machine. Supports HDA (ICH6), HDA (ICH9), and AC97. Default: HDA (ICH6).
+        -   **Motherboard Type**: Specify the default motherboard type when powering on a virtual machine. Supports i440fx and q35. Default: i440fx.
+5.  Set the following parameters to complete the VM advanced settings:
+
+    1.  Configure general options.
+
+        -   **Tag**: Attach tags to identify VMs. For more information, see Tag Management.
+        -   **Hostname**: VM hostname.
+        -   **VM Scheduling Group**: Join a VM scheduling group for host allocation based on scheduling policies associated with the scheduling group. For more information, see [VM Scheduling Policy](/en/docs/user-guide/compute/vm/scheduling).
+        -   **Sync with Host BIOS**: Whether to synchronize the Windows VM BIOS clock with the host's BIOS clock. Default: disabled. [For more information, see VM Time Synchronization](/en/docs/user-guide/compute/vm/time-sync).
+        -   **User Data**: User-defined data. Upload custom parameters or scripts to perform custom configurations or specific tasks on the virtual machine. For more information, see [VM User Data](/en/docs/user-guide/compute/vm/user-data).
+    2.  Configure remote access settings.
+
+        -   **Console Mode**: VM console mode. Options include VNC (default), SPICE, VNC+SPICE.
+        -   **Console Password**: VM console password. Supports manual input or random generation. Allowed characters: letters, numbers, and the following special characters: -\`=\[\];',./~!@\#$%^&amp;\*()\_+\|\{\}:"&lt;&gt;?
+
+            You can specify whether to enforce setting a console password and password strength through VNC Console Password in the security settings. If enabled, you need to set the console password according to the specified strength requirements when creating a virtual machine.
+
+        -   **USB Redirection**: Redirects USB devices from the VDI client to the VM. Default: disabled.
+    3.  Configure login authentication settings.
+
+        -   **None**: Do not set login password or SSH key.
+        -   **Password**: System login password for Linux VM (root) or Windows VM (administrator). Supports manual input or random generation. Allowed characters: letters, numbers, and the following special characters: -\`=\[\];',./~!@\#$%^&amp;\*()\_+\|\{\}:"&lt;&gt;?
+
+            <Callout type="info">
+            Before setting the password, ensure that the virtual machine image has `cloud-init` installed.
+            </Callout>
+
+        -   **SSH Key**: Inject SSH Key for password-free login to Linux VM.
+
+            <Callout type="info">
+            Before injecting the SSH Key, ensure that the virtual machine image has `cloud-init` installed.
+            </Callout>
+
+    4.  Configure VMTools.
+
+        -   **Failure Response Policy**: Set an automatic response action for VM failures (Windows BSOD or Linux guest hang). Options include No Action, Reboot, and Shut Down.
+        -   **Time Synchronization**: Whether to automatically synchronize VM time with host system time. Default: enabled.
+    5.  Configure boot options.
+
+        -   **Boot Order**: OS boot priority sequence. Options include hard disk, CD-ROM, and network. By default, the BIOS boots from the hard disk, and if no boot device is found, it cannot load the system.
+        -   **BIOS Mode**: The BIOS boot mode supports Legacy and UEFI. Legacy is the default in x86 clusters, while UEFI is the default in ARM clusters.
+        -   **Secure Boot**: You can enable this option only when the BIOS mode is set to UEFI. When enabled, the system validates the digital signature of all boot components (such as boot loaders, OS Kernels) during VM startup. Only trusted software with valid signatures can be loaded.
+        -   **BIOS Post Delay**: BIOS screen timeout duration. Default: 10 seconds.
+    6.  Configure other options.
+
+        -   **Hide KVM Virtualization Flag**: Controls CPU virtualization flag. When enabled, inserts `<hidden state="on">` into the `<kvm>` element in the newly started VM XML. Default: disabled.
+        -   **VMware I/O Port Simulation**: Whether to allow a KVM virtual machine to emulate the I/O ports in a VMware virtualization environment, making the KVM virtual machine compatible with VMware I/O port standards. Default: disabled.
+
+            The main purposes of this option:
+
+            -   Migration and Compatibility: Allows migrating virtual machines from a VMware environment to a KVM environment, or running both VMware and KVM virtual machines in a mixed environment without significant configuration changes.
+            -   Testing and Development: Developers and testers can use KVM virtual machines to simulate a VMware environment to test applications or configurations in a VMware-like environment without requiring actual VMware licenses.
+        -   **Anti-Spoofing Mode**: Whether to enable anti-IP/MAC spoofing and ARP deception features. When enabled, the virtual machine can only communicate with the outside world using the IP/MAC address allocated by the platform. Default: disabled.
+        -   **Cross-Cluster HA Policy**: Whether VM HA migration supports cross-cluster.
+
+            <Callout type="info">
+            This policy only affects automatic VM migrations in shared storage scenarios (distributed storage, NFS storage, SAN storage), such as VM migration in host maintenance or host replacement. This policy does not affect other actions such as manual hot migration of virtual machines (changing the host), specifying a host to start a VM, or dynamic resource scheduling (DRS) strategies that change the host.
+            </Callout>
+
+        -   **Hyper-V**: Whether to enable Hyper-V emulation for the VM for nested virtualization scenarios in Windows systems. Default: disabled.
+        -   **EmulatorPin**: Whether to assign all other threads than vCPU threads and IO threads of a VM to host physical CPUs (pCPUs). You can assign by NUMA nodes. Default: unassigned, which is virtual machine-related threads run on corresponding pCPUs according to system scheduling.
+        -   **Auto-Converge**: Whether to enable auto-convergence mode for KVM virtual machine hot migrations. Default: disabled.
+
+            If the virtual machine remains under high business load for a long time and the application is moderately sensitive to performance, it is recommended to enable auto-convergence mode to improve migration success rates.
+
+        -   **PCI Hot Plug**: Whether to allow hot plugging of PCI devices in the virtual machine. Default: enabled.
+
+            <Callout type="info">
+            If hardware compatibility errors occur during hot plugging or if the hardware device is not supported, you can disable this switch.
+            </Callout>
+
+        -   **CPU Vendor ID**: If the virtual machine is running on a host with Hygon CPUs, it is recommended to set the VM's CPU vendor ID to AuthenticAMD to ensure compatibility with various operating systems and maintain normal VM operation. If set to None, certain operating systems may experience compatibility issues.
+
+            <Callout type="info">
+            This parameter is hidden when the location of the virtual machine is set to either cluster or auto-allocated.
+            </Callout>
+
+6.  Review the configuration and click **OK**.
+
+Some VM configurations require VMTools. After VM creation, it is recommended to install VMTools to enable certain configurations. For more information about VMTools, see [Virtual Machine VMTools](/en/docs/user-guide/compute/vm/vmtools).

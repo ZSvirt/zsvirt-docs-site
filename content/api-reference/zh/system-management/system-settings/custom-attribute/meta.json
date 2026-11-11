@@ -1,0 +1,12 @@
+{
+  "title": "资源高级设置相关接口",
+  "pages": [
+    "get-resource-config",
+    "get-resource-bindable-config",
+    "delete-resource-config",
+    "query-resource-config",
+    "update-resource-config",
+    "update-resource-configs"
+  ],
+  "pagesIndex": "index"
+}

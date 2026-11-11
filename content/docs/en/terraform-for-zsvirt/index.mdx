@@ -1,0 +1,39 @@
+---
+title: "Terraform for ZSvirt"
+description: "Manage ZSvirt infrastructure as code with the official Terraform provider."
+---
+
+The ZSvirt Terraform provider enables you to define and manage cloud infrastructure on the ZSvirt platform using [Terraform](https://www.terraform.io/). Use it to automate virtual machines, networks, storage, and related platform resources.
+
+<Callout type="info">
+**ZSvirt** was open-sourced from the **ZStack ZSphere** commercial project and has since developed independently. Some code, configuration, and documentation still retain historical **ZStack**/**ZSphere** names (such as environment variables, configuration items, dependencies, paths, and commands). These names are for compatibility only and do not affect the normal use of **ZSvirt**.
+</Callout>
+
+## Requirements
+
+- [Terraform](https://www.terraform.io/downloads.html) >= 1.10.4
+- [Go](https://golang.org/doc/install) >= 1.25 (only required to build the provider plugin locally)
+
+## Supported versions
+
+| Terraform Version | Minimum Provider Version | Maximum Provider Version |
+| ----------------- | ------------------------ | ------------------------ |
+| >= 1.10.4         | 1.0.0                    | latest                   |
+
+## Guide sections
+
+<Cards>
+  <Card title="Getting Started" href="/en/docs/terraform-for-zsphere/getting-started" description="Provider configuration and environment variables." />
+  <Card title="Provider Configuration" href="/en/docs/terraform-for-zsphere/provider-configuration" description="Authentication options and provider schema." />
+  <Card title="Instance Management" href="/en/docs/terraform-for-zsphere/instance-management" description="Create VMs from images or templates." />
+  <Card title="Resources" href="/en/docs/terraform-for-zsphere/resources" description="Manage ZSvirt resources with Terraform." />
+  <Card title="Data Sources" href="/en/docs/terraform-for-zsphere/data-sources" description="Query existing ZSvirt resources." />
+  <Card title="Known Limitations" href="/en/docs/terraform-for-zsphere/known-limitations" description="Differences compared to the ZSvirt UI." />
+  <Card title="Building and Testing" href="/en/docs/terraform-for-zsphere/building-and-testing" description="Build the provider locally and run tests." />
+</Cards>
+
+## External resources
+
+- [Terraform Registry documentation](https://registry.terraform.io/providers/terraform-zstack-modules/zsphere/latest/docs)
+- [Provider source repository](https://github.com/ZStack-Robot/terraform-provider-zstack)
+- [Report an issue on GitHub](https://github.com/ZStack-Robot/terraform-provider-zstack/issues/new)

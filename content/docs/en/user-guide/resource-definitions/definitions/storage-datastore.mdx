@@ -1,0 +1,17 @@
+---
+title: 'Storage Resource|Data Storage'
+---
+
+Data Storage: A data storage is a virtualized resource that provides storage space for virtual machines and their application data. A data storage can be categorized into local storage and network shared storage.
+
+-   Local Storage: A local storage is storage resource constructed using the physical storage space of one or more hosts. It makes full use of the host's local storage resources.
+-   Network Shared Storage: A storage system used for remote storage of virtual machines and their application data, accessible concurrently by hosts over a network.ZSvirt supports NFS, distributed storage, and SAN storage.
+    -   NFS: Utilizes a Network File System for storage, supporting custom mount parameters.
+    -   Distributed Storage: Employs a distributed block storage method, supporting key-based authentication.
+    -   SAN Storage: Uses shared block storage, supporting both thin provisioning and thick provisioning as storage allocation strategies.
+
+        SAN storage can be built through iSCSI Storage, FC Storage, and NVMe Storage:
+
+        -   iSCSI Storage (iSCSI Storage): A storage technology that allows SCSI commands to be sent over IP networks. It provides block-level data access between servers and storage devices.
+        -   FC Storage (FC Storage): Refers to Fibre Channel storage, which is a high-speed network technology primarily used for storage networking. It supports high-performance and reliable connections between servers and storage systems.
+        -   NVMe Storage (NVMe Storage): Non-Volatile Memory Express storage, which is designed to accelerate read/write speeds using PCIe buses for faster performance compared to traditional SSDs.

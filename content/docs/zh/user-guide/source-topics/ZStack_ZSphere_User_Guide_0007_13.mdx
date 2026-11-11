@@ -1,0 +1,134 @@
+---
+title: "平台基础资源关系表"
+---
+
+下列各表展示了平台各个基础资源之间的从属关系与数量关系：
+
+<table class="doc-feature-table">
+  <thead>
+    <tr>
+      <th>资源A</th>
+      <th>资源B</th>
+      <th>资源A与B从属关系</th>
+      <th>资源A与B数量关系</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowSpan="8">数据中心</td>
+      <td>镜像存储</td>
+      <td>朋友</td>
+      <td>n:n</td>
+    </tr>
+    <tr>
+      <td>集群</td>
+      <td>父子</td>
+      <td>1:n</td>
+    </tr>
+    <tr>
+      <td>主机</td>
+      <td>祖孙</td>
+      <td>1:n</td>
+    </tr>
+    <tr>
+      <td>虚拟机分组</td>
+      <td>父子</td>
+      <td>1:n</td>
+    </tr>
+    <tr>
+      <td>虚拟机</td>
+      <td>祖孙</td>
+      <td>1:n</td>
+    </tr>
+    <tr>
+      <td>数据存储</td>
+      <td>父子</td>
+      <td>1:n</td>
+    </tr>
+    <tr>
+      <td>分布式交换机</td>
+      <td>父子</td>
+      <td>1:n</td>
+    </tr>
+    <tr>
+      <td>分布式端口组</td>
+      <td>祖孙</td>
+      <td>1:n</td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="doc-feature-table">
+  <thead>
+    <tr>
+      <th>资源A</th>
+      <th>资源B</th>
+      <th>资源A与B从属关系</th>
+      <th>资源A与B数量关系</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowSpan="5">集群</td>
+      <td>主机</td>
+      <td>父子</td>
+      <td>1:n</td>
+    </tr>
+    <tr>
+      <td>虚拟机分组</td>
+      <td>兄弟</td>
+      <td>/</td>
+    </tr>
+    <tr>
+      <td>虚拟机</td>
+      <td>祖孙</td>
+      <td>1:n</td>
+    </tr>
+    <tr>
+      <td>数据存储</td>
+      <td>兄弟</td>
+      <td>[n:n](/docs/user-guide/source-topics/ZStack_ZSphere_User_Guide_0007_14)</td>
+    </tr>
+    <tr>
+      <td>分布式交换机</td>
+      <td>兄弟</td>
+      <td>n:n</td>
+    </tr>
+  </tbody>
+</table>
+
+|资源A|资源B|资源A与B从属关系|资源A与B数量关系|
+|---|---|---------|---------|
+|主机|虚拟机|父子|1:n|
+
+|资源A|资源B|资源A与B从属关系|资源A与B数量关系|
+|---|---|---------|---------|
+|虚拟机分组|虚拟机|父子|1:n|
+
+<table class="doc-feature-table">
+  <thead>
+    <tr>
+      <th>资源A</th>
+      <th>资源B</th>
+      <th>资源A与B从属关系</th>
+      <th>资源A与B数量关系</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowSpan="2">数据存储</td>
+      <td>镜像存储</td>
+      <td>[朋友](/docs/user-guide/source-topics/ZStack_ZSphere_User_Guide_0007_14)</td>
+      <td>/</td>
+    </tr>
+    <tr>
+      <td>分布式交换机</td>
+      <td>朋友</td>
+      <td>/</td>
+    </tr>
+  </tbody>
+</table>
+
+|资源A|资源B|资源A与B从属关系|资源A与B数量关系|
+|---|---|---------|---------|
+|分布式交换机|分布式端口组|父子|1:n|

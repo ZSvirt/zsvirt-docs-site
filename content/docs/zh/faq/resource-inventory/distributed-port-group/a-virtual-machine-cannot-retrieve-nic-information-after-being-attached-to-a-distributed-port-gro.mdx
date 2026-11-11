@@ -1,0 +1,26 @@
+---
+title: "虚拟机加载分布式端口组后无法获取相关网卡信息，如何解决？"
+---
+
+## 原因
+可能由于QEMU动态挂载虚拟机虚拟网卡，而虚拟机并未识别。
+
+## 解决方案
+1.  可使用以下方式尝试解决：
+2.  重启虚拟机将自动获取网卡信息。
+
+3.  在虚拟机系统内执行以下命令，手动添加网卡配置文件。
+
+    ```
+    [root@localhost ~]# cp /etc/sysconfig/network-scripts/ifcfg-eth0 /etc/sysconfig/network-scripts/ifcfg-eth1
+    # 假定原有网卡名称为eth0，复制原有配置文件作为模板
+    [root@localhost ~]# vim /etc/sysconfig/network-scripts/ifcfg-eth1
+    # 设置以下参数
+    TYPE=Ethernet
+    BOOTPROTO=dhcp
+    NAME=eth1
+    DEVICE=eth1
+    ONBOOT=yes
+    ```
+
+4.  执行`service network restart`命令重启网络。

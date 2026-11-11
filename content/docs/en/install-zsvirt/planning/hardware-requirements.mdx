@@ -1,0 +1,95 @@
+---
+title: "Hardware Requirements"
+---
+
+The server configuration, including CPU, memory, storage capacity and NIC performance, determines the business capacity of ZSvirt.
+
+-   For demonstration environment: The server must have at least 4 CPU cores and 8 GB of memory.
+-   For production environment:
+    -   Management node configuration: For small-scale scenarios, the server must have at least 8 CPU cores, 16 GB of memory, and 240 GB of storage.
+
+        The actual hardware configuration requirements depend on your business scale. For details, contact official technical support.
+
+    -   Compute node configuration: The actual hardware configuration requirements depend on your business scale. For details, contact official technical support.
+
+## Recommended Hardware Configuration
+The following table shows the recommended hardware configuration for servers in both demonstration and production environments.
+
+<table><thead><tr><th colSpan="2">
+
+Device
+
+</th><th>
+
+Configuration
+
+</th></tr></thead><tbody><tr><td rowSpan="6">
+
+Server
+
+</td><td>
+
+CPU
+
+</td><td>
+
+-   x86 architecture: 64-bit. Supports Intel VT-x or AMD-V hardware virtualization features \(such as Intel VMX or AMD/Hygon SVM\).
+-   ARM architecture: 64-bit. Supports hardware virtualization features.
+
+</td></tr><tr><td>
+
+Memory
+
+</td><td>
+
+No special requirements. DDR4 or higher specification memory is recommended.
+
+</td></tr><tr><td>
+
+Motherboard
+
+</td><td>
+
+Standard dual-socket server motherboard.
+
+</td></tr><tr><td>
+
+RAID Controller
+
+</td><td>
+
+Supports SAS/SATA RAID 0/1/10 and passthrough mode.
+
+</td></tr><tr><td>
+
+Disk
+
+</td><td>
+
+No special requirements. Select HDD or SSD based on capacity and performance requirements.
+
+</td></tr><tr><td>
+
+Network Ports
+
+</td><td>
+
+-   Management port: 1 × 1 GbE RJ45
+-   Business port: 1 × 10 GbE SFP+
+
+</td></tr><tr><td colSpan="2">
+
+Network Switch
+
+</td><td>
+
+-   At least one 1 GbE switch. 10 GbE switch is recommended.
+-   Multiple Category 5 or higher network cables.
+
+</td></tr></tbody>
+</table>
+
+## Hardware Planning
+You need to plan your server resources according to your production needs. In a large data center with sufficient resources, we recommend deploying two servers as management nodes to control the entire virtualization platform. These two management nodes provide high availability. If one management node fails, the system automatically triggers a high availability switchover within seconds. This ensures the management service remains continuously available. In a small data center, you can use a single server as the management node.
+
+The remaining servers act as compute nodes. In a large data center, you can select multiple compute nodes to act as image storage. This expands the total image storage capacity and improves throughput. In a small data center, the image storage can share a server with the management node.

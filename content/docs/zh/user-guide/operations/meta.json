@@ -1,0 +1,15 @@
+{
+  "title": "运维管理",
+  "pages": [
+    "index",
+    "monitoring",
+    "alarms",
+    "tasks",
+    "events",
+    "logs",
+    "tags",
+    "custom-attributes",
+    "migration-service"
+  ],
+  "pagesIndex": "index"
+}

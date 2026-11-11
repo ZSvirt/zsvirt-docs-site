@@ -1,0 +1,23 @@
+---
+title: 'New Event Alarm'
+---
+
+Event alarms are used to monitor predefined events within the platform. For example, a host disconnection event alarm will trigger a system alarm when the host becomes unreachable.
+
+-   ZSvirt provides system parameter functionality to globally control the default behavior of platform settings. You can customize parameters related to alarms within the system parameters. For more information, see System Parameters.
+-   Some alarm items require VMTools for monitoring and alerting. For more information about VMTools, see Virtual Machine VMTools.
+
+1.  In the navigation pane, choose **O&M Management** &gt; **Alarm** &gt; **Event Alarm**.
+
+2.  On the Event Alarm page, click **New Event Alarm**.
+
+3.  In the New Event Alarm dialog, set the following parameters:
+
+    -   **Resource Type**: Select the type of resource.
+    -   **Metric Item**: Choose alarm items based on the selected resource type.
+    -   **Emergency Level**: Different levels of alarms will issue messages according to their severity, including Emergent, Major, and Info.
+    -   **Endpoint**: After the alarm is triggered, the alarm message will be pushed to the specified endpoint.
+
+        The system provides the default endpoint. You can also create custom notification objects. For more information, see [New Endpoint](/en/docs/user-guide/operations/alarms/notification-targets/create).
+
+4.  Review the configuration and click **OK**.

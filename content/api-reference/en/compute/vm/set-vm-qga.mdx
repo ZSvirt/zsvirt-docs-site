@@ -1,0 +1,81 @@
+---
+title: "Set VM Qga"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "setVmQga": {
+    "enable": false
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"setVmQga":{"enable":false}}' \
+http://localhost:8080/zstack/v1/vm-instances/8f37ceee285c3418b28247388508601a/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Resource UUID, uniquely identifies the resource| |0.6|
+|enable|boolean|body \(contained in **params** structure\)| | |0.6|
+|systemTags \(Optional\)|List|body| | |0.6|
+|userTags \(Optional\)|List|body| | |0.6|
+
+## API Response
+On success, this API returns an empty JSON structure **`{}`**. On error, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+SetVmQgaAction action = new SetVmQgaAction();
+action.uuid = "771991c9b47f45a392bddeadba95ab2b";
+action.enable = false;
+action.sessionId = "6dc45ce48e8345f89c8487bb9a5180f8";
+SetVmQgaAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SetVmQgaAction action = SetVmQgaAction()
+action.uuid = "084bb6e8ecd9497fb261049cce04b116"
+action.enable = false
+action.sessionId = "5e78bf8076a84933928ee8d2ef04eca9"
+SetVmQgaAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,36 @@
+---
+title: "A Management Node upgrade fails. How do I resolve this?"
+---
+
+<HistoricalNamingNote locale="en" />
+
+## Symptom
+In a dual-Management Node deployment, one Management Node fails to upgrade.
+
+## Cause
+Database synchronization is out of sync, causing one Management Node to fail the upgrade.
+
+## Solution
+1.  Run the following command on each Management Node to back up the database:
+
+    ```
+    [root@localhost ~]# zstack-ctl dump_mysql
+    ```
+
+2.  Run the following command on the failed Management Node to upgrade it individually:
+
+    ```
+    [root@localhost ~]# bash zstack-install.bin -u
+    ```
+
+3.  Run the following command on the other Management Node to reinstall the dual-Management Node service:
+
+    ```
+    [root@localhost ~]# ./zsha2 install-ha -config zs-install.conf
+    ```
+
+4.  The installation succeeds and the environment is restored.
+
+    <Callout type="warning">
+    Do not perform any other operations on the system during a platform upgrade to avoid upgrade failures.
+    </Callout>

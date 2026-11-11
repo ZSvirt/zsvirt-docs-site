@@ -1,0 +1,21 @@
+---
+title: 'Modify Distributed Port Group Configurations'
+---
+
+1.  In the navigation pane, choose **Inventory** &gt; **Network Resource**.
+
+2.  In the resource tree, select a target distributed port group.
+
+3.  (Optional) To modify basic configurations, click **Actions** &gt; **Modify Configuration**.
+
+    1.  In the Modify Configuration dialog, modify the name, description, VLAN ID, MTU, DHCP service as needed.
+
+    2.  Click **OK**.
+
+4.  (Optional) To add or delete network ranges, click the **Network Range** tab and perform the corresponding operations as needed.
+
+    <Callout type="info">
+    -   Deleting a network range also detaches the VM NICs that are using the network range.
+    -   If the distributed port group has a DHCP IP that is in the selected network range, deleting the network range does not delete the DHCP IP. If all network ranges under the distributed port group are deleted, the DHCP IP will be released.
+    </Callout>
+5.  (Optional) To modify the DNS, click the **DNS** tab and perform the corresponding operations as needed.

@@ -1,0 +1,120 @@
+---
+title: "KVM运行Shell命令"
+---
+
+<APIPage method="PUT" path="/v1/hosts/kvm/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "kvmRunShell": {
+    "hostUuids": [
+      "d987c37b69e14c0fbc02e32f0689e81e",
+      "6d47a55252504d49a5c8f344190a578c"
+    ],
+    "script": "ls"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"kvmRunShell":{"hostUuids":["7b474bb39b14397b97bc7d8d0bdd8854","580f2a7f2ca23af6aa1c93e88d4a788e"],"script":"ls"}}' \
+http://localhost:8080/zstack/v1/hosts/kvm/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|hostUuids|Set|body\(包含在**kvmRunShell**结构中\)|目标机器UUID| |0.6|
+|script|String|body\(包含在**kvmRunShell**结构中\)|脚本| |0.6|
+|systemTags \(可选\)|List|body|系统标签| |0.6|
+|userTags \(可选\)|List|body|用户标签| |0.6|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "8903b4b7fa694c149d932bc53ee716df": {
+      "returnCode": 100.0,
+      "stdout": "hello",
+      "errorCode": {}
+    }
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_tpm_dcw_m1b)|0.6|
+|inventory|Map|详情参考[inventory](#p_ywc_bcw_m1b)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|returnCode|int| |0.6|
+|stdout|String| |0.6|
+|stderr|String| |0.6|
+|errorCode|ErrorCode|详情参考[errorCode](#p_myc_ccw_m1b)|0.6|
+
+### errorCode
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+KvmRunShellAction action = new KvmRunShellAction();
+action.hostUuids = asList("f3349fddda414ee0b64c5f32635ff76e","624ca9859a044fbe909f2aeef4e95b3e");
+action.script = "ls";
+action.sessionId = "c5e92dd1ca554dd781a50961fd8121ac";
+KvmRunShellAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+KvmRunShellAction action = KvmRunShellAction()
+action.hostUuids = [b0e1155a97644eb1a756dd8d3de8eb3b, 04a502bd377e4763850d7a94ba4ffb43]
+action.script = "ls"
+action.sessionId = "72425e0cb8d8425f96114b5760d9a495"
+KvmRunShellAction.Result res = action.call()
+```
+
+</APIPage>

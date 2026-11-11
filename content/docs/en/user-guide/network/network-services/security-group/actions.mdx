@@ -1,0 +1,34 @@
+---
+title: 'Modify Security Groups and Related Rules'
+---
+
+After creating a new security group, its rules, and binding them to virtual machine network interfaces, if you need to modify or delete the security group and related rules, refer to the content in this section for guidance.
+
+-   [Security Group](#section_zsp_f2n_vyb)
+-   [Security Group Rules](#section_l4n_lfl_xyb)
+
+## Security Group
+If you need to change the enabled status of a security group, you can use the **Enable** and **Disable** operations to make the changes.
+
+If you need to modify the name and description of a security group, you can click **Edit Name and Description** in the operation column of the target security group to make the changes.
+
+If you need to unbind virtual machine network interfaces from a security group, follow the instructions below based on your scenario:
+
+-   If you need to unbind multiple virtual machine network interfaces from a security group, you can select the target interfaces on the **VM NIC** page of the security group and click **Disassociate VM NIC** to unbind them.
+-   If you need to unbind multiple virtual machine network interfaces from a security group, you can use **Edit Configuration** on the **Overview** page of the target virtual machine to unbind the security group from the virtual machine network interfaces in bulk.
+
+If you are certain that you no longer need an existing security group, you can click **Delete** in the operation column of the target security group to delete it.
+
+<Callout type="info">
+Deleting a security group will also delete any custom rules created for the security group. Please proceed with caution.
+</Callout>
+
+## Security Group Rules
+If you wish to modify the system default rules, note that security group rules are divided into system default rules and custom rules. The system default rule is the intra-group communication rule, which only supports the disable operation.
+
+If you need to perform operations on custom-added or imported security group rules, you can go to the **Overview** page of the target security group and select the **Ingress Rule** or **Egress Rule** tab as needed, and perform the following operations based on your scenario:
+
+-   If you need to modify the enabled status of individual or multiple security group rules, you can use the **Enable** and **Disable** operations to make the changes.
+-   If you need to modify the configuration of a single security group rule, such as priority, allow or deny policy, protocol and port, source/destination, enabled status, and description, you can click **Edit Rule** in the operation column of the target security group and make the necessary changes.
+-   If you need to adjust the priority of individual or multiple security group rules, you can click the **Adjust Priority** button and adjust the relative priority order of the rules as needed by dragging. Value range: integers within the range of 1-100. Higher numbers indicate lower priority.
+-   If you are certain that you no longer need a particular security group rule or several rules, select the target rule(s) and click **Delete** to delete them.

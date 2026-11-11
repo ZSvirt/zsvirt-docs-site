@@ -1,0 +1,93 @@
+---
+title: "Get Resource Names"
+---
+
+<APIPage method="GET" path="/v1/resources/names">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl  -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/resources/names?uuids=393ce06589043e33b397bc21043e8cd4&uuids=b62bdb31280a30a69c2f110bac8cb682
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuids|List|query|Resource UUID list| |0.6|
+|systemTags \(Optional\)|List|query| | |0.6|
+|userTags \(Optional\)|List|query| | |0.6|
+
+## API Response
+Response example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "9da599e443ec3d21bb4c766ad51784d3",
+      "resourceName": "zone",
+      "resourceType": "ZoneVO"
+    },
+    {
+      "uuid": "a6e1b35c657835c5972e94773e52949b",
+      "resourceName": "vm",
+      "resourceType": "VmInstanceVO"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null on success. For details, see [error](#p_gtx_xn5_m1b)|2.0|
+|inventories|List|For details, see [inventories](#p_dnr_xn5_m1b)|2.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, e.g., SYS.1000, HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Default is null|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null|0.6|
+|cause|ErrorCode|The root error that caused the current error. This field is null if there is no root cause|0.6|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource, uniquely identifying this resource|4.0.0|
+|resourceName|String|Resource name|4.0.0|
+|resourceType|String|Resource type, e.g., VmInstanceVO for virtual machines|4.0.0|
+
+## SDK Examples
+Java SDK
+
+```
+GetResourceNamesAction action = new GetResourceNamesAction();
+action.uuids = asList("393ce06589043e33b397bc21043e8cd4","b62bdb31280a30a69c2f110bac8cb682");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetResourceNamesAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+GetResourceNamesAction action = GetResourceNamesAction()
+action.uuids = [393ce06589043e33b397bc21043e8cd4, b62bdb31280a30a69c2f110bac8cb682]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetResourceNamesAction.Result res = action.call()
+
+```
+
+</APIPage>

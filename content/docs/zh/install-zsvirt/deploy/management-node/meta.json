@@ -1,0 +1,10 @@
+{
+  "title": "安装管理节点",
+  "pages": [
+    "index",
+    "bond-deployment",
+    "single-nic-deployment",
+    "tui-installation"
+  ],
+  "pagesIndex": "index"
+}

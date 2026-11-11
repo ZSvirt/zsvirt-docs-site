@@ -1,0 +1,232 @@
+---
+title: "Add KVM Host"
+---
+
+<APIPage method="POST" path="/v1/hosts/kvm">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "username": "userName",
+    "password": "password",
+    "sshPort": 22,
+    "name": "newHost",
+    "managementIp": "127.0.0.1",
+    "clusterUuid": "9adf394ca46432afb1218d220bf2925e"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding example, `systemTags` and `userTags` are optional. They are listed to show these fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"username":"userName","password":"password","sshPort":"22","name":"newHost","managementIp":"127.0.0.1","clusterUuid":"9adf394ca46432afb1218d220bf2925e"}}' \
+http://localhost:8080/zstack/v1/hosts/kvm
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|username|String|body \(contained in the **params** structure\)|SSH username| |0.6|
+|password|String|body \(contained in the **params** structure\)|SSH password| |0.6|
+|sshPort \(optional\)|int|body \(contained in the **params** structure\)|SSH port| |0.6|
+|name|String|body \(contained in the **params** structure\)|Resource name| |0.6|
+|description \(optional\)|String|body \(contained in the **params** structure\)|Resource description| |0.6|
+|managementIp|String|body \(contained in the **params** structure\)|Host management IP| |0.6|
+|clusterUuid|String|body \(contained in the **params** structure\)|Cluster UUID| |0.6|
+|resourceUuid \(optional\)|String|body \(contained in the **params** structure\)|Resource UUID| |0.6|
+|systemTags \(optional\)|List|body|System tag| |0.6|
+|userTags \(optional\)|List|body|User tag| |0.6|
+
+<Callout type="info">
+-   ZSvirt supports disabling EPT when creating KVM hosts. **SystemTags** adds an option to disable EPT:
+</Callout>
+    -   Option format: `pageTableExtensionDisabled`
+    -   Example: `pageTableExtensionDisabled`
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "zoneUuid": "24b761ab09f7349684387fdf822aaee7",
+    "name": "example",
+    "uuid": "f893fe1c941939738a0ec271880d8e53",
+    "clusterUuid": "4191157f33ab34d0a55b8e30444a1367",
+    "description": "example",
+    "managementIp": "192.168.0.1",
+    "hypervisorType": "KVM",
+    "state": "Enabled",
+    "status": "Connected",
+    "totalCpuCapacity": 4,
+    "availableCpuCapacity": 2,
+    "totalMemoryCapacity": 4,
+    "availableMemoryCapacity": 4
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See [error](#p_yt2_1bw_m1b) for details|0.6|
+|inventory|HostInventory|See [inventory](#p_lgj_1bw_m1b) for details|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier, e.g. SYS.1000, HOST.1001|0.6|
+|description|String|Brief error description|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause. The error that caused the current error. If there is no original error, this field is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|zoneUuid|String|Data Center UUID|0.6|
+|name|String|Resource name|0.6|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|clusterUuid|String|Cluster UUID|0.6|
+|description|String|Resource description|0.6|
+|managementIp|String| |0.6|
+|hypervisorType|String| |0.6|
+|state|String| |0.6|
+|status|String| |0.6|
+|totalCpuCapacity|Long| |0.6|
+|availableCpuCapacity|Long| |0.6|
+|cpuSockets|Integer| |0.6|
+|totalMemoryCapacity|Long| |0.6|
+|availableMemoryCapacity|Long| |0.6|
+|cpuNum|Integer|Logical CPU count|0.6|
+|ipmiAddress|String|IPMI address|0.6|
+|ipmiUsername|String|IPMI username|0.6|
+|ipmiPort|Integer|IPMI port|0.6|
+|ipmiPowerStatus|String|IPMI power status|0.6|
+|architecture|String| |0.6|
+|nqn|String|NVMe qualified name|4.10.6|
+|hostname|String|Host name|4.10.20|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+|cpuStatus|HwMonitorStatus|See [cpuStatus](#p_wvd_kkm_lhc)|4.10.0|
+|memoryStatus|HwMonitorStatus|See [memoryStatus](#p_nhh_kkm_lhc)|4.10.0|
+|diskStatus|HwMonitorStatus|See [diskStatus](#p_esk_kkm_lhc)|4.10.0|
+|nicStatus|HwMonitorStatus|See [nicStatus](#p_n24_kkm_lhc)|4.10.0|
+|gpuStatus|HwMonitorStatus|See [gpuStatus](#p_zgr_kkm_lhc)|4.10.0|
+|powerSupplyStatus|HwMonitorStatus|See [powerSupplyStatus](#p_o35_kkm_lhc)|4.10.0|
+|fanStatus|HwMonitorStatus|See [fanStatus](#p_m2x_kkm_lhc)|4.10.0|
+|raidStatus|HwMonitorStatus|See [raidStatus](#p_oc1_lkm_lhc)|4.10.0|
+|temperatureStatus|HwMonitorStatus|See [temperatureStatus](#p_cyd_lkm_lhc)|4.10.0|
+
+### cpuStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### memoryStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### diskStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### nicStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### gpuStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### powerSupplyStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### fanStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### raidStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### temperatureStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+## SDK Examples
+Java SDK
+
+```
+AddKVMHostAction action = new AddKVMHostAction();
+action.username = "userName";
+action.password = "password";
+action.sshPort = 22;
+action.name = "newHost";
+action.managementIp = "127.0.0.1";
+action.clusterUuid = "9adf394ca46432afb1218d220bf2925e";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddKVMHostAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = AddKVMHostAction()
+action.username = "userName"
+action.password = "password"
+action.sshPort = 22
+action.name = "newHost"
+action.managementIp = "127.0.0.1"
+action.clusterUuid = "9adf394ca46432afb1218d220bf2925e"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

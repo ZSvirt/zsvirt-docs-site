@@ -1,0 +1,225 @@
+---
+title: "Instance Management"
+description: "Create and manage ZSvirt virtual machines from images or templates with zsphere_instance."
+---
+
+<HistoricalNamingNote locale="en" />
+
+The `zsphere_instance` resource is the core component for managing VM instances. It supports two creation methods.
+
+## Creating from image
+
+Create a VM instance from an existing image with full disk configuration:
+
+```hcl
+# Data sources to find resources
+data "zsphere_images" "images" {
+  name = "your-image-name"
+}
+
+data "zsphere_port_groups" "networks" {
+  name = "your-port-group-name"
+}
+
+# Basic VM creation from image
+resource "zsphere_instance" "vm_basic" {
+  name        = "vm_basic_from_terraform"
+  description = "create a basic vm from terraform"
+  image_uuid  = data.zsphere_images.images.images.0.uuid
+  expunge     = true
+  memory_size = 1024
+  cpu_num     = 2
+
+  # Platform configuration
+  platform      = "Linux"
+  guest_os_type = "CentOS 7"
+  architecture  = "x86_64"
+
+  root_disk = {
+    size = 5 * 1024 * 1024 * 1024  # 5 GB in bytes
+  }
+
+  data_disks = [
+    {
+      size = 2 * 1024 * 1024 * 1024  # 2 GB in bytes
+    }
+  ]
+
+  network_interfaces = [
+    {
+      port_group_uuid = data.zsphere_port_groups.networks.port_groups.0.uuid
+      default_l3      = true
+    }
+  ]
+}
+```
+
+**Key characteristics:**
+
+- Full control over disk configuration (root disk and data disks)
+- Supports disk bus types: `virtio`, `ide`, `virtio-scsi`, `scsi`
+- Data disk names are auto-generated as `{vm-name}-1`, `{vm-name}-2`, etc.
+- Supports post-creation configurations such as hostname and static IP
+
+**Advanced example with UEFI and custom disks:**
+
+```hcl
+resource "zsphere_instance" "vm_advanced" {
+  name        = "vm_advanced_from_terraform"
+  description = "create an advanced vm from terraform"
+  image_uuid  = data.zsphere_images.images.images.0.uuid
+  expunge     = true
+  memory_size = 1024
+  cpu_num     = 2
+
+  platform      = "Linux"
+  guest_os_type = "CentOS 7"
+  architecture  = "x86_64"
+
+  boot_mode       = "UEFI"
+  vm_machine_type = "q35"
+  cpu_mode        = "host-model"
+  hostname        = "my-server.example.com"
+
+  root_disk = {
+    size     = 4 * 1024 * 1024 * 1024  # 4 GB in bytes
+    bus_type = "virtio"
+  }
+
+  data_disks = [
+    {
+      size     = 2 * 1024 * 1024 * 1024  # 2 GB in bytes
+      bus_type = "virtio-scsi"
+    },
+    {
+      size     = 1 * 1024 * 1024 * 1024  # 1 GB in bytes
+      bus_type = "scsi"
+    }
+  ]
+
+  network_interfaces = [
+    {
+      port_group_uuid = data.zsphere_port_groups.networks.port_groups.0.uuid
+      default_l3      = true
+      static_ip       = "192.168.1.100"
+    }
+  ]
+
+  netmask = "255.255.255.0"
+  gateway = "192.168.1.1"
+
+  strategy   = "InstantStart"
+  never_stop = false
+  user_data  = "#!/bin/bash\necho 'Hello World'"
+}
+```
+
+## Creating from template
+
+Create a VM instance by cloning from an existing templated VM:
+
+```hcl
+data "zsphere_instances" "template" {
+  name = "your-template-name"
+}
+
+resource "zsphere_instance" "vm_from_template" {
+  name          = "vm_from_template"
+  description   = "create a vm from template"
+  template_uuid = data.zsphere_instances.template.instances.0.uuid
+  expunge       = true
+  memory_size   = 1024
+  cpu_num       = 2
+
+  network_interfaces = [
+    {
+      port_group_uuid = data.zsphere_port_groups.networks.port_groups.0.uuid
+      default_l3      = true
+    }
+  ]
+}
+```
+
+**Key characteristics:**
+
+- Disk configuration is inherited from the template
+- Use `disk_aos` to add additional disks (only `new` type supported)
+- Platform and guest OS type are inherited from the template
+- Some parameters cannot be overridden (see [Known Limitations](/en/docs/terraform-for-zsphere/known-limitations))
+
+**Advanced example with additional disks:**
+
+```hcl
+resource "zsphere_instance" "advanced_from_template" {
+  name          = "vm-advanced-from-template"
+  description   = "Advanced VM from template"
+  template_uuid = data.zsphere_instances.template.instances.0.uuid
+  expunge       = true
+  memory_size   = 4096
+  cpu_num       = 4
+
+  boot_mode    = "UEFI"
+  hostname     = "template-vm.example.com"
+  architecture = "x86_64"
+
+  cpu_mode           = "host-model"
+  cpu_quota          = 100
+  vnuma_enabled      = false
+  cpu_resource_level = "Normal"
+
+  network_interfaces = [
+    {
+      port_group_uuid = data.zsphere_port_groups.networks.port_groups.0.uuid
+      default_l3      = true
+      static_ip       = "192.168.1.101"
+    }
+  ]
+
+  disk_aos = [
+    {
+      size     = 50 * 1024 * 1024 * 1024  # 50 GB
+      bus_type = "virtio"
+    }
+  ]
+
+  strategy = "InstantStart"
+}
+```
+
+## Important notes
+
+1. **Mutual exclusion**: Specify either `image_uuid` or `template_uuid`, not both.
+2. **Data disk naming**: Data disk names are auto-generated as `{vm-name}-1`, `{vm-name}-2`, etc. The `name` field in `data_disks` is computed and cannot be set by the user.
+3. **Parameter validation**:
+   - Image creation: cannot use `vm_nic_params`, `disk_aos`, or `vm_nic_config`
+   - Template creation: cannot use `root_disk`, `data_disks`, `platform`, or `guest_os_type`
+4. **Post-creation configuration**: hostname, static IP, boot order, and NUMA settings may be applied after VM creation via separate API calls.
+
+## Batch deployment
+
+```hcl
+locals {
+  vm_csv_raw = csvdecode(file("${path.module}/vms.csv"))
+
+  vm_configs = [
+    for vm in local.vm_csv_raw : {
+      name       = vm.vm_name
+      ip_address = vm.ip_address
+      cpu        = tonumber(vm.cpu)
+      memory     = tonumber(vm.memory_gb)
+    }
+  ]
+}
+
+resource "zsphere_instance" "vms" {
+  for_each = { for vm in local.vm_configs : vm.name => vm }
+
+  name        = each.value.name
+  description = "Created by Terraform"
+  image_uuid  = each.value.image_uuid
+  cpu_num     = each.value.cpu
+  memory_size = each.value.memory * 1024
+}
+```
+
+For the complete schema and all supported arguments, see [zsphere_instance](/en/docs/terraform-for-zsphere/resources/instance).

@@ -1,0 +1,15 @@
+---
+title: 'Overview'
+---
+
+Snapshot: A snapshot is a point-in-time capture of data status in a disk. Before performing business-sensitive operations, you can create a snapshot at specified time points to record the state of the system disk and data disks of a virtual machine. This allows for quick rollback in case of breakdowns.
+
+## Snapshot Types
+-   **Manual Snapshot**: Users can manually create a snapshot of the entire virtual machine at any time. For more information, see [Snapshot Basic Operations](/en/docs/user-guide/compute/vm/snapshots/basic-operations).
+-   **Scheduled Snapshot**: The system automatically executes snapshots at specified times according to a snapshot policy. For more information, see [Snapshot Policy Basic Operations](/en/docs/user-guide/compute/vm/snapshots/policy).
+-   **Automatic Snapshot**: The system triggers one-time automatic snapshots in specific scenarios, including system reset and virtual machine cloning. When creating an image, a temporary snapshot is automatically created and will be automatically deleted once the image creation is complete.
+
+## Scenarios
+-   Fast recovery from breakdowns: If the production environment breaks down, you can rollback snapshots to return to the normal state. Snapshot rollback is a temporary use for unexpected breakdowns. To backup data for a long term, we recommend that you use the Backup Service.
+-   Data exploration: You can create snapshots for production data and use the snapshots to do data mining, query, and development and test.
+-   Fault tolerance improvement: Before you perform a business-sensitive operation such as upgrading your system or migrating data, we recommend that you create one or more snapshots. This allows fast recovery to the normal state in case of any errors or exceptions during the operation.

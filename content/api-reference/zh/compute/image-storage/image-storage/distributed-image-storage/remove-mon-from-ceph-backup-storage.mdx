@@ -1,0 +1,418 @@
+---
+title: "分布式镜像仓库删除监控节点"
+---
+
+<APIPage method="DELETE" path="/v1/backup-storage/ceph/{uuid}/mons?monHostnames={monHostnames}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/backup-storage/ceph/3a6bd95933784fc49717392356cb67f3/mons?monHostnames=10.0.1.2
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|分布式镜像仓库的UUID| |0.6|
+|monHostnames|List|body|监控节点名字列表| |0.6|
+|systemTags \(可选\)|List|body|系统标签| |0.6|
+|userTags \(可选\)|List|body|用户标签| |0.6|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "mons": [
+      {
+        "monAddr": "10.0.1.2",
+        "monUuid": "d79571a057c94c41b0fad2ca688a6cec"
+      }
+    ],
+    "name": "My Ceph Backup Storage",
+    "description": "Public Ceph Backup Storage",
+    "totalCapacity": 1073741824.0,
+    "availableCapacity": 968884224.0,
+    "type": "Ceph",
+    "state": "Enabled",
+    "status": "Connected",
+    "createDate": "Jun 7, 2017 9:20:30 PM",
+    "lastOpDate": "Jun 7, 2017 9:20:30 PM",
+    "attachedZoneUuids": [
+      "4fd92cde485a4225b97c86846c9f586c"
+    ]
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_imj_n21_n1b)|0.6|
+|inventory|CephBackupStorageInventory|详情参考[inventory](#p_ind_421_n1b)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+<table id="table_s23_121_n1b"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+描述
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+fsid
+
+</td><td>
+
+String
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+poolName
+
+</td><td>
+
+String
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+资源的UUID，唯一标示该资源
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+name
+
+</td><td>
+
+String
+
+</td><td>
+
+资源名称
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+url
+
+</td><td>
+
+String
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+description
+
+</td><td>
+
+String
+
+</td><td>
+
+资源的详细描述
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+totalCapacity
+
+</td><td>
+
+Long
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+availableCapacity
+
+</td><td>
+
+Long
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+type
+
+</td><td>
+
+String
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+state
+
+</td><td>
+
+String
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+status
+
+</td><td>
+
+String
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+createDate
+
+</td><td>
+
+Timestamp
+
+</td><td>
+
+创建时间
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+lastOpDate
+
+</td><td>
+
+Timestamp
+
+</td><td>
+
+最后一次修改时间
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+attachedZoneUuids
+
+</td><td>
+
+List
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+poolUsedCapacity
+
+</td><td>
+
+Long
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3.2
+
+</td></tr><tr><td>
+
+poolReplicatedSize
+
+</td><td>
+
+Integer
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3.2
+
+</td></tr><tr><td>
+
+poolAvailableCapacity
+
+</td><td>
+
+Long
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3.2
+
+</td></tr><tr><td>
+
+mons
+
+</td><td>
+
+List
+
+</td><td>
+
+详情参考[mons](#p_r3c_p21_n1b)
+
+</td><td>
+
+0.6
+
+</td></tr></tbody>
+</table>
+
+### mons
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|hostname|String| |0.6|
+|monPort|Integer| |0.6|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+|backupStorageUuid|String|镜像存储UUID|0.6|
+|monAddr|String| |0.6|
+|sshPort|Integer| |0.6|
+|status|String| |0.6|
+|sshUsername|String| |0.6|
+|sshPassword|String| |0.6|
+|monUuid|String| |0.6|
+
+## SDK示例
+Java SDK
+
+```
+RemoveMonFromCephBackupStorageAction action = new RemoveMonFromCephBackupStorageAction();
+action.uuid = "728cc9123a694a39a9e1915d9e50ee9f";
+action.monHostnames = asList("10.0.1.2");
+action.sessionId = "e12938edf7634fcebba3938d07acde47";
+RemoveMonFromCephBackupStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+RemoveMonFromCephBackupStorageAction action = RemoveMonFromCephBackupStorageAction()
+action.uuid = "eede3cd9cbca4b3289e92a976619b67d"
+action.monHostnames = [10.0.1.2]
+action.sessionId = "fb2ddd76c26f43729fe5346e196c8532"
+RemoveMonFromCephBackupStorageAction.Result res = action.call()
+```
+
+</APIPage>

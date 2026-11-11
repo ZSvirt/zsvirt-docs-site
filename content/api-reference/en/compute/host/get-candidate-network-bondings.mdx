@@ -1,0 +1,169 @@
+---
+title: "Get Candidate Network Bondings"
+---
+
+<APIPage method="GET" path="/v1/cluster/hosts-network-bondings">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/cluster/hosts-network-bondings?hostUuids=dc20018ed3483aeea38fd742f129a59b&limit=1000&start=0
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|hostUuids|List|query|Host UUIDs| |4.1.0|
+|limit \(Optional\)|Integer|query| | |4.1.0|
+|start \(Optional\)|Integer|query| | |4.1.0|
+|systemTags \(Optional\)|List|query|System Tags| |4.1.0|
+|userTags \(Optional\)|List|query|User Tags| |4.1.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "b8f160bbdb5d392fbcb5720f3509bf0b",
+      "hostUuid": "19506ab5300b3e169a616e9e0dd86d33",
+      "bondingName": "bond0",
+      "mode": "active-backup 1",
+      "xmitHashPolicy": "layer2 0",
+      "miiStatus": "up",
+      "mac": "ac:1f:6b:93:6c:8c",
+      "ipAddresses": [
+        "172.20.0.116/16"
+      ],
+      "miimon": 100,
+      "type": "LinuxBonding",
+      "allSlavesActive": true,
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM",
+      "slaves": [
+        {
+          "uuid": "fac6c85bbb743381a2edcaeb01e3a885",
+          "hostUuid": "19506ab5300b3e169a616e9e0dd86d33",
+          "bondingUuid": "b8f160bbdb5d392fbcb5720f3509bf0b",
+          "interfaceName": "eno1",
+          "interfaceType": "bondingSlave",
+          "speed": 1000,
+          "slaveActive": true,
+          "carrierActive": true,
+          "mac": "ac:1f:6b:93:6c:8c",
+          "createDate": "Nov 14, 2017 10:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+        },
+        {
+          "uuid": "828ab68794dc31d89aa600a2792a0ac5",
+          "hostUuid": "19506ab5300b3e169a616e9e0dd86d33",
+          "bondingUuid": "b8f160bbdb5d392fbcb5720f3509bf0b",
+          "interfaceName": "eno2",
+          "interfaceType": "bondingSlave",
+          "speed": 1000,
+          "slaveActive": false,
+          "carrierActive": false,
+          "mac": "ac:1f:6b:93:6c:8c",
+          "createDate": "Nov 14, 2017 10:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+        }
+      ]
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.1.0|
+|inventories|List|See [inventories](#p_tww_j2r_51c) for details|4.1.0|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See [error](#p_m5s_sbk_51c) for details|4.1.0|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource. Uniquely identifies the resource.|4.1.0|
+|hostUuid|String|Host UUID|4.1.0|
+|bondingName|String|Bond name|4.1.0|
+|bondingType|String|Bond application status. Values include noBridge and bridgeSlave.|4.1.0|
+|speed|Long|Bond speed|4.1.0|
+|mode|String|Bond mode|4.1.0|
+|xmitHashPolicy|String|Hash policy|4.1.0|
+|miiStatus|String|MII status|4.1.0|
+|mac|String|MAC address|4.1.0|
+|ipAddresses|List|IP addresses|4.1.0|
+|gateway|String|Gateway address|4.1.0|
+|callBackIp|String|Callback address|4.1.0|
+|miimon|Long|MII monitor interval|4.1.0|
+|type|String|Bond type|4.1.0|
+|allSlavesActive|Boolean| |4.1.0|
+|description|String|Detailed description of the resource|4.1.0|
+|createDate|Timestamp|Create time|4.1.0|
+|lastOpDate|Timestamp|Last update time|4.1.0|
+|slaves|List|See [slaves](#p_akg_p2r_51c) for details|4.1.0|
+
+### slaves
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource. Uniquely identifies the resource.|4.1.0|
+|hostUuid|String|Host UUID|4.1.0|
+|bondingUuid|String|Bond UUID|4.1.0|
+|interfaceName|String|Network interface name|4.1.0|
+|interfaceType|String|Network interface application status. Values include nomaster, bridgeSlave, and bondingSlave.|4.1.0|
+|speed|Long|Network interface speed|4.1.0|
+|slaveActive|Boolean|Bond link status|4.1.0|
+|carrierActive|Boolean|Physical link status|4.1.0|
+|ipAddresses|List|IP addresses|4.1.0|
+|gateway|String|Gateway address|4.1.0|
+|mac|String|MAC address|4.1.0|
+|callBackIp|String|Callback address|4.1.0|
+|pciDeviceAddress|String|Network interface PCI address|4.1.0|
+|offloadStatus|String| |4.1.0|
+|description|String|Detailed description of the resource|4.1.0|
+|createDate|Timestamp|Create time|4.1.0|
+|lastOpDate|Timestamp|Last update time|4.1.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. Globally unique identifier of the error, for example SYS.1000, HOST.1001.|4.1.0|
+|description|String|Brief error description|4.1.0|
+|details|String|Detailed error information|4.1.0|
+|elaboration|String|Reserved field, defaults to null|4.1.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|4.1.0|
+|cause|ErrorCode|Root cause error. The error that caused the current error. If there is no original error, this field is null.|4.1.0|
+
+## SDK Examples
+Java SDK
+
+```
+GetCandidateNetworkBondingsAction action = new GetCandidateNetworkBondingsAction();
+action.hostUuids = asList("dc20018ed3483aeea38fd742f129a59b");
+action.limit = 1000;
+action.start = 0;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetCandidateNetworkBondingsAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetCandidateNetworkBondingsAction action = GetCandidateNetworkBondingsAction()
+action.hostUuids = [dc20018ed3483aeea38fd742f129a59b]
+action.limit = 1000
+action.start = 0
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetCandidateNetworkBondingsAction.Result res = action.call()
+```
+
+</APIPage>

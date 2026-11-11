@@ -1,0 +1,86 @@
+---
+title: "将资源分享给账户组"
+---
+
+<APIPage method="PUT" path="/v1/account-groups/resources/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "shareResourceToGroup": {
+    "resourceUuids": [
+      "7f610aa37f17327d9b1dd74fc4ce871d"
+    ],
+    "groupUuid": "2334f9ef50f03f2dba17abb79c6b5d53"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X PUT -d '{"shareResourceToGroup":{"resourceUuids":["7f610aa37f17327d9b1dd74fc4ce871d"],"groupUuid":"2334f9ef50f03f2dba17abb79c6b5d53"}}' \
+http://localhost:8080/zstack/v1/account-groups/resources/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|resourceUuids|List|body\(包含在`shareResourceToGroup`结构中\)|待分享的资源 UUID 列表, 必须是资源组中的资源| |4.10.0|
+|groupUuid|String|body\(包含在`shareResourceToGroup`结构中\)|账户组 UUID| |4.10.0|
+|systemTags \(可选\)|List|body|系统标签| |4.10.0|
+|userTags \(可选\)|List|body|用户标签| |4.10.0|
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+ShareResourceToGroupAction action = new ShareResourceToGroupAction();
+action.resourceUuids = asList("7f610aa37f17327d9b1dd74fc4ce871d");
+action.groupUuid = "2334f9ef50f03f2dba17abb79c6b5d53";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ShareResourceToGroupAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+ShareResourceToGroupAction action = ShareResourceToGroupAction()
+action.resourceUuids = [7f610aa37f17327d9b1dd74fc4ce871d]
+action.groupUuid = "2334f9ef50f03f2dba17abb79c6b5d53"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ShareResourceToGroupAction.Result res = action.call()
+
+```
+
+</APIPage>

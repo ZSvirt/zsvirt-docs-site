@@ -1,0 +1,35 @@
+---
+title: "主机修改chrony.conf配置后会重置，怎么办？"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+## 原因
+重连主机管理节点会更新`chrony.conf`配置文件。
+
+## 解决方案
+1.  登录主机系统，执行以下命令，停止管理节点服务：
+
+    ```
+    # 确认是否为双管理服务
+    [root@localhost ~]# zsha2 status
+    # 停止管理服务
+    [root@localhost ~]# zsha2 stop-node
+    ```
+
+2.  依次执行以下命令，修改双管理节点配置文件，修改**chrony.serverIp.0 = IP**：
+
+    ```
+    # 备份配置文件
+    [root@localhost ~]# cp -a /usr/local/zstack/apache-tomcat/webapps/zstack/WEB-INF/classes/zstack.properties /root/zstack.properties.bak
+    # 编辑配置文件
+    [root@localhost ~]# vim /usr/local/zstack/apache-tomcat/webapps/zstack/WEB-INF/classes/zstack.properties
+    ```
+
+3.  执行以下命令，启动双管理节点服务：
+
+    ```
+    [root@localhost ~]# zsha2 start-node
+    ```
+
+4.  点击**资源清单** &gt; **主机与虚拟机**，进入主机界面。选中主机，点击**操作** &gt; **重连**重新连接主机。

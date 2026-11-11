@@ -1,0 +1,250 @@
+---
+title: "根据虚拟机需求获取主机资源的分配信息"
+---
+
+<APIPage method="POST" path="/v1/hosts/{uuid}/resource-allocation">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "strategy": "continuous",
+    "scene": "normal",
+    "vcpu": 60
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST //localhost:8080/zstack/v1/hosts/21529457e42c30f0a9b2a137915a0b28/resource-allocation -d '{"params": {"strategy": "continuous", "scene": "normal", "vcpu": 60}}'
+```
+
+参数列表
+
+<table id="table_ijt_d1w_m1b"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+主机UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.12
+
+</td></tr><tr><td>
+
+strategy
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+资源分配策略
+
+</td><td>
+
+continuous\(连续分配策略\)
+
+</td><td>
+
+4.3.12
+
+</td></tr><tr><td>
+
+scene
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+场景类型
+
+</td><td>
+
+-   normal
+-   performance
+
+</td><td>
+
+4.3.12
+
+</td></tr><tr><td>
+
+vcpu
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+虚拟机需要分配的vCPU数量
+
+</td><td>
+
+\[1,512\]
+
+</td><td>
+
+4.3.12
+
+</td></tr></tbody>
+</table>
+
+## API返回
+返回示例
+
+```
+{
+  "name": "example",
+  "uuid": "f7bae73b9874344b8766dfcdda48ad6e",
+  "vCPUPin": [
+    {
+      "vCPU": "0",
+      "pCPU": "13"
+    },
+    {
+      "vCPU": "1",
+      "pCPU": "12"
+    },
+    {
+      "vCPU": "2",
+      "pCPU": "11"
+    },
+    {
+      "vCPU": "3",
+      "pCPU": "10"
+    },
+    {
+      "vCPU": "4",
+      "pCPU": "9"
+    },
+    {
+      "vCPU": "5",
+      "pCPU": "8"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_z5m_lnk_mlb)|4.3.12|
+|name|String|资源名称|4.3.12|
+|uuid|String|资源的UUID，唯一标示该资源|4.3.12|
+|vCPUPin|array\[json\]|此次分配推荐的vCPU pin信息，详情请见[CPU Pin](#p_wmz_15y_1sb)|4.3.12|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.3.12|
+|description|String|错误的概要描述|4.3.12|
+|details|String|错误的详细信息|4.3.12|
+|elaboration|String|保留字段，默认为null|4.3.12|
+|opaque|LinkedHashMap|保留字段，默认为null|4.3.12|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.3.12|
+
+\#CPU Pin
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|vCPU|string|虚拟机vCPU id|4.3.12|
+|pCPU|string|主机pCPU id|4.3.12|
+
+## SDK示例
+Java SDK
+
+```
+GetHostResourceAllocationAction action = new GetHostResourceAllocationAction()
+action.uuid = "ff6d905e75d63e18ab0a9fc2ac14951c"
+action.scene = "normal"
+action.strategy = "continuous"
+action.vcpu = 60
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetHostResourceAllocationAction.Result res = action.call()
+```
+
+Python SDK
+
+```
+GetHostResourceAllocationAction action = new GetHostResourceAllocationAction()
+action.uuid = "ff6d905e75d63e18ab0a9fc2ac14951c"
+action.scene = "normal"
+action.strategy = "continuous"
+action.vcpu = 60
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetHostResourceAllocationAction.Result res = action.call()
+```
+
+</APIPage>

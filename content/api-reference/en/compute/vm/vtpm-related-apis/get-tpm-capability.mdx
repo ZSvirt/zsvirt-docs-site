@@ -1,0 +1,119 @@
+---
+title: "Get TPM Capability Details"
+---
+
+<APIPage method="GET" path="/v1/tpms/capability">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/tpms/capability?vmInstanceUuid=ff01ec80fd11327cba7519b66119d900
+```
+
+Parameters
+
+|Name|Type|Location|Description|Valid Values|Since|
+|----|----|--------|-----------|------------|-----|
+|tpmUuid \(optional\)|String|query|TPM UUID| |5.0.0|
+|vmInstanceUuid \(optional\)|String|query|VM UUID| |5.0.0|
+|systemTags \(optional\)|List|query|System tags| |5.0.0|
+|userTags \(optional\)|List|query|User tags| |5.0.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "ff00de2d3ab43127b1abdac68f1e7f00",
+    "name": "TPM-for-VM-ff01ec80fd11327cba7519b66119d900",
+    "vmInstanceUuid": "ff01ec80fd11327cba7519b66119d900",
+    "createDate": "Nov 14, 2017 2:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 2:20:57 PM",
+    "fileRefs": [
+      {
+        "uuid": "ff0ee7dfcb8a3aa5b3534a1667c90400",
+        "vmInstanceUuid": "ff01ec80fd11327cba7519b66119d900",
+        "hostUuid": "ff0192fa70113da886101145c084bd00",
+        "type": "TpmState",
+        "path": "/var/lib/libvirt/swtpm/ff0192fa70113da886101145c084bd00/",
+        "lastSyncReason": "on libvirt shutdown event",
+        "createDate": "Nov 14, 2017 2:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+      }
+    ],
+    "edkVersion": "edk2-ovmf-20220126gitbb1bba3d77-3.el8.noarch",
+    "swtpmVersion": "0.8.2",
+    "resetTpmAfterVmCloneConfig": true
+  }
+}
+```
+
+|Name|Type|Description|Since|
+|----|----|-----------|-----|
+|success|boolean|Whether the get operation succeeded|5.0.0|
+|inventory|TpmCapabilityView|For details, see [inventory](#p_ldg_4pf_2jc)|5.0.0|
+|error|ErrorCode|For details, see [error](#p_p35_npf_2jc)|5.0.0|
+
+### inventory
+|Name|Type|Description|Since|
+|----|----|-----------|-----|
+|uuid|String|TPM UUID|5.0.0|
+|name|String|TPM resource name|5.0.0|
+|vmInstanceUuid|String|VM UUID|5.0.0|
+|createDate|Timestamp|Creation time|5.0.0|
+|lastOpDate|Timestamp|Last modification time|5.0.0|
+|edkVersion|String|EDK suite version|5.0.0|
+|swtpmVersion|String|SWTPM version|5.0.0|
+|resetTpmAfterVmCloneConfig|boolean|Configuration that specifies whether to reset the TPM state after VM cloning|5.0.0|
+|fileRefs|List|For details, see [fileRefs](#p_ix1_4pf_2jc)|5.0.0|
+
+### fileRefs
+|Name|Type|Description|Since|
+|----|----|-----------|-----|
+|uuid|String|Related file UUID|5.0.0|
+|vmInstanceUuid|String|VM UUID|5.0.0|
+|hostUuid|String|Host UUID|5.0.0|
+|type|String|File type, classified by usage. Possible values are NvRam or TpmState|5.0.0|
+|path|String|Path of the related file or directory on the host|5.0.0|
+|createDate|Timestamp|Creation time|5.0.0|
+|lastOpDate|Timestamp|Last modification time|5.0.0|
+
+### error
+|Name|Type|Description|Since|
+|----|----|-----------|-----|
+|code|String|Error code, a globally unique identifier of the error, for example, SYS.1000 or HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. The default value is null|0.6|
+|opaque|LinkedHashMap|Reserved field. The default value is null|0.6|
+|cause|ErrorCode|Root error, which is the source error that caused the current error. If there is no source error, this field is null|0.6|
+
+## SDK Example
+Java SDK
+
+```
+GetTpmCapabilityAction action = new GetTpmCapabilityAction();
+action.vmInstanceUuid = "ff01ec80fd11327cba7519b66119d900";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetTpmCapabilityAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = GetTpmCapabilityAction()
+action.vmInstanceUuid = "ff01ec80fd11327cba7519b66119d900"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

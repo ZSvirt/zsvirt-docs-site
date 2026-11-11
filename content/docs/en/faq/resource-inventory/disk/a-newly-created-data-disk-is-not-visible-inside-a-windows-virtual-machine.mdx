@@ -1,0 +1,12 @@
+---
+title: "A newly created data disk is not visible inside a Windows virtual machine"
+---
+
+## Cause
+If the Virtio-SCSI disk type is selected, you must install the driver and update it to the latest version.
+
+## Solution
+1.  Try the following methods:
+2.  Add the driver image to the virtualization platform, stop the virtual machine, attach the image, and update the driver.
+
+3.  In the operating system, right-click **Start**, select Device Manager, and update the SCSI controller.

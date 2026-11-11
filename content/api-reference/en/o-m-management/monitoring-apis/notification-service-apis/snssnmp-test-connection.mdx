@@ -1,0 +1,95 @@
+---
+title: "Send an SNMP Test Message"
+---
+
+<APIPage method="POST" path="/v1/sns/application-endpoints/snmp/test-connection">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "platformUuid": "d71f754a80663dc7a6a2003cc5667846",
+    "endpointUuid": "e3a38d5d8d123991bd0a986150f3e6df"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, the **systemTags** and **userTags** fields are optional. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"platformUuid":"d71f754a80663dc7a6a2003cc5667846","endpointUuid":"e3a38d5d8d123991bd0a986150f3e6df"}}' http://localhost:8080/zstack/v1/sns/application-endpoints/snmp/test-connection
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|platformUuid \(optional\)|String|body \(contained in the **params** structure\)|SNMP platform UUID||4.10.0|
+|endpointUuid \(optional\)|String|body \(contained in the **params** structure\)|SNMP endpoint UUID||4.10.0|
+|systemTags \(optional\)|List|body|System tags||4.10.0|
+|userTags \(optional\)|List|body|User tags||4.10.0|
+
+## API Response
+Response Example
+
+```
+{
+  "connected": true,
+  "webhookResp": {}
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.10.0|
+|connected|boolean|Whether the connection is reachable|4.10.0|
+|webhookResp|LinkedHashMap|Remote response|4.10.0|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_bdm_ctx_bdb)|4.10.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001.|4.10.0|
+|description|String|A brief description of the error|4.10.0|
+|details|String|Detailed information about the error|4.10.0|
+|elaboration|String|Reserved field. Default is null.|4.10.0|
+|opaque|LinkedHashMap|Reserved field. Default is null.|4.10.0|
+|cause|ErrorCode|The root error. The source error that caused the current error. If there is no root error, this field is null.|4.10.0|
+
+## SDK Examples
+Java SDK
+
+```
+SNSSnmpTestConnectionAction action = new SNSSnmpTestConnectionAction();
+action.platformUuid = "d71f754a80663dc7a6a2003cc5667846";
+action.endpointUuid = "e3a38d5d8d123991bd0a986150f3e6df";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+SNSSnmpTestConnectionAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SNSSnmpTestConnectionAction action = SNSSnmpTestConnectionAction()
+action.platformUuid = "d71f754a80663dc7a6a2003cc5667846"
+action.endpointUuid = "e3a38d5d8d123991bd0a986150f3e6df"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+SNSSnmpTestConnectionAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,12 @@
+---
+title: "主机上执行zs-show-network报错xrealloc: cannot allocate xxx bytes，怎么办？"
+---
+
+## 现象
+主机上执行`zs-show-network`，提示"`xrealloc: cannot allocate xxx bytes`"。
+
+## 原因
+bond名称过长，bond名称最多12位。
+
+## 解决方案
+删除名称过长的bond，重建bond。重建bond需将该主机上的所有虚拟机迁移走后再进行操作。

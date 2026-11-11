@@ -1,0 +1,99 @@
+---
+title: "Change L3 Network DHCP IP Address"
+---
+
+<APIPage method="PUT" path="/v1/l3-networks/{l3NetworkUuid}/dhcp-ip">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "changeL3NetworkDhcpIpAddress": {
+    "dhcpServerIp": "192.168.1.100",
+    "dhcpv6ServerIp": "2024:04:28:01::100"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding sample, `systemTags` and `userTags` are optional. These two fields can be included in the body structure.
+</Callout>
+
+Curl Sample
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"changeL3NetworkDhcpIpAddress":{"dhcpServerIp":"192.168.1.100","dhcpv6ServerIp":"2024:04:28:01::100"}}' \
+http://localhost:8080/zstack/v1/l3-networks/6b693b00316b30819bb30bfe0df10256/dhcp-ip
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|l3NetworkUuid|String|url|The L3 Network UUID.| |4.10.16|
+|dhcpServerIp \(Optional\)|String|body\(contained in the `changeL3NetworkDhcpIpAddress` structure\)|The DHCP v4 server address.| |4.10.16|
+|dhcpv6ServerIp \(Optional\)|String|body\(contained in the `changeL3NetworkDhcpIpAddress` structure\)|The DHCP v6 server address.| |4.10.16|
+|systemTags \(Optional\)|List|body|The system tags.| |4.10.16|
+|userTags \(Optional\)|List|body|The user tags.| |4.10.16|
+
+## API Response
+Sample Response
+
+```
+{
+  "dhcpServerIp": "192.168.100.3",
+  "dhcpv6ServerIp": "2024:04:28:01::100"
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|dhcpServerIp|String| |4.10.16|
+|dhcpv6ServerIp|String| |4.10.16|
+|success|boolean| |4.10.16|
+|error|ErrorCode|The error code. If not null, the operation fails, or vice versa. For more information, see [error](#p_zkk_gx4_llb)|4.10.16|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code, which is a numbered or alphanumeric code that specifies an error. For example, SYS.1000, HOST.1001|3.9.0|
+|description|String|The brief description of the error.|3.9.0|
+|details|String|The details about the error.|3.9.0|
+|elaboration|String|The reserved field. Default value: null|3.9.0|
+|opaque|LinkedHashMap|The reserved field. Default value: null|3.9.0|
+|cause|ErrorCode|The root error, which is the associated root cause of the current error. If no root error exists, this parameter is null|3.9.0|
+
+## SDK Sample
+Java SDK
+
+```
+ChangeL3NetworkDhcpIpAddressAction action = new ChangeL3NetworkDhcpIpAddressAction();
+action.l3NetworkUuid = "6b693b00316b30819bb30bfe0df10256";
+action.dhcpServerIp = "192.168.1.100";
+action.dhcpv6ServerIp = "2024:04:28:01::100";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ChangeL3NetworkDhcpIpAddressAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = ChangeL3NetworkDhcpIpAddressAction()
+action.l3NetworkUuid = "6b693b00316b30819bb30bfe0df10256"
+action.dhcpServerIp = "192.168.1.100"
+action.dhcpv6ServerIp = "2024:04:28:01::100"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

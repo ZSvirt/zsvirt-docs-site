@@ -1,0 +1,10 @@
+{
+  "title": "虚拟机调度策略篇",
+  "pages": [
+    "overview",
+    "create-vm-policy",
+    "create-host-policy",
+    "manage"
+  ],
+  "pagesIndex": "overview"
+}

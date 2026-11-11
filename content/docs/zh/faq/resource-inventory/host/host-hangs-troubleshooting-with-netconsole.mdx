@@ -1,0 +1,63 @@
+---
+title: "主机hang住，如何通过netconsole排查？"
+---
+
+## 现象
+主机经常hang住，无法获取message、crash等日志，此场景可通过配置netconsole将内核日志发送到管理节点，进而分析hang的原因。
+
+## 原因
+主机hang住后，无法获取message、crash等日志 。
+
+## 解决方案
+1.  通过配置netconsole将内核日志发送到管理节点，进而分析hang住原因。
+
+2.  配置`/etc/sysconfig/netconsole`文件
+
+    在发送端主机`/etc/sysconfig/netconsole`文件中添加以下参数：
+
+    ```
+    #接收端IP
+    SYSLOGADDR=192.X.X.X
+    #端口 
+    SYSLOGPORT=5888
+    #接收端MAC地址    
+    SYSLOGMACADDR=b4:05:5d:aXXXX
+    ```
+
+3.  重启发送端主机netconsole服务
+
+    ```
+    systemctl restart netconsole
+    ```
+
+4.  设置netconsole服务开机自启
+
+    ```
+    systemctl enable netconsole
+    ```
+
+5.  设置514属性：需要监听接收udp端口
+
+    在接收端/etc/rsyslog.conf文件取消‘$ModLoad imudp’和‘$UDPServerRun 514’注释，修改514为监听接收udp端口，执行：
+
+    ```
+    sed -i 's/^#$Mod.*udp$/$ModLoad imudp/g;s/^#$UDP.*/$UDPServerRun 5888/g'/etc/rsyslog.conf
+    ```
+
+6.  重启接收端主机rsyslog服务
+
+    ```
+    systemctl restart rsyslog
+    ```
+
+7.  检查是否正常监听指定端口
+
+    ```
+    lsof -i:5888
+    ```
+
+8.  在接收端查看message日志是否输出发送端系统日志
+
+    ```
+    tail -f /var/log/message
+    ```

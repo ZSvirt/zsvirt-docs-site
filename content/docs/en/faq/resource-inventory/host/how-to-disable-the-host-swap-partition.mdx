@@ -1,0 +1,28 @@
+---
+title: "How to disable the host swap partition"
+---
+
+## Solution
+1.  Run the following command on the host to view swap partition details and memory/disk usage:
+
+    ```
+    [root@localhost ~]# free -m
+    ```
+
+2.  Migrate all virtual machines on the host to other hosts using the virtualization platform to ensure no data is being written to the swap partition.
+
+3.  Run the following command to disable the swap partition:
+
+    ```
+    [root@localhost ~]# swapoff -a
+    ```
+
+4.  Comment out the swap partition mount entry in the `/etc/fstab` file.
+
+5.  Edit the `/etc/sysctl.conf` configuration file and add **vm.swappiness=0**.
+
+6.  Run the following command to make the configuration permanent:
+
+    ```
+    [root@localhost ~]# sysctl -p
+    ```

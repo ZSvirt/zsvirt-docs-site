@@ -1,0 +1,100 @@
+---
+title: "Query Long Job"
+---
+
+<APIPage method="GET" path="/v1/longjobs" altPaths={["/v1/longjobs/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/longjobs
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/longjobs/f031e4ea64673a5f96e022f4eb81fc59
+```
+
+Queryable Fields
+
+Run the CLI command line tool, enter `QueryLongJob` and press Tab to view all queryable fields and cross-table queryable resource names.
+
+## API Response
+Response example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "e8a3fcaa8c393684b78a6dc1b20db49f"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_pj1_d3h_4cb)|2.3|
+|inventories|List|For details, see [inventories](#p_xn5_c3h_4cb)|2.3|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, such as SYS.1000, HOST.1001.|2.3|
+|description|String|A brief description of the error|2.3|
+|details|String|The detailed error information|2.3|
+|elaboration|String|A reserved field. Default is null.|2.3|
+|opaque|LinkedHashMap|A reserved field. Default is null.|2.3|
+|cause|ErrorCode|The root error. The source error that caused the current error. This field is null if there is no root error.|2.3|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource.|2.3|
+|name|String|Resource name|2.3|
+|description|String|Detailed description of the resource|2.3|
+|apiId|String|The API ID used to associate with TaskProgress|2.3|
+|jobName|String|Job name|2.3|
+|jobData|String|Job data|2.3|
+|jobResult|String|Job result|2.3|
+|targetResourceUuid|String|Target resource UUID|2.3|
+|managementNodeUuid|String|Management node UUID|2.3|
+|createDate|Timestamp|Creation time|2.3|
+|lastOpDate|Timestamp|Last modification time|2.3|
+|state|LongJobState|For details, see [state](#p_hp4_c3h_4cb)|2.3|
+
+### state
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name|2.3|
+|ordinal|int| |2.3|
+
+## SDK Examples
+Java SDK
+
+```
+QueryLongJobAction action = new QueryLongJobAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryLongJobAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryLongJobAction action = QueryLongJobAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryLongJobAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,90 @@
+---
+title: "Store Custom Metric Data"
+---
+
+<APIPage method="POST" path="/v1/zwatch/metrics">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "namespace": "MyNameSpace",
+    "data": [
+      {
+        "metricName": "UserDefinedName",
+        "value": 100.01,
+        "labels": {
+          "label1": "value1"
+        }
+      }
+    ]
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The **systemTags** and **userTags** fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"namespace":"MyNameSpace","data":[{"metricName":"UserDefinedName","value":100.01,"labels":{"label1":"value1"}}]}}' \
+http://localhost:8080/zstack/v1/zwatch/metrics
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|namespace|String|body \(included in the **params** structure\)|Custom namespace name| |2.3|
+|data|List|body \(included in the **params** structure\)|Data| |2.3|
+|systemTags \(optional\)|List|body|System tags| |2.3|
+|userTags \(optional\)|List|body|User tags| |2.3|
+
+## API Response
+On success, this API returns an empty JSON structure **`{}`**. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+PutMetricDataAction action = new PutMetricDataAction();
+action.namespace = "MyNameSpace";
+action.data = asList([metricName:UserDefinedName, value:100.01, labels:[label1:value1]]);
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+PutMetricDataAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+PutMetricDataAction action = PutMetricDataAction()
+action.namespace = "MyNameSpace"
+action.data = [[metricName:UserDefinedName, value:100.01, labels:[label1:value1]]]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+PutMetricDataAction.Result res = action.call()
+```
+
+</APIPage>

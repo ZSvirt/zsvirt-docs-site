@@ -1,0 +1,251 @@
+---
+title: "Change NIC Default Traffic Policy"
+---
+
+<APIPage method="PUT" path="/v1/security-groups/nics/{vmNicUuid}/security-policy/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "changeVmNicSecurityPolicy": {
+    "ingressPolicy": "ALLOW",
+    "egressPolicy": "DENY"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" -H "Authorization: OAuth YOUR_SESSION_UUID" -X PUT -d '{"changeVmNicSecurityPolicy":{"ingressPolicy":"ALLOW","egressPolicy":"DENY"}}' http://localhost:8080/zstack/v1/security-groups/nics/5551303bee7037c8848cdb5741be7ff7/security-policy/actions
+```
+
+Parameter List
+
+<table id="table_bhd_2z1_mjb"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+vmNicUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+UUID of the NIC, uniquely identifies the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+ingressPolicy \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **changeVmNicSecurityPolicy** structure\)
+
+</td><td>
+
+NIC ingress security policy
+
+</td><td>
+
+-   DENY
+-   ALLOW
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+egressPolicy \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **changeVmNicSecurityPolicy** structure\)
+
+</td><td>
+
+NIC egress security policy
+
+</td><td>
+
+-   DENY
+-   ALLOW
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System Tag
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.0.0
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User Tag
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.0.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "2c8164f7e3213f1491640a2f98d0a979",
+    "vmNicUuid": "c731cb960eb635a997e58d154d3c4252",
+    "ingressPolicy": "DENY",
+    "egressPolicy": "ALLOW",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.7.21|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation is successful. For details, see [error](#p_qyp_cw5_m1b)|4.7.21|
+|inventory|SecurityGroupInventory|For details, see [inventory](#p_qj5_cw5_m1b)|4.7.21|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause. The source error that caused the current error. If there is no original error, this field is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|vmNicUuid|String|Virtual Machine NIC UUID|4.7.21|
+|ingressPolicy|String|NIC ingress security policy|4.7.21|
+|egressPolicy|String|NIC egress security policy|4.7.21|
+|createDate|Timestamp|Create time|4.7.21|
+|lastOpDate|Timestamp|Last modification time|4.7.21|
+
+## SDK Examples
+Java SDK
+
+```
+ChangeVmNicSecurityPolicyAction action = new ChangeVmNicSecurityPolicyAction();
+action.vmNicUuid = "5551303bee7037c8848cdb5741be7ff7";
+action.ingressPolicy = "ALLOW";
+action.egressPolicy = "DENY";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ChangeVmNicSecurityPolicyAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ChangeVmNicSecurityPolicyAction action = ChangeVmNicSecurityPolicyAction()
+action.vmNicUuid = "5551303bee7037c8848cdb5741be7ff7"
+action.ingressPolicy = "ALLOW"
+action.egressPolicy = "DENY"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ChangeVmNicSecurityPolicyAction.Result res = action.call()
+```
+
+</APIPage>

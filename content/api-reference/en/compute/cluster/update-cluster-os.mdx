@@ -1,0 +1,136 @@
+---
+title: "Upgrade Host Operating System in Cluster"
+---
+
+<APIPage method="PUT" path="/v1/clusters/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateClusterOS": {
+    "excludePackages": [
+      "kernel",
+      "systemd*"
+    ],
+    "updatePackages": [
+      "zstack-release"
+    ],
+    "releaseVersion": "c74"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateClusterOS":{"excludePackages":["kernel","systemd*"],"updatePackages":["zstack-release"],"releaseVersion":"c74"}}' http://localhost:8080/zstack/v1/clusters/31c4951f39ae38969802e833448369ae/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Resource UUID, uniquely identifies the resource| |2.3|
+|excludePackages \(optional\)|List|body \(contained in **updateClusterOS** structure\)|List of packages not to upgrade| |3.7.0|
+|updatePackages \(optional\)|List|body \(contained in **updateClusterOS** structure\)|List of packages to upgrade| |3.7.0|
+|releaseVersion \(optional\)|String|body \(contained in **updateClusterOS** structure\)|Version of the repository for upgrade| |3.7.0|
+|resourceUuid \(optional\)|String|body \(contained in **updateClusterOS** structure\)| | |3.7.0|
+|tagUuids \(optional\)|List|body \(contained in **updateClusterOS** structure\)|Tag UUID list| |3.7.0|
+|systemTags \(optional\)|List|body|System tag| |2.3|
+|userTags \(optional\)|List|body|User tag| |2.3|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "932696598b64375ea4ae6226cc0c1407"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See details [error](#p_dkt_bhw_hdb)|2.3|
+|inventory|LongJobInventory|See details [inventory](#p_d55_chw_hdb)|2.2|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, e.g. SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, default is null|0.6|
+|opaque|LinkedHashMap|Reserved field, default is null|0.6|
+|cause|ErrorCode|Root cause, the error that caused the current error. If there is no original error, this field is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|2.2.4|
+|name|String|Resource name|2.2.4|
+|description|String|Resource description|2.2.4|
+|apiId|String|API ID used to associate TaskProgress|2.2.4|
+|jobName|String|Job name|2.2.4|
+|jobData|String|Job data|2.2.4|
+|jobResult|String|Job result|2.2.4|
+|targetResourceUuid|String|Target resource UUID|2.2.4|
+|managementNodeUuid|String|Management Node UUID|2.2.4|
+|createDate|Timestamp|Creation time|2.2.4|
+|lastOpDate|Timestamp|Last modification time|2.2.4|
+|executeTime|Long| |3.7.0|
+|state|LongJobState|See details [state](#p_ixh_dq5_ljb)|2.2.4|
+
+### state
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Waiting|LongJobState| |3.7.0|
+|Suspended|LongJobState| |3.7.0|
+|Running|LongJobState| |3.7.0|
+|Succeeded|LongJobState| |3.7.0|
+|Canceling|LongJobState| |3.7.0|
+|Canceled|LongJobState| |3.7.0|
+|Failed|LongJobState| |3.7.0|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateClusterOSAction action = new UpdateClusterOSAction();
+action.uuid = "31c4951f39ae38969802e833448369ae";
+action.excludePackages = asList("kernel","systemd*");
+action.updatePackages = asList("zstack-release");
+action.releaseVersion = "c74";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateClusterOSAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateClusterOSAction action = UpdateClusterOSAction()
+action.uuid = "31c4951f39ae38969802e833448369ae"
+action.excludePackages = [kernel, systemd*]
+action.updatePackages = [zstack-release]
+action.releaseVersion = "c74"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateClusterOSAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,85 @@
+---
+title: "AttachNetworkServiceToL3Network"
+---
+
+<APIPage method="POST" path="/v1/l3-networks/{l3NetworkUuid}/network-services">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "networkServices": {
+      "95f60161f9d5483dbfe92a10d8795334": [
+        "PortForwarding"
+      ]
+    }
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding sample, both **systemTags** and **userTags** are optional. These two fields can be included in the body structure.
+</Callout>
+
+Curl Sample
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"networkServices":{"41083a0985973a62bf8e6086dff0a2df":["PortForwarding"]}}}' \
+http://localhost:8080/zstack/v1/l3-networks/ae8e1e4d66003a08b748363b8ebb0be8/network-services
+```
+
+Request Parameters
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|l3NetworkUuid|String|url|The L3 network UUID.| |0.6|
+|networkServices|Map|body\(included in the **params** structure\)|The network services.| |0.6|
+|systemTags|List|body|Optional. The system tags.| |0.6|
+|userTags|List|body|Optional. The user tags.| |0.6|
+
+## API Response
+This API returns a null JSON object `{}` when it succeeds, and returns a JSON object containing an `error` field when it fails. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Sample
+Java SDK
+
+```
+AttachNetworkServiceToL3NetworkAction action = new AttachNetworkServiceToL3NetworkAction();
+action.l3NetworkUuid = "e1a80b4d97ca442b8f313739de6d7997";
+action.networkServices = [a3b86894e3b948288ccb1886a4084f03:[PortForwarding]];
+action.sessionId = "4de1ca63ca1a4a0db7d799093b387c76";
+AttachNetworkServiceToL3NetworkAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AttachNetworkServiceToL3NetworkAction action = AttachNetworkServiceToL3NetworkAction()
+action.l3NetworkUuid = "38daee20c0264e41b58ea573c261f439"
+action.networkServices = [7fb4f50bf7c74c30951fb7adbb202a95:[PortForwarding]]
+action.sessionId = "4be26def099940f0979b1afaf414bba6"
+AttachNetworkServiceToL3NetworkAction.Result res = action.call()
+```
+
+</APIPage>

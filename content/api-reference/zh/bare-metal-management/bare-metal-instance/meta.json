@@ -1,0 +1,18 @@
+{
+  "title": "裸金属设备相关接口",
+  "pages": [
+    "batch-create-baremetal-chassis",
+    "check-baremetal-chassis-config-file",
+    "create-baremetal-chassis",
+    "delete-baremetal-chassis",
+    "update-baremetal-chassis",
+    "query-baremetal-chassis",
+    "inspect-baremetal-chassis",
+    "change-baremetal-chassis-state",
+    "get-baremetal-chassis-power-status",
+    "power-on-baremetal-chassis",
+    "power-reset-baremetal-chassis",
+    "power-off-baremetal-chassis"
+  ],
+  "pagesIndex": "index"
+}

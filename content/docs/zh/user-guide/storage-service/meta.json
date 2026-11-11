@@ -1,0 +1,10 @@
+{
+  "title": "存储服务",
+  "pages": [
+    "index",
+    "deploy-distributed-storage",
+    "import-distributed-storage",
+    "resources"
+  ],
+  "pagesIndex": "index"
+}

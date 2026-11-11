@@ -1,0 +1,10 @@
+{
+  "title": "Time Management",
+  "pages": [
+    "check-network-reachable",
+    "get-chrony-servers",
+    "sync-chrony-servers",
+    "update-chrony-servers"
+  ],
+  "pagesIndex": "index"
+}

@@ -1,0 +1,81 @@
+---
+title: "设置虚拟机Qga"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "setVmQga": {
+    "enable": false
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"setVmQga":{"enable":false}}' \
+http://localhost:8080/zstack/v1/vm-instances/8f37ceee285c3418b28247388508601a/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |0.6|
+|enable|boolean|body\(包含在**params**结构中\)| | |0.6|
+|systemTags \(可选\)|List|body| | |0.6|
+|userTags \(可选\)|List|body| | |0.6|
+
+## API返回
+该API成功时返回一个空的JSON结构**`{}`**，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+SetVmQgaAction action = new SetVmQgaAction();
+action.uuid = "771991c9b47f45a392bddeadba95ab2b";
+action.enable = false;
+action.sessionId = "6dc45ce48e8345f89c8487bb9a5180f8";
+SetVmQgaAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SetVmQgaAction action = SetVmQgaAction()
+action.uuid = "084bb6e8ecd9497fb261049cce04b116"
+action.enable = false
+action.sessionId = "5e78bf8076a84933928ee8d2ef04eca9"
+SetVmQgaAction.Result res = action.call()
+```
+
+</APIPage>

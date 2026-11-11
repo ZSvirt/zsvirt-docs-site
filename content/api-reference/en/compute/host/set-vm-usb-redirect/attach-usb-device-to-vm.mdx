@@ -1,0 +1,277 @@
+---
+title: "Attach Host USB Device to VM"
+---
+
+<APIPage method="POST" path="/v1/usb-device/usb-devices/{usbDeviceUuid}/attach">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "vmInstanceUuid": "2a3697245a4a3e829a246e222c243688",
+    "attachType": "PassThrough"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The **systemTags** and **userTags** fields can be omitted in the above example. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"vmInstanceUuid":"2a3697245a4a3e829a246e222c243688","attachType":"PassThrough"}}' http://localhost:8080/zstack/v1/usb-device/usb-devices/84838a1925bb3eb3b2440a8afd420e40/attach
+```
+
+Parameter List
+
+<table id="table_tzw_zv2_sbb"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+usbDeviceUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+USB device UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.2
+
+</td></tr><tr><td>
+
+vmInstanceUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in **params** structure\)
+
+</td><td>
+
+Virtual Machine UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.2
+
+</td></tr><tr><td>
+
+attachType \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in **params** structure\)
+
+</td><td>
+
+Attach type
+
+</td><td>
+
+-   PassThrough
+-   Redirect
+
+</td><td>
+
+3.5.0
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.2
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.2
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "dc782167a4853525848fd04bf606d072",
+    "name": "usb",
+    "hostUuid": "dea6020aae7b3244be45eee6ae1d4d0f",
+    "vmInstanceUuid": "33471e0ae8a33b3b8b0f295eff6e4db4",
+    "state": "Enabled",
+    "busNum": "001",
+    "devNum": "001",
+    "idVendor": "0781",
+    "idProduct": "5591",
+    "iManufacturer": "SanDisk",
+    "iProduct": "Ultra USB 3.0",
+    "iSerial": "000000000001",
+    "usbVersion": "3.0",
+    "attachType": "PassThrough"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_lyz_tw2_sbb)|2.2|
+|inventory|UsbDeviceInventory|See [inventory](#p_e32_5w2_sbb)|2.2|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code, a globally unique identifier of the error, e.g. SYS.1000, HOST.1001|2.2|
+|description|String|Brief description of the error|2.2|
+|details|String|Detailed error information|2.2|
+|elaboration|String|Reserved field, defaults to null|2.2|
+|opaque|LinkedHashMap|Reserved field, defaults to null|2.2|
+|cause|ErrorCode|Root cause, the source error that caused the current error, null if no original error|2.2|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifies the resource|2.2|
+|name|String|Resource name|2.2|
+|description|String|Resource description|2.2|
+|hostUuid|String|Host UUID|2.2|
+|vmInstanceUuid|String|Virtual Machine UUID|2.2|
+|busNum|String|Bus number|2.2|
+|devNum|String|Device number|2.2|
+|idVendor|String|VendorID|2.2|
+|idProduct|String|ProductID|2.2|
+|iManufacturer|String|Manufacturer|2.2|
+|iProduct|String|Device type|2.2|
+|iSerial|String|Serial number|2.2|
+|usbVersion|String|USB version|2.2|
+|attachType|String|Attach method|3.5.0|
+|createDate|Timestamp|Create date|2.2|
+|lastOpDate|Timestamp|Last update date|2.2|
+|state|UsbDeviceState|See [state](#p_wnk_5w2_sbb)|2.2|
+
+### state
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name|2.2|
+|ordinal|int| |2.2|
+
+## SDK Examples
+Java SDK
+
+```
+AttachUsbDeviceToVmAction action = new AttachUsbDeviceToVmAction();
+action.usbDeviceUuid = "84838a1925bb3eb3b2440a8afd420e40";
+action.vmInstanceUuid = "2a3697245a4a3e829a246e222c243688";
+action.attachType = "PassThrough";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AttachUsbDeviceToVmAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AttachUsbDeviceToVmAction action = AttachUsbDeviceToVmAction()
+action.usbDeviceUuid = "84838a1925bb3eb3b2440a8afd420e40"
+action.vmInstanceUuid = "2a3697245a4a3e829a246e222c243688"
+action.attachType = "PassThrough"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AttachUsbDeviceToVmAction.Result res = action.call()
+```
+
+</APIPage>

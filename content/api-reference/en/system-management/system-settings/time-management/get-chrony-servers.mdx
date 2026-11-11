@@ -1,0 +1,113 @@
+---
+title: "Get Current Chrony Time Source Servers"
+---
+
+<APIPage method="GET" path="/v1/zops/chrony/servers">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zops/chrony/servers
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|systemTags \(Optional\)|List|query|System tags| |4.7.21|
+|userTags \(Optional\)|List|query|User tags| |4.7.21|
+
+## API Response
+Response Example
+
+```
+{
+  "servers": [
+    {
+      "internal": {
+        "hostname": "172.0.0.1",
+        "status": "Connected"
+      },
+      "external": {
+        "hostname": "ntp.test.com",
+        "status": "Connected"
+      }
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.7.21|
+|servers|List|See [servers](#p_ekj_mk1_w2c) for details|4.7.21|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_jck_lk1_w2c) for details|4.7.21|
+
+### servers
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|internal|ChronyServerInfo|See [internal](#p_mg4_hl1_w2c) for details|4.7.21|
+|external|ChronyServerInfo|See [external](#p_k5s_gl1_w2c) for details|4.7.21|
+
+### internal
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|hostname|String|Address|4.7.21|
+|status|HostConnectedStatus|See [status](#p_opx_lk1_w2c) for details|4.7.21|
+
+### status
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Connected|HostConnectedStatus|Network reachable|4.7.21|
+|Disconnected|HostConnectedStatus|Network unreachable|4.7.21|
+|Unknown|HostConnectedStatus|Network connection status unknown|4.7.21|
+
+### external
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|hostname|String|Address|4.7.21|
+|status|HostConnectedStatus|See [status](#p_bvw_fl1_w2c) for details|4.7.21|
+
+### status
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Connected|HostConnectedStatus|Network reachable|4.7.21|
+|Disconnected|HostConnectedStatus|Network unreachable|4.7.21|
+|Unknown|HostConnectedStatus|Network connection status unknown|4.7.21|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|The detailed error information|0.6|
+|elaboration|String|Reserved field. Default is null|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null|0.6|
+|cause|ErrorCode|The root error that caused the current error. If no root error exists, this field is null|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+GetChronyServersAction action = new GetChronyServersAction();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetChronyServersAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetChronyServersAction action = GetChronyServersAction()
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetChronyServersAction.Result res = action.call()
+```
+
+</APIPage>

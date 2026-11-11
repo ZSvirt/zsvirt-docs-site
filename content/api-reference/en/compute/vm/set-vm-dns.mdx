@@ -1,0 +1,284 @@
+---
+title: "Set Virtual Machine DNS"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/{vmInstanceUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "setVmDns": {
+    "vmNicUuid": "ff06b3f6ce3939d78731832c5ac97000",
+    "dnsList": [
+      "223.5.5.5"
+    ],
+    "ipVersion": 4
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"setVmDns":{"vmNicUuid":"ff06b3f6ce3939d78731832c5ac97000","dnsList":["223.5.5.5"],"ipVersion":4}}' \
+http://localhost:8080/zstack/v1/vm-instances/ff01ec80fd11327cba7519b66119d900/actions
+```
+
+Parameter List
+
+<table id="table_hkk_cmb_w2c"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+vmInstanceUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+Virtual Machine UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.10
+
+</td></tr><tr><td>
+
+vmNicUuid \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(included in the `setVmDns` structure\)
+
+</td><td>
+
+Virtual Machine NIC UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.10
+
+</td></tr><tr><td>
+
+dnsList
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(included in the `setVmDns` structure\)
+
+</td><td>
+
+DNS List
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.10
+
+</td></tr><tr><td>
+
+ipVersion \(Optional\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+body\(included in the `setVmDns` structure\)
+
+</td><td>
+
+IP Protocol Number
+
+</td><td>
+
+-   4
+-   6
+
+</td><td>
+
+4.10.10
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System Tag
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.10
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User Tag
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.10
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "vmInstanceUuid": "ff01ec80fd11327cba7519b66119d900",
+      "dns": "223.5.5.5",
+      "ipVersion": 4,
+      "createDate": "Nov 14, 2017 2:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.10.10|
+|inventories|List|For details, see [inventories](#p_tlh_1xv_dfc)|4.10.10|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation is successful, this field is null. For details, see [error](#p_ir4_1xv_dfc)|4.10.10|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|vmInstanceUuid|String|Virtual Machine UUID|4.10.10|
+|vmNicUuid|String|Virtual Machine NIC UUID|4.10.10|
+|dns|String|DNS Address|4.10.10|
+|ipVersion|Integer|IP Protocol Number|4.10.10|
+|createDate|Timestamp|Create time|4.10.10|
+|lastOpDate|Timestamp|Last modification time|4.10.10|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, default is null|0.6|
+|opaque|LinkedHashMap|Reserved field, default is null|0.6|
+|cause|ErrorCode|Root cause: the source error that triggered the current error. If there is no original error, this field is null|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+SetVmDnsAction action = new SetVmDnsAction();
+action.vmInstanceUuid = "ff01ec80fd11327cba7519b66119d900";
+action.vmNicUuid = "ff06b3f6ce3939d78731832c5ac97000";
+action.dnsList = asList("223.5.5.5");
+action.ipVersion = 4;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+SetVmDnsAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SetVmDnsAction action = SetVmDnsAction()
+action.vmInstanceUuid = "ff01ec80fd11327cba7519b66119d900"
+action.vmNicUuid = "ff06b3f6ce3939d78731832c5ac97000"
+action.dnsList = [223.5.5.5]
+action.ipVersion = 4
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+SetVmDnsAction.Result res = action.call()
+```
+
+</APIPage>

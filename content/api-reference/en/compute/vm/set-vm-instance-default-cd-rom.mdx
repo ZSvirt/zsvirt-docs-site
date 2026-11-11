@@ -1,0 +1,110 @@
+---
+title: "Set VM Default CD-ROM"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/{vmInstanceUuid}/cdroms/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "setVmInstanceDefaultCdRom": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"setVmInstanceDefaultCdRom":{}}' http://localhost:8080/zstack/v1/vm-instances/d447a8ba0a7739ebb9ea4328740cb6df/cdroms/65a54c4273433d74970e8bac4c406cd8/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Resource UUID, uniquely identifies the resource| |3.3.0|
+|vmInstanceUuid|String|url|Virtual Machine UUID| |3.3.0|
+|systemTags \(Optional\)|List|body|System Tag| |3.3.0|
+|userTags \(Optional\)|List|body|User Tag| |3.3.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "vmInstanceUuid": "ec0fdf7fd86f39e89510b3102ad1c66e",
+    "deviceId": 0,
+    "isoUuid": "57adfd535d05345895007787f74d11a0",
+    "name": "cd-1",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation succeeds, this field is null. For details, see [error](#p_wsd_dpt_lgb)|3.3.0|
+|inventory|VmCdRomInventory|For details, see [inventory](#p_jkj_dpt_lgb)|3.3.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier of the error, for example SYS.1000, HOST.1001|3.3.0|
+|description|String|Brief description of the error|3.3.0|
+|details|String|Detailed error information|3.3.0|
+|elaboration|String|Reserved field, defaults to null|3.3.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|3.3.0|
+|cause|ErrorCode|Root cause. The error that triggered the current error. If there is no original error, this field is null|3.3.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|3.3.0|
+|vmInstanceUuid|String|Virtual Machine UUID|3.3.0|
+|deviceId|Integer|CD-ROM device number|3.3.0|
+|isoUuid|String|ISO Image UUID|3.3.0|
+|isoInstallPath|String|ISO image mount path|3.3.0|
+|name|String|Resource name|3.3.0|
+|description|String|Resource description|3.3.0|
+|createDate|Timestamp|Create time|3.3.0|
+|lastOpDate|Timestamp|Last update time|3.3.0|
+
+## SDK Examples
+Java SDK
+
+```
+SetVmInstanceDefaultCdRomAction action = new SetVmInstanceDefaultCdRomAction();
+action.uuid = "65a54c4273433d74970e8bac4c406cd8";
+action.vmInstanceUuid = "d447a8ba0a7739ebb9ea4328740cb6df";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+SetVmInstanceDefaultCdRomAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SetVmInstanceDefaultCdRomAction action = SetVmInstanceDefaultCdRomAction()
+action.uuid = "65a54c4273433d74970e8bac4c406cd8"
+action.vmInstanceUuid = "d447a8ba0a7739ebb9ea4328740cb6df"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+SetVmInstanceDefaultCdRomAction.Result res = action.call()
+```
+
+</APIPage>

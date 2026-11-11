@@ -1,0 +1,294 @@
+---
+title: "更新MDEV设备规格"
+---
+
+<APIPage method="PUT" path="/v1/mdev-device-specs/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateMdevDeviceSpec": {
+    "name": "GRID_M60-2A",
+    "description": "NVIDIA Corporation, GM204GL [Tesla M60], a1, VGA compatible controller",
+    "state": "Enabled"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateMdevDeviceSpec":{"name":"GRID_M60-2A","description":"NVIDIA Corporation, GM204GL [Tesla M60], a1, VGA compatible controller","state":"Enabled"}}' http://localhost:8080/zstack/v1/mdev-device-specs/fab85387affa4b74b2806ff2c538725e/actions
+```
+
+参数列表
+
+<table id="table_xzb_2gg_xhb"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+资源的UUID，唯一标示该资源
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.5.0
+
+</td></tr><tr><td>
+
+name \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**updateMdevDeviceSpec**结构中\)
+
+</td><td>
+
+资源名称
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.5.0
+
+</td></tr><tr><td>
+
+description \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**updateMdevDeviceSpec**结构中\)
+
+</td><td>
+
+资源的详细描述
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.5.0
+
+</td></tr><tr><td>
+
+state \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**updateMdevDeviceSpec**结构中\)
+
+</td><td>
+
+规格状态
+
+</td><td>
+
+-   Enabled
+-   Disabled
+
+</td><td>
+
+3.5.0
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.5.0
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.5.0
+
+</td></tr></tbody>
+</table>
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "61d09af331304b40a80eb67fdd5e86d7",
+    "name": "GRID_M60-2A",
+    "specification": "{Max Resolution=1920*1080, GRID License=GRID-Virtual-Apps,3.0, Instance Number=4, Display Heads=4, Vendor=NVIDIA, Frame Rate Limit=60FPS, Name=GRID_M60-2A, RAM=2048MB}",
+    "type": "GPU_Video_Controller",
+    "state": "Enabled",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_ogc_kgg_xhb)|3.5.0|
+|inventory|MdevDeviceSpecInventory|详情参考[inventory](#p_axx_jgg_xhb)|3.5.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.5.0|
+|description|String|错误的概要描述|3.5.0|
+|details|String|错误的详细信息|3.5.0|
+|elaboration|String|保留字段，默认为null|3.5.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.5.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.5.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.5.0|
+|name|String|资源名称|3.5.0|
+|description|String|资源的详细描述|3.5.0|
+|specification|String|规格详情|3.5.0|
+|createDate|Timestamp|创建时间|3.5.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.5.0|
+|type|MdevDeviceType|详情参考[type](#p_w1t_jgg_xhb)|3.5.0|
+|state|MdevDeviceSpecState|详情参考[state](#p_ahp_jgg_xhb)|3.5.0|
+
+### type
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|GPU\_Video\_Controller|MdevDeviceType|GPU显卡控制器|3.5.0|
+
+### state
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Enabled|MdevDeviceSpecState|启用|3.5.0|
+|Disabled|MdevDeviceSpecState|停用|3.5.0|
+
+## SDK示例
+Java SDK
+
+```
+UpdateMdevDeviceSpecAction action = new UpdateMdevDeviceSpecAction();
+action.uuid = "54e2b878d3d9473ab611794ad04d24b7";
+action.name = "GRID_M60-2A";
+action.description = "NVIDIA Corporation, GM204GL [Tesla M60], a1, VGA compatible controller";
+action.state = "Enabled";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateMdevDeviceSpecAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateMdevDeviceSpecAction action = UpdateMdevDeviceSpecAction()
+action.uuid = "e351f911f77f422f9229cf0426ffa608"
+action.name = "GRID_M60-2A"
+action.description = "NVIDIA Corporation, GM204GL [Tesla M60], a1, VGA compatible controller"
+action.state = "Enabled"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateMdevDeviceSpecAction.Result res = action.call()
+```
+
+</APIPage>

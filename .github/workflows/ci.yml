@@ -1,0 +1,117 @@
+name: Documentation CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: docs-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  validate:
+    name: Test and build
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      NEXT_TELEMETRY_DISABLED: '1'
+      DOC_SEARCH_SOURCE_COMMIT: ${{ github.sha }}
+      NODE_OPTIONS: --max-old-space-size=6144
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version-file: .node-version
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test
+      - run: pnpm test:terraform
+      - run: pnpm types:check
+      - run: pnpm build
+      - run: pnpm exec playwright install --with-deps chromium
+      - name: Verify standalone pages and search
+        run: |
+          pnpm preview &
+          preview_pid=$!
+          trap 'kill "$preview_pid" 2>/dev/null || true' EXIT
+          node --input-type=module -e 'const until=Date.now()+45000; let last; while(Date.now()<until){try{const r=await fetch("http://127.0.0.1:4322/health"); if(r.ok){const h=await r.json(); if(h.ready) process.exit(0);} }catch(e){last=e;} await new Promise(r=>setTimeout(r,500));} throw new Error(`Preview did not become ready: ${last}`);'
+          pnpm test:site:e2e
+          pnpm test:search:e2e
+      - name: Package exact commit
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        run: pnpm release:package --commit "$GITHUB_SHA"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        with:
+          name: documentation-release
+          path: |
+            artifacts/*.tgz
+            artifacts/release.json
+          if-no-files-found: error
+          retention-days: 14
+          compression-level: 0
+
+  deploy:
+    name: Deploy documentation to ECS
+    needs: validate
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && github.repository == 'ZSvirt/zsvirt-docs-site'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    environment:
+      name: production
+      url: https://docs.zsvirt.io/docs
+    concurrency:
+      group: docs-production
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version-file: .node-version
+      - name: Check branch still points to this release
+        id: current
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          current_sha=$(gh api "repos/$GITHUB_REPOSITORY/commits/main" --jq .sha)
+          if test "$current_sha" = "$GITHUB_SHA"; then
+            echo 'deploy=true' >> "$GITHUB_OUTPUT"
+          else
+            echo 'A newer main commit is queued; skipping this superseded release.'
+            echo 'deploy=false' >> "$GITHUB_OUTPUT"
+          fi
+      - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
+        if: steps.current.outputs.deploy == 'true'
+        with:
+          name: documentation-release
+          path: artifacts
+      - name: Deploy and verify the packaged release
+        if: steps.current.outputs.deploy == 'true'
+        env:
+          DOCS_DEPLOY_HOST: ${{ secrets.DOCS_DEPLOY_HOST }}
+          DOCS_DEPLOY_USER: ${{ secrets.DOCS_DEPLOY_USER }}
+          DOCS_DEPLOY_PORT: ${{ secrets.DOCS_DEPLOY_PORT }}
+          DOCS_DEPLOY_KEY: ${{ secrets.DOCS_DEPLOY_KEY }}
+          DOCS_DEPLOY_KNOWN_HOSTS: ${{ secrets.DOCS_DEPLOY_KNOWN_HOSTS }}
+        run: |
+          umask 077
+          key_file="$RUNNER_TEMP/docs-deploy-key"
+          hosts_file="$RUNNER_TEMP/docs-known-hosts"
+          trap 'rm -f "$key_file" "$hosts_file"' EXIT
+          printf '%s\n' "$DOCS_DEPLOY_KEY" > "$key_file"
+          printf '%s\n' "$DOCS_DEPLOY_KNOWN_HOSTS" > "$hosts_file"
+          export DOCS_DEPLOY_KEY_FILE="$key_file"
+          export DOCS_DEPLOY_KNOWN_HOSTS_FILE="$hosts_file"
+          unset DOCS_DEPLOY_KEY DOCS_DEPLOY_KNOWN_HOSTS
+          node scripts/deploy.mjs upgrade
+          node scripts/deploy.mjs check

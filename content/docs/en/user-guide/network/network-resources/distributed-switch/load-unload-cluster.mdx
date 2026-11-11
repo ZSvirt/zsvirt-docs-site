@@ -1,0 +1,29 @@
+---
+title: 'Attach/Detach a Distributed Switch to/from a Cluster'
+---
+
+The default distributed switch only supports attaching/detaching bare metal clusters.
+
+1.  In the navigation pane, choose **Inventory** &gt; **Network Resource**.
+
+2.  In the resource tree, select a target distributed switch.
+
+3.  On the target distributed switch's details page, click the **Cluster** tab.
+
+4.  (Optional) To provide network for more clusters and hosts in the data center, click **Attach Cluster**.
+
+    1.  In the Attach Cluster dialog, select a target cluster, bond configuration, and host NIC.
+
+        When attaching a cluster, you cannot specify bond mode. The bond mode inherits the distributed switch's configuration directly.
+
+    2.  Click **OK**.
+
+5.  (Optional) To detach clusters, click **Detach Cluster**.
+
+    1.  In the Detach Cluster dialog, select target clusters.
+
+    2.  Click **OK**.
+
+    <Callout type="info">
+    After detaching a cluster, the corresponding VM NICs will be removed. Proceed with caution.
+    </Callout>

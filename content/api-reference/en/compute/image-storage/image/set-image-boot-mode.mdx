@@ -1,0 +1,198 @@
+---
+title: "Set Image Boot Mode"
+---
+
+<APIPage method="PUT" path="/v1/images/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "setImageBootMode": {
+    "bootMode": "Legacy"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"setImageBootMode":{"bootMode":"Legacy"}}' http://localhost:8080/zstack/v1/images/4efcba4c12cc35f4a1b262038f7e7b80/actions
+```
+
+Parameter List
+
+<table id="table_sd2_krl_plb"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+Resource UUID, uniquely identifies the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.9.0
+
+</td></tr><tr><td>
+
+bootMode
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **setImageBootMode** structure\)
+
+</td><td>
+
+Image boot mode
+
+</td><td>
+
+-   Legacy
+-   UEFI
+-   UEFI\_WITH\_CSM
+
+</td><td>
+
+3.9.0
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System Tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.9.0
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User Tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.9.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+This API returns an empty JSON object `{}` on success. On error, the returned JSON contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+SetImageBootModeAction action = new SetImageBootModeAction();
+action.uuid = "4efcba4c12cc35f4a1b262038f7e7b80";
+action.bootMode = "Legacy";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+SetImageBootModeAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SetImageBootModeAction action = SetImageBootModeAction()
+action.uuid = "4efcba4c12cc35f4a1b262038f7e7b80"
+action.bootMode = "Legacy"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+SetImageBootModeAction.Result res = action.call()
+```
+
+</APIPage>

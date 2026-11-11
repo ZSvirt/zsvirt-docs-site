@@ -1,0 +1,18 @@
+---
+title: "What is the relationship between Virtual Machine system time and host system time?"
+---
+
+<HistoricalNamingNote locale="en" />
+
+## Feature Description
+-   The platform clock source is centrally managed by the Management Node, and all hardware nodes \(including Hosts\) synchronize to this configuration. When a Virtual Machine is created, it reads this clock source as the system time. The configuration is located at `/usr/local/zstack/apache-tomcat/webapps/zstack/WEB-INF/classes/zstack.properties` under the parameter **chrony.serverIp.0**.
+
+-   The Linux Virtual Machine internal system time reads the Host time as the clock source during creation, start, and restart operations.
+
+-   Windows Virtual Machines automatically read the Host time as the clock source during creation.
+
+-   If the Windows Virtual Machine internal system time lags behind the Host time, the Virtual Machine reads the Host time as the clock source every hour and also synchronizes during start and restart operations.
+
+-   When the Windows Virtual Machine internal system time is ahead of the Host time, start and restart operations cannot read the Host time.
+
+-   For time-sensitive business systems, ensure the accuracy of the time source. For extremely time-sensitive workloads — such as real-time billing — configure a time source inside the Virtual Machine for periodic time synchronization.

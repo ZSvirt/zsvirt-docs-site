@@ -1,0 +1,115 @@
+---
+title: "DetachSecurityGroupFromL3Network"
+---
+
+## API Request
+URLs
+
+```
+DELETE/v1/security-groups/{securityGroupUuid}/l3-networks/{l3NetworkUuid}
+```
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/security-groups/08d569c03f8343168f2ae80861db92f3/l3-networks/af8199498a9e4ab1be6d1fea8ec7fbee?
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|securityGroupUuid|String|url|The security group UUID| |0.6|
+|l3NetworkUuid|String|url|The Distributed Port Group UUID| |0.6|
+|systemTags \(Optional\)|List|body|System tags| |0.6|
+|userTags \(Optional\)|List|body|User tags| |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "6cf7a5c5d89b4094ad912a555319d4d0",
+    "name": "web",
+    "description": "for test",
+    "state": "Enabled",
+    "createDate": "Jun 7, 2017 9:21:06 PM",
+    "lastOpDate": "Jun 7, 2017 9:21:06 PM",
+    "internalId": 0.0
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See [error](#p_kxd_ts5_m1b)|0.6|
+|inventory|SecurityGroupInventory|See [inventory](#p_tzk_ts5_m1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root error: the source error that caused the current error. If there is no original error, this field is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource, uniquely identifying the resource|0.6|
+|name|String|The resource name|0.6|
+|description|String|The detailed description of the resource|0.6|
+|state|String| |0.6|
+|ipVersion|Integer|The IP version number|3.1.0|
+|createDate|Timestamp|The creation time|0.6|
+|lastOpDate|Timestamp|The last modification time|0.6|
+|attachedL3NetworkUuids|Set| |0.6|
+|rules|List|See [rules](#p_j3q_ts5_m1b)|0.6|
+
+### rules
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource, uniquely identifying the resource|0.6|
+|securityGroupUuid|String|The security group UUID|0.6|
+|type|String|The traffic type|0.6|
+|ipVersion|Integer|The IP version number|3.1.0|
+|startPort|Integer|For TCP/UDP, it is the start port number of the port range; for ICMP, it is the ICMP type|0.6|
+|endPort|Integer|For TCP/UDP, it is the end port number of the port range; for ICMP, it is the ICMP code|0.6|
+|protocol|String|The traffic protocol type|0.6|
+|state|String|The availability state of the rule, not implemented in the current version|0.6|
+|allowedCidr|String|The allowed CIDR. It has different meanings depending on the traffic type. For Ingress, it is the source CIDR allowed to access the VM NIC. For Egress, it is the destination CIDR that traffic is allowed to reach from the VM NIC|0.6|
+|remoteSecurityGroupUuid|String| |0.6|
+|createDate|Timestamp|The creation time|0.6|
+|lastOpDate|Timestamp|The last modification time|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+DetachSecurityGroupFromL3NetworkAction action = new DetachSecurityGroupFromL3NetworkAction();
+action.securityGroupUuid = "823d378084fa445c8d180895db4dd8c1";
+action.l3NetworkUuid = "cf6dd2bbd5f940d0976e8c2cd2c063c9";
+action.sessionId = "915660a10fc74d509d5ef72caf5892bd";
+DetachSecurityGroupFromL3NetworkAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DetachSecurityGroupFromL3NetworkAction action = DetachSecurityGroupFromL3NetworkAction()
+action.securityGroupUuid = "726d6b2f8a674da681f32c66102494df"
+action.l3NetworkUuid = "f32da69be7ce4918bb81b8a7ce891177"
+action.sessionId = "933ada040fb14b94941997381877bacc"
+DetachSecurityGroupFromL3NetworkAction.Result res = action.call()
+```

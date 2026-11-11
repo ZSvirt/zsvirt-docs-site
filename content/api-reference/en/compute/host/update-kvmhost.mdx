@@ -1,0 +1,218 @@
+---
+title: "Update KVM Host"
+---
+
+<APIPage method="PUT" path="/v1/hosts/kvm/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateKVMHost": {
+    "username": "userName",
+    "password": "password",
+    "sshPort": 22
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateKVMHost":{"username":"userName","password":"password","sshPort":22}}' \
+http://localhost:8080/zstack/v1/hosts/kvm/477399a02a343bf2971d86c531053f9e/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|username \(optional\)|String|body \(contained in **updateKVMHost** structure\)|Username| |0.6|
+|password \(optional\)|String|body \(contained in **updateKVMHost** structure\)|Password| |0.6|
+|sshPort \(optional\)|Integer|body \(contained in **updateKVMHost** structure\)|SSH port number| |0.6|
+|uuid|String|url|Resource UUID, uniquely identifies the resource| |0.6|
+|name \(optional\)|String|body \(contained in **updateKVMHost** structure\)|Resource name| |0.6|
+|description \(optional\)|String|body \(contained in **updateKVMHost** structure\)|Resource description| |0.6|
+|managementIp \(optional\)|String|body \(contained in **updateKVMHost** structure\)|Management node IP| |0.6|
+|systemTags \(optional\)|List|body|System tag| |0.6|
+|userTags \(optional\)|List|body|User tag| |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "zoneUuid": "82c01885efdc3f789fa9130db6a00532",
+    "name": "example",
+    "uuid": "b3b5a4d4c6973932a29d4bee698fe9ca",
+    "clusterUuid": "c416a848e4e538f1b321169001869bbd",
+    "description": "example",
+    "managementIp": "192.168.0.1",
+    "hypervisorType": "KVM",
+    "state": "Enabled",
+    "status": "Connected",
+    "totalCpuCapacity": 4,
+    "availableCpuCapacity": 2,
+    "totalMemoryCapacity": 4,
+    "availableMemoryCapacity": 4
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See details [error](#p_mjd_zwv_m1b)|0.6|
+|inventory|HostInventory|See details [inventory](#p_jy3_zwv_m1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, e.g. SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, default is null|0.6|
+|opaque|LinkedHashMap|Reserved field, default is null|0.6|
+|cause|ErrorCode|Root cause, the error that caused the current error. If there is no original error, this field is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|zoneUuid|String|Data Center UUID|0.6|
+|name|String|Resource name|0.6|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|clusterUuid|String|Cluster UUID|0.6|
+|description|String|Resource description|0.6|
+|managementIp|String| |0.6|
+|hypervisorType|String| |0.6|
+|state|String| |0.6|
+|status|String| |0.6|
+|totalCpuCapacity|Long| |0.6|
+|availableCpuCapacity|Long| |0.6|
+|cpuSockets|Integer| |0.6|
+|totalMemoryCapacity|Long| |0.6|
+|availableMemoryCapacity|Long| |0.6|
+|cpuNum|Integer| |0.6|
+|ipmiAddress|String|IPMI address|0.6|
+|ipmiUsername|String|IPMI username|0.6|
+|ipmiPort|Integer|IPMI port|0.6|
+|ipmiPowerStatus|String|IPMI power status|0.6|
+|architecture|String| |0.6|
+|nqn|String|NVMe Qualified Name|4.10.6|
+|hostname|String|Host name|4.10.20|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+|cpuStatus|HwMonitorStatus|See details [cpuStatus](#p_wvd_kkm_lhc)|4.10.0|
+|memoryStatus|HwMonitorStatus|See details [memoryStatus](#p_nhh_kkm_lhc)|4.10.0|
+|diskStatus|HwMonitorStatus|See details [diskStatus](#p_esk_kkm_lhc)|4.10.0|
+|nicStatus|HwMonitorStatus|See details [nicStatus](#p_n24_kkm_lhc)|4.10.0|
+|gpuStatus|HwMonitorStatus|See details [gpuStatus](#p_zgr_kkm_lhc)|4.10.0|
+|powerSupplyStatus|HwMonitorStatus|See details [powerSupplyStatus](#p_o35_kkm_lhc)|4.10.0|
+|fanStatus|HwMonitorStatus|See details [fanStatus](#p_m2x_kkm_lhc)|4.10.0|
+|raidStatus|HwMonitorStatus|See details [raidStatus](#p_oc1_lkm_lhc)|4.10.0|
+|temperatureStatus|HwMonitorStatus|See details [temperatureStatus](#p_cyd_lkm_lhc)|4.10.0|
+
+### cpuStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### memoryStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### diskStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### nicStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### gpuStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### powerSupplyStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### fanStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### raidStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### temperatureStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateKVMHostAction action = new UpdateKVMHostAction();
+action.username = "userName";
+action.password = "password";
+action.sshPort = 22;
+action.uuid = "477399a02a343bf2971d86c531053f9e";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateKVMHostAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = UpdateKVMHostAction()
+action.username = "userName"
+action.password = "password"
+action.sshPort = 22
+action.uuid = "477399a02a343bf2971d86c531053f9e"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

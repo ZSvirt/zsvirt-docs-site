@@ -1,0 +1,110 @@
+---
+title: "Send Test Email"
+---
+
+<APIPage method="POST" path="/v1/sns/application-endpoints/email/test-connection">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "emails": [
+      "example@zstack.io"
+    ],
+    "platformUuid": "d5904b92d6df39a5905212bde24b2946",
+    "endpointUuid": "2ff88c96f20f36469bdfcd2fa84e533d",
+    "subject": "test email subject",
+    "text": "this is a test email of content"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the `systemTags` and `userTags` fields are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"emails":["example@zstack.io"],"platformUuid":"d5904b92d6df39a5905212bde24b2946","endpointUuid":"2ff88c96f20f36469bdfcd2fa84e533d","subject":"test email subject","text":"this is a test email of content"}}' \
+http://localhost:8080/zstack/v1/sns/application-endpoints/email/test-connection
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|emails \(Optional\)|List|body \(contained in the `params` structure\)|Recipient email addresses| |4.10.0|
+|platformUuid \(Optional\)|String|body \(contained in the `params` structure\)|Email platform UUID| |4.10.0|
+|endpointUuid \(Optional\)|String|body \(contained in the `params` structure\)|Email endpoint UUID| |4.10.0|
+|subject \(Optional\)|String|body \(contained in the `params` structure\)|Subject| |4.10.0|
+|text \(Optional\)|String|body \(contained in the `params` structure\)|Content| |4.10.0|
+|systemTags \(Optional\)|List|body|System tags| |4.10.0|
+|userTags \(Optional\)|List|body|User tags| |4.10.0|
+
+## API Response
+Response Example
+
+```
+{
+  "connected": true,
+  "webhookResp": {}
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.10.0|
+|connected|boolean|Send result|4.10.0|
+|webhookResp|LinkedHashMap|Remote response content|4.10.0|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null on success. See [error](#p_iwx_hcj_p2b)|4.10.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Default is null|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null|0.6|
+|cause|ErrorCode|The root error that caused the current error. If there is no root error, this field is null|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+SNSEmailTestConnectionAction action = new SNSEmailTestConnectionAction();
+action.emails = asList("example@zstack.io");
+action.platformUuid = "d5904b92d6df39a5905212bde24b2946";
+action.endpointUuid = "2ff88c96f20f36469bdfcd2fa84e533d";
+action.subject = "test email subject";
+action.text = "this is a test email of content";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+SNSEmailTestConnectionAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SNSEmailTestConnectionAction action = SNSEmailTestConnectionAction()
+action.emails = [example@zstack.io]
+action.platformUuid = "d5904b92d6df39a5905212bde24b2946"
+action.endpointUuid = "2ff88c96f20f36469bdfcd2fa84e533d"
+action.subject = "test email subject"
+action.text = "this is a test email of content"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+SNSEmailTestConnectionAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,9 @@
+{
+  "title": "日志收集",
+  "pages": [
+    "index",
+    "collect",
+    "manage"
+  ],
+  "pagesIndex": "index"
+}

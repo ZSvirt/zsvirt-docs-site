@@ -1,0 +1,87 @@
+---
+title: "Set Virtual Machine Hostname"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/{uuid}/actions">
+
+Set Virtual Machine hostname.
+
+<Callout type="info">
+ZSvirt configures the Virtual Machine hostname through the DHCP server. If the Virtual Machine uses a static hostname, the hostname configured by this API will not take effect.
+</Callout>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "setVmHostname": {
+    "hostname": "vm1.zstack.org"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"setVmHostname":{"hostname":"vm1.zstack.org"}}' \
+http://localhost:8080/zstack/v1/vm-instances/0d71345add0230f2a893e7789a831b81/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Virtual Machine UUID| |0.6|
+|hostname|String|body\(contained in the **setVmHostname** structure\)|Hostname, must comply with RFC 1123 standard| |0.6|
+|systemTags \(Optional\)|List|body|System Tag| |0.6|
+|userTags \(Optional\)|List|body|User Tag| |0.6|
+
+## API Response
+This API returns an empty JSON structure **`{}`** on success. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+SetVmHostnameAction action = new SetVmHostnameAction();
+action.uuid = "0d71345add0230f2a893e7789a831b81";
+action.hostname = "vm1.zstack.org";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+SetVmHostnameAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SetVmHostnameAction action = SetVmHostnameAction()
+action.uuid = "0d71345add0230f2a893e7789a831b81"
+action.hostname = "vm1.zstack.org"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+SetVmHostnameAction.Result res = action.call()
+```
+
+</APIPage>

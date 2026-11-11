@@ -1,0 +1,30 @@
+---
+title: 'Modify NFS Storage Configuration'
+---
+
+If you have added NFS storage, you can modify the NFS storage configuration as needed based on your business scenarios, including basic and advanced configurations.
+
+-   [Modify Basic Configuration](#section_xbh_tf3_bzb)
+-   [Modify Advanced Configuration](#section_mgw_tf3_bzb)
+
+## Modify Basic Configuration
+If you only need to modify the name and description of the NFS storage, you can click **Action** &gt; **Edit Name and Description** on the target NFS storage page to make the changes.
+
+## Modify Advanced Configuration
+If you want to modify the advanced configuration information for NFS storage, including the storage over-provisioning ratio and hard disk pre-allocation strategy, you can follow these steps:
+
+1.  Navigate to the target NFS storage page.
+2.  Enter the Advanced Settings sub-page.
+3.  Click **Edit**.
+
+ZSvirt supports modifying the following advanced configurations for NFS storage:
+
+-   **Data Storage Overcommit Ratio**: Used to control the allocatable space of data storage for virtual machines.
+
+    Calculation formula: Data storage allocatable capacity = \[(actual capacity - reserved capacity) × over-provisioning ratio\] - (threshold capacity + sum of all hard disks allocated to virtual machines + snapshots + image cache + migration cache)
+
+-   **NFS Storage Disk Preallocation Policy**: Used to set the hard disk pre-allocation strategy in NFS storage. The default is none.
+    -   none: Does not use pre-allocation strategy. With this strategy, files are dynamically allocated the required space as needed.
+    -   metadata: Only pre-allocates the space required for file metadata, without allocating any space for the data. With this strategy, the required storage space for the hard disk is dynamically allocated as data is written.
+    -   falloc: Pre-allocates the required space for the file but does not immediately erase the corresponding data on the physical device. Erasure occurs when the virtual machine first writes data to the hard disk.
+    -   full: Pre-allocates the required space for the file.

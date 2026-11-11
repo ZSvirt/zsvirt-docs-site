@@ -1,0 +1,11 @@
+{
+  "title": "报警消息",
+  "pages": [
+    "index",
+    "view",
+    "acknowledge",
+    "silence-period",
+    "restore"
+  ],
+  "pagesIndex": "index"
+}

@@ -1,0 +1,169 @@
+---
+title: "Detach iSCSI Server from Cluster"
+---
+
+<APIPage method="DELETE" path="/v1/clusters/{clusterUuid}/storage-devices/iscsi/servers/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/clusters/81ecbd4ae7c9346aa3225592441c36df/storage-devices/iscsi/servers/132d1caceecd3847b30bd901485ccc44
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|iSCSI Server UUID| |3.0.0|
+|clusterUuid|String|url|Cluster UUID| |3.0.0|
+|systemTags \(optional\)|List|body| | |3.0.0|
+|userTags \(optional\)|List|body| | |3.0.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "2c42d5e271e93a91a4467bf936a21018",
+    "ip": "10.0.0.201",
+    "port": 3260.0,
+    "chapUserName": "username",
+    "chapUserPassword": "password",
+    "state": "Enabled",
+    "iscsiTargets": [
+      {
+        "iscsiServerUuid": "2c42d5e271e93a91a4467bf936a21018",
+        "uuid": "84fb04ce8ac03803b99cab5cccd831d1",
+        "iqn": "iqn.2018-01.io.cloud:tsn.00001",
+        "state": "Enabled",
+        "iscsiLuns": [
+          {
+            "uuid": "44d2c6a338123031a55ce32f102432af",
+            "iscsiTargetUuid": "84fb04ce8ac03803b99cab5cccd831d1",
+            "wwid": "36b083fe000daf018000015505abbe00a",
+            "vendor": "DELL",
+            "model": "MD32xx",
+            "wwn": "0x6b083fe000daf018",
+            "serial": "6b083fe000daf018000015505abbe00a",
+            "hctl": "6:0:1:1",
+            "type": "mpath",
+            "path": "ip-0.0.0.201:3260-iscsi-iqn.2018-01.io.cloud:tsn.00001-lun-0",
+            "size": 30003188203520.0,
+            "multipathDeviceUuid": "36b083fe000daf018000015505abbe00a"
+          }
+        ],
+        "createDate": "Nov 14, 2017 10:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+      }
+    ],
+    "iscsiClusterRefs": [
+      {
+        "id": 1.0,
+        "iscsiServerUuid": "2c42d5e271e93a91a4467bf936a21018",
+        "clusterUuid": "ced139d5eded3049bbfe8364804fa8c0",
+        "createDate": "Nov 14, 2017 10:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+      }
+    ],
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation is successful, this field is null. For details, see [error](#p_bcg_wsd_z2b)|3.0.0|
+|inventory|IscsiServerInventory|For details, see [inventory](#p_b5m_wsd_z2b)|3.0.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, e.g. SYS.1000, HOST.1001|3.0.0|
+|description|String|Brief description of the error|3.0.0|
+|details|String|Detailed error information|3.0.0|
+|elaboration|String|Reserved field, defaults to null|3.0.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|3.0.0|
+|cause|ErrorCode|Root cause: the error that triggered the current error. If there is no original error, this field is null|3.0.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|3.0.0|
+|name|String|Resource Name|3.0.0|
+|ip|String|IP Address|3.0.0|
+|port|Integer|Port|3.0.0|
+|chapUserName|String|CHAP Username|3.0.0|
+|chapUserPassword|String|CHAP Password|3.0.0|
+|state|String|Enabled State|3.0.0|
+|createDate|Timestamp|Creation Time|3.0.0|
+|lastOpDate|Timestamp|Last Modification Time|3.0.0|
+|iscsiTargets|List|For details, see [iscsiTargets](#p_zts_wsd_z2b)|3.0.0|
+|iscsiClusterRefs|List|For details, see [iscsiClusterRefs](#p_lzd_xsd_z2b)|3.0.0|
+
+### iscsiTargets
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|iscsiServerUuid|String|iSCSI Server UUID|3.0.0|
+|uuid|String|Resource UUID, uniquely identifies the resource|3.0.0|
+|iqn|String|iSCSI IQN|3.0.0|
+|createDate|Timestamp|Creation Time|3.0.0|
+|lastOpDate|Timestamp|Last Modification Time|3.0.0|
+|iscsiLuns|List|For details, see [iscsiLuns](#p_a5y_wsd_z2b)|3.0.0|
+
+### iscsiLuns
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|3.0.0|
+|iscsiTargetUuid|String|iSCSI Target UUID|3.0.0|
+|wwid|String|Unique Identifier ID|3.0.0|
+|vendor|String|Device Vendor|3.0.0|
+|model|String|Device Model|3.0.0|
+|wwn|String|Device WWN|3.0.0|
+|serial|String|Device Serial Number|3.0.0|
+|hctl|String|SCSI Device HCTL|3.0.0|
+|type|String|Device Type|3.0.0|
+|path|String|Device Path|3.0.0|
+|size|Long|Device Size|3.0.0|
+|createDate|Timestamp|Creation Time|3.0.0|
+|lastOpDate|Timestamp|Last Modification Time|3.0.0|
+
+### iscsiClusterRefs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|iscsiServerUuid|String| |3.0.0|
+|clusterUuid|String|Cluster UUID|3.0.0|
+|createDate|Timestamp|Creation Time|3.0.0|
+|lastOpDate|Timestamp|Last Modification Time|3.0.0|
+
+## SDK Examples
+Java SDK
+
+```
+DetachIscsiServerFromClusterAction action = new DetachIscsiServerFromClusterAction();
+action.uuid = "132d1caceecd3847b30bd901485ccc44";
+action.clusterUuid = "81ecbd4ae7c9346aa3225592441c36df";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DetachIscsiServerFromClusterAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DetachIscsiServerFromClusterAction action = DetachIscsiServerFromClusterAction()
+action.uuid = "132d1caceecd3847b30bd901485ccc44"
+action.clusterUuid = "81ecbd4ae7c9346aa3225592441c36df"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DetachIscsiServerFromClusterAction.Result res = action.call()
+```
+
+</APIPage>

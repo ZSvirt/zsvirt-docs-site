@@ -1,0 +1,52 @@
+---
+title: "SSH登录虚拟机失败，如何解决？"
+---
+
+SSH登录虚拟机失败一般存在多种现象和原因，可根据以下现象和原因分类，尝试参考解决方案进行排查解决：
+
+## 现象
+SSH登录虚拟机失败一般可能出现以下三种现象：
+
+-   现象一：root用户无法通过SSH登录虚拟机。
+-   现象二：业务虚拟机SSH连接失败，出现`Permission denied, please try again. error: Could not get shadow information for root.`报错。
+-   现象三：SSH登录虚拟机超时。
+
+## 原因一
+出现现象一，可能是由于SSH服务配置文件不允许root登录。
+
+## 解决方案
+-   在虚拟机系统内执行以下命令，修改配置文件允许root用户登录：
+
+    ```
+    [root@localhost ~]#  vim /etc/ssh/sshd_config
+    PermitRootLogin yes
+    ```
+
+## 原因二
+出现现象二，可能是由于`SELinux`配置文件未放行SSH服务。
+
+## 解决方案
+1.  在虚拟机系统内执行以下命令修改`SELinux`配置文件，放行SSH服务：
+
+    ```
+    [root@localhost ~]#  semanage port -a -t ssh_port_t -p tcp 22
+    ```
+
+2.  依次执行以下命令，停止并停用`SELinux`：
+
+    ```
+    [root@localhost ~]#  setenforce 0
+    [root@localhost ~]#  sed -i 's/SELINUX=enforcing/SELINUX=disabled/' /etc/selinux/config
+    ```
+
+## 原因三
+出现现象三，可能是由于虚拟机启用了基于GSSAPI的用户认证，开启该设置后，登录虚拟机需对服务器端IP地址进行反解析，若服务器IP地址未配置PTR记录，则可能出现登录较慢甚至超时。
+
+## 解决方案
+-   在虚拟机系统内执行以下命令，修改虚拟机**sshd**服务配置文件：
+
+    ```
+    [root@localhost ~]# vim /etc/ssh/sshd_config
+    UseDNS no
+    GSSAPIAuthentication yes
+    ```

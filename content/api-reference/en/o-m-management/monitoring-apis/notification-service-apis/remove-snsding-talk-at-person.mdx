@@ -1,0 +1,67 @@
+---
+title: "Remove DingTalk @ User"
+---
+
+<APIPage method="DELETE" path="/v1/sns/application-endpoints/ding-talk/{endpointUuid}/at-persons/{phoneNumber}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/sns/application-endpoints/ding-talk/696e69a1023f323ca147be82ed7f13cd/at-persons/18988887777?
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|deleteMode \(Optional\)|String|body| | |5.0.0|
+|systemTags \(Optional\)|List|body|System tags| |2.3|
+|userTags \(Optional\)|List|body|User tags| |2.3|
+|endpointUuid|String|url|DingTalk endpoint UUID| |2.3|
+|phoneNumber|String|url|Phone number of the atPerson to remove| |2.3|
+
+## API Response
+On success, this API returns an empty JSON structure **`{}`**. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+RemoveSNSDingTalkAtPersonAction action = new RemoveSNSDingTalkAtPersonAction();
+action.endpointUuid = "696e69a1023f323ca147be82ed7f13cd";
+action.phoneNumber = "18988887777";
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RemoveSNSDingTalkAtPersonAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+RemoveSNSDingTalkAtPersonAction action = RemoveSNSDingTalkAtPersonAction()
+action.endpointUuid = "696e69a1023f323ca147be82ed7f13cd"
+action.phoneNumber = "18988887777"
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+RemoveSNSDingTalkAtPersonAction.Result res = action.call()
+```
+
+</APIPage>

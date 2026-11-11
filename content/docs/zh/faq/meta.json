@@ -1,0 +1,14 @@
+{
+  "title": "常见问题解答（FAQ）",
+  "pages": [
+    "index",
+    "installation-and-upgrade",
+    "platform-login",
+    "dashboard",
+    "resource-inventory",
+    "data-protection",
+    "operations-management",
+    "system-management"
+  ],
+  "pagesIndex": "index"
+}

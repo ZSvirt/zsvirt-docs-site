@@ -1,0 +1,23 @@
+---
+title: 'VM CPU'
+---
+
+ZSvirt provides CPU mode configuration functionality, which you can use to set the virtual machine's CPU model to match the host's CPU model. This allows the virtual machine to inherit some or all of the host's CPU features, meeting specific business requirements.
+
+-   [Introduction to Virtual Machine CPU Modes](#section_zht_tvq_zyb)
+-   [Configuring Virtual Machine CPU Mode](#section_hcw_dyq_zyb)
+
+## Introduction to Virtual Machine CPU Modes
+ZSvirt supports the following CPU mode settings:
+
+-   **None (Default)**: The virtual machine's CPU model is emulated by QEMU, inheriting a limited set of features from the host CPU. This mode is recommended for migration scenarios.
+-   **Compatible**: The virtual machine's CPU model closely matches or is identical to the host CPU model, for example, both showing as Haswell Intel CPUs. Compared to the None mode, this mode allows the virtual machine to inherit more features from the host CPU and can be used in migration scenarios. Note that this setting is not supported on aarch architecture clusters and virtual machines.
+-   **Passthrough**: The virtual machine's CPU model is identical to the host CPU model. Additionally, the virtual machine inherits all CPU features from the host, such as extended page tables, large memory pages, and virtualization support. Compared to None, Compatibility, and Custom modes, this mode inherits the most features from the host CPU and is suitable for business scenarios with higher requirements for virtual machine functionality.
+-   **Custom (a specific CPU model)**: The virtual machine is configured with the specified custom CPU model. After configuring a custom CPU model, the virtual machine may have different CPU features compared to its previous configuration.
+
+## Configuring Virtual Machine CPU Mode
+ZSvirt offers configuration settings at both the virtual machine level and the cluster level. The precedence order for these settings is: virtual machine level &gt; cluster level. This section describes how to configure the CPU mode for a single virtual machine:
+
+1.  In the target virtual machine page, click the **Shut Down** button to power off the virtual machine.
+2.  Click **Modify Configuration**, then choose **Hardware Information** &gt; **CPU** &gt; **CPU Mode**. Select the desired CPU mode according to your needs.
+3.  Click **OK** to complete the CPU mode configuration. You can then click the **Power On** button to restart the virtual machine.

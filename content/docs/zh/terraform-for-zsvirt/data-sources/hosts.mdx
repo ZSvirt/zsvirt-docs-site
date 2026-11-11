@@ -1,0 +1,77 @@
+---
+title: 'zsphere_hosts'
+description: '查询 ZSvirt 物理主机列表及其属性。'
+---
+
+<HistoricalNamingNote locale="zh" />
+
+
+# zsphere_hosts（数据源）
+
+查询 ZSvirt 物理主机列表及其属性。
+
+## 示例用法
+```terraform
+data "zsphere_hosts" "test" {
+}
+
+output "zstack_secs" {
+  value = data.zsphere_hosts.test
+}
+
+# 示例输出：
+# zstack_secs = {
+#   "filter" = tolist([])
+#   "hosts" = tolist([
+#     {
+#       "architecture" = "x86_64"
+#       "cluster_uuid" = "5568b28dbaed465daf768b533b1fe72d"
+#       "managementip" = "172.26.52.90"
+#       "name" = "Host-1"
+#       "state" = "Enabled"
+#       "status" = "Connected"
+#       "type" = "KVM"
+#       "uuid" = "d1058cff5c864a84848e0ab896736578"
+#       "zone_uuid" = "86643f5442164890b8b71de5b582dc9f"
+#     },
+#   ])
+#   "name" = tostring(null)
+#   "name_pattern" = tostring(null)
+# }
+```
+
+## 参数说明
+
+### 可选参数
+
+- `filter`（块列表）（参见下方嵌套结构）
+- `name`（字符串）按精确名称查询
+- `name_pattern`（字符串）按名称模糊查询，类似 MySQL LIKE。`%` 匹配多个字符，`_` 匹配单个字符
+
+### 只读属性
+
+- `hosts`（属性列表）（参见下方嵌套结构）
+
+<a id="nestedblock--filter"></a>
+### `filter` 嵌套结构
+
+必填参数：
+
+- `name`（字符串）用于过滤的字段名。
+- `values`（字符串集合）过滤值，多个值之间为 OR 关系。
+
+
+<a id="nestedatt--hosts"></a>
+### `hosts` 嵌套结构
+
+只读属性：
+
+- `architecture`（字符串）CPU architecture of the host (e.g., x86_64, arm64)
+- `cluster_uuid`（字符串）UUID of the cluster to which the host belongs
+- `managementip`（字符串）Current management operation status on the host (e.g., Pending, Completed)
+- `name`（字符串）host名称
+- `state`（字符串）State of the host (e.g., Enabled, Disabled)
+- `status`（字符串）Operational status of the host (e.g., Connected, Disconnected)
+- `type`（字符串）host类型 (e.g., bare metal, virtualized)
+- `uuid`（字符串）UUID Unique identifier of the host
+- `zone_uuid`（字符串）UUID of the zone to which the host belongs

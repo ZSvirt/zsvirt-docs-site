@@ -1,0 +1,84 @@
+---
+title: "更改虚拟机优先级配置"
+---
+
+<APIPage method="PUT" path="/v1/vm-priority-config/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updatePriorityConfig": {
+    "cpuShares": 2,
+    "oomScoreAdj": 100
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updatePriorityConfig":{"cpuShares":2,"oomScoreAdj":100}}' http://localhost:8080/zstack/v1/vm-priority-config/face4c7ce31f3a5a98708f60a7fc935a/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |3.7.0|
+|cpuShares \(可选\)|Integer|body\(包含在**updatePriorityConfig**结构中\)| | |3.7.0|
+|oomScoreAdj \(可选\)|Integer|body\(包含在**updatePriorityConfig**结构中\)| | |3.7.0|
+|systemTags \(可选\)|List|body| | |3.7.0|
+|userTags \(可选\)|List|body| | |3.7.0|
+
+## API返回
+该API成功时返回一个空的JSON结构**`{}`**，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+UpdatePriorityConfigAction action = new UpdatePriorityConfigAction();
+action.uuid = "face4c7ce31f3a5a98708f60a7fc935a";
+action.cpuShares = 2;
+action.oomScoreAdj = 100;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdatePriorityConfigAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdatePriorityConfigAction action = UpdatePriorityConfigAction()
+action.uuid = "face4c7ce31f3a5a98708f60a7fc935a"
+action.cpuShares = 2
+action.oomScoreAdj = 100
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdatePriorityConfigAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,129 @@
+---
+title: "Update an HTTP Endpoint"
+---
+
+<APIPage method="PUT" path="/v1/sns/application-endpoints/http/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateSNSHttpEndpoint": {
+    "url": "https://open.http.cn/open-apis/bot/v2/hook/006879a3-0898-4428-aad4-3221db3daf81",
+    "username": "admin",
+    "password": "password",
+    "name": "new name",
+    "description": "desc"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, the **systemTags** and **userTags** fields are optional. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateSNSHttpEndpoint":{"url":"https://open.http.cn/open-apis/bot/v2/hook/006879a3-0898-4428-aad4-3221db3daf81","username":"admin","password":"password","name":"new name","description":"desc"}}' \
+http://localhost:8080/zstack/v1/sns/application-endpoints/http/c051c930bd95394c9cd6b3775f8cb475/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|url \(optional\)|String|body \(contained in the **updateSNSHttpEndpoint** structure\)|HTTP Webhook URL| |4.2.0|
+|username \(optional\)|Boolean|body \(contained in the **updateSNSHttpEndpoint** structure\)|Username| |4.2.0|
+|password \(optional\)|String|body \(contained in the **updateSNSHttpEndpoint** structure\)|Password| |4.2.0|
+|uuid|String|url|The UUID of the resource. Uniquely identifies the resource.| |4.2.0|
+|name \(optional\)|String|body \(contained in the **updateSNSHttpEndpoint** structure\)|Resource name| |4.2.0|
+|description \(optional\)|String|body \(contained in the **updateSNSHttpEndpoint** structure\)|Detailed description of the resource| |4.2.0|
+|systemTags \(optional\)|List|body|System tags| |4.2.0|
+|userTags \(optional\)|List|body|User tags| |4.2.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "name": "example",
+    "uuid": "917fe66f76b241f0843dfbd6be685fc1",
+    "description": "description example",
+    "type": "Email",
+    "state": "Enabled",
+    "platformUuid": "4eb0ceebf95b452585ebeacd647d9f35",
+    "createDate": "Mar 26, 2024 2:46:30 AM",
+    "lastOpDate": "Mar 26, 2024 2:46:30 AM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |5.0.0|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_q55_jnx_bdb)|5.0.0|
+|inventory|SNSApplicationEndpointInventory|For details, see [inventory](#p_amz_jnx_bdb)|5.0.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001.|5.0.0|
+|description|String|A brief description of the error|5.0.0|
+|details|String|Detailed information about the error|5.0.0|
+|elaboration|String|Reserved field. Default is null.|5.0.0|
+|opaque|LinkedHashMap|Reserved field. Default is null.|5.0.0|
+|cause|ErrorCode|The root error. The source error that caused the current error. If there is no root error, this field is null.|5.0.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name|5.0.0|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource.|5.0.0|
+|description|String|Detailed description of the resource|5.0.0|
+|type|String|Type|5.0.0|
+|platformUuid|String|Application platform UUID|5.0.0|
+|createDate|Timestamp|Creation time|5.0.0|
+|lastOpDate|Timestamp|Last modification time|5.0.0|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateSNSHttpEndpointAction action = new UpdateSNSHttpEndpointAction();
+action.url = "https://open.http.cn/open-apis/bot/v2/hook/006879a3-0898-4428-aad4-3221db3daf81";
+action.username = "admin";
+action.password = "password";
+action.uuid = "c051c930bd95394c9cd6b3775f8cb475";
+action.name = "new name";
+action.description = "desc";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateSNSHttpEndpointAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateSNSHttpEndpointAction action = UpdateSNSHttpEndpointAction()
+action.url = "https://open.http.cn/open-apis/bot/v2/hook/006879a3-0898-4428-aad4-3221db3daf81"
+action.username = "admin"
+action.password = "password"
+action.uuid = "c051c930bd95394c9cd6b3775f8cb475"
+action.name = "new name"
+action.description = "desc"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateSNSHttpEndpointAction.Result res = action.call()
+```
+
+</APIPage>

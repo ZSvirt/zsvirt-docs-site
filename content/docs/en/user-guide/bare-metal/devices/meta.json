@@ -1,0 +1,11 @@
+{
+  "title": "Bare Metal Chassis",
+  "pages": [
+    "index",
+    "add-device",
+    "state-management",
+    "access-device",
+    "delete-device"
+  ],
+  "pagesIndex": "index"
+}

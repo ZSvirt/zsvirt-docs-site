@@ -1,0 +1,76 @@
+---
+title: "Reconnect Host"
+---
+
+<APIPage method="PUT" path="/v1/hosts/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "reconnectHost": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"reconnectHost":{}}' \
+http://localhost:8080/zstack/v1/hosts/26caa95d6fb53d08ad6716ef03bf4b28/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Resource UUID, uniquely identifies the resource| |0.6|
+|systemTags \(optional\)|List|body|System tag| |0.6|
+|userTags \(optional\)|List|body|User tag| |0.6|
+
+## API Response
+On success, this API returns an empty JSON structure **`{}`**. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+ReconnectHostAction action = new ReconnectHostAction();
+action.uuid = "1c44c6b269724a62b7fb69bd25e5a8a9";
+action.sessionId = "ccc6f95bad044da59080a87e710587c0";
+ReconnectHostAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ReconnectHostAction action = ReconnectHostAction()
+action.uuid = "562400a5ff1e4532aacedf708d3ad75e"
+action.sessionId = "eb137b7f6e45448691b652fe4245a52b"
+ReconnectHostAction.Result res = action.call()
+```
+
+</APIPage>

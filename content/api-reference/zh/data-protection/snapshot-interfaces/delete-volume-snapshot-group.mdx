@@ -1,0 +1,101 @@
+---
+title: "删除快照组"
+---
+
+<APIPage method="DELETE" path="/v1/volume-snapshots/group/{uuid}?deleteMode={deleteMode}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/volume-snapshots/group/f7b2175eebba3161b029689cb32f9b14?deleteMode=Permissive
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |3.6.0|
+|deleteMode \(可选\)|String|body| | |3.6.0|
+|systemTags \(可选\)|List|body| | |3.6.0|
+|userTags \(可选\)|List|body| | |3.6.0|
+
+## API返回
+返回示例
+
+```
+{
+  "results": [
+    {
+      "success": false,
+      "error": {
+        "code": "SYS.1001",
+        "description": "internal error"
+      }
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_qt5_h4g_x3b)|3.6.0|
+|results|List|详情参考[results](#p_ajg_34g_x3b)|3.6.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.6.0|
+|description|String|错误的概要描述|3.6.0|
+|details|String|错误的详细信息|3.6.0|
+|elaboration|String|保留字段，默认为null|3.6.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.6.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.6.0|
+
+### results
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|snapshotUuid|String|快照UUID|3.6.0|
+|volumeUuid|String|硬盘UUID|3.6.0|
+|success|boolean| |3.6.0|
+|error|ErrorCode|详情参考[error](#p_tyw_34g_x3b)|3.6.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.6.0|
+|description|String|错误的概要描述|3.6.0|
+|details|String|错误的详细信息|3.6.0|
+|elaboration|String|保留字段，默认为null|3.6.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.6.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.6.0|
+
+## SDK示例
+Java SDK
+
+```
+DeleteVolumeSnapshotGroupAction action = new DeleteVolumeSnapshotGroupAction();
+action.uuid = "f7b2175eebba3161b029689cb32f9b14";
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteVolumeSnapshotGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteVolumeSnapshotGroupAction action = DeleteVolumeSnapshotGroupAction()
+action.uuid = "f7b2175eebba3161b029689cb32f9b14"
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DeleteVolumeSnapshotGroupAction.Result res = action.call()
+```
+
+</APIPage>

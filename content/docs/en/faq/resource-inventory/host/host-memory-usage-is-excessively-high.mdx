@@ -1,0 +1,17 @@
+---
+title: "Host memory usage is excessively high"
+---
+
+## Cause
+The buffer/cache value is too large and has not been released.
+
+## Solution
+1.  Run the `sync` command to force-write data in the buffer to disk.
+
+2.  Run the following commands in sequence on the host to release cache space:
+
+    ```
+    [root@localhost ~]# echo 1 > /proc/sys/vm/drop_caches;
+    [root@localhost ~]# echo 2 > /proc/sys/vm/drop_caches;
+    [root@localhost ~]# echo 3 > /proc/sys/vm/drop_caches
+    ```

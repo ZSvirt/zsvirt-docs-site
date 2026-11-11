@@ -1,0 +1,62 @@
+---
+title: 'Backup Data Management'
+---
+
+You can perform the following operations on backup data:
+
+-   [Synchronize Backup Data](#section_uyg_2yw_dcc)
+-   [Change the Owner of VM Backup Data](#section_b5m_fyw_dcc)
+-   [Export Platform Database Backup Data](#section_f2d_z1x_dcc)
+-   [Delete Backup Data](#section_bvy_fyw_dcc)
+
+## Synchronize Backup Data
+You can synchronize one or more local backup data to remote backup storage, or synchronize one or more remote backup data to local backup storage, providing dual protection for your backup data. This section uses virtual machine backup data as an example to introduce how to synchronize local backup data to remote backup storage.
+
+**Prerequisites**
+
+-   The remote backup storage must be added to the platform in advance. For more information, see [Add Remote Backup Storage](/en/docs/user-guide/backup/backup-storage/remote).
+-   The selected backup data to be synchronized has not been previously synchronized.
+
+**Procedure**
+
+1.  In the navigation pane, choose **Data Protection** &gt; **Protected Resources**.
+2.  On the Protected Resources page, select the **Virtual Machine** tab.
+3.  Select **Local Backup**.
+4.  Select the virtual machine whose backup data you want to synchronize, then in the right-side Backup Data list, check the backup data you want to synchronize.
+5.  Click **Bulk Actions** &gt; **Sync to Remote Backup Storage**.
+6.  In the Sync to Remote Backup Storage dialog , specify a remote backup storage.
+7.  Review the configuration and click **OK**.
+
+## Change the Owner of VM Backup Data
+You can change the owner of virtual machine backup data.
+
+**Procedure**
+
+1.  In the navigation pane, choose **Data Protection** &gt; **Protected Resources**.
+2.  On the Protected Resources page, select the **Virtual Machine** tab.
+3.  Select the target virtual machine, then in the right-side Backup Data list, check the backup data for which you want to change the owner.
+4.  Click **Bulk Actions** &gt; **Change Owner**.
+5.  In the Change Owner dialog, specify the new owner.
+6.  Review the configuration and click **OK**.
+
+## Export Platform Database Backup Data
+You can export the backup data of the platform database to your local environment.
+
+**Procedure**
+
+1.  In the navigation pane, choose **Data Protection** &gt; **Protected Resources**.
+2.  On the Protected Resources page, select the **Platform Database** tab.
+3.  Select the storage location of the platform database backup files, such as **Local Backup** or **Remote Backup**.
+4.  In the platform database backup list, select the platform database backup you want to export, then click **Actions** &gt; **Export**.
+
+## Delete Backup Data
+After you have determined that the backup data of protected resources is no longer needed, you can delete the backup data. This section uses virtual machine backup data as an example to illustrate how to delete backup data.
+
+**Procedure**
+
+1.  In the navigation pane, choose **Data Protection** &gt; **Protected Resources**.
+2.  On the Protected Resources page, select the **Virtual Machine** tab.
+3.  Select the target virtual machine, then in the right-side Backup Data list, check the backup data you want to delete.
+4.  Click **Bulk Actions** &gt; **Delete**.
+5.  In the Delete Backup Data? dialog, you can choose whether to delete remote backup data at the same time.
+6.  Review the configuration and click **OK**.

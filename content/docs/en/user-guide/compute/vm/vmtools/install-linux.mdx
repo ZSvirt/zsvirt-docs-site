@@ -1,0 +1,39 @@
+---
+title: 'Install VMTools on Linux VMs'
+---
+
+During the installation, you will be guided to first attach the VMTools ISO, then enter the VM console to manually execute the installation commands.
+
+-   Make sure the virtual machine is in the running state.
+-   Make sure the virtual machine has installed Linux command tools, such as `tar`, `wget`, and `curl`.
+
+1.  On the target VM page, click **Actions** &gt; **VMTools** &gt; **Install VMTools**.
+
+2.  In the Install VMTools dialog, click **Next: Install on VM Console**.
+
+    When attaching the VMTools ISO, the system automatically chooses a CD/DVD drive based on the following rules:
+
+    -   When a CD/DVD drive is available, the system automatically selects the first one and attaches the VMTools ISO.
+    -   When no CD/DVD drive is available, the system automatically detaches the original image on CD/DVD drive 1 and attach the VMTools ISO.
+3.  Click **Copy Commands and Launch Console**.
+
+    Click the button copies the following commands and enters the VM console:
+
+    ```
+    # Create a mount point.
+    mkdir /mnt/cdrom
+    # Mount the CD-ROM image.
+    mount /dev/cdrom /mnt/cdrom
+    # Install VMTools.
+    cd /mnt/cdrom/
+    bash ./zs-tools-install.sh
+    # Unmount the CD-ROM image (Optional)
+    cd ~
+    umount /mnt/cdrom
+    ```
+
+4.  Enter the VM console. In the left toolbar, click **Local Command Paster**.
+
+5.  In the Paste Command dialog, paste the copied commands from the last step and click **OK** to run the commands.
+
+To update your VMTools version, click **Actions** &gt; **VMTools** &gt; **Reinstall VMTools** on the target VM page.

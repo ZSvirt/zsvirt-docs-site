@@ -1,0 +1,13 @@
+---
+title: "The virtual machine pauses automatically. How do I resolve this?"
+---
+
+## Cause
+The Local Storage disk, host system disk, or Data Storage is full, causing a virtual machine I/O error and automatic pause.
+
+## Solution
+-   Log in to the host and run `virsh domblkerror $vm_uuid` to view details.
+
+    -   If the Local Storage disk is full, free up space on the corresponding Data Storage host by removing idle business virtual machines or disks, or deleting logs.
+    -   If the host system disk is full, delete unnecessary files or logs.
+    -   If the Data Storage is full, delete idle business virtual machines or disks.

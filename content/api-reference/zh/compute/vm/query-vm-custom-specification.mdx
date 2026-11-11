@@ -1,0 +1,114 @@
+---
+title: "查询虚拟机自定义操作系统规范"
+---
+
+<APIPage method="GET" path="/v1/vm-custom-specifications" altPaths={["/v1/vm-custom-specifications/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-custom-specifications?q=uuid=ff0a9e874342368bb28daaf2c9b3cc00
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-custom-specifications/a821a017ad343c50929c7e0c14bc3f90
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryVmCustomSpecification`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "ff0a9e874342368bb28daaf2c9b3cc00",
+      "vmInstanceUuid": "ff01ec80fd11327cba7519b66119d900",
+      "name": "custom-specification-for-vm-1",
+      "description": "Test",
+      "platform": "Windows",
+      "hostname": "vm-1",
+      "rootPassword": "password",
+      "generateSID": true,
+      "domainMode": "Domain",
+      "domainName": "zsv.test",
+      "domainUsername": "test",
+      "domainPassword": "password",
+      "organization": "OU=zsv,DC=zsv,DC=test"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.10.18|
+|inventories|List|详情参考[inventories](#p_ts1_1fm_lhc)|4.10.18|
+|error|ErrorCode|详情参考[error](#p_xj2_1fm_lhc)|4.10.18|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.10.18|
+|vmInstanceUuid|String|虚拟机UUID|4.10.18|
+|name|String|资源名称|4.10.18|
+|description|String|资源的详细描述|4.10.18|
+|platform|String|虚拟机操作系统平台类型|4.10.18|
+|hostname|String|主机名称|4.10.18|
+|generateSID|Boolean|是否生成SID|4.10.18|
+|domainName|String|域名称或工作组名称|4.10.18|
+|domainUsername|String|域用户名|4.10.18|
+|organization|String|组织单位|4.10.18|
+|createDate|Timestamp|创建时间|4.10.18|
+|lastOpDate|Timestamp|最后一次修改时间|4.10.18|
+|domainMode|VmCustomSpecificationDomainMode|详情参考[domainMode](#p_v4g_dfm_lhc)|4.10.18|
+
+### domainMode
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|WorkGroup|VmCustomSpecificationDomainMode|工作组|4.10.18|
+|Domain|VmCustomSpecificationDomainMode|域|4.10.18|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+QueryVmCustomSpecificationAction action = new QueryVmCustomSpecificationAction();
+action.conditions = asList("uuid=ff0a9e874342368bb28daaf2c9b3cc00");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryVmCustomSpecificationAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = QueryVmCustomSpecificationAction()
+action.conditions = ["uuid=ff0a9e874342368bb28daaf2c9b3cc00"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

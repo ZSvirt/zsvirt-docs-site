@@ -1,0 +1,183 @@
+---
+title: "平台基础资源关系表"
+---
+
+下列各表展示了平台各个基础资源之间的从属关系与数量关系：
+
+<table class="doc-feature-table">
+  <thead>
+    <tr>
+      <th>资源A</th>
+      <th>资源B</th>
+      <th>资源A与B从属关系</th>
+      <th>资源A与B数量关系</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowSpan="8">数据中心</td>
+      <td>镜像存储</td>
+      <td>朋友</td>
+      <td>n:n</td>
+    </tr>
+    <tr>
+      <td>集群</td>
+      <td>父子</td>
+      <td>1:n</td>
+    </tr>
+    <tr>
+      <td>主机</td>
+      <td>祖孙</td>
+      <td>1:n</td>
+    </tr>
+    <tr>
+      <td>虚拟机分组</td>
+      <td>父子</td>
+      <td>1:n</td>
+    </tr>
+    <tr>
+      <td>虚拟机</td>
+      <td>祖孙</td>
+      <td>1:n</td>
+    </tr>
+    <tr>
+      <td>数据存储</td>
+      <td>父子</td>
+      <td>1:n</td>
+    </tr>
+    <tr>
+      <td>分布式交换机</td>
+      <td>父子</td>
+      <td>1:n</td>
+    </tr>
+    <tr>
+      <td>分布式端口组</td>
+      <td>祖孙</td>
+      <td>1:n</td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="doc-feature-table">
+  <thead>
+    <tr>
+      <th>资源A</th>
+      <th>资源B</th>
+      <th>资源A与B从属关系</th>
+      <th>资源A与B数量关系</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowSpan="5">集群</td>
+      <td>主机</td>
+      <td>父子</td>
+      <td>1:n</td>
+    </tr>
+    <tr>
+      <td>虚拟机分组</td>
+      <td>兄弟</td>
+      <td>/</td>
+    </tr>
+    <tr>
+      <td>虚拟机</td>
+      <td>祖孙</td>
+      <td>1:n</td>
+    </tr>
+    <tr>
+      <td>数据存储</td>
+      <td>兄弟</td>
+      <td>
+        <a href="/docs/user-guide/resource-definitions/relationships/cluster-datastore-image-storage">n:n</a>
+      </td>
+    </tr>
+    <tr>
+      <td>分布式交换机</td>
+      <td>兄弟</td>
+      <td>n:n</td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="doc-feature-table">
+  <thead>
+    <tr>
+      <th>资源A</th>
+      <th>资源B</th>
+      <th>资源A与B从属关系</th>
+      <th>资源A与B数量关系</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>主机</td>
+      <td>虚拟机</td>
+      <td>父子</td>
+      <td>1:n</td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="doc-feature-table">
+  <thead>
+    <tr>
+      <th>资源A</th>
+      <th>资源B</th>
+      <th>资源A与B从属关系</th>
+      <th>资源A与B数量关系</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>虚拟机分组</td>
+      <td>虚拟机</td>
+      <td>父子</td>
+      <td>1:n</td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="doc-feature-table">
+  <thead>
+    <tr>
+      <th>资源A</th>
+      <th>资源B</th>
+      <th>资源A与B从属关系</th>
+      <th>资源A与B数量关系</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowSpan="2">数据存储</td>
+      <td>镜像存储</td>
+      <td>
+        <a href="/docs/user-guide/resource-definitions/relationships/cluster-datastore-image-storage">朋友</a>
+      </td>
+      <td>/</td>
+    </tr>
+    <tr>
+      <td>分布式交换机</td>
+      <td>朋友</td>
+      <td>/</td>
+    </tr>
+  </tbody>
+</table>
+
+<table class="doc-feature-table">
+  <thead>
+    <tr>
+      <th>资源A</th>
+      <th>资源B</th>
+      <th>资源A与B从属关系</th>
+      <th>资源A与B数量关系</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>分布式交换机</td>
+      <td>分布式端口组</td>
+      <td>父子</td>
+      <td>1:n</td>
+    </tr>
+  </tbody>
+</table>

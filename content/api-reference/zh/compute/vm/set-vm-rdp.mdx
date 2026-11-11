@@ -1,0 +1,83 @@
+---
+title: "设置虚拟机RDP开关状态"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/{uuid}/actions">
+
+设置虚拟机RDP功能是否开启，如果开启，桌面云会使用RDP连接该虚拟机。
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "setVmRDP": {
+    "enable": true
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"setVmRDP":{"enable":true}}' \
+http://localhost:8080/zstack/v1/vm-instances/f523cb5736b630acb643dda6d31be5a0/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |2.2|
+|enable|boolean|body\(包含在**setVmRDP**结构中\)|虚拟机是否被标识为RDP可访问| |2.2|
+|systemTags \(可选\)|List|body| | |2.2|
+|userTags \(可选\)|List|body| | |2.2|
+
+## API返回
+该API成功时返回一个空的JSON结构**`{}`**，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+SetVmRDPAction action = new SetVmRDPAction();
+action.uuid = "e2889e09bb0a4f1b9f2757d8bd0c1fc6";
+action.enable = true;
+action.sessionId = "595b40e65a1f4755a68573ab9ef6802c";
+SetVmRDPAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SetVmRDPAction action = SetVmRDPAction()
+action.uuid = "dc71514a6e1a490b9985b1dcb4faff11"
+action.enable = true
+action.sessionId = "aee17676e2604d9ab50a4b8907c31568"
+SetVmRDPAction.Result res = action.call()
+```
+
+</APIPage>

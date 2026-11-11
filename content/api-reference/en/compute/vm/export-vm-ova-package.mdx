@@ -1,0 +1,138 @@
+---
+title: "Export VM OVA Package"
+---
+
+<APIPage method="POST" path="/v1/ovf/ova-packages">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "ova",
+    "description": "description",
+    "vmUuid": "af3c221d1dc4351999e0834c00b33118",
+    "backupStorageUuid": "4205d410ede03e759277c9987c660a16"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"ova","description":"description","vmUuid":"af3c221d1dc4351999e0834c00b33118","backupStorageUuid":"4205d410ede03e759277c9987c660a16"}}' http://localhost:8080/zstack/v1/ovf/ova-packages
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|name \(optional\)|String|body \(included in **params** structure\)|Resource name| |4.4.6|
+|description \(optional\)|String|body \(included in **params** structure\)|Resource description| |4.4.6|
+|vmUuid|String|body \(included in **params** structure\)|Source VM UUID| |4.4.6|
+|backupStorageUuid|String|body \(included in **params** structure\)|Destination backup storage UUID for export| |4.4.6|
+|resourceUuid \(optional\)|String|body \(included in **params** structure\)|Resource UUID| |4.4.6|
+|tagUuids \(optional\)|List|body \(included in **params** structure\)|Tag UUID list| |4.4.6|
+|systemTags \(optional\)|List|body|System tags| |4.4.6|
+|userTags \(optional\)|List|body|User tags| |4.4.6|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "9f77f8d79ee138bfac21290c02fc2cb6",
+    "name": "ova",
+    "description": "description",
+    "vmUuid": "43d306a42cdf38c48458d061e40b810a",
+    "backupStorageUuid": "22f7145dba4f3da6af7ff8f0e02af6e3",
+    "state": "Exported",
+    "exportUrl": "http://bs-host-name/path/to/ova.ova",
+    "md5Sum": "sampleMd5Sum",
+    "format": "OVA",
+    "size": 10737418240.0,
+    "createDate": "May 10, 2022 5:24:03 AM",
+    "lastOpDate": "May 10, 2022 5:24:03 AM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.4.6|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See [error](#p_sry_hp2_wmb) for details.|4.4.6|
+|inventory|VmInstanceInventory|See [inventory](#p_ks2_kp2_wmb) for details.|4.4.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code. A globally unique identifier for the error, for example SYS.1000, HOST.1001|4.4.6|
+|description|String|Brief description of the error|4.4.6|
+|details|String|Detailed error information|4.4.6|
+|elaboration|String|Reserved field, defaults to null|4.4.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|4.4.6|
+|cause|ErrorCode|Root error. The error that caused this error. If there is no original error, this field is null|4.4.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID. Uniquely identifies the resource|4.4.6|
+|name|String|Resource name|4.4.6|
+|description|String|Resource description|4.4.6|
+|vmUuid|String|Source VM UUID|4.4.6|
+|backupStorageUuid|String|Backup storage UUID where the image package file is located|4.4.6|
+|exportUrl|String|Download URL|4.4.6|
+|md5Sum|String|Image package file MD5 checksum|4.4.6|
+|format|String|Image package file format|4.4.6|
+|size|Long|Image package file size|4.4.6|
+|createDate|Timestamp|Create time|4.4.6|
+|lastOpDate|Timestamp|Last modification time|4.4.6|
+|state|ImagePackageState|See [state](#p_lqz_lp2_wmb) for details.|4.4.6|
+
+### state
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Exporting|ImagePackageState|Exporting|4.4.6|
+|Exported|ImagePackageState|Exported|4.4.6|
+
+## SDK Examples
+Java SDK
+
+```
+ExportVmOvaPackageAction action = new ExportVmOvaPackageAction();
+action.name = "ova";
+action.description = "description";
+action.vmUuid = "af3c221d1dc4351999e0834c00b33118";
+action.backupStorageUuid = "4205d410ede03e759277c9987c660a16";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ExportVmOvaPackageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ExportVmOvaPackageAction action = ExportVmOvaPackageAction()
+action.name = "ova"
+action.description = "description"
+action.vmUuid = "af3c221d1dc4351999e0834c00b33118"
+action.backupStorageUuid = "4205d410ede03e759277c9987c660a16"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ExportVmOvaPackageAction.Result res = action.call()
+```
+
+</APIPage>

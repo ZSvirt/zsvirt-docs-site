@@ -1,0 +1,29 @@
+{
+  "title": "虚拟机调度策略相关接口",
+  "pages": [
+    "create-host-scheduling-rule-group",
+    "delete-host-scheduling-rule-group",
+    "update-host-scheduling-rule-group",
+    "add-host-to-host-scheduling-rule-group",
+    "detach-host-from-host-scheduling-rule-group",
+    "create-vm-scheduling-rule-group",
+    "delete-vm-scheduling-rule-group",
+    "update-vm-scheduling-rule-group",
+    "add-vm-to-vm-scheduling-rule-group",
+    "detach-vm-from-vm-scheduling-rule-group",
+    "get-vm-scheduling-rules-execute-state",
+    "create-vm-scheduling-rule",
+    "remove-vm-scheduling-rule",
+    "change-vm-scheduling-rule-state",
+    "update-vm-scheduling-rule",
+    "validate-vm-scheduling-rule",
+    "query-vm-sched-history",
+    "query-host-scheduling-rule-group",
+    "query-vm-scheduling-rule-group",
+    "query-vm-scheduling-rule",
+    "get-vms-scheduling-state-from-scheduling-rule",
+    "list-vm-scheduling-rules-from-execute-state",
+    "list-vms-from-scheduling-state"
+  ],
+  "pagesIndex": "index"
+}

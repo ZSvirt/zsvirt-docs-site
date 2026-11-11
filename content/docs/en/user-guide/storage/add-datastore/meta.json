@@ -1,0 +1,10 @@
+{
+  "title": "Add a Data Storage",
+  "pages": [
+    "index",
+    "local-storage",
+    "nfs-storage",
+    "san-storage"
+  ],
+  "pagesIndex": "index"
+}

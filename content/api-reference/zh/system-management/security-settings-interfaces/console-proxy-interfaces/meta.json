@@ -1,0 +1,10 @@
+{
+  "title": "控制台代理相关接口",
+  "pages": [
+    "request-console-access",
+    "query-console-proxy-agent",
+    "reconnect-console-proxy-agent",
+    "accesskey-management-interfaces"
+  ],
+  "pagesIndex": "index"
+}

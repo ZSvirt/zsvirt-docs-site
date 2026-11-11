@@ -1,0 +1,15 @@
+{
+  "title": "Bare Metal Cluster Related Interfaces",
+  "pages": [
+    "create-baremetal-pxe-server",
+    "delete-baremetal-pxe-server",
+    "start-baremetal-pxe-server",
+    "stop-baremetal-pxe-server",
+    "update-baremetal-pxe-server",
+    "query-baremetal-pxe-server",
+    "attach-baremetal-pxe-server-to-cluster",
+    "detach-baremetal-pxe-server-from-cluster",
+    "reconnect-baremetal-pxe-server"
+  ],
+  "pagesIndex": "index"
+}

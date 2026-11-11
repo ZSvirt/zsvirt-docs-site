@@ -1,0 +1,112 @@
+---
+title: "创建LDAP绑定"
+---
+
+<APIPage method="POST" path="/v1/ldap/bindings">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "ldapUid": "ou=Employee,uid=test",
+    "accountUuid": "ed7d933c7a6d37fb9bd444140faeec5c"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X POST -d '{"params":{"ldapUid":"ou=Employee,uid=test","accountUuid":"ed7d933c7a6d37fb9bd444140faeec5c"}}' \
+http://localhost:8080/zstack/v1/ldap/bindings
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|ldapUid|String|body\(包含在`params`结构中\)|LDAP UID| |4.3.0|
+|accountUuid|String|body\(包含在`params`结构中\)|账户UUID| |4.3.0|
+|ldapServerUuid \(可选\)|String|body\(包含在`params`结构中\)|LDAP服务器UUID。如果不指定，系统会选择当前正在使用的LDAP服务器的UUID| |4.3.0|
+|systemTags \(可选\)|List|body|系统标签| |4.3.0|
+|userTags \(可选\)|List|body|用户标签| |4.3.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "id": 1,
+    "credentials": "ou=Employee,uid=test",
+    "accountSourceUuid": "41006790733e38db9ce810878e19f8a3",
+    "accountUuid": "3be58c2832a939bf9bce2ea959e04ce8"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.3.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_fdz_lxf_fcc)|4.3.0|
+|inventory|ImportAccountRefInventory|详情参考[inventory](#p_esc_mxf_fcc)|4.3.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|id|Long|唯一标示该关系|4.3.0|
+|credentials|String|导入源使用的用户唯一标识，例如LDAP源导入的用户则为登录使用的UID|4.3.0|
+|accountSourceUuid|String|导入源服务器UUID|4.3.0|
+|accountUuid|String|账户UUID|4.3.0|
+|createDate|Timestamp|创建时间|4.3.0|
+|lastOpDate|Timestamp|最后一次修改时间|4.3.0|
+
+## SDK示例
+Java SDK
+
+```
+CreateLdapBindingAction action = new CreateLdapBindingAction();
+action.ldapUid = "ou=Employee,uid=test";
+action.accountUuid = "ed7d933c7a6d37fb9bd444140faeec5c";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateLdapBindingAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+CreateLdapBindingAction action = CreateLdapBindingAction()
+action.ldapUid = "ou=Employee,uid=test"
+action.accountUuid = "ed7d933c7a6d37fb9bd444140faeec5c"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateLdapBindingAction.Result res = action.call()
+
+```
+
+</APIPage>

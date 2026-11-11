@@ -1,0 +1,17 @@
+---
+title: "How to resolve the issue of logs sent from the virtualization platform not appearing in log auditing after a Log Server is added?"
+---
+
+There are two common causes for logs not appearing in log auditing. Identify the applicable cause and follow the corresponding solution to troubleshoot the issue.
+
+## Cause 1
+The log level configured on the virtualization platform does not match the log level configured on the Log Server.
+
+## Solution
+-   When adding a Log Server to the virtualization platform, set the log level to match the Log Server configuration. The platform can then receive log messages normally.
+
+## Cause 2
+The device address configured on the Log Server may be incorrect.
+
+## Solution
+-   Update the device address on the Log Server to the primary Management Node IP address instead of the VIP address of the dual-management-node environment. After the update, the Log Server can receive logs normally.

@@ -1,0 +1,217 @@
+---
+title: "Get VM Starting Target Hosts List"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/{uuid}/starting-target-hosts">
+
+Get the list of Clusters and Hosts where a stopped Virtual Machine can start. Users can use this API to determine on which Clusters and Hosts a stopped Virtual Machine can start.
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth: YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/d8cfc97f5099454bb3eed367a79d4e4c/starting-target-hosts
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Virtual Machine UUID| |0.6|
+|systemTags \(Optional\)|List|query|System Tags| |0.6|
+|userTags \(Optional\)|List|query|User Tags| |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "hostInventories": [
+    {
+      "zoneUuid": "d876132a577135729b0d9c6a3913b66d",
+      "name": "example",
+      "uuid": "690fe2a9e75d3cd89697b4bc9de615e7",
+      "clusterUuid": "cadc7dac02873192bf76262f86e57fb4",
+      "description": "example",
+      "managementIp": "192.168.0.1",
+      "hypervisorType": "KVM",
+      "state": "Enabled",
+      "status": "Connected",
+      "totalCpuCapacity": 4,
+      "availableCpuCapacity": 2,
+      "totalMemoryCapacity": 4,
+      "availableMemoryCapacity": 4,
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ],
+  "clusterInventories": [
+    {
+      "name": "cluster1",
+      "uuid": "a7036593626b3d418ff55f9a767aec58",
+      "hypervisorType": "KVM",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM",
+      "zoneUuid": "faa41ed7d0a53cae99ff2a6d2c5d55dc"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation succeeds, this field is null. For details, see [error](#p_nts_4cz_zz)|0.6|
+|hosts|List|For details, see [hosts](#p_xsb_pcz_zz)|0.6|
+|clusters|List|For details, see [clusters](#p_oy3_pcz_zz)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier of the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause. The error that triggered the current error. If there is no original error, this field is null|0.6|
+
+### hosts
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|zoneUuid|String|Data Center UUID|0.6|
+|name|String|Resource name|0.6|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|clusterUuid|String|Cluster UUID|0.6|
+|description|String|Detailed description of the resource|0.6|
+|managementIp|String| |0.6|
+|hypervisorType|String| |0.6|
+|state|String| |0.6|
+|status|String| |0.6|
+|totalCpuCapacity|Long| |0.6|
+|availableCpuCapacity|Long| |0.6|
+|cpuSockets|Integer|Number of physical CPU sockets|0.6|
+|totalMemoryCapacity|Long| |0.6|
+|availableMemoryCapacity|Long| |0.6|
+|cpuNum|Integer| |0.6|
+|ipmiAddress|String|IPMI address|0.6|
+|ipmiUsername|String|IPMI username|0.6|
+|ipmiPort|Integer|IPMI port|0.6|
+|ipmiPowerStatus|String|IPMI power status|0.6|
+|architecture|String| |0.6|
+|nqn|String|NVMe Qualified Name|4.10.6|
+|hostname|String|Host name|4.10.20|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+|cpuStatus|HwMonitorStatus|For details, see [cpuStatus](#p_wvd_kkm_lhc)|4.10.0|
+|memoryStatus|HwMonitorStatus|For details, see [memoryStatus](#p_nhh_kkm_lhc)|4.10.0|
+|diskStatus|HwMonitorStatus|For details, see [diskStatus](#p_esk_kkm_lhc)|4.10.0|
+|nicStatus|HwMonitorStatus|For details, see [nicStatus](#p_n24_kkm_lhc)|4.10.0|
+|gpuStatus|HwMonitorStatus|For details, see [gpuStatus](#p_zgr_kkm_lhc)|4.10.0|
+|powerSupplyStatus|HwMonitorStatus|For details, see [powerSupplyStatus](#p_o35_kkm_lhc)|4.10.0|
+|fanStatus|HwMonitorStatus|For details, see [fanStatus](#p_m2x_kkm_lhc)|4.10.0|
+|raidStatus|HwMonitorStatus|For details, see [raidStatus](#p_oc1_lkm_lhc)|4.10.0|
+|temperatureStatus|HwMonitorStatus|For details, see [temperatureStatus](#p_cyd_lkm_lhc)|4.10.0|
+
+### cpuStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### memoryStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### diskStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### nicStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### gpuStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### powerSupplyStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### fanStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### raidStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### temperatureStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### clusters
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name|0.6|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|description|String|Detailed description of the resource|0.6|
+|state|String|Cluster state|0.6|
+|hypervisorType|String|Hypervisor type|0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+|zoneUuid|String|Data Center UUID|0.6|
+|type|String|Reserved field|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+GetVmStartingCandidateClustersHostsAction action = new GetVmStartingCandidateClustersHostsAction();
+action.uuid = "b2789350a2f438ab9190bd18b7773527";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetVmStartingCandidateClustersHostsAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = GetVmStartingCandidateClustersHostsAction()
+action.uuid = "b2789350a2f438ab9190bd18b7773527"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

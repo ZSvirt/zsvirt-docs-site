@@ -1,0 +1,22 @@
+---
+title: "What do I do if a Windows virtual machine cannot adjust the screen resolution?"
+---
+
+<HistoricalNamingNote locale="en" />
+
+## Cause
+When a Windows virtual machine uses the Spice remote desktop protocol with a QXL graphics adapter, the QXL driver must be installed. Without the QXL driver, the resolution cannot be adjusted.
+
+## Solution
+1.  Try the following steps to resolve the issue:
+2.  Download and install the VirtIO driver.
+
+    -   For Windows 10, use the zstack-windows-virtio-driver-2.1.iso included with the virtualization platform.
+    -   For Windows Server 2016 or Windows Server 2019, download and install the latest version of the VirtIO driver.
+3.  Attach the VirtIO driver to the virtual machine and install the QXL driver. The following example shows how to install the QXL driver on Windows Server 2016:
+
+    1.  Navigate to the optical drive directory `\qxldod\2k16\amd64`.
+
+    2.  Right-click the `qxldod.inf` file in that directory and select **Install** to begin installing the QXL driver.
+
+4.  After the QXL driver is installed, restart the virtual machine.

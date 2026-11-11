@@ -1,0 +1,282 @@
+---
+title: "Change Alarm State"
+---
+
+<APIPage method="PUT" path="/v1/zwatch/alarms/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "changeAlarmState": {
+    "stateEvent": "disable"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the **systemTags** and **userTags** fields can be omitted. They are listed here to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"changeAlarmState":{"stateEvent":"disable"}}' http://localhost:8080/zstack/v1/zwatch/alarms/226149ca389f387e95d0f671bd6b551f/actions
+```
+
+Parameter List
+
+<table id="table_jdn_wkk_p2b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+The UUID of the resource. Uniquely identifies the resource.
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+stateEvent
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **changeAlarmState** structure\)
+
+</td><td>
+
+State event.
+
+</td><td>
+
+-   enabled
+-   disabled
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags.
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags.
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "3b57de3128b545a18bb7da2f086f6362",
+    "name": "VM CPU Alarm",
+    "comparisonOperator": "LessThanOrEqualTo",
+    "period": 60.0,
+    "namespace": "ZStack/VM",
+    "metricName": "org.zstack.zwatch.datatype.Metric@565e1ebe",
+    "threshold": 30.0,
+    "repeatInterval": 1800.0,
+    "status": "Alarm",
+    "state": "Enabled",
+    "createDate": "Jul 6, 2018 1:50:57 PM",
+    "lastOpDate": "Jul 6, 2018 1:50:57 PM",
+    "labels": [
+      {
+        "uuid": "61f43f3a05f74ef39b5b2c30354a5246",
+        "key": "VMUuid",
+        "operator": "=",
+        "value": "23958e475ae34735a4ca0b808df0cf50"
+      }
+    ],
+    "actions": [
+      {
+        "alarmUuid": "f01eb4d0ec1d4cdc81dc478c87f9fceb",
+        "actionType": "sns",
+        "actionUuid": "c9d79c14e37a4ebb83cf0d76fb7b8dbc"
+      }
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null on success. See [error](#p_x5x_blk_p2b) for details.|2.3|
+|inventory|AlarmInventory|See [inventory](#p_obs_dlk_p2b) for details.|2.3|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001.|2.3|
+|description|String|A brief description of the error.|2.3|
+|details|String|Detailed information about the error.|2.3|
+|elaboration|String|A reserved field. Default is null.|2.3|
+|opaque|LinkedHashMap|A reserved field. Default is null.|2.3|
+|cause|ErrorCode|The root error. The source error that caused the current error. This field is null if there is no root error.|2.3|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource.|2.3|
+|name|String|Resource name.|2.3|
+|description|String|Detailed description of the resource.|2.3|
+|period|Integer|Threshold duration.|2.3|
+|namespace|String|Namespace.|2.3|
+|metricName|String|Metric name.|2.3|
+|threshold|Double|Threshold.|2.3|
+|repeatInterval|Integer|Alarm repeat interval.|2.3|
+|createDate|Timestamp|Creation time.|2.3|
+|lastOpDate|Timestamp|Last modification time.|2.3|
+|comparisonOperator|ComparisonOperator|See [comparisonOperator](#p_x2j_2lk_p2b) for details.|2.3|
+|status|AlarmStatus|See [status](#p_gzz_flk_p2b) for details.|2.3|
+|labels|List|See [labels](#p_fhy_glk_p2b) for details.|2.3|
+|actions|List|See [actions](#p_w2z_hlk_p2b) for details.|2.3|
+
+### comparisonOperator
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name.|2.3|
+|ordinal|int| |2.3|
+
+### status
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|OK|AlarmStatus|Monitoring.|2.3|
+|Alarm|AlarmStatus|Triggered.|2.3|
+|InsufficientData|AlarmStatus|Insufficient data.|2.3|
+
+### labels
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource.|2.3|
+|key|String|Label key.|2.3|
+|operator|String|Comparison operator.|2.3|
+|value|String|Label value.|2.3|
+
+### actions
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|alarmUuid|String|Alarm UUID.|2.3|
+|actionType|String|Alarm action type.|2.3|
+|actionUuid|String|Alarm action UUID.|2.3|
+
+## SDK Examples
+Java SDK
+
+```
+ChangeAlarmStateAction action = new ChangeAlarmStateAction();
+action.uuid = "226149ca389f387e95d0f671bd6b551f";
+action.stateEvent = "disable";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ChangeAlarmStateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ChangeAlarmStateAction action = ChangeAlarmStateAction()
+action.uuid = "226149ca389f387e95d0f671bd6b551f"
+action.stateEvent = "disable"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ChangeAlarmStateAction.Result res = action.call()
+```
+
+</APIPage>

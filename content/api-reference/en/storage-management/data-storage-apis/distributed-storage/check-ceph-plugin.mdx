@@ -1,0 +1,68 @@
+---
+title: "Check Ceph Plugin in Environment"
+---
+
+<APIPage method="PUT" path="/v1/ceph-plugin/check">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "checkCephPlugin": {
+    "managementNode": true
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"checkCephPlugin":{"managementNode":true}}' \
+http://localhost:8080/zstack/v1/ceph-plugin/check
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|managementNode \(optional\)|boolean|body \(included in the `checkCephPlugin` structure\)|Whether to check all management nodes| |4.10.7|
+|hostUuidList \(optional\)|List|body \(included in the `checkCephPlugin` structure\)|List of hosts to add for checking| |4.10.7|
+|ipList \(optional\)|List|body \(included in the `checkCephPlugin` structure\)|List of hosts corresponding to the specified IPs to add for checking| |4.10.7|
+|externalHosts \(optional\)|List|body \(included in the `checkCephPlugin` structure\)|List of SSH connection parameters for external hosts used for checking| |4.10.20|
+|systemTags \(optional\)|List|body|System tag| |4.10.7|
+|userTags \(optional\)|List|body|User tag| |4.10.7|
+
+## SDK Examples
+Java SDK
+
+```
+CheckCephPluginAction action = new CheckCephPluginAction();
+action.managementNode = true;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CheckCephPluginAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = CheckCephPluginAction()
+action.managementNode = true
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

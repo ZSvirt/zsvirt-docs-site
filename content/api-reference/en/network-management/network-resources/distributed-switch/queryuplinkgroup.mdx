@@ -1,0 +1,103 @@
+---
+title: "QueryUplinkGroup"
+---
+
+<APIPage method="GET" path="/v1/l2-networks/virtual-switch/uplink-group" altPaths={["/v1/l2-networks/virtual-switch/uplink-group/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Sample
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/l2-networks/virtual-switch/uplink-group
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/l2-networks/virtual-switch/uplink-group/d36391a37b5c399ea46eb86bb2f6ec8a
+```
+
+Queryable Fields
+
+Run the CLI command tool, enter `QueryUplinkGroup`, and press Tab to view all queryable fields and resource names that support cross-table queries.
+
+## API Response
+Sample Response
+
+```
+{
+  "inventories": [
+    {
+      "interfaceName": "eth0",
+      "type": "PhysicalInterface",
+      "interfaceUuid": "24343c2ab2803d82b16b531b5e58b086",
+      "hostUuid": "1b66d910a4de3418b6214b04ac1a2dd3",
+      "l2NetworkUuid": "0472b472fef131999b770c1671515cb7"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.3.0|
+|inventories|List|See [inventories](#p_lpn_vlw_51c).|4.3.0|
+|error|ErrorCode|The error code. If not null, the operation fails, or vice versa. For more information, see [error](#p_wfd_jmw_51c).|4.3.0|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|interfaceName|String|The interface name.|4.3.0|
+|bondingUuid|String|The bonding UUID.|4.3.0|
+|interfaceUuid|String|The interface UUID.|4.3.0|
+|hostUuid|String|The host UUID.|4.3.0|
+|l2NetworkUuid|String|The Distributed Switch UUID.|4.3.0|
+|l2ProviderType|String|The Distributed Switch implementation type.|4.3.0|
+|bridgeName|String|The bridge name.|4.3.0|
+|createDate|Timestamp|The creation date.|4.3.0|
+|lastOpDate|Timestamp|The last operation date.|4.3.0|
+|type|UplinkGroupType|See [type](#p_ppv_pj2_hcc).|4.3.0|
+
+### type
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|PhysicalInterface|UplinkGroupType|Physical NIC.|4.3.0|
+|Bonding|UplinkGroupType|Bonding.|4.3.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code, which is a numbered or alphanumeric code that specifies an error. For example, SYS.1000, HOST.1001.|0.6|
+|description|String|The brief description of the error.|0.6|
+|details|String|The details about the error.|0.6|
+|elaboration|String|The reserved field. Default value: null.|0.6|
+|opaque|LinkedHashMap|The reserved field. Default value: null.|0.6|
+|cause|ErrorCode|The root error, which is the associated root cause of the current error. If no root error exists, this parameter is null.|0.6|
+
+## SDK Sample
+Java SDK
+
+```
+QueryUplinkGroupAction action = new QueryUplinkGroupAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryUplinkGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryUplinkGroupAction action = QueryUplinkGroupAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryUplinkGroupAction.Result res = action.call()
+```
+
+</APIPage>

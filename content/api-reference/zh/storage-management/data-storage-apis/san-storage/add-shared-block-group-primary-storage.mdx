@@ -1,0 +1,141 @@
+---
+title: "添加SAN存储"
+---
+
+<APIPage method="POST" path="/v1/primary-storage/sharedblockgroup">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "diskUuids": [
+      "1b5682b663b937a59adb9e318cab6b05"
+    ],
+    "name": "shared-block-group-1",
+    "type": "SharedBlock",
+    "zoneUuid": "eee8b39ad50b300c8935e554a967691b"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"diskUuids":["1b5682b663b937a59adb9e318cab6b05"],"name":"shared-block-group-1","type":"SharedBlock","zoneUuid":"eee8b39ad50b300c8935e554a967691b"}}' http://localhost:8080/zstack/v1/primary-storage/sharedblockgroup
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|diskUuids|List|body\(包含在**params**结构中\)|磁盘唯一表示（例如UUID, WWN, WWID）| |2.3.2|
+|name|String|body\(包含在**params**结构中\)|资源名称| |2.3.2|
+|description \(可选\)|String|body\(包含在**params**结构中\)|资源的详细描述| |2.3.2|
+|type \(可选\)|String|body\(包含在**params**结构中\)|数据存储类型，此处为 SharedBlock| |2.3.2|
+|url|String|body\(包含在**params**结构中\)|未使用| |2.3.2|
+|zoneUuid|String|body\(包含在**params**结构中\)|数据中心UUID| |2.3.2|
+|resourceUuid \(可选\)|String|body\(包含在**params**结构中\)| | |2.3.2|
+|systemTags \(可选\)|List|body| | |2.3.2|
+|userTags \(可选\)|List|body| | |2.3.2|
+
+<Callout type="info">
+-   ZSvirt添加SAN存储时支持指定硬盘默认置备方式，**SystemTags**增加**primaryStorageVolumeProvisioningStrategy**选项。
+</Callout>
+    -   选项格式为：`primaryStorageVolumeProvisioningStrategy::ThinProvisioning, primaryStorageVolumeProvisioningStrategy::ThickProvisioning`
+    -   例如：`primaryStorageVolumeProvisioningStrategy::ThinProvisioning, primaryStorageVolumeProvisioningStrategy::ThickProvisioning`
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "name": "PS1",
+    "url": "/Cloud_ps",
+    "type": "LocalStorage",
+    "state": "Enabled",
+    "status": "Connected",
+    "attachedClusterUuids": [
+      "c6e9684e8bb93a9192c946dcd0564b39"
+    ]
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_qty_rsk_n2b)|2.3.2|
+|inventory|PrimaryStorageInventory|详情参考[inventory](#p_hg3_tsk_n2b)|2.3.2|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|2.3.2|
+|description|String|错误的概要描述|2.3.2|
+|details|String|错误的详细信息|2.3.2|
+|elaboration|String|保留字段，默认为null|2.3.2|
+|opaque|LinkedHashMap|保留字段，默认为null|2.3.2|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|2.3.2|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|2.3.2|
+|zoneUuid|String|数据中心UUID|2.3.2|
+|name|String|资源名称|2.3.2|
+|url|String| |2.3.2|
+|description|String|资源的详细描述|2.3.2|
+|totalCapacity|Long| |2.3.2|
+|availableCapacity|Long| |2.3.2|
+|totalPhysicalCapacity|Long| |2.3.2|
+|availablePhysicalCapacity|Long| |2.3.2|
+|systemUsedCapacity|Long| |2.3.2|
+|type|String| |2.3.2|
+|state|String| |2.3.2|
+|status|String| |2.3.2|
+|mountPath|String| |2.3.2|
+|createDate|Timestamp|创建时间|2.3.2|
+|lastOpDate|Timestamp|最后一次修改时间|2.3.2|
+|attachedClusterUuids|List| |2.3.2|
+
+## SDK示例
+Java SDK
+
+```
+AddSharedBlockGroupPrimaryStorageAction action = new AddSharedBlockGroupPrimaryStorageAction();
+action.diskUuids = asList("1b5682b663b937a59adb9e318cab6b05");
+action.name = "shared-block-group-1";
+action.type = "SharedBlock";
+action.zoneUuid = "eee8b39ad50b300c8935e554a967691b";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddSharedBlockGroupPrimaryStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddSharedBlockGroupPrimaryStorageAction action = AddSharedBlockGroupPrimaryStorageAction()
+action.diskUuids = [1b5682b663b937a59adb9e318cab6b05]
+action.name = "shared-block-group-1"
+action.type = "SharedBlock"
+action.zoneUuid = "eee8b39ad50b300c8935e554a967691b"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddSharedBlockGroupPrimaryStorageAction.Result res = action.call()
+```
+
+</APIPage>

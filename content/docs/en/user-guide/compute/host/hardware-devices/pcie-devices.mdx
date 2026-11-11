@@ -1,0 +1,15 @@
+---
+title: 'PCIe Device'
+---
+
+On the host Hardware Device page, select the **PCIe Device** tab to view and manage the PCIe devices for that host.
+
+You can enable passthrough functionality for PCIe devices on the host. Passthrough devices provide an effective way to use resources and improve environment performance.
+
+-   **Passthrough PCI Devices**: Displays PCIe devices with passthrough functionality enabled, available for virtual machine use.
+-   **All PCI Devices**: Displays all PCIe devices detected on the host. You can switch devices with a `Configurable` passthrough state to passthrough devices.
+
+<Callout type="info">
+-   Before switching a PCIe device to passthrough, ensure that IOMMU is enabled on the host and that the IOMMU readiness state is available.
+-   If a PCIe device is already loaded by a virtual machine, it cannot be switched to passthrough. Please unload the virtual machine before retrying.
+</Callout>

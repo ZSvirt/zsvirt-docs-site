@@ -1,0 +1,75 @@
+---
+title: "Fstrim VM"
+---
+
+<APIPage method="POST" path="/v1/vm-instances/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{}}' http://localhost:8080/zstack/v1/vm-instances/93534dd9dd813e4ab4ae230f7ecc1840/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Virtual Machine UUID| |4.2.0|
+|systemTags \(Optional\)|List|body|System Tag| |4.2.0|
+|userTags \(Optional\)|List|body|User Tag| |4.2.0|
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On error, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+FstrimVmAction action = new FstrimVmAction();
+action.uuid = "93534dd9dd813e4ab4ae230f7ecc1840";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+FstrimVmAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+FstrimVmAction action = FstrimVmAction()
+action.uuid = "93534dd9dd813e4ab4ae230f7ecc1840"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+FstrimVmAction.Result res = action.call()
+```
+
+</APIPage>

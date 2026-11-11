@@ -1,0 +1,101 @@
+---
+title: "Stop PXE Server"
+---
+
+<APIPage method="PUT" path="/v1/baremetal/pxeservers/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "stopBaremetalPxeServer": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that these fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"stopBaremetalPxeServer":{}}' \
+http://localhost:8080/zstack/v1/baremetal/pxeservers/26a3032ad77330df8de53c6d89f02f12/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|UUID of the resource, uniquely identifying the resource| |2.6.0|
+|systemTags \(Optional\)|List|body|System Tag| |2.6.0|
+|userTags \(Optional\)|List|body|User Tag| |2.6.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "743173fddfb0319fa9b21827875c1341",
+    "name": "test",
+    "hostname": "127.0.0.1",
+    "sshUsername": "root",
+    "sshPassword": "password",
+    "sshPort": 22,
+    "storagePath": "/zstack_bm_cache",
+    "dhcpInterface": "eth0",
+    "dhcpRangeBegin": "10.0.0.1",
+    "dhcpRangeEnd": "10.0.0.255",
+    "dhcpRangeNetmask": "255.255.255.0",
+    "state": "Enabled",
+    "status": "Disconnected"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation is successful, this field is null. For details, see [error](#p_wk2_hyy_3gc)|2.6.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, default is null|0.6|
+|opaque|LinkedHashMap|Reserved field, default is null|0.6|
+|cause|ErrorCode|Root cause: the source error that triggered the current error. If there is no original error, this field is null|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+StopBaremetalPxeServerAction action = new StopBaremetalPxeServerAction();
+action.uuid = "26a3032ad77330df8de53c6d89f02f12";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+StopBaremetalPxeServerAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = StopBaremetalPxeServerAction()
+action.uuid = "26a3032ad77330df8de53c6d89f02f12"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,11 @@
+{
+  "title": "统一认证 SSO",
+  "pages": [
+    "index",
+    "add-oidc",
+    "add-ad",
+    "add-ldap",
+    "manage"
+  ],
+  "pagesIndex": "index"
+}

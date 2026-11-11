@@ -1,0 +1,61 @@
+---
+title: "查询微软Teams接收端"
+---
+
+<APIPage method="GET" path="/v1/sns/application-endpoints/microsoft-teams">
+
+```
+GET zstack/v1/sns/application-endpoints/microsoft-teams/{uuid}
+```
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/sns/application-endpoints/microsoft-teams?q=url=http://teams-url
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QuerySNSMicrosoftTeamsEndpoint`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+QuerySNSMicrosoftTeamsEndpointAction action = new QuerySNSMicrosoftTeamsEndpointAction();
+action.conditions = asList("url=http://teams-url");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QuerySNSMicrosoftTeamsEndpointAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QuerySNSMicrosoftTeamsEndpointAction action = QuerySNSMicrosoftTeamsEndpointAction()
+action.conditions = ["url=http://teams-url"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QuerySNSMicrosoftTeamsEndpointAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,64 @@
+---
+title: "Unsubscribe from an SNS Topic"
+---
+
+<APIPage method="DELETE" path="/v1/sns/topics/{topicUuid}/endpoints/{endpointUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/sns/topics/bd6c49ad623a3740880ca6d3ed3bb793/endpoints/36d6eb53f7c23fbca1ac72008940efc8?
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|topicUuid|String|url|Topic UUID| |2.3|
+|endpointUuid|String|url|Endpoint UUID| |2.3|
+|systemTags \(optional\)|List|body|System tags| |2.3|
+|userTags \(optional\)|List|body|User tags| |2.3|
+
+## API Response
+This API returns an empty JSON structure **`{}`** on success. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+UnsubscribeSNSTopicAction action = new UnsubscribeSNSTopicAction();
+action.topicUuid = "bd6c49ad623a3740880ca6d3ed3bb793";
+action.endpointUuid = "36d6eb53f7c23fbca1ac72008940efc8";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UnsubscribeSNSTopicAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UnsubscribeSNSTopicAction action = UnsubscribeSNSTopicAction()
+action.topicUuid = "bd6c49ad623a3740880ca6d3ed3bb793"
+action.endpointUuid = "36d6eb53f7c23fbca1ac72008940efc8"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UnsubscribeSNSTopicAction.Result res = action.call()
+```
+
+</APIPage>

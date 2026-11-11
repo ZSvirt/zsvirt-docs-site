@@ -1,0 +1,9 @@
+{
+  "title": "更改主机",
+  "pages": [
+    "index",
+    "hot-migration",
+    "cold-migration"
+  ],
+  "pagesIndex": "index"
+}

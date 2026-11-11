@@ -1,0 +1,18 @@
+---
+title: "A host cannot recognize multipath. What should I do?"
+---
+
+## Symptom
+Running `multipath -ll` on the host shows no multipath devices.
+
+## Cause
+The multipath configuration file on the host is incorrect.
+
+## Solution
+1.  Check whether the `/etc/multipath.conf` file on the affected host differs from the file on a healthy host.
+
+2.  On the host, run the following command to copy the `/etc/multipath.conf` file from a healthy host to the affected host:
+
+    ```
+    [root@localhost ~]# scp /etc/multipath.conf root@IP:/etc/
+    ```

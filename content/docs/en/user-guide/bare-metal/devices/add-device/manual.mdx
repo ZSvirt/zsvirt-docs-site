@@ -1,0 +1,28 @@
+---
+title: 'Manually Add a Bare Metal Chassis'
+---
+
+Add single or multiple bare metal chassis by specifying an IPMI address or IPMI range.
+
+Make sure bare metal chassis are connected according to the planned network topology. For more information, see [Preparation](/en/docs/user-guide/bare-metal/prerequisites).
+
+1.  In the navigation pane, choose **Inventory** &gt; **Bare Metal Management**.
+
+2.  Right-click the target bare metal cluster and choose **Add Bare Metal Chassis**.
+
+3.  In the Select Bare Metal Chassis Addition Type dialog, select **Manual Addition**.
+
+4.  Click **Next**.
+
+5.  In the Add Bare Metal Chassis dialog, set the following parameters:
+
+    -   **Name**: Set a name for the bare metal chassis.
+    -   **Description**: Optional. Enter a description.
+    -   **Bare Metal Cluster**: Select the target bare metal cluster where the bare metal chassis reside.
+    -   **Addition Method**: Choose a method to add IPMI addresses. Options include IPMI address and IPMI range.
+    -   **IPMI Address/Range**: Enter an IPMI address or the start and end IP of an IPMI range.
+    -   **Port**: Enter the IPMI port. Default: 623.
+    -   **Username**: Enter the IPMI username.
+    -   **Password**: Enter the IPMI password.
+    -   **Reboot Bare Metal Chassis**: Choose whether to reboot the bare metal chassis to automatically obtain the hardware information. Default: unselected.
+6.  Review the configuration and click **OK**.

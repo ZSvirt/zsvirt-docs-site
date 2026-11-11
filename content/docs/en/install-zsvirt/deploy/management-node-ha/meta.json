@@ -1,0 +1,9 @@
+{
+  "title": "Set Up Management Node HA",
+  "pages": [
+    "index",
+    "gui-setup",
+    "cli-setup"
+  ],
+  "pagesIndex": "index"
+}

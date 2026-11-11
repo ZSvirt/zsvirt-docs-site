@@ -1,0 +1,63 @@
+---
+title: "Query DingTalk Endpoint"
+---
+
+<APIPage method="GET" path="/v1/sns/application-endpoints/ding-talk" altPaths={["/v1/sns/application-endpoints/ding-talk/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/sns/application-endpoints/ding-talk?q=url=http://dingding-url
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/sns/application-endpoints/ding-talk/69658f91a1f130e0986fbfb19de1b3c9
+```
+
+Queryable Fields
+
+Run the CLI tool, enter `QuerySNSDingTalkEndpoint` and press Tab to view all queryable fields and cross-table queryable resource names.
+
+## API Response
+On success, this API returns an empty JSON structure **`{}`**. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+QuerySNSDingTalkEndpointAction action = new QuerySNSDingTalkEndpointAction();
+action.conditions = asList("url=http://dingding-url");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QuerySNSDingTalkEndpointAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QuerySNSDingTalkEndpointAction action = QuerySNSDingTalkEndpointAction()
+action.conditions = ["url=http://dingding-url"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QuerySNSDingTalkEndpointAction.Result res = action.call()
+```
+
+</APIPage>

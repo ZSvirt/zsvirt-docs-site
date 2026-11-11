@@ -1,0 +1,30 @@
+---
+title: "Windows安装VMTools出现“There is a problem with this Windows Installer package. A program run as part of the setup did not finish as expected Contact your support personnel or package vendor”提示，怎么办？"
+---
+
+## 原因
+虚拟机之前安装的版本较低的VMTools有残留，需清理干净安装包后重新安装。
+
+## 解决方案
+1.  可尝试参考以下步骤解决：
+2.  删除注册表中的键值，msdtc服务（分布式事务协调器）重建。以管理员身份打开运行命令行窗口，执行以下命令：
+
+    ```
+    reg delete HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\MSDTC /f
+    reg delete HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSDTC /f
+    reg delete HKEY_CLASSES_ROOT\CID /f
+    net stop msdtc
+    msdtc -uninstall
+    msdtc -install
+    ```
+
+3.  重启虚拟机。
+
+4.  在命令行窗口执行以下命令卸载版本较低的QGA：
+
+    ```
+    msiexec /a "c:\Program Files\GuestTools\qemu-ga.msi" targetdir="c:\Program Files"
+    "c:\Program Files\QEMU Guest Agent\Qemu-ga\qemu-ga.exe" -s vss-uninstall
+    ```
+
+5.  重新安装VMTools。

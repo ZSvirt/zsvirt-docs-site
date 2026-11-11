@@ -1,0 +1,91 @@
+---
+title: "Add IP Access Control Rule"
+---
+
+<APIPage method="POST" path="/v1/login-control/access-control/rules">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "rule1",
+    "description": "this is a rule",
+    "rule": "172.20.1.1,172.20.1.2",
+    "controlStrategy": "ACCEPT"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The **systemTags** and **userTags** fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"rule1","description":"this is a rule","rule":"172.20.1.1,172.20.1.2","controlStrategy":"ACCEPT"}}' http://localhost:8080/zstack/v1/login-control/access-control/rules
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|name|String|body \(contained in the **params** structure\)|Resource name| |3.5.1|
+|description \(optional\)|String|body \(contained in the **params** structure\)|Detailed description of the resource| |3.5.1|
+|rule|String|body \(contained in the **params** structure\)| | |3.5.1|
+|controlStrategy|String|body \(contained in the **params** structure\)| | |3.5.1|
+|resourceUuid \(optional\)|String|body \(contained in the **params** structure\)| | |3.5.1|
+|tagUuids \(optional\)|List|body \(contained in the **params** structure\)|Tag UUID list| |3.5.1|
+|systemTags \(optional\)|List|body| | |3.5.1|
+|userTags \(optional\)|List|body| | |3.5.1|
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+AddAccessControlRuleAction action = new AddAccessControlRuleAction();
+action.name = "rule1";
+action.description = "this is a rule";
+action.rule = "172.20.1.1,172.20.1.2";
+action.controlStrategy = "ACCEPT";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddAccessControlRuleAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddAccessControlRuleAction action = AddAccessControlRuleAction()
+action.name = "rule1"
+action.description = "this is a rule"
+action.rule = "172.20.1.1,172.20.1.2"
+action.controlStrategy = "ACCEPT"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddAccessControlRuleAction.Result res = action.call()
+```
+
+</APIPage>

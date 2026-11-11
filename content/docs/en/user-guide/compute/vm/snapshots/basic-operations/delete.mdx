@@ -1,0 +1,17 @@
+---
+title: 'Delete a Snapshot'
+---
+
+1.  In the navigation pane, choose **Inventory** &gt; **VM and Host**.
+
+2.  Select a target VM and click **Snapshot**.
+
+3.  On the Snapshot tab, select the snapshot that you want to delete and click **Actions** &gt; **Delete**.
+
+4.  Confirm the selected the snapshot information and risk alerts. Click **OK**.
+
+    <Callout type="info">
+    -   Deleting the current snapshot also deletes snapshots on its branch.
+    -   Deleting the current snapshot consumes I/O bandwidth. Do not restart the management node service at this time.
+    -   The snapshot data is committed before it is deleted. This process occupies a certain amount of the data storage. If the data storage capacity is insufficient, you might fail to delete the snapshot.
+    </Callout>

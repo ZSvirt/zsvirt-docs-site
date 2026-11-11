@@ -1,0 +1,112 @@
+---
+title: "Rerun Long Job"
+---
+
+<APIPage method="PUT" path="/v1/longjobs/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "cleanLongJob": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the `systemTags` and `userTags` fields are optional. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"rerunLongJob":{}}' \
+http://localhost:8080/zstack/v1/longjobs/6b0baa24019d331fad1548dbd3ec3eb1/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|The UUID of the resource. Uniquely identifies the resource.| |3.0.1|
+|systemTags \(Optional\)|List|body|System tags| |3.0.1|
+|userTags \(Optional\)|List|body|User tags| |3.0.1|
+
+## API Response
+Response example
+
+```
+{
+  "inventory": {
+    "uuid": "bdff1ecf1cab3029ace943626708678a"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_wyz_cdb_r2c)|3.0.1|
+|inventory|LongJobInventory|For details, see [inventory](#p_rsw_3db_r2c)|3.0.1|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, such as SYS.1000, HOST.1001.|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|The detailed error information|0.6|
+|elaboration|String|A reserved field. Default is null.|0.6|
+|opaque|LinkedHashMap|A reserved field. Default is null.|0.6|
+|cause|ErrorCode|The root error. The source error that caused the current error. This field is null if there is no root error.|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource.|2.2.4|
+|name|String|Resource name|2.2.4|
+|description|String|Detailed description of the resource|2.2.4|
+|apiId|String|The API ID used to associate with TaskProgress|2.2.4|
+|jobName|String|Job name|2.2.4|
+|jobData|String|Job data|2.2.4|
+|jobResult|String|Job result|2.2.4|
+|targetResourceUuid|String|Target resource UUID|2.2.4|
+|managementNodeUuid|String|Management node UUID|2.2.4|
+|createDate|Timestamp|Creation time|2.2.4|
+|lastOpDate|Timestamp|Last modification time|2.2.4|
+|state|LongJobState|For details, see [state](#p_iwm_hdb_r2c)|2.2.4|
+
+### state
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name|2.2.4|
+|ordinal|int| |2.2.4|
+
+## SDK Examples
+Java SDK
+
+```
+RerunLongJobAction action = new RerunLongJobAction();
+action.uuid = "6b0baa24019d331fad1548dbd3ec3eb1";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RerunLongJobAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+RerunLongJobAction action = RerunLongJobAction()
+action.uuid = "6b0baa24019d331fad1548dbd3ec3eb1"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+RerunLongJobAction.Result res = action.call()
+```
+
+</APIPage>

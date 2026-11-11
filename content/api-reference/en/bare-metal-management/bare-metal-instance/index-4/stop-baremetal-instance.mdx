@@ -1,0 +1,269 @@
+---
+title: "Stop Bare Metal Instance"
+---
+
+<APIPage method="PUT" path="/v1/baremetal/instances/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "stopBaremetalInstance": {
+    "type": "grace"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that these fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"stopBaremetalInstance":{"type":"grace"}}' \
+http://localhost:8080/zstack/v1/baremetal/instances/d106a65de4e43667a794a0606a05f724/actions
+```
+
+Parameter List
+
+<table id="table_q3n_4fz_3gc"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+UUID of the resource, uniquely identifying the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.6.0
+
+</td></tr><tr><td>
+
+type \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(included in the `stopBaremetalInstance` structure\)
+
+</td><td>
+
+Bare metal instance shutdown mode
+
+</td><td>
+
+-   grace
+-   cold
+
+</td><td>
+
+2.6.0
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System Tag
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.6.0
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User Tag
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.6.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "4bf8e15fe39c3b0d8055b7074a522d2d",
+    "name": "BM-1",
+    "description": "This is a baremetal instance.",
+    "zoneUuid": "541a4429a399336288dcbb83fe2573b4",
+    "clusterUuid": "30efc0a59ac53afeb1d4d1fe2226a0a9",
+    "chassisUuid": "7bd2492307033fedb5311dd23ddf2bbd",
+    "imageUuid": "441390c7c83c3592ac29e6f1e38d392f",
+    "platform": "Linux",
+    "state": "Stopped",
+    "status": "Provisioned",
+    "createDate": "Nov 14, 2017 2:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 2:20:57 PM",
+    "bmNics": [
+      {
+        "uuid": "f81e9b15830538b9b826e113146f1ed1",
+        "baremetalInstanceUuid": "4bf8e15fe39c3b0d8055b7074a522d2d",
+        "l3NetworkUuid": "811f43fa4f9f34b9a3a1756911ad9fc1",
+        "mac": "6c:b3:11:1b:0b:1e",
+        "ip": "192.168.0.10",
+        "netmask": "255.255.255.0",
+        "gateway": "192.168.0.1",
+        "pxe": false
+      }
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation is successful, this field is null. For details, see [error](#p_lvx_yyy_3gc)|2.6.0|
+|inventory|BaremetalInstanceInventory|For details, see [inventory](#p_nsv_ffz_3gc)|2.6.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, default is null|0.6|
+|opaque|LinkedHashMap|Reserved field, default is null|0.6|
+|cause|ErrorCode|Root cause: the source error that triggered the current error. If there is no original error, this field is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifying the resource|2.6.0|
+|name|String|Resource name|2.6.0|
+|description|String|Detailed description of the resource|2.6.0|
+|zoneUuid|String|Data Center UUID|2.6.0|
+|clusterUuid|String|Cluster UUID|2.6.0|
+|pxeServerUuid|String| |3.1.1|
+|chassisUuid|String|Bare metal chassis UUID|2.6.0|
+|imageUuid|String|Image UUID|2.6.0|
+|platform|String|System platform|2.6.0|
+|state|String| |2.6.0|
+|status|String| |2.6.0|
+|createDate|Timestamp|Create time|2.6.0|
+|lastOpDate|Timestamp|Last modification time|2.6.0|
+|bmNics|List|For details, see [bmNics](#p_ifq_ffz_3gc)|2.6.0|
+
+### bmNics
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifying the resource|2.6.0|
+|baremetalInstanceUuid|String|Bare metal instance UUID|2.6.0|
+|l3NetworkUuid|String|Distributed Port Group UUID|2.6.0|
+|baremetalBondingUuid|String|BOND UUID|3.4.0|
+|mac|String|Network card MAC address|2.6.0|
+|ip|String|IP address|2.6.0|
+|netmask|String|Subnet mask|2.6.0|
+|gateway|String|Gateway|2.6.0|
+|metadata|String| |2.6.0|
+|pxe|Boolean|Whether this is a PXE boot NIC|2.6.0|
+|createDate|Timestamp|Create time|2.6.0|
+|lastOpDate|Timestamp|Last modification time|2.6.0|
+
+## SDK Examples
+Java SDK
+
+```
+StopBaremetalInstanceAction action = new StopBaremetalInstanceAction();
+action.uuid = "d106a65de4e43667a794a0606a05f724";
+action.type = "grace";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+StopBaremetalInstanceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = StopBaremetalInstanceAction()
+action.uuid = "d106a65de4e43667a794a0606a05f724"
+action.type = "grace"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

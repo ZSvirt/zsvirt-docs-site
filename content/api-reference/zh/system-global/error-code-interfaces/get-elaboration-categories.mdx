@@ -1,0 +1,88 @@
+---
+title: "查看错误码目录列表"
+---
+
+<APIPage method="GET" path="/v1/errorcode/elaborations/categories">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/errorcode/elaborations/categories
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|systemTags \(可选\)|List|query|系统标签| |4.5.0|
+|userTags \(可选\)|List|query|用户标签| |4.5.0|
+
+## API返回
+返回示例
+
+```
+{
+  "categories": [
+    {
+      "category": "ACCOUNT",
+      "num": 5.0
+    },
+    {
+      "category": "BS",
+      "num": 3.0
+    },
+    {
+      "category": "VM",
+      "num": 20.0
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_zhf_xkk_w3b)|4.5.0|
+|categories|List|详情参考[categories](#p_cwz_wkk_w3b)|4.5.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.5.0|
+|description|String|错误的概要描述|4.5.0|
+|details|String|错误的详细信息|4.5.0|
+|elaboration|String|保留字段，默认为null|4.5.0|
+|opaque|LinkedHashMap|保留字段，默认为null|4.5.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.5.0|
+
+### categories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|category|String|目录名称|4.5.0|
+|num|Integer|目录下的错误码数目|4.5.0|
+
+## SDK示例
+Java SDK
+
+```
+GetElaborationCategoriesAction action = new GetElaborationCategoriesAction();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetElaborationCategoriesAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetElaborationCategoriesAction action = GetElaborationCategoriesAction()
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetElaborationCategoriesAction.Result res = action.call()
+```
+
+</APIPage>

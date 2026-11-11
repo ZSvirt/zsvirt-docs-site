@@ -1,0 +1,10 @@
+{
+  "title": "IP Blocklist/Allowlist",
+  "pages": [
+    "add-access-control-rule",
+    "delete-access-control-rule",
+    "update-access-control-rule",
+    "query-access-control-rule"
+  ],
+  "pagesIndex": "index"
+}

@@ -1,0 +1,192 @@
+---
+title: "删除安全组"
+---
+
+<APIPage method="DELETE" path="/v1/security-groups/{uuid}?deleteMode={deleteMode}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/security-groups/6791f54e4fb147d1b26030723efe03bd?deleteMode=Permissive
+```
+
+参数列表
+
+<table id="table_t24_d45_m1b"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+资源的UUID，唯一标示该资源
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+deleteMode \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body
+
+</td><td>
+
+-   Permissive:：
+
+如果删除过程中发生错误或者删除不被允许虚拟化平台会停止删除操作
+
+在这种情况下, 包含失败原因的错误代码会被返回
+
+-   Enforcing：
+
+虚拟化平台会忽略所有错误和权限而直接删除资源;
+
+在这种情况下, 删除操作总是会成功
+
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr></tbody>
+</table>
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+DeleteSecurityGroupAction action = new DeleteSecurityGroupAction();
+action.uuid = "86efff16586b4d82bfea66deba85cc50";
+action.deleteMode = "Permissive";
+action.sessionId = "079653952584401b997df37fd7044433";
+DeleteSecurityGroupAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+DeleteSecurityGroupAction action = DeleteSecurityGroupAction()
+action.uuid = "59098134c4214c79a48ced0ed7952ecd"
+action.deleteMode = "Permissive"
+action.sessionId = "2fb58330c68d46f6aa700740d52b02c0"
+DeleteSecurityGroupAction.Result res = action.call()
+```
+
+</APIPage>

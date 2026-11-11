@@ -1,0 +1,120 @@
+---
+title: "Create SSO Redirect Template"
+---
+
+<APIPage method="POST" path="/v1/create/sso/redirect/template/">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "test",
+    "description": "desc",
+    "clientUuid": "64053daa6b56335d843b3fb837fd8133",
+    "redirectTemplate": "http://172.24.194.28:5000/oauth1/verify/?username=${username}&sessionId=${sessionId}&userUuid=${userUuid}&accountUuid=${accountUuid}&loginType=${loginType}&userType=${userType}'"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding example, the `systemTags` and `userTags` fields are optional. They are listed here to show that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"test","description":"desc","clientUuid":"64053daa6b56335d843b3fb837fd8133","redirectTemplate":"http://172.24.194.28:5000/oauth1/verify/?username=${username}&sessionId=${sessionId}&userUuid=${userUuid}&accountUuid=${accountUuid}&loginType=${loginType}&userType=${userType}'"}}' \
+http://localhost:8080/zstack/v1/create/sso/redirect/template/
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|name|String|body \(enclosed in the `params` structure\)|Resource name| |4.3.0|
+|description|String|body \(enclosed in the `params` structure\)|Detailed description of the resource| |4.3.0|
+|clientUuid|String|body \(enclosed in the `params` structure\)|UUID of the corresponding SSO client, which is the UUID of the third-party account source| |4.3.0|
+|redirectTemplate|String|body \(enclosed in the `params` structure\)|Redirect template| |4.3.0|
+|resourceUuid \(Optional\)|String|body \(enclosed in the `params` structure\)|Resource UUID| |4.3.0|
+|tagUuids \(Optional\)|List|body \(enclosed in the `params` structure\)|Tag UUID list| |4.3.0|
+|systemTags \(Optional\)|List|body|System tags| |4.3.0|
+|userTags \(Optional\)|List|body|User tags| |4.3.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "8b233284793c3da397f6ebd7351c3a54",
+    "name": "test",
+    "description": "desv",
+    "clientUuid": "827d2ea3ae8133bbba0b726c1d8e716d"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean|Whether the creation is successful|4.3.0|
+|inventory|SSORedirectTemplateInventory|For details, see [inventory](#p_qst_psl_s2c)|4.3.0|
+|error|ErrorCode|Error code. If not null, the operation has failed. This field is null when the operation succeeds. For details, see [error](#p_opd_ssl_s2c)|4.3.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Template UUID. Uniquely identifies the resource.|4.3.0|
+|name|String|Template name|4.3.0|
+|description|String|Detailed description of the template|4.3.0|
+|clientUuid|String|UUID of the corresponding SSO client, which is the UUID of the third-party account source|4.3.0|
+|redirectTemplate|String|Redirect template|4.3.0|
+|createDate|Timestamp|Creation time|4.3.0|
+|lastOpDate|Timestamp|Last modification time|4.3.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. The globally unique identifier of the error, for example, SYS.1000 or HOST.1001.|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Default is null.|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null.|0.6|
+|cause|ErrorCode|Root error. The source error that caused the current error. This field is null if no root error exists.|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+CreateSSORedirectTemplateAction action = new CreateSSORedirectTemplateAction();
+action.name = "test";
+action.description = "desc";
+action.clientUuid = "64053daa6b56335d843b3fb837fd8133";
+action.redirectTemplate = "http://172.24.194.28:5000/oauth1/verify/?username=${username}&sessionId=${sessionId}&userUuid=${userUuid}&accountUuid=${accountUuid}&loginType=${loginType}&userType=${userType}'";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateSSORedirectTemplateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateSSORedirectTemplateAction action = CreateSSORedirectTemplateAction()
+action.name = "test"
+action.description = "desc"
+action.clientUuid = "64053daa6b56335d843b3fb837fd8133"
+action.redirectTemplate = "http://172.24.194.28:5000/oauth1/verify/?username=${username}&sessionId=${sessionId}&userUuid=${userUuid}&accountUuid=${accountUuid}&loginType=${loginType}&userType=${userType}'"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateSSORedirectTemplateAction.Result res = action.call()
+```
+
+</APIPage>

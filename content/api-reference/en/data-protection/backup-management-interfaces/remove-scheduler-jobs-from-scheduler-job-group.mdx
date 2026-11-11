@@ -1,0 +1,64 @@
+---
+title: "Remove Scheduler Jobs from a Scheduler Job Group"
+---
+
+<APIPage method="DELETE" path="/v1/scheduler/jobgroups/{schedulerJobGroupUuid}/job/{schedulerJobUuids}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/scheduler/jobgroups/fa287a3654d330658db1863b8a41a660/job/[24634a04cc45397cb0298258a47ad650]
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|schedulerJobGroupUuid|String|url|Scheduler job group UUID| |3.4.0|
+|schedulerJobUuids|List|url|Scheduler job UUID list| |3.4.0|
+|systemTags \(optional\)|List|body|System tag list| |3.4.0|
+|userTags \(optional\)|List|body|User tag list| |3.4.0|
+
+## API Response
+On success, this API returns an empty JSON structure **`{}`**. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+RemoveSchedulerJobsFromSchedulerJobGroupAction action = new RemoveSchedulerJobsFromSchedulerJobGroupAction();
+action.schedulerJobGroupUuid = "fa287a3654d330658db1863b8a41a660";
+action.schedulerJobUuids = asList("24634a04cc45397cb0298258a47ad650");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RemoveSchedulerJobsFromSchedulerJobGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+RemoveSchedulerJobsFromSchedulerJobGroupAction action = RemoveSchedulerJobsFromSchedulerJobGroupAction()
+action.schedulerJobGroupUuid = "fa287a3654d330658db1863b8a41a660"
+action.schedulerJobUuids = [24634a04cc45397cb0298258a47ad650]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+RemoveSchedulerJobsFromSchedulerJobGroupAction.Result res = action.call()
+```
+
+</APIPage>

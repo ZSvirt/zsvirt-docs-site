@@ -1,0 +1,81 @@
+---
+title: "Set Image Security Level"
+---
+
+<APIPage method="PUT" path="/v1/images/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "setImageSecurityLevel": {
+    "securityLevel": "low"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"setImageSecurityLevel":{"securityLevel":"low"}}' \
+http://localhost:8080/zstack/v1/images/21637a774f6a38738c723d4699a87f72/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Resource UUID, uniquely identifies the resource| |0.6|
+|securityLevel \(Optional\)|String|body \(contained in `setImageSecurityLevel` structure\)| | |0.6|
+|systemTags \(Optional\)|List|body|System Tags| |0.6|
+|userTags \(Optional\)|List|body|User Tags| |0.6|
+
+## API Response
+This API returns an empty JSON object `{}` on success. On error, the returned JSON contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+SetImageSecurityLevelAction action = new SetImageSecurityLevelAction();
+action.uuid = "21637a774f6a38738c723d4699a87f72";
+action.securityLevel = "low";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+SetImageSecurityLevelAction.Result res = action.call();v
+```
+
+Python SDK
+
+```
+SetImageSecurityLevelAction action = SetImageSecurityLevelAction()
+action.uuid = "21637a774f6a38738c723d4699a87f72"
+action.securityLevel = "low"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+SetImageSecurityLevelAction.Result res = action.call()
+```
+
+</APIPage>

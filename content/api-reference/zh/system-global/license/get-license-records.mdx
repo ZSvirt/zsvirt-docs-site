@@ -1,0 +1,105 @@
+---
+title: "获取许可证历史授权信息"
+---
+
+<APIPage method="GET" path="/v1/licenses/records">
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-X GET http://localhost:8080/zstack/v1/licenses/records?limit=20.0&start=0.0&replyWithCount=true&count=false&sortBy=uploadDate&sortDirection=desc
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|limit \(可选\)|Integer|query|最多返回的记录数，类似MySQL的limit，默认值20| |4.1.0|
+|start \(可选\)|Integer|query|起始查询记录位置，类似MySQL的offset。跟**limit**配合使用可以实现分页| |4.1.0|
+|replyWithCount \(可选\)|boolean|query|计数查询，查询是否附加返回数据记录数。当设置成**true**时，API在返回数据记录的同时返回满足查询条件的记录数| |4.1.0|
+|count \(可选\)|boolean|query|计数查询，相当于MySQL中的count\(\)函数。当设置成**true**时，API只返回的是满足查询条件的记录数| |4.1.0|
+|sortBy \(可选\)|String|query|以字段排序，等同于MySQL中的sort by关键字，例如sortBy=ip。必须跟**sortDirection**配合使用| |4.1.0|
+|sortDirection \(可选\)|String|query|字段排序方向，必须跟**sortBy**配合使用| |4.1.0|
+|systemTags \(可选\)|List|query|系统标签| |4.1.0|
+|userTags \(可选\)|List|query|用户标签| |4.1.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "user": "example",
+      "hostNum": 10.0,
+      "licenseType": "Free",
+      "issuedDate": "2017-01-19 14:31:06",
+      "managementNodeUuid": "00898b3538e53e70bb7521e54ff80276",
+      "expired": true
+    }
+  ],
+  "total": 1.0
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|total|Long|许可证历史授权数据总量。如果设置count或replyWithCount为true则返回该值|4.1.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_ixc_lsq_zdb)|4.1.0|
+|inventory|LicenseInventory|详情参考[inventory](#p_pfh_lsq_zdb)|4.1.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.1.0|
+|description|String|错误的概要描述|4.1.0|
+|details|String|错误的详细信息|4.1.0|
+|elaboration|String|保留字段，默认为null|4.1.0|
+|opaque|LinkedHashMap|保留字段，默认为null|4.1.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.1.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String| |4.1.0|
+|licenseType|String| |4.1.0|
+|expiredDate|String| |4.1.0|
+|issuedDate|String| |4.1.0|
+|uploadDate|String|许可证上传时间|4.1.0|
+|user|String| |4.1.0|
+|prodInfo|String|许可证产品名称|4.1.0|
+|hostNum|Integer| |4.1.0|
+|cpuNum|Integer| |4.1.0|
+|vmNum|Integer| |4.1.0|
+|expired|boolean| |4.1.0|
+|managementNodeUuid|String| |4.1.0|
+
+## SDK示例
+Java SDK
+
+```
+GetLicenseRecordsAction action = new GetLicenseRecordsAction();
+action.limit = 20.0;
+action.start = 0.0;
+action.replyWithCount = true;
+action.count = false;
+action.sortBy = "uploadDate";
+action.sortDirection = "desc";
+GetLicenseRecordsAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetLicenseRecordsAction action = GetLicenseRecordsAction()
+action.limit = 20.0
+action.start = 0.0
+action.replyWithCount = true
+action.count = false
+action.sortBy = "uploadDate"
+action.sortDirection = "desc"
+GetLicenseRecordsAction.Result res = action.call()
+```
+
+</APIPage>

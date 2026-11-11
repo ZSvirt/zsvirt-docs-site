@@ -1,0 +1,132 @@
+---
+title: "将SCSI LUN从虚拟机卸载"
+---
+
+<APIPage method="DELETE" path="/v1/vm-instances/{vmInstanceUuid}/scsi-lun/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/vm-instances/68b34252ae3a386e92b74ce3a2bd7e4a/scsi-lun/4af9531a118a3b7aba404d794a4cfa51
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |3.1.0|
+|vmInstanceUuid|String|url|虚拟机UUID| |3.1.0|
+|systemTags \(可选\)|List|body| | |3.1.0|
+|userTags \(可选\)|List|body| | |3.1.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "name": "fc-lun-36b083fe000daf018000022905ba35d8f",
+    "uuid": "a51554a318e333f1b96a7abe91674ede",
+    "wwid": "36b083fe000daf018000022905ba35d8f",
+    "vendor": "DELL",
+    "model": "MD32xx",
+    "wwn": "0x6f01faf000d5c3e7",
+    "serial": "6b083fe000daf018000015505abbe00a",
+    "type": "mpath",
+    "path": "pci-0000:05:00.0-fc-0x2012b083fedaf018-lun-11",
+    "size": 5497558138880.0,
+    "scsiLunHostRefs": [
+      {
+        "id": 1.0,
+        "scsiLunUuid": "a51554a318e333f1b96a7abe91674ede",
+        "hostUuid": "5c5a4a7c480e3b5791e0915785968eb1",
+        "createDate": "Nov 14, 2017 10:20:57 PM"
+      }
+    ],
+    "scsiLunVmInstanceRefs": [],
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_el3_m12_nfb)|3.1.0|
+|inventory|ScsiLunInventory|详情参考[inventory](#p_yvm_m12_nfb)|3.1.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|name|String|资源名称|3.1.0|
+|uuid|String|资源的UUID，唯一标示该资源|3.1.0|
+|wwid|String|磁盘全局唯一表示|3.1.0|
+|vendor|String|磁盘供应商|3.1.0|
+|model|String|磁盘型号|3.1.0|
+|wwn|String|磁盘WWN|3.1.0|
+|serial|String|磁盘序列号|3.1.0|
+|type|String|磁盘类型|3.1.0|
+|path|String|磁盘路径|3.1.0|
+|state|String|磁盘启用状态|3.1.0|
+|size|Long|磁盘大小|3.1.0|
+|createDate|Timestamp|创建时间|3.1.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.1.0|
+|scsiLunHostRefs|List|详情参考[scsiLunHostRefs](#p_tgf_k12_nfb)|3.1.0|
+|scsiLunVmInstanceRefs|List|详情参考[scsiLunVmInstanceRefs](#p_wxw_j12_nfb)|3.1.0|
+
+### scsiLunHostRefs
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|scsiLunUuid|String|SCSI LUN UUID|3.1.0|
+|hostUuid|String|主机UUID|3.1.0|
+|createDate|Timestamp|创建时间|3.1.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.1.0|
+
+### scsiLunVmInstanceRefs
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|scsiLunUuid|String|SCSI LUN UUID|3.1.0|
+|vmInstanceUuid|String|虚拟机UUID|3.1.0|
+|createDate|Timestamp|创建时间|3.1.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.1.0|
+
+## SDK示例
+Java SDK
+
+```
+DetachScsiLunFromVmInstanceAction action = new DetachScsiLunFromVmInstanceAction();
+action.uuid = "4af9531a118a3b7aba404d794a4cfa51";
+action.vmInstanceUuid = "68b34252ae3a386e92b74ce3a2bd7e4a";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DetachScsiLunFromVmInstanceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DetachScsiLunFromVmInstanceAction action = DetachScsiLunFromVmInstanceAction()
+action.uuid = "4af9531a118a3b7aba404d794a4cfa51"
+action.vmInstanceUuid = "68b34252ae3a386e92b74ce3a2bd7e4a"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DetachScsiLunFromVmInstanceAction.Result res = action.call()
+```
+
+</APIPage>

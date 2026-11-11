@@ -1,0 +1,8 @@
+{
+  "title": "网络资源",
+  "pages": [
+    "distributed-switch",
+    "distributed-port-group"
+  ],
+  "pagesIndex": "index"
+}

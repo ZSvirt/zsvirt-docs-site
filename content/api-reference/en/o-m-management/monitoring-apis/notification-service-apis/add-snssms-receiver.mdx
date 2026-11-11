@@ -1,0 +1,336 @@
+---
+title: "Add SMS Receiver"
+---
+
+<APIPage method="POST" path="/v1/sns/sms-endpoints/receivers">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "phoneNumber": "13333333333",
+    "endpointUuid": "467e77c4cc42492f9794429e689a9874",
+    "type": "AliyunSms",
+    "description": "description"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding example, the **systemTags** and **userTags** fields are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"phoneNumber":"13333333333","endpointUuid":"467e77c4cc42492f9794429e689a9874","type":"AliyunSms","description":"description"}}' \
+http://localhost:8080/zstack/v1/sns/sms-endpoints/receivers
+```
+
+Parameter List
+
+<table id="table_ycs_ylw_jjb"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+phoneNumber
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(Contained in the **params** structure\)
+
+</td><td>
+
+SMS receiving phone number
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.7.0
+
+</td></tr><tr><td>
+
+endpointUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(Contained in the **params** structure\)
+
+</td><td>
+
+SMS endpoint UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.7.0
+
+</td></tr><tr><td>
+
+type
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(Contained in the **params** structure\)
+
+</td><td>
+
+SMS endpoint type
+
+</td><td>
+
+-   AliyunSms
+
+</td><td>
+
+3.7.0
+
+</td></tr><tr><td>
+
+description \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(Contained in the **params** structure\)
+
+</td><td>
+
+SMS receiver description
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.7.0
+
+</td></tr><tr><td>
+
+resourceUuid \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(Contained in the **params** structure\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.7.0
+
+</td></tr><tr><td>
+
+tagUuids \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body \(Contained in the **params** structure\)
+
+</td><td>
+
+Tag UUID list
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.7.0
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.7.0
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.7.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response example
+
+```
+{
+  "inventory": {
+    "uuid": "fac44d00d50f41fda7c74b753ad4298e",
+    "phoneNumber": "18912345678",
+    "endpointUuid": "97c6a427da0e4c67ade85f488ddada53",
+    "type": "AliyunSms",
+    "description": "description",
+    "createDate": "Mar 26, 2024 2:46:22 AM",
+    "lastOpDate": "Mar 26, 2024 2:46:22 AM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |5.0.0|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_ymd_4mw_jjb)|3.7.0|
+|inventory|SNSSmsReceiverInventory|For details, see [inventory](#p_erx_nmw_jjb)|3.7.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number, a globally unique identifier for the error, for example, SYS.1000 or HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field. Defaults to null|0.6|
+|cause|ErrorCode|The root error that caused the current error. This field is null if there is no root cause|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource, uniquely identifying this resource|3.7.0|
+|phoneNumber|String|SMS receiving phone number|3.7.0|
+|endpointUuid|String|SMS endpoint UUID|3.7.0|
+|description|String|SMS receiver description|3.7.0|
+|createDate|Timestamp|Creation time|3.7.0|
+|lastOpDate|Timestamp|Last modification time|3.7.0|
+|type|SmsReceiverType|For details, see [type](#p_p1r_nmw_jjb)|3.7.0|
+
+### type
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|AliyunSms|SmsReceiverType|Alibaba Cloud SMS|3.7.0|
+
+## SDK Examples
+Java SDK
+
+```
+AddSNSSmsReceiverAction action = new AddSNSSmsReceiverAction();
+action.phoneNumber = "13333333333";
+action.endpointUuid = "467e77c4cc42492f9794429e689a9874";
+action.type = "AliyunSms";
+action.description = "description";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddSNSSmsReceiverAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddSNSSmsReceiverAction action = AddSNSSmsReceiverAction()
+action.phoneNumber = "13333333333"
+action.endpointUuid = "467e77c4cc42492f9794429e689a9874"
+action.type = "AliyunSms"
+action.description = "description"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddSNSSmsReceiverAction.Result res = action.call()
+```
+
+</APIPage>

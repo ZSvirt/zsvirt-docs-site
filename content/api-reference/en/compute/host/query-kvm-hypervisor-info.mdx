@@ -1,0 +1,88 @@
+---
+title: "Query Virtualization Software Information of Resource"
+---
+
+<APIPage method="GET" path="/v1/hosts/kvm/hypervisor/info">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/hosts/kvm/hypervisor/info?q=uuid=dd025c0199ef3b7080120db73772234f
+```
+
+Queryable Fields
+
+Run the CLI command tool, enter `QueryHost` and press Tab to view all queryable fields and resources that can be queried across tables.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "a3097e5ebe8a35929e1f2fe4304893f1",
+      "hypervisor": "qemu-kvm",
+      "version": "4.2.0-632.g6a6222b.el7",
+      "matchState": "Matched",
+      "createDate": "Nov 14, 2017 2:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean|Whether the query succeeded|4.6.21|
+|inventories|List|See details [inventories](#p_pdk_mv5_m1b)|4.6.21|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See details [error](#p_blf_4hw_rcb)|4.6.21|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, can be the UUID of a Host or a Virtual Machine|4.6.21|
+|hypervisor|String|Virtualization software name, for example **qemu-kvm**|4.6.21|
+|version|String|Version number, for example **4.2.0-632.g6a6222b.el7**|4.6.21|
+|matchState|String|Match status with expected version number, possible values are **Matched**, **Unmatched**,**Unknown**|4.6.21|
+|createDate|Timestamp|Creation time|4.6.21|
+|lastOpDate|Timestamp|Last modification time|4.6.21|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, e.g. SYS.1000, HOST.1001|4.6.21|
+|description|String|Brief description of the error|4.6.21|
+|details|String|Detailed error information|4.6.21|
+|elaboration|String|Reserved field, default is null|4.6.21|
+|opaque|LinkedHashMap|Reserved field, default is null|4.6.21|
+|cause|ErrorCode|Root cause, the error that caused the current error. If there is no original error, this field is null|4.6.21|
+
+## SDK Examples
+Java SDK
+
+```
+QueryKvmHypervisorInfoAction action = new QueryKvmHypervisorInfoAction();
+action.conditions = asList("uuid=0601103239cd30c2bd738b98d4440199");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryKvmHypervisorInfoAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryKvmHypervisorInfoAction action = QueryKvmHypervisorInfoAction()
+action.conditions = ["uuid=838e20e529cc3a19a9f0efa50e9e2409"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryKvmHypervisorInfoAction.Result res = action.call()
+```
+
+</APIPage>

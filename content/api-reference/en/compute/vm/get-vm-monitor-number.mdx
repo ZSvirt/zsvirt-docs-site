@@ -1,0 +1,74 @@
+---
+title: "Get VM Monitor Number"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/{uuid}/monitorNumber">
+
+Get the number of monitors supported by the VM
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/deb35f3b8ebf4b7e9765726a9c8e3505/monitorNumber
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Resource UUID, uniquely identifies the resource| |2.2|
+|systemTags \(Optional\)|List|query| | |2.2|
+|userTags \(Optional\)|List|query| | |2.2|
+
+## API Response
+Response Example
+
+```
+{
+  "monitorNumber": 2.0
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|monitorNumber|Integer| |2.2|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation succeeds, this field is null. For details, see [error](#p_h23_sgg_vbb)|2.2|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier of the error, for example SYS.1000, HOST.1001|2.2|
+|description|String|Brief description of the error|2.2|
+|details|String|Detailed error information|2.2|
+|elaboration|String|Reserved field, defaults to null|2.2|
+|opaque|LinkedHashMap|Reserved field, defaults to null|2.2|
+|cause|ErrorCode|Root cause. The error that triggered the current error. If there is no original error, this field is null|2.2|
+
+## SDK Examples
+Java SDK
+
+```
+GetVmMonitorNumberAction action = new GetVmMonitorNumberAction();
+action.uuid = "6415ca5909524c00b7b66c9662b45df1";
+action.sessionId = "4bf39c422c2d4e01b5ab88da17096d0d";
+GetVmMonitorNumberAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetVmMonitorNumberAction action = GetVmMonitorNumberAction()
+action.uuid = "dc6e40115e674ccab14d9425d0028428"
+action.sessionId = "3f5d36676ca94b9183b567470a22ed19"
+GetVmMonitorNumberAction.Result res = action.call()
+```
+
+</APIPage>

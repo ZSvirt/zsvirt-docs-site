@@ -1,0 +1,123 @@
+---
+title: "添加 ZStone"
+---
+
+<APIPage method="POST" path="/v1/zstone-plugin">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "zstone-storage",
+    "username": "admin",
+    "managementIp": "172.0.0.1",
+    "logInPort": 4000,
+    "apiPort": 4010,
+    "logInUrl": "/sso/v1/accounts/login"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"zstone-storage","username":"admin","managementIp":"172.0.0.1","logInPort":4000,"apiPort":4010,"logInUrl":"/sso/v1/accounts/login"}}' \
+http://localhost:8080/zstack/v1/zstone-plugin
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|name|String|body\(包含在`params`结构中\)|在 ZSvirt 中这个 ZStone-Storage 的名称| |4.10.6|
+|username \(可选\)|String|body\(包含在`params`结构中\)|登录使用的用户名，一般是 admin| |4.10.6|
+|password \(可选\)|String|body\(包含在`params`结构中\)|登录使用的密码| |4.10.6|
+|managementIp|String|body\(包含在`params`结构中\)|ZStone 的管理节点 IP| |4.10.6|
+|logInPort \(可选\)|int|body\(包含在`params`结构中\)|ZStone 登录服务端口| |4.10.6|
+|apiPort \(可选\)|int|body\(包含在`params`结构中\)|ZStone API 服务端口| |4.10.6|
+|logInUrl \(可选\)|String|body\(包含在`params`结构中\)|ZStone 登录使用 URL| |4.10.6|
+|resourceUuid \(可选\)|String|body\(包含在`params`结构中\)|资源UUID| |4.10.6|
+|tagUuids \(可选\)|List|body\(包含在`params`结构中\)|标签UUID列表| |4.10.6|
+|systemTags \(可选\)|List|body|系统标签| |4.10.6|
+|userTags \(可选\)|List|body|用户标签| |4.10.6|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "53c0433a817349f89f66532addeb8b6c",
+    "name": "zstone-plugin",
+    "username": "admin",
+    "managementIp": "127.0.0.1",
+    "authorizationServer": "Local",
+    "logInPort": 4000,
+    "apiPort": 4010,
+    "logInUrl": "/sso/v1/accounts/login",
+    "createDate": "Nov 14, 2017 2:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean|创建是否成功|4.10.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_bcl_x1v_m1b)|4.10.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.10.0|
+|description|String|错误的概要描述|4.10.0|
+|details|String|错误的详细信息|4.10.0|
+|elaboration|String|保留字段，默认为null|4.10.0|
+|opaque|LinkedHashMap|保留字段，默认为null|4.10.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.10.0|
+
+## SDK示例
+Java SDK
+
+```
+AddZStoneAction action = new AddZStoneAction();
+action.name = "zstone-storage";
+action.username = "admin";
+action.managementIp = "172.0.0.1";
+action.logInPort = 4000;
+action.apiPort = 4010;
+action.logInUrl = "/sso/v1/accounts/login";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddZStoneAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddZStoneAction action = AddZStoneAction()
+action.name = "zstone-storage"
+action.username = "admin"
+action.managementIp = "172.0.0.1"
+action.logInPort = 4000
+action.apiPort = 4010
+action.logInUrl = "/sso/v1/accounts/login"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddZStoneAction.Result res = action.call()
+```
+
+</APIPage>

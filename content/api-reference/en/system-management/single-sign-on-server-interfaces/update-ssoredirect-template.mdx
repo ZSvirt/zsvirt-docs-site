@@ -1,0 +1,109 @@
+---
+title: "Update SSO Redirect Template"
+---
+
+<APIPage method="POST" path="/v1/update/sso/redirectTemplate">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "uuid": "35cc6909f0f23e55a209cd552d8bc938",
+    "redirectTemplate": "http://zstack.com/userinfoUrl"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding example, the `systemTags` and `userTags` fields are optional. They are listed here to show that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"uuid":"35cc6909f0f23e55a209cd552d8bc938","redirectTemplate":"http://zstack.com/userinfoUrl"}}' \
+http://localhost:8080/zstack/v1/update/sso/redirectTemplate
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|body \(enclosed in the `params` structure\)|Template UUID. Uniquely identifies the resource.| |4.3.0|
+|redirectTemplate|String|body \(enclosed in the `params` structure\)|Redirect template| |4.3.0|
+|systemTags \(Optional\)|List|body|System tags| |4.3.0|
+|userTags \(Optional\)|List|body|User tags| |4.3.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "43679041066d37b28f676a49851ade69",
+    "clientUuid": "3e5541e27b9c320fa4ad0a86777cc5ab",
+    "redirectTemplate": "http://zstack.com/code"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean|Whether the update is successful|4.3.0|
+|inventory|SSORedirectTemplateInventory|For details, see [inventory](#p_jdh_b5l_s2c)|4.3.0|
+|error|ErrorCode|Error code. If not null, the operation has failed. This field is null when the operation succeeds. For details, see [error](#p_hd4_d5l_s2c)|4.3.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Template UUID. Uniquely identifies the resource.|4.3.0|
+|name|String|Template name|4.3.0|
+|description|String|Detailed description of the template|4.3.0|
+|clientUuid|String|UUID of the corresponding SSO client, which is the UUID of the third-party account source|4.3.0|
+|redirectTemplate|String|Redirect template|4.3.0|
+|createDate|Timestamp|Creation time|4.3.0|
+|lastOpDate|Timestamp|Last modification time|4.3.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. The globally unique identifier of the error, for example, SYS.1000 or HOST.1001.|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Default is null.|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null.|0.6|
+|cause|ErrorCode|Root error. The source error that caused the current error. This field is null if no root error exists.|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateSSORedirectTemplateAction action = new UpdateSSORedirectTemplateAction();
+action.uuid = "35cc6909f0f23e55a209cd552d8bc938";
+action.redirectTemplate = "http://zstack.com/userinfoUrl";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateSSORedirectTemplateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateSSORedirectTemplateAction action = UpdateSSORedirectTemplateAction()
+action.uuid = "35cc6909f0f23e55a209cd552d8bc938"
+action.redirectTemplate = "http://zstack.com/userinfoUrl"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateSSORedirectTemplateAction.Result res = action.call()
+```
+
+</APIPage>

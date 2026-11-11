@@ -1,0 +1,68 @@
+---
+title: "Change Account Type"
+---
+
+<APIPage method="PUT" path="/v1/accounts/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "changeAccountType": {
+    "type": "SystemAdmin"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding example, the `systemTags` and `userTags` fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"changeAccountType":{"type":"SystemAdmin"}}' \
+http://localhost:8080/zstack/v1/accounts/f0c72e5b9d723dbaa716d2f0fad341d9/actions
+```
+
+Parameters
+
+|Name|Type|Location|Description|Valid Values|Since|
+|----|----|--------|-----------|------------|-----|
+|uuid|String|url|Resource UUID, which uniquely identifies the resource| |5.0.0|
+|type|String|body\(contained in the `changeAccountType` structure\)|Account type. SystemAdmin indicates an administrator, and Normal indicates a regular user. Normal is not supported currently, which means privilege downgrade is not supported currently.| |5.0.0|
+|system Tags \(optional\)|List|body|System tags| |5.0.0|
+|userTags \(optional\)|List|body|User tags| |5.0.0|
+
+## SDK Example
+Java SDK
+
+```
+ChangeAccountTypeAction action = new ChangeAccountTypeAction();
+action.uuid = "f0c72e5b9d723dbaa716d2f0fad341d9";
+action.type = "SystemAdmin";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ChangeAccountTypeAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = ChangeAccountTypeAction()
+action.uuid = "f0c72e5b9d723dbaa716d2f0fad341d9"
+action.type = "SystemAdmin"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

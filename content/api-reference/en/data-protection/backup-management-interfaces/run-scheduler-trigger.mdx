@@ -1,0 +1,76 @@
+---
+title: "Run Scheduler Trigger"
+---
+
+<APIPage method="PUT" path="/v1/scheduler/triggers/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "runSchedulerTrigger": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The **systemTags** and **userTags** fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"runSchedulerTrigger":{}}' http://localhost:8080/zstack/v1/scheduler/triggers/2a486c1cd0cd43f3ac40bd60c6dd6fc1/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Scheduler trigger UUID| |3.5.0|
+|jobUuids \(Optional\)|List|body \(Contained in the **runSchedulerTrigger** structure\)|Optional job UUIDs to trigger| |3.5.0|
+|systemTags \(Optional\)|List|body| | |3.5.0|
+|userTags \(Optional\)|List|body| | |3.5.0|
+
+## API Response
+On success, this API returns an empty JSON structure **`{}`**. On failure, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+RunSchedulerTriggerAction action = new RunSchedulerTriggerAction();
+action.uuid = "61b439ee76004c51bc262324d6eaa332";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RunSchedulerTriggerAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+RunSchedulerTriggerAction action = RunSchedulerTriggerAction()
+action.uuid = "8a5ed7d3e0194c2a98d1ecb529b15875"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+RunSchedulerTriggerAction.Result res = action.call()
+```
+
+</APIPage>

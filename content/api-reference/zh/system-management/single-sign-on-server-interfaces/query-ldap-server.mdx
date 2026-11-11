@@ -1,0 +1,104 @@
+---
+title: "查询LDAP服务器"
+---
+
+<APIPage method="GET" path="/v1/ldap/servers" altPaths={["/v1/ldap/servers/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X GET http://localhost:8080/zstack/v1/ldap/servers?q=name=ldap server
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X GET http://localhost:8080/zstack/v1/ldap/servers/68ff5ef58b4634dba740b26db67d3b01
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryLdapServer`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "fea82960cbaa33bb9f3de91c8054af8d",
+      "name": "miao",
+      "description": "miao desc",
+      "url": "ldap://localhost:1888",
+      "base": "dc=example,dc=com",
+      "username": "",
+      "password": "",
+      "encryption": "None"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.3.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_fdz_lxf_fcc)|4.3.0|
+|inventories|List|详情参考[inventories](#p_esc_mxf_fcc)|4.3.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|Long|资源的UUID，唯一标示该资源|4.3.0|
+|name|String|资源名称|4.3.0|
+|type|String|用户源类型，一般是ldap|4.3.0|
+|description|String|资源的详细描述|4.3.0|
+|url|String| |4.3.0|
+|base|String|LDAP服务器访问地址|4.3.0|
+|username|String|用于访问LDAP服务器的用户名|4.3.0|
+|password|String|密码|4.3.0|
+|encryption|String|加密方式|4.3.0|
+|serverType|String|服务器类型，可能是OpenLdap或WindowsAD，如果不确定会返回Unknown|4.3.0|
+|createDate|Timestamp|创建时间|4.3.0|
+|lastOpDate|Timestamp|最后一次修改时间|4.3.0|
+
+## SDK示例
+Java SDK
+
+```
+QueryLdapServerAction action = new QueryLdapServerAction();
+action.conditions = asList("name=ldap server");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryLdapServerAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+QueryLdapServerAction action = QueryLdapServerAction()
+action.conditions = ["name=ldap server"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryLdapServerAction.Result res = action.call()
+
+```
+
+</APIPage>

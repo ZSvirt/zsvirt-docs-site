@@ -1,0 +1,443 @@
+---
+title: "CreateL2VirtualSwitch"
+---
+
+<APIPage method="POST" path="/v1/l2-networks/virtual-switch">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "isDistributed": true,
+    "name": "dvs-1",
+    "description": "Test",
+    "zoneUuid": "27f8f98f166a3206b020e83996faabc3",
+    "physicalInterface": "bond1",
+    "vSwitchType": "LinuxBridge"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding sample, both **systemTags** and **userTags** are optional. These two fields can be included in the body structure.
+</Callout>
+
+Curl Sample
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"isDistributed":true,"name":"dvs-1","description":"Test","zoneUuid":"27f8f98f166a3206b020e83996faabc3","physicalInterface":"bond1","vSwitchType":"LinuxBridge"}}' \
+http://localhost:8080/zstack/v1/l2-networks/virtual-switch
+```
+
+Parameter List
+
+<table id="table_ztx_zjw_51c"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+isDistributed \(Optional\)
+
+</td><td>
+
+Boolean
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Whether it is distributed.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+name
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+The resource name.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+description \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+The detailed description of the resource.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+zoneUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+The Data Center UUID.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+physicalInterface
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Physical NIC.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+type \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+vSwitchType \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Virtual Switch type.
+
+</td><td>
+
+-   LinuxBridge
+-   OvsDpdk
+-   MacVlan
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+resourceUuid \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+The resource UUID.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+tagUuids \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+The tag UUID list.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+The system tags.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+The user tags.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Sample Response
+
+```
+{
+  "inventory": {
+    "isDistributed": true,
+    "vSwitchIndex": 1,
+    "name": "dvs-1",
+    "description": "Test dvs",
+    "zoneUuid": "4bc93f4e3a1c35b8948583951e56b5eb",
+    "physicalInterface": "bond1",
+    "type": "virtualSwitch"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.1.0|
+|inventory|L2VirtualSwitchNetworkInventory|See [inventory](#p_lpn_vlw_51c).|4.1.0|
+|error|ErrorCode|Error code. If not null, the operation fails, or vice versa. The value is null on success. See [error](#p_wfd_jmw_51c).|4.1.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|isDistributed|Boolean|Whether it is distributed.|4.1.0|
+|uuid|String|The resource UUID.|4.1.0|
+|name|String|The resource name.|4.1.0|
+|description|String|The detailed description of the resource.|4.1.0|
+|zoneUuid|String|The Data Center UUID.|4.1.0|
+|physicalInterface|String|Physical NIC.|4.1.0|
+|type|String| |4.1.0|
+|vSwitchType|String|Virtual Switch type.|4.1.0|
+|virtualNetworkId|Integer|Virtual Network ID.|4.1.0|
+|createDate|Timestamp|The creation date.|4.1.0|
+|lastOpDate|Timestamp|The last operation date.|4.1.0|
+|attachedClusterUuids|List|The list of attached Cluster UUIDs.|4.1.0|
+|portGroups|List|See [portGroups](#p_u5l_dmw_51c).|4.1.0|
+
+### portGroups
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|vSwitchUuid|String|Virtual Switch UUID.|4.1.0|
+|vlanId|Integer|VLAN ID.|4.1.0|
+|vlanRanges|String|VLAN range.|4.1.0|
+|uuid|String|The resource UUID.|4.1.0|
+|name|String|The resource name.|4.1.0|
+|description|String|The detailed description of the resource.|4.1.0|
+|zoneUuid|String|The Data Center UUID.|4.1.0|
+|physicalInterface|String|Physical NIC.|4.1.0|
+|type|String| |4.1.0|
+|vSwitchType|String|Virtual Switch type.|4.1.0|
+|virtualNetworkId|Integer|Virtual Network ID.|4.1.0|
+|createDate|Timestamp|The creation date.|4.1.0|
+|lastOpDate|Timestamp|The last operation date.|4.1.0|
+|attachedClusterUuids|List|The list of attached Cluster UUIDs.|4.1.0|
+|vlanMode|PortGroupVlanMode|See [vlanMode](#p_vpd_gmw_51c).|4.1.0|
+
+### vlanMode
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|ACCESS|PortGroupVlanMode| |4.2.0|
+|TRUNK|PortGroupVlanMode| |4.2.0|
+|PVLAN|PortGroupVlanMode| |4.2.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code, which is a numbered or alphanumeric code that specifies an error. For example, SYS.1000, HOST.1001.|4.1.0|
+|description|String|The brief description of the error.|4.1.0|
+|details|String|The details about the error.|4.1.0|
+|elaboration|String|Reserved field. Default value: null.|4.1.0|
+|opaque|LinkedHashMap|Reserved field. Default value: null.|4.1.0|
+|cause|ErrorCode|The root error, which is the associated root cause of the current error. If no root error exists, this parameter is null.|4.1.0|
+
+## SDK Sample
+Java SDK
+
+```
+CreateL2VirtualSwitchAction action = new CreateL2VirtualSwitchAction();
+action.isDistributed = true;
+action.name = "dvs-1";
+action.description = "Test";
+action.zoneUuid = "27f8f98f166a3206b020e83996faabc3";
+action.physicalInterface = "bond1";
+action.vSwitchType = "LinuxBridge";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateL2VirtualSwitchAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateL2VirtualSwitchAction action = CreateL2VirtualSwitchAction()
+action.isDistributed = true
+action.name = "dvs-1"
+action.description = "Test"
+action.zoneUuid = "27f8f98f166a3206b020e83996faabc3"
+action.physicalInterface = "bond1"
+action.vSwitchType = "LinuxBridge"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateL2VirtualSwitchAction.Result res = action.call()
+```
+
+</APIPage>

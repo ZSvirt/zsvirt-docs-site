@@ -1,0 +1,23 @@
+---
+title: "Adding a host fails with the error \"pip uninstall -y virtualenv failed!\". What should I do?"
+---
+
+<HistoricalNamingNote locale="en" />
+
+## Symptom
+Adding a host on the virtualization platform fails with the following error:
+
+```
+stderr: ERROR: [ HOST: xx.xx.xx.xxx] ERROR: run shell command: pip uninstall -y virtualenv failed!stdout:  error: Cannot uninstall requirement virtualenv, not installed 
+```
+
+## Solution
+1.  Log in to the console of the host that failed to be added and run the following command:
+
+    ```
+    # mn_ip is the VIP of the Management Node.
+    pip install -i http://{mn_ip}:8080/zstack/static/pypi/simple --trusted-host {mn_ip} --ignore-installed virtualenv
+    
+    ```
+
+2.  Log in to the virtualization platform and add the host again. The host installation will now succeed.

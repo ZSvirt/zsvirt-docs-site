@@ -1,0 +1,10 @@
+{
+  "title": "虚拟机快照管理篇",
+  "pages": [
+    "overview",
+    "basic-operations",
+    "policy",
+    "usage-recommendations"
+  ],
+  "pagesIndex": "overview"
+}

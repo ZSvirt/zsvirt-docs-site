@@ -1,0 +1,12 @@
+---
+title: "SSH登录失败出现“This private key will be ignored.”报错，如何解决？"
+---
+
+## 现象
+SSH登录失败,目标虚拟机内提示“`Permissions 0777 for '~/.ssh/id_rsa' are too open，It is required that your private key files are NOT accessible by others.This private key will be ignored.`”。
+
+## 原因
+id\_rsa的权限过高导致ssh登录失败。
+
+## 解决方案
+-   执行`chmod 700 id_rsa`重新赋权后恢复正常。

@@ -1,0 +1,89 @@
+---
+title: "更新资源标签"
+---
+
+<APIPage method="PUT" path="/v1/tags/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateTag": {
+    "value": "new-tag",
+    "description": "tag-for-volume",
+    "color": "#FFFFFF"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateTag":{"value":"new-tag","description":"tag-for-volume","color":"#FFFFFF"}}' http://localhost:8080/zstack/v1/tags/bc54e798f6ad4b9aa6a71365271d9464/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |3.2.0|
+|name \(可选\)|String|body\(包含在**updateTag**结构中\)|资源名称| |3.2.0|
+|value \(可选\)|String|body\(包含在**updateTag**结构中\)|标签的值| |3.2.0|
+|description \(可选\)|String|body\(包含在**updateTag**结构中\)|资源的详细描述| |3.2.0|
+|color \(可选\)|String|body\(包含在**updateTag**结构中\)|标签的颜色| |3.2.0|
+|systemTags \(可选\)|List|body| | |3.2.0|
+|userTags \(可选\)|List|body| | |3.2.0|
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+UpdateTagAction action = new UpdateTagAction();
+action.uuid = "a2bdf841dfdd48ecae5cabf44d0088e1";
+action.value = "new-tag";
+action.description = "tag-for-volume";
+action.color = "#FFFFFF";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateTagAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateTagAction action = UpdateTagAction()
+action.uuid = "982dddcd308b423baf8f82a74afc4e1c"
+action.value = "new-tag"
+action.description = "tag-for-volume"
+action.color = "#FFFFFF"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateTagAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,33 @@
+---
+title: "CentOS虚拟机DNS设置在重启后恢复默认设置，怎么办？"
+---
+
+## 现象
+重启CentOS虚拟机， 虚拟机的DNS设置恢复为默认设置。
+
+## 原因
+网卡配置文件中存在`PEERDNS=no`设置时，网络接口将不会自动配置DNS服务器。在该情况下需要手动为系统配置DNS服务器，否则虚拟机将无法解析域名。
+
+## 解决方案
+-   如果虚拟机已安装Cloud-init，可以在`/etc/reslove.conf`文件中配置DNS。
+
+    ```
+    [root@localhost ~]# vim /etc/reslove.conf
+    #添加DNS配置
+    servername 223.5.5.5
+    ```
+
+-   如果虚拟机未安装Cloud-init，需要使用static方式配置网卡IP和DNS地址。
+
+    ```
+    [root@localhost ~]# vi /etc/sysconfig/network-scripts/ifcfg-eth0
+    #配置IP地址和DNS
+    DEVICE=eth0
+    ONBOOT=yes
+    BOOTPROTO=static
+    IPADDR=192.168.1.100
+    NETMASK=255.255.255.0
+    GATEWAY=192.168.1.1
+    DNS1=8.8.8.8
+    DNS2=8.8.4.4
+    ```

@@ -1,0 +1,275 @@
+---
+title: "Update Alarm Data"
+---
+
+<APIPage method="PUT" path="/v1/zwatch/alarm-histories/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateAlarmData": {
+    "dataUuid": "514d4a1ed3573bf8a14ac350de0a2513",
+    "updateMode": "OnlyOne",
+    "readStatus": "Read"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the **systemTags** and **userTags** fields can be omitted. They are listed here to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateAlarmData":{"dataUuid":"514d4a1ed3573bf8a14ac350de0a2513","updateMode":"OnlyOne","readStatus":"Read"}}' http://localhost:8080/zstack/v1/zwatch/alarm-histories/actions
+```
+
+Parameter List
+
+<table id="table_chc_2m3_kgb"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+dataUuid \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **updateAlarmData** structure\)
+
+</td><td>
+
+The UUID of the resource. Uniquely identifies the resource.
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.3.0
+
+</td></tr><tr><td>
+
+dataStartTime \(Optional\)
+
+</td><td>
+
+Long
+
+</td><td>
+
+body \(contained in the **updateAlarmData** structure\)
+
+</td><td>
+
+Start time for selecting target messages. The updateMode must be set to InRange.
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.3.0
+
+</td></tr><tr><td>
+
+dataEndTime \(Optional\)
+
+</td><td>
+
+Long
+
+</td><td>
+
+body \(contained in the **updateAlarmData** structure\)
+
+</td><td>
+
+End time for selecting target messages. The updateMode must be set to InRange.
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.3.0
+
+</td></tr><tr><td>
+
+updateMode
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **updateAlarmData** structure\)
+
+</td><td>
+
+The scope of target messages to update. OnlyOne updates only the specified message, InRange updates messages within a time range, and All updates all messages.
+
+</td><td>
+
+-   OnlyOne
+-   InRange
+-   All
+
+</td><td>
+
+3.3.0
+
+</td></tr><tr><td>
+
+readStatus \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **updateAlarmData** structure\)
+
+</td><td>
+
+Update message read status.
+
+</td><td>
+
+-   Read
+-   Unread
+
+</td><td>
+
+3.3.0
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags.
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.3.0
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags.
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.3.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On failure, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+UpdateAlarmDataAction action = new UpdateAlarmDataAction();
+action.dataUuid = "514d4a1ed3573bf8a14ac350de0a2513";
+action.updateMode = "OnlyOne";
+action.readStatus = "Read";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateAlarmDataAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateAlarmDataAction action = UpdateAlarmDataAction()
+action.dataUuid = "514d4a1ed3573bf8a14ac350de0a2513"
+action.updateMode = "OnlyOne"
+action.readStatus = "Read"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateAlarmDataAction.Result res = action.call()
+```
+
+</APIPage>

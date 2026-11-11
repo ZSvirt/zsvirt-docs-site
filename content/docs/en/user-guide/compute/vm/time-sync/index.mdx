@@ -1,0 +1,38 @@
+---
+title: 'VM Time Synchronization'
+---
+
+Time is the benchmark for measuring the development stage and status of all things. In the platform, ensuring that VM time is synchronized with the host time is critically important for business operations. ZSvirt offers two time synchronization mechanisms: BIOS Clock Synchronization and VM Time Synchronization. The following sections introduce these two synchronization mechanisms and their setup methods:
+
+-   [BIOS Clock Synchronization](#section_lff_zyh_zyb)
+-   [Time Synchronization](#section_nvr_2yh_zyb)
+
+## BIOS Clock Synchronization
+BIOS clock synchronization is designed for Windows VMs. For Windows VMs, the hardware clock time comes from the host, and the system time is equivalent to the hardware clock time. Therefore, you can enable BIOS clock synchronization to ensure that the hardware and system times of Windows VMs match the host's hardware clock time.
+
+When creating a new VM, you can enable BIOS clock synchronization in **Advanced Settings** &gt; **General Options**. Once enabled, the VM will periodically synchronize with the host's BIOS clock automatically.
+
+## Time Synchronization
+The time synchronization feature is designed to synchronize the system time of Windows and Linux VMs with the host system time. For Linux VMs, the hardware clock time comes from the host, while the system time is calculated independently and only synchronized with the hardware clock at specific points (such as when the system starts), remaining independent otherwise.
+
+The VM time synchronization mechanism includes:
+
+-   Network: Unlike NTP synchronization, this mechanism does not rely on a specific external network; it only involves communication between the host and VM.
+-   Time Zone: The VM periodically synchronizes its time zone with that of the host to maintain consistency.
+-   Synchronization Interval: By default, synchronization occurs every 60 seconds. You can modify the interval via CLI with options including: 60 seconds (1 minute), 600 seconds (10 minutes), 1800 seconds (30 minutes), 3600 seconds (1 hour), 7200 seconds (2 hours), 21600 seconds (6 hours), 43200 seconds (12 hours), 86400 seconds (1 day).
+
+    ```
+    # Modify synchronization interval using CLI
+    [root@localhost ~]# UpdateResourceConfig vm=<vm_uuid> category=vm \
+    name=vm.clock.sync.interval.in.seconds value=<intervalInSeconds>
+    # vm_uuid represents the UUID of the virtual machine
+    # intervalInSeconds represents the desired synchronization interval in seconds
+    ```
+
+-   Synchronization Policy: The current policy ensures immediate consistency. Regardless of whether the VM's time is ahead or behind, once the synchronization mechanism triggers, the VM's time will immediately align with the host's.
+
+To configure time synchronization for an individual VM, follow these steps:
+
+1.  Ensure that Qemu Guest Agent (QGA) is installed on the [VM and that QGA is running. For more information, see Virtual Machine VMTools](/en/docs/user-guide/compute/vm/vmtools).
+2.  Disable other time source synchronization policies on the VM (recommended).
+3.  On the VM page, click **Actions** &gt; **Advanced Settings** &gt; **Modify VMTools** to enable time synchronization. Once enabled, the VM will automatically synchronize with the host system time every 60 seconds.

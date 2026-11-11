@@ -1,0 +1,11 @@
+{
+  "title": "裸金属设备",
+  "pages": [
+    "index",
+    "add-device",
+    "state-management",
+    "access-device",
+    "delete-device"
+  ],
+  "pagesIndex": "index"
+}

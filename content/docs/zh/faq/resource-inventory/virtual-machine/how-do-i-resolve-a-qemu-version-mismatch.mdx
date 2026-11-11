@@ -1,0 +1,22 @@
+---
+title: "如何解决qemu版本不匹配的问题？"
+---
+
+## 现象
+启动虚拟机时可能出现如下报错信息：
+
+```
+uses a qcow2 feature which is not supported by this qemu version: QCOW version 3
+```
+
+## 原因
+主要原因是qcow版本不一致。原始的qcow2创建版本使用的qemu-img为较新版本，现在创建时使用的为较旧版本，旧版本不支持新版本。
+
+## 解决方案
+1.  在虚拟机系统内执行以下命令，在拥有较新版本的qemu-img内进行兼容性转换：
+
+    ```
+    [root@localhost ~]# qemu-img convert -o compat=0.10 -f qcow2 -O qcow2 centos6-cloud-init.qcow2 centos-st-ssh-key.qcow2
+    ```
+
+2.  转换完毕后，重新添加镜像。

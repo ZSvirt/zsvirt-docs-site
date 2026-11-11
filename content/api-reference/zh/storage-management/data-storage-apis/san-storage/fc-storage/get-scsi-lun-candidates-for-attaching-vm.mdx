@@ -1,0 +1,143 @@
+---
+title: "获取可加载的SCSI LUN"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/{vmInstanceUuid}/candidate-storage-devices">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/ccd1f4cb76e83c3b997fc4ed16ed529f/candidate-storage-devices?
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|vmInstanceUuid|String|url|虚拟机UUID| |3.1.0|
+|systemTags \(可选\)|List|query| | |3.1.0|
+|userTags \(可选\)|List|query| | |3.1.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "name": "fc-lun-36b083fe000daf018000022905ba35d8f",
+      "uuid": "d4714249ba273a5c9d1c1cb3a1a16f24",
+      "wwid": "36b083fe000daf018000022905ba35d8f",
+      "vendor": "DELL",
+      "model": "MD32xx",
+      "wwn": "0x6f01faf000d5c3e7",
+      "serial": "6b083fe000daf018000015505abbe00a",
+      "type": "mpath",
+      "path": "pci-0000:05:00.0-fc-0x2012b083fedaf018-lun-11",
+      "size": 5497558138880.0,
+      "scsiLunHostRefs": [
+        {
+          "id": 1.0,
+          "scsiLunUuid": "d4714249ba273a5c9d1c1cb3a1a16f24",
+          "hostUuid": "c922c37f885e35aeb1ae87db3446fc7e",
+          "createDate": "Nov 14, 2017 10:20:57 PM"
+        }
+      ],
+      "scsiLunVmInstanceRefs": [],
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |3.1.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_e44_znm_qfb)|3.1.0|
+|inventories|List|详情参考[inventories](#p_ic5_znm_qfb)|3.1.0|
+|error|ErrorCode|详情参考[error](#p_mwn_14m_qfb)|3.1.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.1.0|
+|description|String|错误的概要描述|3.1.0|
+|details|String|错误的详细信息|3.1.0|
+|elaboration|String|保留字段，默认为null|3.1.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.1.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.1.0|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|name|String|资源名称|3.1.0|
+|uuid|String|资源的UUID，唯一标示该资源|3.1.0|
+|wwid|String|磁盘全局唯一表示|3.1.0|
+|vendor|String|磁盘供应商|3.1.0|
+|model|String|磁盘型号|3.1.0|
+|wwn|String|磁盘WWN|3.1.0|
+|serial|String|磁盘序列号|3.1.0|
+|type|String|磁盘类型|3.1.0|
+|path|String|磁盘路径|3.1.0|
+|state|String|磁盘启用状态|3.1.0|
+|size|Long|磁盘大小|3.1.0|
+|createDate|Timestamp|创建时间|3.1.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.1.0|
+|scsiLunHostRefs|List|详情参考[scsiLunHostRefs](#p_olc_14m_qfb)|3.1.0|
+|scsiLunVmInstanceRefs|List|详情参考[scsiLunVmInstanceRefs](#p_snh_14m_qfb)|3.1.0|
+
+### scsiLunHostRefs
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|scsiLunUuid|String|SCSI Lun UUID|3.1.0|
+|hostUuid|String|主机UUID|3.1.0|
+|createDate|Timestamp|创建时间|3.1.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.1.0|
+
+### scsiLunVmInstanceRefs
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|scsiLunUuid|String|SCSI Lun UUID|3.1.0|
+|vmInstanceUuid|String|虚拟机UUID|3.1.0|
+|createDate|Timestamp|创建时间|3.1.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.1.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.1.0|
+|description|String|错误的概要描述|3.1.0|
+|details|String|错误的详细信息|3.1.0|
+|elaboration|String|保留字段，默认为null|3.1.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.1.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.1.0|
+
+## SDK示例
+Java SDK
+
+```
+GetScsiLunCandidatesForAttachingVmAction action = new GetScsiLunCandidatesForAttachingVmAction();
+action.vmInstanceUuid = "ccd1f4cb76e83c3b997fc4ed16ed529f";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetScsiLunCandidatesForAttachingVmAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetScsiLunCandidatesForAttachingVmAction action = GetScsiLunCandidatesForAttachingVmAction()
+action.vmInstanceUuid = "ccd1f4cb76e83c3b997fc4ed16ed529f"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetScsiLunCandidatesForAttachingVmAction.Result res = action.call()
+```
+
+</APIPage>

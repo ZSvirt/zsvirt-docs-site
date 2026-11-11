@@ -1,0 +1,13 @@
+{
+  "title": "主机硬件设备篇",
+  "pages": [
+    "index",
+    "numa-topology",
+    "block-devices",
+    "nics",
+    "gpu-devices",
+    "usb-devices",
+    "pcie-devices"
+  ],
+  "pagesIndex": "index"
+}

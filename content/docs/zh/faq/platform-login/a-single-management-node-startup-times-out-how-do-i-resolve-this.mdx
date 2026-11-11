@@ -1,0 +1,15 @@
+---
+title: "单管理节点启动超时，如何解决？"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+## 原因
+虚拟化平台管理节点性能较低，导致启动超时。
+
+## 解决方案
+-   在该管理节点系统内执行以下命令，设置管理节点启动超时时间为3600秒：
+
+    ```
+    [root@localhost ~]# zstack-ctl start_node --timeout=3600
+    ```

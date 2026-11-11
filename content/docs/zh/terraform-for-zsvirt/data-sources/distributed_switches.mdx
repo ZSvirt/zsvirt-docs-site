@@ -1,0 +1,52 @@
+---
+title: 'zsphere_distributed_switches'
+description: '查询 ZSvirt 分布式交换机列表及其属性。'
+---
+
+<HistoricalNamingNote locale="zh" />
+
+
+# zsphere_distributed_switches（数据源）
+
+查询 ZSvirt 分布式交换机列表及其属性。
+
+
+
+## 参数说明
+
+### 可选参数
+
+- `filter`（属性列表）（参见下方嵌套结构）
+- `name`（字符串）distributed名称 switch.
+- `name_pattern`（字符串）Pattern to match distributed switch names.
+
+### 只读属性
+
+- `distributed_switches`（属性列表）（参见下方嵌套结构）
+
+<a id="nestedatt--filter"></a>
+### `filter` 嵌套结构
+
+必填参数：
+
+- `name` (String)
+- `values` (List of String)
+
+可选参数：
+
+- `regex` (Boolean)
+
+
+<a id="nestedatt--distributed_switches"></a>
+### `distributed_switches` 嵌套结构
+
+只读属性：
+
+- `attached_cluster_uuids`（字符串列表）List of cluster UUIDs attached to this distributed switch.
+- `datacenter_uuid`（字符串）分布式交换机所属数据中心（区域）UUID。
+- `description`（字符串）分布式交换机描述。
+- `name`（字符串）distributed名称 switch.
+- `physical_interface`（字符串）The physical interface used by the distributed switch.
+- `type`（字符串）The type of the L2 network.
+- `uuid`（字符串）分布式交换机 UUID。
+- `vswitch_type`（字符串）The type of virtual switch.

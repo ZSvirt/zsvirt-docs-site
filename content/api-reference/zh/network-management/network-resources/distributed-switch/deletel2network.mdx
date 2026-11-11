@@ -1,0 +1,64 @@
+---
+title: "删除分布式交换机"
+---
+
+<APIPage method="DELETE" path="/v1/l2-networks/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/l2-networks/254811ac54a04835a8f82871f96ab86f?deleteMode=Permissive
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |4.8.0|
+|deleteMode \(可选\)|String|body|删除模式| |4.8.0|
+|systemTags \(可选\)|List|body|系统标签| |4.8.0|
+|userTags \(可选\)|List|body|用户标签| |4.8.0|
+
+## API返回
+该API成功时返回一个空的JSON结构**`{}`**，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+    "error": {
+        "code": "SYS.1001",
+        "description": "A message or a operation timeout",
+        "details": "Create VM on KVM timeout after 300s"
+    }
+}/9
+```
+
+## SDK示例
+Java SDK
+
+```
+DeleteL2NetworkAction action = new DeleteL2NetworkAction();
+action.uuid = "8952ecc352fc49b9a0b22286772e74e2";
+action.deleteMode = "Permissive";
+action.sessionId = "1bece9d1092e47e7ba176ac2e3b03793";
+DeleteL2NetworkAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteL2NetworkAction action = DeleteL2NetworkAction()
+action.uuid = "f1f6deb480d44b77b53b74784c17a1d9"
+action.deleteMode = "Permissive"
+action.sessionId = "9b914d6dc4d64c8f8f45452bad140f9f"
+DeleteL2NetworkAction.Result res = action.call()
+```
+
+</APIPage>

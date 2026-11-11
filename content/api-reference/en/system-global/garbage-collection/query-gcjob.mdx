@@ -1,0 +1,95 @@
+---
+title: "Query GC Job"
+---
+
+<APIPage method="GET" path="/v1/gc-jobs" altPaths={["/v1/gc-jobs/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/gc-jobs?q=name=gc&q=state=Enabled
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/gc-jobs/b41ea820e0bd47d5a028ddb3eb10bb98
+```
+
+Queryable Fields
+
+Run the CLI command line tool, enter `QueryGCJob` and press the Tab key to view all queryable fields and cross-table queryable resource names.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "c7606f2ed20b4212aa3d1ce4e00acc1c",
+      "name": "TestGC",
+      "type": "TimeBased",
+      "createDate": "Jun 7, 2017 9:21:16 PM",
+      "lastOpDate": "Jun 7, 2017 9:21:16 PM"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_sdx_ysl_l1b) for details|0.6|
+|inventories|List|See [inventories](#p_xgq_ysl_l1b) for details|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|The detailed error information|0.6|
+|elaboration|String|Reserved field. Default is null|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null|0.6|
+|cause|ErrorCode|The root error that caused the current error. If no root error exists, this field is null|0.6|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource|0.6|
+|name|String|Resource name|0.6|
+|runnerClass|String| |0.6|
+|context|String| |0.6|
+|status|String| |0.6|
+|managementNodeUuid|String| |0.6|
+|type|String| |0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+QueryGCJobAction action = new QueryGCJobAction();
+action.conditions = asList("name=gc","state=Enabled");
+action.sessionId = "3b403b588a96471cbee74a19d4a846aa";
+QueryGCJobAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryGCJobAction action = QueryGCJobAction()
+action.conditions = ["name=gc","state=Enabled"]
+action.sessionId = "76af9b84c87f4dcf9aa8f9042a982a6b"
+QueryGCJobAction.Result res = action.call()
+```
+
+</APIPage>

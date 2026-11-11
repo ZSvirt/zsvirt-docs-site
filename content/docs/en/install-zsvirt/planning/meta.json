@@ -1,0 +1,10 @@
+{
+  "title": "Planning and Prerequisites",
+  "pages": [
+    "index",
+    "hardware-requirements",
+    "network-planning",
+    "server-configuration"
+  ],
+  "pagesIndex": "index"
+}

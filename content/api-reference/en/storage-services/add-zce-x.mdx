@@ -1,0 +1,118 @@
+---
+title: "Add ZCE-X"
+---
+
+<APIPage method="POST" path="/v1/zce-x-plugin">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "zce-x-storage",
+    "managementIp": "172.0.0.1",
+    "apiPort": 8056
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"zce-x-storage","managementIp":"172.0.0.1","apiPort":8056}}' \
+http://localhost:8080/zstack/v1/zce-x-plugin
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|name|String|body \(included in `params` structure\)|ZCE-X name| |4.10.6|
+|adminToken \(Optional\)|String|body \(included in `params` structure\)|Access token for taking over ZCE-X. Required when taking over, not needed before initialization| |4.10.6|
+|managementIp \(Optional\)|String|body \(included in `params` structure\)|ZCE-X management network IP| |4.10.6|
+|apiPort \(Optional\)|int|body \(included in `params` structure\)|ZCE-X API port| |4.10.6|
+|resourceUuid \(Optional\)|String|body \(included in `params` structure\)|Resource UUID| |4.10.6|
+|tagUuids \(Optional\)|List|body \(included in `params` structure\)|Tag UUID list| |4.10.6|
+|systemTags \(Optional\)|List|body|System Tag| |4.10.6|
+|userTags \(Optional\)|List|body|User Tag| |4.10.6|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "77e1393bf5aa4536a018b4c0c4e29c72",
+    "name": "zce-x-plugin",
+    "managementIp": "127.0.0.1",
+    "apiPort": 8056,
+    "createDate": "Nov 14, 2017 2:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean|Whether the addition was successful|4.10.6|
+|inventory|ZceXInventory|For details, see [inventory](#p_mtr_vkt_q2c)|4.10.6|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. For details, see [error](#p_bcl_x1v_m1b)|4.10.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|4.10.6|
+|name|String|Resource name|4.10.6|
+|managementIp|String|IP address for accessing ZCE-X|4.10.6|
+|apiPort|int|API port for accessing ZCE-X|4.10.6|
+|createDate|Timestamp|Creation time|4.10.6|
+|lastOpDate|Timestamp|Last modification time|4.10.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, for example SYS.1000, HOST.1001|4.10.0|
+|description|String|Brief summary of the error|4.10.0|
+|details|String|Detailed error information|4.10.0|
+|elaboration|String|Reserved field, defaults to null|4.10.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|4.10.0|
+|cause|ErrorCode|Root cause: the source error that triggered the current error. If there is no original error, this field is null|4.10.0|
+
+## SDK Examples
+Java SDK
+
+```
+AddZceXAction action = new AddZceXAction();
+action.name = "zce-x-storage";
+action.managementIp = "172.0.0.1";
+action.apiPort = 8056;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddZceXAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddZceXAction action = AddZceXAction()
+action.name = "zce-x-storage"
+action.managementIp = "172.0.0.1"
+action.apiPort = 8056
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddZceXAction.Result res = action.call()
+```
+
+</APIPage>

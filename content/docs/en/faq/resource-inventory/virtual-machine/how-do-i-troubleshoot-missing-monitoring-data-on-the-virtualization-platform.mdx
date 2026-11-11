@@ -1,0 +1,15 @@
+---
+title: "How do I troubleshoot missing monitoring data on the virtualization platform?"
+---
+
+<HistoricalNamingNote locale="en" />
+
+## Solution
+-   Try the following methods to troubleshoot the issue:
+-   Log in to the host system and run `cat /etc/sysconfig/iptables` to check whether ports **7069**, **9100**, and **9103** are open on the host. If any port is not open, try reconnecting the host.
+
+-   Access **$HOST\_IP:9103** in a browser to view the specific missing monitoring data. For example, search by virtual machine UUID to check its monitoring data. If the virtual machine monitoring data is missing, log in to the host system and run `pkill collectd` to stop the collectd service, then try reconnecting the host.
+
+-   Check whether the owner of the Management Node configuration file `/var/lib/zstack/prometheus/data2` is **zstack**. If the owner is not **zstack**, run `pkill promethues` to stop the Prometheus service. After 30 seconds, the Management Node automatically restarts the Prometheus service.
+
+-   If monitoring data is still missing after completing the steps above, try restarting the host or removing and re-adding it.

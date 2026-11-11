@@ -1,0 +1,13 @@
+---
+title: "What is the difference between host maintenance mode and deactivation?"
+---
+
+## Feature description
+-   Maintenance mode:
+
+    -   When a host enters maintenance mode, you can power it off and perform repairs.
+    -   If the host in maintenance mode uses Local Storage, the virtualization platform stops all virtual machines running on that host.
+    -   If the host in maintenance mode uses shared storage, virtual machines are automatically migrated to other hosts.
+-   Deactivation:
+
+    -   After a host is deactivated, existing resources on it are unaffected, but the host is not available as a candidate host when allocating new resources.

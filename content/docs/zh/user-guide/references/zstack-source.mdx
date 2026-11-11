@@ -1,0 +1,246 @@
+---
+title: "ZStack 源"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+## 引用源
+
+-   产品版本：5.0.3
+-   公司名称（全称）：上海云轴科技股份有限公司
+-   公司名称（简称）：云轴科技
+-   产品名称（中文）：ZSvirt 虚拟化平台
+-   产品名称（英文）：ZSvirt
+-   软件包名称（ISO/bin）：ZStack-ZSvirt
+-   软件包名称（其他）：ZStack
+-   API/zstack-cli/zstack-ctl：zstack
+-   h76c ISO Tmp：h76c
+-   h79c ISO Tmp：h79c
+-   OS名称（小写）Tmp：helix
+-   OS名称（大写）Tmp：Helix
+
+## 常用重用源
+
+http://confluence.zstack.io/pages/viewpage.action?pageId=24543717
+
+**登录链接：** `http://management_node_ip:5000`
+
+**ZStack ISO软件包和bin包：**
+
+-   ZSvirt定制版 ISO：
+    -   软件名称（h76c）：ZStack-ZSvirt-x86\_64-DVD-5.0.3-h76c.iso
+    -   软件名称（h79c）：ZStack-ZSvirt-x86\_64-DVD-5.0.3-h79c.iso
+    -   软件名称（H84r）：ZStack-ZSvirt-x86\_64-DVD-5.0.3-H84r.iso
+    -   软件名称（H22e）：ZStack-ZSvirt-aarch64-DVD-5.0.3-H22e.iso
+    -   软件名称（x86\_kylinsp3）：ZStack-ZSvirt-x86\_64-DVD-5.0.3-KylinV10SP3.iso
+    -   软件名称（arm\_kylinsp3）：ZStack-ZSvirt-aarch64-DVD-5.0.3-KylinV10SP3.iso
+    -   下载地址：点击这里点击这里请联系官方技术支持获取
+-   ZSvirt安装包：
+    -   软件名称：ZStack-ZSvirt-installer-5.0.3.bin
+    -   下载地址：点击这里点击这里请联系官方技术支持获取
+
+**升级脚本：**
+
+-   软件名称：zstack-upgrade
+-   下载地址：点击这里点击这里请联系官方技术支持获取
+
+**VPC路由器镜像（KVM）：**
+
+-   软件名称：ZStack-vRouter-5.0.3.qcow2
+-   下载地址：点击这里点击这里请联系官方技术支持获取
+
+**性能独享型负载均衡镜像（KVM）：**
+
+-   软件名称：ZStack-SLB-5.0.3.qcow2
+-   下载地址：点击这里点击这里请联系官方技术支持获取
+
+**VPC路由器镜像（VMware）：**
+
+-   软件名称：ZStack-vRouter-5.0.3.vmdk
+-   下载地址：点击这里点击这里请联系官方技术支持获取
+
+**灾备镜像：**
+
+-   软件名称：ZStack-DS-5.0.3.qcow2
+-   下载地址：请联系官方技术支持获取点击这里请联系官方技术支持获取
+
+**多管理节点高可用套件 Multi-MN-HA：**
+
+-   软件名称：ZStack-Multinode-HA-Suite-5.0.3.tar.gz
+-   下载地址：点击这里点击这里请联系官方技术支持获取
+
+## 常用话术
+
+资源名称：命名规则：长度限制1~128字符，输入内容只能包含中文汉字、英文字母、数字、空格和以下 7 种英文字符`- _ . ( ) : +`且不支持以空格开头或结尾
+
+在ZSvirt主菜单，点击
+
+## ZStack文档标记对使用规范
+
+http://confluence.zstack.io/pages/viewpage.action?pageId=90751099
+
+<table class="doc-feature-table">
+  <thead>
+    <tr>
+      <th>标签</th>
+      <th>Value</th>
+      <th>说明</th>
+      <th>备注</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowSpan="3">product</td>
+      <td rowSpan="3">ZStack</td>
+      <td>ZStack版本</td>
+      <td>从产品层面区分文档内容</td>
+    </tr>
+    <tr>
+      <td>Aliyun</td>
+      <td>阿里云版本</td>
+    </tr>
+    <tr>
+      <td>OEM</td>
+      <td>OEM厂商发布版本，相关名词。包括：Nologo、安恒、中科曙光等</td>
+    </tr>
+    <tr>
+      <td rowSpan="11">props</td>
+      <td rowSpan="11">prop1</td>
+      <td>全局过滤不需要的内容</td>
+      <td>控制子模块是否发布</td>
+    </tr>
+    <tr>
+      <td>prop2</td>
+      <td>vCenter</td>
+    </tr>
+    <tr>
+      <td>prop3</td>
+      <td>企业管理</td>
+    </tr>
+    <tr>
+      <td>prop4</td>
+      <td>灾备管理</td>
+    </tr>
+    <tr>
+      <td>prop4-1</td>
+      <td>灾备服务</td>
+    </tr>
+    <tr>
+      <td>prop4-2</td>
+      <td>持续数据保护（CDP）</td>
+    </tr>
+    <tr>
+      <td>prop5</td>
+      <td>迁移服务</td>
+    </tr>
+    <tr>
+      <td>prop6</td>
+      <td>裸金属管理</td>
+    </tr>
+    <tr>
+      <td>prop7</td>
+      <td>弹性裸金属管理</td>
+    </tr>
+    <tr>
+      <td>prop8</td>
+      <td>阿里云混合云管理</td>
+    </tr>
+    <tr>
+      <td>prop9</td>
+      <td>密评合规</td>
+    </tr>
+    <tr>
+      <td rowSpan="2">otherprops</td>
+      <td rowSpan="2">uidoc</td>
+      <td>离线文档库内容</td>
+      <td>从文档类别区分文档内容</td>
+    </tr>
+    <tr>
+      <td>twdoc</td>
+      <td>技术文档内容</td>
+    </tr>
+  </tbody>
+</table>
+
+## 许可证章节 文档策略
+
+## 授权协议说明
+
+AStack提供多种**授权协议**，主要分为：单机标准版License、单机高级版License、单机旗舰版License、分布式存储标准版License、分布式存储高级版License、分布式存储旗舰版License。
+
+具体授权协议说明：
+
+## 授权协议
+
+## 授权协议说明
+
+单机标准版
+
+-   激活1个物理CPU
+-   激活VMware管理子模块
+-   提供ZSvirt核心基本功能，可满足用户主流业务场景需求
+-   为VMware计算节点提供独立的CPU授权
+
+单机高级版
+
+-   激活1个物理CPU
+-   激活VMware管理子模块
+-   激活灾备服务子模块
+-   提供ZSvirt核心基本功能，可满足用户主流业务场景需求
+-   为VMware计算节点提供独立的CPU授权
+-   支持本地备份、异地备份和混合云备份多种场景
+
+单机旗舰版
+
+-   激活1个物理CPU
+-   激活VMware管理子模块
+-   激活灾备服务子模块
+-   激活企业管理子模块
+-   激活裸金属管理子模块
+-   激活迁移服务子模块
+-   提供ZSvirt核心基本功能，可满足用户主流业务场景需求
+-   支持接管VMware vCenter虚拟机
+-   支持本地备份、异地备份和混合云备份多种场景
+-   提供企业管理子模块的全部功能，包括：管理项目、组织架构、用户、权限，以及ZSvirt运营相关功能
+-   提供指定数量的专属物理服务器，保证核心应用的高性能和稳定性
+-   提供V2V迁移功能，将其他虚拟环境的虚拟机系统及数据完整迁移至当前ZSvirt
+
+分布式存储标准版
+
+-   激活1个物理CPU
+-   激活VMware管理子模块
+-   激活分布式存储管理子模块（支持块存储）
+-   提供ZSvirt核心基本功能，可满足用户主流业务场景需求
+-   为VMware计算节点提供独立的CPU授权
+-   支持分布式存储，支持内存级缓存优化读写效率
+
+分布式存储高级版
+
+-   激活1个物理CPU
+-   激活VMware管理子模块
+-   激活灾备服务子模块
+-   激活分布式存储管理子模块（支持块存储、NAS存储）
+-   提供ZSvirt核心基本功能，可满足用户主流业务场景需求
+-   为VMware计算节点提供独立的CPU授权
+-   支持本地备份、异地备份和混合云备份多种场景
+-   支持分布式存储，支持内存级缓存优化读写效率
+
+分布式存储旗舰版
+
+-   激活1个物理CPU
+-   激活VMware管理子模块
+-   激活灾备服务子模块
+-   激活企业管理子模块
+-   激活裸金属管理子模块
+-   激活迁移服务管理子模块
+-   激活分布式存储管理子模块（支持块存储、NAS存储、对象存储）
+-   提供ZSvirt核心基本功能，可满足用户主流业务场景需求
+-   支持接管VMware vCenter虚拟机
+-   支持本地备份、异地备份和混合云备份多种场景
+-   提供企业管理子模块的全部功能，包括：管理项目、组织架构、用户、权限，以及ZSvirt运营相关功能
+-   提供指定数量的专属物理服务器，保证核心应用的高性能和稳定性
+-   提供V2V迁移功能，将其他虚拟环境的虚拟机系统及数据完整迁移至当前ZSvirt
+-   支持分布式存储，支持内存级缓存优化读写效率
+
+-   如您需要试用或购买AStack，欢迎您直接与**400-6059-110转4**咨询购买的相关事宜。
+-   如您需要升级或更新许可证，请将您的请求码和升级需求发送电子邮件至**400-6059-110转4**，我们将尽快与您联系。

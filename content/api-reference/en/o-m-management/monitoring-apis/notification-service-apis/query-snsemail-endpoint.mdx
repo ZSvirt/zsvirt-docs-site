@@ -1,0 +1,63 @@
+---
+title: "Query Email Endpoint"
+---
+
+<APIPage method="GET" path="/v1/sns/application-endpoints/emails" altPaths={["/v1/sns/application-endpoints/emails/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/sns/application-endpoints/emails?q=email=test@cloud.io
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/sns/application-endpoints/emails/bbae379b811f3d18a422d73557ece1b1
+```
+
+Queryable Fields
+
+Run the CLI command line tool, enter `QuerySNSEmailEndpoint` and press Tab to view all queryable fields and the resource names that support cross-table queries.
+
+## API Response
+This API returns an empty JSON structure **`{}`** on success. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+QuerySNSEmailEndpointAction action = new QuerySNSEmailEndpointAction();
+action.conditions = asList("email=test@cloud.io");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QuerySNSEmailEndpointAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QuerySNSEmailEndpointAction action = QuerySNSEmailEndpointAction()
+action.conditions = ["email=test@cloud.io"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QuerySNSEmailEndpointAction.Result res = action.call()
+```
+
+</APIPage>

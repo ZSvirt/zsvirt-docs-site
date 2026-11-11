@@ -1,0 +1,72 @@
+---
+title: "上传KMS服务端证书"
+---
+
+<APIPage method="PUT" path="/v1/key-providers/kms/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "uploadKmsServerCert": {
+    "serverCertPem": "-----BEGIN CERTIFICATE-----\n...\n-----END CERTIFICATE-----"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"uploadKmsServerCert":{"serverCertPem":"-----BEGIN CERTIFICATE-----\n...\n-----END CERTIFICATE-----"}}' \
+http://localhost:8080/zstack/v1/key-providers/kms/ff0a9250e11b3fe5a553d61be176d300/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|serverCertPem|String|body\(包含在`uploadKmsServerCert`结构中\)|服务端证书| |5.0.0|
+|uuid|String|url|资源的UUID，唯一标示该资源| |5.0.0|
+|systemTags \(可选\)|List|body|系统标签| |5.0.0|
+|userTags \(可选\)|List|body|用户标签| |5.0.0|
+
+## SDK示例
+Java SDK
+
+```
+UploadKmsServerCertAction action = new UploadKmsServerCertAction();
+action.uuid = "ff0a9250e11b3fe5a553d61be176d300";
+action.serverCertPem = "-----BEGIN CERTIFICATE-----
+...
+-----END CERTIFICATE-----";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UploadKmsServerCertAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = UploadKmsServerCertAction()
+action.uuid = "ff0a9250e11b3fe5a553d61be176d300"
+action.serverCertPem = "-----BEGIN CERTIFICATE-----
+...
+-----END CERTIFICATE-----"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

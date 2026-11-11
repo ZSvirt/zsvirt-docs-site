@@ -1,0 +1,31 @@
+---
+title: "虚拟化平台添加新节点提示qemu版本不一致，如何解决？"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+## 原因
+原平台由旧版本升级导致。
+
+## 解决方案
+1.  SSH登录至管理节点。
+
+2.  执行以下命令，开启zstack-cli会话：
+
+    ```
+    [root@localhost ~]# zstack-cli
+    ```
+
+3.  执行以下命令，登录zstack-cli：
+
+    ```
+    admin >>> LogInByAccount accountName=admin password=$password  //密码为平台admin用户密码
+    ```
+
+4.  执行以下命令，升级集群qemu版本：
+
+    ```
+    admin >>> UpdateClusterOS uuid=$集群uuid updatepackage=qemu-kvm-ev
+    ```
+
+5.  重连集群内所有主机。

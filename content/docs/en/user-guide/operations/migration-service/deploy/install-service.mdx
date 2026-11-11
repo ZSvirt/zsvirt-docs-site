@@ -1,0 +1,29 @@
+---
+title: 'Step 2: Deploy Migration Service'
+---
+
+Select the appropriate specification based on your business requirements to deploy the migration service. Once deployed, you can use the migration service to migrate virtual machines to the target platform.
+
+1.  On the Migration Service page, click **Install**.
+
+2.  In the Deploy Migration Service dialog, set the following parameters:
+
+    -   **Migration Service Version**: Displays the version of the service to be installed and deployed.
+    -   **Data Center**: The migration service is deployed through the virtual machine data gateway. Select a data center.
+    -   **Run Location**: Select where the service runs.
+    -   **CPU**: Default is 8 cores. Set the number of CPU cores.
+    -   **Memory**: Default is 8 GB. Set the memory size.
+    -   **Storage Location**: Specify the data storage.
+    -   **Storage Pool**: When the storage location is distributed storage, you must specify the storage pool.
+    -   **Hard Disk 1**: Default is 100 GB. Set the system disk size.
+    -   **Migration Network**: Specify a distributed port group to use as the migration network. Ensure that the selected distributed port group has network connectivity with both the source platform and the destination platform to guarantee data transfer.
+    -   **IPv4 Address**: Specify the IP address.
+
+        <Callout type="info">
+        The IP address allocation method depends on the configuration of the selected migration network:
+        </Callout>
+
+        -   When DHCP is enabled on the migration network, the system automatically assigns an IP address.
+        -   When DHCP is disabled on the migration network, you need to specify an IP address.
+        -   When IPAM is enabled on the migration network, manually specified IP address must be within the selected network segment.
+3.  Review the configuration and click **OK**.

@@ -1,0 +1,135 @@
+---
+title: "Re-encrypt Specified Keys"
+---
+
+<APIPage method="PUT" path="/v1/key-providers/{providerUuid}/rekey">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "rekeyKeyProviderRefs": {
+    "refIds": [
+      1,
+      2
+    ],
+    "rekeyAll": false
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding example, the `systemTags` and `userTags` fields can be omitted. They are listed to indicate that the body can include these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"rekeyKeyProviderRefs":{"refIds":[1,2],"rekeyAll":false}}' \
+http://localhost:8080/zstack/v1/key-providers/ff0340e5866e385b9a86e592dd7e1900/rekey
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Optional Value|Since|
+|----|----|--------|-----------|--------------|-----|
+|refIds \(optional\)|List|body \(contained in `rekeyKeyProviderRefs` structure\)|List of key reference IDs to re-encrypt| |5.0.0|
+|resourceUuids \(optional\)|List|body \(contained in `rekeyKeyProviderRefs` structure\)|List of associated resource UUIDs. Use this with resourceType.| |5.0.0|
+|resourceType \(optional\)|String|body \(contained in `rekeyKeyProviderRefs` structure\)|Associated resource type. Use this with resourceUuids.| |5.0.0|
+|providerUuid|String|url|Key provider UUID| |5.0.0|
+|rekeyAll \(optional\)|boolean|body \(contained in `rekeyKeyProviderRefs` structure\)|Whether to perform full re-encryption. If set to true, you cannot specify refIds or resourceType/resourceUuids.| |5.0.0|
+|systemTags \(optional\)|List|body|System tags| |5.0.0|
+|userTags \(optional\)|List|body|User tags| |5.0.0|
+
+## API Response
+Response Example
+
+```
+{
+  "totalCount": 3,
+  "successCount": 1,
+  "skippedCount": 1,
+  "failedCount": 1,
+  "providerResults": [
+    {
+      "providerUuid": "provider-uuid-1",
+      "providerName": "provider-1",
+      "totalRefCount": 3,
+      "successRefCount": 1,
+      "skippedRefCount": 1,
+      "failedRefCount": 1,
+      "skippedResources": [
+        {
+          "keyRefId": 11,
+          "resourceType": "TpmVO",
+          "resourceUuid": "ff00de2d3ab43127b1abdac68f1e7f00",
+          "reason": "encrypted resource key ref[id:11, resourceType:TpmVO, resourceUuid:ff00de2d3ab43127b1abdac68f1e7f00] has empty secret ref"
+        }
+      ],
+      "failedResources": [
+        {
+          "keyRefId": 12,
+          "resourceType": "TpmVO",
+          "resourceUuid": "ff00de2d3ab43127b1abdac68f1e7f00",
+          "reason": "key-tool rekey failed: failed to decrypt wrapper DEK with KEK"
+        }
+      ]
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Since|
+|----|----|-----------|-----|
+|success|boolean| |5.0.0|
+|totalCount|int|Number of source key providers involved in this operation \(deduplicated by provider associated with resource refs\)|5.0.0|
+|successCount|int|Number of providers with no failed refs \(including providers that only have skipped refs\)|5.0.0|
+|skippedCount|int|Number of providers that have skipped refs|5.0.0|
+|failedCount|int|Number of providers that have failed refs|5.0.0|
+|providerResults|List|Results aggregated by source key provider. Each element contains skippedResources, failedResources, and ref counts of each type for the provider.|5.0.0|
+|error|ErrorCode|For details, see [error](#p_t4f_pp2_2jc)|5.0.0|
+
+### error
+|Name|Type|Description|Since|
+|----|----|-----------|-----|
+|code|String|Error code, which is the globally unique identifier of the error, for example, SYS.1000 or HOST.1001|0.6|
+|description|String|Summary description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. The default value is null.|0.6|
+|opaque|LinkedHashMap|Reserved field. The default value is null.|0.6|
+|cause|ErrorCode|Root error that caused the current error. If no root error exists, this field is null.|0.6|
+
+## SDK Example
+Java SDK
+
+```
+RekeyKeyProviderRefsAction action = new RekeyKeyProviderRefsAction();
+action.refIds = asList(1,2);
+action.providerUuid = "ff0340e5866e385b9a86e592dd7e1900";
+action.rekeyAll = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RekeyKeyProviderRefsAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = RekeyKeyProviderRefsAction()
+action.refIds = [1, 2]
+action.providerUuid = "ff0340e5866e385b9a86e592dd7e1900"
+action.rekeyAll = false
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

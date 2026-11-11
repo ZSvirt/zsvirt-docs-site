@@ -1,0 +1,78 @@
+---
+title: "Get Current Time"
+---
+
+<APIPage method="PUT" path="/v1/management-nodes/actions">
+
+Body
+
+```
+{
+  "getCurrentTime": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the **systemTags** and **userTags** fields can be omitted. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-X PUT -d '{"getCurrentTime":{}}' http://localhost:8080/zstack/v1/management-nodes/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|systemTags \(Optional\)|List|body|System tags| |0.6|
+|userTags \(Optional\)|List|body|User tags| |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "currentTime": {
+    "MillionSeconds": 1494480176967.0,
+    "Seconds": 1494480176.0
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|currentTime|Map|The current time of the Management Node|0.6|
+|success|boolean|The success flag|0.6|
+|error|ErrorCode|The error code. If not null, the operation has failed. This field is null when the operation succeeds. For details, see [error](#p_d5v_pfk_l1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001.|0.6|
+|description|String|A brief description of the error.|0.6|
+|details|String|The detailed error information.|0.6|
+|elaboration|String|A reserved field. Default is null.|0.6|
+|opaque|LinkedHashMap|A reserved field. Default is null.|0.6|
+|cause|ErrorCode|The root error. The source error that caused the current error. If there is no root error, this field is null.|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+GetCurrentTimeAction action = new GetCurrentTimeAction();
+GetCurrentTimeAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetCurrentTimeAction action = GetCurrentTimeAction()
+GetCurrentTimeAction.Result res = action.call()
+```
+
+</APIPage>

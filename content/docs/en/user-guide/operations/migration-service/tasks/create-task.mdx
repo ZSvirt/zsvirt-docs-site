@@ -1,0 +1,61 @@
+---
+title: 'Create a Migration Task'
+---
+
+Ensure that you have sufficient license capacity for the migration service.
+
+1.  In the navigation pane, select **O&M Management** &gt; **Migration Task** &gt; **All Tasks**.
+
+2.  On the All Tasks page, click **Create Migration Task**.
+
+3.  In the Create Migration Task dialog, complete the source platform configurations:
+
+    -   **Source Platform**: Select the source platform.
+    -   **Source VM**: Add the source virtual machine you want to migrate.
+
+        <Callout type="info">
+        The disk capacity of the source VM cannot exceed the limit defined by the license type. Additional capacity requires a separate license.
+        </Callout>
+
+        -   Trial License: Disk capacity limit is 1 TB.
+        -   Production License: Disk capacity limit is 5 TB.
+    -   **Migration Authorization Type**: Select the license type.
+4.  Click **Next**.
+
+5.  Configure the target platform.
+
+    1.  Complete the virtual machine configuration:
+
+        -   **Data Center**: Select the data center where the virtual machine resides after migration.
+        -   **Cluster**: Select the cluster where the virtual machine resides after migration.
+        -   **Host**: Select the host where the virtual machine resides after migration.
+        -   **Storage Location**: Select the data storage that the virtual machine uses after migration.
+        -   **Bus Type**: Select the bus type for the virtual machine hard disk device.
+        -   **CPU Mode**: Select the CPU mode for the virtual machine after migration.
+        -   **Destination Network Port Group**: Select the distributed port group that the virtual machine uses.
+            -   **CIDR**: Select the CIDR.
+            -   **Network Adapter Configuration**: Select whether to clone the source virtual machine's network configuration and MAC address.
+
+                -   Clone Network Configuration: After cloning, the target virtual machine will retain the same IP address as the source VM by default. The netmask and gateway must be manually entered.
+                -   Clone MAC Address: The target MAC address of the virtual machine remains the same as that of the source virtual machine.
+                <Callout type="info">
+                -   When you select Clone Network Configuration, the platform assigns a temporary IP address to the virtual machine based on network properties to ensure data synchronization. You can also manually specify an IP address on the virtual machine configuration confirmation page.
+                -   When you select Clone Network Configuration, power off the source virtual machine before the formal cutover to avoid IP address conflicts.
+                </Callout>
+            -   **Destination IP Address**: Specify the destination IP address for the virtual machine.
+        -   **Temporary Network Port Group**: When you select **Clone Network Configuration**, you must configure a temporary network port group. A DHCP-enabled port group is recommended. By default, the target network port group is used. If the target port group does not have DHCP enabled, you must manually assign a temporary IP address.
+        -   **Security Group**: Select a security group.
+    2.  Complete the cutover configuration by referring to the following example:
+
+        -   **Immediate Cutover**: When enabled, the system automatically performs the cutover task immediately after the initial data synchronization is completed.
+        -   **Create Rollback Snapshot**: When enabled, the system creates a rollback snapshot for the target VM when the cutover task is initiated.
+
+            Purpose of the rollback snapshot:
+
+            -   When enabled: If you select "Delete cutover program only" when deleting the migration task, the system automatically rolls back the target VM or disk to the snapshot state.
+            -   When disabled: The "Delete cutover program only" option will not be available when deleting the migration task.
+        -   **Auto Shut Down Source VM**: When enabled, the system shuts down the source VM before executing the cutover task.
+        -   **Auto Install VMTools**: When enabled, the system automatically installs VMTools after the target VM operating system conversion is complete.
+6.  Click **Next**.
+
+7.  Review the configuration and click **OK**.

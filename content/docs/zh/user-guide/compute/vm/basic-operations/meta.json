@@ -1,0 +1,18 @@
+{
+  "title": "虚拟机基础操作篇",
+  "pages": [
+    "index",
+    "create-vm",
+    "import-vm",
+    "create-from-template",
+    "register-vm",
+    "clone-vm",
+    "access-vm",
+    "access-options",
+    "console-access",
+    "ssh-access",
+    "modify-vm",
+    "delete-vm"
+  ],
+  "pagesIndex": "index"
+}

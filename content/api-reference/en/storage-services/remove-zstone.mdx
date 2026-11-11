@@ -1,0 +1,64 @@
+---
+title: "Remove ZStone"
+---
+
+<APIPage method="DELETE" path="/v1/zstone-plugin/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/zstone-plugin/53c0433a817349f89f66532addeb8b6c
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|ZStone UUID, uniquely identifies the resource| |4.10.6|
+|deleteMode \(Optional\)|String|body|Delete mode \(Permissive / Enforcing, Permissive\)| |4.10.6|
+|systemTags \(Optional\)|List|body|System Tag| |4.10.6|
+|userTags \(Optional\)|List|body|User Tag| |4.10.6|
+
+## API Response
+This API returns an empty JSON structure `{}` on success, and a JSON structure containing an error field on failure, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+RemoveZStoneAction action = new RemoveZStoneAction();
+action.uuid = "53c0433a817349f89f66532addeb8b6c";
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RemoveZStoneAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+RemoveZStoneAction action = RemoveZStoneAction()
+action.uuid = "53c0433a817349f89f66532addeb8b6c"
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+RemoveZStoneAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,28 @@
+---
+title: "The virtualization platform cannot recognize a USB device. What should I do?"
+---
+
+<HistoricalNamingNote locale="en" />
+
+## Cause
+The iSerial field of the USB device is too long, preventing the virtualization platform from recognizing the device.
+
+## Solution
+1.  Run the following command to query details of all USB devices and determine whether the host recognizes them:
+
+    ```
+    [root@localhost ~]# lsusb.py -u
+    ```
+
+2.  Run the following command to view details of a specific USB device and check whether the iSerial field is too long:
+
+    ```
+    [root@localhost ~]# lsusb -v -d  1908:1320
+    ```
+
+3.  Run the following command to adjust the string length of the iSerial field in the **UsbDeviceVO** database table:
+
+    ```
+    [root@localhost ~]# mysql -uroot -pzstack.mysql.password
+    MariaDB [(none)]> ALTER TABLE `zstack`.`UsbDeviceVO` modify column iSerial varchar(1024) DEFAULT NULL;
+    ```

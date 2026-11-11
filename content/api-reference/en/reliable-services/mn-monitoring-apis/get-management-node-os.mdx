@@ -1,0 +1,77 @@
+---
+title: "Get Management Node OS Information"
+---
+
+<APIPage method="PUT" path="/v1/management/actions">
+
+Body
+
+```
+{
+  "getManagementNodeOS": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the **systemTags** and **userTags** fields can be omitted. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-X PUT -d '{"getManagementNodeOS":{}}' http://localhost:8080/zstack/v1/management/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|systemTags \(Optional\)|List|query|System tags| |4.1.0|
+|userTags \(Optional\)|List|query|User tags| |4.1.0|
+
+## API Response
+Response Example:
+
+```
+{
+  "name": "Linux",
+  "version": "5.4.0-33-generic"
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|The resource name|4.1.0|
+|version|String| |4.1.0|
+|success|boolean| |4.1.0|
+|error|ErrorCode|The error code. If not null, the operation has failed. This field is null when the operation succeeds. For details, see [error](#p_xj3_rpw_wbb)|4.1.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001.|4.1.0|
+|description|String|A brief description of the error.|4.1.0|
+|details|String|The detailed error information.|4.1.0|
+|elaboration|String|A reserved field. Default is null.|4.1.0|
+|opaque|LinkedHashMap|A reserved field. Default is null.|4.1.0|
+|cause|ErrorCode|The root error. The source error that caused the current error. If there is no root error, this field is null.|4.1.0|
+
+## SDK Examples
+Java SDK
+
+```
+GetManagementNodeOSAction action = new GetManagementNodeOSAction();
+GetManagementNodeOSAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetManagementNodeOSAction action = GetManagementNodeOSAction()
+GetManagementNodeOSAction.Result res = action.call()
+```
+
+</APIPage>

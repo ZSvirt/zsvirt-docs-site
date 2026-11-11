@@ -1,0 +1,113 @@
+---
+title: "Update a WeCom Mentioned User"
+---
+
+<APIPage method="PUT" path="/v1/sns/application-endpoints/we-com/at-persons/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateAtPersonOfAtWeComEndpoint": {
+    "endpointUuid": "4aec8a68c63439f197df9623ec89cda6",
+    "userId": "zhang.san",
+    "remark": "jack"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, the **systemTags** and **userTags** fields are optional. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateAtPersonOfAtWeComEndpoint":{"endpointUuid":"4aec8a68c63439f197df9623ec89cda6","userId":"zhang.san","remark":"jack"}}' \
+http://localhost:8080/zstack/v1/sns/application-endpoints/we-com/at-persons/87df59c09f0336c2817d318a468f717c/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|The UUID of the resource. Uniquely identifies the resource.| |4.2.0|
+|endpointUuid|String|body \(contained in the **updateAtPersonOfAtWeComEndpoint** structure\)|WeCom endpoint UUID| |4.2.0|
+|userId \(optional\)|String|body \(contained in the **updateAtPersonOfAtWeComEndpoint** structure\)|WeCom user ID| |4.2.0|
+|systemTags \(optional\)|List|body|System tags| |4.2.0|
+|userTags \(optional\)|List|body|User tags| |4.2.0|
+|remark \(optional\)|String|body \(contained in the **updateAtPersonOfAtWeComEndpoint** structure\)|Remark| |4.2.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "30a039832d40439da2c499cba7f1f866",
+    "userId": "18988887777",
+    "endpointUuid": "acb286c4425f4a7cbbd21afbf5303447",
+    "remark": "jack"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.2.0|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_q55_jnx_bdb)|4.2.0|
+|inventory|SNSWeComAtPersonInventory|For details, see [inventory](#p_amz_jnx_bdb)|4.2.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001.|5.0.0|
+|description|String|A brief description of the error|5.0.0|
+|details|String|Detailed information about the error|5.0.0|
+|elaboration|String|Reserved field. Default is null.|5.0.0|
+|opaque|LinkedHashMap|Reserved field. Default is null.|5.0.0|
+|cause|ErrorCode|The root error. The source error that caused the current error. If there is no root error, this field is null.|5.0.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource.|4.2.0|
+|userId|String|WeCom user ID|4.2.0|
+|endpointUuid|String|WeCom endpoint UUID|4.2.0|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateAtPersonOfAtWeComEndpointAction action = new UpdateAtPersonOfAtWeComEndpointAction();
+action.uuid = "87df59c09f0336c2817d318a468f717c";
+action.endpointUuid = "4aec8a68c63439f197df9623ec89cda6";
+action.userId = "zhang.san";
+action.remark = "jack";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateAtPersonOfAtWeComEndpointAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateAtPersonOfAtWeComEndpointAction action = UpdateAtPersonOfAtWeComEndpointAction()
+action.uuid = "87df59c09f0336c2817d318a468f717c"
+action.endpointUuid = "4aec8a68c63439f197df9623ec89cda6"
+action.userId = "zhang.san"
+action.remark = "jack"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateAtPersonOfAtWeComEndpointAction.Result res = action.call()
+```
+
+</APIPage>

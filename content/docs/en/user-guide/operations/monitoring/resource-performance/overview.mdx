@@ -1,0 +1,20 @@
+---
+title: 'Overview'
+---
+
+ZSvirt provides visual charts that display various monitoring data for resources over a period of time. These charts include multiple key performance monitoring metrics, helping you gain an intuitive understanding of resource performance conditions.
+
+## Monitoring Chart Types
+|Chart Type|Description|
+|----------|-----------|
+|Bar Chart|Displays monitoring data of resource capacity load in the form of proportional bars, providing an intuitive understanding of resource capacity information.|
+|Line Chart|Displays monitoring data of various loads on resources in the form of a line chart, offering an intuitive understanding of resource health status.|
+
+## Monitoring Data Collection Methods
+ZSvirt provides two monitoring methods for virtual machines. Generally speaking, for memory data, Advanced Monitoring offers better accuracy than Basic Monitoring. It is recommended to use Advanced Monitoring when monitoring memory data.
+
+-   **Basic Monitoring**: Monitoring data is obtained from the host via Libvirt.
+-   **Advanced Monitoring**: Monitoring data is obtained from the virtual machine by an advanced monitoring agent. VMTools must be pre-installed on the virtual machine for this method.
+
+## Monitoring Data Collection Intervals
+ZSvirt uses real-time monitoring, with resource monitoring charts refreshing data every 10 seconds by default.

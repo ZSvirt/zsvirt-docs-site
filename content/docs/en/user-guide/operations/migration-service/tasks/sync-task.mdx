@@ -1,0 +1,17 @@
+---
+title: 'Synchronize a Migration Task'
+---
+
+Ensure that the migration task status is "Synchronization Stopped", "Synchronization Failed", or "Ready for Cutover". Otherwise, you cannot perform the synchronization operation.
+
+1.  In the navigation pane, select **O&M Management** &gt; **Migration Task** &gt; **All Tasks**.
+
+2.  On the All Tasks page, select the migration task you want to synchronize, and then click **Actions** &gt; **Synchronize**.
+
+3.  In the Synchronize Migration Task dialog, select the synchronization mode.
+
+    The following two synchronization modes are supported:
+
+    -   Incremental Sync: Only synchronizes data that has changed since the last synchronization.
+    -   Full Sync: Synchronizes all data of the virtual machine. For migration tasks that have completed initial synchronization, the system performs a comparison scan before executing a full sync. This process may take a significant amount of time.
+4.  Click **OK**.

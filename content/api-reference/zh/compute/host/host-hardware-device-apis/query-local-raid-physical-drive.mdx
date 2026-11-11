@@ -1,0 +1,127 @@
+---
+title: "查询Raid物理盘"
+---
+
+<APIPage method="GET" path="/v1/storage-devices/local-raid/physical-drives" altPaths={["/v1/storage-devices/local-raid/physical-drives/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/storage-devices/local-raid/physical-drives
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/storage-devices/local-raid/physical-drives/75dae76e484537bbaea154d9348f4e15
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryLocalRaidPhysicalDrive`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "ba2fe0dcd360397a92748ea6efe9ffd6",
+      "name": "raidPhysical",
+      "raidLevel": "raid1",
+      "raidControllerUuid": "1022305d664e34329a63f350a2fd1e02",
+      "enclosureDeviceId": 252,
+      "slotNumber": 1,
+      "diskGroup": 0,
+      "wwn": "50014ee059f2f491",
+      "serialNumber": "V6GLEX2S",
+      "deviceModel": "HGST HUS726T4TALA6L4",
+      "size": 1000204886016,
+      "driveState": "Online, Spun Up",
+      "locateStatus": "Disabled",
+      "driveType": "SATA",
+      "mediaType": "HDD",
+      "rotationRate": 7200,
+      "createDate": "Nov 14, 2017 2:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+    },
+    {}
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_hs2_4ct_s2c)|3.6|
+|inventories|List|详情参考[inventories](#p_fv1_rct_s2c)|3.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.6|
+|name|String|资源名称|3.6|
+|raidLevel|String|Raid级别|3.6|
+|raidControllerUuid|String|Raid控制器Uuid|3.6|
+|description|String|资源的详细描述|3.6|
+|enclosureDeviceId|Integer|Enclosure Id|3.6|
+|slotNumber|Integer|槽位号|3.6|
+|deviceId|Integer|Device Id|3.6|
+|diskGroup|Integer|磁盘组 Id|3.6|
+|wwn|String|WWN|3.6|
+|serialNumber|String|序列号|3.6|
+|deviceModel|String|磁盘规格|3.6|
+|size|Long|磁盘大小|3.6|
+|driveState|String|磁盘状态|3.6|
+|driveType|String|接口类型|3.6|
+|mediaType|String|介质类型|3.6|
+|rotationRate|Integer|转速|3.6|
+|createDate|Timestamp|创建时间|3.6|
+|lastOpDate|Timestamp|最后一次修改时间|3.6|
+|locateStatus|LocateStatus|详情参考[locateStatus](#p_hnq_sct_s2c)|3.6|
+
+### locateStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Enabled|LocateStatus|定位灯闪烁|3.6|
+|Disabled|LocateStatus|定位灯关闭|3.6|
+
+## SDK示例
+Java SDK
+
+```
+QueryLocalRaidPhysicalDriveAction action = new QueryLocalRaidPhysicalDriveAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryLocalRaidPhysicalDriveAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryLocalRaidPhysicalDriveAction action = QueryLocalRaidPhysicalDriveAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryLocalRaidPhysicalDriveAction.Result res = action.call()
+```
+
+</APIPage>

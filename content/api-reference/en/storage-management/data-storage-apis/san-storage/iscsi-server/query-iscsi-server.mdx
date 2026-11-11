@@ -1,0 +1,177 @@
+---
+title: "Query iSCSI Server"
+---
+
+<APIPage method="GET" path="/v1/storage-devices/iscsi/servers" altPaths={["/v1/storage-devices/iscsi", "/v1/storage-devices/iscsi/servers/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/storage-devices/iscsi/servers
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/storage-devices/iscsi
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/storage-devices/iscsi/servers/cf91d809261735be9f20429880c1d19c
+```
+
+Queryable Fields
+
+Run the CLI command-line tool, enter `QueryIscsiServer` and press Tab to see all queryable fields and resource names that can be queried across tables.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "fd97e8b6d61c399abed358ea6b2fc206",
+      "name": "iscsi-server-10.0.0.201",
+      "ip": "10.0.0.201",
+      "port": 3260.0,
+      "chapUserName": "username",
+      "chapUserPassword": "password",
+      "state": "Enabled",
+      "iscsiTargets": [
+        {
+          "iscsiServerUuid": "fd97e8b6d61c399abed358ea6b2fc206",
+          "uuid": "d156429110f13c2ca07bbc04e4031231",
+          "iqn": "iqn.2018-01.io.cloud:tsn.00001",
+          "state": "Enabled",
+          "iscsiLuns": [
+            {
+              "uuid": "500f63c8f44939bbab102222927f9290",
+              "iscsiTargetUuid": "d156429110f13c2ca07bbc04e4031231",
+              "wwid": "36b083fe000daf018000015505abbe00a",
+              "vendor": "DELL",
+              "model": "MD32xx",
+              "wwn": "0x6b083fe000daf018",
+              "serial": "6b083fe000daf018000015505abbe00a",
+              "hctl": "6:0:1:1",
+              "type": "mpath",
+              "path": "ip-0.0.0.201:3260-iscsi-iqn.2018-01.io.cloud:tsn.00001-lun-0",
+              "size": 30003188203520.0,
+              "multipathDeviceUuid": "36b083fe000daf018000015505abbe00a"
+            }
+          ],
+          "createDate": "Nov 14, 2017 10:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+        }
+      ],
+      "iscsiClusterRefs": [
+        {
+          "id": 1.0,
+          "iscsiServerUuid": "fd97e8b6d61c399abed358ea6b2fc206",
+          "clusterUuid": "02db8eb4e3043f55b7f1cf02df735611",
+          "createDate": "Nov 14, 2017 10:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+        }
+      ],
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation is successful, this field is null. For details, see [error](#p_u11_svd_z2b)|3.0.0|
+|inventories|List|For details, see [inventories](#p_iyf_svd_z2b)|3.0.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, e.g. SYS.1000, HOST.1001|3.0.0|
+|description|String|Brief description of the error|3.0.0|
+|details|String|Detailed error information|3.0.0|
+|elaboration|String|Reserved field, defaults to null|3.0.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|3.0.0|
+|cause|ErrorCode|Root cause: the error that triggered the current error. If there is no original error, this field is null|3.0.0|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|3.0.0|
+|name|String|Resource Name|3.0.0|
+|ip|String|IP Address|3.0.0|
+|port|Integer|Port|3.0.0|
+|chapUserName|String|CHAP Username|3.0.0|
+|chapUserPassword|String|CHAP Password|3.0.0|
+|state|String|Enabled State|3.0.0|
+|createDate|Timestamp|Creation Time|3.0.0|
+|lastOpDate|Timestamp|Last Modification Time|3.0.0|
+|iscsiTargets|List|For details, see [iscsiTargets](#p_d2k_svd_z2b)|3.0.0|
+|iscsiClusterRefs|List|For details, see [iscsiClusterRefs](#p_pqv_svd_z2b)|3.0.0|
+
+### iscsiTargets
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|iscsiServerUuid|String|iSCSI Server UUID|3.0.0|
+|uuid|String|Resource UUID, uniquely identifies the resource|3.0.0|
+|iqn|String|iSCSI IQN|3.0.0|
+|createDate|Timestamp|Creation Time|3.0.0|
+|lastOpDate|Timestamp|Last Modification Time|3.0.0|
+|iscsiLuns|List|For details, see [iscsiLuns](#p_dnp_svd_z2b)|3.0.0|
+
+### iscsiLuns
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|3.0.0|
+|iscsiTargetUuid|String|iSCSI Target UUID|3.0.0|
+|wwid|String|Unique Identifier ID|3.0.0|
+|vendor|String|Device Vendor|3.0.0|
+|model|String|Device Model|3.0.0|
+|wwn|String|Device WWN|3.0.0|
+|serial|String|Device Serial Number|3.0.0|
+|hctl|String|SCSI Device HCTL|3.0.0|
+|type|String|Device Type|3.0.0|
+|path|String|Device Path|3.0.0|
+|size|Long|Device Size|3.0.0|
+|createDate|Timestamp|Creation Time|3.0.0|
+|lastOpDate|Timestamp|Last Modification Time|3.0.0|
+
+### iscsiClusterRefs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|iscsiServerUuid|String| |3.0.0|
+|clusterUuid|String|Cluster UUID|3.0.0|
+|createDate|Timestamp|Creation Time|3.0.0|
+|lastOpDate|Timestamp|Last Modification Time|3.0.0|
+
+## SDK Examples
+Java SDK
+
+```
+QueryIscsiServerAction action = new QueryIscsiServerAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryIscsiServerAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryIscsiServerAction action = QueryIscsiServerAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryIscsiServerAction.Result res = action.call()
+```
+
+</APIPage>

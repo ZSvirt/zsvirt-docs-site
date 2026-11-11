@@ -1,0 +1,78 @@
+---
+title: "Get Host IOMMU Status"
+---
+
+<APIPage method="GET" path="/v1/pci-device/hosts/{uuid}/status">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/pci-device/hosts/0ec53c2f753331f1a2c62b378821e9b7/status
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|UUID of the resource, uniquely identifies the resource| |2.1|
+|systemTags \(Optional\)|List|query| | |2.1|
+|userTags \(Optional\)|List|query| | |2.1|
+
+## API Response
+Response Example
+
+```
+{
+  "status": "Active"
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |2.1|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_ahh_xcq_s1b)|2.1|
+|status|HostIommuStatusType|See [status](#p_grb_xcq_s1b)|2.1|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code, a globally unique identifier of the error, e.g. SYS.1000, HOST.1001|2.1|
+|description|String|Brief description of the error|2.1|
+|details|String|Detailed error information|2.1|
+|elaboration|String|Reserved field, defaults to null|2.1|
+|opaque|LinkedHashMap|Reserved field, defaults to null|2.1|
+|cause|ErrorCode|Root cause, the source error that caused the current error, null if no original error|2.1|
+
+### status
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|type|String|Host IOMMU ready status, can be Active or Inactive|2.1|
+
+## SDK Examples
+Java SDK
+
+```
+GetHostIommuStatusAction action = new GetHostIommuStatusAction();
+action.uuid = "0ec53c2f753331f1a2c62b378821e9b7";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetHostIommuStatusAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetHostIommuStatusAction action = GetHostIommuStatusAction()
+action.uuid = "0ec53c2f753331f1a2c62b378821e9b7"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetHostIommuStatusAction.Result res = action.call()
+```
+
+</APIPage>

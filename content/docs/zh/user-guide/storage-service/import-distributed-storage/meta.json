@@ -1,0 +1,10 @@
+{
+  "title": "接管现有分布式存储",
+  "pages": [
+    "index",
+    "initialize-storage",
+    "import-storage",
+    "unimport-storage"
+  ],
+  "pagesIndex": "index"
+}

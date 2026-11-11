@@ -1,0 +1,157 @@
+---
+title: "查询主机Bond信息"
+---
+
+<APIPage method="GET" path="/v1/hosts/bondings">
+
+```
+GET zstack/v1/hosts/bondings/{uuid}
+```
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/hosts/bondings
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/hosts/bondings/4557b1f12ef7393c926b8b7223ddebac
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryHostNetworkBonding`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "2e2226e18e853f20a5791684a1b644c8",
+      "hostUuid": "903696c585a639bb8049713b98d93437",
+      "bondingName": "bond0",
+      "mode": "active-backup 1",
+      "xmitHashPolicy": "layer2 0",
+      "miiStatus": "up",
+      "mac": "ac:1f:6b:93:6c:8c",
+      "ipAddresses": [
+        "172.20.0.116/16"
+      ],
+      "miimon": 100.0,
+      "allSlavesActive": true,
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM",
+      "slaves": [
+        {
+          "uuid": "17a40aa475cf322494ea82e09066892e",
+          "hostUuid": "903696c585a639bb8049713b98d93437",
+          "bondingUuid": "2e2226e18e853f20a5791684a1b644c8",
+          "interfaceName": "eno1",
+          "interfaceType": "bondingSlave",
+          "speed": 1000.0,
+          "slaveActive": true,
+          "carrierActive": true,
+          "mac": "ac:1f:6b:93:6c:8c",
+          "createDate": "Nov 14, 2017 10:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+        },
+        {
+          "uuid": "c3716c87b9173cbb8315e7d7f3645bc4",
+          "hostUuid": "903696c585a639bb8049713b98d93437",
+          "bondingUuid": "2e2226e18e853f20a5791684a1b644c8",
+          "interfaceName": "eno2",
+          "interfaceType": "bondingSlave",
+          "speed": 1000.0,
+          "slaveActive": false,
+          "carrierActive": false,
+          "mac": "ac:1f:6b:93:6c:8c",
+          "createDate": "Nov 14, 2017 10:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+        }
+      ]
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_gmt_vmk_mlb)|3.9.0|
+|inventories|List|详情参考[inventories](#p_c23_vmk_mlb)|3.9.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.9.0|
+|description|String|错误的概要描述|3.9.0|
+|details|String|错误的详细信息|3.9.0|
+|elaboration|String|保留字段，默认为null|3.9.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.9.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.9.0|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.9.0|
+|hostUuid|String|主机UUID|3.9.0|
+|bondingName|String|Bond名称|3.9.0|
+|mode|String|Bond模式|3.9.0|
+|xmitHashPolicy|String|哈希策略|3.9.0|
+|miiStatus|String|mii状态|3.9.0|
+|mac|String|MAC地址|3.9.0|
+|ipAddresses|List|IP地址|3.9.0|
+|miimon|Long|mii监控间隔|3.9.0|
+|allSlavesActive|Boolean| |3.9.0|
+|createDate|Timestamp|创建时间|3.9.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.9.0|
+|slaves|List|详情参考[slaves](#p_ggv_5mk_mlb)|3.9.0|
+
+### slaves
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.9.0|
+|hostUuid|String|主机UUID|3.9.0|
+|bondingUuid|String|Bond UUID|3.9.0|
+|interfaceName|String|网卡名称|3.9.0|
+|interfaceType|String|网卡应用状态，有nomaster、bridgeSlave、bondSlave|3.9.0|
+|speed|Long|网卡速率|3.9.0|
+|slaveActive|Boolean|Bond链路状态|3.9.0|
+|carrierActive|Boolean|物理链路状态|3.9.0|
+|ipAddresses|List|IP地址|3.9.0|
+|mac|String|MAC地址|3.9.0|
+|pciDeviceAddress|String|网卡PCI地址|3.9.0|
+|createDate|Timestamp|创建时间|3.9.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.9.0|
+
+## SDK示例
+Java SDK
+
+```
+QueryHostNetworkBondingAction action = new QueryHostNetworkBondingAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryHostNetworkBondingAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryHostNetworkBondingAction action = QueryHostNetworkBondingAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryHostNetworkBondingAction.Result res = action.call()
+```
+
+</APIPage>

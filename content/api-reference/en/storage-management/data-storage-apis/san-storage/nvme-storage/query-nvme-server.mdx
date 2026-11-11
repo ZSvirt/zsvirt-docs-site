@@ -1,0 +1,63 @@
+---
+title: "Query NVMe Server"
+---
+
+<APIPage method="GET" path="/v1/storage-devices/nvme/servers" altPaths={["/v1/storage-devices/nvme/servers/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/storage-devices/nvme/servers
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/storage-devices/nvme/servers/dc4a7cc72a763b19b05aaba063a4cc29
+```
+
+Queryable Fields
+
+Run the CLI command tool, enter `QueryNvmeServer` and press Tab to view all queryable fields and resource names that can be queried across tables.
+
+## API Response
+This API returns an empty JSON structure `{}` on success, and a JSON structure containing an error field on failure, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+QueryNvmeServerAction action = new QueryNvmeServerAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryNvmeServerAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryNvmeServerAction action = QueryNvmeServerAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryNvmeServerAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,10 @@
+{
+  "title": "VM Snapshot Management",
+  "pages": [
+    "overview",
+    "basic-operations",
+    "policy",
+    "usage-recommendations"
+  ],
+  "pagesIndex": "overview"
+}

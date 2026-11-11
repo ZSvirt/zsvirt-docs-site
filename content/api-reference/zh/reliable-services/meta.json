@@ -1,0 +1,10 @@
+{
+  "title": "可靠服务",
+  "pages": [
+    "mn-monitoring-apis",
+    "drs-policy-apis",
+    "vm-scheduling-policy-interfaces",
+    "ha-policy-interfaces"
+  ],
+  "pagesIndex": "index"
+}

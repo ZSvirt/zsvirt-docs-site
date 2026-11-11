@@ -1,0 +1,114 @@
+---
+title: "添加飞书@用户"
+---
+
+<APIPage method="POST" path="/v1/sns/application-endpoints/feishu/at-persons">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "userId": "18099997777",
+    "endpointUuid": "9214e9f129783370bea45388a1734073",
+    "remark": "jack"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"userId":"18099997777","endpointUuid":"9214e9f129783370bea45388a1734073","remark":"jack"}}' \
+http://localhost:8080/zstack/v1/sns/application-endpoints/feishu/at-persons
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|userId|String|body\(包含在**params**结构中\)|飞书用户ID| |4.2.0|
+|endpointUuid|String|body\(包含在**params**结构中\)|飞书终端UUID| |4.2.0|
+|resourceUuid \(可选\)|String|body\(包含在**params**结构中\)|资源UUID| |4.2.0|
+|systemTags \(可选\)|List|body|系统标签| |4.2.0|
+|userTags \(可选\)|List|body|用户标签| |4.2.0|
+|tagUuid \(可选\)|List|body\(包含在**params**结构中\)|标签UUID列表| |4.2.0|
+|remark \(可选\)|String|body\(包含在**params**结构中\)|备注| |4.2.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "554e2a66f6124d4c89e5c27179364681",
+    "userId": "18988887777",
+    "endpointUuid": "76b5f7a29a3a403fa8e3701902135bcf",
+    "createDate": "Mar 26, 2024 2:47:17 AM",
+    "lastOpDate": "Mar 26, 2024 2:47:17 AM",
+    "remark": "jack"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.2.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_kzq_vpx_bdb)|4.2.0|
+|inventory|SNSFeiShuAtPersonInventory|详情参考[inventory](#p_nmx_vpx_bdb)|4.2.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|5.0.0|
+|description|String|错误的概要描述|5.0.0|
+|details|String|错误的详细信息|5.0.0|
+|elaboration|String|保留字段，默认为null|5.0.0|
+|opaque|LinkedHashMap|保留字段，默认为null|5.0.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|5.0.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.2.0|
+|userId|String|飞书用户ID|4.2.0|
+|endpointUuid|String|飞书Endpoint UUID|4.2.0|
+
+## SDK示例
+Java SDK
+
+```
+AddSNSFeiShuAtPersonAction action = new AddSNSFeiShuAtPersonAction();
+action.userId = "18099997777";
+action.endpointUuid = "9214e9f129783370bea45388a1734073";
+action.remark = "jack";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddSNSFeiShuAtPersonAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddSNSFeiShuAtPersonAction action = AddSNSFeiShuAtPersonAction()
+action.userId = "18099997777"
+action.endpointUuid = "9214e9f129783370bea45388a1734073"
+action.remark = "jack"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddSNSFeiShuAtPersonAction.Result res = action.call()
+```
+
+</APIPage>

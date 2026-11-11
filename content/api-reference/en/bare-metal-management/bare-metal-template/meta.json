@@ -1,0 +1,11 @@
+{
+  "title": "Bare Metal Template Related Interfaces",
+  "pages": [
+    "add-preconfiguration-template",
+    "delete-preconfiguration-template",
+    "change-preconfiguration-template-state",
+    "update-preconfiguration-template",
+    "query-preconfiguration-template"
+  ],
+  "pagesIndex": "index"
+}

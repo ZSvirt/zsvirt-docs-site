@@ -1,0 +1,11 @@
+{
+  "title": "Alarm Service",
+  "pages": [
+    "overview",
+    "notification-targets",
+    "message-templates",
+    "alarm-rules",
+    "alarm-messages"
+  ],
+  "pagesIndex": "overview"
+}

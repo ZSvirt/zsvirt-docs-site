@@ -1,0 +1,30 @@
+---
+title: "管理节点启动失败，报错“ERROR 2002: Can't connect to MySQL server”，如何解决？"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+## 现象
+管理节点启动失败，出现报错：ERROR 2002: Can't connect to MySQL server。
+
+## 原因
+管理节点的数据库状态异常，出现报错：`service changed on disk`。
+
+## 解决方案
+1.  登录管理节点，执行以下命令，重新加载配置文件：
+
+    ```
+    systemctl daemon-reload
+    ```
+
+2.  执行以下命令，重启数据库服务：
+
+    ```
+    systemctl restart mariadb
+    ```
+
+3.  执行以下命令，启动管理节点：
+
+    ```
+    zstack-ctl start
+    ```

@@ -1,0 +1,10 @@
+{
+  "title": "Kernel Adapter",
+  "pages": [
+    "index",
+    "create",
+    "modify",
+    "delete"
+  ],
+  "pagesIndex": "index"
+}

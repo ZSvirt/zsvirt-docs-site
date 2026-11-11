@@ -1,0 +1,24 @@
+---
+title: 'Delete a Virtual Machine'
+---
+
+-   You cannot move virtual machines to recycle bin or delete virtual machines that are in the running, paused, crashed, or unknown state. Shut down the VM first before perform the action.
+-   (Optional) The platform provides deletion protection for virtual machines and disks. You can define how resources are deleted by customizing the deletion policy in system parameters. By default, the platform adopts a delayed deletion for VM deletion policy (retained for 7 days) and disk deletion policy (retained for 3 days). Deleted resources are first moved to the recycle bin and permanently deleted after the retention period. For more information, see System Parameters.
+
+1.  In the navigation pane, choose **Inventory** &gt; **VM and Host**.
+
+2.  Select a target virtual machine.
+
+3.  On the VM details page, click **Actions** &gt; **Move to Recycle Bin**.
+
+    To delete multiple virtual machines, go to the virtual machine tab of the parent resources (host, cluster, data center). For example, on the host's Virtual Machine tab, select the VMs you want to delete, then click **Bulk Action** &gt; **Move to Recycle Bin**.
+
+    The delete button label changes based on the **VM Deletion Policy**. When the deletion policy is set to immediate deletion, the button appears as "Delete". When the deletion policy is set to delayed deletion or never delete, the button appears as "Move to Recycle Bin".
+
+4.  In the confirmation dialog, select whether to simultaneously delete disks attached to the virtual machine (excluding shared disks).
+
+    When selected, disks will be deleted or moved to recycle bin according to the defined disk deletion policy.
+
+5.  After acknowledging the risk, click **OK**.
+
+The deletion releases the associated CPU, memory, and IP address resources.

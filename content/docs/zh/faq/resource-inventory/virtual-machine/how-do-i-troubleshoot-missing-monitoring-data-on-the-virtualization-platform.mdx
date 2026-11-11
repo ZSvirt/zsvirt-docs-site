@@ -1,0 +1,15 @@
+---
+title: "虚拟化平台监控数据不显示，如何排查？"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+## 解决方案
+-   可尝试以下方法进行排查：
+-   进入主机系统，使用`cat /etc/sysconfig/iptables`命令查看主机是否开放**7069**、 **9100**、 **9103**端口。若端口未开放，可尝试重连主机。
+
+-   使用浏览器访问**$HOST\_IP:9103**，查看具体未显示的监控数据。例如，可通过搜索虚拟机UUID 查看该虚拟机监控数据。若该虚拟机监控数据未显示，可进入主机系统执行`pkill collectd`命令中止collectd服务，再尝试重连主机。
+
+-   查看管理节点配置文件`/var/lib/zstack/prometheus/data2`的所有者是否为**zstack**。若所有者不是**zstack**，执行`pkill promethues`命令中止promethues服务，等待30秒后管理节点自动拉起promethues服务。
+
+-   若执行以上操作后，仍存在监控数据未显示，可尝试重启主机或删除主机并重新添加。

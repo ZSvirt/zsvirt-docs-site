@@ -1,0 +1,123 @@
+---
+title: 'Virtual Machine VMTools'
+---
+
+The Virtual Machine VMTools is a collection of drivers and tools that enrich virtual machine functionality and enhance performance.
+
+## VMTools Components
+VMTools primarily includes the following tools and drivers, which may vary depending on the operating system.
+
+<table className="doc-feature-table" id="table_x4n_hz3_dfc"><thead><tr><th>
+
+OS
+
+</th><th>
+
+VMTools Components
+
+</th><th>
+
+Description
+
+</th></tr></thead><tbody><tr><td rowSpan="2">
+
+Linux
+
+</td><td>
+
+Advanced Monitoring Agent
+
+</td><td>
+
+An agent installed on virtual machines for collecting VM advanced monitoring data, including CPU, memory, and disk capacity data.
+
+</td></tr><tr><td>
+
+QEMU Guest Agent (QGA)
+
+</td><td>
+
+An application for interaction between virtual machines and hosts, without relying on network. It can read and deliver VM configurations, and push monitoring data.
+
+<Callout type="info">
+Linux OS usually comes with built-in virtio drivers and cloud-init, so the VMTools for Linux does not include these two tools. If your Linux OS lacks them, you can install them manually through other methods.
+</Callout>
+
+</td></tr><tr><td rowSpan="4">
+
+Windows
+
+</td><td>
+
+Advanced Monitoring Agent
+
+</td><td>
+
+An agent installed on virtual machines for collecting VM advanced monitoring data, including CPU, memory, and disk capacity data.
+
+</td></tr><tr><td>
+
+QGA
+
+</td><td>
+
+An application for interaction between virtual machines and hosts, without relying on network. It can read and deliver VM configurations, and push monitoring data.
+
+</td></tr><tr><td>
+
+Virtio Driver
+
+</td><td>
+
+A collection of drivers to improve the VM performance.-   SCSI controller driver: Used to improve the VM disk performance in a virtualization environment.
+-   PCI simple communications controller driver: Used to realize the communications between a Windows virtual machine and the underlying KVM virtualization.
+-   PCI device driver: Used to realize the balloon memory scaling.
+-   Ethernet adapter driver: Used to improve the network performance of a Windows virtual machine in a virtualization environment.
+
+</td></tr><tr><td>
+
+Cloudbase-init
+
+</td><td>
+
+A component helps realize the User Data import and other customized functions.
+
+</td></tr><tr><td>
+
+FreeBSD
+
+</td><td>
+
+Advanced Monitoring Agent
+
+</td><td>
+
+An agent installed on virtual machines for collecting VM advanced monitoring data, including CPU, memory, and disk capacity data.
+
+</td></tr></tbody>
+</table>
+
+## Using VMTools
+After installing VMTools on a virtual machine, you can achieve advanced monitoring, configuration issuance, and configuration reading.
+
+-   **Advanced Monitoring**: Advanced monitoring is the monitoring data obtained from the virtual machine by the advanced monitoring agent, which is periodically pushed to the host via DHCP service or QGA. You can use line charts to monitor real-time trends in virtual machine performance, including CPU, memory, and disk capacity.
+-   **Configuration Issuance**: Through QGA in VMTools, parameters set on the platform are actually issued to take effect inside the virtual machine, including the virtual machine hostname and network configurations.
+    -   Hostname: After installing the latest version of VMTools, users can modify the hostname of a running virtual machine, and the new hostname will be issued directly via QGA without needing to restart the virtual machine.
+
+        <Callout type="info">
+        If you need to issue the hostname via QGA, please install VMTools before modifying the hostname.
+        </Callout>
+
+    -   Network Configuration: When distributed port groups do not have DHCP services enabled, IP addresses, DNS, MTU, and other parameters set on the platform need to be issued via QGA to take effect on the NIC. After installing VMTools, the specified IP addresses and other parameters will automatically take effect.
+-   **Configuration Reading**: Through QGA in VMTools, the IP address configured on the virtual machine's NIC is automatically read, and the successfully read IP address can be displayed and managed on the platform.
+
+    <Callout type="info">
+    -   If the distributed port group to which the virtual machine's NIC belongs does not have DHCP enabled, and the virtual machine has VMTools installed and is in a running state, it supports automatically reading the virtual machine's NIC configuration information.
+    -   If an IP address is already configured inside the virtual machine, it will be read and overwrite the IP address configured on the platform.
+    -   If there is a duplicate IP address between the virtual machine's NIC IP address and the IP addresses in its port group, an alert will be triggered.
+    </Callout>
+-   **[Install VMTools on Linux VMs](/en/docs/user-guide/compute/vm/vmtools/install-linux)**  
+During the installation, you will be guided to first attach the VMTools ISO, then enter the VM console to manually execute the installation commands.
+-   **[Install VMTools on Windows VMs](/en/docs/user-guide/compute/vm/vmtools/install-windows)**  
+During the installation, you will be guided to first attach the VMTools ISO, then enter the VM console to install VMTools following the prompted steps.
+-   **[VMTools Compatibility with OS](/en/docs/user-guide/compute/vm/vmtools/os-compatibility)**

@@ -1,0 +1,142 @@
+---
+title: "Query FC Storage LUN"
+---
+
+<APIPage method="GET" path="/v1/storage-devices/fiber-channel/luns" altPaths={["/v1/storage-devices/fiber-channel/luns/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/storage-devices/fiber-channel/luns
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/storage-devices/fiber-channel/luns/2bb2719f7d45316a80e333c90bbf6e59
+```
+
+Queryable Fields
+
+Run the CLI command-line tool, enter `QueryFiberChannelLun` and press Tab to view all queryable fields and resource names that support cross-table queries.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "fiberChannelStorageUuid": "9f1895c8d1b6306e908df42244901617",
+      "scsiLunHostRefs": [],
+      "scsiLunVmInstanceRefs": [],
+      "name": "fc-lun-36b083fe000daf018000022905ba35d8f",
+      "uuid": "aaab6d1a63713ae0ac18a21b9547312b",
+      "wwid": "36b083fe000daf018000022905ba35d8f",
+      "vendor": "DELL",
+      "model": "MD32xx",
+      "wwn": "0x6f01faf000d5c3e7",
+      "serial": "6b083fe000daf018000015505abbe00a",
+      "type": "mpath",
+      "path": "pci-0000:05:00.0-fc-0x2012b083fedaf018-lun-11",
+      "size": 5497558138880
+    },
+    {
+      "fiberChannelStorageUuid": "9452ad8bb69f33c495bf0da260d80003",
+      "scsiLunHostRefs": [],
+      "scsiLunVmInstanceRefs": [],
+      "name": "fc-lun-36f01faf000d5c3e7000023ef5ba362f2",
+      "uuid": "cc050d2f06163d9dbf6d82cd61b7f008",
+      "wwid": "36f01faf000d5c3e7000023ef5ba362f2",
+      "vendor": "DELL",
+      "model": "MD32xx",
+      "wwn": "0x6b083fe000daf018",
+      "serial": "6b083fe000daf018000015505abbe00a",
+      "type": "mpath",
+      "path": "pci-0000:05:00.0-fc-0x2012b083fedaf018-lun-12",
+      "size": 5497558138880
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See [error](#p_e44_znm_qfb) for details|3.1.0|
+|inventories|List|See [inventories](#p_ic5_znm_qfb) for details|3.1.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. Globally unique identifier of the error, for example SYS.1000, HOST.1001.|0.6|
+|description|String|Brief error description|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause error. The error that caused the current error. If there is no original error, this field is null.|0.6|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource. Uniquely identifies the resource.|3.1.0|
+|fiberChannelStorageUuid|String|FC SAN Storage UUID|3.1.0|
+|wwid|String|Disk globally unique identifier|3.1.0|
+|vendor|String|Vendor|3.1.0|
+|model|String|Model|3.1.0|
+|wwn|String|Disk WWN|3.1.0|
+|serial|String|Disk serial number|3.1.0|
+|type|String|Disk type|3.1.0|
+|path|String|Disk path|3.1.0|
+|size|Long|Disk size|3.1.0|
+|createDate|Timestamp|Create time|3.1.0|
+|lastOpDate|Timestamp|Last update time|3.1.0|
+|name|String|Resource name|3.1.0|
+|state|String|Enabled status|3.1.0|
+|scsiLunHostRefs|List|See [scsiLunHostRefs](#p_dzf_hxl_s2c) for details|3.1.0|
+|scsiLunVmInstanceRefs|List|See [scsiLunVmInstanceRefs](#p_wwq_jxl_s2c) for details|3.1.0|
+
+### scsiLunHostRefs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|scsiLunUuid|String|SCSI Lun UUID|3.1.0|
+|hostUuid|String|Host UUID|3.1.0|
+|createDate|Timestamp|Create time|3.1.0|
+|lastOpDate|Timestamp|Last update time|3.1.0|
+
+### scsiLunVmInstanceRefs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|scsiLunUuid|String|SCSI Lun UUID|3.1.0|
+|vmInstanceUuid|String|Virtual Machine UUID|3.1.0|
+|createDate|Timestamp|Create time|3.1.0|
+|lastOpDate|Timestamp|Last update time|3.1.0|
+
+## SDK Examples
+Java SDK
+
+```
+QueryFiberChannelLunAction action = new QueryFiberChannelLunAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryFiberChannelLunAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryFiberChannelLunAction action = QueryFiberChannelLunAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryFiberChannelLunAction.Result res = action.call()
+```
+
+</APIPage>

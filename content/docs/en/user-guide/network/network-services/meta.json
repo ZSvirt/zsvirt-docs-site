@@ -1,0 +1,8 @@
+{
+  "title": "Network Service",
+  "pages": [
+    "index",
+    "security-group"
+  ],
+  "pagesIndex": "index"
+}

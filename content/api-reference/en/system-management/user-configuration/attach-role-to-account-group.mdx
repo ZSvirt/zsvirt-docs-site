@@ -1,0 +1,83 @@
+---
+title: "Attach Role to Account Group"
+---
+
+<APIPage method="POST" path="/v1/account-groups/{groupUuid}/roles">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "roleUuids": [
+      "314c999460493f589963a021e0478054"
+    ]
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, the **systemTags** and **userTags** fields are optional. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"roleUuids":["314c999460493f589963a021e0478054"]}}' \
+http://localhost:8080/zstack/v1/account-groups/c271dab858c63bd288502e9ee4e0498d/roles
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|groupUuid|String|url|Account group UUID| |4.10.0|
+|roleUuids|List|body \(contained in the `params` structure\)|Role UUID list| |4.10.0|
+|systemTags \(Optional\)|List|body|System tags| |4.10.0|
+|userTags \(Optional\)|List|body|User tags| |4.10.0|
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+AttachRoleToAccountGroupAction action = new AttachRoleToAccountGroupAction();
+action.groupUuid = "c271dab858c63bd288502e9ee4e0498d";
+action.roleUuids = asList("314c999460493f589963a021e0478054");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AttachRoleToAccountGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AttachRoleToAccountGroupAction action = AttachRoleToAccountGroupAction()
+action.groupUuid = "c271dab858c63bd288502e9ee4e0498d"
+action.roleUuids = [314c999460493f589963a021e0478054]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AttachRoleToAccountGroupAction.Result res = action.call()
+```
+
+</APIPage>

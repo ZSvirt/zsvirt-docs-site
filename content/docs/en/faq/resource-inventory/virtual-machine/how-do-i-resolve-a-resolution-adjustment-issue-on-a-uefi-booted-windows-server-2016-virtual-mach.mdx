@@ -1,0 +1,9 @@
+---
+title: "How do I resolve a resolution adjustment issue on a UEFI-booted Windows Server 2016 virtual machine?"
+---
+
+## Cause
+Virtual machines with UEFI boot support require OVMF firmware. Resolution must be changed through this firmware.
+
+## Solution
+-   Restart the virtual machine from within the Windows system. When the UEFI interface appears, press ESC to enter the boot settings, then set the resolution in OVMF Manager.

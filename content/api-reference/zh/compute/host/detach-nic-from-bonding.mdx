@@ -1,0 +1,227 @@
+---
+title: "从Bond网口解绑slave"
+---
+
+<APIPage method="PUT" path="/v1/hosts/bondings/{uuid}/detach">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "detachNicFromBonding": {
+    "slaveUuids": [
+      "23ac510ff6a830ac8a52553e86e00b07"
+    ],
+    "type": "LinuxBonding"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"detachNicFromBonding":{"slaveUuids":["23ac510ff6a830ac8a52553e86e00b07"],"type":"LinuxBonding"}}' \
+http://localhost:8080/zstack/v1/hosts/bondings/bee329acc0573a16bc30fafada5a96f6/detach
+```
+
+参数列表
+
+<table id="table_zbn_lsb_3cb"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+资源的UUID，唯一标示该资源
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+slaveUuids
+
+</td><td>
+
+List
+
+</td><td>
+
+body \(包含在**detachNicFromBonding**结构中\)
+
+</td><td>
+
+slave网卡Uuids
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+type \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(包含在**detachNicFromBonding**结构中\)
+
+</td><td>
+
+Bond类型
+
+</td><td>
+
+-   LinuxBonding
+-   OvsBonding
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.11
+
+</td></tr></tbody>
+</table>
+
+## API返回
+该API成功时返回一个空的JSON结构**`{}`**，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+DetachNicFromBondingAction action = new DetachNicFromBondingAction();
+action.uuid = "bee329acc0573a16bc30fafada5a96f6";
+action.slaveUuids = asList("23ac510ff6a830ac8a52553e86e00b07");
+action.type = "LinuxBonding";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DetachNicFromBondingAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DetachNicFromBondingAction action = DetachNicFromBondingAction()
+action.uuid = "bee329acc0573a16bc30fafada5a96f6"
+action.slaveUuids = [23ac510ff6a830ac8a52553e86e00b07]
+action.type = "LinuxBonding"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DetachNicFromBondingAction.Result res = action.call()
+```
+
+</APIPage>

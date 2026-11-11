@@ -1,0 +1,22 @@
+---
+title: "虚拟机删除快照超时，如何解决？"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+## 原因
+删除快照的默认超时时间为3小时，快照容量过大导致操作超时。
+
+## 解决方案
+1.  SSH连接至管理节点。
+
+2.  依次执行以下命令，修改超时时间为24小时：
+
+    ```
+    [root@localhost ~]# zstack-cli
+    admin >>> LogInByAccount accountName=admin password=$password  //密码为平台admin用户密码
+    admin >>> UpdateGlobalConfig name=org.zstack.header.storage.snapshot.APIBatchDeleteVolumeSnapshotMsg category=apiTimeout value=24h
+    admin >>> UpdateGlobalConfig name=org.zstack.header.storage.snapshot.APIDeleteVolumeSnapshotMsg category=apiTimeout value=24h
+    ```
+
+3.  重新尝试删除快照。

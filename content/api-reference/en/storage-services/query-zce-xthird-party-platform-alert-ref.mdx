@@ -1,0 +1,82 @@
+---
+title: "Query ZCE-X and Third-party Alert Platform Relationship"
+---
+
+<APIPage method="GET" path="/v1/zce-x-plugin/alert-platform">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zce-x-plugin/alert-platform?q=zceXUuid=77e1393bf5aa4536a018b4c0c4e29c72
+```
+
+Queryable Fields
+
+Run the CLI command tool, enter `QueryZceX` and press Tab to view all queryable fields and resource names that can be queried across tables.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "zceXUuid": "77e1393bf5aa4536a018b4c0c4e29c72",
+      "thirdPartyPlatformUuid": "eec32b6fe11a464790641439f1d7c754",
+      "createDate": "Nov 14, 2017 2:20:57 PM"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean|Whether the query was successful|4.10.6|
+|inventories|List|For details, see [inventories](#p_q5z_fnt_q2c)|4.10.6|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. For details, see [error](#p_bcl_x1v_m1b)|4.10.6|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|zceXUuid|String|ZCE-X resource UUID|4.10.6|
+|thirdPartyPlatformUuid|String|Associated third-party alert platform UUID|4.10.6|
+|createDate|Timestamp|Creation time|4.10.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, for example SYS.1000, HOST.1001|4.10.0|
+|description|String|Brief summary of the error|4.10.0|
+|details|String|Detailed error information|4.10.0|
+|elaboration|String|Reserved field, defaults to null|4.10.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|4.10.0|
+|cause|ErrorCode|Root cause: the source error that triggered the current error. If there is no original error, this field is null|4.10.0|
+
+## SDK Examples
+Java SDK
+
+```
+QueryZceXThirdPartyPlatformAlertRefAction action = new QueryZceXThirdPartyPlatformAlertRefAction();
+action.conditions = asList("zceXUuid=77e1393bf5aa4536a018b4c0c4e29c72");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryZceXThirdPartyPlatformAlertRefAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryZceXThirdPartyPlatformAlertRefAction action = QueryZceXThirdPartyPlatformAlertRefAction()
+action.conditions = ["zceXUuid=77e1393bf5aa4536a018b4c0c4e29c72"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryZceXThirdPartyPlatformAlertRefAction.Result res = action.call()
+```
+
+</APIPage>

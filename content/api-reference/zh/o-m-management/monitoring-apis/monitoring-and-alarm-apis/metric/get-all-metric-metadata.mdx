@@ -1,0 +1,92 @@
+---
+title: "获取所有metric元数据"
+---
+
+<APIPage method="GET" path="/v1/zwatch/metrics/meta-data">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zwatch/metrics/meta-data?name=VMHAProcess
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|name \(可选\)|String|query|监控指标名称| |3.9.0|
+|namespace \(可选\)|String|query|监控指标命名空间| |3.9.0|
+|systemTags \(可选\)|List|query|系统标签| |2.3|
+|userTags \(可选\)|List|query|用户标签| |2.3|
+
+## API返回
+返回示例
+
+```
+{
+  "metrics": [
+    {
+      "namespace": "ZStack/VM",
+      "name": "org.zstack.zwatch.datatype.Metric@4efa6b58",
+      "description": "CPUIdleUtilization",
+      "labelNames": [
+        "VMUuid",
+        "CPUNum"
+      ],
+      "driver": "PrometheusDatabaseDriver"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_gt1_vxx_bdb)|2.3|
+|metrics|List|详情参考[metrics](#p_wrx_vxx_bdb)|2.3|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### metrics
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|namespace|String|名字空间|2.3|
+|name|String|资源名称|2.3|
+|description|String|描述|3.9.0|
+|labelNames|List|标签名|2.3|
+
+## SDK示例
+Java SDK
+
+```
+GetAllMetricMetadataAction action = new GetAllMetricMetadataAction();
+action.name = "VMHAProcess";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetAllMetricMetadataAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetAllMetricMetadataAction action = GetAllMetricMetadataAction()
+action.name = "VMHAProcess"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetAllMetricMetadataAction.Result res = action.call()
+```
+
+</APIPage>

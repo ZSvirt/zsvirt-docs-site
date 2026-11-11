@@ -1,0 +1,50 @@
+---
+title: 'Create a Distributed Port Group'
+---
+
+1.  In the navigation pane, choose **Inventory** &gt; **Network Resource**.
+
+2.  In the resource tree, right-click a target distributed switch and select **New Distributed Port Group**.
+
+3.  In the New Distributed Port Group dialog, set the following parameters:
+
+    -   **Name**: Enter a name for the distributed port group.
+    -   **Description**: Enter a brief description for the distributed port group.
+    -   **Distributed Switch**: Select a distributed switch for the distributed port group.
+    -   **VLAN Type**: Select a VLAN type. When selecting Standard VLAN, you need to specify a VLAN ID.
+    -   **DHCP Service**: Choose whether to enable the automatic IP address assignment for platform resources.
+    -   **IP Address Management**: Choose whether to enable the IP address management. When enabled, you can add network ranges to this distributed port group. IP addresses in these ranges can be allocated via DHCP service (when enabled) to resources in the network.
+        -   **IP Address Type**: Supports IPv4 and IPv6.
+
+            When selecting IPv4, configure the following parameters:
+
+            -   **IP Allocation Policy**: After enabling the DHCP service, you can select one of the following policies to assign IP addresses.
+                -   Random Allocation: The system randomly assigns IP addresses from the network range.
+                -   Allocate in Order: The system assigns all available IP addresses from the network range in ascending order. Released IP addresses are assigned in the next allocation.
+
+                    Example: Assume that the network range is *192.168.0.101*～*192.168.0.120*, within which *192.168.0.101*～*192.168.0.108* are allocated. If *192.168.0.106* is released, it will be assigned first in the next allocation.
+
+                -   Allocate in Cycle: The system assigns available IP addresses from the network range in ascending order. Released IP addresses are assigned when currently available IP addresses are used up.
+
+                    Example: Assume that the network range is *192.168.0.101*～*192.168.0.120*, within which *192.168.0.101*～*192.168.0.108* are allocated. If *192.168.0.106* is released, it will be assigned after *192.168.0.120* is used.
+
+            -   **Network Range Method**: Supports IP range and CIDR.
+                -   For IP range, enter start IP, end IP, netmask, and gateway.
+
+                    <Callout type="info">
+                    Do not include gateway, broadcast address, or network addresses in the IP range.
+                    </Callout>
+
+                -   For CIDR, enter CIDR Block and gateway. You can enter the first or last CIDR address for gateway. If left blank, the fist CIDR address will be used.
+            When selecting IPv6, configure the following parameters:
+
+            -   **Network Range Method**: Supports IP range and CIDR.
+                -   For IP range, enter start IP, end IP, prefix length, and gateway.
+                -   For CIDR, enter CIDR Block.
+            -   **IP Configuration Mode**: Select IPv6 address allocation method.
+                -   Stateful-DHCP (Default): The interface address and other parameters are all configured through DHCP. The IP range method supports stateful DHCP.
+                -   Stateless-DHCP: The interface address is automatically derived from the route advertisement prefix and the interface Mac address. Other parameters are configured through DHCP.
+                -   SLAAC: The interface address is automatically derived from the prefix of the route advertisement that also contains other parameters.
+    -   **DHCP IP**: Specify an IP address used by the DHCP service.
+    -   **DNS**: Specify a DNS to provide DNS resolution service for the distributed port group.
+4.  Review the configuration and click **OK**.

@@ -1,0 +1,124 @@
+---
+title: "Query MDEV Devices Sliced from PCI Device"
+---
+
+<APIPage method="GET" path="/v1/mdev-devices">
+
+```
+GET zstack/v1/mdev-devices/{uuid}
+```
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/mdev-devices
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/mdev-devices/9fa9e261caad306f89ccde6f0dca7a1d
+```
+
+Queryable Fields
+
+Run the CLI command tool, enter `QueryMdevDevice` and press Tab to view all queryable fields and cross-resource names.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "597624b580d1458f82671b0ef77cf6a4",
+      "name": "GRID M60-2A",
+      "parentUuid": "90c171f07b21452b87b6d5ee58f4d687",
+      "hostUuid": "b440c9393fc644cc8394d789ea1e18e1",
+      "mdevSpecUuid": "91b07312092741f18a382942a92f1373",
+      "type": "GPU_Video_Controller",
+      "state": "Enabled",
+      "status": "Active",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_eby_vch_xhb)|3.5.0|
+|inventories|List|See [inventories](#p_vqs_vch_xhb)|3.5.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code, a globally unique identifier of the error, e.g. SYS.1000, HOST.1001|3.5.0|
+|description|String|Brief description of the error|3.5.0|
+|details|String|Detailed error information|3.5.0|
+|elaboration|String|Reserved field, defaults to null|3.5.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|3.5.0|
+|cause|ErrorCode|Root cause, the source error that caused the current error, null if no original error|3.5.0|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifies the resource|3.5.0|
+|name|String|Resource name|3.5.0|
+|description|String|Resource description|3.5.0|
+|parentUuid|String|Physical PCI device UUID|3.5.0|
+|hostUuid|String|Host UUID|3.5.0|
+|vmInstanceUuid|String|Virtual Machine UUID|3.5.0|
+|mdevSpecUuid|String|MDEV device spec UUID|3.5.0|
+|createDate|Timestamp|Create date|3.5.0|
+|lastOpDate|Timestamp|Last update date|3.5.0|
+|type|MdevDeviceType|See [type](#p_osn_vch_xhb)|3.5.0|
+|state|MdevDeviceState|See [state](#p_n2k_vch_xhb)|3.5.0|
+|status|MdevDeviceStatus|See [status](#p_ylg_vch_xhb)|3.5.0|
+
+### type
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|GPU\_Video\_Controller|MdevDeviceType|GPU video controller|3.5.0|
+
+### state
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Enabled|MdevDeviceState|Enabled|3.5.0|
+|Disabled|MdevDeviceState|Disabled|3.5.0|
+
+### status
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Active|MdevDeviceStatus|Ready|3.5.0|
+|Attached|MdevDeviceStatus|Attached|3.5.0|
+
+## SDK Examples
+Java SDK
+
+```
+QueryMdevDeviceAction action = new QueryMdevDeviceAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryMdevDeviceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryMdevDeviceAction action = QueryMdevDeviceAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryMdevDeviceAction.Result res = action.call()
+```
+
+</APIPage>

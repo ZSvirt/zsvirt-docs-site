@@ -1,0 +1,22 @@
+---
+title: "Windows虚拟机挂载硬盘无法直接识别，如何解决？"
+---
+
+## 解决方案
+1.  可尝试参考以下步骤解决：
+2.  进入磁盘管理器，将挂载的磁盘进行联机操作。
+
+3.  初始化磁盘，随后将磁盘格式化分区，便可成功识别硬盘。
+
+    如[Figure 1](#fig_dtq_1f3_x5b)所示：
+
+    ![初始化磁盘](/docs/faq/images/ZStack_FAQ_Summary_0002_4_1.png)
+
+4.  进入虚拟机dos界面，依次执行以下命令，为磁盘配置防脱机策略：
+
+    ```
+    DOS> DISKPART
+    DISKPART> san
+    DISKPART> san policy=onlineall
+    DISKPART> exit
+    ```

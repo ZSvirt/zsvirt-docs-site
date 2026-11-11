@@ -1,0 +1,61 @@
+---
+title: "解绑快照组"
+---
+
+<APIPage method="DELETE" path="/v1/volume-snapshots/ungroup/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/volume-snapshots/ungroup/8903cef5a11c3457881bfd7bd5f04757
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|快照组的UUID| |3.6.0|
+|systemTags \(可选\)|List|body| | |3.6.0|
+|userTags \(可选\)|List|body| | |3.6.0|
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+UngroupVolumeSnapshotGroupAction action = new UngroupVolumeSnapshotGroupAction();
+action.uuid = "8903cef5a11c3457881bfd7bd5f04757";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UngroupVolumeSnapshotGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UngroupVolumeSnapshotGroupAction action = UngroupVolumeSnapshotGroupAction()
+action.uuid = "8903cef5a11c3457881bfd7bd5f04757"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UngroupVolumeSnapshotGroupAction.Result res = action.call()
+```
+
+</APIPage>

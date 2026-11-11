@@ -1,0 +1,40 @@
+---
+title: 'New Virtual Machine from Snapshot'
+---
+
+You can create a new virtual machine directly from a snapshot. This recovery method does not overwrite the existing virtual machine.
+
+-   Make sure the virtual machine has at least one successfully generated snapshot.
+-   Make sure the platform has sufficient compute, storage, and network resources to support the new virtual machine.
+-   You cannot create a new virtual machine if the selected snapshot is a memory snapshot.
+
+1.  In the navigation pane, choose **Inventory** &gt; **VM and Host**.
+
+2.  Select a target VM and click **Snapshot**.
+
+3.  On the Snapshot tab, select a snapshot point and click **New Virtual Machine**.
+
+4.  In the New Virtual Machine from Snapshot dialog, set the following parameters:
+
+    **Snapshot Information**
+
+    -   **Snapshot**: Display the selected snapshot.
+    **Basic Information**
+
+    -   **Name**: Name of the virtual machine.
+    -   **Quantity**: Default is 1, modification is not supported.
+    -   **Location**: Host or cluster location where the virtual machine resides.
+    -   **OS**: Operating system of the virtual machine, including Linux and Windows
+    -   **Power Status**: Choose whether to automatically power on the virtual machine after the creation.
+    **Hardware Information**
+
+    -   **CPU**: Support adjusting the total number of cores.
+    -   **Memory**: Support adjusting the memory size.
+    -   **Disk**: Display the disk configuration recorded in the snapshot. Modification is not supported.
+    -   **NIC**: Support adjusting port groups, MAC address, IP address, DNS assignment, and security groups
+
+        You can add a new NIC to the virtual machine by clicking **Add NIC**. The new NIC allows customization of the network address and features.
+
+5.  Review the configuration and click **OK**.
+
+Some VM configurations require VMTools. After VM creation, it is recommended to install VMTools to enable certain configurations. For more information about VMTools, see [Virtual Machine VMTools](/en/docs/user-guide/compute/vm/vmtools).

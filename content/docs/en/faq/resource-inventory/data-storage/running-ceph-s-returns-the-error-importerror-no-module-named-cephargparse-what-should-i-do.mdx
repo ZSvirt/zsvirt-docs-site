@@ -1,0 +1,12 @@
+---
+title: "Running ceph -s returns the error \"ImportError: No module named cephargparse\". What should I do?"
+---
+
+## Symptom
+In the enterprise distributed storage environment, running `ceph -s` returns the error "`ImportError: No module named cephargparse`".
+
+## Cause
+The `cephargparse` file is missing.
+
+## Solution
+Check whether the `/usr/lib/python2.7/site-packages/ceph argparse,py` file exists. If it is missing, copy it from a healthy node.

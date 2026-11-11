@@ -1,0 +1,12 @@
+{
+  "title": "SNMP Management",
+  "pages": [
+    "overview",
+    "enable",
+    "modify",
+    "download-mib",
+    "manage-trap-receivers",
+    "disable"
+  ],
+  "pagesIndex": "overview"
+}

@@ -1,0 +1,9 @@
+{
+  "title": "Garbage Collection",
+  "pages": [
+    "trigger-gcjob",
+    "delete-gcjob",
+    "query-gcjob"
+  ],
+  "pagesIndex": "index"
+}

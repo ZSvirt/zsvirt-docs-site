@@ -1,0 +1,12 @@
+{
+  "title": "分布式交换机",
+  "pages": [
+    "index",
+    "create",
+    "uplinks",
+    "topology",
+    "load-unload-cluster",
+    "delete"
+  ],
+  "pagesIndex": "index"
+}

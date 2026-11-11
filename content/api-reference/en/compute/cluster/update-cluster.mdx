@@ -1,0 +1,119 @@
+---
+title: "Update Cluster"
+---
+
+<APIPage method="PUT" path="/v1/clusters/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateCluster": {
+    "name": "cluster1",
+    "description": "test"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateCluster":{"name":"cluster1","description":"test"}}' \
+http://localhost:8080/zstack/v1/clusters/851a3783e1503de2a1b9222014c843c4/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Resource UUID, uniquely identifies the resource| |0.6|
+|name \(optional\)|String|body \(contained in **updateCluster** structure\)|Resource name| |0.6|
+|description \(optional\)|String|body \(contained in **updateCluster** structure\)|Resource description| |0.6|
+|systemTags \(optional\)|List|body|System tag| |0.6|
+|userTags \(optional\)|List|body|User tag| |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "name": "cluster1",
+    "uuid": "9dd0fbecb0e04260ad161c66d1da9f96",
+    "description": "test",
+    "state": "Enabled",
+    "hypervisorType": "KVM",
+    "createDate": "Jun 7, 2017 9:20:29 PM",
+    "lastOpDate": "Jun 7, 2017 9:20:29 PM",
+    "zoneUuid": "25b7ddce968f4cbbb58aa5a205e116ee",
+    "type": "zstack"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See details [error](#p_nwk_1bt_l1b)|0.6|
+|inventory|ClusterInventory|See details [inventory](#p_wnf_1bt_l1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, e.g. SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, default is null|0.6|
+|opaque|LinkedHashMap|Reserved field, default is null|0.6|
+|cause|ErrorCode|Root cause, the error that caused the current error. If there is no original error, this field is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name|0.6|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|description|String|Resource description|0.6|
+|state|String|Cluster state|0.6|
+|hypervisorType|String|Hypervisor type|0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+|zoneUuid|String|Data Center UUID|0.6|
+|type|String|Reserved field|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateClusterAction action = new UpdateClusterAction();
+action.uuid = "ce185b26a4f14153941a868435d94498";
+action.name = "cluster1";
+action.description = "test";
+action.sessionId = "5abfadbc97d64b4687ba6281de117d2d";
+UpdateClusterAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateClusterAction action = UpdateClusterAction()
+action.uuid = "a643ba1b98524c60acced530ce2ded1b"
+action.name = "cluster1"
+action.description = "test"
+action.sessionId = "cc779e5d5344493d9bd1cb1ced887321"
+UpdateClusterAction.Result res = action.call()
+```
+
+</APIPage>

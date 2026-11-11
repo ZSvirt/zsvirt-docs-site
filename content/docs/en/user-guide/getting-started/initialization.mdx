@@ -1,0 +1,25 @@
+---
+title: 'Initialize ZSvirt'
+---
+
+The initialization wizard helps you quickly set up necessary resources for your environment.
+
+You can initialize the environment through the following methods:
+
+-   Initialize manually
+-   Restore from backup data
+
+Notes during the initialization:
+
+-   If you exit the Wizard midway, **you will not be able to enter the Wizard again**.
+-   If no resources are created during the initialization, you can initialize the environment again from the Dashboard page.
+-   If you accidentally exit the Wizard, you can delete the data center and re-enter the initialization wizard from the Dashboard page.
+
+    <Callout type="info">
+    Deleting a data center will delete clusters, hosts, networks, and data storage resources, along with all subordinate resources of each resource. Proceed with caution.
+    </Callout>
+
+-   **[Initialize Manually](/en/docs/user-guide/getting-started/manual-initialization)**  
+You can follow the wizard to initiate a new environment by creating necessary resources, including data center, cluster, host, data storage, image storage, image and distributed port group.
+-   **[Restore from Backup Data](/en/docs/user-guide/getting-started/restore-from-backup)**  
+In the event of a disaster in the local data center, you can rely on the platform's database backup data to rebuild the data center and restore business. You can quickly restore the whole environment from an existing platform database backup using the initialization wizard.

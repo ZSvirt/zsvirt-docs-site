@@ -1,0 +1,113 @@
+---
+title: "新建数据中心"
+---
+
+<APIPage method="POST" path="/v1/zones">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "TestZone",
+    "description": "test zone"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"TestZone","description":"test zone"}}' \
+http://localhost:8080/zstack/v1/zones
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|name|String|body\(包含在**params**结构中\)|资源名称| |0.6|
+|description \(可选\)|String|body\(包含在**params**结构中\)|资源的详细描述| |0.6|
+|resourceUuid \(可选\)|String|body\(包含在**params**结构中\)|用户指定的资源uuid| |0.6|
+|systemTags \(可选\)|List|body|系统标签| |0.6|
+|userTags \(可选\)|List|body|用户标签| |0.6|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "0d26522305c34d07b5661ccda62053c0",
+    "name": "TestZone",
+    "description": "Test",
+    "state": "Enabled",
+    "type": "zstack",
+    "createDate": "Jun 7, 2017 9:20:28 PM",
+    "lastOpDate": "Jun 7, 2017 9:20:28 PM"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_or3_gss_l1b)|0.6|
+|inventory|ZoneInventory|详情参考[inventory](#p_egn_gss_l1b)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|name|String|资源名称|0.6|
+|description|String|资源的详细描述|0.6|
+|state|String| |0.6|
+|type|String| |0.6|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+
+## SDK示例
+Java SDK
+
+```
+CreateZoneAction action = new CreateZoneAction();
+action.name = "TestZone";
+action.description = "test zone";
+action.sessionId = "982a09118de64ef7a9051fde346270c5";
+CreateZoneAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateZoneAction action = CreateZoneAction()
+action.name = "TestZone"
+action.description = "test zone"
+action.sessionId = "79e260dca17b4bdf9b7d7b4e150883df"
+CreateZoneAction.Result res = action.call()
+```
+
+</APIPage>

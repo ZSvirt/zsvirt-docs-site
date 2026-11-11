@@ -1,0 +1,12 @@
+{
+  "title": "Resource Definition",
+  "pages": [
+    "index",
+    "compute-datacenter-cluster-host",
+    "compute-image-image-storage",
+    "compute-vm-vm-group",
+    "storage-datastore",
+    "network-dvs-port-group"
+  ],
+  "pagesIndex": "index"
+}

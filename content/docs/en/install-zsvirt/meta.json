@@ -1,0 +1,12 @@
+{
+  "title": "Installation and Upgrade Tutorial",
+  "pages": [
+    "index",
+    "introduction",
+    "planning",
+    "deploy",
+    "service-management",
+    "upgrade"
+  ],
+  "pagesIndex": "index"
+}

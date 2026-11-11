@@ -1,0 +1,119 @@
+---
+title: "Update Resource Custom Attribute"
+---
+
+<APIPage method="PUT" path="/v1/resource-configurations/{category}/{name}/{resourceUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateResourceConfig": {
+    "value": "10"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the **systemTags** and **userTags** fields are optional. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateResourceConfig":{"value":"10"}}' http://localhost:8080/zstack/v1/resource-configurations/host/cpu.overProvisioning.ratio/afd5f67a253b4990b9e8160672357eed/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|category|String|url|Configuration category| |3.4.0|
+|name|String|url|Configuration name| |3.4.0|
+|resourceUuid|String|url|Resource UUID of the configuration| |3.4.0|
+|value|String|body \(Included in the **updateResourceConfig** structure\)|The configuration value| |3.4.0|
+|systemTags \(Optional\)|List|body| | |3.4.0|
+|userTags \(Optional\)|List|body| | |3.4.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "ce61962673574ff689e2e6cb6f8cf558",
+    "resourceUuid": "435a7c71c82b4b0b971f4674ab346822",
+    "resourceType": "ClusterVO",
+    "name": "cpu.overProvisioning.ratio",
+    "category": "host",
+    "value": "10",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_ij2_mml_zgb) for details|3.4.0|
+|inventory|ResourceConfigInventory|See [inventory](#p_knm_mml_zgb) for details|3.4.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|3.4.0|
+|description|String|A brief description of the error|3.4.0|
+|details|String|The detailed error information|3.4.0|
+|elaboration|String|Reserved field. Default is null|3.4.0|
+|opaque|LinkedHashMap|Reserved field. Default is null|3.4.0|
+|cause|ErrorCode|The root error that caused the current error. If no root error exists, this field is null|3.4.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource, uniquely identifying the resource|3.4.0|
+|resourceUuid|String|The resource UUID associated with the configuration|3.4.0|
+|resourceType|String|The resource type associated with the configuration|3.4.0|
+|name|String|Configuration name|3.4.0|
+|description|String|The detailed description of the configuration|3.4.0|
+|category|String|Configuration category|3.4.0|
+|value|String|The configuration value|3.4.0|
+|createDate|Timestamp|Creation time|3.4.0|
+|lastOpDate|Timestamp|Last modification time|3.4.0|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateResourceConfigAction action = new UpdateResourceConfigAction();
+action.category = "host";
+action.name = "cpu.overProvisioning.ratio";
+action.resourceUuid = "5fa296dff4f04c96b29f38bef93e9e15";
+action.value = "10";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateResourceConfigAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateResourceConfigAction action = UpdateResourceConfigAction()
+action.category = "host"
+action.name = "cpu.overProvisioning.ratio"
+action.resourceUuid = "1e0f389aca364a1f94929bb4f39597b3"
+action.value = "10"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateResourceConfigAction.Result res = action.call()
+```
+
+</APIPage>

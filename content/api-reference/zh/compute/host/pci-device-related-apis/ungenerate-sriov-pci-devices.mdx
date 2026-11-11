@@ -1,0 +1,75 @@
+---
+title: "虚拟化还原支持SR-IOV的PCI设备"
+---
+
+<APIPage method="PUT" path="/v1/pci-devices/{pciDeviceUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "ungenerateSriovPciDevices": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"ungenerateSriovPciDevices":{}}' http://localhost:8080/zstack/v1/pci-devices/31f8b8c366c63901ac928106568eca85/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|pciDeviceUuid|String|url|PCI UUID| |3.5.0|
+|systemTags \(可选\)|List|body|系统标签| |3.5.0|
+|userTags \(可选\)|List|body|用户标签| |3.5.0|
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+UngenerateSriovPciDevicesAction action = new UngenerateSriovPciDevicesAction();
+action.pciDeviceUuid = "31f8b8c366c63901ac928106568eca85";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UngenerateSriovPciDevicesAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UngenerateSriovPciDevicesAction action = UngenerateSriovPciDevicesAction()
+action.pciDeviceUuid = "31f8b8c366c63901ac928106568eca85"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UngenerateSriovPciDevicesAction.Result res = action.call()
+```
+
+</APIPage>

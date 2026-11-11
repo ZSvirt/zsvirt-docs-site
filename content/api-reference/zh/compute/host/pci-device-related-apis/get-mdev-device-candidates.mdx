@@ -1,0 +1,133 @@
+---
+title: "获取可用的MDEV设备"
+---
+
+<APIPage method="GET" path="/v1/mdev-devices/candidates">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/mdev-devices/candidates?vmInstanceUuid=3be91dd3332a3ef0b57831dcfc28a0c2&types=GPU_Video_Controller
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|clusterUuids \(可选\)|List|query|集群UUID| |3.5.0|
+|hostUuid \(可选\)|String|query|主机UUID| |3.5.0|
+|vmInstanceUuid \(可选\)|String|query|虚拟机UUID| |3.5.0|
+|types \(可选\)|List|query|设备类型| |3.5.0|
+|systemTags \(可选\)|List|query|系统标签| |3.5.0|
+|userTags \(可选\)|List|query|用户标签| |3.5.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "ff09c7d3eb084e0c92d91f91559b0015",
+      "name": "GRID M60-2A",
+      "parentUuid": "cd35f76c62ec4e0ca5af3f93434f9410",
+      "hostUuid": "55c3da7722a442fcbf5cc2373cb45dc7",
+      "mdevSpecUuid": "55d7980cf5604dd6b45e2946fa75a312",
+      "type": "GPU_Video_Controller",
+      "state": "Enabled",
+      "status": "Active",
+      "chooser": "None",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_vdd_dch_xhb)|3.5.0|
+|inventories|List|详情参考[inventories](#p_hly_cch_xhb)|3.5.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.5.0|
+|description|String|错误的概要描述|3.5.0|
+|details|String|错误的详细信息|3.5.0|
+|elaboration|String|保留字段，默认为null|3.5.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.5.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.5.0|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.5.0|
+|name|String|资源名称|3.5.0|
+|description|String|资源的详细描述|3.5.0|
+|parentUuid|String|物理PCI设备UUID|3.5.0|
+|hostUuid|String|主机UUID|3.5.0|
+|vmInstanceUuid|String|虚拟机UUID|3.5.0|
+|mdevSpecUuid|String|MDEV设备规格UUID|3.5.0|
+|createDate|Timestamp|创建时间|3.5.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.5.0|
+|type|MdevDeviceType|详情参考[type](#p_wcr_cch_xhb)|3.5.0|
+|state|MdevDeviceState|详情参考[state](#p_ilm_cch_xhb)|3.5.0|
+|status|MdevDeviceStatus|详情参考[status](#p_yt3_cch_xhb)|3.5.0|
+|chooser|MdevDeviceChooser|详情参考[chooser](#p_cjf_3qn_y1c)|4.1.0|
+
+### type
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|GPU\_Video\_Controller|MdevDeviceType|GPU显卡控制器|3.5.0|
+
+### state
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Enabled|MdevDeviceState|启用|3.5.0|
+|Disabled|MdevDeviceState|停用|3.5.0|
+
+### status
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Active|MdevDeviceStatus|就绪|3.5.0|
+|Attached|MdevDeviceStatus|已挂载|3.5.0|
+
+### chooser
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|None|PciDeviceChooser| |4.2.0|
+|Device|PciDeviceChooser| |4.2.0|
+|Spec|PciDeviceChooser| |4.2.0|
+
+## SDK示例
+Java SDK
+
+```
+GetMdevDeviceCandidatesAction action = new GetMdevDeviceCandidatesAction();
+action.vmInstanceUuid = "3be91dd3332a3ef0b57831dcfc28a0c2";
+action.types = asList("GPU_Video_Controller");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetMdevDeviceCandidatesAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetMdevDeviceCandidatesAction action = GetMdevDeviceCandidatesAction()
+action.vmInstanceUuid = "3be91dd3332a3ef0b57831dcfc28a0c2"
+action.types = [GPU_Video_Controller]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetMdevDeviceCandidatesAction.Result res = action.call()
+```
+
+</APIPage>

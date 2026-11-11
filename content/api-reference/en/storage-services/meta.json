@@ -1,0 +1,32 @@
+{
+  "title": "Storage Services",
+  "pages": [
+    "add-zstone-storage",
+    "remove-zstone",
+    "update-zstone-cluster-config",
+    "update-zstone-host-config",
+    "zstone-test-connection",
+    "zce-xtest-connection",
+    "add-zce-x",
+    "create-zce-xalert-platform",
+    "delete-zce-xalert-platform",
+    "get-zce-xcapability",
+    "query-zce-x",
+    "query-zce-xthird-party-platform-alert-ref",
+    "remove-zce-x",
+    "update-zce-xcluster-config",
+    "bootstrap-mini-host",
+    "get-candidate-mini-hosts",
+    "create-mini-cluster",
+    "clean-software-package",
+    "get-directory-usage",
+    "getuploadsoftwarepackagejobdetails",
+    "installsoftwarepackage",
+    "querysoftwarepackage",
+    "uninstallsoftwarepackage",
+    "uploadsoftwarepackage",
+    "upload-and-execute-software-upgrade-package",
+    "upload-software-package-to-backup-storage"
+  ],
+  "pagesIndex": "index"
+}

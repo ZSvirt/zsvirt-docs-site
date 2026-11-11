@@ -1,0 +1,6 @@
+---
+title: "How do I check whether a Virtual Machine supports hardware virtualization?"
+---
+
+## Solution
+-   Run `egrep "vmx|svm" /proc/cpuinfo` in a terminal. If the command produces output, the Virtual Machine supports hardware virtualization.

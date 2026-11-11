@@ -1,0 +1,166 @@
+---
+title: "QueryPortGroup"
+---
+
+<APIPage method="GET" path="/v1/l3-networks/port-group" altPaths={["/v1/l3-networks/port-group/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Sample
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/l3-networks/port-group
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/l3-networks/port-group/c94adc28385a31d99a2c07dfa8120532
+```
+
+Queryable Fields
+
+Run the CLI command tool, enter `QueryPortGroup`, and press Tab to view all queryable fields and resource names that support cross-table queries.
+
+## API Response
+Sample Response
+
+```
+{
+  "inventories": [
+    {
+      "vSwitchUuid": "5343e94b3aa93086b81c1b33c335b9ad",
+      "vlanMode": "ACCESS",
+      "vlanId": 100,
+      "uuid": "01a9693135323cf1acb3049e8ddf50b2",
+      "name": "port-group-1",
+      "description": "Test",
+      "type": "portGroup",
+      "zoneUuid": "36712d24b27b327aae544095c768366b",
+      "l2NetworkUuid": "49012f786210301697167b3771a65e8c",
+      "state": "Enabled",
+      "system": false,
+      "category": "Private",
+      "enableIPAM": false
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.2.0|
+|error|ErrorCode|The error code. If not null, the operation fails, or vice versa. For more information, see [error](#p_r5w_rqg_m1b).|0.6|
+|inventories|List|See [inventories](#p_qnr_vqg_m1b).|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code, which is a numbered or alphanumeric code that specifies an error. For example, SYS.1000, HOST.1001.|0.6|
+|description|String|The brief description of the error.|0.6|
+|details|String|The details about the error.|0.6|
+|elaboration|String|The reserved field. Default value: null.|0.6|
+|opaque|LinkedHashMap|The reserved field. Default value: null.|0.6|
+|cause|ErrorCode|The root error, which is the associated root cause of the current error. If no root error exists, this parameter is null.|0.6|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|vSwitchUuid|String|The virtual Switch UUID.|4.2.0|
+|vlanId|Integer|The VLAN number.|4.2.0|
+|vlanRanges|String|The VLAN range.|4.2.0|
+|uuid|String|The resource UUID.|4.2.0|
+|name|String|The resource name.|4.2.0|
+|description|String|The detailed description of the resource.|4.2.0|
+|type|String|The port group type.|4.2.0|
+|zoneUuid|String|The Data Center UUID.|4.2.0|
+|l2NetworkUuid|String|The port group Distributed Switch UUID.|4.2.0|
+|state|String|The status.|4.2.0|
+|dnsDomain|String|The DNS domain.|4.2.0|
+|system|Boolean|Whether it is used for system VMs.|4.2.0|
+|category|String|The network type. This parameter must be used with the system tag. When system is true, you can set it to Public, Private, or System.|4.2.0|
+|ipVersion|Integer|The IP version.|4.2.0|
+|enableIPAM|Boolean|Whether IP address management is enabled.|4.2.0|
+|createDate|Timestamp|The creation date.|4.2.0|
+|lastOpDate|Timestamp|The last operation date.|4.2.0|
+|dns|List| |4.2.0|
+|vlanMode|PortGroupVlanMode|See [vlanMode](#p_vjh_pwh_y1c).|4.2.0|
+|ipRanges|List|See [ipRanges](#p_szg_wqg_m1b).|0.6|
+|networkServices|List|See [networkServices](#p_irk_xqg_m1b).|0.6|
+|hostRoute|List|See [hostRoute](#p_fmd_nzq_ndb).|2.3|
+
+### vlanMode
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|ACCESS|PortGroupVlanMode| |4.2.0|
+|TRUNK|PortGroupVlanMode| |4.2.0|
+|PVLAN|PortGroupVlanMode| |4.2.0|
+
+### ipRanges
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The resource UUID.|0.6|
+|l3NetworkUuid|String|The Distributed Port Group UUID.|0.6|
+|name|String|The resource name.|0.6|
+|description|String|The detailed description of the resource.|0.6|
+|startIp|String|The start IP address.|0.6|
+|endIp|String|The end IP address.|0.6|
+|netmask|String|The netmask.|0.6|
+|prefixLen|String|The prefix length.|3.1.0|
+|gateway|String|The gateway.|0.6|
+|networkCidr|String|The network CIDR.|0.6|
+|ipVersion|Integer|The IP version.|3.1.0|
+|addressMode|String|The IPv6 address allocation mode.|3.1.0|
+|createDate|Timestamp|The creation date.|0.6|
+|lastOpDate|Timestamp|The last operation date.|0.6|
+|ipRangeType|IpRangeType|See [ipRangeType](#p_llc_wwh_y1c).|3.9|
+
+### ipRangeType
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|IpRangeType|Normal address range.|3.9|
+|AddressPool|IpRangeType|Address pool range.|3.9|
+
+### networkServices
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|l3NetworkUuid|String|The Distributed Port Group UUID.|0.6|
+|networkServiceProviderUuid|String|The network service provider module UUID.|0.6|
+|networkServiceType|String| |0.6|
+
+### hostRoute
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|id|Long| |2.3|
+|l3NetworkUuid|String|The Distributed Port Group UUID.|2.3|
+|prefix|String| |2.3|
+|nexthop|String| |2.3|
+|createDate|Timestamp|The creation date.|2.3|
+|lastOpDate|Timestamp|The last operation date.|2.3|
+
+## SDK Sample
+Java SDK
+
+```
+QueryPortGroupAction action = new QueryPortGroupAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryPortGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryPortGroupAction action = QueryPortGroupAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryPortGroupAction.Result res = action.call()
+```
+
+</APIPage>

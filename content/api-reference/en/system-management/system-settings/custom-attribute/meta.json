@@ -1,0 +1,12 @@
+{
+  "title": "Custom Attribute",
+  "pages": [
+    "get-resource-config",
+    "get-resource-bindable-config",
+    "delete-resource-config",
+    "query-resource-config",
+    "update-resource-config",
+    "update-resource-configs"
+  ],
+  "pagesIndex": "index"
+}

@@ -1,0 +1,10 @@
+{
+  "title": "VM Migration Management",
+  "pages": [
+    "index",
+    "change-host",
+    "change-datastore",
+    "change-host-and-datastore"
+  ],
+  "pagesIndex": "index"
+}

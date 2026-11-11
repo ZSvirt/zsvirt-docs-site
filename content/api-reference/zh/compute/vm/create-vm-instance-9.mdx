@@ -1,0 +1,803 @@
+---
+title: "从硬盘新建虚拟机"
+---
+
+<APIPage method="POST" path="/v1/vm-instances/from/volume">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "vm1",
+    "description": "this is a vm",
+    "instanceOfferingUuid": "80c606e35bc038bbb102e31cae191ea2",
+    "l3NetworkUuids": [
+      "333817afcaf63f13a101f674761c8a77"
+    ],
+    "volumeUuid": "23984cd68b903fd4883aa962c70d83fc",
+    "clusterUuid": "ada53eb6c42e34d3946ff1280718d9f2",
+    "strategy": "InstantStart"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"vm1","description":"this is a vm","instanceOfferingUuid":"80c606e35bc038bbb102e31cae191ea2","l3NetworkUuids":["333817afcaf63f13a101f674761c8a77"],"volumeUuid":"23984cd68b903fd4883aa962c70d83fc","clusterUuid":"ada53eb6c42e34d3946ff1280718d9f2","strategy":"InstantStart"}}' http://localhost:8080/zstack/v1/vm-instances/from/volume
+```
+
+参数列表
+
+<table id="table_zbn_lsb_3cb"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+name
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+资源名称
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.10.0
+
+</td></tr><tr><td>
+
+description \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+资源的详细描述
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.10.0
+
+</td></tr><tr><td>
+
+instanceOfferingUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+计算规格UUID，注意：该参数与CPU数量、内存大小二选一
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.10.0
+
+</td></tr><tr><td>
+
+cpuNum \(可选\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+CPU核数，单位为GB，该参数与instanceOfferingUuid二选一
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.10.0
+
+</td></tr><tr><td>
+
+memorySize \(可选\)
+
+</td><td>
+
+Long
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+内存大小，单位为Byte，该参数与instanceOfferingUuid二选一
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.10.0
+
+</td></tr><tr><td>
+
+l3NetworkUuids \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+分布式端口组UUID-   可指定一个或多个分布式端口组，虚拟机会在每个分布式端口组上创建一个网卡。
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.10.0
+
+</td></tr><tr><td>
+
+vmNicParams \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+网卡信息
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.0.0
+
+</td></tr><tr><td>
+
+type \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+虚拟机类型-   保留字段，无需指定。
+
+</td><td>
+
+-   UserVm
+-   ApplianceVm
+
+</td><td>
+
+3.10.0
+
+</td></tr><tr><td>
+
+volumeUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+硬盘UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+platform \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+硬盘系统平台
+
+</td><td>
+
+-   Linux
+-   Windows
+-   Other
+
+</td><td>
+
+3.10.0
+
+</td></tr><tr><td>
+
+zoneUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+数据中心UUID-   若指定，虚拟机会在指定数据中心创建。
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.10.0
+
+</td></tr><tr><td>
+
+clusterUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+集群UUID-   若指定，虚拟机会在指定集群创建，该字段优先级高于**zoneUuid**。
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.10.0
+
+</td></tr><tr><td>
+
+hostUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+主机UUID-   若指定，虚拟机会在指定主机创建，该字段优先级高于**zoneUuid**和**clusterUuid**。
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.10.0
+
+</td></tr><tr><td>
+
+primaryStorageUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+数据存储UUID-   若指定，虚拟机的根硬盘会在指定数据存储创建。
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.10.0
+
+</td></tr><tr><td>
+
+defaultL3NetworkUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+默认分布式端口组UUID-   当**l3NetworkUuids**指定了多个分布式端口组时，该字段指定提供默认路由的分布式端口组。
+-   若不指定，`l3NetworkUuids`的第一个网络被选为默认网络。
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.10.0
+
+</td></tr><tr><td>
+
+strategy \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+虚拟机创建策略-   创建后立刻启动
+-   创建后不启动
+
+</td><td>
+
+-   InstantStart
+-   CreateStopped
+
+</td><td>
+
+3.10.0
+
+</td></tr><tr><td>
+
+resourceUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+资源UUID-   若指定，虚拟机会使用该字段值作为UUID。
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.10.0
+
+</td></tr><tr><td>
+
+tagUuids \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+标签UUID列表
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.10.0
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+虚拟机系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.10.0
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+虚拟机用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.10.0
+
+</td></tr><tr><td>
+
+reservedMemorySize \(可选\)
+
+</td><td>
+
+Long
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr></tbody>
+</table>
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "33614668ae7d386c91d662928f60b23f",
+    "name": "Test-VM",
+    "description": "web server VM",
+    "zoneUuid": "62f048b02e353ba4bdb9184ad7f54170",
+    "clusterUuid": "ff753adc06c83d5ab2b0291f57b4745a",
+    "imageUuid": "9291412f184f37a284b484b0788b24ca",
+    "hostUuid": "0f9f5c6561d733d18a94577c4cd0976f",
+    "lastHostUuid": "dc452dde2f7832b29bf91a0ddb6a004c",
+    "instanceOfferingUuid": "b35adab33ba139b98ee20c1e2be702d3",
+    "rootVolumeUuid": "f54fc6d488133688a6a7635f5c44a288",
+    "platform": "Linux",
+    "defaultL3NetworkUuid": "d82e3c622f933054a1939fb66e07681e",
+    "type": "UserVm",
+    "hypervisorType": "KVM",
+    "memorySize": 8589934592,
+    "cpuNum": 1,
+    "allocatorStrategy": "LastHostPreferredAllocatorStrategy",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM",
+    "state": "Running",
+    "vmNics": [
+      {
+        "uuid": "16198ebdef9c3f8084acd1a919eff4f2",
+        "vmInstanceUuid": "33614668ae7d386c91d662928f60b23f",
+        "usedIpUuid": "8eb3618f949a3e588acf9d8b0ee8293f",
+        "l3NetworkUuid": "d82e3c622f933054a1939fb66e07681e",
+        "ip": "192.168.1.10",
+        "mac": "00:0c:29:bd:99:fc",
+        "hypervisorType": "KVM",
+        "netmask": "255.255.255.0",
+        "gateway": "192.168.1.1",
+        "deviceId": 0,
+        "state": "enable",
+        "createDate": "Nov 14, 2017 10:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+      }
+    ],
+    "allVolumes": [
+      {
+        "uuid": "f54fc6d488133688a6a7635f5c44a288",
+        "name": "Root-Volume-For-VM-33614668ae7d386c91d662928f60b23f",
+        "primaryStorageUuid": "769061e63aec3278b1e6c3619d6da766",
+        "vmInstanceUuid": "33614668ae7d386c91d662928f60b23f",
+        "rootImageUuid": "9291412f184f37a284b484b0788b24ca",
+        "installPath": "/zstack_ps/rootVolumes/acct-36c27e8ff05c4780bf6d2fa65700f22e/vol-f54fc6d488133688a6a7635f5c44a288/f54fc6d488133688a6a7635f5c44a288.qcow2",
+        "type": "Root",
+        "format": "qcow2",
+        "size": 107374182400,
+        "actualSize": 21474836480,
+        "deviceId": 0,
+        "state": "Enabled",
+        "status": "Ready",
+        "createDate": "Nov 14, 2017 10:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+      }
+    ]
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_sry_hp2_wmb)|3.10.0|
+|inventory|VmInstanceInventory|详情参考[inventory](#p_ks2_kp2_wmb)|3.10.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.10.0|
+|description|String|错误的概要描述|3.10.0|
+|details|String|错误的详细信息|3.10.0|
+|elaboration|String|保留字段，默认为null|3.10.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.10.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.10.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.10.0|
+|name|String|资源名称|3.10.0|
+|description|String|资源的详细描述|3.10.0|
+|zoneUuid|String|数据中心UUID|3.10.0|
+|clusterUuid|String|集群UUID|3.10.0|
+|imageUuid|String|镜像UUID|3.10.0|
+|hostUuid|String|主机UUID|3.10.0|
+|lastHostUuid|String| |3.10.0|
+|instanceOfferingUuid|String|计算规格UUID|3.10.0|
+|rootVolumeUuid|String|根硬盘UUID|3.10.0|
+|platform|String| |3.10.0|
+|architecture|String| |0.6|
+|defaultL3NetworkUuid|String| |3.10.0|
+|type|String| |3.10.0|
+|hypervisorType|String| |3.10.0|
+|memorySize|Long| |3.10.0|
+|cpuNum|Integer| |3.10.0|
+|cpuSpeed|Long| |3.10.0|
+|allocatorStrategy|String| |3.10.0|
+|createDate|Timestamp|创建时间|3.10.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.10.0|
+|state|String| |3.10.0|
+|guestOsType|String| |4.1.2|
+|vmNics|List|详情参考[vmNics](#p_lqz_lp2_wmb)|3.10.0|
+|allVolumes|List|详情参考[allVolumes](#p_oqj_pp2_wmb)|3.10.0|
+|vmCdRoms|List|详情参考[vmCdRoms](#p_rvl_yg1_y1c)|0.6|
+
+### vmNics
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.10.0|
+|vmInstanceUuid|String|虚拟机UUID|3.10.0|
+|l3NetworkUuid|String|分布式端口组UUID|3.10.0|
+|ip|String|ip地址|3.10.0|
+|mac|String|mac地址|3.10.0|
+|hypervisorType|String|虚拟化类型|3.10.0|
+|netmask|String|子网掩码|3.10.0|
+|gateway|String|网关|3.10.0|
+|metaData|String|内部使用的保留域|3.10.0|
+|ipVersion|Integer|IP地址版本|3.10.0|
+|driverType|String| |4.7.13|
+|internalName|String| |4.7.13|
+|deviceId|Integer|设备ID|3.10.0|
+|type|String| |4.7.13|
+|state|String|网卡状态|4.7.13|
+|createDate|Timestamp|创建时间|3.10.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.10.0|
+|usedIps|List|详情参考[usedIps](#p_fcv_mp2_wmb)|3.10.0|
+
+### usedIps
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.10.0|
+|ipRangeUuid|String|IP段UUID|3.10.0|
+|l3NetworkUuid|String|分布式端口组UUID|3.10.0|
+|ipVersion|Integer|IP协议号|3.10.0|
+|ip|String|IP地址|3.10.0|
+|netmask|String|网络掩码|3.10.0|
+|gateway|String|网关地址|3.10.0|
+|usedFor|String| |3.10.0|
+|ipInLong|long||3.10.0|
+|vmNicUuid|String|虚拟机网卡UUID|3.10.0|
+|createDate|Timestamp|创建时间|3.10.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.10.0|
+
+### allVolumes
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.10.0|
+|name|String|资源名称|3.10.0|
+|description|String|资源的详细描述|3.10.0|
+|primaryStorageUuid|String|数据存储UUID|3.10.0|
+|vmInstanceUuid|String|虚拟机UUID|3.10.0|
+|diskOfferingUuid|String|硬盘规格UUID|3.10.0|
+|rootImageUuid|String|硬盘根镜像UUID|3.10.0|
+|installPath|String|硬盘在数据存储上的路径|3.10.0|
+|type|String|硬盘类型，数据硬盘/根硬盘|3.10.0|
+|format|String|硬盘格式|3.10.0|
+|size|Long|硬盘大小|3.10.0|
+|actualSize|Long|硬盘真实大小|3.10.0|
+|deviceId|Integer| |3.10.0|
+|state|String|硬盘是否开启|3.10.0|
+|status|String|硬盘状态|3.10.0|
+|createDate|Timestamp|创建时间|3.10.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.10.0|
+|isShareable|Boolean|是否共享硬盘|3.10.0|
+|volumeQos|String| |3.10.0|
+|lastDetachDate|Timestamp| |4.7.13|
+|lastVmInstanceUuid|String| |4.7.13|
+
+### vmCdRoms
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.7.13|
+|vmInstanceUuid|String|虚拟机UUID|4.7.13|
+|deviceId|Integer| |4.7.13|
+|isoUuid|String| |4.7.13|
+|isoInstallPath|String| |4.7.13|
+|name|String|资源名称|4.7.13|
+|description|String|资源的详细描述|4.7.13|
+|createDate|Timestamp|创建时间|4.7.13|
+|lastOpDate|Timestamp|最后一次修改时间|4.7.13|
+
+## SDK示例
+Java SDK
+
+```
+CreateVmInstanceFromVolumeAction action = new CreateVmInstanceFromVolumeAction();
+action.name = "vm1";
+action.description = "this is a vm";
+action.instanceOfferingUuid = "80c606e35bc038bbb102e31cae191ea2";
+action.l3NetworkUuids = asList("333817afcaf63f13a101f674761c8a77");
+action.volumeUuid = "23984cd68b903fd4883aa962c70d83fc";
+action.clusterUuid = "ada53eb6c42e34d3946ff1280718d9f2";
+action.strategy = "InstantStart";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateVmInstanceFromVolumeAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = CreateVmInstanceFromVolumeAction()
+action.name = "vm1"
+action.description = "this is a vm"
+action.instanceOfferingUuid = "80c606e35bc038bbb102e31cae191ea2"
+action.l3NetworkUuids = [333817afcaf63f13a101f674761c8a77]
+action.volumeUuid = "23984cd68b903fd4883aa962c70d83fc"
+action.clusterUuid = "ada53eb6c42e34d3946ff1280718d9f2"
+action.strategy = "InstantStart"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

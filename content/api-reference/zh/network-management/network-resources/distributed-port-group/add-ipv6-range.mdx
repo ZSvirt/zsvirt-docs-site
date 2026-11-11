@@ -1,0 +1,424 @@
+---
+title: "添加IPv6地址范围"
+---
+
+<APIPage method="POST" path="/v1/l3-networks/{l3NetworkUuid}/ipv6-ranges">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "Test-IP-Range",
+    "startIp": "2002:2001::02",
+    "endIp": "2002:2001::FE",
+    "gateway": "2002:2001::01",
+    "prefixLen": 64,
+    "addressMode": "Stateful-DHCP"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"Test-IP-Range","startIp":"2002:2001::02","endIp":"2002:2001::FE","gateway":"2002:2001::01","prefixLen":64.0,"addressMode":"Stateful-DHCP"}}' http://localhost:8080/zstack/v1/l3-networks/b6f82aa00c3f37adba4b349eb427db80/ipv6-ranges
+```
+
+参数列表
+
+<table id="table_hsb_1gy_pfb"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+l3NetworkUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+分布式端口组UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.1.0
+
+</td></tr><tr><td>
+
+name
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+分布式端口组的名称
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.1.0
+
+</td></tr><tr><td>
+
+description \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+分布式端口组的详细描述
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.1.0
+
+</td></tr><tr><td>
+
+startIp
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+起始地址
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.1.0
+
+</td></tr><tr><td>
+
+endIp
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+结束地址
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.1.0
+
+</td></tr><tr><td>
+
+gateway
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+网关
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.1.0
+
+</td></tr><tr><td>
+
+prefixLen
+
+</td><td>
+
+Integer
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+前缀长度
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.1.0
+
+</td></tr><tr><td>
+
+addressMode
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+IPv6地址分配模式
+
+</td><td>
+
+-   SLAAC
+-   Stateful-DHCP
+-   Stateless-DHCP
+
+</td><td>
+
+3.1.0
+
+</td></tr><tr><td>
+
+resourceUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+资源UUID。若指定，分布式端口组会使用该字段值作为UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.1.0
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.1.0
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.1.0
+
+</td></tr></tbody>
+</table>
+
+<Callout type="info">
+-   ZSvirt添加IPv6地址范围时支持指定DHCP server地址功能，**SystemTags**增加**affinityGroup**选项。
+    -   选项格式为：`flatNetwork::DhcpServer::{%s}::ipUuid::{%s}`
+    -   例如：`flatNetwork::DhcpServer::192.168.1.100::ipUuid::null`
+</Callout>
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "l3NetworkUuid": "10d6128c8f473a63889597becc396bba",
+    "name": "Test-IP-Range",
+    "startIp": "2002:2001::02",
+    "endIp": "2002:2001::FE",
+    "netmask": "FFFF:FFFF:FFFF:FFFF:0:0:0:0",
+	"prefixLen": "64"
+    "gateway": "2002:2001::01"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_wmy_svg_m1b)|3.1.0|
+|inventory|IpRangeInventory|详情参考[inventory](#p_s5b_wvg_m1b)|3.1.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.1.0|
+|description|String|错误的概要描述|3.1.0|
+|details|String|错误的详细信息|3.1.0|
+|elaboration|String|保留字段，默认为null|3.1.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.1.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.1.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.1.0|
+|l3NetworkUuid|String|分布式端口组UUID|3.1.0|
+|name|String|资源名称|3.1.0|
+|description|String|资源的详细描述|3.1.0|
+|startIp|String| |3.1.0|
+|endIp|String| |3.1.0|
+|netmask|String| |3.1.0|
+|prefixLen|String|掩码长度|3.1.0|
+|gateway|String| |3.1.0|
+|networkCidr|String| |3.1.0|
+|ipVersion|Integer|ip协议号|3.1.0|
+|addressMode|String|IPv6地址分配模式|3.1.0|
+|createDate|Timestamp|创建时间|3.1.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.1.0|
+
+## SDK示例
+Java SDK
+
+```
+AddIpv6RangeAction action = new AddIpv6RangeAction();
+action.l3NetworkUuid = "b6f82aa00c3f37adba4b349eb427db80";
+action.name = "Test-IP-Range";
+action.startIp = "2002:2001::02";
+action.endIp = "2002:2001::FE";
+action.gateway = "2002:2001::01";
+action.prefixLen = 64;
+action.addressMode = "Stateful-DHCP";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddIpv6RangeAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddIpv6RangeAction action = AddIpv6RangeAction()
+action.l3NetworkUuid = "b6f82aa00c3f37adba4b349eb427db80"
+action.name = "Test-IP-Range"
+action.startIp = "2002:2001::02"
+action.endIp = "2002:2001::FE"
+action.gateway = "2002:2001::01"
+action.prefixLen = 64
+action.addressMode = "Stateful-DHCP"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddIpv6RangeAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,10 @@
+{
+  "title": "数据存储配置修改篇",
+  "pages": [
+    "index",
+    "local-storage",
+    "nfs-storage",
+    "san-storage"
+  ],
+  "pagesIndex": "index"
+}

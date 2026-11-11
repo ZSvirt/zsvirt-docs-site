@@ -1,0 +1,22 @@
+---
+title: "How do I resolve a qemu version mismatch?"
+---
+
+## Symptom
+When starting a virtual machine, the following error may appear:
+
+```
+uses a qcow2 feature which is not supported by this qemu version: QCOW version 3
+```
+
+## Cause
+The qcow version is inconsistent. The original qcow2 image was created with a newer version of qemu-img, but the current environment uses an older version that does not support the newer format.
+
+## Solution
+1.  On a host with a newer version of qemu-img, run the following command to convert the image for compatibility:
+
+    ```
+    [root@localhost ~]# qemu-img convert -o compat=0.10 -f qcow2 -O qcow2 centos6-cloud-init.qcow2 centos-st-ssh-key.qcow2
+    ```
+
+2.  After the conversion is complete, add the image again.

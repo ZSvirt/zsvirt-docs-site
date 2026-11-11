@@ -1,0 +1,445 @@
+---
+title: "修改一键报警模板"
+---
+
+<APIPage method="PUT" path="/v1/zwatch/activealarms/templates/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateActiveAlarmTemplate": {
+    "alarmName": "VM-CPUAverageUsedUtilization",
+    "comparisonOperator": "LessThanOrEqualTo",
+    "period": 60,
+    "threshold": 80.0,
+    "repeatInterval": 1800,
+    "repeatCount": -1,
+    "emergencyLevel": "Emergent"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateActiveAlarmTemplate":{"alarmName":"VM-CPUAverageUsedUtilization","comparisonOperator":"LessThanOrEqualTo","period":60,"threshold":80.0,"repeatInterval":1800,"repeatCount":-1,"emergencyLevel":"Emergent"}}' http://localhost:8080/zstack/v1/zwatch/activealarms/templates/c3e82dade74732009d5f4fd0b462f65d/actions
+```
+
+参数列表
+
+<table id="table_zbn_lsb_3cb"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+模板UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+alarmName \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(包含在**updateActiveAlarmTemplate**结构中\)
+
+</td><td>
+
+模板名称
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+comparisonOperator \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(包含在**updateActiveAlarmTemplate**结构中\)
+
+</td><td>
+
+阈值比较符
+
+</td><td>
+
+-   GreaterThanOrEqualTo
+-   GreaterThan
+-   LessThan
+-   LessThanOrEqualTo
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+period \(可选\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+body \(包含在**updateActiveAlarmTemplate**结构中\)
+
+</td><td>
+
+阈值持续时间
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+threshold \(可选\)
+
+</td><td>
+
+Double
+
+</td><td>
+
+body \(包含在**updateActiveAlarmTemplate**结构中\)
+
+</td><td>
+
+阈值
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+repeatInterval \(可选\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+body \(包含在**updateActiveAlarmTemplate**结构中\)
+
+</td><td>
+
+报警重复时间
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+repeatCount \(可选\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+body \(包含在**updateActiveAlarmTemplate**结构中\)
+
+</td><td>
+
+报警重复次数
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+emergencyLevel \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(包含在**updateActiveAlarmTemplate**结构中\)
+
+</td><td>
+
+报警等级
+
+</td><td>
+
+-   Emergent
+-   Important
+-   Normal
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+labels \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(包含在**updateActiveAlarmTemplate**结构中\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr></tbody>
+</table>
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "ea8aa7b6b2e43d4a9f3a19ba121ab72a",
+    "alarmName": "VM CPU Alarm",
+    "comparisonOperator": "LessThanOrEqualTo",
+    "period": 60,
+    "repeatInterval": 60,
+    "repeatCount": -1,
+    "namespace": "zstack/VM",
+    "metricName": "CPUIdleUtilization",
+    "threshold": 30.0,
+    "emergencyLevel": "Emergent",
+    "labels": "[{\"uuid\":\"48cc4d3273a249009ea2166b71495785\",\"key\":\"VMUuid\",\"operator\":\"=\",\"value\":\"c69d93586ca349b9a3bc074e2739e20a\"}]",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.7.0|
+|inventory|ActiveAlarmTemplateInventory|详情参考[inventory](#p_ks2_kp2_wmb)|4.7.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_sry_hp2_wmb)|4.7.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.7.0|
+|alarmName|String| |4.7.0|
+|period|int| |4.7.0|
+|repeatInterval|int| |4.7.0|
+|repeatCount|int| |4.7.0|
+|namespace|String| |4.7.0|
+|metricName|String| |4.7.0|
+|threshold|double| |4.7.0|
+|labels|String| |4.7.0|
+|createDate|Timestamp|创建时间|4.7.0|
+|lastOpDate|Timestamp|最后一次修改时间|4.7.0|
+|comparisonOperator|ComparisonOperator|详情参考[comparisonOperator](#p_gg5_rq1_pxb)|4.7.0|
+|emergencyLevel|EmergencyLevel|详情参考[emergencyLevel](#p_cqn_rq1_pxb)|4.7.0|
+
+### comparisonOperator
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|GreaterThanOrEqualTo|ComparisonOperator| |4.7.0|
+|GreaterThan|ComparisonOperator| |4.7.0|
+|LessThan|ComparisonOperator| |4.7.0|
+|LessThanOrEqualTo|ComparisonOperator| |4.7.0|
+
+### emergencyLevel
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Emergent|EmergencyLevel| |4.7.0|
+|Important|EmergencyLevel| |4.7.0|
+|Normal|EmergencyLevel| |4.7.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.7.0|
+|description|String|错误的概要描述|4.7.0|
+|details|String|错误的详细信息|4.7.0|
+|elaboration|String|保留字段，默认为null|4.7.0|
+|opaque|LinkedHashMap|保留字段，默认为null|4.7.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.7.0|
+
+## SDK示例
+Java SDK
+
+```
+UpdateActiveAlarmTemplateAction action = new UpdateActiveAlarmTemplateAction();
+action.uuid = "c3e82dade74732009d5f4fd0b462f65d";
+action.alarmName = "VM-CPUAverageUsedUtilization";
+action.comparisonOperator = "LessThanOrEqualTo";
+action.period = 60;
+action.threshold = 80.0;
+action.repeatInterval = 1800;
+action.repeatCount = -1;
+action.emergencyLevel = "Emergent";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateActiveAlarmTemplateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateActiveAlarmTemplateAction action = UpdateActiveAlarmTemplateAction()
+action.uuid = "c3e82dade74732009d5f4fd0b462f65d"
+action.alarmName = "VM-CPUAverageUsedUtilization"
+action.comparisonOperator = "LessThanOrEqualTo"
+action.period = 60
+action.threshold = 80.0
+action.repeatInterval = 1800
+action.repeatCount = -1
+action.emergencyLevel = "Emergent"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateActiveAlarmTemplateAction.Result res = action.call()
+```
+
+</APIPage>

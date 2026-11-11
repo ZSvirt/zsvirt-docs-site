@@ -1,0 +1,13 @@
+{
+  "title": "平台设置",
+  "pages": [
+    "index",
+    "accesskey",
+    "console-proxy",
+    "snmp",
+    "time",
+    "log-server",
+    "email-server"
+  ],
+  "pagesIndex": "index"
+}

@@ -1,0 +1,11 @@
+{
+  "title": "Migration Service",
+  "pages": [
+    "index",
+    "deploy",
+    "manage",
+    "resources",
+    "tasks"
+  ],
+  "pagesIndex": "index"
+}

@@ -1,0 +1,507 @@
+---
+title: "Update LDAP Server"
+---
+
+<APIPage method="PUT" path="/v1/ldap/servers/{ldapServerUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateLdapServer": {
+    "name": "new name"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding example, the `systemTags` and `userTags` fields are optional. They are listed here to show that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateLdapServer":{"name":"new name"}}' \
+http://localhost:8080/zstack/v1/ldap/servers/ddd2491867273e6d8fb7c891faf0413f
+```
+
+Parameter List
+
+<table id="table_ns2_yvf_fcc"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+ldapServerUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+UUID of the LDAP server
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+name \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(enclosed in the `updateLdapServer` structure\)
+
+</td><td>
+
+Resource name
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+description \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(enclosed in the `updateLdapServer` structure\)
+
+</td><td>
+
+Detailed description of the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+url \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(enclosed in the `updateLdapServer` structure\)
+
+</td><td>
+
+Access URL of the LDAP server
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+base \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(enclosed in the `updateLdapServer` structure\)
+
+</td><td>
+
+Query BaseDN of the LDAP server
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+username \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(enclosed in the `updateLdapServer` structure\)
+
+</td><td>
+
+Username for accessing the LDAP server
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+password \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(enclosed in the `updateLdapServer` structure\)
+
+</td><td>
+
+Password
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+encryption \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(enclosed in the `updateLdapServer` structure\)
+
+</td><td>
+
+Encryption method
+
+</td><td>
+
+-   None
+-   TLS
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+serverType \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(enclosed in the `updateLdapServer` structure\)
+
+</td><td>
+
+LDAP server type
+
+</td><td>
+
+-   OpenLdap
+-   WindowsAD
+-   Unknown
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+usernameProperty \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(enclosed in the `updateLdapServer` structure\)
+
+</td><td>
+
+The field used as the username when a user logs in to the virtualization platform
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+filter \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(enclosed in the `updateLdapServer` structure\)
+
+</td><td>
+
+The filter used when syncing from the LDAP server, which determines which users need to be synced
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+syncCreatedAccountStrategy \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(enclosed in the `updateLdapServer` structure\)
+
+</td><td>
+
+The strategy for handling newly created users on the LDAP server during synchronization: create a corresponding account or take no action
+
+</td><td>
+
+-   NoAction
+-   CreateDisabledAccount
+-   CreateAccount
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+syncDeletedAccountStrategy \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(enclosed in the `updateLdapServer` structure\)
+
+</td><td>
+
+The strategy for handling deleted users on the LDAP server during synchronization: delete the corresponding account, mark as stale, or take no action
+
+</td><td>
+
+-   NoAction
+-   StaleAccount
+-   DeleteAccount
+
+</td><td>
+
+4.3.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "5c502802c9633f4398e9f286d8187f49",
+    "name": "new name",
+    "description": "miao desc",
+    "url": "ldap://localhost:1888",
+    "base": "dc=example,dc=com",
+    "username": "",
+    "password": "",
+    "encryption": "None"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.3.0|
+|error|ErrorCode|Error code. If not null, the operation has failed. This field is null when the operation succeeds. For details, see [error](#p_wjw_gmg_fcc)|4.3.0|
+|inventory|LdapServerInventory|For details, see [inventory](#p_htf_jmg_fcc)|4.3.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. The globally unique identifier of the error, for example, SYS.1000 or HOST.1001.|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Default is null.|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null.|0.6|
+|cause|ErrorCode|Root error. The source error that caused the current error. This field is null if no root error exists.|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID. Uniquely identifies the resource.|4.3.0|
+|name|String|Resource name|4.3.0|
+|type|String|User source type, typically ldap|4.3.0|
+|description|String|Detailed description of the resource|4.3.0|
+|url|String| |4.3.0|
+|base|String|LDAP server access URL|4.3.0|
+|username|String|Username for accessing the LDAP server|4.3.0|
+|password|String|Password|4.3.0|
+|encryption|String|Encryption method|4.3.0|
+|serverType|String|Server type. Possible values are OpenLdap or WindowsAD. Returns Unknown if the type cannot be determined.|4.3.0|
+|createDate|Timestamp|Creation time|4.3.0|
+|lastOpDate|Timestamp|Last modification time|4.3.0|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateLdapServerAction action = new UpdateLdapServerAction();
+action.ldapServerUuid = "ddd2491867273e6d8fb7c891faf0413f";
+action.name = "new name";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateLdapServerAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+UpdateLdapServerAction action = UpdateLdapServerAction()
+action.ldapServerUuid = "ddd2491867273e6d8fb7c891faf0413f"
+action.name = "new name"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateLdapServerAction.Result res = action.call()
+
+```
+
+</APIPage>

@@ -1,0 +1,9 @@
+{
+  "title": "虚拟机高可用篇",
+  "pages": [
+    "overview",
+    "basic-operations",
+    "best-practices"
+  ],
+  "pagesIndex": "overview"
+}

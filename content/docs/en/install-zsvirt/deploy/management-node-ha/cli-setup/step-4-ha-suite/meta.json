@@ -1,0 +1,9 @@
+{
+  "title": "Step 4: Install HA Suite",
+  "pages": [
+    "index",
+    "cli-install",
+    "config-file-install"
+  ],
+  "pagesIndex": "index"
+}

@@ -1,0 +1,129 @@
+---
+title: "Update Alarm Message Template"
+---
+
+<APIPage method="PUT" path="/v1/zwatch/alarms/sns/text-templates/{uuid}/actions">
+
+Update an alarm message template.
+
+Headers
+
+```
+
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateSNSTextTemplate": {
+    "name": "email template",
+    "template": "Alarm ${ALARM_NAME} changes status to ${ALARM_CURRENT_STATUS}",
+    "recoveryTemplate": "Alarm ${ALARM_NAME} Resource ${ALARM_RESOURCE_NAME} changes status to ${ALARM_CURRENT_STATUS}",
+    "defaultTemplate": true
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the **systemTags** and **userTags** fields are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateSNSTextTemplate":{"name":"email template","template":"Alarm ${ALARM_NAME} changes status to ${ALARM_CURRENT_STATUS}","recoveryTemplate":"Alarm ${ALARM_NAME} Resource ${ALARM_RESOURCE_NAME} changes status to ${ALARM_CURRENT_STATUS}","defaultTemplate":true}}' http://localhost:8080/zstack/v1/zwatch/alarms/sns/text-templates/108482a9d3153463abd49712701ad937/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|The UUID of the resource. Uniquely identifies the resource| |2.3|
+|name \(Optional\)|String|body \(contained in the **updateSNSTextTemplate** structure\)|The resource name| |2.3|
+|description \(Optional\)|String|body \(contained in the **updateSNSTextTemplate** structure\)|The detailed description of the resource| |2.3|
+|template \(Optional\)|String|body \(contained in the **updateSNSTextTemplate** structure\)|The alarm message template text| |2.3|
+|recoveryTemplate \(Optional\)|String|body \(contained in the **updateSNSTextTemplate** structure\)|The recovery alarm message template text| |3.4.0|
+|defaultTemplate \(Optional\)|Boolean|body \(contained in the **updateSNSTextTemplate** structure\)|Whether it is the default template| |2.3|
+|systemTags \(Optional\)|List|body|System tags| |2.3|
+|userTags \(Optional\)|List|body|User tags| |2.3|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "cc881c03f4c04ea9a0e0dda61f4c2f00",
+    "name": "email template",
+    "applicationPlatformType": "Email",
+    "template": "Alarm ${ALARM_NAME} changes status to ${ALARM_CURRENT_STATUS}",
+    "recoveryTemplate": "Alarm ${ALARM_NAME} Resource ${ALARM_RESOURCE_NAME} changes status to ${ALARM_CURRENT_STATUS}",
+    "defaultTemplate": false,
+    "createDate": "Jul 6, 2018 1:51:22 PM",
+    "lastOpDate": "Jul 6, 2018 1:51:22 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null on success. See [error](#p_r1p_rf2_l2b)|2.3|
+|inventory|SNSTextTemplateInventory|See [inventory](#p_d1w_sf2_l2b)|2.3|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, such as SYS.1000, HOST.1001|2.3|
+|description|String|A brief description of the error|2.3|
+|details|String|The detailed error information|2.3|
+|elaboration|String|Reserved field. Default is null|2.3|
+|opaque|LinkedHashMap|Reserved field. Default is null|2.3|
+|cause|ErrorCode|The root error. The source error that caused the current error. This field is null if there is no root error|2.3|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource|2.3|
+|name|String|The resource name|2.3|
+|description|String|The detailed description of the resource|2.3|
+|applicationPlatformType|String|The application platform type|2.3|
+|template|String|The template text|2.3|
+|recoveryTemplate|String|The template text|3.4.0|
+|defaultTemplate|Boolean|Whether it is the default template|2.3|
+|createDate|Timestamp|The creation time|2.3|
+|lastOpDate|Timestamp|The last modification time|2.3|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateSNSTextTemplateAction action = new UpdateSNSTextTemplateAction();
+action.uuid = "108482a9d3153463abd49712701ad937";
+action.name = "email template";
+action.template = "Alarm ${ALARM_NAME} changes status to ${ALARM_CURRENT_STATUS}";
+action.recoveryTemplate = "Alarm ${ALARM_NAME} Resource ${ALARM_RESOURCE_NAME} changes status to ${ALARM_CURRENT_STATUS}";
+action.defaultTemplate = true;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateSNSTextTemplateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateSNSTextTemplateAction action = UpdateSNSTextTemplateAction()
+action.uuid = "108482a9d3153463abd49712701ad937"
+action.name = "email template"
+action.template = "Alarm ${ALARM_NAME} changes status to ${ALARM_CURRENT_STATUS}"
+action.recoveryTemplate = "Alarm ${ALARM_NAME} Resource ${ALARM_RESOURCE_NAME} changes status to ${ALARM_CURRENT_STATUS}"
+action.defaultTemplate = true
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateSNSTextTemplateAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,24 @@
+---
+title: "How do I manually cancel a disaster recovery task?"
+---
+
+## Solution
+-   Restart the virtual machine to quickly cancel the disaster recovery task.
+
+-   If the virtual machine cannot be restarted due to service constraints, follow these steps:
+
+    1.  During the backup, log in to the host where the virtual machine resides and run the following command to view the disaster recovery task:
+
+        ```
+        [root@localhost ~]#  virsh qemu-monitor-command UUID --pretty '{ "execute": "query-block-jobs" }'
+        ```
+
+    2.  Run the following command to cancel the disaster recovery task:
+
+        ```
+        [root@localhost ~]#  virsh qemu-monitor-command UUID '{"execute": "block-job-cancel", "arguments": {"device": "zs-516"}}'
+        ```
+
+        <Callout type="info">
+        The **"device": "zs-516"** parameter value is obtained from the query in step 1. If two disks are present, run the command twice and update the **device** value to the corresponding identifier for each disk.
+        </Callout>

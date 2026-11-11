@@ -1,0 +1,77 @@
+---
+title: 'zsphere_image_storage'
+description: 'Image Storage resource for managing backup storages.'
+---
+
+<HistoricalNamingNote locale="en" />
+
+# zsphere_image_storage (Resource)
+
+Image Storage resource for managing backup storages.
+
+## Example Usage
+
+```terraform
+data "zsphere_datacenter" "test" {
+  name = "zone_example"
+}
+
+resource "zsphere_image_storage" "image_store" {
+  name          = "image_store_from_terraform"
+  description   = "Add An example image storage from terraform"
+  type          = "ImageStore"
+  hostname      = "192.168.1.100"
+  url           = "/zstack/imagestore"
+  ssh_port      = 22
+  username      = "root"
+  password      = "password"
+  zone_uuid     = data.zsphere_datacenter.test.data_centers[0].uuid
+  import_images = false
+}
+
+resource "zsphere_image_storage" "ceph" {
+  name        = "ceph_backup_storage_from_terraform"
+  description = "Add An example Ceph backup storage from terraform"
+  type        = "Ceph"
+  pool_name   = "images"
+  mon_urls    = ["ceph-user:password@192.168.1.10:6789"]
+  zone_uuid   = data.zsphere_zone.test.zones[0].uuid
+}
+
+output "zsphere_image_storage_image_store" {
+  value = zsphere_image_storage.image_store
+}
+
+output "zsphere_image_storage_ceph" {
+  value = zsphere_image_storage.ceph
+}
+```
+
+## Schema
+
+### Required
+
+- `name` (String) Name of the Image Storage
+- `type` (String) Type of the Image Storage (ImageStore or Ceph)
+
+### Optional
+
+- `description` (String) Description of the Image Storage
+- `hostname` (String) Hostname for ImageStore type
+- `import_images` (Boolean) Import images for ImageStore type
+- `mon_urls` (List of String) MON URLs for Ceph type
+- `password` (String, Sensitive) Password for ImageStore type
+- `pool_name` (String) Pool name for Ceph type
+- `ssh_port` (Number) SSH port for ImageStore type
+- `url` (String) URL for ImageStore type
+- `username` (String) Username for ImageStore type
+- `zone_uuid` (String) Zone UUID to attach the Image Storage
+
+### Read-Only
+
+- `attached_zone_uuids` (List of String) Attached zone UUIDs
+- `available_capacity` (Number) Available capacity of the Image Storage
+- `state` (String) State of the Image Storage
+- `status` (String) Status of the Image Storage
+- `total_capacity` (Number) Total capacity of the Image Storage
+- `uuid` (String) UUID of the Image Storage

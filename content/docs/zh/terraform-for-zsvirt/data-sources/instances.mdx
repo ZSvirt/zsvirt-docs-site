@@ -1,0 +1,182 @@
+---
+title: 'zsphere_instances'
+description: '查询 ZSvirt 云主机实例列表及其属性。'
+---
+
+<HistoricalNamingNote locale="zh" />
+
+
+# zsphere_instances（数据源）
+
+查询 ZSvirt 云主机实例列表及其属性。
+
+## 示例用法
+```terraform
+data "zsphere_instances" "test" {
+}
+
+output "zstack_secs" {
+  value = data.zsphere_instances.test
+}
+
+# example output
+# zstack_secs = {
+#   "filter" = tolist([])
+#   "name" = tostring(null)
+#   "name_pattern" = tostring(null)
+#   "vminstances" = tolist([
+#     {
+#       "all_volumes" = tolist([
+#         {
+#           "volume_actual_size" = 0
+#           "volume_description" = "Root volume for VM[uuid:0579c098c3294b3c8e587ceabb3c5870]"
+#           "volume_format" = "qcow2"
+#           "volume_size" = 40
+#           "volume_state" = "Enabled"
+#           "volume_status" = "Ready"
+#           "volume_type" = "Root"
+#           "volume_uuid" = "af6b08beb73f49489565d20ad00c4585"
+#         },
+#       ])
+#       "architecture" = "x86_64"
+#       "cluster_uuid" = "5568b28dbaed465daf768b533b1fe72d"
+#       "cpu_num" = 2
+#       "datacenter_uuid" = "86643f5442164890b8b71de5b582dc9f"
+#       "host_uuid" = ""
+#       "hypervisor_type" = "KVM"
+#       "image_uuid" = "8c00337d47e94acab448e88afdc5c872"
+#       "memory_size" = 2048
+#       "name" = "VM-Instance-1"
+#       "platform" = "Linux"
+#       "state" = "Stopped"
+#       "type" = "UserVm"
+#       "uuid" = "0579c098c3294b3c8e587ceabb3c5870"
+#       "vm_nics" = tolist(null) /* of object */
+#     },
+#     {
+#       "all_volumes" = tolist([
+#         {
+#           "volume_actual_size" = 0
+#           "volume_description" = "Root volume for VM[uuid:0c55e5b3f8204133afeaa98519a5e147]"
+#           "volume_format" = "qcow2"
+#           "volume_size" = 40
+#           "volume_state" = "Enabled"
+#           "volume_status" = "Deleted"
+#           "volume_type" = "Root"
+#           "volume_uuid" = "7b600b459fec44acbec2d6e913383583"
+#         },
+#       ])
+#       "architecture" = "x86_64"
+#       "cluster_uuid" = "5568b28dbaed465daf768b533b1fe72d"
+#       "cpu_num" = 2
+#       "datacenter_uuid" = "86643f5442164890b8b71de5b582dc9f"
+#       "host_uuid" = ""
+#       "hypervisor_type" = "KVM"
+#       "image_uuid" = "8c00337d47e94acab448e88afdc5c872"
+#       "memory_size" = 2048
+#       "name" = "test-vm-instance"
+#       "platform" = "Linux"
+#       "state" = "Destroyed"
+#       "type" = "UserVm"
+#       "uuid" = "0c55e5b3f8204133afeaa98519a5e147"
+#       "vm_nics" = tolist(null) /* of object */
+#     },
+#     {
+#       "all_volumes" = tolist([
+#         {
+#           "volume_actual_size" = 0
+#           "volume_description" = "Root volume for VM[uuid:6ada685eeb4c48ffa617b9e79bec5935]"
+#           "volume_format" = "qcow2"
+#           "volume_size" = 40
+#           "volume_state" = "Enabled"
+#           "volume_status" = "Deleted"
+#           "volume_type" = "Root"
+#           "volume_uuid" = "47e9f37bcc19402e9269b3c0b14d0826"
+#         },
+#       ])
+#       "architecture" = "x86_64"
+#       "cluster_uuid" = "5568b28dbaed465daf768b533b1fe72d"
+#       "cpu_num" = 2
+#       "datacenter_uuid" = "86643f5442164890b8b71de5b582dc9f"
+#       "host_uuid" = ""
+#       "hypervisor_type" = "KVM"
+#       "image_uuid" = "8c00337d47e94acab448e88afdc5c872"
+#       "memory_size" = 2048
+#       "name" = "test-vm-instance"
+#       "platform" = "Linux"
+#       "state" = "Destroyed"
+#       "type" = "UserVm"
+#       "uuid" = "6ada685eeb4c48ffa617b9e79bec5935"
+#       "vm_nics" = tolist(null) /* of object */
+#     },
+#   ])
+# }
+```
+
+## 参数说明
+
+### 可选参数
+
+- `filter`（块列表）（参见下方嵌套结构）
+- `name`（字符串）按精确名称查询
+- `name_pattern`（字符串）按名称模糊查询，类似 MySQL LIKE。`%` 匹配多个字符，`_` 匹配单个字符
+
+### 只读属性
+
+- `vminstances`（属性列表）（参见下方嵌套结构）
+
+<a id="nestedblock--filter"></a>
+### `filter` 嵌套结构
+
+必填参数：
+
+- `name`（字符串）用于过滤的字段名。
+- `values`（字符串集合）过滤值，多个值之间为 OR 关系。
+
+
+<a id="nestedatt--vminstances"></a>
+### `vminstances` 嵌套结构
+
+只读属性：
+
+- `all_volumes`（属性列表）（参见下方嵌套结构）
+- `architecture`（字符串）云主机 CPU 架构（如 x86_64、ARM）。
+- `cluster_uuid`（字符串）云主机所在集群 UUID。
+- `cpu_num`（数字）分配给云主机的 CPU 数量。
+- `datacenter_uuid`（字符串）云主机所在区域 UUID。
+- `host_uuid`（字符串）运行云主机的物理主机 UUID。
+- `hypervisor_type`（字符串）云主机 Hypervisor 类型（如 KVM、VMware）。
+- `image_uuid`（字符串）创建云主机所用镜像 UUID。
+- `memory_size`（数字）分配给云主机的内存大小（MB）。
+- `name`（字符串）云主机实例名称。
+- `platform`（字符串）云主机平台类型（如 Linux、Windows）。
+- `state`（字符串）云主机当前状态（如 Running、Stopped）。
+- `type`（字符串）云主机类型（如 UserVm、SystemVm）。
+- `uuid`（字符串）云主机实例唯一标识符（UUID）。
+- `vm_nics`（属性列表）（参见下方嵌套结构）
+
+<a id="nestedatt--vminstances--all_volumes"></a>
+### `vminstances.all_volumes` 嵌套结构
+
+只读属性：
+
+- `volume_actual_size`（数字）磁盘实际大小（GB），可能与申请大小不同。
+- `volume_description`（字符串）云主机挂载磁盘的描述。
+- `volume_format`（字符串）磁盘格式（如 RAW、QCOW2）。
+- `volume_size`（数字）The size of the volume, in gigabytes (GB).
+- `volume_state`（字符串）磁盘状态（如 Enabled、Disabled）。
+- `volume_status`（字符串）The status of the volume (e.g., Ready, NoReady).
+- `volume_type`（字符串）The type of the volume (e.g., root, data).
+- `volume_uuid`（字符串）云主机挂载磁盘的 UUID。
+
+
+<a id="nestedatt--vminstances--vm_nics"></a>
+### `vminstances.vm_nics` 嵌套结构
+
+只读属性：
+
+- `gateway`（字符串）The gateway IP address for the VM NIC.
+- `ip`（字符串）云主机网卡分配的 IP 地址。
+- `mac`（字符串）The 云主机网卡 MAC 地址。
+- `netmask`（字符串）The network mask of the VM NIC.
+- `uuid`（字符串）The uuid for the VM NIC.

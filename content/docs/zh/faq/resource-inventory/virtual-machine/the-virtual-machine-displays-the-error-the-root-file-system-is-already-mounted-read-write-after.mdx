@@ -1,0 +1,22 @@
+---
+title: "虚拟机启动后报错“ The root file system is already mounted read-write.”，怎么办？"
+---
+
+## 现象
+虚拟机启动后报错“ The root file system is already mounted read-write.”。
+
+如[Figure 1](#fig_vm2_b14_txb)所示：
+
+![虚拟机启动显示报错信息](/docs/faq/images/ZStack_FAQ_Summary_0001_97_1.png)
+
+## 原因
+磁盘的盘符发生变化，导致虚拟机无法正常进入系统。
+
+## 解决方案
+1.  登录虚拟机控制台，执行`blkid`命令，查询并记录磁盘的UUID。
+
+2.  执行`vim /etc/fstab`命令 ，进入fstab文件编辑模式，通过UUID将磁盘挂载到对应分区。
+
+    如[Figure 2](#fig_tk4_zhs_txb)所示：
+
+    ![添加UUID信息](/docs/faq/images/ZStack_FAQ_Summary_0001_97_2.png)

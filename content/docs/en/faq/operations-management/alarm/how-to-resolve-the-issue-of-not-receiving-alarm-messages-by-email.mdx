@@ -1,0 +1,13 @@
+---
+title: "How to resolve the issue of not receiving alarm messages by email?"
+---
+
+## Cause
+The dual-management-node environment has no DNS server configured, so the Email Server domain name cannot be resolved.
+
+## Solution
+-   On each of the two Management Node hosts, add the **nameserver 114.114.114.114** entry to the `/etc/resolv.conf` file.
+
+    See [Figure 1](#fig_lm2_2q5_p5b) for an example:
+
+    ![Modify the configuration](/docs/en/faq/images/ZStack_FAQ_Summary_0040_1_1.png)

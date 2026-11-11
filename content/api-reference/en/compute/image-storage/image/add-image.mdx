@@ -1,0 +1,556 @@
+---
+title: "Add Image"
+---
+
+<APIPage method="POST" path="/v1/images">
+
+Add an image to the image storage.
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "TinyLinux",
+    "url": "http://192.168.1.20/share/images/tinylinux.qcow2",
+    "mediaType": "RootVolumeTemplate",
+    "architecture": "x86_64",
+    "system": false,
+    "format": "qcow2",
+    "platform": "Linux",
+    "backupStorageUuids": [
+      "b8fc9c1c027438c28d36af24eca06595"
+    ],
+    "virtio": false
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **userTags** field can be omitted. It is listed to indicate that the body can contain this field.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d'{"params":{"name":"TinyLinux","url":"http://192.168.1.20/share/images/tinylinux.qcow2","mediaType":"RootVolumeTemplate","architecture":"x86_64","system":false,"format":"qcow2","platform":"Linux","backupStorageUuids":["b8fc9c1c027438c28d36af24eca06595"],"virtio":false}}' http://localhost:8080/zstack/v1/images
+```
+
+Parameter List
+
+<table id="table_bzs_hcd_l1b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+name
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Image name
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+description \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Detailed description of the image
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+url
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+URL address of the image to be added
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+mediaType \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Type of the image
+
+</td><td>
+
+-   RootVolumeTemplate
+-   ISO
+-   DataVolumeTemplate
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+guestOsType \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Guest OS type corresponding to the image
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+system \(Optional\)
+
+</td><td>
+
+boolean
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Whether it is a system image
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+format \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Format of the image, for example: raw
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.0.0
+
+</td></tr><tr><td>
+
+platform \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Platform of the image
+
+</td><td>
+
+-   Linux
+-   Windows
+-   WindowsVirtio
+-   Other
+-   Paravirtualization
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+backupStorageUuids
+
+</td><td>
+
+List
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+List of image storage UUIDs where the image will be added
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+type \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Internal use field
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+resourceUuid \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Resource UUID. If specified, the image will use this value as its UUID.
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+architecture \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+-   x86\_64
+-   aarch64
+-   mips64el
+
+</td><td>
+
+4.0.0
+
+</td></tr><tr><td>
+
+tagUuids \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+List of tag UUIDs
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.0.0
+
+</td></tr><tr><td>
+
+systemTags
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "1eb26d06364036b7860d2b7dbb462b8c",
+    "name": "TinyLinux",
+    "url": "http://192.168.1.20/share/images/tinylinux.qcow2",
+    "mediaType": "RootVolumeTemplate",
+    "platform": "Linux",
+    "architecture": "x86_64",
+    "format": "qcow2",
+    "backupStorageRefs": [
+      {
+        "id": 0.0,
+        "imageUuid": "1eb26d06364036b7860d2b7dbb462b8c",
+        "backupStorageUuid": "902dcc8d1015318fb4903df890765c4d",
+        "installPath": "ceph://zs-images/f0b149e053b34c7eb7fe694b182ebffd",
+        "status": "Ready"
+      }
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_dcx_kjd_l1b)|0.6|
+|inventory|ImageInventory|See [inventory](#p_jq2_ljd_l1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause. The source error that triggered the current error. This field is null if there is no original error|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|name|String|Resource name|0.6|
+|description|String|Detailed description of the resource|0.6|
+|state|String|Boot state of the image|4.0.0|
+|status|String|Ready state of the image|4.0.0|
+|size|Long|Image size|4.0.0|
+|actualSize|Long|Actual image size|4.0.0|
+|md5Sum|String|MD5 value of the image|4.0.0|
+|url|String|URL address of the image|4.0.0|
+|mediaType|String|Type of the image|4.0.0|
+|guestOsType|String|Guest OS type corresponding to the image|4.0.0|
+|type|String|Internal use field|4.0.0|
+|platform|String|Platform of the image|4.0.0|
+|format|String|Format of the image, for example: raw|4.0.0|
+|system|Boolean|Indicates whether it is a system image|4.0.0|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+|backupStorageRefs|List|See [backupStorageRefs](#p_ggk_ljd_l1b)|0.6|
+
+### backupStorageRefs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|imageUuid|String|Image UUID|0.6|
+|backupStorageUuid|String|Image storage UUID|0.6|
+|installPath|String|Install path on the image storage|4.0.0|
+|exportUrl|String|Export URL of the image|4.0.0|
+|exportMd5Sum|String|Export MD5 value of the image|4.0.0|
+|status|String|Image ready state|4.0.0|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+AddImageAction action = new AddImageAction();
+action.name = "TinyLinux";
+action.url = "http://192.168.1.20/share/images/tinylinux.qcow2";
+action.mediaType = "RootVolumeTemplate";
+action.architecture = "x86_64";
+action.system = false;
+action.format = "qcow2";
+action.platform = "Linux";
+action.backupStorageUuids = asList("b8fc9c1c027438c28d36af24eca06595");
+action.virtio = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddImageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddImageAction action = AddImageAction()
+action.name = "TinyLinux"
+action.url = "http://192.168.1.20/share/images/tinylinux.qcow2"
+action.mediaType = "RootVolumeTemplate"
+action.architecture = "x86_64"
+action.system = false
+action.format = "qcow2"
+action.platform = "Linux"
+action.backupStorageUuids = [b8fc9c1c027438c28d36af24eca06595]
+action.virtio = false
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddImageAction.Result res = action.call()
+```
+
+</APIPage>

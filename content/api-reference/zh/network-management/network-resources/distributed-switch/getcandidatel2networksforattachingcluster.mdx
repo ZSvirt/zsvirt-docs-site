@@ -1,0 +1,103 @@
+---
+title: "获取集群允许加分布式交换机"
+---
+
+<APIPage method="GET" path="/v1/cluster/{clusterUuid}/l2-candidates">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/cluster/016f3e0efa66377b8acf1d1b73050af0/l2-candidates?limit=1000&start=0
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|clusterUuid|String|url|集群UUID| |4.0.0|
+|limit \(可选\)|Integer|query|最多返回的记录数，类似MySQL的limit| |4.0.0|
+|start \(可选\)|Integer|query|起始查询记录位置，类似MySQL的offset。跟`limit`配合使用可以实现分页| |4.0.0|
+|systemTags \(可选\)|List|query|系统标签| |4.0.0|
+|userTags \(可选\)|List|query|用户标签| |4.0.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "name": "l2",
+      "description": "test",
+      "physicalInterface": "eth0",
+      "vlan": 0,
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.0.0|
+|inventories|List|详情参考[inventories](#p_lpn_vlw_51c)|4.0.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_wfd_jmw_51c)|4.0.0|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.0.0|
+|name|String|资源名称|4.0.0|
+|poolUuid|String|网络池UUID|4.0.0|
+|zoneUuid|String|数据中心UUID|4.0.0|
+|description|String|资源的详细描述|4.0.0|
+|physicalInterface|String|网卡名称|4.0.0|
+|type|String|分布式交换机类型|4.0.0|
+|vni|String|Vni号|4.0.0|
+|vlan|int|Vlan号|4.0.0|
+|createDate|Timestamp|创建时间|4.0.0|
+|lastOpDate|Timestamp|最后一次修改时间|4.0.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+GetCandidateL2NetworksForAttachingClusterAction action = new GetCandidateL2NetworksForAttachingClusterAction();
+action.clusterUuid = "016f3e0efa66377b8acf1d1b73050af0";
+action.limit = 1000;
+action.start = 0;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetCandidateL2NetworksForAttachingClusterAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetCandidateL2NetworksForAttachingClusterAction action = GetCandidateL2NetworksForAttachingClusterAction()
+action.clusterUuid = "016f3e0efa66377b8acf1d1b73050af0"
+action.limit = 1000
+action.start = 0
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetCandidateL2NetworksForAttachingClusterAction.Result res = action.call()
+```
+
+</APIPage>

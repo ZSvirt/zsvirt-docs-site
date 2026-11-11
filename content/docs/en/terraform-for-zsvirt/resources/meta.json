@@ -1,0 +1,20 @@
+{
+  "title": "Resources",
+  "pages": [
+    "index",
+    "datacenter",
+    "cluster",
+    "host",
+    "distributed_switch",
+    "port_group",
+    "local_primary_storage",
+    "nfs_primary_storage",
+    "image_storage",
+    "image",
+    "vm_template",
+    "instance",
+    "security_group",
+    "tag"
+  ],
+  "pagesIndex": "index"
+}

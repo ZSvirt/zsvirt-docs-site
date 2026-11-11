@@ -1,0 +1,267 @@
+---
+title: "Set Network Service Type on Bond Interface"
+---
+
+<APIPage method="POST" path="/v1/hosts/bondings/service-types">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "bondingUuids": [
+      "e96881d20cde3a9ab337cdf0ab4e8b08"
+    ],
+    "serviceTypes": [
+      "TenantNetwork"
+    ]
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"bondingUuids":["e96881d20cde3a9ab337cdf0ab4e8b08"],"serviceTypes":["TenantNetwork"]}}' \
+http://localhost:8080/zstack/v1/hosts/bondings/service-types
+```
+
+Parameter List
+
+<table id="table_wy3_qlk_mlb"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+bondingUuids
+
+</td><td>
+
+List
+
+</td><td>
+
+body \(contained in `params` structure\)
+
+</td><td>
+
+Bond NIC UUIDs
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+vlanIds \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body \(contained in `params` structure\)
+
+</td><td>
+
+VLAN interface IDs
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+serviceTypes \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body \(contained in `params` structure\)
+
+</td><td>
+
+Network service type
+
+</td><td>
+
+-   ManagementNetwork
+-   TenantNetwork
+-   StorageNetwork
+-   BackupNetwork
+-   MigrationNetwork
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+systemTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tag
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+userTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tag
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.11
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": [
+    {
+      "id": 0,
+      "bondingUuid": "d1fd53a607c936859414f6222175c820",
+      "vlanId": 10,
+      "serviceType": "BackupNetwork"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.7.11|
+|inventory|List|See details [inventory](#p_e4h_nsc_2yb)|4.7.11|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See details [error](#p_yzk_5lk_mlb)|4.7.11|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|bondingUuid|String|Bond NIC UUID|4.7.11|
+|vlanId|Integer|VLAN sub-interface ID|4.7.11|
+|createDate|Timestamp|Creation time|4.7.11|
+|lastOpDate|Timestamp|Last modification time|4.7.11|
+|serviceType|HostNetworkInterfaceServiceType|See details [serviceType](/en/docs/api-reference/compute/host/set-service-type-on-host-network-interface)|4.7.11|
+
+### serviceType
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|ManagementNetwork|HostNetworkInterfaceServiceType|Management Network|4.7.11|
+|TenantNetwork|HostNetworkInterfaceServiceType|Tenant Network|4.7.11|
+|StorageNetwork|HostNetworkInterfaceServiceType|Storage Network|4.7.11|
+|BackupNetwork|HostNetworkInterfaceServiceType|Backup Network|4.7.11|
+|MigrationNetwork|HostNetworkInterfaceServiceType|Migration Network|4.7.11|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, e.g. SYS.1000, HOST.1001|4.7.11|
+|description|String|Brief description of the error|4.7.11|
+|details|String|Detailed error information|4.7.11|
+|elaboration|String|Reserved field, default is null|4.7.11|
+|opaque|LinkedHashMap|Reserved field, default is null|4.7.11|
+|cause|ErrorCode|Root cause, the error that caused the current error. If there is no original error, this field is null|4.7.11|
+
+## SDK Examples
+Java SDK
+
+```
+SetServiceTypeOnHostNetworkBondingAction action = new SetServiceTypeOnHostNetworkBondingAction();
+action.bondingUuids = asList("e96881d20cde3a9ab337cdf0ab4e8b08");
+action.serviceTypes = asList("TenantNetwork");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+SetServiceTypeOnHostNetworkBondingAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SetServiceTypeOnHostNetworkBondingAction action = SetServiceTypeOnHostNetworkBondingAction()
+action.bondingUuids = [e96881d20cde3a9ab337cdf0ab4e8b08]
+action.serviceTypes = [TenantNetwork]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+SetServiceTypeOnHostNetworkBondingAction.Result res = action.call()
+```
+
+</APIPage>

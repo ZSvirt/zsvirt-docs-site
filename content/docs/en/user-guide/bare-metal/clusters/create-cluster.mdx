@@ -1,0 +1,129 @@
+---
+title: 'New Bare Metal Cluster'
+---
+
+Bare metal clusters are used to manage bare metal instances. When creating a cluster, you can choose to attach a deployment server to provide PXE deployment capability for bare metal instances in the cluster.
+
+## Prerequisites
+
+- The bare metal cluster requires a deployment server to provide PXE services for bare metal instances in the cluster.
+- Each bare metal cluster supports only one deployment server, but one deployment server can be attached to multiple clusters.
+- The bare metal cluster can attach distributed switches to provide networks for bare metal instances.
+
+## Procedure
+
+<Steps>
+
+<Step>
+
+### Go to Bare Metal Management
+
+In the navigation pane, choose **Inventory** &gt; **Bare Metal Management**.
+
+Select the target data center. On the details page, click **Bare Metal Management** to go to the **Bare Metal Cluster** tab.
+
+</Step>
+
+<Step>
+
+### Create a Bare Metal Cluster
+
+Click **New Bare Metal Cluster**. In the dialog, set the following parameters.
+
+#### Basic Information
+
+<table className="doc-feature-table">
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Name</strong></td>
+      <td>Set a name for the bare metal cluster.</td>
+    </tr>
+    <tr>
+      <td><strong>Description</strong></td>
+      <td>Optional. Enter a description.</td>
+    </tr>
+  </tbody>
+</table>
+
+#### Deployment Server
+
+Choose whether to attach a deployment server. If attached, specify **Server Source**.
+
+### New Deployment Server
+
+<table className="doc-feature-table">
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Deployment Server Name</strong></td>
+      <td>Set a name for the deployment server.</td>
+    </tr>
+    <tr>
+      <td><strong>DHCP Listening NIC</strong></td>
+      <td>Enter the NIC device number connected to the deployment network.</td>
+    </tr>
+    <tr>
+      <td><strong>Storage Path</strong></td>
+      <td>Enter the local directory for PXE deployment images.</td>
+    </tr>
+    <tr>
+      <td><strong>Deployment Server IP</strong></td>
+      <td>Enter the deployment server IP address.</td>
+    </tr>
+    <tr>
+      <td><strong>SSH Port</strong></td>
+      <td>Default: 22.</td>
+    </tr>
+    <tr>
+      <td><strong>Username</strong></td>
+      <td>Default: root. You can enter a regular user.</td>
+    </tr>
+    <tr>
+      <td><strong>Password</strong></td>
+      <td>Enter the corresponding user password.</td>
+    </tr>
+    <tr>
+      <td><strong>DHCP Start IP</strong></td>
+      <td>Used for traversing IP ranges of DHCP services.</td>
+    </tr>
+    <tr>
+      <td><strong>DHCP End IP</strong></td>
+      <td>Used for traversing IP ranges of DHCP services.</td>
+    </tr>
+  </tbody>
+</table>
+
+<Callout type="info">
+
+- This NIC must be connected to the deployment network of the bare metal chassis and have a configured IP address.
+- The network where this NIC resides must not have any other DHCP services.
+- If not specified, the system will detect and filter used IP address as IP ranges according to this NIC IP address.
+
+</Callout>
+
+### Existing Deployment Server
+
+Select an existing deployment server.
+
+</Step>
+
+<Step>
+
+### Complete the Creation
+
+Review the configuration and click **OK**.
+
+</Step>
+
+</Steps>

@@ -1,0 +1,80 @@
+---
+title: "Generate VFIO MDEV Sliced PCI Devices"
+---
+
+<APIPage method="PUT" path="/v1/pci-devices/{pciDeviceUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "generateMdevDevices": {
+    "mdevSpecUuid": "013f5f259daa3e119ec79496ed2f5697"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+systemTags and userTags fields can be omitted in the above example. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"generateMdevDevices":{"mdevSpecUuid":"013f5f259daa3e119ec79496ed2f5697"}}' http://localhost:8080/zstack/v1/pci-devices/b5b60d1bc9353c948c635a500a044c97/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|pciDeviceUuid|String|url|PCI device UUID| |3.5.0|
+|mdevSpecUuid|String|body\(inside the **generateMdevDevices** structure\)|MDEV device spec UUID| |3.5.0|
+|systemTags \(Optional\)|List|body|System tags| |3.5.0|
+|userTags \(Optional\)|List|body|User tags| |3.5.0|
+
+## API Response
+This API returns an empty JSON structure `{}` on success. On error, the returned JSON contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+GenerateMdevDevicesAction action = new GenerateMdevDevicesAction();
+action.pciDeviceUuid = "b5b60d1bc9353c948c635a500a044c97";
+action.mdevSpecUuid = "013f5f259daa3e119ec79496ed2f5697";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GenerateMdevDevicesAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GenerateMdevDevicesAction action = GenerateMdevDevicesAction()
+action.pciDeviceUuid = "b5b60d1bc9353c948c635a500a044c97"
+action.mdevSpecUuid = "013f5f259daa3e119ec79496ed2f5697"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GenerateMdevDevicesAction.Result res = action.call()
+```
+
+</APIPage>

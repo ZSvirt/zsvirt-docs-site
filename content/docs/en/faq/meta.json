@@ -1,0 +1,14 @@
+{
+  "title": "FAQ",
+  "pages": [
+    "index",
+    "installation-and-upgrade",
+    "platform-login",
+    "dashboard",
+    "resource-inventory",
+    "data-protection",
+    "operations-management",
+    "system-management"
+  ],
+  "pagesIndex": "index"
+}

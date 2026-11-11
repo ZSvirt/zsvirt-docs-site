@@ -1,0 +1,28 @@
+---
+title: 'USB Device'
+---
+
+On the host **Hardware Device** page, select the **USB Device** tab to view and manage the USB devices for that host.
+
+You can perform different operations on USB devices based on various scenarios:
+
+-   **Device Renaming Scenario**: If you wish to rename a USB device to better align with your business needs, click the **Edit Device Name** button to rename it.
+-   **Enable and Disable Scenarios**:
+    -   If you want to pass through a USB device to a virtual machine, ensure that the device is enabled. Click the **Enable** button to enable it.
+    -   If you no longer want to pass through the USB device to any other virtual machines, click the **Disable** button to disable it. After disabling, the USB device currently in use by a virtual machine will continue to function normally until it is uninstalled.
+-   **VM Attach/Detach Scenarios**: Attach VM &amp; Detach VM
+    -   **Attach VM**: Pass the USB device directly to a virtual machine, supporting both Direct Connection and Forwarding modes.
+
+        -   Direct Connection: Attach the USB device from the host where the VM resides to the VM. This USB device must be unloaded if the VM is migrated.
+        -   Forwarding: Attach the USB device from any host within the data center where the VM resides to the VM. This USB device does not need to be unloaded if the VM is migrated.
+        When loading a USB device to a virtual machine, note the following:
+
+        -   The same USB device can only be passed through to one virtual machine at a time.
+        -   A single virtual machine supports up to 1 USB 1.0 device, up to 6 USB 2.0 devices, and up to 4 USB 3.0 devices.
+        -   A running VM or a VM with local storage in a stopped state only supports loading available USB devices from the host where the VM resides; cross-host USB device loading is not supported.
+        -   A VM stopped on shared storage supports loading multiple USB devices from any host within its cluster.
+    -   **Detach VM**: Detach the USB device from the virtual machine.
+
+        <Callout type="info">
+        This action will interrupt read/write operations for the USB device, proceed with caution.
+        </Callout>

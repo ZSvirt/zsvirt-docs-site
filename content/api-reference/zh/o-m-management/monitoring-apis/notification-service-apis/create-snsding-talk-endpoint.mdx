@@ -1,0 +1,157 @@
+---
+title: "创建钉钉接收端"
+---
+
+<APIPage method="POST" path="/v1/sns/application-endpoints/ding-talk">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "url": "https://example.invalid/webhook",
+    "atAll": false,
+    "secret": "YOUR_WEBHOOK_SECRET",
+    "atPersonPhoneNumbers": [
+      "18900002222",
+      "13377778888"
+    ],
+    "atPersonList": {
+      "13377778888": "jack"
+    },
+    "name": "dinding"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"url":"https://example.invalid/webhook","atAll":false,"secret":"YOUR_WEBHOOK_SECRET","atPersonPhoneNumbers":["18900002222","13377778888"],"atPersonList":{"13377778888":"jack"},"name":"dinding"}}' \
+http://localhost:8080/zstack/v1/sns/application-endpoints/ding-talk
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|url|String|body\(包含在**params**结构中\)|钉钉机器人URL| |2.3|
+|atAll \(可选\)|Boolean|body\(包含在**params**结构中\)|是否消息@所有人| |2.3|
+|atPersonPhoneNumbers \(可选\)|List|body\(包含在**params**结构中\)|要@用户的电话号码| |2.3|
+|name|String|body\(包含在**params**结构中\)|资源名称| |2.3|
+|description \(可选\)|String|body\(包含在**params**结构中\)|资源的详细描述| |2.3|
+|resourceUuid \(可选\)|String|body\(包含在**params**结构中\)| | |2.3|
+|systemTags \(可选\)|List|body|系统标签| |2.3|
+|userTags \(可选\)|List|body|用户标签| |2.3|
+|platformUuid \(可选\)|String|body\(包含在**params**结构中\)|通知平台uuid| |2.3|
+|tagUuid \(可选\)|List|body\(包含在**params**结构中\)|标签UUID列表| |5.0.0|
+|secret \(可选\)|String|body\(包含在**params**结构中\)|钉钉密钥| |5.0.0|
+|atPersonList \(可选\)|Map|body\(包含在**params**结构中\)|@用户信息| |5.0.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "url": "https://example.invalid/webhook",
+    "atAll": false,
+    "secret": "YOUR_WEBHOOK_SECRET",
+    "atPersonPhoneNumbers": [
+      "18900001111"
+    ],
+    "name": "example",
+    "uuid": "917fe66f76b241f0843dfbd6be685fc1",
+    "description": "description example",
+    "type": "Email",
+    "state": "Enabled",
+    "platformUuid": "4eb0ceebf95b452585ebeacd647d9f35",
+    "createDate": "Mar 26, 2024 2:43:38 AM",
+    "lastOpDate": "Mar 26, 2024 2:43:38 AM"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |5.0.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_ehg_qqx_bdb)|2.3|
+|inventory|SNSDingTalkEndpointInventory|详情参考[inventory](#p_kxl_qqx_bdb)|2.3|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|url|String|钉钉机器人URL|2.3|
+|atAll|boolean|是否@所有人|2.3|
+|secret|String|钉钉密钥|5.0.0|
+|atPersonPhoneNumbers|List|@用户的电话号码|2.3|
+|name|String|资源名称|2.3|
+|uuid|String|资源的UUID，唯一标示该资源|2.3|
+|description|String|资源的详细描述|2.3|
+|type|String|终端类型|2.3|
+|state|String|状态|5.0.0|
+|platformUuid|String|应用平台UUID|2.3|
+|createDate|Timestamp|创建时间|2.3|
+|lastOpDate|Timestamp|最后一次修改时间|2.3|
+|platform|SNSApplicationPlatformInventory|详情参考[platform](#table_pdp_jwz_c1c)|5.0.0|
+
+### platform
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|5.0.0|
+|name|String|资源名称|5.0.0|
+|description|String|资源的详细描述|5.0.0|
+|type|String|类型|5.0.0|
+|createDate|Timestamp|创建时间|5.0.0|
+|lastOpDate|Timestamp|最后一次修改时间|5.0.0|
+
+## SDK示例
+Java SDK
+
+```
+CreateSNSDingTalkEndpointAction action = new CreateSNSDingTalkEndpointAction();
+action.url = "https://example.invalid/webhook";
+action.atAll = false;
+action.atPersonPhoneNumbers = asList("18900002222","13377778888");
+action.name = "dinding";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateSNSDingTalkEndpointAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateSNSDingTalkEndpointAction action = new CreateSNSDingTalkEndpointAction()
+action.url = "https://example.invalid/webhook"
+action.atAll = false
+action.atPersonPhoneNumbers = asList("18900002222","13377778888")
+action.name = "dinding"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateSNSDingTalkEndpointAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,161 @@
+---
+title: "Query Mini Storage Replication"
+---
+
+<APIPage method="GET" path="/v1/primary-storage/mini/replications" altPaths={["/v1/primary-storage/mini/replications/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Examples
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/primary-storage/mini/replications
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/primary-storage/mini/replications/981f98a16e173fd2a7b2fed99c8b3262
+```
+
+Queryable Fields
+
+Run the CLI command tool, enter `QueryMiniStorageResourceReplication` and press Tab to view all queryable fields and resource names that support cross-table queries.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "0b2b57b92d5036a9a5ee3a3194eaa980",
+      "resourceUuid": "89aa094f24f8389faf2032d6d1869566",
+      "hostUuid": "c61a2e0586cb398b85b47392a7561ed0",
+      "primaryStorageUuid": "c7da0ad70680308d98e5940f0f32b6d2",
+      "state": "Enabled",
+      "type": "Basic",
+      "role": "Primary",
+      "networkStatus": "Connected",
+      "diskStatus": "UpToDate",
+      "size": 0,
+      "createDate": "Nov 14, 2017 2:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+    },
+    {
+      "size": 0
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, indicates the operation failed. This field is null when the operation succeeds. For details, see [error](#p_gxy_yw4_v3b)|0.6|
+|inventories|List|For details, see [inventories](#p_crl_jfr_s2c)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier for the error, such as SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause. The source error that triggered the current error. If there is no original error, this field is null|0.6|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|resourceUuid|String| |0.6|
+|hostUuid|String|Host UUID|0.6|
+|primaryStorageUuid|String|Data Storage UUID|0.6|
+|type|String|Type|0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+|state|ReplicationState|For details, see [state](#p_ey3_ngr_s2c)|0.6|
+|role|ReplicationRole|For details, see [role](#p_e22_qgr_s2c)|0.6|
+|networkStatus|ReplicationNetworkStatus|For details, see [networkStatus](#p_tct_sgr_s2c)|0.6|
+|diskStatus|ReplicationDiskStatus|For details, see [diskStatus](#p_msd_vgr_s2c)|0.6|
+
+### state
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Enabled|ReplicationState| |0.6|
+|Disabled|ReplicationState| |0.6|
+
+### role
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Primary|ReplicationRole|Primary replica|0.6|
+|Secondary|ReplicationRole|Secondary replica|0.6|
+|Unkown|ReplicationRole|Unknown|0.6|
+
+### networkStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Disconnecting|ReplicationNetworkStatus| |0.6|
+|Unconnected|ReplicationNetworkStatus| |0.6|
+|Timeout|ReplicationNetworkStatus| |0.6|
+|BrokenPipe|ReplicationNetworkStatus| |0.6|
+|NetworkFailure|ReplicationNetworkStatus| |0.6|
+|ProtocolError|ReplicationNetworkStatus| |0.6|
+|TearDown|ReplicationNetworkStatus| |0.6|
+|WFConnection|ReplicationNetworkStatus| |0.6|
+|WFReportParams|ReplicationNetworkStatus| |0.6|
+|Connected|ReplicationNetworkStatus| |0.6|
+|StartingSyncS|ReplicationNetworkStatus| |0.6|
+|StartingSyncT|ReplicationNetworkStatus| |0.6|
+|WFBitMapS|ReplicationNetworkStatus| |0.6|
+|WFBitMapT|ReplicationNetworkStatus| |0.6|
+|WFSyncUUID|ReplicationNetworkStatus| |0.6|
+|SyncSource|ReplicationNetworkStatus| |0.6|
+|SyncTarget|ReplicationNetworkStatus| |0.6|
+|PausedSyncS|ReplicationNetworkStatus| |0.6|
+|PausedSyncT|ReplicationNetworkStatus| |0.6|
+|VerifyS|ReplicationNetworkStatus| |0.6|
+|VerifyT|ReplicationNetworkStatus| |0.6|
+|Unknown|ReplicationNetworkStatus| |0.6|
+
+### diskStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Diskless|ReplicationDiskStatus| |0.6|
+|Attaching|ReplicationDiskStatus| |0.6|
+|Failed|ReplicationDiskStatus| |0.6|
+|Negotiating|ReplicationDiskStatus| |0.6|
+|Inconsistent|ReplicationDiskStatus| |0.6|
+|Outdated|ReplicationDiskStatus| |0.6|
+|DUnknown|ReplicationDiskStatus| |0.6|
+|Consistent|ReplicationDiskStatus| |0.6|
+|UpToDate|ReplicationDiskStatus| |0.6|
+|Unknown|ReplicationDiskStatus| |0.6|
+
+## SDK Examples
+Java SDK
+
+```
+QueryMiniStorageResourceReplicationAction action = new QueryMiniStorageResourceReplicationAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryMiniStorageResourceReplicationAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryMiniStorageResourceReplicationAction action = QueryMiniStorageResourceReplicationAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryMiniStorageResourceReplicationAction.Result res = action.call()
+```
+
+</APIPage>

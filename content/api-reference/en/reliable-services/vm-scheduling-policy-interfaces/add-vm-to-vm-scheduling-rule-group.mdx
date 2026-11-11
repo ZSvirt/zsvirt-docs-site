@@ -1,0 +1,64 @@
+---
+title: "Add VM to VM Scheduling Group"
+---
+
+<APIPage method="POST" path="/v1/vmSchedulingRuleGroup/{vmGroupUuid}/vmInstance/{vmUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST http://localhost:8080/zstack/v1/vmSchedulingRuleGroup/663fb7c5b74f3bc9bf629ca3523fb8cc/vmInstance/64d7de2d3eb431c99998292d1ed5411e
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|vmGroupUuid|String|url|VM scheduling group UUID| |4.6.0|
+|vmUuid|String|url|VM UUID| |4.6.0|
+|systemTags \(optional\)|List|body|System tags| |4.6.0|
+|userTags \(optional\)|List|body|User tags| |4.6.0|
+
+## API Response
+This API returns an empty JSON structure **`{}`** on success. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+AddVmToVmSchedulingRuleGroupAction action = new AddVmToVmSchedulingRuleGroupAction();
+action.vmGroupUuid = "663fb7c5b74f3bc9bf629ca3523fb8cc";
+action.vmUuid = "64d7de2d3eb431c99998292d1ed5411e";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddVmToVmSchedulingRuleGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddVmToVmSchedulingRuleGroupAction action = AddVmToVmSchedulingRuleGroupAction()
+action.vmGroupUuid = "663fb7c5b74f3bc9bf629ca3523fb8cc"
+action.vmUuid = "64d7de2d3eb431c99998292d1ed5411e"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddVmToVmSchedulingRuleGroupAction.Result res = action.call()
+```
+
+</APIPage>

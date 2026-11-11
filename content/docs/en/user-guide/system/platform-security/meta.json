@@ -1,0 +1,10 @@
+{
+  "title": "Security Access Settings",
+  "pages": [
+    "index",
+    "ip-allow-deny-list",
+    "certificates",
+    "security-settings"
+  ],
+  "pagesIndex": "index"
+}

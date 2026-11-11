@@ -1,0 +1,113 @@
+---
+title: "更新虚拟机调度组"
+---
+
+<APIPage method="PUT" path="/v1/vmSchedulingRuleGroup/{uuid}/update">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateVmSchedulingRuleGroup": {
+    "name": "test",
+    "description": "test desc"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateVmSchedulingRuleGroup":{"name":"test","description":"test desc"}}' http://localhost:8080/zstack/v1/vmSchedulingRuleGroup/0e8a74e4ff8d3da9bff07f0cc7d58f91/update
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |4.6.0|
+|name \(可选\)|String|body\(包含在**updateVmSchedulingRuleGroup**结构中\)|资源名称| |4.6.0|
+|description \(可选\)|String|body\(包含在**updateVmSchedulingRuleGroup**结构中\)|资源的详细描述| |4.6.0|
+|systemTags \(可选\)|List|body|系统标签| |4.6.0|
+|userTags \(可选\)|List|body|用户标签| |4.6.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "75840459a5f83afebc36e605a3189289",
+    "name": "test",
+    "description": "test desc",
+    "appliance": "CUSTOMER",
+    "zoneUuid": "261246b65f253787b06a29c6c266543c"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.6.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_w13_jcb_3cb)|4.6.0|
+|inventory|AffinityGroupInventory|详情参考[inventory](#p_fbm_jcb_3cb)|4.6.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.6.0|
+|description|String|错误的概要描述|4.6.0|
+|details|String|错误的详细信息|4.6.0|
+|elaboration|String|保留字段，默认为null|4.6.0|
+|opaque|LinkedHashMap|保留字段，默认为null|4.6.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.6.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.6.0|
+|name|String|资源名称|4.6.0|
+|description|String|资源的详细描述|4.6.0|
+|appliance|String| |4.6.0|
+|zoneUuid|String|数据中心UUID|4.6.0|
+|createDate|Timestamp|创建时间|4.6.0|
+|lastOpDate|Timestamp|最后一次修改时间|4.6.0|
+
+## SDK示例
+Java SDK
+
+```
+UpdateVmSchedulingRuleGroupAction action = new UpdateVmSchedulingRuleGroupAction();
+action.uuid = "0e8a74e4ff8d3da9bff07f0cc7d58f91";
+action.name = "test";
+action.description = "test desc";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateVmSchedulingRuleGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateVmSchedulingRuleGroupAction action = UpdateVmSchedulingRuleGroupAction()
+action.uuid = "0e8a74e4ff8d3da9bff07f0cc7d58f91"
+action.name = "test"
+action.description = "test desc"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateVmSchedulingRuleGroupAction.Result res = action.call()
+```
+
+</APIPage>

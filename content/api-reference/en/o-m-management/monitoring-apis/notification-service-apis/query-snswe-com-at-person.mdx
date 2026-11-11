@@ -1,0 +1,88 @@
+---
+title: "Query WeCom Mentioned Users"
+---
+
+<APIPage method="GET" path="/v1/sns/application-endpoints/we-com/at-persons" altPaths={["/v1/sns/application-endpoints/we-com/at-persons/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/sns/application-endpoints/we-com/at-persons?q=uuid=ec74d6afc6fa32419a8e22857038dca8&q=endpointUuid=b1a06b4282043ec39305377a3df1c99d
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/sns/application-endpoints/we-com/at-persons/8ab29c25622e3419b5690b6002596af3
+```
+
+Queryable Fields
+
+Run the zstack-cli command line tool, type `QuerySNSWeComAtPerson` and press the Tab key to view all queryable fields and cross-table queryable resource names.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "02be8517bdda3a3990343870d24a55df",
+      "userId": "zhang.san",
+      "endpointUuid": "6c8dafc01f3135ec954d6fd937f4e0e1"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.2.0|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_b1q_chy_p1b)|4.2.0|
+|inventories|List|For details, see [inventories](#p_ywy_chy_p1b)|4.2.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001.|5.0.0|
+|description|String|A brief description of the error|5.0.0|
+|details|String|Detailed information about the error|5.0.0|
+|elaboration|String|Reserved field. Default is null.|5.0.0|
+|opaque|LinkedHashMap|Reserved field. Default is null.|5.0.0|
+|cause|ErrorCode|The root error. The source error that caused the current error. If there is no root error, this field is null.|5.0.0|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource.|4.2.0|
+|userId|String|WeCom user ID|4.2.0|
+|endpointUuid|String|WeCom endpoint UUID|4.2.0|
+
+## SDK Examples
+Java SDK
+
+```
+QuerySNSWeComAtPersonAction action = new QuerySNSWeComAtPersonAction();
+action.conditions = asList("uuid=4bd23fb21c7d3d4d9d5d18b794ab05d0","endpointUuid=a0b96b1f27fa3ef992e1fd37b1ab58f9");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QuerySNSWeComAtPersonAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QuerySNSWeComAtPersonAction action = QuerySNSWeComAtPersonAction()
+action.conditions = ["uuid=0f5346ee4a9d36da9228e57e3249f853","endpointUuid=6f42b53c5a9336368921441afdf19583"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QuerySNSWeComAtPersonAction.Result res = action.call()
+```
+
+</APIPage>

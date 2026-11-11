@@ -1,0 +1,417 @@
+---
+title: "Update SNMP Agent"
+---
+
+<APIPage method="PUT" path="/v1/snmp/agent/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateSnmpAgent": {
+    "version": "v2c",
+    "readCommunity": "zstack",
+    "port": 1161
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The `systemTags` and `userTags` fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateSnmpAgent":{"version":"v2c","readCommunity":"zstack","port":1161}}' \
+http://localhost:8080/zstack/v1/snmp/agent/actions
+```
+
+Parameter List
+
+<table id="table_wpz_r1v_m1b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **updateSnmpAgent** structure\)
+
+</td><td>
+
+Resource UUID. Uniquely identifies the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+version
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **updateSnmpAgent** structure\)
+
+</td><td>
+
+SNMP agent protocol version
+
+</td><td>
+
+-   v2c
+-   v3
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+readCommunity \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **updateSnmpAgent** structure\)
+
+</td><td>
+
+Read community string \(used when version is v2c\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+userName \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **updateSnmpAgent** structure\)
+
+</td><td>
+
+Username \(used when version is v3\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+authAlgorithm \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **updateSnmpAgent** structure\)
+
+</td><td>
+
+Authentication algorithm
+
+</td><td>
+
+-   MD5
+-   SHA
+-   SHA224
+-   SHA256
+-   SHA384
+-   SHA512
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+authPassword \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **updateSnmpAgent** structure\)
+
+</td><td>
+
+Authentication password
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+privacyAlgorithm \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **updateSnmpAgent** structure\)
+
+</td><td>
+
+Privacy algorithm
+
+</td><td>
+
+-   DES
+-   AES128
+-   AES192
+-   AES256
+-   3DES
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+privacyPassword \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **updateSnmpAgent** structure\)
+
+</td><td>
+
+Privacy password
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+port
+
+</td><td>
+
+int
+
+</td><td>
+
+body \(contained in the **updateSnmpAgent** structure\)
+
+</td><td>
+
+Port
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+systemTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+userTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "cad9965ebedd495aa1f5718f31da1aa8",
+    "version": "v3",
+    "userName": "zstack",
+    "authAlgorithm": "SHA",
+    "authPassword": "authPassword",
+    "privacyAlgorithm": "AES128",
+    "privacyPassword": "privPassword",
+    "port": 162
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.10.0|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_bcl_x1v_m1b)|4.10.0|
+|inventory|SnmpAgentInventory|See [inventory](#p_nqg_y1v_m1b)|4.10.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. A globally unique identifier for the error, e.g., SYS.1000, HOST.1001|4.10.0|
+|description|String|Brief description of the error|4.10.0|
+|details|String|Detailed error information|4.10.0|
+|elaboration|String|Reserved field. Defaults to null|4.10.0|
+|opaque|LinkedHashMap|Reserved field. Defaults to null|4.10.0|
+|cause|ErrorCode|Root error. The source error that caused this error. Null if no root cause exists|4.10.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID. Uniquely identifies the resource|4.10.0|
+|version|String|SNMP agent protocol version|4.10.0|
+|readCommunity|String|Read community string \(used when version is v2c\)|4.10.0|
+|userName|String|Username \(used when version is v3\)|4.10.0|
+|authAlgorithm|String|Authentication algorithm|4.10.0|
+|authPassword|String|Authentication password|4.10.0|
+|privacyAlgorithm|String|Privacy algorithm|4.10.0|
+|privacyPassword|String|Privacy password|4.10.0|
+|port|int|Port|4.10.0|
+|status|String|Whether the SNMP agent is enabled|4.10.0|
+|securityLevel|String|Security level|4.10.0|
+|createDate|Timestamp|Creation time|4.10.0|
+|lastOpDate|Timestamp|Last modification time|4.10.0|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateSnmpAgentAction action = new UpdateSnmpAgentAction();
+action.version = "v2c";
+action.readCommunity = "zstack";
+action.port = 1161;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateSnmpAgentAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateSnmpAgentAction action = UpdateSnmpAgentAction()
+action.version = "v2c"
+action.readCommunity = "zstack"
+action.port = 1161
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateSnmpAgentAction.Result res = action.call()
+```
+
+</APIPage>

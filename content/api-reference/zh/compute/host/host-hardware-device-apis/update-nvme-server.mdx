@@ -1,0 +1,165 @@
+---
+title: "更新NVMe服务器配置"
+---
+
+<APIPage method="PUT" path="/v1/storage-devices/nvme/servers/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateNvmeServer": {
+    "name": "nvme-server-10.0.0.201"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateNvmeServer":{"name":"nvme-server-10.0.0.201"}}' \
+http://localhost:8080/zstack/v1/storage-devices/nvme/servers/3adcddf1292f3665805d5345919ac617/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |zsv 4.10.6|
+|name \(可选\)|String|body\(包含在`updateNvmeServer`结构中\)|资源名称| |zsv 4.10.6|
+|systemTags \(可选\)|List|body| | |zsv 4.10.6|
+|userTags \(可选\)|List|body| | |zsv 4.10.6|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "1aeed04f5f1730028ab808617aee75ec",
+    "name": "nvme-server-10.0.0.201",
+    "ip": "10.0.0.201",
+    "port": 3260,
+    "state": "Enabled"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |zsv 4.10.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_ggg_hzl_s2c)|zsv 4.10.6|
+|inventory|NvmeServerInventory|详情参考[inventory](#p_ix1_jzl_s2c)|zsv 4.10.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.7.21|
+|name|String|资源名称|4.7.21|
+|ip|String| |4.7.21|
+|port|Integer| |4.7.21|
+|state|String| |4.7.21|
+|transport|String| |4.7.21|
+|createDate|Timestamp|创建时间|4.7.21|
+|lastOpDate|Timestamp|最后一次修改时间|4.7.21|
+|nvmeTargets|List|详情参考[nvmeTargets](#p_vgm_pzl_s2c)|4.7.21|
+|nvmeClusterRefs|List|详情参考[nvmeClusterRefs](#p_am5_rzl_s2c)|4.7.21|
+
+### nvmeTargets
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.6.21|
+|name|String|资源名称|4.6.21|
+|nqn|String|NVMe 限定名称|4.6.21|
+|nvmeServerUuid|String|nvme服务器UUID|4.7.21|
+|state|String|状态|4.6.21|
+|createDate|Timestamp|创建时间|4.6.21|
+|lastOpDate|Timestamp|最后一次修改时间|4.6.21|
+|nvmeLuns|List|详情参考[nvmeLuns](#p_xmy_4zl_s2c)|4.6.21|
+
+### nvmeLuns
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|nvmeTargetUuid|String|所属NVMe设备UUID|4.6.21|
+|name|String|资源名称|4.6.21|
+|uuid|String|资源的UUID，唯一标示该资源|4.6.21|
+|wwid|String|全局唯一标识|4.6.21|
+|vendor|String|供应商|4.6.21|
+|model|String|型号|4.6.21|
+|wwn|String| |4.6.21|
+|serial|String|序列号|4.6.21|
+|type|String|类型|4.6.21|
+|hctl|String| |4.6.21|
+|path|String|路径|4.6.21|
+|state|String|状态|4.6.21|
+|size|Long|大小|4.6.21|
+|multipathDeviceUuid|String|多路径设备UUID|4.6.21|
+|source|String|磁盘来源，NVMe|4.6.21|
+|createDate|Timestamp|创建时间|4.6.21|
+|lastOpDate|Timestamp|最后一次修改时间|4.6.21|
+|nvmeLunHostRefs|List|详情参考[nvmeLunHostRefs](#p_b2m_4zl_s2c)|4.6.21|
+
+### nvmeLunHostRefs
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|nvmeLunUuid|String|NVMe磁盘UUID|4.6.21|
+|hostUuid|String|主机UUID|4.6.21|
+|path|String|磁盘路径|4.6.21|
+|hctl|String|磁盘HCTL|4.6.21|
+|createDate|Timestamp|创建时间|4.6.21|
+|lastOpDate|Timestamp|最后一次修改时间|4.6.21|
+
+### nvmeClusterRefs
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|nvmeServerUuid|String| |4.7.21|
+|clusterUuid|String|集群UUID|4.7.21|
+|createDate|Timestamp|创建时间|4.7.21|
+|lastOpDate|Timestamp|最后一次修改时间|4.7.21|
+
+## SDK示例
+Java SDK
+
+```
+UpdateNvmeServerAction action = new UpdateNvmeServerAction();
+action.uuid = "3adcddf1292f3665805d5345919ac617";
+action.name = "nvme-server-10.0.0.201";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateNvmeServerAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateNvmeServerAction action = UpdateNvmeServerAction()
+action.uuid = "3adcddf1292f3665805d5345919ac617"
+action.name = "nvme-server-10.0.0.201"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateNvmeServerAction.Result res = action.call()
+```
+
+</APIPage>

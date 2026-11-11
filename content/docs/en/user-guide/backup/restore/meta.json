@@ -1,0 +1,10 @@
+{
+  "title": "Data Recovery",
+  "pages": [
+    "index",
+    "overwrite-vm",
+    "create-vm-from-backup",
+    "overwrite-platform-database"
+  ],
+  "pagesIndex": "index"
+}

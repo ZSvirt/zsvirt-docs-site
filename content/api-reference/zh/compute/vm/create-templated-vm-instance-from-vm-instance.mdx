@@ -1,0 +1,109 @@
+---
+title: "从虚拟机创建虚拟机模板"
+---
+
+<APIPage method="POST" path="/v1/vm-instances/{vmInstanceUuid}/create-templated-vmInstance">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "vm1"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"vm1"}}' \
+http://localhost:8080/zstack/v1/vm-instances/326c05ee121432628ddabd7036ea94ff/create-templated-vmInstance
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|name|String|body\(包含在`params`结构中\)|虚拟机模板名称| |4.2.6|
+|vmInstanceUuid|String|url|虚拟机UUID| |4.2.6|
+|clusterUuid \(可选\)|String|body\(包含在`params`结构中\)|集群UUID| |4.2.6|
+|hostUuid \(可选\)|String|body\(包含在`params`结构中\)|主机UUID| |4.2.6|
+|systemTags \(可选\)|List|body|系统标签| |4.2.6|
+|userTags \(可选\)|List|body|用户标签| |4.2.6|
+
+## API返回
+返回示例
+
+```
+{
+  "templatedVmInstanceInventory": {
+    "uuid": "0878457833cd33fda63afc7423f2ce58",
+    "name": "templated vmInstance"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.2.6|
+|templatedVmInstanceInventory|TemplatedVmInstanceInventory|详情参考[templatedVmInstanceInventory](#p_u4v_txf_y1c)|4.2.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_jws_nyf_y1c)|4.2.6|
+
+### templatedVmInstanceInventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.2.6|
+|name|String|资源名称|4.2.6|
+|zoneUuid|String|数据中心UUID|4.2.6|
+|createDate|Timestamp|创建时间|4.2.6|
+|lastOpDate|Timestamp|最后一次修改时间|4.2.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+CreateTemplatedVmInstanceFromVmInstanceAction action = new CreateTemplatedVmInstanceFromVmInstanceAction();
+action.name = "vm1";
+action.vmInstanceUuid = "326c05ee121432628ddabd7036ea94ff";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateTemplatedVmInstanceFromVmInstanceAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+CreateTemplatedVmInstanceFromVmInstanceAction action = CreateTemplatedVmInstanceFromVmInstanceAction()
+action.name = "vm1"
+action.vmInstanceUuid = "326c05ee121432628ddabd7036ea94ff"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateTemplatedVmInstanceFromVmInstanceAction.Result res = action.call()
+
+```
+
+</APIPage>

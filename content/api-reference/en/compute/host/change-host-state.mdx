@@ -1,0 +1,325 @@
+---
+title: "Change Host State"
+---
+
+<APIPage method="PUT" path="/v1/hosts/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "changeHostState": {
+    "stateEvent": "enable"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X PUT -d '{"changeHostState":{"stateEvent":"enable"}}' \
+http://localhost:8080/zstack/v1/hosts/70e37940fe263e858a151850a312143f/actions
+```
+
+Parameter List
+
+<table id="table_vhs_yv5_m1b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+Resource UUID, uniquely identifies the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+stateEvent
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in `changeHostState` structure\)
+
+</td><td>
+
+Expected host state
+
+</td><td>
+
+-   enable
+-   disable
+-   maintain
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+systemTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tag
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+userTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tag
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "zoneUuid": "faf35db46f044232a96b1c9ac228f7a1",
+    "name": "example",
+    "uuid": "cf2e376062fe4a06bd5ab4d76cd88f5d",
+    "clusterUuid": "7f314660761a4899b5967b6f4aad88f3",
+    "description": "example",
+    "managementIp": "192.168.0.1",
+    "hypervisorType": "KVM",
+    "state": "Enabled",
+    "status": "Connected",
+    "totalCpuCapacity": 4.0,
+    "availableCpuCapacity": 2.0,
+    "totalMemoryCapacity": 4.0,
+    "availableMemoryCapacity": 4.0
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See details [error](#p_im3_qy5_m1b)|0.6|
+|inventory|HostInventory|See details [inventory](#p_asj_ry5_m1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, e.g. SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, default is null|0.6|
+|opaque|LinkedHashMap|Reserved field, default is null|0.6|
+|cause|ErrorCode|Root cause, the error that caused the current error. If there is no original error, this field is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|zoneUuid|String|Data Center UUID|0.6|
+|name|String|Resource name|0.6|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|clusterUuid|String|Cluster UUID|0.6|
+|description|String|Resource description|0.6|
+|managementIp|String| |0.6|
+|hypervisorType|String| |0.6|
+|state|String| |0.6|
+|status|String| |0.6|
+|totalCpuCapacity|Long| |0.6|
+|availableCpuCapacity|Long| |0.6|
+|cpuSockets|Integer|Number of physical CPU sockets|0.6|
+|totalMemoryCapacity|Long| |0.6|
+|availableMemoryCapacity|Long| |0.6|
+|cpuNum|Integer|Number of logical CPUs|0.6|
+|ipmiAddress|String|IPMI address|0.6|
+|ipmiUsername|String|IPMI username|0.6|
+|ipmiPort|Integer|IPMI port|0.6|
+|ipmiPowerStatus|String|IPMI power status|0.6|
+|architecture|String| |0.6|
+|nqn|String|NVMe Qualified Name|4.10.6|
+|hostname|String|Host name|4.10.20|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+|cpuStatus|HwMonitorStatus|See details [cpuStatus](#p_wvd_kkm_lhc)|4.10.0|
+|memoryStatus|HwMonitorStatus|See details [memoryStatus](#p_nhh_kkm_lhc)|4.10.0|
+|diskStatus|HwMonitorStatus|See details [diskStatus](#p_esk_kkm_lhc)|4.10.0|
+|nicStatus|HwMonitorStatus|See details [nicStatus](#p_n24_kkm_lhc)|4.10.0|
+|gpuStatus|HwMonitorStatus|See details [gpuStatus](#p_zgr_kkm_lhc)|4.10.0|
+|powerSupplyStatus|HwMonitorStatus|See details [powerSupplyStatus](#p_o35_kkm_lhc)|4.10.0|
+|fanStatus|HwMonitorStatus|See details [fanStatus](#p_m2x_kkm_lhc)|4.10.0|
+|raidStatus|HwMonitorStatus|See details [raidStatus](#p_oc1_lkm_lhc)|4.10.0|
+|temperatureStatus|HwMonitorStatus|See details [temperatureStatus](#p_cyd_lkm_lhc)|4.10.0|
+
+### cpuStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### memoryStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### diskStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### nicStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### gpuStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### powerSupplyStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### fanStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### raidStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### temperatureStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+## SDK Examples
+Java SDK
+
+```
+ChangeHostStateAction action = new ChangeHostStateAction();
+action.uuid = "70e37940fe263e858a151850a312143f";
+action.stateEvent = "enable";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ChangeHostStateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = ChangeHostStateAction()
+action.uuid = "70e37940fe263e858a151850a312143f"
+action.stateEvent = "enable"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

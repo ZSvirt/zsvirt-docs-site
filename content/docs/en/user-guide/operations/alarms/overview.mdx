@@ -1,0 +1,26 @@
+---
+title: 'Overview'
+---
+
+ZSvirt supports setting up alarms for resources based on load and capacity usage, as well as configuring event alarms for predefined events occurring within the platform. When critical resources experience abnormalities, the platform instantly pushes alarm messages to designated endpoints to help quickly identify and resolve issues, minimizing potential business disruptions.
+
+## Alarm Service Infrastructure
+The ZSvirt alarm service consists of two main components: the monitoring system and the notification service.
+
+-   **Monitoring System**
+    -   Provides time-series data monitoring and alarms, including resource load and capacity data.
+    -   Captures predefined events from the platform and triggers alarms.
+    -   Supports custom alarms and alarm message templates.
+    -   Allows viewing of alarm messages through multiple entry points.
+-   **Notification Service**
+    -   Sends alarm notifications to designated endpoints, such as system, email, DingTalk, Lark, WeCom, HTTP applications, Microsoft Teams, and SNMP Trap receivers.
+
+## Usage Recommendations
+Considering that monitoring data consumes certain system resources, it is recommended to configure ZSvirt related resources according to the following requirements:
+
+-   Plan a dedicated physical server as the management node for the platform.
+-   Given that monitoring data may periodically consume system disk I/O resources, it is recommended to use an SSD for the management node's system disk.
+-   To avoid excessive system disk usage due to large monitoring data, plan for a system disk space of at least **1TB**.
+-   If your system disk space is less than 500GB, you can modify the following configurations in System Parameters:
+    -   **Monitoring Data Retention Period**: Set to 1 month.
+    -   **Monitoring Data Retention Size**: Set to a power of 2, such as 32GB, 64GB, or 128GB.

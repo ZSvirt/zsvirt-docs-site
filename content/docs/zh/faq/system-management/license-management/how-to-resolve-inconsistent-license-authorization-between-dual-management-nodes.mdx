@@ -1,0 +1,34 @@
+---
+title: "双管理节点授权不一致，如何解决？"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+## 现象
+虚拟化平台UI界面告警提示双管理节点授权不一致。
+
+## 原因
+申请许可证授权时申请错误。
+
+## 解决方案
+1.  登录管理节点依次执行以下命令，查询两个管理节点许可证授权模块：
+
+    ```
+    [root@localhost ~]# zstack-cli
+    admin >>> LogInByAccount accountName=admin password=$password  //密码为平台admin用户密码 
+    admin >>> GetLicenseAddOns
+    ```
+
+    如[Figure 1](#fig_rw3_wr5_p5b)所示：
+
+    ![查询授权模块](/docs/faq/images/ZStack_FAQ_Summary_0056_1_1.png)
+
+2.  执行以下命令，删除不一致的许可证模块：
+
+    ```
+    admin >>> DeleteLicense managementNodeUuid=$ Uuid=$
+    ```
+
+    <Callout type="warning">
+    删除许可证模块需确认是否为管理节点之间重复的模块，误删除许可证模块将影响虚拟化平台正常使用。
+    </Callout>

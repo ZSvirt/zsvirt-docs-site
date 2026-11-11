@@ -1,0 +1,114 @@
+---
+title: "Update Group Directory"
+---
+
+<APIPage method="PUT" path="/v1/update/directory">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateDirectory": {
+    "uuid": "66a79f93fd5d3d269302297dc1459f6e",
+    "name": "test"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateDirectory":{"uuid":"66a79f93fd5d3d269302297dc1459f6e","name":"test"}}' http://localhost:8080/zstack/v1/update/directory
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|body\(contained in **updateDirectory** structure\)|Resource UUID, a unique identifier for the resource| |4.6.0|
+|name|String|body\(contained in **updateDirectory** structure\)|Resource Name| |4.6.0|
+|systemTags \(optional\)|List|body|System Tags| |4.6.0|
+|userTags \(optional\)|List|body|User Tags| |4.6.0|
+
+## API Response
+Return Example
+
+```
+{
+  "inventory": {
+    "uuid": "ce9c80c271df30eba545af5b7efc6b09",
+    "name": "test",
+    "groupName": "admin/first/second",
+    "parentUuid": "5cc7f45b66783385b3f4a9d1ef109a5d",
+    "rootDirectoryUuid": "57290934e96a305fbdad6ccb33bb64b8",
+    "zoneUuid": "b103949274663c19b9675ea6f6505dd5",
+    "type": "default"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.6.0|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. For details, see [error](#p_rx5_n2s_zz)|4.6.0|
+|inventory|VmInstanceInventory|For details, see [inventory](#p_e23_42s_zz)|4.6.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|4.6.0|
+|description|String|Brief description of the error|4.6.0|
+|details|String|Detailed error information|4.6.0|
+|elaboration|String|Reserved field, defaults to null|4.6.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|4.6.0|
+|cause|ErrorCode|Root cause: the source error that triggered the current error. If there is no original error, this field is null|4.6.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, a unique identifier for the resource|4.6.0|
+|name|String|Resource Name|4.6.0|
+|groupName|String|Group|4.6.0|
+|parentUuid|String|Parent Directory UUID|4.6.0|
+|rootDirectoryUuid|String|Root Directory UUID|4.6.0|
+|zoneUuid|String|Data Center UUID|4.6.0|
+|type|String|Directory Type|4.6.0|
+|createDate|Timestamp|Creation Time|4.6.0|
+|lastOpDate|Timestamp|Last Operation Date|4.6.0|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateDirectoryAction action = new UpdateDirectoryAction();
+action.uuid = "66a79f93fd5d3d269302297dc1459f6e";
+action.name = "test";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateDirectoryAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateDirectoryAction action = UpdateDirectoryAction()
+action.uuid = "66a79f93fd5d3d269302297dc1459f6e"
+action.name = "test"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateDirectoryAction.Result res = action.call()
+```
+
+</APIPage>

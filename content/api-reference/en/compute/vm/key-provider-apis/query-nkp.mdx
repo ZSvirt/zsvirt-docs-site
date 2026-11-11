@@ -1,0 +1,54 @@
+---
+title: "Query Native Key Providers"
+---
+
+<APIPage method="GET" path="/v1/key-providers/nkp">
+
+```
+GET zstack/v1/key-providers/nkp/{uuid}
+```
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/key-providers/nkp?q=uuid=ff0415ff372f33b5b6b757d3b99ad900
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/key-providers/nkp/12fcf606191b3b249ef4c419585ca769
+```
+
+Queryable Fields
+
+Run the CLI command line tool, enter `QueryNkp`, and press Tab to view all queryable fields and resource names that can be used for cross-table queries.
+
+## SDK Example
+Java SDK
+
+```
+QueryNkpAction action = new QueryNkpAction();
+action.conditions = asList("uuid=ff0415ff372f33b5b6b757d3b99ad900");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryNkpAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = QueryNkpAction()
+action.conditions = ["uuid=ff0415ff372f33b5b6b757d3b99ad900"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

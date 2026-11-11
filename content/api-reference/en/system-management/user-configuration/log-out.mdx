@@ -1,0 +1,53 @@
+---
+title: "Log Out"
+---
+
+<APIPage method="DELETE" path="/v1/accounts/sessions/{sessionUuid}">
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-X DELETE http://localhost:8080/zstack/v1/accounts/sessions/77b3af8ddd67334ebdec0b2e32d1559b
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|sessionUuid \(Optional\)|String|url|Session UUID| |0.6|
+|clientInfo \(Optional\)|Map|body \(contained in the **logInByAccount** structure\)|Client information| |3.5.0|
+|systemTags \(Optional\)|List|body|System tags| |0.6|
+|userTags \(Optional\)|List|body|User tags| |0.6|
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+LogOutAction action = new LogOutAction();
+action.sessionId = "0c7e729fb59945938752cd4ec99c2a94";
+LogOutAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+LogOutAction action = LogOutAction()
+action.sessionId = "1cb84b3f5713432aaf42bc230c32aa20"
+LogOutAction.Result res = action.call()
+```
+
+</APIPage>

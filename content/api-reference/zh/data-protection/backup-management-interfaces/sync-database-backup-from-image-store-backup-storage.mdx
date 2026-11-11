@@ -1,0 +1,129 @@
+---
+title: "同步至DS"
+---
+
+<APIPage method="PUT" path="/v1/database-backups/{uuid}/actions">
+
+同步备份至备份存储。
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "syncDatabaseBackupFromImageStoreBackupStorage": {
+    "srcBackupStorageUuid": "72ad4c5419d63f5aaf37faf985c95a65",
+    "dstBackupStorageUuid": "76b2c6b412a73ef8a4263e659c104fff"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"syncDatabaseBackupFromImageStoreBackupStorage":{"srcBackupStorageUuid":"72ad4c5419d63f5aaf37faf985c95a65","dstBackupStorageUuid":"76b2c6b412a73ef8a4263e659c104fff"}}' http://localhost:8080/zstack/v1/database-backups/4594a949f00e3a55932f5b5e66ec9d67/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |3.0.0|
+|srcBackupStorageUuid|String|body\(包含在**syncDatabaseBackupFromImageStoreBackupStorage**结构中\)| | |3.0.0|
+|dstBackupStorageUuid|String|body\(包含在**syncDatabaseBackupFromImageStoreBackupStorage**结构中\)| | |3.0.0|
+|systemTags \(可选\)|List|body| | |3.0.0|
+|userTags \(可选\)|List|body| | |3.0.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "c04683f1c53039d1bb0b0f0b601b5a5b",
+    "name": "Backup-1",
+    "description": "database backup",
+    "size": 1048576.0,
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_k5t_b4m_2fb)|3.0.0|
+|inventory|DatabaseBackupInventory|详情参考[inventory](#p_qtz_b4m_2fb)|3.0.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.0.0|
+|description|String|错误的概要描述|3.0.0|
+|details|String|错误的详细信息|3.0.0|
+|elaboration|String|保留字段，默认为null|3.0.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.0.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.0.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.0.0|
+|name|String|资源名称|3.0.0|
+|description|String|资源的详细描述|3.0.0|
+|state|String| |3.0.0|
+|status|String| |3.0.0|
+|size|Long| |3.0.0|
+|metadata|String| |3.0.0|
+|createDate|Timestamp|创建时间|3.0.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.0.0|
+|backupStorageRefs|List|详情参考[backupStorageRefs](#p_imf_c4m_2fb)|3.0.0|
+
+### backupStorageRefs
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|databaseBackupUuid|String| |3.0.0|
+|backupStorageUuid|String|镜像存储UUID|3.0.0|
+|installPath|String| |3.0.0|
+|exportUrl|String| |3.0.0|
+|status|String| |3.0.0|
+|createDate|Timestamp|创建时间|3.0.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.0.0|
+
+## SDK示例
+Java SDK
+
+```
+SyncDatabaseBackupFromImageStoreBackupStorageAction action = new SyncDatabaseBackupFromImageStoreBackupStorageAction();
+action.uuid = "4594a949f00e3a55932f5b5e66ec9d67";
+action.srcBackupStorageUuid = "72ad4c5419d63f5aaf37faf985c95a65";
+action.dstBackupStorageUuid = "76b2c6b412a73ef8a4263e659c104fff";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+SyncDatabaseBackupFromImageStoreBackupStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SyncDatabaseBackupFromImageStoreBackupStorageAction action = SyncDatabaseBackupFromImageStoreBackupStorageAction()
+action.uuid = "4594a949f00e3a55932f5b5e66ec9d67"
+action.srcBackupStorageUuid = "72ad4c5419d63f5aaf37faf985c95a65"
+action.dstBackupStorageUuid = "76b2c6b412a73ef8a4263e659c104fff"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+SyncDatabaseBackupFromImageStoreBackupStorageAction.Result res = action.call()
+```
+
+</APIPage>

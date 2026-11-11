@@ -1,0 +1,136 @@
+---
+title: "使用AK调用API"
+---
+
+创建AccessKey后，第三方平台可以使用AccessKey调用ZSvirt API。
+
+-   [SDK方式](#section_yg3_h52_t1c)
+-   [直接调用ZSvirt RESTful API方式](#section_hh3_352_t1c)
+
+## SDK方式
+以创建虚拟机（CreateVmInstance）为例，使用AccessKey调用ZSvirt API时，需输入`accessKeyId`和`accessKeySecret`，示例如下：
+
+-   Java SDK
+
+    ```
+    CreateVmInstanceAction action = new CreateVmInstanceAction();
+    action.name = "vm1";
+    action.instanceOfferingUuid = "ae97ced44efc3314b8f7798972b4ba1a";
+    action.imageUuid = "da119f7906513eccabf271991c35a65e";
+    action.l3NetworkUuids = asList("cc0e4c5e77df3af68e59668e7f9e06c5");
+    action.dataDiskOfferingUuids = asList("19d22d051b063d379a2816daaf431838","905d94a6abb5398fa1995f6398e3f6fc");
+    action.clusterUuid = "a0468dc645223f67bd0f2ab95276bbae";
+    action.description = "this is a vm";
+    action.strategy = "InstantStart";
+    action.accessKeyId = "Fnxc7KIQAdGTvXfx8OjC";
+    action.accessKeySecret = "YOUR_ACCESS_KEY_SECRET";
+    CreateVmInstanceAction.Result res = action.call();
+    ```
+
+-   Python SDK
+
+    ```
+    CreateVmInstanceAction action = CreateVmInstanceAction()
+    action.name = "vm1"
+    action.instanceOfferingUuid = "ae97ced44efc3314b8f7798972b4ba1a"
+    action.imageUuid = "da119f7906513eccabf271991c35a65e"
+    action.l3NetworkUuids = [cc0e4c5e77df3af68e59668e7f9e06c5]
+    action.dataDiskOfferingUuids = [19d22d051b063d379a2816daaf431838, 905d94a6abb5398fa1995f6398e3f6fc]
+    action.clusterUuid = "a0468dc645223f67bd0f2ab95276bbae"
+    action.description = "this is a vm"
+    action.strategy = "InstantStart"
+    action.accessKeyId = "Fnxc7KIQAdGTvXfx8OjC"
+    action.accessKeySecret = "YOUR_ACCESS_KEY_SECRET"
+    CreateVmInstanceAction.Result res = action.call()
+    ```
+
+
+## 直接调用ZSvirt RESTful API方式
+1.  创建AccessKey：
+
+    ```
+    CreateAccessKey accountUuid=dff4fb9bbff14e97a67ab894c7b8c528 userUuid=dff4fb9bbff14e97a67ab894c7b8c528
+    {
+        "inventory": {
+            "AccessKeyID": "N3Tf05yXZUmSjCf6mYIB",
+            "AccessKeySecret": "YOUR_ACCESS_KEY_SECRET",
+            "accountUuid": "dff4fb9bbff14e97a67ab894c7b8c528",
+            "createDate": "Sep 6, 2018 1:50:06 PM",
+            "lastOpDate": "Sep 6, 2018 1:50:06 PM",
+            "userUuid": "dff4fb9bbff14e97a67ab894c7b8c528",
+            "uuid": "ae353717ca7b4182bb87fb5d010235e8"
+        },
+        "success": true
+    }
+    ```
+
+2.  生成`date`：
+
+    ```
+    python get_time.py
+    Thu, 06 Sep 2018 13:54:10 PRC
+    ```
+
+    ```
+    import datetime
+    import time
+     
+    date = time.time()
+    #EEE, dd MMM yyyy HH:mm:ss z
+    str = datetime.datetime.fromtimestamp(date).strftime('%a, %d %b %Y %H:%M:%S PRC')
+    print str
+    ```
+
+    **Note:** 时间格式必须为**EEE, dd MMM yyyy HH:mm:ss zzz**。
+
+3.  生成`digest`：
+
+    ```
+    python get_accesskey.py "vvSZpmj4cnB53qUDmm6E" "YOUR_ACCESS_KEY_SECRET" \
+    "GET" "Fri, 06 Aug 2021 17:58:34 PRC" "/v1/vm-instances"
+    # 以下为返回结果
+    args: Namespace(acesskey_id='vvSZpmj4cnB53qUDmm6E', acesskey_secret='YOUR_ACCESS_KEY_SECRET', \
+    date='Fri, 06 Aug 2021 17:58:34 PRC', method='GET', uri='/v1/vm-instances')
+    Signature: hPToRHeHdV49D4u20G8OlE0yJho=
+    Authoration ZStack vvSZpmj4cnB53qUDmm6E:hPToRHeHdV49D4u20G8OlE0yJho=
+    ```
+
+    ```
+    #/usr/bin/python
+    import base64
+    import hmac
+    import sha
+    import argparse
+    from hashlib import sha1
+     
+    parser = argparse.ArgumentParser(description='calculate zstack access key digit.')
+    parser.add_argument('acesskey_id')
+    parser.add_argument('acesskey_secret')
+    parser.add_argument('method')
+    parser.add_argument('date')
+    parser.add_argument('uri')
+     
+    args = parser.parse_args()
+     
+    print "args: %s" % args
+    h = hmac.new(args.acesskey_secret, args.method + "\n"
+                                        + args.date + "\n"
+                                        + args.uri, sha1)
+    Signature = base64.b64encode(h.digest())
+    print "Signature: %s" % Signature
+    print "Authoration %s" % ("ZStack " + args.acesskey_id + ":" + Signature)
+    ```
+
+4.  发送请求
+
+    ```
+    curl -H "Authorization:ZStack vvSZpmj4cnB53qUDmm6E:hPToRHeHdV49D4u20G8OlE0yJho=" \
+    -H "Content-Type:application/x-www-form-urlencoded" \
+    -H "Date:Fri, 06 Aug 2021 17:58:34 PRC" \
+    -X GET http://172.20.11.134:8080/zstack/v1/vm-instances
+    ```
+
+    **Note:** API请求header字段说明：
+
+    -   Authorization字段值应与第三步生成的[digest](#codeblock_wwb_3gy_vqb)中Authorization字段值保持一致，格式为："ZStack " + args.acesskey\_id + ":" + Signature
+    -   Date字段值应与生成[digest](#codeblock_wwb_3gy_vqb)时的时间戳保持一致

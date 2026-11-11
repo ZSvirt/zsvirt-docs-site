@@ -1,0 +1,644 @@
+---
+title: "Create Alarm"
+---
+
+<APIPage method="POST" path="/v1/zwatch/alarms">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "VM CPU Alarm",
+    "comparisonOperator": "LessThanOrEqualTo",
+    "period": 60.0,
+    "namespace": "ZStack/VM",
+    "metricName": "org.zstack.zwatch.datatype.Metric@53fa9b19",
+    "threshold": 60.0,
+    "repeatInterval": 1800.0,
+    "enableRecovery": true,
+    "labels": [
+      {
+        "key": "VMUuid",
+        "value": "ca6b4ad7a0e446c6a8c4f52d93215f6e",
+        "op": "Equal"
+      }
+    ],
+    "actions": [
+      {
+        "actionUuid": "19b7cfaf6134408897d95588b01308fe",
+        "actionType": "sns"
+      }
+    ],
+    "repeatCount": -1.0,
+    "type": "Any"
+    "enableRecovery": true
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"VM CPU Alarm","comparisonOperator":"LessThanOrEqualTo","period":60.0,"namespace":"ZStack/VM","metricName":"org.zstack.zwatch.datatype.Metric@53fa9b19","threshold":60.0,"repeatInterval":1800.0,"labels":[{"key":"VMUuid","value":"61f6b705fcb944df8138ea6b52b0b4a6","op":"Equal"}],"actions":[{"actionUuid":"699541db497e4d3e9c49020c2dad8d6c","actionType":"sns"}],"repeatCount":-1.0,"type":"Any","enableRecovery":true}}' http://localhost:8080/zstack/v1/zwatch/alarms
+```
+
+Parameter List
+
+<table id="table_lbf_pqj_p2b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+name
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+The resource name.
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+description \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+The detailed description of the resource.
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+comparisonOperator
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+The threshold comparison operator.
+
+</td><td>
+
+-   GreaterThanOrEqualTo
+-   GreaterThan
+-   LessThan
+-   LessThanOrEqualTo
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+period\(Optional\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+The threshold duration.
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+namespace
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+The namespace.
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+metricName
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+The metric name.
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+threshold
+
+</td><td>
+
+Double
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+The threshold.
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+repeatInterval \(Optional\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+The alarm repeat interval.
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+labels \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+The label list.
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+actions \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+The alarm action list.
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+resourceUuid \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+repeatCount \(Optional\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+The alarm repeat count.
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.3.0
+
+</td></tr><tr><td>
+
+type \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+The alarm type.
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.3.0
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags.
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags.
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+enableRecovery
+
+</td><td>
+
+Boolean
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+Whether to enable recovery notification.
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.4.0
+
+</td></tr><tr><td>
+
+emergencyLevel \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+The alarm level.
+
+</td><td>
+
+-   Emergent
+-   Important
+-   Normal
+
+</td><td>
+
+3.8.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "6ff094db7e8b4640880751c5a17e7b63",
+    "name": "VM CPU Alarm",
+    "comparisonOperator": "LessThanOrEqualTo",
+    "period": 60.0,
+    "namespace": "ZStack/VM",
+    "metricName": "org.zstack.zwatch.datatype.Metric@c2e79f0",
+    "threshold": 30.0,
+    "repeatInterval": 1800.0,
+    "repeatCount": -1.0,
+    "status": "Alarm",
+    "state": "Enabled",
+    "enableRecovery": true,
+    "createDate": "Jul 6, 2018 1:51:02 PM",
+    "lastOpDate": "Jul 6, 2018 1:51:02 PM",
+    "labels": [
+      {
+        "uuid": "cccd980c3bb84f4486d96a960eb08edb",
+        "key": "VMUuid",
+        "operator": "=",
+        "value": "f486fd81583747459d8a6cd47f9228e5"
+      }
+    ],
+    "actions": [
+      {
+        "alarmUuid": "8a6a98e3cc484388a746d725265886b3",
+        "actionType": "sns",
+        "actionUuid": "86a2b51fbc7f406c906711081852fa49"
+      }
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_dl3_frj_p2b) for details.|2.3|
+|inventory|AlarmInventory|See [inventory](#p_vwc_3rj_p2b) for details.|2.3|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, e.g., SYS.1000, HOST.1001.|2.3|
+|description|String|A brief description of the error.|2.3|
+|details|String|The detailed error information.|2.3|
+|elaboration|String|A reserved field. Default is null.|2.3|
+|opaque|LinkedHashMap|A reserved field. Default is null.|2.3|
+|cause|ErrorCode|The root error. The source error that caused the current error. This field is null if there is no root cause.|2.3|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource.|2.3|
+|name|String|The resource name.|2.3|
+|description|String|The detailed description of the resource.|2.3|
+|period|Integer|The threshold duration.|2.3|
+|namespace|String|The namespace.|2.3|
+|metricName|String|The metric name.|2.3|
+|threshold|Double|The threshold.|2.3|
+|repeatInterval|Integer|The alarm repeat interval.|2.3|
+|enableRecovery|Boolean|Whether to enable recovery notification.|3.4.0|
+|createDate|Timestamp|The creation time.|2.3|
+|lastOpDate|Timestamp|The last modification time.|2.3|
+|comparisonOperator|ComparisonOperator|See [comparisonOperator](#p_ejx_hrj_p2b) for details.|2.3|
+|status|AlarmStatus|See [status](#p_bkl_jrj_p2b) for details.|2.3|
+|labels|List|See [labels](#p_q1h_krj_p2b) for details.|2.3|
+|actions|List|See [actions](#p_jmy_lrj_p2b) for details.|2.3|
+
+### comparisonOperator
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|The resource name.|2.3|
+|ordinal|int| |2.3|
+
+### status
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|OK|AlarmStatus|Monitoring.|2.3|
+|Alarm|AlarmStatus|Triggered.|2.3|
+|InsufficientData|AlarmStatus|Insufficient data.|2.3|
+
+### labels
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource.|2.3|
+|key|String|The label key.|2.3|
+|operator|String|The comparison operator.|2.3|
+|value|String|The label value.|2.3|
+
+### actions
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|alarmUuid|String|The alarm UUID.|2.3|
+|actionType|String|The alarm action type.|2.3|
+|actionUuid|String|The alarm action UUID.|2.3|
+
+## SDK Examples
+Java SDK
+
+```
+CreateAlarmAction action = new CreateAlarmAction();
+action.name = "VM CPU Alarm";
+action.comparisonOperator = "LessThanOrEqualTo";
+action.period = 60.0;
+action.namespace = "ZStack/VM";
+action.metricName = "org.zstack.zwatch.datatype.Metric@c2e79f0";
+action.threshold = 60.0;
+action.repeatInterval = 1800.0;
+action.labels = asList([key:VMUuid, value:45821a26f579447fa77bfb82b1b0268e, op:Equal]);
+action.actions = asList([actionUuid:8e06ec09862c46c3aaf9fc6337815ffb, actionType:sns]);
+action.repeatCount = -1.0;
+action.type = "Any";
+action.enableRecovery = true;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateAlarmAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateAlarmAction action = CreateAlarmAction()
+action.name = "VM CPU Alarm"
+action.comparisonOperator = "LessThanOrEqualTo"
+action.period = 60.0
+action.namespace = "ZStack/VM"
+action.metricName = "org.zstack.zwatch.datatype.Metric@c2e79f0"
+action.threshold = 60.0
+action.repeatInterval = 1800.0
+action.labels = [[key:VMUuid, value:7dd44bfe750f42859528b27ef90f1412, op:Equal]]
+action.actions = [[actionUuid:b1acb139666140d09f4f93b8dd96f49f, actionType:sns]]
+action.repeatCount = -1.0
+action.type = "Any"
+action.enableRecovery = true
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateAlarmAction.Result res = action.call()
+```
+
+</APIPage>

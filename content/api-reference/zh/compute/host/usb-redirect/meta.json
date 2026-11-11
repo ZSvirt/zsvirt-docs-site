@@ -1,0 +1,8 @@
+{
+  "title": "USB重定向相关接口",
+  "pages": [
+    "get-vm-usb-redirect",
+    "usb-passthrough"
+  ],
+  "pagesIndex": "index"
+}

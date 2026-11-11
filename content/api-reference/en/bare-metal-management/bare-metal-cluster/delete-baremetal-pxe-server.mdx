@@ -1,0 +1,64 @@
+---
+title: "Delete PXE Server"
+---
+
+<APIPage method="DELETE" path="/v1/baremetal/pxeservers/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/baremetal/pxeservers/da517231390c368b91440d0bda783ba1?deleteMode=Permissive
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|UUID of the resource, uniquely identifying the resource| |2.6.0|
+|deleteMode \(Optional\)|String|query|Delete mode| |2.6.0|
+|systemTags \(Optional\)|List|query|System Tag| |2.6.0|
+|userTags \(Optional\)|List|query|User Tag| |2.6.0|
+
+## API Response
+This API returns an empty JSON structure `{}` on success. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DeleteBaremetalPxeServerAction action = new DeleteBaremetalPxeServerAction();
+action.uuid = "da517231390c368b91440d0bda783ba1";
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteBaremetalPxeServerAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = DeleteBaremetalPxeServerAction()
+action.uuid = "da517231390c368b91440d0bda783ba1"
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

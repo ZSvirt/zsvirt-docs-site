@@ -1,0 +1,10 @@
+{
+  "title": "IP黑白名单相关接口",
+  "pages": [
+    "add-access-control-rule",
+    "delete-access-control-rule",
+    "update-access-control-rule",
+    "query-access-control-rule"
+  ],
+  "pagesIndex": "index"
+}

@@ -1,0 +1,95 @@
+---
+title: "概述"
+---
+
+虚拟机 VMTools 是一组虚拟机驱动和工具的集合，用于丰富虚拟机功能、提高虚拟机性能表现。
+
+## VMTools 组成
+
+VMTools 主要包含以下工具和驱动，不同操作系统包含的工具和驱动不同。
+
+<table class="doc-feature-table">
+  <thead>
+    <tr>
+      <th>操作系统</th>
+      <th>VMTools 组成</th>
+      <th>描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowSpan="2">Linux</td>
+      <td>高级监控 agent</td>
+      <td>安装在虚拟机内部的代理，用于获取虚拟机高级监控数据，包括 CPU、内存、硬盘容量。</td>
+    </tr>
+    <tr>
+      <td>QEMU Guest Agent (QGA)</td>
+      <td>
+        实现虚拟机与主机间交互的应用程序，该交互不依赖网络，可实现虚拟机配置读取、下发，和监控数据推送等功能。
+        <Callout type="info">
+        Linux 操作系统通常默认包含 virtio 驱动和 cloud-init 驱动，因此针对 Linux 的 VMTools 不额外包含这两种工具。若您使用的 Linux 系统不含这两种工具，您可以通过其他方式自行安装。
+        </Callout>
+      </td>
+    </tr>
+    <tr>
+      <td rowSpan="4">Windows</td>
+      <td>高级监控 agent</td>
+      <td>安装在虚拟机内部的代理，用于获取虚拟机高级监控数据，包括 CPU、内存、硬盘容量。</td>
+    </tr>
+    <tr>
+      <td>QGA</td>
+      <td>实现虚拟机与主机间交互的应用程序，该交互不依赖网络，可实现虚拟机配置读取、下发，和监控数据推送等功能。</td>
+    </tr>
+    <tr>
+      <td>Virtio 驱动</td>
+      <td>
+        一组增强虚拟机性能表现的驱动的集合，包括：
+        <ul>
+          <li>SCSI 控制器驱动：用于提高虚拟化环境中虚拟机的磁盘性能。</li>
+          <li>PCI 简易通讯控制器驱动：用于实现虚拟机与底层 KVM 虚拟化通信。</li>
+          <li>PCI 设备驱动：用于实现虚拟机气球内存伸缩功能。</li>
+          <li>以太网控制器驱动：用于提高虚拟化环境中虚拟机的网络性能。</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>Cloudbase-init</td>
+      <td>用于实现虚拟机导入 User Data 等定制化功能。</td>
+    </tr>
+    <tr>
+      <td>FreeBSD</td>
+      <td>高级监控 agent</td>
+      <td>安装在虚拟机内部的代理，用于获取虚拟机高级监控数据，包括 CPU、内存、硬盘容量。</td>
+    </tr>
+  </tbody>
+</table>
+
+## VMTools 应用
+
+为虚拟机安装 VMTools 后，可实现虚拟机高级监控、配置下发、配置读取等功能。
+
+- **高级监控**：高级监控是由高级监控 agent 从虚拟机处获取的监控数据，定期通过 DHCP 服务或 QGA 推送到主机。您可通过曲线图实时掌握虚拟机各项性能变化趋势，包括 CPU、内存、磁盘容量。
+- **配置下发**：通过 VMTools 中的 QGA 将平台上设置的参数实际下发到虚拟机内部生效，包括虚拟机主机名和网络配置。
+  - **主机名**：安装最新版 VMTools 后，用户为运行中的虚拟机修改主机名，新设置的主机名将通过 QGA 直接下发，无需重启虚拟机生效。
+
+    <Callout type="info">
+    如需通过 QGA 下发主机名，请在修改主机名前安装 VMTools。
+    </Callout>
+
+  - **网络配置**：分布式端口组未开启 DHCP 服务时，平台上设置的 IP 地址、DNS、MTU 等参数需通过 QGA 下发到网卡生效。安装好 VMTools 后，指定的 IP 地址等参数将自动下发生效。
+- **配置读取**：通过 VMTools 中的 QGA 自动读取虚拟机内部配置的网卡 IP 地址，读取成功的 IP 地址可在平台展示和管理。
+
+  <Callout type="info">
+  - 虚拟机网卡所属的分布式端口组未开启 DHCP，且虚拟机已安装 VMTools，并处于运行中状态时，支持自动读取虚拟机网卡配置信息。
+  - 若虚拟机内部已配置 IP 地址，将读取该 IP 并覆盖平台上配置的 IP 地址。
+  - 若虚拟机网卡 IP 地址与所在端口组存在重复的 IP 地址，将触发告警提示。
+  </Callout>
+
+## 相关主题
+
+<Cards>
+  <Card title="高级监控 agent" href="/docs/user-guide/compute/vm/vmtools/advanced-monitoring-agent" />
+  <Card title="Linux 虚拟机安装 VMTools" href="/docs/user-guide/compute/vm/vmtools/install-linux" />
+  <Card title="Windows 虚拟机安装 VMTools" href="/docs/user-guide/compute/vm/vmtools/install-windows" />
+  <Card title="VMTools 适配 OS 列表" href="/docs/user-guide/compute/vm/vmtools/os-compatibility" />
+</Cards>

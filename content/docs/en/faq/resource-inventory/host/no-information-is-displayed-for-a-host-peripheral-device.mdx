@@ -1,0 +1,10 @@
+---
+title: "No information is displayed for a host peripheral device"
+---
+
+## Solution
+1.  Click **Resource Inventory** &gt; **Hosts and Virtual Machines** to open the Host page. Select the host to open its details page, and check the **IOMMU Enabled** and **IOMMU Ready** status.
+
+2.  Manually enable IOMMU on the host and restart the host.
+
+3.  Wait for the host to reconnect successfully. When the IOMMU status is ready, peripheral devices are recognized normally.

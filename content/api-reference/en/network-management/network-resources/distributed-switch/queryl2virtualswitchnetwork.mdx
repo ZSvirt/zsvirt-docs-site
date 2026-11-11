@@ -1,0 +1,126 @@
+---
+title: "QueryL2VirtualSwitchNetwork"
+---
+
+<APIPage method="GET" path="/v1/l2-networks/virtual-switch" altPaths={["/v1/l2-networks/virtual-switch/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Sample
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/l2-networks/virtual-switch
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/l2-networks/virtual-switch/95f17f8b6b6137e3815cedcfa39d812d
+```
+
+Queryable Fields
+
+Run the CLI command tool, enter `QueryL2VirtualSwitchNetwork`, and press Tab to view all queryable fields and resource names that support cross-table queries.
+
+## API Response
+Sample Response
+
+```
+{
+  "inventories": [
+    {
+      "name": "Test-dvs",
+      "description": "Test",
+      "zoneUuid": "55210de8afc03d42bddc8e098c69410c",
+      "physicalInterface": "eth0",
+      "type": "virtualSwitch"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.1.0|
+|inventories|List|See [inventories](#p_lpn_vlw_51c).|4.1.0|
+|error|ErrorCode|The error code. If not null, the operation fails, or vice versa. For more information, see [error](#p_wfd_jmw_51c).|4.1.0|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|isDistributed|Boolean|Whether it is distributed.|4.1.0|
+|uuid|String|The resource UUID.|4.1.0|
+|name|String|The resource name.|4.1.0|
+|description|String|The detailed description of the resource.|4.1.0|
+|zoneUuid|String|The Data Center UUID.|4.1.0|
+|physicalInterface|String|The physical NIC.|4.1.0|
+|type|String|The Distributed Switch type.|4.1.0|
+|vSwitchType|String|The virtual Switch type.|4.1.0|
+|virtualNetworkId|Integer|The virtual network ID.|4.1.0|
+|createDate|Timestamp|The creation date.|4.1.0|
+|lastOpDate|Timestamp|The last operation date.|4.1.0|
+|attachedClusterUuids|List|The list of attached Cluster UUIDs.|4.1.0|
+|portGroups|List|See [portGroups](#p_oyp_w4w_51c).|4.1.0|
+
+### portGroups
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|vSwitchUuid|String|The virtual Switch UUID.|4.1.0|
+|vlanId|Integer|The VLAN ID.|4.1.0|
+|vlanRanges|String|The VLAN range.|4.1.0|
+|uuid|String|The resource UUID.|4.1.0|
+|name|String|The resource name.|4.1.0|
+|description|String|The detailed description of the resource.|4.1.0|
+|zoneUuid|String|The Data Center UUID.|4.1.0|
+|physicalInterface|String|The physical NIC.|4.1.0|
+|type|String|The Distributed Switch type.|4.1.0|
+|vSwitchType|String|The virtual Switch type.|4.1.0|
+|virtualNetworkId|Integer|The virtual network ID.|4.1.0|
+|createDate|Timestamp|The creation date.|4.1.0|
+|lastOpDate|Timestamp|The last operation date.|4.1.0|
+|attachedClusterUuids|List|The list of attached Cluster UUIDs.|4.1.0|
+|vlanMode|L2PortGroupVlanMode|See [vlanMode](#p_vpd_gmw_51c).|4.1.0|
+
+### vlanMode
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|ACCESS|L2PortGroupVlanMode| |4.2.0|
+|TRUNK|L2PortGroupVlanMode| |4.2.0|
+|PVLAN|L2PortGroupVlanMode| |4.2.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code, which is a numbered or alphanumeric code that specifies an error. For example, SYS.1000, HOST.1001.|4.1.0|
+|description|String|The brief description of the error.|4.1.0|
+|details|String|The details about the error.|4.1.0|
+|elaboration|String|The reserved field. Default value: null.|4.1.0|
+|opaque|LinkedHashMap|The reserved field. Default value: null.|4.1.0|
+|cause|ErrorCode|The root error, which is the associated root cause of the current error. If no root error exists, this parameter is null.|4.1.0|
+
+## SDK Sample
+Java SDK
+
+```
+QueryL2VirtualSwitchNetworkAction action = new QueryL2VirtualSwitchNetworkAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryL2VirtualSwitchNetworkAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryL2VirtualSwitchNetworkAction action = QueryL2VirtualSwitchNetworkAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryL2VirtualSwitchNetworkAction.Result res = action.call()
+```
+
+</APIPage>

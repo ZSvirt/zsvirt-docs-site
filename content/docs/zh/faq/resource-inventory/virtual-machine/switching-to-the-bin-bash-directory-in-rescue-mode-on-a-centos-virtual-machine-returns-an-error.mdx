@@ -1,0 +1,45 @@
+---
+title: "CentOS虚拟机在救援模式下切换到/bin/bash目录报错，怎么办？"
+---
+
+## 现象
+CentOS虚拟机在救援模式下切换到`/bin/bash`目录出现`No such file or directory`报错。
+
+## 原因
+虚拟机系统内缺少依赖库，需要恢复系统的bash环境。
+
+## 解决方案
+1.  找到故障虚拟机，点击**修改配置** &gt; **光驱** &gt; **镜像文件**，为虚拟机加载CentOS ISO文件。
+
+2.  在故障虚拟机详情页，点击**高级设置** &gt; **引导选项** &gt; **启动顺序**，进入设置启动顺序界面，修改虚拟机启动顺序为光驱启动。
+
+3.  进入安装页面，选择Troubleshooting。
+
+    如[Figure 1](#fig_k1g_wb3_sxb)所示：
+
+    ![选择Troubleshooting](/docs/faq/images/ZStack_FAQ_Summary_0001_92_1.png)
+
+4.  选择Rescue a CentOS system进入救援模式。
+
+    如[Figure 2](#fig_thq_5d3_sxb)所示：
+
+    ![选择Rescue a CentOS system](/docs/faq/images/ZStack_FAQ_Summary_0001_92_2.png)
+
+5.  在救援模式界面输入1，以读写模式将系统根文件系统挂载到`/mnt/sysimage`目录下。如果想要把`/mnt/sysimage`目录切换为根目录，执行`chroot /mnt/sysimage`命令。
+
+    如[Figure 3](#fig_w1k_bg3_sxb)所示：
+
+    ![以读写模式挂载系统根文件](/docs/faq/images/ZStack_FAQ_Summary_0001_92_3.png)
+
+6.  执行以下命令，将进入救援模式的系统lib依赖库和lib64依赖库分别拷贝一份到`/mnt/sysimage/usr/lib`目录和`/mnt/sysimage/usr/lib64`目录：
+
+    ```
+    [root@localhost ~]# cp -r /usr/lib /mnt/sysimage/usr/lib
+    [root@localhost ~]# cp -r /usr/lib64 /mnt/sysimage/usr/lib64
+    ```
+
+    <Callout type="info">
+    新加载的CentOS镜像版本需要和虚拟机初始镜像版本保持一致。
+    </Callout>
+
+7.  再将`/mnt/sysimage`目录切换为根目录，验证CentOS虚拟机环境是否恢复。

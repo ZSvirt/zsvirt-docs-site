@@ -1,0 +1,9 @@
+{
+  "title": "View Backup Plan and Data",
+  "pages": [
+    "index",
+    "view-plan-execution",
+    "view-database-backup-data"
+  ],
+  "pagesIndex": "index"
+}

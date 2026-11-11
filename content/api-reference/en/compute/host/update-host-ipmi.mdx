@@ -1,0 +1,118 @@
+---
+title: "Update Host IPMI Information"
+---
+
+<APIPage method="PUT" path="/v1/hosts/ipmi/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateHostIpmi": {
+    "ipmiAddress": "127.0.0.10",
+    "ipmiUsername": "admin",
+    "ipmiPassword": "password",
+    "ipmiPort": 623
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \-X PUT -d '{"updateHostIpmi":{"ipmiAddress":"127.0.0.10","ipmiUsername":"admin","ipmiPassword":"password","ipmiPort":623}}' \
+http://localhost:8080/zstack/v1/hosts/ipmi/6cbd75f1a7cb3805b47a8dca8871c1c6/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Resource UUID, uniquely identifies the resource| |4.7.0|
+|ipmiAddress \(optional\)|String|body \(contained in **updateHostIpmi** structure\)|IPMI address| |4.7.0|
+|ipmiUsername \(optional\)|String|body \(contained in **updateHostIpmi** structure\)|IPMI username| |4.7.0|
+|ipmiPassword \(optional\)|String|body \(contained in **updateHostIpmi** structure\)|IPMI password| |4.7.0|
+|ipmiPort \(optional\)|int|body \(contained in **updateHostIpmi** structure\)|IPMI port| |4.7.0|
+|systemTags \(optional\)|List|body|System tag| |4.7.0|
+|userTags \(optional\)|List|body|User tag| |4.7.0|
+
+## API Response
+Response Example
+
+```
+{
+  "hostIpmiInventory": {
+    "ipmiAddress": "192.168.0.1",
+    "ipmiUsername": "admin",
+    "ipmiPort": 623,
+    "ipmiPassword": "password"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.7.0|
+|hostIpmiInventory|HostIpmiInventory|See details [hostIpmiInventory](#p_asj_ry5_m1b)|4.7.0|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See details [error](#p_im3_qy5_m1b)|4.7.0|
+
+### hostIpmiInventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|4.7.0|
+|ipmiAddress|String|IPMI address|4.7.0|
+|ipmiUsername|String|IPMI username|4.7.0|
+|ipmiPort|int|IPMI port|4.7.0|
+|ipmiPowerStatus|String|IPMI power status|4.7.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, e.g. SYS.1000, HOST.1001|4.7.0|
+|description|String|Brief description of the error|4.7.0|
+|details|String|Detailed error information|4.7.0|
+|elaboration|String|Reserved field, default is null|4.7.0|
+|opaque|LinkedHashMap|Reserved field, default is null|4.7.0|
+|cause|ErrorCode|Root cause, the error that caused the current error. If there is no original error, this field is null|4.7.0|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateHostIpmiAction action = new UpdateHostIpmiAction();
+action.uuid = "6cbd75f1a7cb3805b47a8dca8871c1c6";
+action.ipmiAddress = "127.0.0.10";
+action.ipmiUsername = "admin";
+action.ipmiPassword = "password";
+action.ipmiPort = 623;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateHostIpmiAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateHostIpmiAction action = UpdateHostIpmiAction()
+action.uuid = "6cbd75f1a7cb3805b47a8dca8871c1c6"
+action.ipmiAddress = "127.0.0.10"
+action.ipmiUsername = "admin"
+action.ipmiPassword = "password"
+action.ipmiPort = 623
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateHostIpmiAction.Result res = action.call()
+```
+
+</APIPage>

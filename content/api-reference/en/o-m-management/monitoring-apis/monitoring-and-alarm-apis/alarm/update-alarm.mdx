@@ -1,0 +1,513 @@
+---
+title: "Update Alarm"
+---
+
+<APIPage method="PUT" path="/v1/zwatch/alarms/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateAlarm": {
+    "name": "VM CPU Alarm",
+    "comparisonOperator": "LessThanOrEqualTo",
+    "period": 60.0,
+    "enableRecovery": true
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the **systemTags** and **userTags** fields can be omitted. They are listed here to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateAlarm":{"name":"VM CPU Alarm","comparisonOperator":"LessThanOrEqualTo","period":60.0,"enableRecovery":true}}' http://localhost:8080/zstack/v1/zwatch/alarms/28397feb3d083fdc9346edb066fbf589/actions
+```
+
+Parameter List
+
+<table id="table_gfv_btj_p2b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+The UUID of the resource. Uniquely identifies the resource.
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+name \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **updateAlarm** structure\)
+
+</td><td>
+
+Resource name.
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+description \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **updateAlarm** structure\)
+
+</td><td>
+
+Detailed description of the resource.
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+comparisonOperator \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **updateAlarm** structure\)
+
+</td><td>
+
+Comparison operator.
+
+</td><td>
+
+-   GreaterThanOrEqualTo
+-   GreaterThan
+-   LessThan
+-   LessThanOrEqualTo
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+period \(Optional\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+body \(contained in the **updateAlarm** structure\)
+
+</td><td>
+
+Threshold duration.
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+threshold \(Optional\)
+
+</td><td>
+
+Double
+
+</td><td>
+
+body \(contained in the **updateAlarm** structure\)
+
+</td><td>
+
+Threshold.
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+repeatInterval \(Optional\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+body \(contained in the **updateAlarm** structure\)
+
+</td><td>
+
+Alarm repeat interval.
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+repeatCount \(Optional\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+body \(contained in the **updateAlarm** structure\)
+
+</td><td>
+
+Alarm repeat count.
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.3.0
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags.
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags.
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+repeatCount \(Optional\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+body \(contained in the **updateAlarm** structure\)
+
+</td><td>
+
+Alarm repeat count.
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.2
+
+</td></tr><tr><td>
+
+enableRecovery \(Optional\)
+
+</td><td>
+
+Boolean
+
+</td><td>
+
+Enable recovery notification.
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.4.0
+
+</td></tr><tr><td>
+
+emergencyLevel \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **updateAlarm** structure\)
+
+</td><td>
+
+Alarm level.
+
+</td><td>
+
+-   Emergent
+-   Important
+-   Normal
+
+</td><td>
+
+3.8.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "33e642a1eb3c4f27a7da7acc5891de0a",
+    "name": "VM CPU Alarm",
+    "comparisonOperator": "LessThanOrEqualTo",
+    "period": 60.0,
+    "namespace": "ZStack/VM",
+    "metricName": "org.zstack.zwatch.datatype.Metric@22c0dd63",
+    "threshold": 30.0,
+    "repeatInterval": 1800.0,
+    "repeatCount": -1.0,
+    "status": "Alarm",
+    "state": "Enabled",
+    "createDate": "Jan 8, 2019 4:11:27 PM",
+    "lastOpDate": "Jan 8, 2019 4:11:27 PM",
+    "labels": [
+      {
+        "uuid": "c4da2db2fa454368a3a05016ae8c8070",
+        "key": "VMUuid",
+        "operator": "=",
+        "value": "396d863211e446938ea01eb10bc9fd18"
+      }
+    ],
+    "actions": [
+      {
+        "alarmUuid": "0d18a844bbf544bb914ab9287651f59f",
+        "actionType": "sns",
+        "actionUuid": "17b884822b284e6e9a0b67307a28955c"
+      }
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null on success. See [error](#p_ud1_ntj_p2b) for details.|2.3|
+|inventory|AlarmInventory|See [inventory](#p_clx_ntj_p2b) for details.|2.3|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001.|2.3|
+|description|String|A brief description of the error.|2.3|
+|details|String|Detailed information about the error.|2.3|
+|elaboration|String|A reserved field. Default is null.|2.3|
+|opaque|LinkedHashMap|A reserved field. Default is null.|2.3|
+|cause|ErrorCode|The root error. The source error that caused the current error. This field is null if there is no root error.|2.3|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource.|2.3|
+|name|String|Resource name.|2.3|
+|description|String|Detailed description of the resource.|2.3|
+|period|Integer|Threshold duration.|2.3|
+|namespace|String|Namespace.|2.3|
+|metricName|String|Metric name.|2.3|
+|threshold|Double|Threshold.|2.3|
+|repeatInterval|Integer|Alarm repeat interval.|2.3|
+|enableRecovery|Boolean|Enable recovery notification.|3.4.0|
+|createDate|Timestamp|Creation time.|2.3|
+|lastOpDate|Timestamp|Last modification time.|2.3|
+|comparisonOperator|ComparisonOperator|See [comparisonOperator](#p_hlp_ptj_p2b) for details.|2.3|
+|status|AlarmStatus|See [status](#p_ipd_rtj_p2b) for details.|2.3|
+|labels|List|See [labels](#p_f2r_stj_p2b) for details.|2.3|
+|actions|List|See [actions](#p_thw_ttj_p2b) for details.|2.3|
+
+### comparisonOperator
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name.|2.3|
+|ordinal|int| |2.3|
+
+### status
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|OK|AlarmStatus|Monitoring.|2.3|
+|Alarm|AlarmStatus|Triggered.|2.3|
+|InsufficientData|AlarmStatus|Insufficient data.|2.3|
+
+### labels
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource.|2.3|
+|key|String|Label key.|2.3|
+|operator|String|Comparison operator.|2.3|
+|value|String|Label value.|2.3|
+
+### actions
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|alarmUuid|String|Alarm UUID.|2.3|
+|actionType|String|Alarm action type.|2.3|
+|actionUuid|String|Alarm action UUID.|2.3|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateAlarmAction action = new UpdateAlarmAction();
+action.uuid = "28397feb3d083fdc9346edb066fbf589";
+action.name = "VM CPU Alarm";
+action.comparisonOperator = "LessThanOrEqualTo";
+action.period = 60.0;
+action.enableRecovery = true;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateAlarmAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateAlarmAction action = UpdateAlarmAction()
+action.uuid = "28397feb3d083fdc9346edb066fbf589"
+action.name = "VM CPU Alarm"
+action.comparisonOperator = "LessThanOrEqualTo"
+action.period = 60.0
+action.enableRecovery = true
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateAlarmAction.Result res = action.call()
+```
+
+</APIPage>

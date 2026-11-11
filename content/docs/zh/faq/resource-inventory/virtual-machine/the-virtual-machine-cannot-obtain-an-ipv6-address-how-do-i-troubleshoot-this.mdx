@@ -1,0 +1,12 @@
+---
+title: "虚拟机无法获取IPv6地址，如何排查？"
+---
+
+## 解决方案
+1.  检查`/etc/modprobe.d/disable_ipv6.conf`文件，确认**options ipv6 disable=0**配置。
+
+2.  检查`/etc/sysconfig/network`，确认**NETWORKING\_IPV6=yes**配置。
+
+3.  修改`/etc/sysctl.conf`，确认如下配置：**net.ipv6.conf.all.disable\_ipv6=0**、**net.ipv6.conf.default.disable\_ipv6=0**、**net.ipv6.conf.lo.disable\_ipv6=0**。
+
+4.  检查网卡配置文件`/etc/sysconfig/network-scripts/ifcfg-ens33`，确认参数配置正确。

@@ -1,0 +1,67 @@
+---
+title: "Remove Feishu @ User"
+---
+
+<APIPage method="DELETE" path="/v1/sns/application-endpoints/feishu/{endpointUuid}/at-persons/{userId}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/sns/application-endpoints/feishu/43241429944f37a1b1c9470d8c2f3e1c/at-persons/18988887777
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|endpointUuid|String|url|Feishu endpoint UUID| |4.2.0|
+|userId|String|url|Feishu userId| |4.2.0|
+|deleteMode \(Optional\)|String|body|Delete mode \(Permissive / Enforcing, Permissive\)| |4.2.0|
+|systemTags \(Optional\)|List|body|System tags| |4.2.0|
+|userTags \(Optional\)|List|body|User tags| |4.2.0|
+
+## API Response
+On success, this API returns an empty JSON structure **`{}`**. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+RemoveSNSFeiShuAtPersonAction action = new RemoveSNSFeiShuAtPersonAction();
+action.endpointUuid = "43241429944f37a1b1c9470d8c2f3e1c";
+action.userId = "18988887777";
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RemoveSNSFeiShuAtPersonAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+RemoveSNSFeiShuAtPersonAction action = RemoveSNSFeiShuAtPersonAction()
+action.endpointUuid = "43241429944f37a1b1c9470d8c2f3e1c"
+action.userId = "18988887777"
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+RemoveSNSFeiShuAtPersonAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,115 @@
+---
+title: "Create a User Tag"
+---
+
+<APIPage method="POST" path="/v1/user-tags">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "resourceType": "DiskOfferingVO",
+    "resourceUuid": "beff527f6ccb45c8b215c59434b2fa5c",
+    "tag": "for-large-DB"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, the **systemTags** and **userTags** fields are optional. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"resourceType":"DiskOfferingVO","resourceUuid":"0a93a8d099a9339bb21b6e14a4ca3eea","tag":"for-large-DB"}}' \
+http://localhost:8080/zstack/v1/user-tags
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|resourceType|String|body \(contained in the **params** structure\)|When creating a tag, the user must specify the resource type associated with the tag.| |0.6|
+|resourceUuid|String|body \(contained in the **params** structure\)|User-specified resource UUID. If specified, the system will not randomly assign a UUID to the resource.| |0.6|
+|tag|String|body \(contained in the **params** structure\)|Tag string| |0.6|
+|systemTags \(optional\)|List|body|System tags| |0.6|
+|userTags \(optional\)|List|body|User tags| |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "b97c64cbf0524f809c05bf9eaf262b79",
+    "resourceType": "DiskOfferingVO",
+    "tag": "for-large-DB",
+    "type": "User",
+    "createDate": "May 11, 2017 1:22:33 PM",
+    "lastOpDate": "May 11, 2017 1:22:33 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_xxr_hsk_l1b)|0.6|
+|inventory|UserTagInventory|For details, see [inventory](#p_wby_hsk_l1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001.|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Default is null.|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null.|0.6|
+|cause|ErrorCode|The root error. The source error that caused the current error. If there is no root error, this field is null.|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource.|0.6|
+|resourceUuid|String|User-specified resource UUID. If specified, the system will not randomly assign a UUID to the resource.|0.6|
+|resourceType|String|When creating a tag, the user must specify the resource type associated with the tag.|0.6|
+|tag|String|Tag string|0.6|
+|type|String|Reserved field. Do not use.|0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+CreateUserTagAction action = new CreateUserTagAction();
+action.resourceType = "DiskOfferingVO";
+action.resourceUuid = "824246fa21d8405fbd48ea1cc7dbf049";
+action.tag = "for-large-DB";
+action.sessionId = "5d9cde1f7e6a43f586ec78dedf743201";
+CreateUserTagAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateUserTagAction action = CreateUserTagAction()
+action.resourceType = "DiskOfferingVO"
+action.resourceUuid = "11f5e230f43d49e69815c35fbd39bad5"
+action.tag = "for-large-DB"
+action.sessionId = "6301b756253c4103adbf8c891d858e5f"
+CreateUserTagAction.Result res = action.call()
+```
+
+</APIPage>

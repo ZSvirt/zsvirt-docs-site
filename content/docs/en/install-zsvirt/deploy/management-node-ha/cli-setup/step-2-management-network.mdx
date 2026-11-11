@@ -1,0 +1,60 @@
+---
+title: "Step 2: Configure Management Network"
+---
+
+The following tables list the network information for the management nodes and the VIP settings for Keepalived communication in this scenario.
+
+|Server|NIC 1|NIC 2|Bond|Bridge|IP Address|Netmask|Gateway|
+|------|-----|-----|----|------|----------|-------|-------|
+|MN 1|eth0|eth1|bond0|br\_bond0|*192.168.195.200*|*255.255.0.0*|*192.168.0.1*|
+|MN 2|eth0|eth1|bond0|br\_bond0|*192.168.196.125*|*255.255.0.0*|*192.168.0.1*|
+
+|-|IP Address|Netmask|
+|---|----------|-------|
+|VIP|*192.168.199.151*|*255.255.0.0*|
+
+### Note:
+
+## Prerequisites
+
+-   The VIP is used to log in to the UI of the management node. Avoid using the VIP for SSH logins to the management nodes.
+-   The above data is for example only. You need to modify it based on your actual deployment environment.
+-   The gateway must be provided by physical network devices and will also serve as **network status arbitration detection**.
+
+## Procedure
+
+1.  Log in to the **MN 1** operating system and run the following commands.
+
+    ```
+    # Create the bonded NIC bond0
+    [root@localhost ~]# zs-bond-lacp -c bond0
+    
+    # Add NICs eth0 and eth1 to bond0
+    [root@localhost ~]# zs-nic-to-bond -a bond0 eth0 
+    [root@localhost ~]# zs-nic-to-bond -a bond0 eth1
+    
+    # After configuring the link aggregation, you need to set up LACP aggregation on the corresponding switch ports.
+    
+    # Create the bridge br_bond0 and specify network IP, netmask, and gateway
+    [root@localhost ~]# zs-network-setting -b bond0 192.168.195.200 255.255.0.0 192.168.0.1
+    
+    # Check if the aggregated port bond0 was created successfully
+    [root@localhost ~]# zs-show-network
+    ...
+    ----------------------------------------------------------------------------------
+    | Bond Name  | SLAVE(s)        | BONDING_OPTS                                     |
+    ----------------------------------------------------------------------------------
+    | bond0      | eth0            | miimon=100 mode=4 xmit_hash_policy=layer2+3        |
+    |            | eth1            |                                                    |
+    ---------------------------------------------------------------------------------
+    ```
+
+2.  Log in to the **MN 2** operating system and run the similar configuration commands.
+
+### Note:
+
+    -   After adding eth0 and eth1 to bond0, you need to configure LACP aggregation on the corresponding switch ports. Otherwise, network communication will be disrupted.
+    -   After creating the bridge through bond0, the bridge will be named as br\_bond0 to provide management network services.
+    -   You need to configure the bridge's IP address, netmask, and gateway according to your actual network environment.
+    -   Once you complete the management network configuration, use the `ping` command to test it. If configured correctly, the management network IP addresses of the two management nodes should be able to `ping` each other.
+    -   A 10 Gigabit or higher bandwidth is recommended for the management network. A 1 Gigabit bandwidth is acceptable if the network is deployed independently.

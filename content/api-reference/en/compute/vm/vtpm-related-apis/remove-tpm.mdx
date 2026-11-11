@@ -1,0 +1,65 @@
+---
+title: "Remove a TPM from a VM"
+---
+
+<APIPage method="DELETE" path="/v1/tpms">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/tpms?vmInstanceUuid=ff01ec80fd11327cba7519b66119d900&deleteMode=Permissive
+```
+
+Parameters
+
+|Name|Type|Location|Description|Valid Values|Since|
+|----|----|--------|-----------|------------|-----|
+|tpmUuid \(optional\)|String|query|TPM UUID| |5.0.0|
+|vmInstanceUuid \(optional\)|String|query|VM UUID| |5.0.0|
+|deleteMode \(optional\)|String|query|Deletion mode \(Permissive / Enforcing, Permissive\)| |5.0.0|
+|systemTags \(optional\)|List|query|System tags| |5.0.0|
+|userTags \(optional\)|List|query|User tags| |5.0.0|
+
+## API Response
+When this API succeeds, it returns an empty JSON structure `{}`. When an error occurs, the returned JSON structure contains an error field. Example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Example
+Java SDK
+
+```
+RemoveTpmAction action = new RemoveTpmAction();
+action.vmInstanceUuid = "ff01ec80fd11327cba7519b66119d900";
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RemoveTpmAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = RemoveTpmAction()
+action.vmInstanceUuid = "ff01ec80fd11327cba7519b66119d900"
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,106 @@
+---
+title: "Get Storage Migration Candidate List"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/{vmInstanceUuid}/storage-migration-candidates">
+
+Get the candidate Data Storage list for VM migration across different storage.
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/2ac3852f503a339f857c9381d881bd91/storage-migration-candidates
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|vmInstanceUuid|String|url|VM Instance UUID| |3.1.0|
+|withDataVolumes \(Optional\)|boolean|body\(contained in the **primaryStorageMigrateVm** structure\)| | |3.7.0|
+|migrateStorageOnly\(Optional\)|boolean|body\(contained in the **primaryStorageMigrateVm** structure\)|Whether to migrate storage only| |4.4.0|
+|systemTags \(Optional\)|List|query| | |3.1.0|
+|userTags \(Optional\)|List|query| | |3.1.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "19e075320ee9327182fcb82a8b0a078b",
+      "name": "PS-1"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation succeeds, this field is null. See [error](#p_tyz_5rx_nfb)|3.1.0|
+|inventories|List|See [inventories](#p_hp3_vrx_nfb)|3.1.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|3.1.0|
+|description|String|Brief description of the error|3.1.0|
+|details|String|Detailed error information|3.1.0|
+|elaboration|String|Reserved field, defaults to null|3.1.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|3.1.0|
+|cause|ErrorCode|Root cause, the source error that caused the current error. If there is no original error, this field is null|3.1.0|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|3.1.0|
+|zoneUuid|String|Data Center UUID|3.1.0|
+|name|String|Resource Name|3.1.0|
+|url|String| |3.1.0|
+|description|String|Resource Description|3.1.0|
+|totalCapacity|Long| |3.1.0|
+|availableCapacity|Long| |3.1.0|
+|totalPhysicalCapacity|Long| |3.1.0|
+|availablePhysicalCapacity|Long| |3.1.0|
+|systemUsedCapacity|Long| |3.1.0|
+|type|String| |3.1.0|
+|state|String| |3.1.0|
+|status|String| |3.1.0|
+|mountPath|String| |3.1.0|
+|createDate|Timestamp|Create Time|3.1.0|
+|lastOpDate|Timestamp|Last Modification Time|3.1.0|
+|attachedClusterUuids|List| |3.1.0|
+
+## SDK Examples
+Java SDK
+
+```
+GetPrimaryStorageCandidatesForVmMigrationAction action = new GetPrimaryStorageCandidatesForVmMigrationAction();
+action.vmInstanceUuid = "2ac3852f503a339f857c9381d881bd91";
+action.withDataVolumes = true;
+action.migrateStorageOnly = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetPrimaryStorageCandidatesForVmMigrationAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetPrimaryStorageCandidatesForVmMigrationAction action = GetPrimaryStorageCandidatesForVmMigrationAction()
+action.vmInstanceUuid = "2ac3852f503a339f857c9381d881bd91"
+action.withDataVolumes = true
+action.migrateStorageOnly = false
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetPrimaryStorageCandidatesForVmMigrationAction.Result res = action.call()
+```
+
+</APIPage>

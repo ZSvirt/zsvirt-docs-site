@@ -1,0 +1,76 @@
+---
+title: "Validate Email Server"
+---
+
+<APIPage method="PUT" path="/v1/sns/application-platforms/email/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "validateSNSEmailPlatform": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the **systemTags** and **userTags** fields are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"validateSNSEmailPlatform":{}}' \
+http://localhost:8080/zstack/v1/sns/application-platforms/email/ee6f4b67dc7e3b298353a6fe2b5d0a6f/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|The UUID of the resource, which uniquely identifies the resource| |2.3|
+|systemTags \(Optional\)|List|body|System tags| |2.3|
+|userTags \(Optional\)|List|body|User tags| |2.3|
+
+## API Response
+This API returns an empty JSON structure **`{}`** on success. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+ValidateSNSEmailPlatformAction action = new ValidateSNSEmailPlatformAction();
+action.uuid = "ee6f4b67dc7e3b298353a6fe2b5d0a6f";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ValidateSNSEmailPlatformAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ValidateSNSEmailPlatformAction action = ValidateSNSEmailPlatformAction()
+action.uuid = "ee6f4b67dc7e3b298353a6fe2b5d0a6f"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ValidateSNSEmailPlatformAction.Result res = action.call()
+```
+
+</APIPage>

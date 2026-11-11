@@ -1,0 +1,18 @@
+---
+title: "主机异常重启，如何排查？"
+---
+
+## 解决方案
+-   执行`last reboot`命令获取并分析对应时间点日志。
+
+-   查看`/var/log/history.d/history`日志文件对应时间点，可确认是否人为重启主机。
+
+-   查看`/var/log/message`日志文件，分析对应时间点前后是否存在硬件报错或内存溢出OOM等信息。
+
+-   查看`/var/crash/`目录下是否有相关错误日志。
+
+-   请确认主机关闭CPU C-state配置。
+
+    可通过`cat /proc/cpuinfo | grep 'cpu MHz' | awk -F " " '{print $4}'`命令确认开启状态。若CPU频率一致，则表示已关闭，否则CPU可能进入深度睡眠导致系统crash。
+
+-   登录主机IPMI带外管理页面，查看主机是否硬件故障报错。

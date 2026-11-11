@@ -1,0 +1,258 @@
+---
+title: "Get Destination List"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/candidate-destinations">
+
+Get the destination Data Centers, Clusters, and Hosts where a VM with specified parameters can be created. Users can use this API to obtain destinations that meet the VM parameters by specifying VM parameters.
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/candidate-destinations?\
+instanceOfferingUuid=0a3d761b0e3031a9b3c62f418fdade09&imageUuid=f6885d39912b347880517a58a9f5ad5b\
+&l3NetworkUuids=51f30f4fcd3b3a0da2998b37f1a8d8a3\
+&dataDiskOfferingUuids=cf8aa933d58230ee80a4181a66772d0b\
+&dataDiskOfferingUuids=6a5ea214bc88372285ff3c301d64428c&clusterUuid=1f6b12b24aa03d4bb57f84a2df4a03f4
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|instanceOfferingUuid\(Optional\)|String|query|Instance offering UUID| |0.6|
+|imageUuid|String|query|Image UUID| |0.6|
+|l3NetworkUuids|List|query|List of Distributed Port Group UUIDs| |0.6|
+|rootDiskOfferingUuid \(Optional\)|String|query|Root disk offering. Only required when the image specified by**imageUuid**is an ISO| |0.6|
+|dataDiskOfferingUuids \(Optional\)|List|query|List of disk offering UUIDs| |0.6|
+|zoneUuid \(Optional\)|String|query|Data Center UUID| |0.6|
+|clusterUuid \(Optional\)|String|query|Cluster UUID| |0.6|
+|defaultL3NetworkUuid \(Optional\)|String|query|Default Distributed Port Group UUID| |0.6|
+|cpuNum \(Optional\)|int|query|Number of CPUs| |3.10.0|
+|memorySize \(Optional\)|long|query|Memory size in bytes| |3.10.0|
+|systemTags \(Optional\)|List|query|System tags| |0.6|
+|userTags \(Optional\)|List|query|User tags| |0.6|
+|rootDiskSize \(Optional\)|Long|query|Root disk size. Only required when the image specified by**imageUuid**is an ISO and**rootDiskOfferingUuid**is empty| |4.1.2|
+
+## API Response
+Response Example
+
+```
+{
+  "zones": [
+    {
+      "uuid": "88a4f663c5c63a80b74cb8d1bf54a5a5",
+      "name": "zone",
+      "isDefault": false
+    }
+  ],
+  "clusters": [
+    {
+      "name": "cluster1",
+      "uuid": "779ab0160e9734f8b2de0f75612f794f",
+      "hypervisorType": "KVM",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM",
+      "zoneUuid": "cb1001af731e3500a07269049e695eaa"
+    }
+  ],
+  "hosts": [
+    {
+      "zoneUuid": "88a4f663c5c63a80b74cb8d1bf54a5a5",
+      "name": "example",
+      "uuid": "dee308ca7bf931edbc1adc31735cd9c8",
+      "clusterUuid": "0ea74049ad863b3185465ca2e9b7ae06",
+      "description": "example",
+      "managementIp": "192.168.0.1",
+      "hypervisorType": "KVM",
+      "state": "Enabled",
+      "status": "Connected",
+      "totalCpuCapacity": 4,
+      "availableCpuCapacity": 2,
+      "totalMemoryCapacity": 4,
+      "availableMemoryCapacity": 4,
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean|Whether the operation succeeded|0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see[error](#p_ky5_yxx_zz)|0.6|
+|zones|List|For details, see[zones](#p_rsg_zxx_zz)|0.6|
+|clusters|List|For details, see[clusters](#p_thw_zxx_zz)|0.6|
+|hosts|List|For details, see[hosts](#p_spd_1yx_zz)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. A globally unique identifier for the error, e.g., SYS.1000, HOST.1001.|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field. Defaults to null.|0.6|
+|opaque|LinkedHashMap|Reserved field. Defaults to null.|0.6|
+|cause|ErrorCode|Root error. The source error that caused the current error. This field is null if there is no root cause.|0.6|
+
+### zones
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource. Uniquely identifies the resource.|0.6|
+|name|String|Resource name|0.6|
+|description|String|Detailed description of the resource|0.6|
+|state|String| |0.6|
+|type|String| |0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+
+### clusters
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name|0.6|
+|uuid|String|UUID of the resource. Uniquely identifies the resource.|0.6|
+|description|String|Detailed description of the resource|0.6|
+|state|String|Cluster state|0.6|
+|hypervisorType|String|Hypervisor type|0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+|zoneUuid|String|Data Center UUID|0.6|
+|type|String|Reserved field|0.6|
+
+### hosts
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|zoneUuid|String|Data Center UUID|0.6|
+|name|String|Resource name|0.6|
+|uuid|String|UUID of the resource. Uniquely identifies the resource.|0.6|
+|clusterUuid|String|Cluster UUID|0.6|
+|description|String|Detailed description of the resource|0.6|
+|managementIp|String| |0.6|
+|hypervisorType|String| |0.6|
+|state|String| |0.6|
+|status|String| |0.6|
+|totalCpuCapacity|Long| |0.6|
+|availableCpuCapacity|Long| |0.6|
+|cpuSockets|Integer|Number of physical CPU sockets|0.6|
+|totalMemoryCapacity|Long| |0.6|
+|availableMemoryCapacity|Long| |0.6|
+|cpuNum|Integer|Number of logical CPUs|0.6|
+|ipmiAddress|String|IPMI address|0.6|
+|ipmiUsername|String|IPMI username|0.6|
+|ipmiPort|Integer|IPMI port|0.6|
+|ipmiPowerStatus|String|IPMI power status|0.6|
+|architecture|String| |0.6|
+|nqn|String|NVMe qualified name|4.10.6|
+|hostname|String|Host name|4.10.20|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+|cpuStatus|HwMonitorStatus|For details, see[cpuStatus](#p_wvd_kkm_lhc)|4.10.0|
+|memoryStatus|HwMonitorStatus|For details, see[memoryStatus](#p_nhh_kkm_lhc)|4.10.0|
+|diskStatus|HwMonitorStatus|For details, see[diskStatus](#p_esk_kkm_lhc)|4.10.0|
+|nicStatus|HwMonitorStatus|For details, see[nicStatus](#p_n24_kkm_lhc)|4.10.0|
+|gpuStatus|HwMonitorStatus|For details, see[gpuStatus](#p_zgr_kkm_lhc)|4.10.0|
+|powerSupplyStatus|HwMonitorStatus|For details, see[powerSupplyStatus](#p_o35_kkm_lhc)|4.10.0|
+|fanStatus|HwMonitorStatus|For details, see[fanStatus](#p_m2x_kkm_lhc)|4.10.0|
+|raidStatus|HwMonitorStatus|For details, see[raidStatus](#p_oc1_lkm_lhc)|4.10.0|
+|temperatureStatus|HwMonitorStatus|For details, see[temperatureStatus](#p_cyd_lkm_lhc)|4.10.0|
+
+### cpuStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Abnormal|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### memoryStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Abnormal|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### diskStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Abnormal|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### nicStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Abnormal|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### gpuStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Abnormal|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### powerSupplyStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Abnormal|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### fanStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Abnormal|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### raidStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Abnormal|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### temperatureStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Abnormal|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+## SDK Examples
+Java SDK
+
+```
+GetCandidateZonesClustersHostsForCreatingVmAction action = new GetCandidateZonesClustersHostsForCreatingVmAction();
+action.instanceOfferingUuid = "0a3d761b0e3031a9b3c62f418fdade09";
+action.imageUuid = "f6885d39912b347880517a58a9f5ad5b";
+action.l3NetworkUuids = asList("51f30f4fcd3b3a0da2998b37f1a8d8a3");
+action.dataDiskOfferingUuids = asList("cf8aa933d58230ee80a4181a66772d0b","6a5ea214bc88372285ff3c301d64428c");
+action.clusterUuid = "1f6b12b24aa03d4bb57f84a2df4a03f4";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetCandidateZonesClustersHostsForCreatingVmAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = GetCandidateZonesClustersHostsForCreatingVmAction()
+action.instanceOfferingUuid = "0a3d761b0e3031a9b3c62f418fdade09"
+action.imageUuid = "f6885d39912b347880517a58a9f5ad5b"
+action.l3NetworkUuids = [51f30f4fcd3b3a0da2998b37f1a8d8a3]
+action.dataDiskOfferingUuids = [cf8aa933d58230ee80a4181a66772d0b, 6a5ea214bc88372285ff3c301d64428c]
+action.clusterUuid = "1f6b12b24aa03d4bb57f84a2df4a03f4"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

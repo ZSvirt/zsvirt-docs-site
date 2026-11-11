@@ -1,0 +1,237 @@
+---
+title: "Get USB Passthrough Candidate List"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/{vmInstanceUuid}/candidate-usb-devices">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/ab759c79169739cb9e13ff091c4fa386/candidate-usb-devices?attachType=PassThrough
+```
+
+Parameter List
+
+<table id="table_rb1_5cf_sbb"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+vmInstanceUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+Virtual Machine UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.2
+
+</td></tr><tr><td>
+
+attachType \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+Attach type
+
+</td><td>
+
+-   PassThrough
+-   Redirect
+
+</td><td>
+
+3.6.0
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+System tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.2
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+User tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.2
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "b58b4b48b3b8398f93b8b529f6f5b53a",
+      "name": "usb",
+      "hostUuid": "9f7438cf6fd233cf8fc27d4f311326ca",
+      "vmInstanceUuid": "ccdfb1d443433e1a8beac3a1d54374d5",
+      "state": "Enabled",
+      "busNum": "001",
+      "devNum": "001",
+      "idVendor": "0781",
+      "idProduct": "5591",
+      "iManufacturer": "SanDisk",
+      "iProduct": "Ultra USB 3.0",
+      "iSerial": "000000000001",
+      "usbVersion": "3.0",
+      "attachType": "PassThrough"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean|Success|2.2|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_uf5_gdf_sbb)|2.2|
+|inventories|List|See [inventories](#p_utn_hdf_sbb)|2.2|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code, a globally unique identifier of the error, e.g. SYS.1000, HOST.1001|2.2|
+|description|String|Brief description of the error|2.2|
+|details|String|Detailed error information|2.2|
+|elaboration|String|Reserved field, defaults to null|2.2|
+|opaque|LinkedHashMap|Reserved field, defaults to null|2.2|
+|cause|ErrorCode|Root cause, the source error that caused the current error, null if no original error|2.2|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifies the resource|2.2|
+|name|String|Resource name|2.2|
+|description|String|Resource description|2.2|
+|hostUuid|String|Host UUID|2.2|
+|vmInstanceUuid|String|Virtual Machine UUID|2.2|
+|busNum|String|Bus number|2.2|
+|devNum|String|Device number|2.2|
+|idVendor|String|VendorID|2.2|
+|idProduct|String|ProductID|2.2|
+|iManufacturer|String|Manufacturer|2.2|
+|iProduct|String|Device type|2.2|
+|iSerial|String|Serial number|2.2|
+|usbVersion|String|USB version|2.2|
+|attachType|String|Attach method|3.5.0|
+|createDate|Timestamp|Create date|2.2|
+|lastOpDate|Timestamp|Last update date|2.2|
+|state|UsbDeviceState|See [state](#p_on3_jdf_sbb)|2.2|
+
+### state
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name|2.2|
+|ordinal|int| |2.2|
+
+## SDK Examples
+Java SDK
+
+```
+GetUsbDeviceCandidatesForAttachingVmAction action = new GetUsbDeviceCandidatesForAttachingVmAction();
+action.vmInstanceUuid = "ab759c79169739cb9e13ff091c4fa386";
+action.attachType = "PassThrough";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetUsbDeviceCandidatesForAttachingVmAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetUsbDeviceCandidatesForAttachingVmAction action = GetUsbDeviceCandidatesForAttachingVmAction()
+action.vmInstanceUuid = "ab759c79169739cb9e13ff091c4fa386"
+action.attachType = "PassThrough"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetUsbDeviceCandidatesForAttachingVmAction.Result res = action.call()
+```
+
+</APIPage>

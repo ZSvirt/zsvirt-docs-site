@@ -1,0 +1,106 @@
+---
+title: "获取存储迁移候选列表"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/{vmInstanceUuid}/storage-migration-candidates">
+
+获取跨数据存储迁移虚拟机候选数据存储列表。
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/2ac3852f503a339f857c9381d881bd91/storage-migration-candidates
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|vmInstanceUuid|String|url|虚拟机UUID| |3.1.0|
+|withDataVolumes \(可选\)|boolean|body\(包含在**primaryStorageMigrateVm**结构中\)| | |3.7.0|
+|migrateStorageOnly\(可选\)|boolean|body\(包含在**primaryStorageMigrateVm**结构中\)|是否仅迁移存储| |4.4.0|
+|systemTags \(可选\)|List|query| | |3.1.0|
+|userTags \(可选\)|List|query| | |3.1.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "19e075320ee9327182fcb82a8b0a078b",
+      "name": "PS-1"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_tyz_5rx_nfb)|3.1.0|
+|inventories|List|详情参考[inventories](#p_hp3_vrx_nfb)|3.1.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.1.0|
+|description|String|错误的概要描述|3.1.0|
+|details|String|错误的详细信息|3.1.0|
+|elaboration|String|保留字段，默认为null|3.1.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.1.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.1.0|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.1.0|
+|zoneUuid|String|数据中心UUID|3.1.0|
+|name|String|资源名称|3.1.0|
+|url|String| |3.1.0|
+|description|String|资源的详细描述|3.1.0|
+|totalCapacity|Long| |3.1.0|
+|availableCapacity|Long| |3.1.0|
+|totalPhysicalCapacity|Long| |3.1.0|
+|availablePhysicalCapacity|Long| |3.1.0|
+|systemUsedCapacity|Long| |3.1.0|
+|type|String| |3.1.0|
+|state|String| |3.1.0|
+|status|String| |3.1.0|
+|mountPath|String| |3.1.0|
+|createDate|Timestamp|创建时间|3.1.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.1.0|
+|attachedClusterUuids|List| |3.1.0|
+
+## SDK示例
+Java SDK
+
+```
+GetPrimaryStorageCandidatesForVmMigrationAction action = new GetPrimaryStorageCandidatesForVmMigrationAction();
+action.vmInstanceUuid = "2ac3852f503a339f857c9381d881bd91";
+action.withDataVolumes = true;
+action.migrateStorageOnly = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetPrimaryStorageCandidatesForVmMigrationAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetPrimaryStorageCandidatesForVmMigrationAction action = GetPrimaryStorageCandidatesForVmMigrationAction()
+action.vmInstanceUuid = "2ac3852f503a339f857c9381d881bd91"
+action.withDataVolumes = true
+action.migrateStorageOnly = false
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetPrimaryStorageCandidatesForVmMigrationAction.Result res = action.call()
+```
+
+</APIPage>

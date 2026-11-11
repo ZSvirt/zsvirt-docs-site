@@ -1,0 +1,15 @@
+{
+  "title": "Backup Management",
+  "pages": [
+    "overview",
+    "prerequisites",
+    "backup-storage",
+    "vm-backup",
+    "platform-database-backup",
+    "restore",
+    "backup-data-management",
+    "backup-plan-management",
+    "backup-storage-management"
+  ],
+  "pagesIndex": "overview"
+}

@@ -1,0 +1,92 @@
+---
+title: "查询资源高级设置"
+---
+
+<APIPage method="GET" path="/v1/resource-configurations">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X GET http://localhost:8080/zstack/v1/resource-configurations
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryResourceConfig`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "4944c2599c394bd5be5ccc1099dfdb4b",
+      "resourceUuid": "45a511dfef1b474dbef3c1ff88275465",
+      "resourceType": "ClusterVO",
+      "name": "cpu.overProvisioning.ratio",
+      "category": "host",
+      "value": "10",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_h14_lll_zgb)|3.4.0|
+|inventories|List|详情参考[inventories](#p_jst_lll_zgb)|3.4.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.4.0|
+|description|String|错误的概要描述|3.4.0|
+|details|String|错误的详细信息|3.4.0|
+|elaboration|String|保留字段，默认为null|3.4.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.4.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.4.0|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.4.0|
+|resourceUuid|String|配置对应的资源UUID|3.4.0|
+|resourceType|String|配置对应的资源类型|3.4.0|
+|name|String|配置名称|3.4.0|
+|description|String|配置的详细描述|3.4.0|
+|category|String|配置类别|3.4.0|
+|value|String|配置的值|3.4.0|
+|createDate|Timestamp|创建时间|3.4.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.4.0|
+
+## SDK示例
+Java SDK
+
+```
+QueryResourceConfigAction action = new QueryResourceConfigAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryResourceConfigAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryResourceConfigAction action = QueryResourceConfigAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryResourceConfigAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,12 @@
+{
+  "title": "Identity and Access Management",
+  "pages": [
+    "overview",
+    "prerequisites",
+    "sso",
+    "roles",
+    "users",
+    "user-groups"
+  ],
+  "pagesIndex": "overview"
+}

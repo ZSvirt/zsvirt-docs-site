@@ -1,0 +1,22 @@
+---
+title: "A host cannot recognize a GPU device. What should I do?"
+---
+
+## Symptom
+The host cannot recognize the GPU device, and the IOMMU readiness status shows Unavailable.
+
+## Cause
+The host was not restarted after IOMMU was enabled.
+
+## Solution
+1.  Migrate all virtual machines on the host to other hosts.
+
+2.  Go to **Resource Center** &gt; **Hosts and VMs** to open the Hosts interface. Select the host and click **Actions** &gt; **Enter Maintenance Mode**.
+
+3.  Log in to the host and run the following commands to restart it:
+
+    ```
+    # Confirm no VMs are running on the host
+    [root@localhost ~]# virsh list
+    [root@localhost ~]# sync;sync;reboot
+    ```

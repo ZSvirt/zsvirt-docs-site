@@ -1,0 +1,27 @@
+---
+title: 'Add OIDC SSO Server'
+---
+
+Make sure ZSvirt is installed with a valid Advanced Edition license.
+
+1.  In the navigation pane, choose **System Management** &gt; **Single Sign-On**.
+
+2.  On the Single Sign-On page, click **Add SSO Server**.
+
+3.  In the Add SSO Server dialog, set the following parameters:
+
+    **Basic Information**
+
+    -   **Name**: Set a name for the unified authentication server.
+    -   **Description**: Optionally fill in a description for the unified authentication server.
+    -   **Type**: Select **OIDC**.
+    **Configuration Information**
+
+    -   **Client ID**: The unique identifier assigned to the platform by the unified authentication system.
+    -   **Client Secret**: The secret key assigned to the platform by the unified authentication system.
+    -   **Authorization Request URL**: The request URL used to obtain authorization under the authorization code grant type.
+    -   **Token Request URL**: The request URL used to obtain an access token from the authentication server.
+    -   **User Mapping Rules**: Establishes the mapping relationship between unified authentication attributes and local attributes, including username and description.
+        -   **Username**: Maps the virtualization platform user name to a specific attribute of users in the unified authentication server.
+        -   **Description**: Optional, maps the platform user description to a specific attribute of users in the unified authentication server.
+4.  Review the configuration and click **OK**.

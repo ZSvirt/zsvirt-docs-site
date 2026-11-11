@@ -1,0 +1,30 @@
+---
+title: 'zsphere_tag'
+description: '管理 ZSvirt 资源标签，用于分类与检索资源。'
+---
+
+<HistoricalNamingNote locale="zh" />
+
+
+# zsphere_tag（资源）
+
+管理 ZSvirt 资源标签，用于分类与检索资源。
+
+
+
+## 参数说明
+
+### 必填参数
+
+- `name`（字符串）The name of the tag. 必填项。
+- `value`（字符串）The value of the tag. 必填项。
+
+### 可选参数
+
+- `color`（字符串）The color of the tag in hex format (e.g., #3185FC for blue).
+- `description`（字符串）A description of the tag, providing additional context or details.
+
+### 只读属性
+
+- `type`（字符串）The type of the tag.
+- `uuid`（字符串）唯一标识符，由 ZSvirt 管理。 tag. 由 ZSvirt 自动生成。

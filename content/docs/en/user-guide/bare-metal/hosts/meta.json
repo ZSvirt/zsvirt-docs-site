@@ -1,0 +1,10 @@
+{
+  "title": "Bare Metal Instance",
+  "pages": [
+    "index",
+    "create-host",
+    "state-management",
+    "delete-host"
+  ],
+  "pagesIndex": "index"
+}

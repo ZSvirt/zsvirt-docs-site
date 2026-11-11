@@ -1,0 +1,93 @@
+---
+title: "Get Host Web Terminal Link"
+---
+
+<APIPage method="POST" path="/v1/hosts/webssh">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "uuid": "1e6eb11de9d5347e9a5bc72269f45247",
+    "https": false
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"uuid":"1e6eb11de9d5347e9a5bc72269f45247","https":false}}' //localhost:8080/zstack/v1/hosts/webssh
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|body \(contained in `params` structure\)|Resource UUID, uniquely identifies the resource| |4.7.0|
+|systemTags \(optional\)|List|body|System tag| |4.7.0|
+|userTags \(optional\)|List|body|User tag| |4.7.0|
+|https \(optional\)|Boolean|body \(contained in **params** structure\)| | |4.7.11|
+
+## API Response
+Response Example
+
+```
+{
+  "url": "ws://{{ip}}:8888/ws?id=140147795208568"
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|url|String|Host web terminal link|4.7.0|
+|success|boolean|Whether succeeded|4.7.0|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See details [error](#p_z5m_lnk_mlb)|4.7.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, e.g. SYS.1000, HOST.1001|4.7.0|
+|description|String|Brief description of the error|4.7.0|
+|details|String|Detailed error information|4.7.0|
+|elaboration|String|Reserved field, default is null|4.7.0|
+|opaque|LinkedHashMap|Reserved field, default is null|4.7.0|
+|cause|ErrorCode|Root cause, the error that caused the current error. If there is no original error, this field is null|4.7.0|
+
+## SDK Examples
+Java SDK
+
+```
+GetHostWebSshUrlAction action = new GetHostWebSshUrlAction();
+action.uuid = "1e6eb11de9d5347e9a5bc72269f45247";
+action.https = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetHostWebSshUrlAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetHostWebSshUrlAction action = GetHostWebSshUrlAction()
+action.uuid = "1e6eb11de9d5347e9a5bc72269f45247"
+action.https = false
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetHostWebSshUrlAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,106 @@
+---
+title: "Query Distributed Storage"
+---
+
+<APIPage method="GET" path="/v1/primary-storage/ceph" altPaths={["/v1/primary-storage/ceph/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Examples
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/primary-storage/ceph?q=uuid=c7b3cbd9ae3e44bb9536728191761cb3
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/primary-storage/ceph/1ffb7b09c405477b95563abfcad506a0
+```
+
+Queryable Fields
+
+Run the CLI command tool, enter `QueryCephPrimaryStorage` and press Tab to view all queryable fields and resource names that support cross-table queries.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "name": "Ceph-1",
+      "url": "not used",
+      "type": "Ceph",
+      "state": "Enabled",
+      "status": "Connected",
+      "attachedClusterUuids": [
+        "1b70bb2e338f4a278b9efadda42ad26f"
+      ]
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, indicates the operation failed. This field is null when the operation succeeds. For details, see [error](#p_uqr_d1b_n1b)|0.6|
+|inventories|List|For details, see [inventories](#p_n3w_d1b_n1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier for the error, such as SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause. The source error that triggered the current error. If there is no original error, this field is null|0.6|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|zoneUuid|String|Data Center UUID|0.6|
+|name|String|Resource name|0.6|
+|url|String| |0.6|
+|description|String|Detailed description of the resource|0.6|
+|totalCapacity|Long| |0.6|
+|availableCapacity|Long| |0.6|
+|totalPhysicalCapacity|Long| |0.6|
+|availablePhysicalCapacity|Long| |0.6|
+|systemUsedCapacity|Long| |0.6|
+|type|String| |0.6|
+|state|String| |0.6|
+|status|String| |0.6|
+|mountPath|String| |0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+|attachedClusterUuids|List| |0.6|
+
+## SDK Examples
+Java SDK
+
+```
+QueryCephPrimaryStorageAction action = new QueryCephPrimaryStorageAction();
+action.conditions = asList("uuid=d351d433b5974116a4c9649ef5b89e64");
+action.sessionId = "172c3d6b977b4cbfbd401ace20ad0442";
+QueryCephPrimaryStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryCephPrimaryStorageAction action = QueryCephPrimaryStorageAction()
+action.conditions = ["uuid=aa79df396a4943f8b9066c4d8057565d"]
+action.sessionId = "0aca367c9e7946d29a63044684d5dd71"
+QueryCephPrimaryStorageAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,13 @@
+---
+title: "Network Planning"
+---
+
+[Figure 1](#fig_b1g_fg1_hhc) shows a typical data center that consists of several servers with different functions and two independent network environments.
+
+![Network Planning](/docs/en/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0003_3_1.png)
+
+-   The management network uses dual Gigabit networks for managing hardware resources related to the virtualization platform. The business network uses dual 10-Gigabit networks for virtual machine service traffic. You can configure network speeds based on your actual business requirements.
+-   If you use network storage such as NFS or distributed storage, you need also plan an additional storage network to handle storage traffic.
+-   We recommend that you maintain consistent NIC naming across all servers and use NICs with the same name to carry the same type of network traffic. For example, all management network traffic use the `em1` NICs.
+-   If you use a VLAN network, you need to configure the corresponding VLAN network communication on the switch in advance.
+-   ZSvirt automatically assigns IP addresses to virtual machines. You need to reserve an IP range that does not conflict with the system and ensure this range does not conflict with any existing DHCP services in your network environment.

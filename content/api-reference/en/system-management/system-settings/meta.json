@@ -1,0 +1,11 @@
+{
+  "title": "System Settings",
+  "pages": [
+    "log-server",
+    "snmp",
+    "time-management",
+    "global-setting",
+    "custom-attribute"
+  ],
+  "pagesIndex": "index"
+}

@@ -1,0 +1,31 @@
+---
+title: "虚拟化平台无法登录，如何解决？"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+虚拟化平台无法登录一般有以下两种原因，可根据原因分类，尝试参考解决方案进行排查解决：
+
+## 原因一
+管理节点配置文件中的管理IP与查看管理服务状态输出的IP不一致。
+
+## 解决方案
+1.  SSH连接至管理节点。
+
+2.  修改管理节点配置文件：进入`/usr/local/zstack/apache-tomcat/webapps/zstack/WEB-INF/classes/zstack.properties`，在配置文件中将**management.server.ip**以及其他相关IP 修改为正确IP。
+
+3.  执行以下命令重启管理节点服务：
+
+    ```
+    [root@localhost ~]# zstack-ctl stop && zstack-ctl start
+    ```
+
+4.  重新登录虚拟化平台成功。
+
+## 原因二
+虚拟化平台无法访问，主机`dmesg`出现**Temperature above threshold**提示。可能是由于主机CPU温度异常。
+
+## 解决方案
+-   排查机房空调是否损坏。
+
+-   排查主机所在机柜状态。

@@ -1,0 +1,159 @@
+---
+title: "从硬盘快照创建数据硬盘镜像"
+---
+
+<APIPage method="POST" path="/v1/images/data-volume-templates/from/volume-snapshots/{snapshotUuid}">
+
+从指定的硬盘快照创建出一个数据硬盘镜像。
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "My Data Volume Template",
+    "backupStorageUuids": [
+      "dbf107f8efa531f786f243850499e010"
+    ],
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"My Data Volume Template","backupStorageUuids":["dbf107f8efa531f786f243850499e010"]}}' \
+http://localhost:8080/zstack/v1/images/data-volume-templates/from/volume-snapshots/58976137bf95309692762077cd7077e3
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|snapshotUuid|String|url|快照UUID| |0.6|
+|name|String|body\(包含在**params**结构中\)|数据硬盘镜像名称| |0.6|
+|description \(可选\)|String|body\(包含在**params**结构中\)|数据硬盘镜像的详细描述| |0.6|
+|backupStorageUuids|List|body\(包含在**params**结构中\)|镜像仓库UUID列表| |0.6|
+|resourceUuid \(可选\)|String|body\(包含在**params**结构中\)|数据硬盘镜像UUID。若指定，数据硬盘镜像会使用该字段值作为UUID| |0.6|
+|tagUuids \(可选\)|List|body\(包含在**params**结构中\)|标签UUID列表| | |
+|systemTags \(可选\)|List|body|系统标签| |0.6|
+|userTags \(可选\)|List|body|用户标签| |0.6|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "314d80c2feb5352c984b3ffd36108c32",
+    "name": "My Data Volume Template",
+    "mediaType": "DataVolumeTemplate",
+    "platform": "Linux",
+    "format": "raw",
+    "backupStorageRefs": [
+      {
+        "id": 0.0,
+        "imageUuid": "314d80c2feb5352c984b3ffd36108c32",
+        "backupStorageUuid": "d861144baadf31e3b1cbbb282242adcf",
+        "installPath": "ceph://zs-images/0cd599ec519249489475112a058bb93a",
+        "status": "Ready"
+      }
+    ]
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_ms5_nck_l1b)|0.6|
+|inventory|ImageInventory|详情参考[inventory](#p_ixz_nck_l1b)|0.6|
+|failures|List|详情参考[failures](#p_epn_4ck_l1b)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|name|String|资源名称|0.6|
+|description|String|资源的详细描述|0.6|
+|state|String|镜像的启动状态|0.6|
+|status|String|镜像的就绪状态|0.6|
+|size|Long|镜像大小|0.6|
+|actualSize|Long|镜像真实容量|0.6|
+|md5Sum|String|镜像的md5值|0.6|
+|url|String|镜像的URL地址|0.6|
+|mediaType|String|镜像的类型|0.6|
+|guestOsType|String|镜像对应的客户机操作系统类型|0.6|
+|type|String|内部使用字段|0.6|
+|platform|String|镜像的系统平台|0.6|
+|format|String|镜像的格式，比如：raw|0.6|
+|system|Boolean|标识是否为系统镜像|0.6|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+|backupStorageRefs|List|详情参考[backupStorageRefs](#p_ujg_4ck_l1b)|0.6|
+
+### backupStorageRefs
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|imageUuid|String|镜像UUID|0.6|
+|backupStorageUuid|String|镜像存储UUID|0.6|
+|installPath|String|在镜像仓库上的安装路径|0.6|
+|exportUrl|String|导出镜像的url|0.6|
+|exportMd5Sum|String|导出镜像的md5值|0.6|
+|status|String|镜像就绪状态|0.6|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+
+### failures
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|backupStorageUuid|String|镜像存储UUID|0.6|
+|error|ErrorCode|详情参考[error](#p_ms5_nck_l1b)|0.6|
+
+## SDK示例
+Java SDK
+
+```
+CreateDataVolumeTemplateFromVolumeSnapshotAction action = new CreateDataVolumeTemplateFromVolumeSnapshotAction();
+action.snapshotUuid = "58976137bf95309692762077cd7077e3";
+action.name = "My Data Volume Template";
+action.backupStorageUuids = asList("dbf107f8efa531f786f243850499e010");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateDataVolumeTemplateFromVolumeSnapshotAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateDataVolumeTemplateFromVolumeSnapshotAction action = CreateDataVolumeTemplateFromVolumeSnapshotAction()
+action.snapshotUuid = "58976137bf95309692762077cd7077e3"
+action.name = "My Data Volume Template"
+action.backupStorageUuids = [dbf107f8efa531f786f243850499e010]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateDataVolumeTemplateFromVolumeSnapshotAction.Result res = action.call()
+```
+
+</APIPage>

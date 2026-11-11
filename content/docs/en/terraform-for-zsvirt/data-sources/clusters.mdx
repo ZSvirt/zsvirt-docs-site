@@ -1,0 +1,71 @@
+---
+title: 'zsphere_clusters'
+description: 'Fetches a list of clusters and their associated attributes.'
+---
+
+<HistoricalNamingNote locale="en" />
+
+# zsphere_clusters (Data Source)
+
+Fetches a list of clusters and their associated attributes.
+
+## Example Usage
+
+```terraform
+data "zsphere_clusters" "test" {
+}
+
+output "zstack_secs" {
+  value = data.zsphere_clusters.test
+}
+
+# example output:
+# zstack_secs = {
+#   "clusters" = tolist([
+#     {
+#       "hypervisor_type" = "KVM"
+#       "name" = "Cluster-1"
+#       "state" = "Enabled"
+#       "type" = "zstack"
+#       "uuid" = "5568b28dbaed465daf768b533b1fe72d"
+#       "zone_uuid" = "86643f5442164890b8b71de5b582dc9f"
+#     }
+#   ])
+#   "filter" = tolist([])
+#   "name" = tostring(null)
+#   "name_pattern" = tostring(null)
+# }
+```
+
+## Schema
+
+### Optional
+
+- `filter` (Block List) Filter resources based on any field in the schema. For example, to filter by status, use `name = "status"` and `values = ["Ready"]`. (see [below for nested schema](#nestedblock--filter))
+- `name` (String) Exact name for searching Cluster
+- `name_pattern` (String) Pattern for fuzzy name search, similar to MySQL LIKE. Use % for multiple characters and _ for exactly one character.
+
+### Read-Only
+
+- `clusters` (Attributes List) List of clusters matching the specified filters (see [below for nested schema](#nestedatt--clusters))
+
+<a id="nestedblock--filter"></a>
+### Nested Schema for `filter`
+
+Required:
+
+- `name` (String) Name of the field to filter by (e.g., status, state).
+- `values` (Set of String) Values to filter by. Multiple values will be treated as an OR condition.
+
+
+<a id="nestedatt--clusters"></a>
+### Nested Schema for `clusters`
+
+Read-Only:
+
+- `hypervisor_type` (String) Type of hypervisor used by the cluster (e.g., KVM, ESXi)
+- `name` (String) Name of the cluster
+- `state` (String) State of the cluster (e.g., Enabled, Disabled)
+- `type` (String) ype of the cluster
+- `uuid` (String) UUID identifier of the cluster
+- `zone_uuid` (String) UUID of the zone to which the cluster belongs

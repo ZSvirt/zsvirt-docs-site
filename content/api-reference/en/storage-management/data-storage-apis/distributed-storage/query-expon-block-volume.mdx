@@ -1,0 +1,63 @@
+---
+title: "Query Expon Block Volume"
+---
+
+<APIPage method="GET" path="/v1/expon/block-volumes" altPaths={["/v1/expon/block-volumes/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/expon/block-volumes?q=uuid=xxx&q=name=xxx
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/expon/block-volumes/57dcd9124665304191c221331ee95e6b
+```
+
+Queryable Fields
+
+Run the CLI command, enter `QueryExponBlockVolume` and press Tab to view all queryable fields and resources that support cross-table queries.
+
+## API Response
+This API returns an empty JSON structure `{}` on success, and returns a JSON structure containing an error field on failure. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+QueryExponBlockVolumeAction action = new QueryExponBlockVolumeAction();
+action.conditions = asList("uuid=xxx","name=xxx");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryExponBlockVolumeAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = QueryExponBlockVolumeAction()
+action.conditions = ["uuid=xxx","name=xxx"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

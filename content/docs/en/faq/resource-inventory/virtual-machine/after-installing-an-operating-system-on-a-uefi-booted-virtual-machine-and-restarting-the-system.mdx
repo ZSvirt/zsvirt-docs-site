@@ -1,0 +1,13 @@
+---
+title: "After installing an operating system on a UEFI-booted virtual machine and restarting, the system automatically enters the UEFI shell. How do I resolve this?"
+---
+
+## Solution
+-   Run `vim /boot/efi/startup.nsh` to write the following content and save the file, then restart the virtual machine to boot normally.
+
+    ```
+    FS0:
+    CD EFI
+    CD centos
+    shimx64-centos.efi
+    ```

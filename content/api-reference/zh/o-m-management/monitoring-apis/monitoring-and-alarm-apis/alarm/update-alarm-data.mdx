@@ -1,0 +1,275 @@
+---
+title: "更新报警器历史消息"
+---
+
+<APIPage method="PUT" path="/v1/zwatch/alarm-histories/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateAlarmData": {
+    "dataUuid": "514d4a1ed3573bf8a14ac350de0a2513",
+    "updateMode": "OnlyOne",
+    "readStatus": "Read"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateAlarmData":{"dataUuid":"514d4a1ed3573bf8a14ac350de0a2513","updateMode":"OnlyOne","readStatus":"Read"}}' http://localhost:8080/zstack/v1/zwatch/alarm-histories/actions
+```
+
+参数列表
+
+<table id="table_chc_2m3_kgb"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+dataUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**updateAlarmData**结构中\)
+
+</td><td>
+
+资源的UUID，唯一标示该资源
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.3.0
+
+</td></tr><tr><td>
+
+dataStartTime \(可选\)
+
+</td><td>
+
+Long
+
+</td><td>
+
+body\(包含在**updateAlarmData**结构中\)
+
+</td><td>
+
+选择目标消息的起始时间，updateMode需要传入InRange
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.3.0
+
+</td></tr><tr><td>
+
+dataEndTime \(可选\)
+
+</td><td>
+
+Long
+
+</td><td>
+
+body\(包含在**updateAlarmData**结构中\)
+
+</td><td>
+
+选择目标消息的结束时间，updateMode需要传入InRange
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.3.0
+
+</td></tr><tr><td>
+
+updateMode
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**updateAlarmData**结构中\)
+
+</td><td>
+
+选择更新目标消息的范围，OnlyOne表示只更新指定的消息，InRange表示更新某个时间范围产生的消息， All表示更新所有消息
+
+</td><td>
+
+-   OnlyOne
+-   InRange
+-   All
+
+</td><td>
+
+3.3.0
+
+</td></tr><tr><td>
+
+readStatus \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**updateAlarmData**结构中\)
+
+</td><td>
+
+更新消息已读状态
+
+</td><td>
+
+-   Read
+-   Unread
+
+</td><td>
+
+3.3.0
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.3.0
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.3.0
+
+</td></tr></tbody>
+</table>
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+UpdateAlarmDataAction action = new UpdateAlarmDataAction();
+action.dataUuid = "514d4a1ed3573bf8a14ac350de0a2513";
+action.updateMode = "OnlyOne";
+action.readStatus = "Read";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateAlarmDataAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateAlarmDataAction action = UpdateAlarmDataAction()
+action.dataUuid = "514d4a1ed3573bf8a14ac350de0a2513"
+action.updateMode = "OnlyOne"
+action.readStatus = "Read"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateAlarmDataAction.Result res = action.call()
+```
+
+</APIPage>

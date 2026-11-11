@@ -1,0 +1,64 @@
+---
+title: "Delete iSCSI Server"
+---
+
+<APIPage method="DELETE" path="/v1/storage-devices/iscsi/servers/{uuid}?deleteMode={deleteMode}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/storage-devices/iscsi/servers/7a3f7749fd393899b4b74d2b470e15eb?deleteMode=Permissive
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|iSCSI Server UUID| |3.0.0|
+|deleteMode \(optional\)|String|url| | |3.0.0|
+|systemTags \(optional\)|List|body| | |3.0.0|
+|userTags \(optional\)|List|body| | |3.0.0|
+
+## API Response
+When the API succeeds, it returns an empty JSON structure **`{}`**. When an error occurs, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DeleteIscsiServerAction action = new DeleteIscsiServerAction();
+action.uuid = "7a3f7749fd393899b4b74d2b470e15eb";
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteIscsiServerAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteIscsiServerAction action = DeleteIscsiServerAction()
+action.uuid = "7a3f7749fd393899b4b74d2b470e15eb"
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DeleteIscsiServerAction.Result res = action.call()
+```
+
+</APIPage>

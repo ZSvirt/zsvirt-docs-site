@@ -1,0 +1,40 @@
+---
+title: "Linux 虚拟机安装 VMTools"
+---
+
+安装过程将先加载 VMTools ISO，而后进入虚拟机控制台手动执行安装命令。
+
+-   确保虚拟机处于运行中状态。
+-   确保虚拟机已安装 Linux 命令工具，如：`tar`、`wget`、`curl`。
+
+1.  在目标虚拟机页面，点击**更多操作** > **VMTools** > **安装VMTools**。
+
+2.  在安装VMTools弹窗中，点击**安装并进入下一步**。
+
+    加载 VMTools ISO 时，系统将根据以下规则选择光驱：
+
+    -   有空光驱时，系统将自动选择第一顺位的空光驱，加载 VMTools ISO。
+    -   无空光驱时，系统将选择光驱 1，自动卸载原有镜像并加载 VMTools ISO。
+
+3.  点击**复制并进入控制台**。
+
+    点击后，将一键复制以下命令，并自动进入虚拟机控制台：
+
+    ```
+    # 创建挂载点目录
+    mkdir /mnt/cdrom
+    # 挂载 CD-ROM 镜像
+    mount /dev/cdrom /mnt/cdrom
+    # 安装 VMTools
+    cd /mnt/cdrom/
+    bash ./zs-tools-install.sh
+    # 卸载 CD-ROM 镜像（可选）
+    cd ~
+    umount /mnt/cdrom
+    ```
+
+4.  进入虚拟机控制台，在左侧工具栏中，点击**本地命令粘贴工具**。
+
+5.  在粘贴命令弹窗中，粘贴上一步复制的命令，然后点击**确定**执行命令。
+
+如需更新 VMTools 版本，可在目标虚拟机页面，点击**更多操作** > **VMTools** > **重装VMTools**。

@@ -1,0 +1,48 @@
+---
+title: 'Add a SAN Storage'
+---
+
+If you wish to use shared LUNs to create storage resources, you can refer to this section for instructions.
+
+-   LUNs are provided by iSCSI, FC, or NVMe storage. For more information, see .
+-   Check the quantity and type limitations between the cluster and the data storage to the attached. For more information, see Cluster and Data Storage.
+
+1.  In the navigation pane, choose **Inventory** &gt; **Data Storage**.
+
+2.  Select the target data center and click **Actions** &gt; **Add Data Storage**.
+
+3.  In the Add Data Storage dialog, set the following parameters:
+
+    **Basic Information**
+
+    -   **Name**: Name of the SAN storage.
+    -   **Description**: Optional. You can add relevant information as a note.
+    -   **Type**: Select **SAN Storage**.
+    -   **Data Center**: Location of the data center where the SAN storage resides.
+    **Configurations**
+
+    -   **Cluster**: The cluster where the SAN storage needs to be attached.
+    -   **Default Provisioning Type**: The allocation method for disk storage space. Default: Thick Provision. Options include Thick Provision and Thin Provision.
+        -   Thick Provision: Pre-allocate the required storage space, providing sufficient storage capacity to ensure storage performance.
+        -   Thin Provision: Allocate storage space according to actual usage, achieving higher storage utilization.
+    -   **Storage Network**: Specify a storage network for the shared storage. The system uses the storage network to check the health status of virtual machines.
+    -   **Storage Addition Method**: Select a method to add the storage.
+        -   New: Creates a brand new data storage by initializing an unused LUN into a data storage usable by the platform. You can choose whether to clear existing data on the LUN device during addition.
+        -   Register: Imports LUNs that already contain data (for example, storage migrated from another platform or replicated through disaster recovery) into the platform. The platform will identify its SAN storage structure and repair the metadata. During registration, all LUN devices under that SAN storage will be automatically added.
+    -   **LUN**: Select LUN devices provided by iSCSI storage, FC storage, or NVMe storage.
+    -   **Cleanse LUN**: Choose whether to forcibly clear data from the LUN devices, such as file system, RAID, or partition table labels. Default: Unselected.
+
+        <Callout type="info">
+        If data or partition exists in the LUN, you might fail to add LUNs or attach data storage.
+        </Callout>
+
+    -   **Storage UUID**: When you select **Register** as the storage addition method, you must specify how to handle the storage UUID.
+        -   Keep: Retains the existing UUID of the SAN storage unchanged.
+        -   Reset: Regenerates a new UUID for the SAN storage. This is useful in scenarios such as UUID conflicts after cloning or snapshots, or when decoupling from the production environment during disaster recovery drills. After reset, the original UUID becomes invalid. If other hosts continue to access the storage using the original UUID, I/O errors will occur.
+4.  Review the configuration and click **OK**.
+
+-   **[Add an iSCSI Storage](/en/docs/user-guide/storage/add-datastore/san-storage/iscsi-storage)**  
+iSCSI storage is a SAN storage that uses the iSCSI protocol for data transmission.
+-   **[Synchronize a FC Storage](/en/docs/user-guide/storage/add-datastore/san-storage/sync-fc-storage)**  
+FC storage is a SAN storage that uses the FC protocol for data transmission.
+-   **[Add a NVMe Storage](/en/docs/user-guide/storage/add-datastore/san-storage/nvme-storage)**

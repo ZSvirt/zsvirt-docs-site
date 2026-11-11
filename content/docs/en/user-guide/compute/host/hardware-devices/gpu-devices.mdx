@@ -1,0 +1,41 @@
+---
+title: 'GPU Device'
+---
+
+On the **Hardware Device** tab of the host, select the **Physical GPU Device** or **vGPU Device** tab to view and manage physical GPU devices and vGPU devices for that host.
+
+-   [Physical GPU Device](#section_tzb_2lk_xyb)
+-   vGPU [Devices](#section_sqc_vmk_xyb)
+
+## Physical GPU Device
+You can perform different operations on physical GPU devices based on various scenarios:
+
+-   **Enable and Disable Scenarios**: Enable &amp; Disable
+    -   If you want to pass through the physical GPU device directly to a virtual machine, ensure that the device is enabled. Click the **Enable** button to enable it.
+    -   If you no longer wish to pass through the physical GPU device to any virtual machines, click the **Disable** button to disable it.
+
+        <Callout type="info">
+        After disabling, the physical GPU device currently in use by a virtual machine will continue to function normally until it is uninstalled.
+        </Callout>
+
+-   **Virtualization Scenarios**: Virtualization Partitioning &amp; Restoration
+    -   **Virtualization Partitioning**: Partition an unpassed-through physical GPU device into vGPU devices of specified specifications. Before partitioning, ensure the following conditions are met:
+
+        -   The physical GPU model supports virtualization partitioning.
+        -   The physical GPU is not passed through to any virtual machine.
+        -   The host BIOS has Intel VT-d / AMD IOMMU enabled, and the host kernel has IOMMU support enabled.
+        -   The host's IOMMU readiness status in the platform is set to **Available**.
+        Different manufacturers have slightly different methods for partitioning physical GPUs virtually:
+
+        -   NVIDIA: Supports partitioning NVIDIA physical GPUs according to selected specifications individually.
+        -   AMD: Supports partitioning all AMD physical GPUs on the current host simultaneously based on the selected quantity.
+    -   **Virtualization Restoration**: Restore vGPU devices back to physical GPU devices. Before restoration, ensure that all vGPUs created from this physical GPU have been uninstalled from virtual machines. The method of restoring physical GPUs varies by manufacturer:
+        -   NVIDIA: Ensure that all vGPUs related to this NVIDIA physical GPU have been uninstalled from virtual machines before restoration.
+        -   AMD: Ensure that all AMD vGPUs on the current host have been uninstalled from virtual machines before restoring AMD vGPUs.
+
+## vGPU Devices
+You can perform different operations on vGPU devices based on various scenarios:
+
+-   **Enable and Disable vGPU Device Scenarios**: Enable &amp; Disable
+    -   If you want to pass through the vGPU device directly to a virtual machine, ensure that the device is enabled. Click the **Enable** button to enable it.
+    -   If you no longer wish to pass through the vGPU device to any other virtual machines, click the **Disable** button to disable it. After disabling, the vGPU device currently in use by a virtual machine will continue to function normally until it is uninstalled.

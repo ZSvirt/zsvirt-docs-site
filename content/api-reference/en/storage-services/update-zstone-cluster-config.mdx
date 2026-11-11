@@ -1,0 +1,110 @@
+---
+title: "Configure ZStone Cluster"
+---
+
+<APIPage method="PUT" path="/v1/zstone-plugin/config/cluster">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateZStoneClusterConfig": {
+    "uuid": "53c0433a817349f89f66532addeb8b6c",
+    "clusterName": "zstone-test",
+    "chronyIp": "172.26.30.113",
+    "publicNetworkCidr": "172.26.0.1/16",
+    "clusterNetworkCidr": "172.26.0.1/16",
+    "managementNetworkCidr": "172.26.0.1/16",
+    "force": false
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateZStoneClusterConfig":{"uuid":"53c0433a817349f89f66532addeb8b6c","clusterName":"zstone-test","chronyIp":"172.26.30.113","publicNetworkCidr":"172.26.0.1/16","clusterNetworkCidr":"172.26.0.1/16","managementNetworkCidr":"172.26.0.1/16","force":false}}' \
+http://localhost:8080/zstack/v1/zstone-plugin/config/cluster
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|body \(included in `updateZStoneClusterConfig` structure\)|ZStone UUID, uniquely identifies the resource| |4.10.6|
+|clusterName|String|body \(included in `updateZStoneClusterConfig` structure\)|ZStone cluster name| |4.10.6|
+|managementIp \(Optional\)|String|body \(included in `updateZStoneClusterConfig` structure\)|ZStone management node IP| |4.10.6|
+|chronyIp|String|body \(included in `updateZStoneClusterConfig` structure\)|ZStone time synchronization server IP| |4.10.6|
+|publicNetworkCidr|String|body \(included in `updateZStoneClusterConfig` structure\)|ZStone public network IP CIDR| |4.10.6|
+|clusterNetworkCidr|String|body \(included in `updateZStoneClusterConfig` structure\)|ZStone cluster network IP CIDR| |4.10.6|
+|managementNetworkCidrv|String|body \(included in `updateZStoneClusterConfig` structure\)|ZStone management network IP CIDR| |4.10.6|
+|systemTags \(Optional\)|List|body|System Tag| |4.10.6|
+|userTags \(Optional\)|List|body|User Tag| |4.10.6|
+|force \(Optional\)|boolean|body \(included in `updateZStoneClusterConfig` structure\)|Whether to forcibly add ZStone cluster. Generally, adding a cluster when ZStone already has one may cause unexpected issues, so this serves as a safeguard.| |4.10.7|
+|softwarePackageUuid|String|body \(included in `updateZStoneClusterConfig` structure\)|Distributed software package UUID| |4.10.20|
+
+<Callout type="info">
+-   Parameters for the initialization software package.
+</Callout>
+    -   SystemTag format: `initConfig::{%s}`
+    -   SystemTag example: `APIUpdateZStoneClusterConfigMsg converted to json string`
+
+## API Response
+This API returns an empty JSON structure `{}` on success, and a JSON structure containing an error field on failure, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+UpdateZStoneClusterConfigAction action = new UpdateZStoneClusterConfigAction();
+action.uuid = "53c0433a817349f89f66532addeb8b6c";
+action.clusterName = "zstone-test";
+action.chronyIp = "172.26.30.113";
+action.publicNetworkCidr = "172.26.0.1/16";
+action.clusterNetworkCidr = "172.26.0.1/16";
+action.managementNetworkCidr = "172.26.0.1/16";
+action.force = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateZStoneClusterConfigAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = UpdateZStoneClusterConfigAction()
+action.uuid = "53c0433a817349f89f66532addeb8b6c"
+action.clusterName = "zstone-test"
+action.chronyIp = "172.26.30.113"
+action.publicNetworkCidr = "172.26.0.1/16"
+action.clusterNetworkCidr = "172.26.0.1/16"
+action.managementNetworkCidr = "172.26.0.1/16"
+action.force = false
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

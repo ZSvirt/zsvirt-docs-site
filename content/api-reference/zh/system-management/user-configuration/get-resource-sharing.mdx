@@ -1,0 +1,93 @@
+---
+title: "获取资源名称"
+---
+
+<APIPage method="GET" path="/v1/resources/names">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl  -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X GET http://localhost:8080/zstack/v1/resources/names?uuids=393ce06589043e33b397bc21043e8cd4&uuids=b62bdb31280a30a69c2f110bac8cb682
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuids|List|query|资源的UUID列表| |0.6|
+|systemTags \(可选\)|List|query| | |0.6|
+|userTags \(可选\)|List|query| | |0.6|
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "9da599e443ec3d21bb4c766ad51784d3",
+      "resourceName": "zone",
+      "resourceType": "ZoneVO"
+    },
+    {
+      "uuid": "a6e1b35c657835c5972e94773e52949b",
+      "resourceName": "vm",
+      "resourceType": "VmInstanceVO"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_gtx_xn5_m1b)|2.0|
+|inventories|List|详情参考[inventories](#p_dnr_xn5_m1b)|2.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.0.0|
+|resourceName|String|资源名称|4.0.0|
+|resourceType|String|资源类型，例如虚拟机为VmInstanceVO|4.0.0|
+
+## SDK示例
+Java SDK
+
+```
+GetResourceNamesAction action = new GetResourceNamesAction();
+action.uuids = asList("393ce06589043e33b397bc21043e8cd4","b62bdb31280a30a69c2f110bac8cb682");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetResourceNamesAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+GetResourceNamesAction action = GetResourceNamesAction()
+action.uuids = [393ce06589043e33b397bc21043e8cd4, b62bdb31280a30a69c2f110bac8cb682]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetResourceNamesAction.Result res = action.call()
+
+```
+
+</APIPage>

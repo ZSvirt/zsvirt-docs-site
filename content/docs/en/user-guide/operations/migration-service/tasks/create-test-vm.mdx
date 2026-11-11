@@ -1,0 +1,26 @@
+---
+title: 'Create a Test Virtual Machine'
+---
+
+Ensure that the migration task status is not "Cutover in Progress". Otherwise, you cannot create a test virtual machine.
+
+1.  In the navigation pane, select **O&M Management** &gt; **Migration Task** &gt; **All Tasks**.
+
+2.  On the All Tasks page, select the target migration task, and then click **Actions** &gt; **Test** &gt; **Create Test Virtual Machine**.
+
+3.  In the Create Test Virtual Machine dialog, set the following parameters:
+
+    -   **CPU**: Set the number of CPU cores for the virtual machine.
+    -   **Memory**: Set the memory size for the virtual machine.
+    -   **Network**: Select the distributed port group that the virtual machine uses.
+    -   **CIDR**: The system automatically retrieves the CIDR based on the selected network.
+    -   **IPv4 Address**: The IP address allocation method depends on the configuration of the selected network.
+        -   If DHCP is enabled on the selected distributed port group, an IPv4 address is automatically assigned by default. You can also manually specify an IP address, and the specified IP address must be within the CIDR.
+        -   If DHCP is not enabled on the selected distributed port group, you must manually specify an IP address, and the specified IP address must be within the CIDR.
+        -   If IPAM is not enabled on the selected distributed port group, the CIDR parameter is not displayed. You must manually specify an IP address.
+    -   **System Conversion Policy**: Specify the system conversion policy before the virtual machine starts.
+        -   **Perform System Conversion**: Performs a full system conversion, including: driver replacement/injection, network adapter name and IP address configuration for the target VM, and post-script execution.
+        -   **Perform System Conversion Without Loading Target Drivers**: Skips driver replacement. Only configures the target VM's network adapter name and IP address, and executes post-scripts.
+        -   **Skip System Conversion**: No driver replacement, no network configuration (adapter name/IP address), and no post-script execution. You will need to log in to the target VM and manually perform these configurations.
+    -   **Data Recovery Point**: Use a snapshot or copy from a specific point in time to perform virtual machine recovery testing.
+4.  Review the configuration and click **OK**.

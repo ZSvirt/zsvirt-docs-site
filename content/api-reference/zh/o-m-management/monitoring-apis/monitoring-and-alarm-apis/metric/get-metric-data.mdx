@@ -1,0 +1,103 @@
+---
+title: "获取metric数据"
+---
+
+<APIPage method="GET" path="/v1/zwatch/metrics">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zwatch/metrics?namespace=ZStack/VM&metricName=CPUIdleUtilization&startTime=
+1.588831825415E12&period=30.0&labels=VMUuid=b89391d8b93b470a99055001a4383cc7&labels=CPUNum=4
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|namespace|String|query|名字空间| |2.3|
+|metricName|String|query|监控项| |2.3|
+|startTime \(可选\)|Long|query|起始时间| |2.3|
+|endTime \(可选\)|Long|query|结束时间| |2.3|
+|period \(可选\)|Integer|query|数据精度| |2.3|
+|labels \(可选\)|List|query|过滤标签| |2.3|
+|systemTags \(可选\)|List|query|系统标签| |2.3|
+|userTags \(可选\)|List|query|用户标签| |2.3|
+|functions \(可选\)|List|query|函数列表| |2.3|
+|offsetAheadOfCurrentTime \(可选\)|Long|query| | |2.3|
+
+## API返回
+返回示例
+
+```
+{
+  "data": [
+    {
+      "value": 101.02,
+      "time": 1519829245957.0,
+      "labels": {
+        "VMUuid": "9304ab73d9b84852ad1d5061fd4760a5"
+      }
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_yrg_zzx_bdb)|2.3|
+|data|List|详情参考[data](#p_yfx_yzx_bdb)|2.3|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### data
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|value|double|监控值|0.6|
+|time|long|记录生成时间|0.6|
+|labels|Map|标签|0.6|
+
+## SDK示例
+Java SDK
+
+```
+GetMetricDataAction action = new GetMetricDataAction();
+action.namespace = "ZStack/VM";
+action.metricName = "CPUIdleUtilization";
+action.startTime = 1.519829246005E12;
+action.period = 30.0;
+action.labels = asList("VMUuid=3bb5b754320a4331bd907f10d8683568","CPUNum=4");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetMetricDataAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetMetricDataAction action = GetMetricDataAction()
+action.namespace = "ZStack/VM"
+action.metricName = "CPUIdleUtilization"
+action.startTime = 1.519829246005E12
+action.period = 30.0
+action.labels = [VMUuid=b577cfe6aad447c1b2e793fdc6d7975b, CPUNum=4]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetMetricDataAction.Result res = action.call()
+```
+
+</APIPage>

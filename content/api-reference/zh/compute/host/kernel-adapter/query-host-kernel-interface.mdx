@@ -1,0 +1,100 @@
+---
+title: "查询主机Kernel适配器"
+---
+
+<APIPage method="GET" path="/v1/l2-networks/kernel-interfaces" altPaths={["/v1/l2-networks/kernel-interfaces/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/l2-networks/kernel-interfaces
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/l2-networks/kernel-interfaces/2eeff10481233dd48b1ffc6ed7c3d4fc
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryHostKernelInterface`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "7be0a19c5d083b52abaf98205478c7e2",
+      "name": "test-kernel",
+      "description": "test-kernel",
+      "hostUuid": "3f79834ddf6f3e118dcb5abaa33489cc",
+      "l2NetworkUuid": "4a9e06dbe8d6375a8f8f002ea50b7121",
+      "l3NetworkUuid": "7cec7a1b63c732498be3d7a45c7076a5",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.1.0|
+|inventory|List|详情参考[inventory](#p_mh4_sbk_51c)|4.1.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_m5s_sbk_51c)|4.1.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.1.0|
+|name|String|资源名称|4.1.0|
+|description|String|资源的详细描述|4.1.0|
+|hostUuid|String|主机UUID|4.1.0|
+|l2PortGroupUuid|String|端口组UUID|4.1.0|
+|l3NetworkUuid|String|分布式端口组UUID|4.1.0|
+|usedIps|List|IP配置|4.1.0|
+|trafficTypes|List|流量类型|4.1.0|
+|createDate|Timestamp|创建时间|4.1.0|
+|lastOpDate|Timestamp|最后一次修改时间|4.1.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.1.0|
+|description|String|错误的概要描述|4.1.0|
+|details|String|错误的详细信息|4.1.0|
+|elaboration|String|保留字段，默认为null|4.1.0|
+|opaque|LinkedHashMap|保留字段，默认为null|4.1.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.1.0|
+
+## SDK示例
+Java SDK
+
+```
+QueryHostKernelInterfaceAction action = new QueryHostKernelInterfaceAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryHostKernelInterfaceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryHostKernelInterfaceAction action = QueryHostKernelInterfaceAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryHostKernelInterfaceAction.Result res = action.call()
+```
+
+</APIPage>

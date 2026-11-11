@@ -1,0 +1,392 @@
+---
+title: "更新PCI设备规格"
+---
+
+<APIPage method="PUT" path="/v1/pci-device-specs/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updatePciDeviceSpec": {
+    "name": "MSI_GTX1060",
+    "description": "NVIDIA Corporation, GP106 [GeForce GTX 1060 6GB], a1, VGA compatible controller",
+    "romContent": "*BASE64 ENCODED ROM CONTENT*",
+    "romVersion": "86.06.0E.00.29",
+    "abandonSpecRom": false,
+    "state": "Enabled"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updatePciDeviceSpec":{"name":"MSI_GTX1060","description":"NVIDIA Corporation, GP106 [GeForce GTX 1060 6GB], a1, VGA compatible controller","romContent":"*BASE64 ENCODED ROM CONTENT*","romVersion":"86.06.0E.00.29","abandonSpecRom":false,"state":"Enabled"}}' http://localhost:8080/zstack/v1/pci-device-specs/78ba2350be1e451597c2d42f778d0241/actions
+```
+
+参数列表
+
+<table id="table_dnt_gyg_xhb"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+资源的UUID，唯一标示该资源
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.5.0
+
+</td></tr><tr><td>
+
+name \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**updatePciDeviceSpec**结构中\)
+
+</td><td>
+
+资源名称
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.5.0
+
+</td></tr><tr><td>
+
+description \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**updatePciDeviceSpec**结构中\)
+
+</td><td>
+
+资源的详细描述
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.5.0
+
+</td></tr><tr><td>
+
+romContent \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**updatePciDeviceSpec**结构中\)
+
+</td><td>
+
+BASE64编码后的固件内容
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.5.0
+
+</td></tr><tr><td>
+
+romVersion \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**updatePciDeviceSpec**结构中\)
+
+</td><td>
+
+固件版本
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.5.0
+
+</td></tr><tr><td>
+
+abandonSpecRom \(可选\)
+
+</td><td>
+
+boolean
+
+</td><td>
+
+body\(包含在**updatePciDeviceSpec**结构中\)
+
+</td><td>
+
+删除已有固件
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.5.0
+
+</td></tr><tr><td>
+
+state \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**updatePciDeviceSpec**结构中\)
+
+</td><td>
+
+PCI设备规格启用状态
+
+</td><td>
+
+-   Enabled
+-   Disabled
+
+</td><td>
+
+3.5.0
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.5.0
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.5.0
+
+</td></tr></tbody>
+</table>
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "304bc9b4af93442fb666bef79e84243a",
+    "name": "MSI_GTX1060",
+    "description": "NVIDIA Corporation, GP106 [GeForce GTX 1060 6GB], a1, VGA compatible controller",
+    "vendorId": "10de",
+    "deviceId": "1c03",
+    "subvendorId": "1462",
+    "subdeviceId": "3283",
+    "type": "GPU_Video_Controller",
+    "state": "Enabled",
+    "romVersion": "86.06.0E.00.28",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_hwf_myg_xhb)|3.5.0|
+|inventory|PciDeviceSpecInventory|详情参考[inventory](#p_rbz_lyg_xhb)|3.5.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.5.0|
+|description|String|错误的概要描述|3.5.0|
+|details|String|错误的详细信息|3.5.0|
+|elaboration|String|保留字段，默认为null|3.5.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.5.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.5.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.5.0|
+|name|String|资源名称|3.5.0|
+|description|String|资源的详细描述|3.5.0|
+|vendorId|String|供应商ID|3.5.0|
+|deviceId|String|设备ID|3.5.0|
+|subvendorId|String|子供应商ID|3.5.0|
+|subdeviceId|String|子设备ID|3.5.0|
+|ramSize|String|显存容量|3.5.0|
+|maxPartNum|Integer|最大切分数量|3.5.0|
+|isVirtual|Boolean|是否虚拟设备|3.5.0|
+|romVersion|String|固件版本|3.5.0|
+|romMd5sum|String|固件MD5|3.5.0|
+|createDate|Timestamp|创建时间|3.5.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.5.0|
+|type|PciDeviceType|详情参考[type](#p_ett_lyg_xhb)|3.5.0|
+|state|PciDeviceSpecState|详情参考[state](#p_znn_lyg_xhb)|3.5.0|
+
+### type
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|GPU\_Video\_Controller|PciDeviceType|GPU显卡控制器|2.1|
+|GPU\_Audio\_Controller|PciDeviceType|GPU声卡控制器|2.1|
+|GPU\_3D\_Controller|PciDeviceType|GPU 3D控制器|2.1|
+|Moxa\_Device|PciDeviceType|MOXA卡|2.1|
+|Generic|PciDeviceType|一般设备|2.1|
+
+### state
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Enabled|PciDeviceSpecState|启用|3.5.0|
+|Disabled|PciDeviceSpecState|停用|3.5.0|
+
+## SDK示例
+Java SDK
+
+```
+UpdatePciDeviceSpecAction action = new UpdatePciDeviceSpecAction();
+action.uuid = "2e9160ddd31245dca87eee7d7d2a2ac8";
+action.name = "MSI_GTX1060";
+action.description = "NVIDIA Corporation, GP106 [GeForce GTX 1060 6GB], a1, VGA compatible controller";
+action.romContent = "*BASE64 ENCODED ROM CONTENT*";
+action.romVersion = "86.06.0E.00.29";
+action.abandonSpecRom = false;
+action.state = "Enabled";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdatePciDeviceSpecAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdatePciDeviceSpecAction action = UpdatePciDeviceSpecAction()
+action.uuid = "2589cc1b20294e0b85d75f652f7dcf77"
+action.name = "MSI_GTX1060"
+action.description = "NVIDIA Corporation, GP106 [GeForce GTX 1060 6GB], a1, VGA compatible controller"
+action.romContent = "*BASE64 ENCODED ROM CONTENT*"
+action.romVersion = "86.06.0E.00.29"
+action.abandonSpecRom = false
+action.state = "Enabled"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdatePciDeviceSpecAction.Result res = action.call()
+```
+
+</APIPage>

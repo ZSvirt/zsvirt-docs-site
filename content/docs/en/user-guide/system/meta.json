@@ -1,0 +1,10 @@
+{
+  "title": "System Management",
+  "pages": [
+    "index",
+    "iam",
+    "platform-security",
+    "platform-settings"
+  ],
+  "pagesIndex": "index"
+}

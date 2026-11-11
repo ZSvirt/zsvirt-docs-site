@@ -1,0 +1,107 @@
+---
+title: "Single NIC Deployment"
+---
+
+The operating system installation process is identical for both x86 and ARM servers. This chapter uses x86 servers to introduce the detailed installation procedure.
+
+## Procedure
+
+1.  Select the boot option.
+
+    Enter the ISO boot interface and choose the default option to start the operating system installation. You can select based on your actual situation, but we recommend using the graphical user interface \(GUI\) for installation. If the server does not have a VGA port and only supports serial connections, you can use either VNC or text mode installation methods.
+
+    -   GUI method
+    -   VNC method
+    -   Text mode method
+    ![System Boot](/docs/en/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_1_1.png)
+
+2.  Review the installation configuration summary.
+
+    This page displays the system installation configuration. You can modify the configuration as needed. By default, ZSvirt is configured with the following settings:
+
+    -   **Keyboard**: English \(US\)
+    -   **Language Support**: English \(United States\)
+    -   **Time &amp; Date**: Asia/Shanghai \(UTC+8\). We recommend that you check the host's time in advance and configure it to the current time and time zone.
+    ![System Installation Interface](/docs/en/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_1_2.png)
+
+3.  Select the installation mode.
+
+    1.  On the INSTALLATION SUMMARY page, click **Software Selection**.
+
+    2.  On the SOFTWARE SELECTION page, choose the installation mode.
+
+        Set the servers for management nodes to **ZSvirt Management Node** mode. Set the other servers to **ZSvirt Compute Node** mode.
+
+    3.  After selecting the installation mode, click **Done**.
+
+    ![Select Installation Mode](/docs/en/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_1_3.png)
+
+4.  Configure the disk partitions.
+
+    1.  On the INSTALLATION SUMMARY page, click **Installation Destination** to enter the INSTALLATION DESTINATION page.
+
+    2.  For Device Selection, we recommend that you only configure the system disk. After the system is installed, you can configure other disks.
+
+    3.  For Storage Configuration, we recommend selecting **Automatic** to automatically configure the disk partitions.
+
+        If you need to manually configure disk partitions, refer to the following guidelines based on the BIOS boot mode:
+
+        -   UEFI Mode:
+            -   `/boot`: This directory stores the core files needed for Linux boot. We recommend allocating 1 GB of space.
+            -   `/boot/efi`: This directory stores the UEFI boot files. We recommend allocating 500 MB.
+            -   `swap`: This is the swap area. We recommend allocating 32 GB.
+            -   `/`: This is the root directory for the Linux system. We recommend allocating all remaining space.
+        -   Legacy Mode:
+            -   `/boot`: This directory stores the core files needed for Linux boot. We recommend allocating 1 GB of space.
+            -   `swap`: This is the swap area. We recommend allocating 32 GB.
+            -   `/`: This is the root directory for the Linux system. We recommend allocating all remaining space.
+
+        <Callout type="info">
+
+        - The above values represent the recommended partition sizes for ZSvirt \(total disk capacity should be greater than 300 GB\).
+        - In Legacy mode, if the system disk capacity exceeds 2 TB, you need to configure a BIOS boot partition to support GPT partitioning. UEFI mode does not have this limitation and supports GPT partitioning.
+
+        </Callout>
+    4.  Review the configuration and click **Done**.
+
+    ![Configure Disk Partitions](/docs/en/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_1_4.png)
+
+5.  Start configuring the NIC.
+
+    1.  On the INSTALLATION SUMMARY page, click **Network &amp; Host Name** to access the NETWORK &amp; HOST NAME page.
+
+    2.  Select a NIC from the list on the left, such as **Ethernet \(ens3\)**.
+
+    3.  Click **Configure**.
+
+    ![Configure NIC](/docs/en/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_2_1.png)
+
+6.  Configure a static IP address for the NIC.
+
+    1.  In the Editing ens3 dialog, click **IPv4 Settings**.
+
+    2.  For **Method**, choose the IP address acquisition method as needed. For example, select **Manual** to specify the IP address manually.
+
+    3.  Click **Add** to add an IP address entry, and configure the IP address, netmask, and gateway as needed.
+
+    ![Configure Static IP Address](/docs/en/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_2_2.png)
+
+7.  Configure the NIC to activate automatically.
+
+    1.  In the Editing ens3 dialog, click **General**, then select the **Connect automatically with priority** checkbox to set the NIC for automatic activation.
+
+    2.  Review the configuration and click **Save**.
+
+    ![Configure NIC to Activate Automatically](/docs/en/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_2_3.png)
+
+8.  Complete the NIC configuration.
+
+    1.  Return to the NETWORK &amp; HOST NAME page, and confirm that you have selected the correct NIC and that the NIC status is **ON**.
+
+    2.  Click **Done** to return the INSTALLATION SUMMARY page.
+
+    ![Check NIC Configuration](/docs/en/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_2_4.png)
+
+9.  On the INSTALLATION SUMMARY page, click **Root Password** to set the root password for the operating system.
+
+10. On the INSTALLATION SUMMARY page, click **Begin Installation** to begin installing the operating system.

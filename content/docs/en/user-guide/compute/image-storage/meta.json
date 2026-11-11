@@ -1,0 +1,10 @@
+{
+  "title": "Image Storage",
+  "pages": [
+    "index",
+    "basic-operations",
+    "image-basic-operations",
+    "cross-platform"
+  ],
+  "pagesIndex": "index"
+}

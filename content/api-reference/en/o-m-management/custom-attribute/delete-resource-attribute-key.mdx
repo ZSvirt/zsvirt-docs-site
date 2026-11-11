@@ -1,0 +1,64 @@
+---
+title: "Delete Custom Attribute Key"
+---
+
+<APIPage method="DELETE" path="/v1/resource-attributes/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/resource-attributes/ff03a2b491023030bf58b1b35ea9cd00?deleteMode=Permissive
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Custom attribute key UUID| |4.10.16|
+|deleteMode \(optional\)|String|query|Deletion mode \(Permissive or Enforcing, defaults to Permissive\)| |4.10.16|
+|systemTags \(optional\)|List|query|System tags| |4.10.16|
+|userTags \(optional\)|List|query|User tags| |4.10.16|
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DeleteResourceAttributeKeyAction action = new DeleteResourceAttributeKeyAction();
+action.uuid = "ff03a2b491023030bf58b1b35ea9cd00";
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteResourceAttributeKeyAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = DeleteResourceAttributeKeyAction()
+action.uuid = "ff03a2b491023030bf58b1b35ea9cd00"
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

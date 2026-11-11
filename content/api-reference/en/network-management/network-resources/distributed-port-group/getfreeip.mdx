@@ -1,0 +1,340 @@
+---
+title: "GetFreeIp"
+---
+
+<APIPage method="GET" path="/v1/l3-networks/ip/free">
+
+```
+GET zstack/v1/l3-networks/{l3NetworkUuid}/ip/free
+```
+
+```
+GET zstack/v1/l3-networks/ip-ranges/{ipRangeUuid}/ip/free
+```
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Sample
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/l3-networks/ip/free?l3NetworkUuid=c8cd63a1882331a9a5ee83e5d9b265ec&ipRangeUuid=10fc8508fd723e63bcc57b8bb6d7a133&limit=100.0
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/l3-networks/c8cd63a1882331a9a5ee83e5d9b265ec/ip/free?l3NetworkUuid=c8cd63a1882331a9a5ee83e5d9b265ec&ipRangeUuid=10fc8508fd723e63bcc57b8bb6d7a133&limit=100.0
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/l3-networks/ip-ranges/10fc8508fd723e63bcc57b8bb6d7a133/ip/free?l3NetworkUuid=c8cd63a1882331a9a5ee83e5d9b265ec&ipRangeUuid=10fc8508fd723e63bcc57b8bb6d7a133&limit=100.0
+```
+
+Request Parameters
+
+<table id="table_pnb_h1h_m1b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+l3NetworkUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+The L3 network UUID.**Note:** Either **l3NetworkUuid** or **ipRangeUuid** is required.
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+ipRangeUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+The IP range UUID.**Note:** Either **l3NetworkUuid** or **ipRangeUuid** is required.
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+start
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+Optional. The start IP address.
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+ipRangeType
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+Optional. The address type.
+
+</td><td>
+
+-   Normal
+-   AddressPool
+
+</td><td>
+
+3.9.0
+
+</td></tr><tr><td>
+
+ipVersion
+
+</td><td>
+
+Integer
+
+</td><td>
+
+query
+
+</td><td>
+
+Optional. The IP version.
+
+</td><td>
+
+-   4
+-   6
+
+</td><td>
+
+3.10.0
+
+</td></tr><tr><td>
+
+limit
+
+</td><td>
+
+int
+
+</td><td>
+
+query
+
+</td><td>
+
+Optional. The maximum number of IP addresses to return.
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+systemTags
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+Optional. The system tags.
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+userTags
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+Optional. The user tags.
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Sample Response
+
+```
+{
+  "inventories": [
+    {
+      "ipRangeUuid": "662d600a4b644f98a0c49df2e5430d69",
+      "ip": "10.20.10.5",
+      "netmask": "255.255.255.0",
+      "gateway": "10.20.10.1"
+    },
+    {
+      "ipRangeUuid": "662d600a4b644f98a0c49df2e5430d69",
+      "ip": "10.20.10.6",
+      "netmask": "255.255.255.0",
+      "gateway": "10.20.10.1"
+    },
+    {
+      "ipRangeUuid": "662d600a4b644f98a0c49df2e5430d69",
+      "ip": "10.20.10.10",
+      "netmask": "255.255.255.0",
+      "gateway": "10.20.10.1"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation fails, or vice versa. For more information, see [error](#p_bqn_p1h_m1b).|0.6|
+|inventory|L3NetworkInventory|See [inventory](#p_xsj_q1h_m1b).|0.6|
+
+error
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code, which is a numbered or alphanumeric code that specifies an error. For example, SYS.1000, HOST.1001.|0.6|
+|description|String|The brief description of the error.|0.6|
+|details|String|The details about the error.|0.6|
+|elaboration|String|The reserved field. Default value: null.|0.6|
+|opaque|LinkedHashMap|The reserved field. Default value: null.|0.6|
+|cause|ErrorCode|The root error, which is the associated root cause of the current error. If no root error exists, this parameter is null.|0.6|
+
+inventory
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|ipRangeUuid|String|The IP range UUID.|0.6|
+|ip|String| |0.6|
+|netmask|String| |0.6|
+|gateway|String| |0.6|
+
+## SDK Sample
+Java SDK
+
+```
+GetFreeIpAction action = new GetFreeIpAction();
+action.l3NetworkUuid = "c8cd63a1882331a9a5ee83e5d9b265ec";
+action.ipRangeUuid = "10fc8508fd723e63bcc57b8bb6d7a133";
+action.limit = 100.0;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetFreeIpAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetFreeIpAction action = GetFreeIpAction()
+action.l3NetworkUuid = "c8cd63a1882331a9a5ee83e5d9b265ec"
+action.ipRangeUuid = "10fc8508fd723e63bcc57b8bb6d7a133"
+action.limit = 100.0
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetFreeIpAction.Result res = action.call()
+```
+
+</APIPage>

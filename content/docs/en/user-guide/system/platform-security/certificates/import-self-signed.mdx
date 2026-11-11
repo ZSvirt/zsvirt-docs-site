@@ -1,0 +1,42 @@
+---
+title: 'Import System Self-Signed Certificate'
+---
+
+-   You have deployed the latest ZSvirt environment. For a dual-management node environment, ensure that each management node is working properly.
+-   You need admin permissions to configure the certificates.
+
+1.  In the navigation pane, choose **System Management** &gt; **Certificate Management**.
+
+2.  On the Certificate Management page, click **Import Certificate**.
+
+3.  In the Certificate Import dialog, set the following parameters:
+
+    -   **Import Mode**: Select **System-Signed Certificate**.
+    -   **Validity Period**: Choose from 3 months, 1 year, 3 years, 5 years, or 10 years. The default is 3 years.
+    -   **HTTP Redirection**: Optional, enabled by default. When enabled, the system automatically redirects requests from port 80 of the HTTP address to port 443 of the HTTPS address.
+    -   **Custom Information**: Optional, disabled by default. When enabled, you can customize the system-signed certificate information:
+        -   **Common Name (CN)**: Optional, set the common name; the default is localhost.
+
+            The length should be 1 to 64 characters, supporting only English letters in upper and lower case, numbers, and the following special characters: ~\`@\#$%^&amp;\*()-\_+=\{\}\[\]\|:;'&lt;&gt;.?/.
+
+        -   **Organization (O)**: Optional, set the organization name; the default is localhost.
+
+            The length should be 1 to 64 characters, supporting only English letters in upper and lower case, numbers, and the following special characters: ~\`@\#$%^&amp;\*()-\_+=\{\}\[\]\|:;'&lt;&gt;.?/.
+
+        -   **Organizational Unit (OU)**: Optional, set the department.
+
+            The length should be 1 to 64 characters, supporting only English letters in upper and lower case, numbers, and the following special characters: ~\`@\#$%^&amp;\*()-\_+=\{\}\[\]\|:;'&lt;&gt;.?/.
+
+        -   **Country/Region (C)**: Optional, set the country/region; only CN is supported.
+        -   **State/Province (S)**: Optional, set the state/province.
+
+            The length should be 1 to 128 characters, supporting Chinese characters, English letters in upper and lower case, numbers, and the following special characters: ~\`@\#$%^&amp;\*()-\_+=\{\}\[\]\|:;'&lt;&gt;.?/.
+
+        -   **Locality (L)**: Optional, set the city.
+
+            The length should be 1 to 128 characters, supporting Chinese characters, English letters in upper and lower case, numbers, and the following special characters: ~\`@\#$%^&amp;\*()-\_+=\{\}\[\]\|:;'&lt;&gt;.?/.
+
+        -   **Email Address**: Optional, set the email address.
+4.  Review the certificate information and click **OK**.
+
+After successfully importing the system-signed certificate, the system will re-establish the session and reconnect to the UI management interface through port 443 of the HTTPS protocol.

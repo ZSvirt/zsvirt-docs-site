@@ -1,0 +1,24 @@
+---
+title: 'VM Failure Management'
+---
+
+A virtual machine failure occurs when a Windows VM experience a blue screen or a Linux VM becomes unresponsive due to excessive load or other issues during operation. You can set an automatic response action for VM failures.
+
+-   You can set a failure response policy for VMs with the x86\_64 CPU architecture
+-   Before setting a failure response policy, install VMTools on the VM and make sure the VMTools is running properly. For more information about VMTools, see [Virtual Machine VMTools](/en/docs/user-guide/compute/vm/vmtools).
+-   The failure response policy takes effect immediately after configuration and does not require a VM reboot.
+
+1.  In the navigation pane, choose **Inventory** &gt; **VM and Host**.
+
+2.  Select the target VM and click **Actions** &gt; **Advanced Settings** &gt; **Modify VMTools**.
+
+3.  In the Modify VMTools Settings dialog, modify the failure response policy as needed.
+
+    -   No Action (default): Maintains current state without intervention.
+    -   Reboot: Automatically reboots the VM. Stops after 5 reboot attempts within 30 minutes.
+    -   Shut Down: Automatically shuts down the VM.
+    <Callout type="info">
+    For Linux VMs, disable the `kdump` module upon the next boot after enabling this feature.
+    </Callout>
+
+4.  Click **OK**.

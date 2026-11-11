@@ -1,0 +1,63 @@
+---
+title: "Get Migratable Hosts for Local Storage Volume"
+---
+
+<APIPage method="GET" path="/v1/volumes/{volumeUuid}/migration-target-hosts">
+
+Check which hosts can migrate disks on local storage.
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Examples
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/volumes/ef7fe562459146d6bb13078821d451a8/migration-target-hosts?
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|volumeUuid|String|url|Disk UUID| |0.6|
+|systemTags \(optional\)|List|query| | |0.6|
+|userTags \(optional\)|List|query| | |0.6|
+
+## **API Response**
+When the API succeeds, it returns an empty JSON structure `{}`. When an error occurs, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+LocalStorageGetVolumeMigratableHostsAction action = new LocalStorageGetVolumeMigratableHostsAction();
+action.volumeUuid = "dd15184d915c422686da18415b194ce9";
+action.sessionId = "1ce8dcd82213420ba5aea5c488834eba";
+LocalStorageGetVolumeMigratableHostsAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+LocalStorageGetVolumeMigratableHostsAction action = LocalStorageGetVolumeMigratableHostsAction()
+action.volumeUuid = "19a3d12dc45540f997ac0c6ad0cfb8d7"
+action.sessionId = "e6d54fe5d8424c45b723f65a1136d23e"
+LocalStorageGetVolumeMigratableHostsAction.Result res = action.call()
+```
+
+</APIPage>

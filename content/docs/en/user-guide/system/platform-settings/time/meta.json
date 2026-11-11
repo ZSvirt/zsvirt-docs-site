@@ -1,0 +1,9 @@
+{
+  "title": "Time Configuration",
+  "pages": [
+    "overview",
+    "modify-time-source",
+    "sync-time"
+  ],
+  "pagesIndex": "overview"
+}

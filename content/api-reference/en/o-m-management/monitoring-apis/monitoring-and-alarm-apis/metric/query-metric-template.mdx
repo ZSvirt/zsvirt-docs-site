@@ -1,0 +1,101 @@
+---
+title: "Query Metric Data Template"
+---
+
+<APIPage method="GET" path="/v1/zwatch/metrics/httpreceivers/templates" altPaths={["/v1/zwatch/metrics/httpreceivers/templates/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zwatch/metrics/httpreceivers/templates?q=receiverUuid=13213154f64e33bb8ad461956981a6e2
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zwatch/metrics/httpreceivers/templates/98a42f1af96e3c89b59e87bb20cc6421
+```
+
+Queryable Fields
+
+Run the CLI command-line tool, enter `QueryMetricTemplate`, and press the Tab key to view all queryable fields and cross-table queryable resource names.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "77fa620b8d36311ca413c1bfc661c207",
+      "name": "CloudMonitor",
+      "url": "http://127.0.0.1/xxx",
+      "createDate": "Nov 14, 2017 2:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 2:20:57 PM",
+      "state": "Enabled"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|inventories|List|See [inventories](#p_hvb_lq1_w2c) for details.|0.6|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_pjs_kq1_w2c) for details.|0.6|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource.|0.6|
+|name|String|The resource name.|0.6|
+|url|String| |0.6|
+|description|String|The detailed description of the resource.|0.6|
+|createDate|Timestamp|The creation time.|0.6|
+|lastOpDate|Timestamp|The last modification time.|0.6|
+|state|ReceiverState|See [state](#p_dzw_kq1_w2c) for details.|0.6|
+
+### state
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Enabled|ReceiverState| |0.6|
+|Disabled|ReceiverState| |0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, e.g., SYS.1000, HOST.1001.|0.6|
+|description|String|A brief description of the error.|0.6|
+|details|String|The detailed error information.|0.6|
+|elaboration|String|A reserved field. Default is null.|0.6|
+|opaque|LinkedHashMap|A reserved field. Default is null.|0.6|
+|cause|ErrorCode|The root error. The source error that caused the current error. This field is null if there is no root cause.|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+QueryMetricTemplateAction action = new QueryMetricTemplateAction();
+action.conditions = asList("receiverUuid=21eee98608ce3cc580d7572e6ee47fea");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryMetricTemplateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryMetricTemplateAction action = QueryMetricTemplateAction()
+action.conditions = ["receiverUuid=aca6437c53a4348eb6d8c20fe0cf054e"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryMetricTemplateAction.Result res = action.call()
+```
+
+</APIPage>

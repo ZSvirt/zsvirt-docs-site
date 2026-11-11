@@ -1,0 +1,295 @@
+---
+title: "创建安全组"
+---
+
+<APIPage method="POST" path="/v1/security-groups">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "sp",
+    "description": "test create security group"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"sp","description":"test create security group"}}' \
+http://localhost:8080/zstack/v1/security-groups
+```
+
+参数列表
+
+<table id="table_wq2_hn5_m1b"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+name
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+资源名称
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+description \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+资源的详细描述
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+ipVersion \(可选\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+ip协议号
+
+</td><td>
+
+-   4
+-   6
+
+</td><td>
+
+3.1.0
+
+</td></tr><tr><td>
+
+resourceUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+用户指定的资源UUID，若指定，系统不会为该资源随机分配UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr></tbody>
+</table>
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "7bb070cdebf44fd8af354f25344d758b",
+    "name": "web",
+    "description": "for test",
+    "state": "Enabled",
+    "createDate": "Jun 7, 2017 9:21:20 PM",
+    "lastOpDate": "Jun 7, 2017 9:21:20 PM",
+    "internalId": 0.0
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_htn_tn5_m1b)|0.6|
+|inventory|SecurityGroupInventory|详情参考[inventory](#p_irt_tn5_m1b)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|name|String|资源名称|0.6|
+|description|String|资源的详细描述|0.6|
+|state|String| |0.6|
+|ipVersion|Integer|ip协议号|3.1.0|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+|attachedL3NetworkUuids|Set| |0.6|
+|rules|List|详情参考[rules](#p_edd_5n5_m1b)|0.6|
+
+### rules
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|securityGroupUuid|String|安全组UUID|0.6|
+|type|String|流量类型|0.6|
+|ipVersion|Integer|ip协议号|3.1.0|
+|startPort|Integer|如果协议是TCP/UDP, 它是端口范围（port range）的起始端口号; 如果协议是ICMP, 它是ICMP类型（type）|0.6|
+|endPort|Integer|如果协议是TCP/UDP, 它是端口范围（port range）的起始端口号; 如果协议是ICMP, 它是ICMP类型（type）|0.6|
+|protocol|String|流量协议类型|0.6|
+|state|String|规则的可用状态, 当前版本未实现|0.6|
+|allowedCidr|String|允许的CIDR,根据流量类型的不同, 允许的CIDR有不同的含义,如果流量类型是Ingress, 允许的CIDR是允许访问虚拟机网卡的源CIDR,如果流量类型是Egress, 允许的CIDR是允许从虚拟机网卡离开并到达的目的地CIDR|0.6|
+|remoteSecurityGroupUuid|String| |0.6|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+
+## SDK示例
+Java SDK
+
+```
+CreateSecurityGroupAction action = new CreateSecurityGroupAction();
+action.name = "sp";
+action.description = "test create security group";
+action.sessionId = "b5032c14210c4668a3a2bcd341d80bbf";
+CreateSecurityGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateSecurityGroupAction action = CreateSecurityGroupAction()
+action.name = "sp"
+action.description = "test create security group"
+action.sessionId = "e34f8139af4548d5ade539ca2a5d7983"
+CreateSecurityGroupAction.Result res = action.call()
+```
+
+</APIPage>

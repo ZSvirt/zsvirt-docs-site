@@ -1,0 +1,10 @@
+---
+title: "What is the impact of using the host management network NIC for a Distributed Switch?"
+---
+
+## Feature description
+-   Normal operations are not affected. It is recommended to separate the management network from the virtual machine service network. Using different physical NICs improves security and distributes network load more effectively.
+
+    <Callout type="info">
+    For production environments, configure bonding to improve physical network redundancy.
+    </Callout>

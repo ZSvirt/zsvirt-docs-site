@@ -1,0 +1,96 @@
+---
+title: "Export Image from Backup Storage"
+---
+
+<APIPage method="PUT" path="/v1/backup-storage/{backupStorageUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "exportImageFromBackupStorage": {
+    "imageUuid": "bd09de6529704e168923b77e5c1445c3"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"exportImageFromBackupStorage":{"imageUuid":"0538b97654be3249a962327ace7c5520"}}' \
+http://localhost:8080/zstack/v1/backup-storage/03c75cf832863825b43696ea22d5d1ad/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|backupStorageUuid|String|url|Backup Storage UUID| |1.7|
+|imageUuid|String|body \(contained in **exportImageFromBackupStorage** structure\)|Image UUID| |1.7|
+|exportFormat \(Optional\)|String|body \(contained in **exportImageFromBackupStorage** structure\)|Export format of the image| |3.9.0|
+|systemTags \(Optional\)|List|body|System tags| |1.7|
+|userTags \(Optional\)|List|body|User tags| |1.7|
+
+## API Response
+Response Example
+
+```
+{
+  "imageUrl": "http://bs-host-name/path/to/image.qcow2",
+  "exportMd5Sum": "8a239d17b045dea51c4677fa90a42ed8"
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|imageUrl|String|Access URL of the exported image|1.7|
+|exportMd5Sum|String|MD5 value of the exported image|3.9.0|
+|success|boolean|Export success or failure flag|1.7|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_t5r_5n1_n1b)|1.7|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause. The source error that triggered the current error. This field is null if there is no original error|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+ExportImageFromBackupStorageAction action = new ExportImageFromBackupStorageAction();
+action.backupStorageUuid = "b95c2eef6b8d44248305bc21b58324dd";
+action.imageUuid = "a8e908dd49a444d2ad37dd729a2d881f";
+action.sessionId = "f58bf3e6d8294d488573fc62511a2ad0";
+ExportImageFromBackupStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ExportImageFromBackupStorageAction action = ExportImageFromBackupStorageAction()
+action.backupStorageUuid = "dda8b4f308534e98a5fc2facdbc7936e"
+action.imageUuid = "7ed5c3c65ae941dabe9ecc00b7a1b015"
+action.sessionId = "f724920d165944218cd71b76e755757e"
+ExportImageFromBackupStorageAction.Result res = action.call()
+```
+
+</APIPage>

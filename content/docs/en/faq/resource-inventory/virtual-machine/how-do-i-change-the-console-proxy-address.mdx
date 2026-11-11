@@ -1,0 +1,23 @@
+---
+title: "How do I change the Console Proxy address?"
+---
+
+<HistoricalNamingNote locale="en" />
+
+## Solution
+-   **UI method**:
+
+    Log in to the virtualization platform and go to **System Management** &gt; **Platform Settings** &gt; **Console Proxy** to open the Console Proxy page. Click **Modify Proxy Address**.
+
+    <Callout type="info">
+    The change takes effect immediately without restarting the Management Node.
+    </Callout>
+
+-   **Command-line method**:
+
+    Open the virtual machine console and run the following commands in sequence:
+
+    ```
+    [root@localhost ~]# zstack-ctl configure consoleProxyOverriddenIp=MANAGEMENT_NODE_PUBLIC_IP_ADDRESS  //Console Proxy IP address
+    [root@localhost ~]# zstack-ctl restart_node
+    ```

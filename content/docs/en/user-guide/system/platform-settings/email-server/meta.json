@@ -1,0 +1,9 @@
+{
+  "title": "Email Server",
+  "pages": [
+    "index",
+    "add",
+    "manage"
+  ],
+  "pagesIndex": "index"
+}

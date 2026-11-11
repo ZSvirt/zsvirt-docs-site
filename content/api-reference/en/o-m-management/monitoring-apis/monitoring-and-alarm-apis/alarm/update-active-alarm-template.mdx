@@ -1,0 +1,445 @@
+---
+title: "Update Active Alarm Template"
+---
+
+<APIPage method="PUT" path="/v1/zwatch/activealarms/templates/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateActiveAlarmTemplate": {
+    "alarmName": "VM-CPUAverageUsedUtilization",
+    "comparisonOperator": "LessThanOrEqualTo",
+    "period": 60,
+    "threshold": 80.0,
+    "repeatInterval": 1800,
+    "repeatCount": -1,
+    "emergencyLevel": "Emergent"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the **systemTags** and **userTags** fields can be omitted. They are listed here to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateActiveAlarmTemplate":{"alarmName":"VM-CPUAverageUsedUtilization","comparisonOperator":"LessThanOrEqualTo","period":60,"threshold":80.0,"repeatInterval":1800,"repeatCount":-1,"emergencyLevel":"Emergent"}}' http://localhost:8080/zstack/v1/zwatch/activealarms/templates/c3e82dade74732009d5f4fd0b462f65d/actions
+```
+
+Parameter List
+
+<table id="table_zbn_lsb_3cb"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+Template UUID.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+alarmName \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **updateActiveAlarmTemplate** structure\)
+
+</td><td>
+
+Template name.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+comparisonOperator \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **updateActiveAlarmTemplate** structure\)
+
+</td><td>
+
+Comparison operator.
+
+</td><td>
+
+-   GreaterThanOrEqualTo
+-   GreaterThan
+-   LessThan
+-   LessThanOrEqualTo
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+period \(Optional\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+body \(contained in the **updateActiveAlarmTemplate** structure\)
+
+</td><td>
+
+Threshold duration.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+threshold \(Optional\)
+
+</td><td>
+
+Double
+
+</td><td>
+
+body \(contained in the **updateActiveAlarmTemplate** structure\)
+
+</td><td>
+
+Threshold.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+repeatInterval \(Optional\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+body \(contained in the **updateActiveAlarmTemplate** structure\)
+
+</td><td>
+
+Alarm repeat interval.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+repeatCount \(Optional\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+body \(contained in the **updateActiveAlarmTemplate** structure\)
+
+</td><td>
+
+Alarm repeat count.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+emergencyLevel \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **updateActiveAlarmTemplate** structure\)
+
+</td><td>
+
+Alarm level.
+
+</td><td>
+
+-   Emergent
+-   Important
+-   Normal
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+labels \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **updateActiveAlarmTemplate** structure\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "ea8aa7b6b2e43d4a9f3a19ba121ab72a",
+    "alarmName": "VM CPU Alarm",
+    "comparisonOperator": "LessThanOrEqualTo",
+    "period": 60,
+    "repeatInterval": 60,
+    "repeatCount": -1,
+    "namespace": "zstack/VM",
+    "metricName": "CPUIdleUtilization",
+    "threshold": 30.0,
+    "emergencyLevel": "Emergent",
+    "labels": "[{\"uuid\":\"48cc4d3273a249009ea2166b71495785\",\"key\":\"VMUuid\",\"operator\":\"=\",\"value\":\"c69d93586ca349b9a3bc074e2739e20a\"}]",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.7.0|
+|inventory|ActiveAlarmTemplateInventory|See [inventory](#p_ks2_kp2_wmb) for details.|4.7.0|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null on success. See [error](#p_sry_hp2_wmb) for details.|4.7.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource.|4.7.0|
+|alarmName|String| |4.7.0|
+|period|int| |4.7.0|
+|repeatInterval|int| |4.7.0|
+|repeatCount|int| |4.7.0|
+|namespace|String| |4.7.0|
+|metricName|String| |4.7.0|
+|threshold|double| |4.7.0|
+|labels|String| |4.7.0|
+|createDate|Timestamp|Creation time.|4.7.0|
+|lastOpDate|Timestamp|Last modification time.|4.7.0|
+|comparisonOperator|ComparisonOperator|See [comparisonOperator](#p_gg5_rq1_pxb) for details.|4.7.0|
+|emergencyLevel|EmergencyLevel|See [emergencyLevel](#p_cqn_rq1_pxb) for details.|4.7.0|
+
+### comparisonOperator
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|GreaterThanOrEqualTo|ComparisonOperator| |4.7.0|
+|GreaterThan|ComparisonOperator| |4.7.0|
+|LessThan|ComparisonOperator| |4.7.0|
+|LessThanOrEqualTo|ComparisonOperator| |4.7.0|
+
+### emergencyLevel
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Emergent|EmergencyLevel| |4.7.0|
+|Important|EmergencyLevel| |4.7.0|
+|Normal|EmergencyLevel| |4.7.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001.|4.7.0|
+|description|String|A brief description of the error.|4.7.0|
+|details|String|Detailed information about the error.|4.7.0|
+|elaboration|String|A reserved field. Default is null.|4.7.0|
+|opaque|LinkedHashMap|A reserved field. Default is null.|4.7.0|
+|cause|ErrorCode|The root error. The source error that caused the current error. This field is null if there is no root error.|4.7.0|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateActiveAlarmTemplateAction action = new UpdateActiveAlarmTemplateAction();
+action.uuid = "c3e82dade74732009d5f4fd0b462f65d";
+action.alarmName = "VM-CPUAverageUsedUtilization";
+action.comparisonOperator = "LessThanOrEqualTo";
+action.period = 60;
+action.threshold = 80.0;
+action.repeatInterval = 1800;
+action.repeatCount = -1;
+action.emergencyLevel = "Emergent";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateActiveAlarmTemplateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateActiveAlarmTemplateAction action = UpdateActiveAlarmTemplateAction()
+action.uuid = "c3e82dade74732009d5f4fd0b462f65d"
+action.alarmName = "VM-CPUAverageUsedUtilization"
+action.comparisonOperator = "LessThanOrEqualTo"
+action.period = 60
+action.threshold = 80.0
+action.repeatInterval = 1800
+action.repeatCount = -1
+action.emergencyLevel = "Emergent"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateActiveAlarmTemplateAction.Result res = action.call()
+```
+
+</APIPage>

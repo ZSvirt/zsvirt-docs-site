@@ -1,0 +1,18 @@
+---
+title: "How do I cancel a live migration task for a virtual machine?"
+---
+
+## Cause
+You may need to cancel a live migration task if migration progress is too slow or the migration takes too long.
+
+## Solution
+-   Log in to the host system where the virtual machine resides and run the following commands to cancel the live migration task:
+
+    ```
+    # List running/paused virtual machines on this host
+    [root@localhost ~]# virsh list
+    # Check the live migration task on the target virtual machine
+    [root@localhost ~]# virsh domjobinfo $uuid  //target virtual machine UUID
+    # Cancel the live migration task on the target virtual machine
+    [root@localhost ~]# virsh domjobabort $uuid  //target virtual machine UUID
+    ```

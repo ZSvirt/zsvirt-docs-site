@@ -1,0 +1,158 @@
+---
+title: "VM Related Interfaces"
+---
+
+<Cards>
+  <Card title="Create VM" href="/en/docs/api-reference/compute/vm/create-vm-instance" />
+  <Card title="Create VM Instance" href="/en/docs/api-reference/compute/vm/create-vm-instance-9" />
+  <Card title="Create VM Instance from Volume Snapshot" href="/en/docs/api-reference/compute/vm/create-vm-instance-from-volume-snapshot" />
+  <Card title="Create VM from Volume Snapshot Group" href="/en/docs/api-reference/compute/vm/create-vm-instance-from-volume-snapshot-group" />
+  <Card title="Create VM from OVF Template" href="/en/docs/api-reference/compute/vm/create-vm-instance-from-ovf" />
+  <Card title="Export VM OVA Package" href="/en/docs/api-reference/compute/vm/export-vm-ova-package" />
+  <Card title="Parse OVF Template Information" href="/en/docs/api-reference/compute/vm/parse-ovf" />
+  <Card title="Delete VM" href="/en/docs/api-reference/compute/vm/destroy-vm-instance" />
+  <Card title="Recover Deleted Virtual Machine" href="/en/docs/api-reference/compute/vm/recover-vm-instance" />
+  <Card title="Completely Delete Virtual Machine" href="/en/docs/api-reference/compute/vm/expunge-vm-instance" />
+  <Card title="Query Virtual Machine" href="/en/docs/api-reference/compute/vm/query-vm-instance" />
+  <Card title="Start Virtual Machine" href="/en/docs/api-reference/compute/vm/start-vm-instance" />
+  <Card title="Stop Virtual Machine" href="/en/docs/api-reference/compute/vm/stop-vm-instance" />
+  <Card title="Reboot Virtual Machine" href="/en/docs/api-reference/compute/vm/reboot-vm-instance" />
+  <Card title="Pause Virtual Machine" href="/en/docs/api-reference/compute/vm/pause-vm-instance" />
+  <Card title="Resume Paused Virtual Machine" href="/en/docs/api-reference/compute/vm/resume-vm-instance" />
+  <Card title="Reimage Virtual Machine" href="/en/docs/api-reference/compute/vm/reimage-vm-instance" />
+  <Card title="Create Resource Group Directory" href="/en/docs/api-reference/compute/vm/create-directory" />
+  <Card title="Delete Resource Group Directory" href="/en/docs/api-reference/compute/vm/delete-directory" />
+  <Card title="Add Resources to Group Directory" href="/en/docs/api-reference/compute/vm/add-resources-to-directory" />
+  <Card title="Move Resources to Group Directory" href="/en/docs/api-reference/compute/vm/move-resources-to-directory" />
+  <Card title="Remove Resources from Group Directory" href="/en/docs/api-reference/compute/vm/remove-resources-from-directory" />
+  <Card title="Update Group Directory" href="/en/docs/api-reference/compute/vm/update-directory" />
+  <Card title="Query Directory" href="/en/docs/api-reference/compute/vm/query-directory" />
+  <Card title="Migrate Virtual Machine" href="/en/docs/api-reference/compute/vm/migrate-vm" />
+  <Card title="Query Shared Disk Attached VM Instances" href="/en/docs/api-reference/compute/vm/query-shareable-volume-vm-instance-ref" />
+  <Card title="Get VM Migration Candidate Hosts" href="/en/docs/api-reference/compute/vm/get-vm-migration-candidate-hosts" />
+  <Card title="Get Candidate Data Storages for Creating VM" href="/en/docs/api-reference/compute/vm/get-candidate-primary-storages-for-creating-vm" />
+  <Card title="Get Candidate ISO for Attaching VM" href="/en/docs/api-reference/compute/vm/get-candidate-iso-for-attaching-vm" />
+  <Card title="Get ISO Attachable VM List" href="/en/docs/api-reference/compute/vm/get-candidate-vm-for-attaching-iso" />
+  <Card title="Attach ISO to VM" href="/en/docs/api-reference/compute/vm/attach-iso-to-vm-instance" />
+  <Card title="Detach ISO from VM" href="/en/docs/api-reference/compute/vm/detach-iso-from-vm-instance" />
+  <Card title="Get VM Attachable Data Volume List" href="/en/docs/api-reference/compute/vm/get-vm-attachable-data-volume" />
+  <Card title="Get VM Attachable L3 Network List" href="/en/docs/api-reference/compute/vm/get-vm-attachable-l3-network" />
+  <Card title="Get Virtualization Software Info" href="/en/docs/api-reference/compute/vm/get-virtualizer-info" />
+  <Card title="Attach L3 Network to VM" href="/en/docs/api-reference/compute/vm/attach-l3-network-to-vm" />
+  <Card title="Detach L3 Network from VM" href="/en/docs/api-reference/compute/vm/detach-l3-network-from-vm" />
+  <Card title="Create VM Nic" href="/en/docs/api-reference/compute/vm/create-vm-nic" />
+  <Card title="Change Virtual Machine NIC State" href="/en/docs/api-reference/compute/vm/change-vm-nic-state" />
+  <Card title="Attach L3 Network to NIC" href="/en/docs/api-reference/compute/vm/attach-l3-network-to-vm-nic" />
+  <Card title="Change Virtual Machine NIC L3 Network" href="/en/docs/api-reference/compute/vm/change-vm-nic-network" />
+  <Card title="Attach NIC to Virtual Machine" href="/en/docs/api-reference/compute/vm/attach-vm-nic-to-vm" />
+  <Card title="Delete Virtual Machine NIC" href="/en/docs/api-reference/compute/vm/delete-vm-nic" />
+  <Card title="Change NIC Default Traffic Policy" href="/en/docs/api-reference/compute/vm/change-vm-nic-security-policy" />
+  <Card title="Query Virtual Machine NIC" href="/en/docs/api-reference/compute/vm/query-vm-nic" />
+  <Card title="Get NIC Attached Network Service Names" href="/en/docs/api-reference/compute/vm/get-vm-nic-attached-network-service" />
+  <Card title="Get Virtual Machine NIC Attachable Distributed Port Groups" href="/en/docs/api-reference/compute/vm/get-candidate-l3-networks-for-change-vm-nic-network" />
+  <Card title="Set Virtual Machine NIC Rate Limit" href="/en/docs/api-reference/compute/vm/set-nic-qos" />
+  <Card title="Get Virtual Machine NIC Rate Limit" href="/en/docs/api-reference/compute/vm/get-nic-qos" />
+  <Card title="Delete Virtual Machine NIC Rate Limit" href="/en/docs/api-reference/compute/vm/delete-nic-qos" />
+  <Card title="Get Interdependent Images and Distributed Port Groups" href="/en/docs/api-reference/compute/vm/get-interdependent-l3-networks-images" />
+  <Card title="Set Virtual Machine SSH Key" href="/en/docs/api-reference/compute/vm/set-vm-ssh-key" />
+  <Card title="Get Virtual Machine SSH Key" href="/en/docs/api-reference/compute/vm/get-vm-ssh-key" />
+  <Card title="Delete Virtual Machine SSH Key" href="/en/docs/api-reference/compute/vm/delete-vm-ssh-key" />
+  <Card title="Change Virtual Machine Password" href="/en/docs/api-reference/compute/vm/change-vm-password" />
+  <Card title="Set Virtual Machine Console Password" href="/en/docs/api-reference/compute/vm/set-vm-console-password" />
+  <Card title="Get Virtual Machine Console Password" href="/en/docs/api-reference/compute/vm/get-vm-console-password" />
+  <Card title="Delete Virtual Machine Console Password" href="/en/docs/api-reference/compute/vm/delete-vm-console-password" />
+  <Card title="Get Virtual Machine Console Address" href="/en/docs/api-reference/compute/vm/get-vm-console-address" />
+  <Card title="Set Virtual Machine Hostname" href="/en/docs/api-reference/compute/vm/set-vm-hostname" />
+  <Card title="Get Virtual Machine Hostname" href="/en/docs/api-reference/compute/vm/get-vm-hostname" />
+  <Card title="Delete Virtual Machine Hostname" href="/en/docs/api-reference/compute/vm/delete-vm-hostname" />
+  <Card title="Create Start Virtual Machine Scheduler" href="/en/docs/api-reference/compute/vm/create-start-vm-instance-scheduler" />
+  <Card title="Create Stop Virtual Machine Scheduler" href="/en/docs/api-reference/compute/vm/create-stop-vm-instance-scheduler" />
+  <Card title="Create Reboot Virtual Machine Scheduler" href="/en/docs/api-reference/compute/vm/create-reboot-vm-instance-scheduler" />
+  <Card title="Get Virtual Machine Boot Order" href="/en/docs/api-reference/compute/vm/get-vm-boot-order" />
+  <Card title="Set Virtual Machine Boot Order" href="/en/docs/api-reference/compute/vm/set-vm-boot-order" />
+  <Card title="Get Destination List" href="/en/docs/api-reference/compute/vm/get-candidate-zones-clusters-hosts-for-creating-vm" />
+  <Card title="Get VM Starting Target Hosts List" href="/en/docs/api-reference/compute/vm/get-vm-starting-candidate-clusters-hosts" />
+  <Card title="Set VM Static IP" href="/en/docs/api-reference/compute/vm/set-vm-static-ip" />
+  <Card title="Delete VM Static IP" href="/en/docs/api-reference/compute/vm/delete-vm-static-ip" />
+  <Card title="Get VM Capabilities" href="/en/docs/api-reference/compute/vm/get-vm-capabilities" />
+  <Card title="Update VM Information" href="/en/docs/api-reference/compute/vm/update-vm-instance" />
+  <Card title="Clone VM Instance" href="/en/docs/api-reference/compute/vm/clone-vm-instance" />
+  <Card title="Set VM Clock Sync" href="/en/docs/api-reference/compute/vm/set-vm-clock-track" />
+  <Card title="Set VM HA Level" href="/en/docs/api-reference/compute/vm/set-vm-instance-ha-level" />
+  <Card title="Set VM HA Level" href="/en/docs/api-reference/compute/vm/set-vm-instance-ha-level-0087" />
+  <Card title="Get VM HA Level" href="/en/docs/api-reference/compute/vm/get-vm-instance-ha-level" />
+  <Card title="Delete VM HA Level" href="/en/docs/api-reference/compute/vm/delete-vm-instance-ha-level" />
+  <Card title="Get VM Qga" href="/en/docs/api-reference/compute/vm/get-vm-qga" />
+  <Card title="Set VM Qga" href="/en/docs/api-reference/compute/vm/set-vm-qga" />
+  <Card title="Query Guest Tools State" href="/en/docs/api-reference/compute/vm/query-guest-tools-state" />
+  <Card title="Update Guest Tools State" href="/en/docs/api-reference/compute/vm/update-guest-tools-state" />
+  <Card title="Update VM Network Config" href="/en/docs/api-reference/compute/vm/update-vm-network-config" />
+  <Card title="Get VM RDP Status" href="/en/docs/api-reference/compute/vm/get-vm-rdp" />
+  <Card title="Set VM RDP Status" href="/en/docs/api-reference/compute/vm/set-vm-rdp" />
+  <Card title="Get VM Monitor Number" href="/en/docs/api-reference/compute/vm/get-vm-monitor-number" />
+  <Card title="Set VM Monitor Number" href="/en/docs/api-reference/compute/vm/set-vm-monitor-number" />
+  <Card title="Change VM Image" href="/en/docs/api-reference/compute/vm/change-vm-image" />
+  <Card title="Get Image Candidates For VM To Change" href="/en/docs/api-reference/compute/vm/get-image-candidates-for-vm-to-change" />
+  <Card title="Update VM Nic MAC" href="/en/docs/api-reference/compute/vm/update-vm-nic-mac" />
+  <Card title="Set VM Clean Traffic" href="/en/docs/api-reference/compute/vm/set-vm-clean-traffic" />
+  <Card title="Create VM CD-ROM" href="/en/docs/api-reference/compute/vm/create-vm-cd-rom" />
+  <Card title="Delete VM CD-ROM" href="/en/docs/api-reference/compute/vm/delete-vm-cd-rom" />
+  <Card title="Update VM CD-ROM" href="/en/docs/api-reference/compute/vm/update-vm-cd-rom" />
+  <Card title="Set VM Default CD-ROM" href="/en/docs/api-reference/compute/vm/set-vm-instance-default-cd-rom" />
+  <Card title="Query VM CD-ROM" href="/en/docs/api-reference/compute/vm/query-vm-cd-rom" />
+  <Card title="Update Priority Config" href="/en/docs/api-reference/compute/vm/update-priority-config" />
+  <Card title="Update VM Priority" href="/en/docs/api-reference/compute/vm/update-vm-priority" />
+  <Card title="Set VM QXL Memory" href="/en/docs/api-reference/compute/vm/set-vm-qxl-memory" />
+  <Card title="Set VM Sound Card Type" href="/en/docs/api-reference/compute/vm/set-vm-sound-type" />
+  <Card title="Get Spice CA Certificates" href="/en/docs/api-reference/compute/vm/get-spice-certificates" />
+  <Card title="Attach Guest Tools ISO To VM" href="/en/docs/api-reference/compute/vm/attach-guest-tools-iso-to-vm" />
+  <Card title="Get Latest Guest Tools For VM" href="/en/docs/api-reference/compute/vm/get-latest-guest-tools-for-vm" />
+  <Card title="Get VM Guest Tools Info" href="/en/docs/api-reference/compute/vm/get-vm-guest-tools-info" />
+  <Card title="Detach Guest Tools ISO From VM" href="/en/docs/api-reference/compute/vm/detach-guest-tools-iso-from-vm" />
+  <Card title="Get VM Instance First Boot Device" href="/en/docs/api-reference/compute/vm/get-vm-instance-first-boot-device" />
+  <Card title="Update VM NIC Driver" href="/en/docs/api-reference/compute/vm/update-vm-nic-driver" />
+  <Card title="Get VM Device Address" href="/en/docs/api-reference/compute/vm/get-vm-device-address" />
+  <Card title="Set VM NUMA" href="/en/docs/api-reference/compute/vm/set-vm-numa" />
+  <Card title="Get VM NUMA Status" href="/en/docs/api-reference/compute/vm/get-vm-numa" />
+  <Card title="Get VM vNUMA Topology" href="/en/docs/api-reference/compute/vm/get-vmv-numatopology" />
+  <Card title="Set VM Emulator Pinning" href="/en/docs/api-reference/compute/vm/set-vm-emulator-pinning" />
+  <Card title="Get VM Emulator Pinning Host CPU" href="/en/docs/api-reference/compute/vm/get-vm-emulator-pinning" />
+  <Card title="Query VM Priority Config" href="/en/docs/api-reference/compute/vm/query-vm-priority-config" />
+  <Card title="Flatten VM Instance" href="/en/docs/api-reference/compute/vm/flatten-vm-instance" />
+  <Card title="Take VM Console Screenshot" href="/en/docs/api-reference/compute/vm/take-vm-console-screenshot" />
+  <Card title="Delete VM Boot Mode" href="/en/docs/api-reference/compute/vm/delete-vm-boot-mode" />
+  <Card title="Fstrim VM" href="/en/docs/api-reference/compute/vm/fstrim-vm" />
+  <Card title="Get Interdependent L3Networks Backup Storages" href="/en/docs/api-reference/compute/vm/get-interdependent-l3-networks-backup-storages" />
+  <Card title="Get VM Task" href="/en/docs/api-reference/compute/vm/get-vm-task" />
+  <Card title="Get VM Uptime" href="/en/docs/api-reference/compute/vm/get-vm-uptime" />
+  <Card title="Set VM Boot Mode" href="/en/docs/api-reference/compute/vm/set-vm-boot-mode" />
+  <Card title="Set VM Boot Volume" href="/en/docs/api-reference/compute/vm/set-vm-boot-volume" />
+  <Card title="Create Templated Virtual Machine From Virtual Machine" href="/en/docs/api-reference/compute/vm/create-templated-vm-instance-from-vm-instance" />
+  <Card title="Create VM Instance from VM Template" href="/en/docs/api-reference/compute/vm/create-vm-instance-from-templated-vm-instance" />
+  <Card title="Convert Virtual Machine To Templated Virtual Machine" href="/en/docs/api-reference/compute/vm/convert-vm-instance-to-templated-vm-instance" />
+  <Card title="Convert VM Template to Virtual Machine" href="/en/docs/api-reference/compute/vm/convert-templated-vm-instance-to-vm-instance" />
+  <Card title="Delete VM Template" href="/en/docs/api-reference/compute/vm/delete-templated-vm-instance" />
+  <Card title="Query VM Template" href="/en/docs/api-reference/compute/vm/query-templated-vm-instance" />
+  <Card title="Update VM Template" href="/en/docs/api-reference/compute/vm/update-templated-vm-instance" />
+  <Card title="Query Fault Tolerance Virtual Machine" href="/en/docs/api-reference/compute/vm/query-fault-tolerance-vm" />
+  <Card title="Set Virtual Machine Console Mode" href="/en/docs/api-reference/compute/vm/set-vm-console-mode" />
+  <Card title="Set Virtual Machine Security Level" href="/en/docs/api-reference/compute/vm/set-vm-security-level" />
+  <Card title="Query Virtual Machine Device Address Archive" href="/en/docs/api-reference/compute/vm/query-vm-instance-device-address-archive" />
+  <Card title="Query Virtual Machine Device Address Group" href="/en/docs/api-reference/compute/vm/query-vm-instance-device-address-group" />
+  <Card title="Failover Fault Tolerance Virtual Machine" href="/en/docs/api-reference/compute/vm/failover-fault-tolerance-vm" />
+  <Card title="Get Virtual Machine DNS Information" href="/en/docs/api-reference/compute/vm/get-vm-dns" />
+  <Card title="Set Virtual Machine DNS" href="/en/docs/api-reference/compute/vm/set-vm-dns" />
+  <Card title="Query Virtual Machine Device Address Archive" href="/en/docs/api-reference/compute/vm/query-vm-instance-resource-metadata-archive" />
+  <Card title="Query Virtual Machine Device Address Group" href="/en/docs/api-reference/compute/vm/query-vm-instance-resource-metadata-group" />
+  <Card title="Create FT Virtual Machine" href="/en/docs/api-reference/compute/vm/create-fault-tolerance-vm-instance" />
+  <Card title="Create Virtual Machine Custom Specification" href="/en/docs/api-reference/compute/vm/create-vm-custom-specification" />
+  <Card title="Delete Virtual Machine Custom Operating System Specification" href="/en/docs/api-reference/compute/vm/delete-vm-custom-specification" />
+  <Card title="Query Virtual Machine Custom Operating System Specification" href="/en/docs/api-reference/compute/vm/query-vm-custom-specification" />
+  <Card title="Update Virtual Machine Custom Operating System Specification" href="/en/docs/api-reference/compute/vm/update-vm-custom-specification" />
+  <Card title="Get Data Volume Attachable VM" href="/en/docs/api-reference/compute/vm/get-data-volume-attachable-vm" />
+  <Card title="Query Appliance VM" href="/en/docs/api-reference/compute/vm/query-appliance-vm" />
+  <Card title="Clean Up Metadata Files of Specified VM Instances on Primary Storage" href="/en/docs/api-reference/compute/vm/cleanup-vm-instance-metadata" />
+  <Card title="Register a VM Instance from Metadata" href="/en/docs/api-reference/compute/vm/register-vm-instance-from-metadata" />
+  <Card title="Key Provider APIs" href="/en/docs/api-reference/compute/vm/key-provider-apis" />
+  <Card title="vTPM-related APIs" href="/en/docs/api-reference/compute/vm/vtpm-related-apis" />
+</Cards>

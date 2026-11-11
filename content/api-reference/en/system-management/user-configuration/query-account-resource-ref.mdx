@@ -1,0 +1,88 @@
+---
+title: "Query Account Resource References"
+---
+
+<APIPage method="GET" path="/v1/accounts/resources/refs">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/accounts/resources/refs?q=acountUuid=279c136f406e35a6a6874e39b231a2d3
+```
+
+Queryable Fields
+
+Run the CLI tool, type `QueryAccountResourceRef`, and press Tab to view all queryable fields and cross-table queryable resource names.
+
+## API Response
+Response example
+
+```
+{
+  "inventories": [
+    {
+      "id": 1,
+      "accountUuid": "ef9a9b4c5bd338768f18148dbfe42f1c",
+      "resourceUuid": "6e06fe5d204f30ac80ffc4c2d6372e46",
+      "resourceType": "ImageVO",
+      "type": "Own"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null on success. For details, see [error](#p_zfj_24l_l1b)|0.6|
+|inventories|List|For details, see [inventories](#p_ckd_24l_l1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, e.g., SYS.1000, HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Default is null|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null|0.6|
+|cause|ErrorCode|The root error that caused the current error. This field is null if there is no root cause|0.6|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|accountUuid|String|Account UUID|0.6|
+|resourceUuid|String|Resource UUID|0.6|
+|resourceType|String|Resource type|0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+QueryAccountResourceRefAction action = new QueryAccountResourceRefAction();
+action.conditions = asList("acountUuid=dec9472c2f9b3f6abaa84ed78094171c");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryAccountResourceRefAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+QueryAccountResourceRefAction action = QueryAccountResourceRefAction()
+action.conditions = ["acountUuid=05e51ebc332935769868ecde43b8f8e6"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryAccountResourceRefAction.Result res = action.call()
+
+```
+
+</APIPage>

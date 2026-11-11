@@ -1,0 +1,88 @@
+---
+title: "Export Disks as NBD Devices"
+---
+
+<APIPage method="POST" path="/v1/cbt-task/exportvolume">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "volumeUuids": [
+      "8d7de4e1c3b73fc49772b0fef78b0fc7"
+    ],
+    "vmInstanceUuid": "7d8c1dec326c3230be08d3c82fb7a476",
+    "force": false
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The `systemTags` and `userTags` fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"volumeUuids":["8d7de4e1c3b73fc49772b0fef78b0fc7"],"vmInstanceUuid":"7d8c1dec326c3230be08d3c82fb7a476","force":false}}' \
+http://localhost:8080/zstack/v1/cbt-task/exportvolume
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|volumeUuids|List|body \(included in the `params` structure\)| | |4.10.10|
+|vmInstanceUuid|String|body \(included in the `params` structure\)|Virtual Machine UUID| |4.10.10|
+|systemTags \(optional\)|List|body|System tags| |4.10.10|
+|userTags \(optional\)|List|body|User tags| |4.10.10|
+|force \(optional\)|boolean|body \(included in the `params` structure\)| | |4.10.10|
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+ExportNbdVolumesAction action = new ExportNbdVolumesAction();
+action.volumeUuids = asList("8d7de4e1c3b73fc49772b0fef78b0fc7");
+action.vmInstanceUuid = "7d8c1dec326c3230be08d3c82fb7a476";
+action.force = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ExportNbdVolumesAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ExportNbdVolumesAction action = ExportNbdVolumesAction()
+action.volumeUuids = [8d7de4e1c3b73fc49772b0fef78b0fc7]
+action.vmInstanceUuid = "7d8c1dec326c3230be08d3c82fb7a476"
+action.force = false
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ExportNbdVolumesAction.Result res = action.call()
+```
+
+</APIPage>

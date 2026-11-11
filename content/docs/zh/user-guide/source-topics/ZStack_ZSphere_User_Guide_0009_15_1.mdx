@@ -1,0 +1,73 @@
+---
+title: "高级监控 agent"
+---
+
+高级监控是VMTools从虚拟机处获取的虚拟机性能数据，通过曲线图实时动态展示虚拟机的各项性能指标，包括：CPU、内存、磁盘容量。本节主要介绍agent监控机制以及使用方法。
+
+-   监控机制
+-   操作高级监控agent
+
+## 监控机制
+
+-   高级监控数据通过VMTools中的高级监控agent获取，查看高级监控需为虚拟机预先安装VMTools，具体安装方法请参考。
+-   获取到的监控数据可通过分布式端口组DHCP服务或VMTools中的QEMU Guest Agent (QGA) 推送到主机：
+    -   如虚拟机默认网络已开启DHCP服务，监控数据默认通过DHCP服务推送。
+    -   虚拟机默认网络未开启DHCP服务或DHCP服务故障，监控数据将切换由QGA推送。虚拟机默认网络开启DHCP服务或DHCP服务恢复后，将自动切换回DHCP服务推送监控数据。
+
+如Figure 1所示：
+
+<img src="/docs/user-guide/images/ZStack_ZSphere_User_Guide_0009_15_1_1.png" alt="高级监控机制" />
+
+<Callout type="info">
+部分操作系统虚拟机VMTools中不包含QGA，具体匹配关系请参考。
+</Callout>
+
+## 操作高级监控agent
+
+支持通过以下命令管理高级监控agent，从而停止、启动、重启、查询或卸载高级监控服务：
+
+-   停止服务：`service zwatch-vm-agent stop`
+-   启动服务：`service zwatch-vm-agent start`
+-   重启服务：`service zwatch-vm-agent restart`
+-   查询服务状态：`service zwatch-vm-agent status`
+-   卸载高级监控服务：
+
+    卸载高级监控agent后，将不再获取高级监控数据及提供高级监控服务。高级监控agent卸载方法区分Linux虚拟机与Windows虚拟机，方法分别如下：
+
+    -   Linux虚拟机
+        1.  使用`service zwatch-vm-agent stop`命令停止agent。
+        2.  使用`rm -f /etc/systemd/system/zwatch-vm-agent.service`命令删除service配置文件。
+        3.  使用`rm -rf /usr/local/zstack/zwatch-vm-agent`命令删除agent安装目录。
+    -   Windows虚拟机
+        1.  删除注册表相关条目。
+
+            以管理员身份运行Windows命令提示符，执行以下命令删除系统中相关键值：
+
+            ```
+            reg delete HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\MSDTC /f
+            reg delete HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSDTC /f
+            reg delete HKEY_CLASSES_ROOT\CID /f
+            ```
+
+        2.  停止并重新安装msdtc服务。
+
+            以管理员身份运行Windows命令提示符，执行以下命令停止并重新安装msdtc服务：
+
+            ```
+
+## net stop msdtc
+
+## msdtc -uninstall
+
+## msdtc -install
+            ```
+
+        3.  重新启动虚拟机。
+        4.  卸载agent。
+
+            以管理员身份运行Windows命令提示符，执行以下命令删除agent：
+
+            ```
+            msiexec /a "c:\Program Files\GuestTools\qemu-ga.msi" targetdir="c:\Program Files"
+            "c:\Program Files\QEMU Guest Agent\Qemu-ga\qemu-ga.exe" -s vss-uninstall
+            ```

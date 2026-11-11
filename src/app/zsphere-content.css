@@ -1,0 +1,659 @@
+/* Article typography, MDX components, guide index, and feature tables. */
+
+#nd-page:not(.api-docs-page) {
+  gap: 0;
+  color: var(--zsphere-copy);
+}
+
+#nd-page [data-card="true"]:hover {
+  border-color: var(--docs-cloud);
+  background: var(--docs-paper);
+  color: var(--docs-ink);
+}
+
+#nd-page :is([data-callout], figure.shiki) {
+  border-color: var(--docs-mist);
+  border-radius: var(--docs-radius-card);
+  box-shadow: var(--docs-shadow-sm);
+}
+
+#nd-page .prose img {
+  border: 1px solid var(--docs-cloud);
+  border-radius: 12px;
+  box-shadow: 0 1px 2px rgb(17 24 39 / 5%), 0 4px 16px rgb(17 24 39 / 6%);
+}
+
+.dark #nd-page .prose img {
+  box-shadow: 0 1px 2px rgb(0 0 0 / 30%), 0 4px 16px rgb(0 0 0 / 35%);
+}
+
+#nd-page .prose > ol {
+  list-style: none;
+}
+
+#nd-page .prose > ol > li {
+  margin-top: 0;
+}
+
+#nd-page .prose > ol > li::marker {
+  content: "";
+}
+
+#nd-page .prose > ol > li::before {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  content: counter(list-item);
+}
+
+#nd-page .prose .fd-step > .procedure-step-title + p,
+#nd-page .prose > ol > li > p:first-child + p {
+  margin-top: 0;
+}
+
+#nd-page .prose .fd-step > :last-child,
+#nd-page .prose > ol > li > :last-child {
+  margin-bottom: 0;
+}
+
+#nd-page .prose .fd-step :is(ol, ul),
+#nd-page .prose > ol > li :is(ol, ul) {
+  margin-block: 12px 16px;
+}
+
+#nd-page .prose .fd-step [data-callout],
+#nd-page .prose > ol > li [data-callout] {
+  margin-block: 18px 20px;
+}
+
+/* The guide index keeps its own centered title and card layout. */
+
+#nd-page.docs-index-page {
+  text-align: center;
+}
+
+#nd-page.docs-index-page > h1 {
+  width: 100%;
+  color: var(--docs-ink);
+  font-size: 2.25rem;
+  font-weight: 500;
+  letter-spacing: -0.05625rem;
+  line-height: 2.5rem;
+  text-align: center;
+}
+
+#nd-page.docs-index-page > p {
+  max-width: 576px;
+  margin: 16px auto 0;
+  padding-inline: 16px;
+  color: var(--docs-muted);
+  font-size: 1.125rem;
+  letter-spacing: 0;
+  line-height: 1.75rem;
+  text-align: center;
+}
+
+#nd-page.docs-index-page .prose {
+  width: 100%;
+  max-width: none;
+  text-align: left;
+}
+
+#nd-page.docs-index-page .prose > h2:first-child {
+  margin: 72px 0 0;
+  color: var(--docs-brand);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1rem;
+  text-transform: uppercase;
+}
+
+#nd-page.docs-index-page .prose > h2:first-child + p {
+  max-width: 576px;
+  margin: 10px 0 0;
+  color: var(--docs-muted);
+  font-size: 1rem;
+  letter-spacing: -0.0125rem;
+  line-height: 1.5rem;
+}
+
+#nd-page.docs-index-page .prose > div:has(> [data-card="true"]) {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 24px;
+  margin-top: 48px;
+}
+
+/* Feature tables also appear in imported MDX. */
+
+.doc-feature-table-wrap {
+  margin: 24px 0 32px;
+  overflow-x: auto;
+  border: 1px solid var(--docs-mist);
+  border-radius: var(--docs-radius-card);
+  background: var(--docs-paper);
+  box-shadow: var(--docs-shadow-sm);
+}
+
+.doc-feature-table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+  color: var(--docs-ink);
+  font-size: 0.875rem;
+  letter-spacing: 0;
+  line-height: 1.5;
+}
+
+.doc-feature-table th,
+.doc-feature-table__head {
+  padding: 12px 16px;
+  border-right: 1px solid var(--docs-mist);
+  border-bottom: 1px solid var(--docs-mist);
+  background: var(--docs-mist);
+  color: var(--docs-ink);
+  font-weight: 500;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.doc-feature-table td,
+.doc-feature-table__cell {
+  padding: 12px 16px;
+  border-right: 1px solid var(--docs-mist);
+  border-bottom: 1px solid var(--docs-mist);
+  color: var(--docs-ink);
+  vertical-align: top;
+}
+
+.doc-feature-table :is(th, td):last-child,
+.doc-feature-table :is(.doc-feature-table__head, .doc-feature-table__cell):last-child {
+  border-right: 0;
+}
+
+.doc-feature-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.doc-feature-table tbody tr:hover td {
+  background: var(--docs-brand-wash);
+}
+
+@media (max-width: 760px) {
+  #nd-page.docs-index-page .prose > h2:first-child {
+    margin-top: 48px;
+  }
+}
+
+#nd-page > .flex.items-center.text-sm {
+  margin-bottom: 12px;
+  color: var(--zsphere-muted);
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 20px;
+}
+
+#nd-page > h1 {
+  margin: 0;
+  color: var(--zsphere-heading);
+  font-size: 36px;
+  font-weight: 600;
+  letter-spacing: -0.9px;
+  line-height: 40px;
+}
+
+#nd-page > p {
+  max-width: none;
+  margin: 4px 0 32px;
+  color: var(--zsphere-muted);
+  font-size: 18px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 28px;
+}
+
+#nd-page > .prose {
+  max-width: none;
+  margin-top: 32px;
+}
+
+#nd-page > p + .prose {
+  margin-top: 0;
+}
+
+#nd-page .prose {
+  max-width: none;
+  color: var(--zsphere-copy);
+  font-size: 16px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 28px;
+}
+
+#nd-page .prose :is(p, li) {
+  color: var(--zsphere-copy);
+  line-height: 28px;
+}
+
+#nd-page .prose :is(strong, b) {
+  color: var(--zsphere-heading);
+  font-weight: 600;
+}
+
+#nd-page .prose :is(h2, h3, h4, h5, h6) {
+  color: var(--zsphere-heading);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+}
+
+#nd-page .prose h2 {
+  margin: 48px 0 16px;
+  font-size: 24px;
+  line-height: 32px;
+}
+
+#nd-page .prose h3 {
+  margin: 32px 0 12px;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+#nd-page .prose h4 {
+  margin: 28px 0 10px;
+  font-size: 15px;
+  line-height: 24px;
+}
+
+#nd-page .prose :is(h2, h3, h4) > a[data-card=""] {
+  color: inherit;
+  font: inherit;
+  text-decoration: none;
+}
+
+#nd-page .prose a:not([data-card="true"]) {
+  color: var(--docs-brand);
+  font-weight: 500;
+  text-decoration-color: color-mix(in srgb, var(--docs-brand) 45%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+#nd-page .prose :is(ul, ol):not(.fd-steps) {
+  color: var(--zsphere-copy);
+}
+
+#nd-page .prose :is(ul, ol):not(.fd-steps) > li::marker {
+  color: var(--zsphere-muted);
+}
+
+#nd-page .prose hr {
+  border-color: var(--zsphere-border);
+}
+
+#nd-page .prose > div.grid:has(> [data-card="true"]),
+#nd-page .prose > div:has(> [data-card="true"]) {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+#nd-page [data-card="true"] {
+  min-width: 0;
+  min-height: 0;
+  border: 1px solid var(--zsphere-border);
+  border-radius: var(--zsphere-radius-card);
+  background: var(--zsphere-surface);
+  padding: 20px;
+  box-shadow: none;
+  color: var(--zsphere-copy);
+  transition: border-color 160ms ease, background-color 160ms ease;
+}
+
+#nd-page a[data-card="true"]:hover {
+  border-color: var(--docs-brand);
+  background: var(--zsphere-surface);
+  color: var(--zsphere-copy);
+}
+
+#nd-page [data-card="true"] > div:first-child:not(:last-child) {
+  border-color: var(--zsphere-border);
+  border-radius: var(--zsphere-radius-control);
+  background: var(--zsphere-surface-subtle);
+  box-shadow: none;
+  color: var(--zsphere-heading);
+}
+
+#nd-page [data-card="true"] h3 {
+  margin: 0 0 4px;
+  color: var(--zsphere-heading);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 20px;
+}
+
+#nd-page [data-card="true"] :is(p, div) {
+  color: var(--zsphere-muted);
+  font-size: 14px;
+  line-height: 21px;
+}
+
+#nd-page .prose [style*="--callout-color"] {
+  align-items: flex-start;
+  gap: 12px;
+  margin-block: 20px;
+  border: 1px solid var(--zsphere-border);
+  border-radius: var(--zsphere-radius-card);
+  background: var(--zsphere-surface-subtle);
+  padding: 16px 20px;
+  box-shadow: none;
+  color: var(--zsphere-copy);
+  font-size: 14px;
+  line-height: 22px;
+}
+
+#nd-page .prose [style*="--callout-color"] > [role="none"] {
+  display: none;
+}
+
+#nd-page .prose [style*="--callout-color"] > svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+  margin: 2px 0 0;
+  fill: none;
+  color: currentColor;
+}
+
+#nd-page .prose [style*="--callout-color"] > div:last-child {
+  gap: 6px;
+}
+
+#nd-page .prose [style*="--callout-color"] :is(p, li) {
+  color: inherit;
+  font-size: 14px;
+  line-height: 22px;
+}
+
+#nd-page .prose [style*="--color-fd-info"] {
+  border-color: var(--zsphere-blue-border);
+  background: var(--zsphere-blue-surface);
+  color: var(--zsphere-blue);
+}
+
+.dark #nd-page .prose [style*="--color-fd-info"] {
+  border-color: #1e3a8a;
+  background: rgb(37 99 235 / 20%);
+  color: #93c5fd;
+}
+
+#nd-page :not(pre) > code:not(.api-path) {
+  border: 0;
+  border-radius: 5px;
+  background: var(--zsphere-surface-subtle);
+  padding: 2px 5px;
+  color: var(--zsphere-heading);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.875em;
+  font-weight: 500;
+  line-height: inherit;
+}
+
+#nd-page :is(pre, code, kbd, samp) {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-variant-ligatures: none;
+}
+
+#nd-page :is(figure.shiki, .shiki) {
+  overflow: hidden;
+  border: 1px solid var(--zsphere-border);
+  border-radius: var(--zsphere-radius-card);
+  background: var(--zsphere-surface);
+  box-shadow: none;
+}
+
+#nd-page figure.shiki pre {
+  background: transparent;
+  font-size: 14px;
+  letter-spacing: 0;
+  line-height: 24px;
+}
+
+#nd-page figure.shiki figcaption,
+#nd-page figure.shiki > div:first-child:not(:only-child) {
+  border-color: var(--zsphere-border);
+  background: var(--zsphere-surface-subtle);
+}
+
+#nd-page .prose .fd-steps,
+#nd-page .prose > ol {
+  margin: 36px 0 24px 14px;
+  padding-left: 32px;
+  border-left: 0;
+}
+
+#nd-page .prose .fd-step,
+#nd-page .prose > ol > li {
+  position: relative;
+  padding-bottom: 32px;
+  color: var(--zsphere-copy);
+  font-size: 16px;
+  line-height: 28px;
+}
+
+#nd-page .prose .fd-step::before,
+#nd-page .prose > ol > li::before {
+  inset: 7px auto auto -46px;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--zsphere-border);
+  background: var(--zsphere-surface-subtle);
+  box-shadow: 0 0 0 5px var(--zsphere-bg);
+  color: var(--zsphere-heading);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+#nd-page .prose .fd-step:not(:last-child)::after,
+#nd-page .prose > ol > li:not(:last-child)::after {
+  position: absolute;
+  top: 43px;
+  bottom: 0;
+  left: -32px;
+  width: 1px;
+  background: var(--zsphere-border);
+  content: "";
+}
+
+#nd-page .prose .fd-step:last-child::after,
+#nd-page .prose > ol > li:last-child::after {
+  position: absolute;
+  top: 43px;
+  bottom: 0;
+  left: -32px;
+  width: 1px;
+  background: linear-gradient(to bottom, var(--zsphere-border), transparent);
+  content: "";
+}
+
+#nd-page .prose .fd-step > :is(h2, h3, h4):first-child,
+#nd-page .prose .fd-step > .procedure-step-title:first-child,
+#nd-page .prose > ol > li > p:first-child {
+  margin: 0 0 8px;
+  padding-top: 7px;
+  color: var(--zsphere-heading);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 28px;
+}
+
+#nd-page .prose .fd-step [style*="--callout-color"],
+#nd-page .prose > ol > li [style*="--callout-color"] {
+  margin-block: 18px 20px;
+}
+
+#nd-page .prose :is(.doc-feature-table-wrap, .type-table) {
+  overflow: hidden;
+  border: 1px solid var(--zsphere-border);
+  border-radius: var(--zsphere-radius-card);
+  background: var(--zsphere-surface);
+  box-shadow: none;
+}
+
+#nd-page .prose table {
+  width: 100%;
+  border: 1px solid var(--zsphere-border);
+  border-radius: var(--zsphere-radius-card);
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--zsphere-surface);
+  color: var(--zsphere-copy);
+  font-size: 14px;
+  line-height: 22px;
+}
+
+#nd-page .prose table :is(th, td) {
+  border-color: var(--zsphere-border);
+  padding: 12px 16px;
+}
+
+#nd-page .prose table th {
+  background: var(--zsphere-surface-subtle);
+  color: var(--zsphere-heading);
+  font-weight: 600;
+}
+
+#nd-page .prose table tbody tr:hover td {
+  background: var(--zsphere-hover);
+}
+
+#nd-page .prose [role="tablist"] {
+  gap: 4px;
+  border-color: var(--zsphere-border);
+  background: var(--zsphere-surface-subtle);
+  padding: 4px;
+}
+
+#nd-page .prose [role="tablist"] [role="tab"] {
+  min-height: 36px;
+  border: 0;
+  border-radius: var(--zsphere-radius-control);
+  padding: 6px 12px;
+  color: var(--zsphere-muted);
+}
+
+#nd-page .prose [role="tablist"] [role="tab"][data-state="active"] {
+  background: var(--zsphere-surface);
+  box-shadow: inset 0 0 0 1px var(--zsphere-border);
+  color: var(--zsphere-heading);
+}
+
+#nd-page .prose [role="tabpanel"] {
+  border-radius: var(--zsphere-radius-card);
+  background: var(--zsphere-surface);
+}
+
+#nd-page .prose > [data-orientation="horizontal"]:has([role="tablist"]) {
+  border: 1px solid var(--zsphere-border);
+  border-radius: var(--zsphere-radius-card);
+  background: var(--zsphere-surface);
+  box-shadow: none;
+}
+
+#nd-page .prose > [data-orientation="vertical"] {
+  overflow: hidden;
+  border: 1px solid var(--zsphere-border);
+  border-radius: var(--zsphere-radius-card);
+  background: var(--zsphere-surface);
+  box-shadow: none;
+}
+
+#nd-page .prose [data-orientation="vertical"] > [data-state] {
+  border-color: var(--zsphere-border);
+}
+
+#nd-page .prose [data-orientation="vertical"] h3 {
+  margin: 0;
+  font-size: 15px;
+  letter-spacing: 0;
+  line-height: 24px;
+}
+
+#nd-page .prose [data-orientation="vertical"] button {
+  border-radius: var(--zsphere-radius-control);
+}
+
+#nd-page.docs-index-page [data-card="true"] {
+  position: relative;
+  display: block;
+  min-height: 0;
+  overflow: hidden;
+  border: 1px solid var(--zsphere-border);
+  border-radius: var(--zsphere-radius-card);
+  background: var(--zsphere-surface);
+  padding: 20px;
+  color: var(--zsphere-copy);
+  text-align: left;
+}
+
+#nd-page.docs-index-page [data-card="true"]::before,
+#nd-page.docs-index-page [data-card="true"]::after {
+  display: none;
+  content: none;
+}
+
+#nd-page.docs-index-page [data-card="true"]:hover {
+  border-color: var(--docs-brand);
+  background: var(--zsphere-surface);
+}
+
+#nd-page.docs-index-page [data-card="true"] h3 {
+  margin: 0 0 4px;
+  color: var(--zsphere-heading);
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0;
+  line-height: 20px;
+}
+
+#nd-page.docs-index-page [data-card="true"] p {
+  margin: 0;
+  color: var(--zsphere-muted);
+  font-size: 14px;
+  line-height: 21px;
+}
+
+@media (max-width: 760px) {
+  #nd-page > h1 {
+    font-size: 30px;
+    letter-spacing: -0.6px;
+    line-height: 36px;
+  }
+  #nd-page > p {
+    font-size: 16px;
+    line-height: 24px;
+  }
+  #nd-page .prose > div.grid:has(> [data-card="true"]),
+  #nd-page .prose > div:has(> [data-card="true"]),
+  #nd-page.docs-index-page .prose > div:has(> [data-card="true"]) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 12px;
+    padding-inline: 0;
+  }
+  #nd-page [data-card="true"],
+  #nd-page.docs-index-page [data-card="true"] {
+    width: 100%;
+    padding: 20px;
+  }
+  #nd-page .prose [style*="--callout-color"] {
+    padding: 14px 16px;
+  }
+  #nd-page .prose table {
+    min-width: 620px;
+  }
+}

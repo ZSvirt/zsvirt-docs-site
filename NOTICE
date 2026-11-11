@@ -1,0 +1,11 @@
+ZSvirt documentation site
+Copyright 2026 Shanghai Yunzhou Technology Co., Ltd. and contributors.
+
+Website application code, search runtime and repository tooling are licensed under Apache License 2.0 (LICENSE).
+Original documentation in content/, its templates and original documentation images in public/docs/ are licensed under Creative Commons Attribution 4.0 International (LICENSE-CONTENT), unless a file states another third-party license.
+
+This repository contains ZSvirt product guides and API references adapted from the project's existing documentation sources. Preserve copyright notices, author credits and third-party notices in those documents. Terraform reference pages are generated from the explicitly supplied provider documentation; preserve any source-specific notices when importing updates.
+
+ZSvirt and ZStack names, logos and other trademarks remain the property of their respective owners. Neither the software license nor the content license grants trademark rights or endorsement. Third-party names, logos, screenshots and quoted materials retain their own rights and notices.
+
+Dependencies retain their respective licenses. The built search runtime includes a generated THIRD-PARTY-LICENSES.txt covering the dependencies actually bundled into that runtime.

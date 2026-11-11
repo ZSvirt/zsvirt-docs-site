@@ -1,0 +1,9 @@
+{
+  "title": "第四步 安装高可用套件",
+  "pages": [
+    "index",
+    "cli-install",
+    "config-file-install"
+  ],
+  "pagesIndex": "index"
+}

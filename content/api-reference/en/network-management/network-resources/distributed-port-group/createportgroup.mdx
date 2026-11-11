@@ -1,0 +1,619 @@
+---
+title: "CreatePortGroup"
+---
+
+<APIPage method="POST" path="/v1/l3-networks/port-group">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "vSwitchUuid": "04d84d13c7e43c53810bd0d470210b4d",
+    "vlanMode": "ACCESS",
+    "vlan": 100,
+    "name": "port-group-1",
+    "description": "Test",
+    "type": "L3BasicNetwork",
+    "category": "Private",
+    "ipVersion": 4,
+    "system": false,
+    "enableIPAM": false
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding sample, both **systemTags** and **userTags** are optional. These two fields can be included in the body structure.
+</Callout>
+
+Curl Sample
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"vSwitchUuid":"04d84d13c7e43c53810bd0d470210b4d","vlanMode":"ACCESS","vlan":100,"name":"port-group-1","description":"Test","type":"L3BasicNetwork","category":"Private","ipVersion":4,"system":false,"enableIPAM":false}}' \
+http://localhost:8080/zstack/v1/l3-networks/port-group
+```
+
+Parameter List
+
+<table id="table_cdl_l3g_m1b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+vSwitchUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in **params** structure\)
+
+</td><td>
+
+The virtual Switch UUID.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.2.0
+
+</td></tr><tr><td>
+
+vlanMode \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in **params** structure\)
+
+</td><td>
+
+Optional. The VLAN mode.
+
+</td><td>
+
+-   ACCESS
+-   TRUNK
+-   PVLAN
+
+</td><td>
+
+4.2.0
+
+</td></tr><tr><td>
+
+vlan
+
+</td><td>
+
+Integer
+
+</td><td>
+
+body\(contained in **params** structure\)
+
+</td><td>
+
+The VLAN number.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.2.0
+
+</td></tr><tr><td>
+
+vlanRanges \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in **params** structure\)
+
+</td><td>
+
+Optional. The VLAN range.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.2.0
+
+</td></tr><tr><td>
+
+name
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in **params** structure\)
+
+</td><td>
+
+The resource name.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.2.0
+
+</td></tr><tr><td>
+
+description \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in **params** structure\)
+
+</td><td>
+
+Optional. The detailed description of the resource.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.2.0
+
+</td></tr><tr><td>
+
+type \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in **params** structure\)
+
+</td><td>
+
+Optional. The port group type.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.2.0
+
+</td></tr><tr><td>
+
+category \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in **params** structure\)
+
+</td><td>
+
+Optional. The network type. This parameter must be used with the system tag. When system is true, you can set it to Public, Private, or System.
+
+</td><td>
+
+-   Public
+-   Private
+-   System
+
+</td><td>
+
+4.2.0
+
+</td></tr><tr><td>
+
+ipVersion \(Optional\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+body\(contained in **params** structure\)
+
+</td><td>
+
+Optional. The IP version.
+
+</td><td>
+
+-   4
+-   6
+
+</td><td>
+
+4.2.0
+
+</td></tr><tr><td>
+
+system \(Optional\)
+
+</td><td>
+
+boolean
+
+</td><td>
+
+body\(contained in **params** structure\)
+
+</td><td>
+
+Optional. Whether it is used for system VMs.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.2.0
+
+</td></tr><tr><td>
+
+dnsDomain \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in **params** structure\)
+
+</td><td>
+
+Optional. The DNS domain.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.2.0
+
+</td></tr><tr><td>
+
+enableIPAM \(Optional\)
+
+</td><td>
+
+Boolean
+
+</td><td>
+
+body\(contained in **params** structure\)
+
+</td><td>
+
+Optional. Whether IP address management is enabled.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.2.0
+
+</td></tr><tr><td>
+
+resourceUuid \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in **params** structure\)
+
+</td><td>
+
+Optional. The resource UUID.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.2.0
+
+</td></tr><tr><td>
+
+tagUuids \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(contained in **params** structure\)
+
+</td><td>
+
+Optional. The tag UUID list.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.2.0
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+Optional. The system tags.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.2.0
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+Optional. The user tags.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.2.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Sample Response
+
+```
+{
+  "inventory": {
+    "vSwitchUuid": "39217a13614a3435bcc5ed199dc6bc04",
+    "vlanMode": "ACCESS",
+    "vlanId": 100,
+    "uuid": "afc3dd5d3e5e36f7af08797bd6582a7d",
+    "name": "port-group-1",
+    "description": "Test",
+    "type": "portGroup",
+    "zoneUuid": "2ee7572e6ce53147866096c79eb4d4f0",
+    "l2NetworkUuid": "5f62648626353514892de22f154eeee7",
+    "state": "Enabled",
+    "system": false,
+    "category": "Private",
+    "enableIPAM": false
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.6.21|
+|error|ErrorCode|The error code. If not null, the operation fails, or vice versa. For more information, see [error](#p_cs4_dng_m1b).|0.6|
+|inventory|L3NetworkInventory|See [inventory](#p_f1m_gng_m1b).|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code, which is a numbered or alphanumeric code that specifies an error. For example, SYS.1000, HOST.1001.|0.6|
+|description|String|The brief description of the error.|0.6|
+|details|String|The details about the error.|0.6|
+|elaboration|String|The reserved field. Default value: null.|0.6|
+|opaque|LinkedHashMap|The reserved field. Default value: null.|0.6|
+|cause|ErrorCode|The root error, which is the associated root cause of the current error. If no root error exists, this parameter is null.|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The resource UUID.|0.6|
+|name|String|The resource name.|0.6|
+|description|String|The detailed description of the resource.|0.6|
+|type|String|The Distributed Port Group type.|0.6|
+|zoneUuid|String|The Data Center UUID.|0.6|
+|l2NetworkUuid|String|The port group Distributed Switch UUID.|0.6|
+|state|String|The Distributed Port Group availability status.|0.6|
+|dnsDomain|String|The DNS domain.|0.6|
+|system|Boolean|Whether it is used for system VMs.|0.6|
+|category|String|The network type. This parameter must be used with the system tag. When system is false, you can set it to Public or Private.|0.6|
+|ipVersion|Integer|The IP version.|3.1.0|
+|enableIPAM|Boolean|Whether IP address management is enabled.|4.10.16|
+|createDate|Timestamp|The creation date.|0.6|
+|lastOpDate|Timestamp|The last operation date.|0.6|
+|dns|List|The DNS server.|0.6|
+|ipRanges|List|See [ipRanges](#p_gv5_wn1_rbb).|0.6|
+|networkServices|List|See [networkServices](#p_mjl_wn1_rbb).|0.6|
+|hostRoute|List|See [hostRoute](#p_vcn_cls_l2b).|2.3|
+|reservedIpRanges|List|See [reservedIpRanges](#p_lzv_5qy_3gc).|4.10.16|
+
+### ipRanges
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The resource UUID.|0.6|
+|l3NetworkUuid|String|The Distributed Port Group UUID.|0.6|
+|name|String|The resource name.|0.6|
+|description|String|The detailed description of the resource.|0.6|
+|startIp|String|The start IP address.|4.6.21|
+|endIp|String|The end IP address.|4.6.21|
+|netmask|String|The netmask.|4.6.21|
+|prefixLen|String|The prefix length.|3.1.0|
+|gateway|String|The gateway.|0.6|
+|networkCidr|String|The network CIDR.|4.6.21|
+|ipVersion|Integer|The IP version.|3.1.0|
+|addressMode|String|The IPv6 address allocation mode.|3.1.0|
+|createDate|Timestamp|The creation date.|0.6|
+|lastOpDate|Timestamp|The last operation date.|0.6|
+|ipRangeType|IpRangeType|See [ipRangeType](#p_gsc_hdb_bxb).|4.6.21|
+
+### ipRangeType
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|IpRangeType|Normal address range.|4.6.21|
+|AddressPool|IpRangeType|Address pool range.|4.6.21|
+
+### networkServices
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|l3NetworkUuid|String|The Distributed Port Group UUID.|0.6|
+|networkServiceProviderUuid|String|The network service provider module UUID.|0.6|
+|networkServiceType|String| |0.6|
+
+### hostRoute
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|id|Long| |2.3|
+|l3NetworkUuid|String|The Distributed Port Group UUID.|2.3|
+|prefix|String| |2.3|
+|nexthop|String| |2.3|
+|createDate|Timestamp|The creation date.|2.3|
+|lastOpDate|Timestamp|The last operation date.|2.3|
+
+### reservedIpRanges
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The resource UUID.|4.10.16|
+|l3NetworkUuid|String|The Distributed Port Group UUID.|4.10.16|
+|name|String|The resource name.|4.10.16|
+|description|String|The detailed description of the resource.|4.10.16|
+|startIp|String|The start IP address \(included in the reserved IP range\).|4.10.16|
+|endIp|String|The end IP address \(included in the reserved IP range\).|4.10.16|
+|ipVersion|Integer|The IP version.|4.10.16|
+|createDate|Timestamp|The creation date.|4.10.16|
+|lastOpDate|Timestamp|The last operation date.|4.10.16|
+
+## SDK Sample
+Java SDK
+
+```
+CreatePortGroupAction action = new CreatePortGroupAction();
+action.vSwitchUuid = "04d84d13c7e43c53810bd0d470210b4d";
+action.vlanMode = "ACCESS";
+action.vlan = 100;
+action.name = "port-group-1";
+action.description = "Test";
+action.type = "L3BasicNetwork";
+action.category = "Private";
+action.ipVersion = 4;
+action.system = false;
+action.enableIPAM = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreatePortGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = CreatePortGroupAction()
+action.vSwitchUuid = "04d84d13c7e43c53810bd0d470210b4d"
+action.vlanMode = "ACCESS"
+action.vlan = 100
+action.name = "port-group-1"
+action.description = "Test"
+action.type = "L3BasicNetwork"
+action.category = "Private"
+action.ipVersion = 4
+action.system = false
+action.enableIPAM = false
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,48 @@
+---
+title: 'Dedicated Backup Storage'
+---
+
+Add a remote backup storage by adding a dedicated backup node.
+
+1.  In the navigation pane, choose **Data Protection** &gt; **Backup Storage**.
+
+2.  On the Backup Storage page, click **Add Backup Storage**.
+
+3.  In the Select Backup Storage Addition Type dialog, select **Dedicated Backup Storage**, and then click **Next**.
+
+4.  In the Add Remote Backup Storage dialog box, complete the basic configuration and disk configuration.
+
+5.  For **Basic Configuration**, set the following parameters:
+
+    **Basic Information**
+
+    -   **Name**: Name of the remote backup storage.
+    -   **Description**: Description of the remote backup storage.
+    -   **Data Center**: Display the data center where the backup storage resides.
+    -   **Addition Method**: Display **Dedicated Backup Storage**.
+    **Configuration Information**
+
+    -   **Backup Storage IP**: Enter the IP address of the dedicated backup storage.
+    -   **SSH Port**: Default is 22.
+    -   **Username**: Default is the root user.
+    -   **Password**: The password corresponding to the user.
+6.  Review the configuration and click **Next**.
+
+7.  For **Disk Configuration**, set the following parameters:
+
+    -   **Storage Method**: Supports **Free Disk** and **Local Directory**.
+    -   **Free Disk**: When the storage method is set to **Free Disk**, this parameter must be configured.
+
+        <Callout type="info">
+        This option will format the selected disks and completely erase all partitions, file systems, and data on the disk.
+        </Callout>
+
+    -   **Backup Storage Path**: Enter the mount path on the dedicated backup storage.
+
+        <Callout type="info">
+        Avoid using system directories such as `/`, `/dev/`, `/proc/`, `/sys/`, `/usr/bin`, `/bin`. Using system directories might cause backup storage unable to work properly.
+        </Callout>
+
+    -   **Backup Network**: The network dedicated for backups. Enter a backup network CIDR.
+    -   **Backup Data**: When the storage method is set to **Local Directory**, this parameter must be configured. Choose whether to scan for existing backup data.
+8.  Review the configuration and click **OK**.

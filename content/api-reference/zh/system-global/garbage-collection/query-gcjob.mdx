@@ -1,0 +1,95 @@
+---
+title: "查询垃圾回收任务"
+---
+
+<APIPage method="GET" path="/v1/gc-jobs" altPaths={["/v1/gc-jobs/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/gc-jobs?q=name=gc&q=state=Enabled
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/gc-jobs/b41ea820e0bd47d5a028ddb3eb10bb98
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryGCJob`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "c7606f2ed20b4212aa3d1ce4e00acc1c",
+      "name": "TestGC",
+      "type": "TimeBased",
+      "createDate": "Jun 7, 2017 9:21:16 PM",
+      "lastOpDate": "Jun 7, 2017 9:21:16 PM"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_sdx_ysl_l1b)|0.6|
+|inventories|List|详情参考[inventories](#p_xgq_ysl_l1b)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|name|String|资源名称|0.6|
+|runnerClass|String| |0.6|
+|context|String| |0.6|
+|status|String| |0.6|
+|managementNodeUuid|String| |0.6|
+|type|String| |0.6|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+
+## SDK示例
+Java SDK
+
+```
+QueryGCJobAction action = new QueryGCJobAction();
+action.conditions = asList("name=gc","state=Enabled");
+action.sessionId = "3b403b588a96471cbee74a19d4a846aa";
+QueryGCJobAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryGCJobAction action = QueryGCJobAction()
+action.conditions = ["name=gc","state=Enabled"]
+action.sessionId = "76af9b84c87f4dcf9aa8f9042a982a6b"
+QueryGCJobAction.Result res = action.call()
+```
+
+</APIPage>

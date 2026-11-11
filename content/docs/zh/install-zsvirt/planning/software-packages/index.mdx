@@ -1,0 +1,43 @@
+---
+title: "准备软件包"
+---
+
+ZSvirt ISO 以自研的 Helix 为底座。Helix 是运行在基础设施层和上层客户操作系统之间的虚拟化内核软件，集成硬件驱动、宏内核、虚拟代理等必要组件。当上层各类客户操作系统对底层硬件资源进行访问时，Helix 可屏蔽底层异构硬件的差异，使客户操作系统免除对最底层物理硬件的驱动依赖，并增强虚拟化运行环境中的硬件兼容性、高可靠性、高可用性、可扩展性、运行性能。
+
+安装 ZSvirt 无需连接公网，也无须配置 yum 源，可完全离线安装。
+
+安装 ZSvirt 使用的软件包如下表所示：
+
+<table>
+  <thead>
+    <tr>
+      <th>服务器架构</th>
+      <th>软件包名称</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowSpan={2}>x86</td>
+      <td>ZSvirt-x86_64-DVD-1.0.0-h84r.iso</td>
+    </tr>
+    <tr>
+      <td>ZSvirt-x86_64-DVD-1.0.0-KylinV10SP3.iso</td>
+    </tr>
+    <tr>
+      <td rowSpan={2}>ARM</td>
+      <td>ZSvirt-aarch64-DVD-1.0.0-h22e.iso</td>
+    </tr>
+    <tr>
+      <td>ZSvirt-aarch64-DVD-1.0.0-KylinV10SP3.iso</td>
+    </tr>
+  </tbody>
+</table>
+
+<Callout type="info">
+    获取软件后，请通过 MD5 校验工具核对校验码，以确保软件完整无损。
+</Callout>
+
+-   **[使用 Rufus 刻录 ISO 镜像文件](/docs/install-zsphere/planning/software-packages/rufus)**
+    获取 ISO 软件包后，可使用 Rufus 软件将 ISO 镜像刻录到 U 盘。
+-   **[使用 Fedora Media Writer 刻录 ISO 镜像文件](/docs/install-zsphere/planning/software-packages/fedora-media-writer)**
+    获取 ISO 软件包后，若使用麒麟操作系统，建议使用 Fedora Media Writer 软件刻录 ISO 镜像。

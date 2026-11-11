@@ -1,0 +1,573 @@
+---
+title: "Update VM Information"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateVmInstance": {
+    "name": "new vm name"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8"\
+ -H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateVmInstance":{"name":"new vm name"}}' \
+http://localhost:8080/zstack/v1/vm-instances/dfa2feae60f431ac8d5f071f5594cfc1/actions
+```
+
+Parameter List
+
+<table id="table_utb_l3z_zz"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+Virtual Machine UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+name \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **updateVmInstance** structure\)
+
+</td><td>
+
+Virtual Machine name
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+description \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **updateVmInstance** structure\)
+
+</td><td>
+
+Virtual Machine description
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+state \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **updateVmInstance** structure\)
+
+</td><td>
+
+Virtual Machine state-   In general, the Virtual Machine state should not be updated directly; otherwise, the virtualization platform may misjudge the state of the Virtual Machine.
+-   This field should only be used when the actual state of the Virtual Machine is inconsistent with the state recorded by the virtualization platform, and the synchronization mechanism of the virtualization platform has failed \(usually meaning a bug\).
+-   Administrators should fully understand the consequences of using this field.
+
+</td><td>
+
+-   Stopped
+-   Running
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+defaultL3NetworkUuid \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **updateVmInstance** structure\)
+
+</td><td>
+
+Default L3 Network UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+platform \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **updateVmInstance** structure\)
+
+</td><td>
+
+Virtual Machine platform type
+
+</td><td>
+
+-   Linux
+-   Windows
+-   WindowsVirtio
+-   Other
+-   Paravirtualization
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+cpuNum \(Optional\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+body \(contained in **updateVmInstance** structure\)
+
+</td><td>
+
+-   Virtual Machine CPU count. Takes effect after stopping/starting the Virtual Machine
+-   For Virtual Machines created when the system parameter NUMA is true, supports dynamic adjustment
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+memorySize \(Optional\)
+
+</td><td>
+
+Long
+
+</td><td>
+
+body \(contained in **updateVmInstance** structure\)
+
+</td><td>
+
+-   Virtual Machine memory size. Takes effect after stopping/starting the Virtual Machine
+-   For Virtual Machines created when the system parameter NUMA is true, supports dynamic adjustment.
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+guestOsType \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **updateVmInstance** structure\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+reservedMemorySize \(Optional\)
+
+</td><td>
+
+Long
+
+</td><td>
+
+body \(contained in **updateVmInstance** structure\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System Tag
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User Tag
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "6710cdffb0653455809b6511a6b3aaa4",
+    "name": "new vm name",
+    "description": "web server VM",
+    "zoneUuid": "aa63c5a3b3c436fa94e5e851f057fe23",
+    "clusterUuid": "48b424d94ed239f1b18e1ce37db24cf8",
+    "imageUuid": "4e1ac550da8d30c7b07162acc39773c1",
+    "hostUuid": "1f3ffea4673e3e4197681ee030d1794b",
+    "lastHostUuid": "d334dadb7cfc34da8f6f7d74dfd04692",
+    "instanceOfferingUuid": "33b38aff5cbe3e24a9266300f7163d20",
+    "rootVolumeUuid": "761df8e1eef933ee8d7f3b7f8551b754",
+    "platform": "Linux",
+    "defaultL3NetworkUuid": "3a3c91f4a28a31beb410d6d1c3dc862c",
+    "type": "UserVm",
+    "hypervisorType": "KVM",
+    "memorySize": 8589934592,
+    "cpuNum": 1,
+    "allocatorStrategy": "LastHostPreferredAllocatorStrategy",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM",
+    "state": "Running",
+    "vmNics": [
+      {
+        "uuid": "ae19167e24713aeea9c45e6f2d27249d",
+        "vmInstanceUuid": "6710cdffb0653455809b6511a6b3aaa4",
+        "usedIpUuid": "010f4817011b32d3b476faa3f393d765",
+        "l3NetworkUuid": "3a3c91f4a28a31beb410d6d1c3dc862c",
+        "ip": "192.168.1.10",
+        "mac": "00:0c:29:bd:99:fc",
+        "hypervisorType": "KVM",
+        "netmask": "255.255.255.0",
+        "gateway": "192.168.1.1",
+        "deviceId": 0,
+        "state": "enable",
+        "createDate": "Nov 14, 2017 10:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+      }
+    ],
+    "allVolumes": [
+      {
+        "uuid": "761df8e1eef933ee8d7f3b7f8551b754",
+        "name": "Root-Volume-For-VM-6710cdffb0653455809b6511a6b3aaa4",
+        "primaryStorageUuid": "da81ed018a9738ff97a16d7b7a43327d",
+        "vmInstanceUuid": "6710cdffb0653455809b6511a6b3aaa4",
+        "diskOfferingUuid": "bd9b406d36c13fc7ad3f995535415898",
+        "rootImageUuid": "4e1ac550da8d30c7b07162acc39773c1",
+        "installPath": "/zstack_ps/rootVolumes/acct-36c27e8ff05c4780bf6d2fa65700f22e/vol-761df8e1eef933ee8d7f3b7f8551b754/761df8e1eef933ee8d7f3b7f8551b754.qcow2",
+        "type": "Root",
+        "format": "qcow2",
+        "size": 107374182400,
+        "actualSize": 21474836480,
+        "deviceId": 0,
+        "state": "Enabled",
+        "status": "Ready",
+        "createDate": "Nov 14, 2017 10:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+      }
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation succeeds, this field is null. For details, see [error](#p_vwb_slz_zz)|0.6|
+|inventory|VmInstanceInventory|For details, see [inventory](#p_zlj_slz_zz)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier of the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause. The error that triggered the current error. If there is no original error, this field is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|name|String|Resource name|0.6|
+|description|String|Resource description|0.6|
+|zoneUuid|String|Data Center UUID|0.6|
+|clusterUuid|String|Cluster UUID|0.6|
+|imageUuid|String|Image UUID|0.6|
+|hostUuid|String|Host UUID|0.6|
+|lastHostUuid|String| |0.6|
+|instanceOfferingUuid|String|Instance Offering UUID|0.6|
+|rootVolumeUuid|String|Root Volume UUID|0.6|
+|platform|String| |0.6|
+|architecture|String| |0.6|
+|defaultL3NetworkUuid|String| |0.6|
+|type|String| |0.6|
+|hypervisorType|String| |0.6|
+|memorySize|Long| |0.6|
+|cpuNum|Integer| |0.6|
+|cpuSpeed|Long| |0.6|
+|allocatorStrategy|String| |0.6|
+|createDate|Timestamp|Create time|0.6|
+|lastOpDate|Timestamp|Last update time|0.6|
+|state|String| |0.6|
+|guestOsType|String| |4.1.2|
+|vmNics|List|For details, see [vmNics](#p_ym2_tlz_zz)|0.6|
+|allVolumes|List|For details, see [allVolumes](#p_tjm_tlz_zz)|0.6|
+|vmCdRoms|List|For details, see [vmCdRoms](#p_oh3_hyf_y1c)|0.6|
+
+### vmNics
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|vmInstanceUuid|String|Virtual Machine UUID|0.6|
+|l3NetworkUuid|String|L3 Network UUID|0.6|
+|ip|String|IP address|4.1.0|
+|mac|String|MAC address|4.1.0|
+|hypervisorType|String|Hypervisor type|4.1.0|
+|netmask|String|Netmask|4.1.0|
+|gateway|String|Gateway|4.1.0|
+|metaData|String| |0.6|
+|ipVersion|Integer|IP address version|3.1.0|
+|driverType|String| |4.7.13|
+|internalName|String| |4.7.13|
+|deviceId|Integer|Device ID|0.6|
+|type|String|NIC type|4.1.0|
+|createDate|Timestamp|Create time|0.6|
+|lastOpDate|Timestamp|Last update time|0.6|
+|usedIps|List|For details, see [usedIps](#p_gwc_4dc_pfb)|0.6|
+
+### usedIps
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|ipRangeUuid|String|IP Range UUID|0.6|
+|l3NetworkUuid|String|L3 Network UUID|0.6|
+|ipVersion|Integer|IP protocol version|3.1.0|
+|ip|String|IP address|0.6|
+|netmask|String|Network mask|0.6|
+|gateway|String|Gateway address|0.6|
+|usedFor|String| |0.6|
+|ipInLong|long| |0.6|
+|vmNicUuid|String|Virtual Machine NIC UUID|3.1.0|
+|createDate|Timestamp|Create time|0.6|
+|lastOpDate|Timestamp|Last update time|0.6|
+
+### allVolumes
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|name|String|Resource name|0.6|
+|description|String|Resource description|0.6|
+|primaryStorageUuid|String|Primary Storage UUID|0.6|
+|vmInstanceUuid|String|Virtual Machine UUID|0.6|
+|diskOfferingUuid|String|Disk Offering UUID|0.6|
+|rootImageUuid|String|Root Image UUID|4.1.0|
+|installPath|String|Volume install path on Primary Storage|4.1.0|
+|type|String|Volume type, data volume/root volume|4.1.0|
+|format|String|Volume format|4.1.0|
+|size|Long|Volume size|4.1.0|
+|actualSize|Long|Actual volume size|4.1.0|
+|deviceId|Integer| |0.6|
+|state|String|Whether the volume is enabled|4.1.0|
+|status|String|Volume status|4.1.0|
+|createDate|Timestamp|Create time|0.6|
+|lastOpDate|Timestamp|Last update time|0.6|
+|isShareable|Boolean| |0.6|
+|volumeQos|String| |4.7.13|
+|lastDetachDate|Timestamp| |4.7.13|
+|lastVmInstanceUuid|String| |4.7.13|
+
+### vmCdRoms
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|4.7.13|
+|vmInstanceUuid|String|Virtual Machine UUID|4.7.13|
+|deviceId|Integer| |4.7.13|
+|isoUuid|String| |4.7.13|
+|isoInstallPath|String| |4.7.13|
+|name|String|Resource name|4.7.13|
+|description|String|Resource description|4.7.13|
+|createDate|Timestamp|Create time|4.7.13|
+|lastOpDate|Timestamp|Last update time|4.7.13|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateVmInstanceAction action = new UpdateVmInstanceAction();
+action.uuid = "dfa2feae60f431ac8d5f071f5594cfc1";
+action.name = "new vm name";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateVmInstanceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = UpdateVmInstanceAction()
+action.uuid = "dfa2feae60f431ac8d5f071f5594cfc1"
+action.name = "new vm name"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,104 @@
+---
+title: "Query HBA Device"
+---
+
+<APIPage method="GET" path="/v1/storage-devices/hba" altPaths={["/v1/storage-devices/hba/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/storage-devices/hba?q=uuid=db041d8a238732be82740eaf5a43d252
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/storage-devices/hba/1698716626f33b6fb1637a76590e1fe6
+```
+
+Queryable Fields
+
+Run the CLI command-line tool, enter `QueryFcHbaDevice` and press Tab to view all queryable fields and resource names that support cross-table queries.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "portName": "10000090fab38778",
+      "portState": "Online",
+      "speed": "8 Gbit",
+      "supportedSpeeds": "16 Gbit",
+      "symbolicName": "QLE2692 FW:v9.07.00 DVR:v10.02.00.106-k",
+      "supportedClasses": "Class 3",
+      "uuid": "511a5ac34b423ac99a33d5c863531d2e",
+      "name": "host",
+      "hostUuid": "38e3ebc0b54e3cf8a99db5f7c80ee59e",
+      "hbaType": "FC"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |5.3.0|
+|inventories|List|See [inventories](#p_t5p_zk2_s2c) for details|5.2.0|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See [error](#p_ymg_fs1_r2c) for details|5.3.0|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource. Uniquely identifies the resource.|5.3.0|
+|name|String|Resource name|5.3.0|
+|hostUuid|String|Host UUID|5.3.0|
+|portName|String|Port name|5.3.0|
+|portState|String|Port status|5.3.0|
+|hbaType|String|Type|5.3.0|
+|speed|String|Speed|5.3.0|
+|supportedSpeeds|String|Supported speeds|5.3.0|
+|symbolicName|String|Symbolic name|5.3.0|
+|supportedClasses|String|Service class|5.3.0|
+|createDate|String|Create time|5.3.0|
+|lastOpDate|String|Last update time|5.3.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. Globally unique identifier of the error, for example SYS.1000, HOST.1001.|0.6|
+|description|String|Brief error description|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause error. The error that caused the current error. If there is no original error, this field is null.|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+QueryFcHbaDeviceAction action = new QueryFcHbaDeviceAction();
+action.conditions = asList("uuid=744cbe74c6f8365dafdbcf9568cfafa0");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryFcHbaDeviceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryFcHbaDeviceAction action = QueryFcHbaDeviceAction()
+action.conditions = ["uuid=e8b3f35dce0c38da8cec8a56347899e9"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryFcHbaDeviceAction.Result res = action.call()
+```
+
+</APIPage>

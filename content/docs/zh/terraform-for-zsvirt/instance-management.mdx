@@ -1,0 +1,224 @@
+---
+title: "云主机管理"
+description: "使用 zsphere_instance 从镜像或模板创建并管理 ZSvirt 云主机。"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+`zsphere_instance` 是管理云主机实例的核心资源，支持两种创建方式。
+
+## 从镜像创建
+
+基于已有镜像创建云主机，可完整配置磁盘：
+
+```hcl
+# 通过数据源查找资源
+data "zsphere_images" "images" {
+  name = "your-image-name"
+}
+
+data "zsphere_port_groups" "networks" {
+  name = "your-port-group-name"
+}
+
+# 从镜像创建基础云主机
+resource "zsphere_instance" "vm_basic" {
+  name        = "vm_basic_from_terraform"
+  description = "create a basic vm from terraform"
+  image_uuid  = data.zsphere_images.images.images.0.uuid
+  expunge     = true
+  memory_size = 1024
+  cpu_num     = 2
+
+  platform      = "Linux"
+  guest_os_type = "CentOS 7"
+  architecture  = "x86_64"
+
+  root_disk = {
+    size = 5 * 1024 * 1024 * 1024  # 5 GB
+  }
+
+  data_disks = [
+    {
+      size = 2 * 1024 * 1024 * 1024  # 2 GB
+    }
+  ]
+
+  network_interfaces = [
+    {
+      port_group_uuid = data.zsphere_port_groups.networks.port_groups.0.uuid
+      default_l3      = true
+    }
+  ]
+}
+```
+
+**主要特点：**
+
+- 可完整控制根盘与数据盘配置
+- 支持磁盘总线类型：`virtio`、`ide`、`virtio-scsi`、`scsi`
+- 数据盘名称自动生成为 `{vm-name}-1`、`{vm-name}-2` 等
+- 支持创建后配置主机名、静态 IP 等
+
+**UEFI 启动与自定义磁盘的高级示例：**
+
+```hcl
+resource "zsphere_instance" "vm_advanced" {
+  name        = "vm_advanced_from_terraform"
+  description = "create an advanced vm from terraform"
+  image_uuid  = data.zsphere_images.images.images.0.uuid
+  expunge     = true
+  memory_size = 1024
+  cpu_num     = 2
+
+  platform      = "Linux"
+  guest_os_type = "CentOS 7"
+  architecture  = "x86_64"
+
+  boot_mode       = "UEFI"
+  vm_machine_type = "q35"
+  cpu_mode        = "host-model"
+  hostname        = "my-server.example.com"
+
+  root_disk = {
+    size     = 4 * 1024 * 1024 * 1024  # 4 GB
+    bus_type = "virtio"
+  }
+
+  data_disks = [
+    {
+      size     = 2 * 1024 * 1024 * 1024  # 2 GB
+      bus_type = "virtio-scsi"
+    },
+    {
+      size     = 1 * 1024 * 1024 * 1024  # 1 GB
+      bus_type = "scsi"
+    }
+  ]
+
+  network_interfaces = [
+    {
+      port_group_uuid = data.zsphere_port_groups.networks.port_groups.0.uuid
+      default_l3      = true
+      static_ip       = "192.168.1.100"
+    }
+  ]
+
+  netmask = "255.255.255.0"
+  gateway = "192.168.1.1"
+
+  strategy   = "InstantStart"
+  never_stop = false
+  user_data  = "#!/bin/bash\necho 'Hello World'"
+}
+```
+
+## 从模板创建
+
+通过克隆已有模板云主机创建实例：
+
+```hcl
+data "zsphere_instances" "template" {
+  name = "your-template-name"
+}
+
+resource "zsphere_instance" "vm_from_template" {
+  name          = "vm_from_template"
+  description   = "create a vm from template"
+  template_uuid = data.zsphere_instances.template.instances.0.uuid
+  expunge       = true
+  memory_size   = 1024
+  cpu_num       = 2
+
+  network_interfaces = [
+    {
+      port_group_uuid = data.zsphere_port_groups.networks.port_groups.0.uuid
+      default_l3      = true
+    }
+  ]
+}
+```
+
+**主要特点：**
+
+- 磁盘配置继承自模板
+- 可通过 `disk_aos` 追加磁盘（仅支持 `new` 类型）
+- 平台类型与来宾操作系统类型继承自模板
+- 部分参数不可覆盖（参见 [已知限制](/docs/terraform-for-zsphere/known-limitations)）
+
+**追加磁盘的高级示例：**
+
+```hcl
+resource "zsphere_instance" "advanced_from_template" {
+  name          = "vm-advanced-from-template"
+  description   = "Advanced VM from template"
+  template_uuid = data.zsphere_instances.template.instances.0.uuid
+  expunge       = true
+  memory_size   = 4096
+  cpu_num       = 4
+
+  boot_mode    = "UEFI"
+  hostname     = "template-vm.example.com"
+  architecture = "x86_64"
+
+  cpu_mode           = "host-model"
+  cpu_quota          = 100
+  vnuma_enabled      = false
+  cpu_resource_level = "Normal"
+
+  network_interfaces = [
+    {
+      port_group_uuid = data.zsphere_port_groups.networks.port_groups.0.uuid
+      default_l3      = true
+      static_ip       = "192.168.1.101"
+    }
+  ]
+
+  disk_aos = [
+    {
+      size     = 50 * 1024 * 1024 * 1024  # 50 GB
+      bus_type = "virtio"
+    }
+  ]
+
+  strategy = "InstantStart"
+}
+```
+
+## 注意事项
+
+1. **互斥参数**：`image_uuid` 与 `template_uuid` 只能指定其一，不可同时使用。
+2. **数据盘命名**：数据盘名称自动生成为 `{vm-name}-1`、`{vm-name}-2` 等，`data_disks` 中的 `name` 为计算属性，不可手动设置。
+3. **参数校验**：
+   - 从镜像创建：不可使用 `vm_nic_params`、`disk_aos`、`vm_nic_config`
+   - 从模板创建：不可使用 `root_disk`、`data_disks`、`platform`、`guest_os_type`
+4. **创建后配置**：主机名、静态 IP、启动顺序、NUMA 等部分配置可能在云主机创建后通过独立 API 调用生效。
+
+## 批量部署
+
+```hcl
+locals {
+  vm_csv_raw = csvdecode(file("${path.module}/vms.csv"))
+
+  vm_configs = [
+    for vm in local.vm_csv_raw : {
+      name       = vm.vm_name
+      ip_address = vm.ip_address
+      cpu        = tonumber(vm.cpu)
+      memory     = tonumber(vm.memory_gb)
+    }
+  ]
+}
+
+resource "zsphere_instance" "vms" {
+  for_each = { for vm in local.vm_configs : vm.name => vm }
+
+  name        = each.value.name
+  description = "Created by Terraform"
+  image_uuid  = each.value.image_uuid
+  cpu_num     = each.value.cpu
+  memory_size = each.value.memory * 1024
+}
+```
+
+完整参数说明请参阅 [zsphere_instance](/docs/terraform-for-zsphere/resources/instance)。

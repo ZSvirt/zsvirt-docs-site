@@ -1,0 +1,107 @@
+---
+title: "修改控制策略组转发规则的名称"
+---
+
+<APIPage method="PUT" path="/v1/access-control-lists/redirectRules/{uuid}/actions">
+
+Body
+
+```
+{
+  "changeAccessControlListRedirectRule": {
+    "name": "test-access-control"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X PUT -d '{"changeAccessControlListRedirectRule":{"name":"test-access-control"}}' \
+http://localhost:8080/zstack/v1/access-control-lists/redirectRules/ff0b6fb727353d33817b3714cee15d00/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |4.1.3|
+|name \(可选\)|String|body\(包含在`changeAccessControlListRedirectRule`结构中\)|转发规则名称| |4.1.3|
+|systemTags \(可选\)|List|body|系统标签| |4.1.3|
+|userTags \(可选\)|List|body|用户标签| |4.1.3|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "aclUuid": "bc9854edd56938f59a7ad06d2ffddb77",
+    "type": "RedirectRule",
+    "name": "acl-group",
+    "domain": "zstack.io",
+    "url": "/test"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_hs4_hz1_r2c)|0.6|
+|inventory|AccessControlListEntryInventory|详情参考[inventory](#p_st1_hv1_w2c)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|aclUuid|String| |0.6|
+|type|String| |0.6|
+|name|String|资源名称|0.6|
+|domain|String| |0.6|
+|url|String| |0.6|
+|ipEntries|String| |0.6|
+|description|String|资源的详细描述|0.6|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+
+## SDK示例
+Java SDK
+
+```
+ChangeAccessControlListRedirectRuleAction action = new ChangeAccessControlListRedirectRuleAction();
+action.uuid = "ff0b6fb727353d33817b3714cee15d00";
+action.name = "test-access-control";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ChangeAccessControlListRedirectRuleAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ChangeAccessControlListRedirectRuleAction action = ChangeAccessControlListRedirectRuleAction()
+action.uuid = "ff0b6fb727353d33817b3714cee15d00"
+action.name = "test-access-control"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ChangeAccessControlListRedirectRuleAction.Result res = action.call()
+```
+
+</APIPage>

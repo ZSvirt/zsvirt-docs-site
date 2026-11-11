@@ -1,0 +1,67 @@
+---
+title: "从镜像存储删除导出的镜像"
+---
+
+## API请求
+URLs
+
+```
+DELETE/v1/backup-storage/{backupStorageUuid}/exported-images/{imageUuid}
+```
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/backup-storage/c03c38ab9d184143891718c4b3f664d1/exported-images/dce27bd0a0ae4aaa8771ac33d481ec52?
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|backupStorageUuid|String|url|镜像存储UUID| |1.7|
+|imageUuid|String|url|镜像UUID| |1.7|
+|systemTags \(可选\)|List|body|系统标签| |1.7|
+|userTags \(可选\)|List|body|用户标签| |1.7|
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+DeleteExportedImageFromBackupStorageAction action = new DeleteExportedImageFromBackupStorageAction();
+action.backupStorageUuid = "9c781fd5c7334e8492c9d3409ad0c63a";
+action.imageUuid = "b9b4f79d505040eba37ad6e4581b64fd";
+action.sessionId = "ecce8dd56c3a476c8dd1ac90aeb0d321";
+DeleteExportedImageFromBackupStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteExportedImageFromBackupStorageAction action = DeleteExportedImageFromBackupStorageAction()
+action.backupStorageUuid = "29e4e1a659004403bd9b3738b36dd37e"
+action.imageUuid = "2ba013855b8f4c688d977b545272541f"
+action.sessionId = "e2c772523e104f3da969630930e68a17"
+DeleteExportedImageFromBackupStorageAction.Result res = action.call()
+```

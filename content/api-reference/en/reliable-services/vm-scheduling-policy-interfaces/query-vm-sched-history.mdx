@@ -1,0 +1,102 @@
+---
+title: "Query VM Scheduling History"
+---
+
+## API Request
+URLs
+
+```
+GET zstack//v1/vm/sched-history
+```
+
+```
+GET zstack//v1/vm/sched-history/{vmInstanceUuid}
+```
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm/sched-history?q=vmInstanceUuid=15b5b8ab631d300592bf83d66331f914
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm/sched-history/{vmInstanceUuid}?q=vmInstanceUuid=4240a319fabf3728960d1d7639f3fc0f
+```
+
+Queryable Fields
+
+Run the CLI tool, enter `QueryVmSchedHistory` and press Tab to view all queryable fields and cross-table queryable resource names.
+
+## API Response
+```
+{
+  "inventories": [
+    {
+      "id": 0.0,
+      "vmInstanceUuid": "ec8fe40b4b0a38bc8f195bfc8bfc72e9",
+      "accountUuid": "b07dda064256343c894cecfa5d50b42c",
+      "schedType": "VMHA",
+      "success": true,
+      "lastHostUuid": "d4d26f65cfff3fafb98d3da284290455",
+      "destHostUuid": "bc001bb4d762395db4b2ed97c6d6dae3"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|inventories|List|For details, see [inventories](#p_yw2_ydf_h5b)|4.4.24|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_zrl_t2z_1sb)|0.6|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|vmInstanceUuid|String|Virtual Machine UUID|4.4.24|
+|accountUuid|String|Account UUID|4.4.24|
+|schedType|String| |4.4.24|
+|success|Boolean| |4.4.24|
+|lastHostUuid|String| |4.4.24|
+|destHostUuid|String| |4.4.24|
+|createDate|Timestamp|Creation time|4.4.24|
+|lastOpDate|Timestamp|Last modification time|4.4.24|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|4.4.24|
+|description|String|Brief description of the error|4.4.24|
+|details|String|Detailed information about the error|4.4.24|
+|elaboration|String|Reserved field. Default is null|4.4.24|
+|opaque|LinkedHashMap|Reserved field. Default is null|4.4.24|
+|cause|ErrorCode|Root error. The source error that caused the current error. This field is null if no root error exists|4.4.24|
+
+## SDK Examples
+Java SDK
+
+```
+QueryVmSchedHistoryAction action = new QueryVmSchedHistoryAction();
+action.conditions = asList("vmInstanceUuid=b35d14e4af4c3f4c8f745e73df083020");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryVmSchedHistoryAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryVmSchedHistoryAction action = QueryVmSchedHistoryAction()
+action.conditions = ["vmInstanceUuid=f9bd0652c3843cb285c2e7b8c9f4561b"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryVmSchedHistoryAction.Result res = action.call()
+```

@@ -1,0 +1,110 @@
+---
+title: "Get ZMigrate Gateway Images"
+---
+
+<APIPage method="GET" path="/v1/zmigrate/images">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zmigrate/images
+```
+
+Parameters
+
+|Name|Type|Location|Description|Optional Values|Since|
+|----|----|--------|-----------|---------------|-----|
+|systemTags \(Optional\)|List|query|System tags| |5.0.0|
+|userTags \(Optional\)|List|query|User tags| |5.0.0|
+
+## API Response
+Response Example
+
+```
+{
+  "images": {
+    "ZMigrateGatewayImage": {
+      "uuid": "32b618f43799325988e3a376fa65bfc1",
+      "name": "test-image",
+      "description": "test image for zmigrate"
+    }
+  }
+}
+```
+
+|Name|Type|Description|Since|
+|----|----|-----------|-----|
+|success|boolean| |5.0.0|
+|images|Map|For details, see [images](#p_cy3_z2y_djc)|5.0.0|
+|error|ErrorCode|For details, see [error](#p_xm1_vmk_l1b)|5.0.0|
+
+### images
+|Name|Type|Description|Since|
+|----|----|-----------|-----|
+|uuid|String|Resource UUID, which uniquely identifies the resource|0.6|
+|name|String|Resource name|0.6|
+|description|String|Detailed description of the resource|0.6|
+|state|String|Image state|0.6|
+|status|String|Image readiness status|0.6|
+|size|Long|Image size|0.6|
+|actualSize|Long|Actual image size|0.6|
+|md5Sum|String|MD5 value of the image|0.6|
+|url|String|URL of the image|0.6|
+|mediaType|String|Image type|0.6|
+|guestOsType|String|Guest operating system type corresponding to the image|0.6|
+|type|String|Field for internal use|0.6|
+|platform|String|System platform of the image|0.6|
+|format|String|Image format, for example, raw|0.6|
+|system|Boolean|Indicates whether the image is a system image|0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+|backupStorageRefs|List|For details, see [backupStorageRefs](#p_ftw_y2y_djc)|0.6|
+
+### backupStorageRefs
+|Name|Type|Description|Since|
+|----|----|-----------|-----|
+|imageUuid|String|Image UUID|0.6|
+|backupStorageUuid|String|Backup storage UUID|0.6|
+|installPath|String|Installation path on the image server|0.6|
+|exportUrl|String|URL of the exported image|3.9.0|
+|exportMd5Sum|String|MD5 value of the exported image|3.9.0|
+|status|String|Image readiness status|0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+
+### error
+|Name|Type|Description|Since|
+|----|----|-----------|-----|
+|ode|String|Error code, which is the globally unique identifier of the error, such as SYS.1000 or HOST.1001|0.6|
+|description|String|Summary description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. The default value is null.|0.6|
+|opaque|LinkedHashMap|Reserved field. The default value is null.|0.6|
+|cause|ErrorCode|Root error that caused the current error. If there is no original error, this field is null.|0.6|
+
+## SDK Example
+Java SDK
+
+```
+GetZMigrateImagesAction action = new GetZMigrateImagesAction();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetZMigrateImagesAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = GetZMigrateImagesAction()
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

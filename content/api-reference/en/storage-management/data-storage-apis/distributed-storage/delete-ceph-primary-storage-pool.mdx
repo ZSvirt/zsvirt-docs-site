@@ -1,0 +1,61 @@
+---
+title: "Delete Distributed Storage Pool"
+---
+
+<APIPage method="DELETE" path="/v1/primary-storage/ceph/pools/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Examples
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/primary-storage/ceph/pools/5d9ee6f791d33de3a3aff68f7a746282?
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Resource UUID, uniquely identifies the resource| |0.6|
+|systemTags \(optional\)|List|body| | |0.6|
+|userTags \(optional\)|List|body| | |0.6|
+
+## API Response
+When the API succeeds, it returns an empty JSON structure **`{}`**. When an error occurs, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DeleteCephPrimaryStoragePoolAction action = new DeleteCephPrimaryStoragePoolAction();
+action.uuid = "5d9ee6f791d33de3a3aff68f7a746282";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteCephPrimaryStoragePoolAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteCephPrimaryStoragePoolAction action = DeleteCephPrimaryStoragePoolAction()
+action.uuid = "5d9ee6f791d33de3a3aff68f7a746282"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DeleteCephPrimaryStoragePoolAction.Result res = action.call()
+```
+
+</APIPage>

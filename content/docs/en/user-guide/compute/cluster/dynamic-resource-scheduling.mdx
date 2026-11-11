@@ -1,0 +1,58 @@
+---
+title: 'Cluster DRS'
+---
+
+Dynamic Resource Scheduling (DRS): Monitors CPU or memory load on hosts at the cluster level and dynamically adjusts virtual machine services running on hosts according to configured scheduling policies.
+
+ZSvirt supports both manual and automatic scheduling strategies, both of which can balance cluster loads and effectively improve platform stability:
+
+-   Manual scheduling strategy provides scheduling suggestions, allowing you to manually migrate virtual machines according to the suggestions.
+-   Automatic scheduling strategy, where the system automatically performs resource scheduling based on scheduling algorithms.
+
+The basic process for using dynamic resource scheduling is:
+
+1.  Configure the dynamic resource scheduling policy.
+2.  Execute dynamic resource scheduling operations.
+
+## Configure DRS
+**Prerequisites**: To enable or use the dynamic resource scheduling feature, ensure that the cluster meets the following conditions:
+
+-   The cluster only attaches ZCE distributed storage or SAN storage.
+-   All hosts in the cluster have consistent CPU models.
+
+**Configure Dynamic Resource Scheduling**:
+
+The platform provides multiple entry points for configuring dynamic resource scheduling policies. You can configure dynamic resource scheduling policies from the following two main entry points:
+
+-   In the target cluster DRS tab, click **Enable** to configure the settings.
+-   In the navigation bar on the left side of the platform page, click **Business Reliability** &gt; **DRS Policy**, then in the target cluster, click **Actions** &gt; **Modify Policy** to configure the settings.
+
+You can configure dynamic resource scheduling policies as follows:
+
+-   **Resource Type**: Default is compute resources, currently not modifiable.
+-   **Scheduling Policy**: Supports manual and automatic scheduling modes:
+    -   Manual Scheduling: After the CPU utilization or memory utilization of hosts in the cluster reaches the specified threshold, you manually execute resource scheduling based on the scheduling suggestions.
+    -   Automatic Scheduling: After the CPU utilization or memory utilization of hosts in the cluster reaches the specified threshold, the system automatically executes resource scheduling based on scheduling algorithms.
+-   **Monitoring Items**: Select the monitoring items for hosts, including: CPU utilization, memory utilization, CPU or memory utilization
+    -   **CPU Utilization**: Define the trigger conditions for the CPU utilization monitoring item.
+    -   **Memory Utilization**: Define the trigger conditions for the memory utilization monitoring item.
+-   **Duration**: Define the duration for the threshold, units include: seconds, minutes, hours.
+-   **DRS VM Migration Concurrency**: Number of virtual machines concurrently migrated during dynamic resource scheduling. Default is 1.
+-   **DRS Cluster Scan Interval**: Time interval for scanning the cluster balance status during dynamic resource scheduling. Default is 10 minutes.
+
+<Callout type="info">
+If any host in the cluster reaches the threshold for the monitoring item trigger condition and meets the duration, it can be determined that the cluster state is imbalanced, and scheduling suggestions will be given.
+</Callout>
+
+## Execute Dynamic Resource Scheduling Operations
+After configuring dynamic resource scheduling, you can perform the following operations:
+
+-   Manually scan the cluster balance status.
+-   If set to manual scheduling, you can migrate virtual machines to recommended hosts based on scheduling suggestions to balance the cluster load.
+-   You can view scheduling execution history, results, and times in **O&M Management** &gt; **Tasks** &gt; **Scheduling Tasks**. By default, the last 7 days of data are displayed. You can customize the time period to view execution history and search execution history by virtual machine UUID.
+-   You can reconfigure the dynamic resource scheduling policy.
+-   You can disable cluster dynamic resource scheduling.
+
+    <Callout type="info">
+    This may result in an inability to balance host loads in high-load scenarios, affecting business performance. Proceed with caution.
+    </Callout>

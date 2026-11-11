@@ -1,0 +1,172 @@
+---
+title: "Add NVMe Server"
+---
+
+<APIPage method="POST" path="/v1/storage-devices/nvme/servers">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "ip": "10.0.0.201",
+    "port": 4420
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"ip":"10.0.0.201","port":4420}}' \
+http://localhost:8080/zstack/v1/storage-devices/nvme/servers
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|name \(Optional\)|String|body \(included in `params` structure\)|Name| |4.7.21|
+|ip|String|body \(included in `params` structure\)|IP address| |4.7.21|
+|port \(Optional\)|Integer|body \(included in `params` structure\)|Port| |4.7.21|
+|transport|String|body \(included in `params` structure\)|Target transport type| |4.7.21|
+|resourceUuid \(Optional\)|String|body \(included in `params` structure\)|Resource UUID| |4.7.21|
+|tagUuids \(Optional\)|List|body \(included in `params` structure\)|Tag UUID list| |4.7.21|
+|systemTags \(Optional\)|List|body|System Tag| |4.7.21|
+|userTags \(Optional\)|List|body|User Tag| |4.7.21|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "13b261814cc036629e76e2e218d3c764",
+    "name": "nvme-server-10.0.0.201",
+    "ip": "10.0.0.201",
+    "port": 3260,
+    "state": "Enabled",
+    "createDate": "Nov 14, 2017 2:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.7.21|
+|inventory|NvmeServerInventory|For details, see [inventory](#p_ajf_kd1_t2c)|4.7.21|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. For details, see [error](#p_y5j_wd1_t2c)|4.7.21|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|4.7.21|
+|name|String|Resource name|4.7.21|
+|ip|String| |4.7.21|
+|port|Integer| |4.7.21|
+|state|String| |4.7.21|
+|transport|String| |4.7.21|
+|createDate|Timestamp|Creation time|4.7.21|
+|lastOpDate|Timestamp|Last modification time|4.7.21|
+|nvmeTargets|List|For details, see [nvmeTargets](#p_dtm_md1_t2c)|4.7.21|
+|nvmeClusterRefs|List|For details, see [nvmeClusterRefs](#p_mdm_5d1_t2c)|4.7.21|
+
+### nvmeTargets
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|4.6.21|
+|name|String|Resource name|4.6.21|
+|nqn|String|NVMe Qualified Name|4.6.21|
+|nvmeServerUuid|String|NVMe server UUID|4.7.21|
+|state|String|State|4.6.21|
+|createDate|Timestamp|Creation time|4.6.21|
+|lastOpDate|Timestamp|Last modification time|4.6.21|
+|nvmeLuns|List|For details, see [nvmeLuns](#p_ivv_4d1_t2c)|4.6.21|
+
+### nvmeLuns
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|nvmeTargetUuid|String|NVMe device UUID|4.6.21|
+|name|String|Resource name|4.6.21|
+|uuid|String|Resource UUID, uniquely identifies the resource|4.6.21|
+|wwid|String|Global unique identifier|4.6.21|
+|vendor|String|Vendor|4.6.21|
+|model|String|Model|4.6.21|
+|wwn|String| |4.6.21|
+|serial|String|Serial number|4.6.21|
+|type|String|Type|4.6.21|
+|hctl|String| |4.6.21|
+|path|String|Path|4.6.21|
+|state|String|State|4.6.21|
+|size|Long|Size|4.6.21|
+|multipathDeviceUuid|String|Multipath device UUID|4.6.21|
+|source|String|Disk source, NVMe|4.6.21|
+|createDate|Timestamp|Creation time|4.6.21|
+|lastOpDate|Timestamp|Last modification time|4.6.21|
+|nvmeLunHostRefs|List|For details, see [nvmeLunHostRefs](#p_w2p_sd1_t2c)|4.6.21|
+
+### nvmeLunHostRefs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|nvmeLunUuid|String|NVMe disk UUID|4.6.21|
+|hostUuid|String|Host UUID|4.6.21|
+|path|String|Disk path|4.6.21|
+|hctl|String|Disk HCTL|4.6.21|
+|createDate|Timestamp|Creation time|4.6.21|
+|lastOpDate|Timestamp|Last modification time|4.6.21|
+
+### nvmeClusterRefs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|nvmeServerUuid|String| |4.7.21|
+|clusterUuid|String|Cluster UUID|4.7.21|
+|createDate|Timestamp|Creation time|4.7.21|
+|lastOpDate|Timestamp|Last modification time|4.7.21|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief summary of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause: the source error that triggered the current error. If there is no original error, this field is null|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+AddNvmeServerAction action = new AddNvmeServerAction();
+action.ip = "10.0.0.201";
+action.port = 4420;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddNvmeServerAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddNvmeServerAction action = AddNvmeServerAction()
+action.ip = "10.0.0.201"
+action.port = 4420
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddNvmeServerAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,364 @@
+---
+title: "更新iSCSI服务器配置"
+---
+
+<APIPage method="POST" path="/v1/storage-devices/iscsi/servers">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateIscsiServer": {
+    "name": "test-iscsi-server"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateIscsiServer":{"name":"test-iscsi-server"}}' http://localhost:8080/zstack/v1/storage-devices/iscsi/servers/98d2177199ca301d9fd842eace2dbc67/actions
+```
+
+参数列表
+
+<table id="table_fbf_qxd_z2b"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+资源的UUID，唯一标示该资源
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+name \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+资源名称
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+chapUserName \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+CHAP用户名
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+chapUserPassword \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+CHAP密码
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+state \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+启用状态
+
+</td><td>
+
+-   Enabled
+-   Disabled
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+resourceUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr></tbody>
+</table>
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "0b77c2e947ca3b40b79f6342728ec8fc",
+    "name": "iscsi-server-10.0.0.201",
+    "ip": "10.0.0.201",
+    "port": 3260.0,
+    "chapUserName": "username",
+    "chapUserPassword": "password",
+    "state": "Enabled",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_cxh_z12_z2b)|3.0.0|
+|inventory|IscsiServerInventory|详情参考[inventory](#p_sym_z12_z2b)|3.0.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.0.0|
+|description|String|错误的概要描述|3.0.0|
+|details|String|错误的详细信息|3.0.0|
+|elaboration|String|保留字段，默认为null|3.0.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.0.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.0.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.0.0|
+|name|String|资源名称|3.0.0|
+|ip|String|IP地址|3.0.0|
+|port|Integer|端口|3.0.0|
+|chapUserName|String|CHAP用户名|3.0.0|
+|chapUserPassword|String|CHAP密码|3.0.0|
+|state|String|启用状态|3.0.0|
+|createDate|Timestamp|创建时间|3.0.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.0.0|
+|iscsiTargets|List|详情参考[iscsiTargets](#p_tds_z12_z2b)|3.0.0|
+|iscsiClusterRefs|List|详情参考[iscsiClusterRefs](#p_y51_1b2_z2b)|3.0.0|
+
+### iscsiTargets
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|iscsiServerUuid|String|iSCSI服务器UUID|3.0.0|
+|uuid|String|资源的UUID，唯一标示该资源|3.0.0|
+|iqn|String|iSCSI IQN|3.0.0|
+|createDate|Timestamp|创建时间|3.0.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.0.0|
+|iscsiLuns|List|详情参考[iscsiLuns](#p_cmw_z12_z2b)|3.0.0|
+
+### iscsiLuns
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.0.0|
+|iscsiTargetUuid|String|iSCSI目标UUID|3.0.0|
+|wwid|String|唯一识别ID|3.0.0|
+|vendor|String|设备供应商|3.0.0|
+|model|String|设备型号|3.0.0|
+|wwn|String|设备WWN|3.0.0|
+|serial|String|设备序列号|3.0.0|
+|hctl|String|SCSI设备HCTL|3.0.0|
+|type|String|设备类型|3.0.0|
+|path|String|设备路径|3.0.0|
+|size|Long|设备大小|3.0.0|
+|createDate|Timestamp|创建时间|3.0.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.0.0|
+
+### iscsiClusterRefs
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|iscsiServerUuid|String| |3.0.0|
+|clusterUuid|String|集群UUID|3.0.0|
+|createDate|Timestamp|创建时间|3.0.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.0.0|
+
+## SDK示例
+Java SDK
+
+```
+UpdateIscsiServerAction action = new UpdateIscsiServerAction();
+action.uuid = "98d2177199ca301d9fd842eace2dbc67";
+action.name = "test-iscsi-server";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateIscsiServerAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateIscsiServerAction action = UpdateIscsiServerAction()
+action.uuid = "98d2177199ca301d9fd842eace2dbc67"
+action.name = "test-iscsi-server"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateIscsiServerAction.Result res = action.call()
+```
+
+</APIPage>

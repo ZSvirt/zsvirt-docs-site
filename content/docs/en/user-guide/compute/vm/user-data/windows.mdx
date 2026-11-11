@@ -1,0 +1,41 @@
+---
+title: 'Import User Data to Windows VMs'
+---
+
+-   Before importing User Data, ensure the VM image has Cloudbase-init installed. Recommended version: 0.9.11. [For more information about Cloudbase-init, see Cloudbase Documentation](https://cloudbase.it/cloudbase-init/).
+-   When setting hostname and SSH password via User Data, avoid configuring these parameters again on the platform to prevent conflicts.
+-   For Windows VMs created from images with pre-installed Cloudbase-init, you must import User Data. Otherwise, Cloudbase-init task will wait until timeout.
+
+1.  Prepare the User Data script for your desired functionality.
+
+    Example script:
+
+    ```
+    #cloud-config
+    write_files:
+       -   encoding: b64
+           content: NDI=
+           path: C:\b64
+           permissions: '0644'
+       -   encoding: base64
+           content: NDI=
+           path: C:\b64_1
+           permissions: '0644'
+       -   encoding: gzip
+           content: !!binary |
+               H4sIAGUfoFQC/zMxAgCIsCQyAgAAAA==
+           path: C:\gzip
+           permissions: '0644'
+    ```
+
+    This example script creates three files during VM startup: `b64`, `b64_1`, `gzip` on the C drive.
+
+2.  In the navigation pane, choose **Inventory**.
+
+3.  In the inventory, right-click a cluster, host, or image, then select **New Virtual Machine**
+
+4.  In the New Virtual Machine dialog, select **Advanced Settings** &gt; **General Options**.
+
+5.  Paste your script into the **User Data** input field.
+
+6.  Complete the VM creation process to import the User Data.

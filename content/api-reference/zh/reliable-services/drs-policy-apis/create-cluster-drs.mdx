@@ -1,0 +1,384 @@
+---
+title: "创建集群DRS"
+---
+
+<APIPage method="POST" path="/v1/clusters/{clusterUuid}/drs">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "test",
+    "automationLevel": "Automatic",
+    "thresholds": [
+      {
+        "thresholdName": "cpuUsedPercentThreshold",
+        "thresholdValue": "90",
+        "operator": ">="
+      }
+    ],
+    "thresholdDuration": 10,
+    "defaultEnable": true
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"test","automationLevel":"Automatic","thresholds":[{"thresholdName":"cpuUsedPercentThreshold","thresholdValue":"90","operator":">="}],"thresholdDuration":10,"defaultEnable":true}}' \
+http://localhost:8080/zstack/v1/clusters/ff0bcb94de7a3567b641d3fde2329d00/drs
+```
+
+参数列表
+
+<table id="table_zqz_gjb_w2c"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+name
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+资源名称
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.0.0
+
+</td></tr><tr><td>
+
+description \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+资源的详细描述
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.0.0
+
+</td></tr><tr><td>
+
+clusterUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+集群UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.0.0
+
+</td></tr><tr><td>
+
+automationLevel
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+调度是手动触发还是自动触发
+
+</td><td>
+
+-   Automatic
+-   Manual
+
+</td><td>
+
+4.0.0
+
+</td></tr><tr><td>
+
+thresholds
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+阈值判断项目
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.0.0
+
+</td></tr><tr><td>
+
+thresholdDuration
+
+</td><td>
+
+Integer
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+阈值判断时长。系统将查询从现在往前 thresholdDuration 的时段的负载数据进行统计，算出的结果和阈值比较来判断集群是否需要调度
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.0.0
+
+</td></tr><tr><td>
+
+defaultEnable \(可选\)
+
+</td><td>
+
+boolean
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+集群DRS的启用状态，刚创建完是启用还是禁用
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.0.0
+
+</td></tr><tr><td>
+
+resourceUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+资源UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.0.0
+
+</td></tr><tr><td>
+
+tagUuids \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+标签UUID列表
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.4.0
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.0.0
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.0.0
+
+</td></tr></tbody>
+</table>
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+CreateClusterDRSAction action = new CreateClusterDRSAction();
+action.name = "test";
+action.clusterUuid = "ff0bcb94de7a3567b641d3fde2329d00";
+action.automationLevel = "Automatic";
+action.thresholds = asList([thresholdName:cpuUsedPercentThreshold, thresholdValue:90, operator:>=]);
+action.thresholdDuration = 10;
+action.defaultEnable = true;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateClusterDRSAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateClusterDRSAction action = CreateClusterDRSAction()
+action.name = "test"
+action.clusterUuid = "ff0bcb94de7a3567b641d3fde2329d00"
+action.automationLevel = "Automatic"
+action.thresholds = [[thresholdName:cpuUsedPercentThreshold, thresholdValue:90, operator:>=]]
+action.thresholdDuration = 10
+action.defaultEnable = true
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateClusterDRSAction.Result res = action.call()
+```
+
+</APIPage>

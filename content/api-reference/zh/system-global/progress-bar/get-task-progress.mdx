@@ -1,0 +1,97 @@
+---
+title: "获取任务进度"
+---
+
+<APIPage method="GET" path="/v1/task-progresses/{apiId}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/task-progresses/7b016e3d2b4647e9abe3183728f77e57?all=false
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|apiId \(可选\)|String|url|任务对应的API ID| |1.11|
+|all \(可选\)|boolean|query|指定获取所有进度信息| |1.11|
+|systemTags \(可选\)|List|query|系统标签| |1.11|
+|userTags \(可选\)|List|query|用户标签| |1.11|
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "taskUuid": "931102503f64436ea649939ff3957406",
+      "taskName": "org.zstack.header.vm.APICreateVmInstanceMsg",
+      "type": "Task",
+      "content": "Choose backup storage for downloading the image",
+      "time": 1510669257141.0
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_dyp_ssw_wbb)|0.6|
+|inventories|List|详情参考[inventories](#p_qst_ssw_wbb)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|taskUuid|String| |0.6|
+|taskName|String| |0.6|
+|parentUuid|String| |0.6|
+|type|String| |0.6|
+|content|String| |0.6|
+|opaque|LinkedHashMap| |0.6|
+|time|Long| |0.6|
+|totalSteps|Integer| |0.6|
+|currentStep|Integer| |0.6|
+|subTasks|List|详情参考subTasks|0.6|
+
+## SDK示例
+Java SDK
+
+```
+GetTaskProgressAction action = new GetTaskProgressAction();
+action.apiId = "00c035b586634edeb3bfb21f17e02b40";
+action.all = false;
+action.sessionId = "dea874a205c04a838e46ff6f48294add";
+GetTaskProgressAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetTaskProgressAction action = GetTaskProgressAction()
+action.apiId = "82f5efb211394297b1d6a4f8d5e5618e"
+action.all = false
+action.sessionId = "2100b95ab4064c81acc5db473b2a1ef6"
+GetTaskProgressAction.Result res = action.call()
+```
+
+</APIPage>

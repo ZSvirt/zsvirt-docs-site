@@ -1,0 +1,141 @@
+---
+title: "恢复虚拟机备份"
+---
+
+<APIPage method="PUT" path="/v1/vm-backups/{groupUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "recoverVmBackupFromImageStoreBackupStorage": {
+    "srcBackupStorageUuid": "c63b10a638f6302caeabb7a806d087ad",
+    "dstBackupStorageUuid": "7c7d653af1c531dfa04dabea3a085de5"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"recoverVmBackupFromImageStoreBackupStorage":{"srcBackupStorageUuid":"c63b10a638f6302caeabb7a806d087ad","dstBackupStorageUuid":"7c7d653af1c531dfa04dabea3a085de5"}}' http://localhost:8080/zstack/v1/vm-backups/7913ce9f37973f4e8339aea4ff61584c/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|groupUuid|String|url|虚拟机备份组uuid| |3.0.0|
+|srcBackupStorageUuid|String|body\(包含在**recoverVmBackupFromImageStoreBackupStorage**结构中\)|本地镜像仓库| |3.0.0|
+|dstBackupStorageUuid|String|body\(包含在**recoverVmBackupFromImageStoreBackupStorage**结构中\)|备份镜像仓库| |3.0.0|
+|systemTags \(可选\)|List|body| | |3.0.0|
+|userTags \(可选\)|List|body| | |3.0.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "5e28a0c27a8e352bbeedff94a0326f9e",
+      "volumeUuid": "aa5fbdba3ffa352bbefaf913f56949f3",
+      "name": "Root-Volume-Backup-1",
+      "description": "volume backup",
+      "size": 1073741824.0,
+      "groupUuid": "0150a8120f9334db8e9abc9d3f5eea08",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    },
+    {
+      "uuid": "5924c90ddbcb3784ae6e78b70ede90ce",
+      "volumeUuid": "12d583f519f03a0593dff7514af65be4",
+      "name": "Data-Volume-Backup-1",
+      "description": "volume backup",
+      "size": 2147483648.0,
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_zfy_3vx_y2b)|3.0.0|
+|inventories|List|详情参考[inventories](#p_a5f_jvx_y2b)|3.0.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.0.0|
+|description|String|错误的概要描述|3.0.0|
+|details|String|错误的详细信息|3.0.0|
+|elaboration|String|保留字段，默认为null|3.0.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.0.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.0.0|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|硬盘备份的UUID，唯一标示该资源|3.0.0|
+|volumeUuid|String|硬盘UUID|3.0.0|
+|name|String|备份名称|3.0.0|
+|description|String|备份的详细描述|3.0.0|
+|type|String|硬盘的类型|3.0.0|
+|state|String|硬盘备份的启用状态|3.0.0|
+|status|String|硬盘备份的状态|3.0.0|
+|size|Long|当前硬盘备份的大小|3.0.0|
+|metadata|String|硬盘备份相关元数据|3.0.0|
+|createDate|Timestamp|创建时间|3.0.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.0.0|
+|backupStorageRefs|List|详情参考[backupStorageRefs](#p_g4l_jvx_y2b)|3.0.0|
+
+### backupStorageRefs
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|volumeBackupUuid|String|硬盘备份的uuid|3.0.0|
+|backupStorageUuid|String|镜像存储UUID|3.0.0|
+|installPath|String|硬盘备份的数据路径|3.0.0|
+|status|String|硬盘备份在镜像存储的状态|3.0.0|
+|createDate|Timestamp|创建时间|3.0.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.0.0|
+
+## SDK示例
+Java SDK
+
+```
+RecoverVmBackupFromImageStoreBackupStorageAction action = new RecoverVmBackupFromImageStoreBackupStorageAction();
+action.groupUuid = "7913ce9f37973f4e8339aea4ff61584c";
+action.srcBackupStorageUuid = "c63b10a638f6302caeabb7a806d087ad";
+action.dstBackupStorageUuid = "7c7d653af1c531dfa04dabea3a085de5";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RecoverVmBackupFromImageStoreBackupStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+RecoverVmBackupFromImageStoreBackupStorageAction action = RecoverVmBackupFromImageStoreBackupStorageAction()
+action.groupUuid = "7913ce9f37973f4e8339aea4ff61584c"
+action.srcBackupStorageUuid = "c63b10a638f6302caeabb7a806d087ad"
+action.dstBackupStorageUuid = "7c7d653af1c531dfa04dabea3a085de5"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+RecoverVmBackupFromImageStoreBackupStorageAction.Result res = action.call()
+```
+
+</APIPage>

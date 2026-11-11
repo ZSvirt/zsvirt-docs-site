@@ -1,0 +1,88 @@
+---
+title: "查询钉钉@用户"
+---
+
+<APIPage method="GET" path="/v1/sns/application-endpoints/ding-talk/at-persons" altPaths={["/v1/sns/application-endpoints/ding-talk/at-persons/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/sns/application-endpoints/ding-talk/at-persons?q=uuid=bc09a0f65270322da363ad99552b234e&q=endpointUuid=a4e3535bc4663b15832d7cc091855e13
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/sns/application-endpoints/ding-talk/at-persons/38f8430ba7c9331d9d6d920072d7bf27
+```
+
+可查询字段
+
+运行zstack-cli命令行工具，输入`QuerySNSDingTalkAtPerson`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+该API成功时返回一个空的JSON结构**`{}`**，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "234f8735703a38ecb840cfe9042bc945",
+      "phoneNumber": "13062689903",
+      "endpointUuid": "9488e18c34b933f5a06d1f45301c7f20"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.2.0|
+|inventories|List|详情参考[inventories](#p_ywy_chy_p1b)|4.2.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_b1q_chy_p1b)|4.2.0|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.2.0|
+|phoneNumber|String|手机号码|4.2.0|
+|endpointUuid|String|钉钉Endpoint UUID|4.2.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|5.0.0|
+|description|String|错误的概要描述|5.0.0|
+|details|String|错误的详细信息|5.0.0|
+|elaboration|String|保留字段，默认为null|5.0.0|
+|opaque|LinkedHashMap|保留字段，默认为null|5.0.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|5.0.0|
+
+## SDK示例
+Java SDK
+
+```
+QuerySNSDingTalkAtPersonAction action = new QuerySNSDingTalkAtPersonAction();
+action.conditions = asList("uuid=3806b82167a33673b5067831090f317d","endpointUuid=c36e1b34d3e73db7a53e067da95de3d5");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QuerySNSDingTalkAtPersonAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QuerySNSDingTalkAtPersonAction action = QuerySNSDingTalkAtPersonAction()
+action.conditions = ["uuid=b836d745aa623217838bc9d0ecb3bb1f","endpointUuid=dc9f00eecd1837e484bde65bf53f45a1"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QuerySNSDingTalkAtPersonAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,314 @@
+---
+title: "Get CPU and Memory Capacity"
+---
+
+<APIPage method="GET" path="/v1/hosts/capacities/cpu-memory">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/hosts/capacities/cpu-memory?zoneUuids=6510dcd4e77939d695b035ecbcfb217c&zoneUuids=33a39cd9391538a4a4d45666e8505dda&clusterUuids=b7c233dd9c573f63b5bb97f50028fa7f&clusterUuids=08d332af6fdb351da456aea3b6b5d029&hostUuids=ba1bfc20682136c4b2f76920af8f010e&hostUuids=b09cd47a6fa93302ae55918ef8da2af4&hypervisorType=KVM&all=true
+```
+
+Parameter List
+
+<table id="table_f4d_mpl_l1b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+zoneUuids \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+Data Center UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+clusterUuids \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+Cluster UUID. Used for attaching networks, storage, etc.
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+hostUuids \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+Host UUID. Used for adding, deleting hosts, etc.
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+all \(Optional\)
+
+</td><td>
+
+boolean
+
+</td><td>
+
+query
+
+</td><td>
+
+-   Defaults to false. When false, at least one of Data Center UUID, Cluster UUID, or Host UUID must be specified, or all can be specified
+-   When set to true, Data Center UUID, Cluster UUID, and Host UUID can all be omitted
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+hypervisorType \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+ 
+
+</td><td>
+
+-   KVM
+-   ESC
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+System tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+User tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "totalCpu": 4.0,
+  "availableCpu": 2.0,
+  "totalMemory": 8.0,
+  "availableMemory": 4.0,
+  "managedCpuNum": 4.0,
+  "capacityData": [
+    {
+      "resourceUuid": "db558260b0b53e36aa8ebf7e40c7c9c6",
+      "totalCpu": 4.0,
+      "availableCpu": 2.0,
+      "totalMemory": 8.0,
+      "availableMemory": 4.0,
+      "managedCpuNum": 4.0
+    }
+  ],
+  "resourceType": "HostVO"
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|totalCpu|long|Total CPU count|0.6|
+|availableCpu|long|Available CPU count|0.6|
+|totalMemory|long|Total memory|0.6|
+|availableMemory|long|Available memory|0.6|
+|managedCpuNum|long|Number of managed physical CPUs|2.5.0|
+|resourceType|String|The type of queried resource \(Host, Cluster, Data Center\)|3.9.0|
+|success|boolean|Success|0.6|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_e2b_zpl_l1b) for details|0.6|
+|capacityData|List|See [capacityData](#p_lcf_nhl_plb) for details|3.9.0|
+|error|ErrorCode|See [error](#p_jzz_mhl_plb) for details|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|The detailed error information|0.6|
+|elaboration|String|Reserved field. Default is null|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null|0.6|
+|cause|ErrorCode|The root error that caused the current error. If no root error exists, this field is null|0.6|
+
+### capacityData
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|resourceUuid|String|Resource UUID|3.9.0|
+|totalCpu|long|Total CPU count|3.9.0|
+|availableCpu|long|Available CPU count|3.9.0|
+|totalMemory|long|Total memory|3.9.0|
+|availableMemory|long|Available memory|3.9.0|
+|managedCpuNum|long|Number of managed physical CPUs|3.9.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|The detailed error information|0.6|
+|elaboration|String|Reserved field. Default is null|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null|0.6|
+|cause|ErrorCode|The root error that caused the current error. If no root error exists, this field is null|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+GetCpuMemoryCapacityAction action = new GetCpuMemoryCapacityAction();
+action.zoneUuids = asList("79383afd88f54a0b994515d84dbfa447","907c8ca71ee440e3bb0327f19d60754a");
+action.clusterUuids = asList("9f5431123b834d95ae642c3cb923ba32","09cdcc7e28f340ccace7c427a32e2c05");
+action.hostUuids = asList("2926839176934652ac3c6a77e4ce1484","c1b46284d0dd4d2a8a7637f0d4792d31");
+action.hypervisorType = "KVM";
+action.all = true;
+action.sessionId = "f3aedb623b3c47a7bb215ea3f4be90d7";
+GetCpuMemoryCapacityAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetCpuMemoryCapacityAction action = GetCpuMemoryCapacityAction()
+action.zoneUuids = [28cd4ea55a72429d815205b0738b87b3, 2571613b0ba642b7a1c99ddc17aee8e3]
+action.clusterUuids = [3e9e56c96fa545fea0b759cb601aad1c, 98ec43d31af446a9bf290b117af95e52]
+action.hostUuids = [b5cf96f88a1943f89417d6bea0715b6c, b358d13ac15049a581e47c76183c1358]
+action.hypervisorType = "KVM"
+action.all = true
+action.sessionId = "b0b7e398d33d4d7893255547d0859731"
+GetCpuMemoryCapacityAction.Result res = action.call()
+```
+
+</APIPage>

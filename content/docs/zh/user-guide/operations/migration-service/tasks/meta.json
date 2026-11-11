@@ -1,0 +1,12 @@
+{
+  "title": "迁移任务管理",
+  "pages": [
+    "index",
+    "create-task",
+    "sync-task",
+    "create-test-vm",
+    "cutover",
+    "delete-task"
+  ],
+  "pagesIndex": "index"
+}

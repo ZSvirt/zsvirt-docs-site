@@ -1,0 +1,32 @@
+---
+title: 'Manage Joined Hosts'
+---
+
+1.  In the navigation pane, choose **Inventory** &gt; **Network Resource**.
+
+2.  In the resource tree, select a target distributed switch.
+
+3.  On the target distributed switch's details page, click the **Uplink** tab.
+
+4.  In the Joined Host list, select a target host.
+
+    1.  (Optional) To add new ports to this bond, click **Actions** &gt; **Add Physical Network Interface**.
+
+        <Callout type="info">
+        </Callout>
+        1.  You can only add ports that are not currently bonded.
+        2.  New ports must have the same speed as existing ports in the bond.
+        3.  A bond supports a maximum of 8 physical ports.
+    2.  (Optional) To remove physical ports from the bond, click **Actions** &gt; **Remove Physical Network Interface**.
+
+        <Callout type="info">
+        You must keep at least 1 physical port.
+        </Callout>
+
+    3.  (Optional) To remove the host's entire uplink, click **Actions** &gt; **Disconnect Host Uplink**.
+
+        <Callout type="info">
+        </Callout>
+        1.  Disconnecting host uplink will delete all bonds on this host. Proceed with caution.
+        2.  This action will also detach all VM NICs on this host. Proceed with caution.
+        3.  The default distributed switch does not support disconnecting host uplink.

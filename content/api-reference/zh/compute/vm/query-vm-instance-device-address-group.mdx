@@ -1,0 +1,118 @@
+---
+title: "查询虚拟机设备地址组"
+---
+
+<APIPage method="GET" path="/v1/vmInstance/device/address/group" altPaths={["/v1/vmInstance/device/address/group/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vmInstance/device/address/group?q=uuid=15faf301daf53b75a5292b501110397e
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vmInstance/device/address/group/ce8802c036843741bfd429cddb5c0f26
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryVmInstanceDeviceAddressGroup`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "77cc648bcbda321f9b5982627618b57f",
+      "resourceUuid": "b28bd07303de3b8bb88ecc45778ebc10",
+      "createDate": "Nov 14, 2017 2:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 2:20:57 PM",
+      "addressList": [
+        {
+          "id": 1,
+          "resourceUuid": "664783c1fb2432b6944602836377d61f",
+          "vmInstanceUuid": "7f29c11b15b3348a95bc368b4ab60efb",
+          "deviceAddress": "{\"bus\":\"00\",\"domain\":\"0000\",\"slot\":\"0d\",\"function\":\"0\"}",
+          "addressGroupUuid": "77cc648bcbda321f9b5982627618b57f",
+          "metadata": "{\"uuid\":\"726104d38c423fecac45c39a258b1338\",\"name\":\"Root-Volume-For-VM-70f0a99c825d3bed98c95932e5cd6d0b\",\"primaryStorageUuid\":\"0a2c36ffd5ff39d6a4ffd3d6a2a60ea8\",\"vmInstanceUuid\":\"70f0a99c825d3bed98c95932e5cd6d0b\",\"diskOfferingUuid\":\"a0c51ff80bba366d8350d63d02d56346\",\"rootImageUuid\":\"8473469c3e833afbb02db9ed227787bd\",\"installPath\":\"/zstack_ps/rootVolumes/acct-36c27e8ff05c4780bf6d2fa65700f22e/vol-726104d38c423fecac45c39a258b1338/726104d38c423fecac45c39a258b1338.qcow2\",\"type\":\"Root\",\"format\":\"qcow2\",\"size\":107374182400,\"actualSize\":21474836480,\"deviceId\":0,\"state\":\"Enabled\",\"status\":\"Ready\",\"createDate\":\"Nov 14, 2017 2:20:57 PM\",\"lastOpDate\":\"Nov 14, 2017 2:20:57 PM\"}",
+          "metadataClass": "org.zstack.header.vm.devices.VmInstanceDeviceAddressGroupInventory",
+          "createDate": "Nov 14, 2017 2:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+        }
+      ]
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.4.24|
+|inventories|List|详情参考[inventories](#p_sz4_zml_s2c)|4.4.24|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_t2p_bnl_s2c)|4.4.24|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.4.24|
+|resourceUuid|String|资源UUID|4.4.24|
+|vmInstanceUuid|String|虚拟机UUID|4.4.24|
+|createDate|Timestamp|创建时间|4.4.24|
+|lastOpDate|Timestamp|最后一次修改时间|4.4.24|
+|addressList|List|详情参考[addressList](#p_p2m_rnl_s2c)|4.4.24|
+
+### addressList
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|id|long| |4.4.24|
+|resourceUuid|String|资源UUID|4.4.24|
+|vmInstanceUuid|String|虚拟机UUID|4.4.24|
+|deviceAddress|String| |4.4.24|
+|addressGroupUuid|String| |4.4.24|
+|metadata|String| |4.4.24|
+|metadataClass|String| |4.4.24|
+|createDate|Timestamp|创建时间|4.4.24|
+|lastOpDate|Timestamp|最后一次修改时间|4.4.24|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+QueryVmInstanceDeviceAddressGroupAction action = new QueryVmInstanceDeviceAddressGroupAction();
+action.conditions = asList("uuid=c6ac07294e923ed09d8ac26fb0bcd2de");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryVmInstanceDeviceAddressGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryVmInstanceDeviceAddressGroupAction action = QueryVmInstanceDeviceAddressGroupAction()
+action.conditions = ["uuid=089878d0a83330a8a0a07c878266fc52"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryVmInstanceDeviceAddressGroupAction.Result res = action.call()
+```
+
+</APIPage>

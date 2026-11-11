@@ -1,0 +1,8 @@
+{
+  "title": "裸金属网络相关接口",
+  "pages": [
+    "create-baremetal-bonding",
+    "query-baremetal-bonding"
+  ],
+  "pagesIndex": "index"
+}

@@ -1,0 +1,64 @@
+---
+title: "Delete a Metric Data HTTP Receiver"
+---
+
+<APIPage method="DELETE" path="/v1/zwatch/metrics/httpreceivers/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/zwatch/metrics/httpreceivers/8a02129f4a5b3a2dad0d9136f90d5b08
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Resource UUID. Uniquely identifies the resource| |0.6|
+|deleteMode \(optional\)|String|body|Deletion mode \(Permissive / Enforcing, Permissive\)| |0.6|
+|systemTags \(optional\)|List|body|System tags| |0.6|
+|userTags \(optional\)|List|body|User tags| |0.6|
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DeleteMetricDataHttpReceiverAction action = new DeleteMetricDataHttpReceiverAction();
+action.uuid = "8a02129f4a5b3a2dad0d9136f90d5b08";
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteMetricDataHttpReceiverAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteMetricDataHttpReceiverAction action = DeleteMetricDataHttpReceiverAction()
+action.uuid = "8a02129f4a5b3a2dad0d9136f90d5b08"
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DeleteMetricDataHttpReceiverAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,106 @@
+---
+title: "Get Upload Image Job Details"
+---
+
+<APIPage method="PUT" path="/v1/images/upload-job/details/{imageId}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "setImageBootMode": {
+    "bootMode": "Legacy"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/images/upload-job/details/d41d8cd98f00b204e9800998ecf8427e?
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|imageId|String|url|Unique identifier for the image upload, user-defined, md5 recommended| |4.1.0|
+|systemTags \(Optional\)|List|body|System Tags| |4.1.0|
+|userTags \(Optional\)|List|body|User Tags| |4.1.0|
+
+## API Response
+Response Example
+
+```
+{
+  "existingJobDetails": [
+    {
+      "longJobUuid": "0792dd52aeb9329cb1e677fae6465f23",
+      "longJobState": "Suspended",
+      "imageUuid": "ccf943310d86335bb3d2511ca8e14137",
+      "imageUploadUrl": "http://127.0.0.1:8001/imagestore/upload",
+      "offset": 452984832.0
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.1.0|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_ldh_yqd_l1b)|4.1.0|
+|existingJobDetails| |See [existingJobDetails](#p_wyn_yqd_l1b)|4.1.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|4.1.0|
+|description|String|Brief description of the error|4.1.0|
+|details|String|Detailed error information|4.1.0|
+|elaboration|String|Reserved field, defaults to null|4.1.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|4.1.0|
+|cause|ErrorCode|Root cause. The source error that triggered the current error. This field is null if there is no original error|4.1.0|
+
+### existingJobDetails
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|longJobUuid|String|Long job UUID|4.1.0|
+|longJobState|String|Long job state|4.1.0|
+|imageUuid|String|Image UUID|4.1.0|
+|imageUploadUrl|String|Image upload URL|4.1.0|
+|offset|long|Upload offset, in bytes|4.1.0|
+
+## SDK Examples
+Java SDK
+
+```
+GetUploadImageJobDetailsAction action = new GetUploadImageJobDetailsAction();
+action.imageId = "d41d8cd98f00b204e9800998ecf8427e";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetUploadImageJobDetailsAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetUploadImageJobDetailsAction action = GetUploadImageJobDetailsAction()
+action.imageId = "d41d8cd98f00b204e9800998ecf8427e"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetUploadImageJobDetailsAction.Result res = action.call()
+```
+
+</APIPage>

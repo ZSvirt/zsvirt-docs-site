@@ -1,0 +1,444 @@
+---
+title: "创建主机Kernel适配器"
+---
+
+<APIPage method="POST" path="/v1/l2-networks/kernel-interfaces">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "zs-kernel",
+    "description": "test-description",
+    "hostUuid": "ac64f7d9591b34b5a9286d7124e9787c",
+    "l2NetworkUuid": "c68967a38bf132bf96f7ca42cdc5c47b",
+    "l3NetworkUuid": "1c9547c6bd89392e8c0f50efa83ac990",
+    "requiredIp": "172.16.1.1",
+    "netmask": "255.255.255.0",
+    "trafficTypes": [
+      "Management"
+    ]
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"zs-kernel","description":"test-description","hostUuid":"ac64f7d9591b34b5a9286d7124e9787c","l2NetworkUuid":"c68967a38bf132bf96f7ca42cdc5c47b","l3NetworkUuid":"1c9547c6bd89392e8c0f50efa83ac990","requiredIp":"172.16.1.1","netmask":"255.255.255.0","trafficTypes":["Management"]}}' http://localhost:8080/zstack/v1/l2-networks/kernel-interfaces
+```
+
+参数列表
+
+<table id="table_ekq_xkq_51c"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+name
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+资源名称
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+description \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+资源的详细描述
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+hostUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+主机UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+l2NetworkUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+端口组分布式交换机UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+l3NetworkUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+分布式端口组UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+requiredIp \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+请求的IP
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+netmask \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+网络掩码
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+trafficTypes \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+流量类型
+
+</td><td>
+
+-   Management
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+resourceUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+资源UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+tagUuids \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+标签UUID列表
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr></tbody>
+</table>
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "748beaeb70273060a8b599d871a195e6",
+    "name": "test-kernel",
+    "description": "test-kernel",
+    "hostUuid": "3a620091153d3027af5df7c27a0f8fd8",
+    "l2NetworkUuid": "f66b2fcb35ae3779a69447cf56a153e3",
+    "l3NetworkUuid": "c2372a1dd7ce338d80ce1de8c658e9a6",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.1.0|
+|inventory|HostKernelInterfaceInventory|详情参考[inventory](#p_mh4_sbk_51c)|4.1.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_m5s_sbk_51c)|4.1.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.1.0|
+|name|String|资源名称|4.1.0|
+|description|String|资源的详细描述|4.1.0|
+|hostUuid|String|主机UUID|4.1.0|
+|l2PortGroupUuid|String|端口组UUID|4.1.0|
+|l3NetworkUuid|String|分布式端口组UUID|4.1.0|
+|usedIps|List|IP配置|4.1.0|
+|trafficTypes|List|流量类型|4.1.0|
+|createDate|Timestamp|创建时间|4.1.0|
+|lastOpDate|Timestamp|最后一次修改时间|4.1.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.1.0|
+|description|String|错误的概要描述|4.1.0|
+|details|String|错误的详细信息|4.1.0|
+|elaboration|String|保留字段，默认为null|4.1.0|
+|opaque|LinkedHashMap|保留字段，默认为null|4.1.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.1.0|
+
+## SDK示例
+Java SDK
+
+```
+CreateHostKernelInterfaceAction action = new CreateHostKernelInterfaceAction();
+action.name = "zs-kernel";
+action.description = "test-description";
+action.hostUuid = "ac64f7d9591b34b5a9286d7124e9787c";
+action.l2NetworkUuid = "c68967a38bf132bf96f7ca42cdc5c47b";
+action.l3NetworkUuid = "1c9547c6bd89392e8c0f50efa83ac990";
+action.requiredIp = "172.16.1.1";
+action.netmask = "255.255.255.0";
+action.trafficTypes = asList("Management");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateHostKernelInterfaceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateHostKernelInterfaceAction action = CreateHostKernelInterfaceAction()
+action.name = "zs-kernel"
+action.description = "test-description"
+action.hostUuid = "ac64f7d9591b34b5a9286d7124e9787c"
+action.l2NetworkUuid = "c68967a38bf132bf96f7ca42cdc5c47b"
+action.l3NetworkUuid = "1c9547c6bd89392e8c0f50efa83ac990"
+action.requiredIp = "172.16.1.1"
+action.netmask = "255.255.255.0"
+action.trafficTypes = [Management]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateHostKernelInterfaceAction.Result res = action.call()
+```
+
+</APIPage>

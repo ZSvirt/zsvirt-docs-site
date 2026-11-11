@@ -1,0 +1,439 @@
+---
+title: "Update Image"
+---
+
+<APIPage method="PUT" path="/v1/images/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateImage": {
+    "platform": "Windows",
+    "virtio": false
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateImage":{"platform":"Windows","virtio":false}}' http://localhost:8080/zstack/v1/images/38549d5d5a3d3c5caefc18d8a9e0aa13/actions
+```
+
+Parameter List
+
+<table id="table_jjj_jzd_l1b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+Image UUID, uniquely identifies the Image
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+name \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Image name
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+description \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Detailed description of the Image
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+guestOsType \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Guest Operating System type corresponding to the Image
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+mediaType \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Image type
+
+</td><td>
+
+-   RootVolumeTemplate
+-   DataVolumeTemplate
+-   ISO
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+format \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Image format
+
+</td><td>
+
+-   raw
+-   qcow2
+-   iso
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+system \(Optional\)
+
+</td><td>
+
+Boolean
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Indicates whether it is a system Image
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+platform \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Image system platform
+
+</td><td>
+
+-   Linux
+-   Windows
+-   WindowsVirtio
+-   Other
+-   Paravirtualization
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+architecture \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **updateImage** structure\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+-   x86\_64
+-   aarch64
+-   mips64el
+
+</td><td>
+
+4.0.0
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System Tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User Tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "fadea0efc22e3e6fa43f537f1af6ee6b",
+    "name": "TinyLinux",
+    "url": "http://192.168.1.20/share/images/tinylinux.qcow2",
+    "mediaType": "RootVolumeTemplate",
+    "platform": "Windows",
+    "architecture": "x86_64",
+    "format": "qcow2",
+    "backupStorageRefs": [
+      {
+        "id": 0.0,
+        "imageUuid": "fadea0efc22e3e6fa43f537f1af6ee6b",
+        "backupStorageUuid": "b94ff32725d133fea53e8ada5ea7f0fc",
+        "installPath": "ceph://zs-images/f0b149e053b34c7eb7fe694b182ebffd",
+        "status": "Ready"
+      }
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_vrd_mb2_l1b)|0.6|
+|inventory|ImageInventory|See [inventory](#p_lpk_mb2_l1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause. The source error that triggered the current error. This field is null if there is no original error|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|name|String|Resource name|0.6|
+|description|String|Detailed description of the resource|0.6|
+|state|String|Image boot state|4.0.0|
+|status|String|Image ready state|4.0.0|
+|size|Long|Image size|4.0.0|
+|actualSize|Long|Image actual capacity|4.0.0|
+|md5Sum|String|Image md5 value|4.0.0|
+|url|String|Image URL address|4.0.0|
+|mediaType|String|Image type|4.0.0|
+|guestOsType|String|Guest Operating System type corresponding to the Image|4.0.0|
+|type|String|Internal use field|4.0.0|
+|platform|String|Image system platform|4.0.0|
+|format|String|Image format, for example: raw|4.0.0|
+|system|Boolean|Indicates whether it is a system Image|4.0.0|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+|backupStorageRefs|List|See [backupStorageRefs](#p_rzx_mb2_l1b)|0.6|
+
+### backupStorageRefs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|imageUuid|String|Image UUID|0.6|
+|backupStorageUuid|String|Image Storage UUID|0.6|
+|installPath|String|Installation path on the Image Storage|4.0.0|
+|exportUrl|String|Export Image URL|4.0.0|
+|exportMd5Sum|String|Export Image md5 value|4.0.0|
+|status|String|Image ready state|4.0.0|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateImageAction action = new UpdateImageAction();
+action.uuid = "38549d5d5a3d3c5caefc18d8a9e0aa13";
+action.platform = "Windows";
+action.virtio = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateImageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateImageAction action = UpdateImageAction()
+action.uuid = "38549d5d5a3d3c5caefc18d8a9e0aa13"
+action.platform = "Windows"
+action.virtio = false
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateImageAction.Result res = action.call()
+```
+
+</APIPage>

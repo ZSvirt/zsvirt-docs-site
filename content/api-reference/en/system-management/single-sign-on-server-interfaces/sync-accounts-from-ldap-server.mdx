@@ -1,0 +1,80 @@
+---
+title: "Sync Accounts from LDAP Server"
+---
+
+<APIPage method="PUT" path="/v1/ldap/servers/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "syncAccountsFromLdapServer": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding example, the `systemTags` and `userTags` fields are optional. They are listed here to show that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"syncAccountsFromLdapServer":{}}' \
+http://localhost:8080/zstack/v1/ldap/servers/0fdb3f15019f362396cd13645d5e5135/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|UUID of the LDAP server. Uniquely identifies the resource.| |4.3.0|
+|createAccountStrategy \(Optional\)|String|body \(enclosed in the `syncAccountsFromLdapServer` structure\)|The strategy for handling newly created users on the LDAP server during synchronization: create a corresponding account or take no action| |4.3.0|
+|deleteAccountStrategy \(Optional\)|String|body \(enclosed in the `syncAccountsFromLdapServer` structure\)|The strategy for handling deleted users on the LDAP server during synchronization: delete the corresponding account, mark as stale, or take no action| |4.3.0|
+|systemTags \(Optional\)|List|body|System tags| |4.3.0|
+|userTags \(Optional\)|List|body|User tags| |4.3.0|
+
+## API Response
+This API returns an empty JSON structure `{}` on success. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+SyncAccountsFromLdapServerAction action = new SyncAccountsFromLdapServerAction();
+action.uuid = "0fdb3f15019f362396cd13645d5e5135";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+SyncAccountsFromLdapServerAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+SyncAccountsFromLdapServerAction action = SyncAccountsFromLdapServerAction()
+action.uuid = "0fdb3f15019f362396cd13645d5e5135"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+SyncAccountsFromLdapServerAction.Result res = action.call()
+
+```
+
+</APIPage>

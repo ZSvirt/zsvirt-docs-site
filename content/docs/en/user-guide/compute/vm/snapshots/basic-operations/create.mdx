@@ -1,0 +1,26 @@
+---
+title: 'Create a Snapshot'
+---
+
+You can create one or more snapshots for a virtual machine to retain its temporary state at a specific point in time, allowing for quick rollback in case of a fault.
+
+-   To create a snapshot, make sure the virtual machine does not have any shared disks attached.
+-   You cannot take memory snapshots for virtual machines using distributed storage.
+-   You cannot take memory snapshots for virtual machines in the Compatible CPU mode.
+-   To create a memory snapshot, make sure the virtual machine is in the running state and any attached peripheral devices are detached from the virtual machine.
+-   Excessive snapshots will lower the VM performance, increase data security risks, and occupy data storage space. For long-term data backup, you can use the backup service.
+
+1.  In the navigation pane, choose **Inventory** &gt; **VM and Host**.
+
+2.  Select a target VM and click **Actions** &gt; **Snapshot and Image** &gt; **Create Snapshot**.
+
+3.  In the Create Snapshot dialog, set the following parameters:
+
+    -   **Name**: Enter a name for the snapshot.
+    -   **Description**: Enter a brief description for the snapshot.
+    -   **Memory Snapshot**: A memory snapshot captures the real-time state of a virtual machine.
+4.  Review the configuration and click **OK**.
+
+    <Callout type="info">
+    To ensure memory consistency, the virtual machine will be briefly paused during memory snapshot creation.
+    </Callout>

@@ -1,0 +1,9 @@
+{
+  "title": "Endpoint",
+  "pages": [
+    "index",
+    "create",
+    "manage"
+  ],
+  "pagesIndex": "index"
+}

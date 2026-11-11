@@ -1,0 +1,166 @@
+---
+title: "查询分布式端口组"
+---
+
+<APIPage method="GET" path="/v1/l3-networks/port-group" altPaths={["/v1/l3-networks/port-group/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/l3-networks/port-group
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/l3-networks/port-group/c94adc28385a31d99a2c07dfa8120532
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryPortGroup`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "vSwitchUuid": "5343e94b3aa93086b81c1b33c335b9ad",
+      "vlanMode": "ACCESS",
+      "vlanId": 100,
+      "uuid": "01a9693135323cf1acb3049e8ddf50b2",
+      "name": "port-group-1",
+      "description": "Test",
+      "type": "portGroup",
+      "zoneUuid": "36712d24b27b327aae544095c768366b",
+      "l2NetworkUuid": "49012f786210301697167b3771a65e8c",
+      "state": "Enabled",
+      "system": false,
+      "category": "Private",
+      "enableIPAM": false
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.2.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_r5w_rqg_m1b)|0.6|
+|inventories|List|详情参考[inventories](#p_qnr_vqg_m1b)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|vSwitchUuid|String|虚拟交换机UUID|4.2.0|
+|vlanId|Integer|VLAN号|4.2.0|
+|vlanRanges|String|VLAN范围|4.2.0|
+|uuid|String|资源的UUID，唯一标示该资源|4.2.0|
+|name|String|资源名称|4.2.0|
+|description|String|资源的详细描述|4.2.0|
+|type|String|端口组类型|4.2.0|
+|zoneUuid|String|数据中心UUID|4.2.0|
+|l2NetworkUuid|String|端口组分布式交换机UUID|4.2.0|
+|state|String|状态|4.2.0|
+|dnsDomain|String|DNS域|4.2.0|
+|system|Boolean|是否用于系统虚拟机|4.2.0|
+|category|String|网络类型，需要与system标签搭配使用，system为true时可设置为Public、Private|4.2.0|
+|ipVersion|Integer|IP协议号|4.2.0|
+|enableIPAM|Boolean|IP地址管理是否启用|4.2.0|
+|createDate|Timestamp|创建时间|4.2.0|
+|lastOpDate|Timestamp|最后一次修改时间|4.2.0|
+|dns|List| |4.2.0|
+|vlanMode|PortGroupVlanMode|详情参考[vlanMode](#p_vjh_pwh_y1c)|4.2.0|
+|ipRanges|List|详情参考[ipRanges](#p_szg_wqg_m1b)|0.6|
+|networkServices|List|详情参考[networkServices](#p_irk_xqg_m1b)|0.6|
+|hostRoute|List|详情参考[hostRoute](#p_fmd_nzq_ndb)|2.3|
+
+### vlanMode
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|ACCESS|PortGroupVlanMode| |4.2.0|
+|TRUNK|PortGroupVlanMode| |4.2.0|
+|PVLAN|PortGroupVlanMode| |4.2.0|
+
+### ipRanges
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|l3NetworkUuid|String|分布式端口组UUID|0.6|
+|name|String|资源名称|0.6|
+|description|String|资源的详细描述|0.6|
+|startIp|String|起始地址|0.6|
+|endIp|String|结束地址|0.6|
+|netmask|String|掩码|0.6|
+|prefixLen|String|掩码长度|3.1.0|
+|gateway|String|网关|0.6|
+|networkCidr|String|网络CIDR|0.6|
+|ipVersion|Integer|IP协议号|3.1.0|
+|addressMode|String|IPv6地址分配模式|3.1.0|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+|ipRangeType|IpRangeType|详情参考[ipRangeType](#p_llc_wwh_y1c)|3.9|
+
+### ipRangeType
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|IpRangeType|普通地址段|3.9|
+|AddressPool|IpRangeType|地址池段|3.9|
+
+### networkServices
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|l3NetworkUuid|String|分布式端口组UUID|0.6|
+|networkServiceProviderUuid|String|网络服务提供模块UUID|0.6|
+|networkServiceType|String| |0.6|
+
+### hostRoute
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|id|Long| |2.3|
+|l3NetworkUuid|String|分布式端口组UUID|2.3|
+|prefix|String| |2.3|
+|nexthop|String| |2.3|
+|createDate|Timestamp|创建时间|2.3|
+|lastOpDate|Timestamp|最后一次修改时间|2.3|
+
+## SDK示例
+Java SDK
+
+```
+QueryPortGroupAction action = new QueryPortGroupAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryPortGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryPortGroupAction action = QueryPortGroupAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryPortGroupAction.Result res = action.call()
+```
+
+</APIPage>

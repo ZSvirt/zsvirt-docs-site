@@ -1,0 +1,107 @@
+---
+title: "Get Alarm Alert Histogram"
+---
+
+<APIPage method="GET" path="/v1/zwatch/alert-histories/histogram">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zwatch/alert-histories/histogram?startTime=1.623414899E9&endTime=1.623501299E9&intervalHours=8.0&groupColumns=emergencyLevel
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|tableName|String|query|Message type.| |4.1.0|
+|startTime|Long|query|Start time.| |4.1.0|
+|endTime|Long|query|End time.| |4.1.0|
+|intervalHours|String|query|Interval hours.| |4.1.0|
+|groupColumns \(Optional\)|List|query|Group columns.| |4.1.0|
+|systemTags \(Optional\)|List|query|System tags.| |4.1.0|
+|userTags \(Optional\)|List|query|User tags.| |4.1.0|
+
+## API Response
+Response Example
+
+```
+{
+  "histograms": [
+    {
+      "time": 1510669257141.0,
+      "count": 50.0,
+      "tags": [
+        {
+          "name": "emergencyLevel",
+          "value": "Emergent"
+        }
+      ]
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.1.0|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null on success. See [error](#p_u5h_w2s_l2b) for details.|4.1.0|
+|histograms|List| |4.1.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001.|4.1.0|
+|description|String|A brief description of the error.|4.1.0|
+|details|String|Detailed information about the error.|4.1.0|
+|elaboration|String|A reserved field. Default is null.|4.1.0|
+|opaque|LinkedHashMap|A reserved field. Default is null.|4.1.0|
+|cause|ErrorCode|The root error. The source error that caused the current error. This field is null if there is no root error.|4.1.0|
+
+### histories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|time|long|Time.|4.1.0|
+|count|long|Count.|4.1.0|
+|tags|List|See [tags](#p_kpb_2jk_xpb) for details.|4.1.0|
+
+### tags
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Tag name.|4.1.0|
+|value|String|Tag value.|4.1.0|
+
+## SDK Examples
+Java SDK
+
+```
+GetZWatchAlertHistogramAction action = new GetZWatchAlertHistogramAction();
+action.startTime = 1.623414899E9;
+action.endTime = 1.623501299E9;
+action.intervalHours = 8.0;
+action.groupColumns = asList("emergencyLevel");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetZWatchAlertHistogramAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetZWatchAlertHistogramAction action = GetZWatchAlertHistogramAction()
+action.startTime = 1.623414899E9
+action.endTime = 1.623501299E9
+action.intervalHours = 8.0
+action.groupColumns = [emergencyLevel]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetZWatchAlertHistogramAction.Result res = action.call()
+```
+
+</APIPage>

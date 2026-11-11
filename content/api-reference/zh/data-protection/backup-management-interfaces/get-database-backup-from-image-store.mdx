@@ -1,0 +1,101 @@
+---
+title: "获取数据库备份"
+---
+
+<APIPage method="GET" path="/v1/database-backups/image-store">
+
+从备份存储获取导出的数据库备份。
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/database-backups/image-store?url=ssh://root:password@localhost:22/Cloud_bs&registryPort=8000.0
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|url|String|query|镜像存储URL| |3.0.0|
+|registryPort \(可选\)|int|query|镜像仓库访问端口| |3.0.0|
+|systemTags \(可选\)|List|query| | |3.0.0|
+|userTags \(可选\)|List|query| | |3.0.0|
+
+## API返回
+返回示例
+
+```
+{
+  "infos": [
+    {
+      "id": "270c67e3699f72ba",
+      "created": "Nov 14, 2017 10:20:57 PM",
+      "author": "cloud",
+      "arch": "amd64",
+      "size": 7995392.0,
+      "virtualsize": 12682240.0,
+      "name": "78b6afbc9da73932a000fb9a75947962"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_q4m_1lm_2fb)|3.0.0|
+|infos|List|详情参考[infos](#p_v1r_1lm_2fb)|3.0.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.0.0|
+|description|String|错误的概要描述|3.0.0|
+|details|String|错误的详细信息|3.0.0|
+|elaboration|String|保留字段，默认为null|3.0.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.0.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.0.0|
+
+### infos
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|id|String|镜像仓库中的id|3.0.0|
+|parent|String|父镜像名称|3.0.0|
+|blobsum|String|镜像hash码|3.0.0|
+|created|Timestamp|镜像提交时间|3.0.0|
+|author|String|镜像制作者|3.0.0|
+|arch|String|镜像的os结构|3.0.0|
+|desc|String|镜像描述|3.0.0|
+|size|Long|镜像的真实大小|3.0.0|
+|virtualsize|Long|镜像的虚拟大小|3.0.0|
+|name|String|镜像仓库中的镜像名称|3.0.0|
+
+## SDK示例
+Java SDK
+
+```
+GetDatabaseBackupFromImageStoreAction action = new GetDatabaseBackupFromImageStoreAction();
+action.url = "ssh://root:password@localhost:22/Cloud_bs";
+action.registryPort = 8000.0;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetDatabaseBackupFromImageStoreAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetDatabaseBackupFromImageStoreAction action = GetDatabaseBackupFromImageStoreAction()
+action.url = "ssh://root:password@localhost:22/Cloud_bs"
+action.registryPort = 8000.0
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetDatabaseBackupFromImageStoreAction.Result res = action.call()
+```
+
+</APIPage>

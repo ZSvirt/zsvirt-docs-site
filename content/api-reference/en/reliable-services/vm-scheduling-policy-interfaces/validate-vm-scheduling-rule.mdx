@@ -1,0 +1,280 @@
+---
+title: "Validate VM Scheduling Policy from VM Scheduling Group"
+---
+
+<APIPage method="PUT" path="/v1/validate/vmSchedulingRule">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "validateVmSchedulingRule": {
+    "vmGroupUuid": "2bce1a0af86a3ceebd70ef1aaa3633d1",
+    "hostGroupUuid": "15b9f0a9a3c43708890eef7552959746",
+    "rule": "AFFINITY",
+    "mode": "HARD",
+    "zoneUuid": "538bdbde4d9d3b919e2cc9ae44542f09"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The **systemTags** and **userTags** fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"validateVmSchedulingRule":{"vmGroupUuid":"2bce1a0af86a3ceebd70ef1aaa3633d1","hostGroupUuid":"15b9f0a9a3c43708890eef7552959746","rule":"AFFINITY","mode":"HARD","zoneUuid":"538bdbde4d9d3b919e2cc9ae44542f09"}}' http://localhost:8080/zstack/v1/validate/vmSchedulingRule
+```
+
+Parameter List
+
+<table id="table_i3d_2bb_3cb"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+vmGroupUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **validateVmSchedulingRule** structure\)
+
+</td><td>
+
+VM scheduling group UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.6.0
+
+</td></tr><tr><td>
+
+hostGroupUuid \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **validateVmSchedulingRule** structure\)
+
+</td><td>
+
+Host scheduling group UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.6.0
+
+</td></tr><tr><td>
+
+rule
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **validateVmSchedulingRule** structure\)
+
+</td><td>
+
+Scheduling rule
+
+</td><td>
+
+-   AFFINITY
+-   ANTIAFFINITY
+
+</td><td>
+
+4.6.0
+
+</td></tr><tr><td>
+
+mode
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **validateVmSchedulingRule** structure\)
+
+</td><td>
+
+Execution mode
+
+</td><td>
+
+-   SOFT
+-   HARD
+
+</td><td>
+
+4.6.0
+
+</td></tr><tr><td>
+
+zoneUuid \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **validateVmSchedulingRule** structure\)
+
+</td><td>
+
+Data Center UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.6.0
+
+</td></tr><tr><td>
+
+systemTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.6.0
+
+</td></tr><tr><td>
+
+userTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.6.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+This API returns an empty JSON structure **`{}`** on success. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+ValidateVmSchedulingRuleAction action = new ValidateVmSchedulingRuleAction();
+action.vmGroupUuid = "2bce1a0af86a3ceebd70ef1aaa3633d1";
+action.hostGroupUuid = "15b9f0a9a3c43708890eef7552959746";
+action.rule = "AFFINITY";
+action.mode = "HARD";
+action.zoneUuid = "538bdbde4d9d3b919e2cc9ae44542f09";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ValidateVmSchedulingRuleAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ValidateVmSchedulingRuleAction action = ValidateVmSchedulingRuleAction()
+action.vmGroupUuid = "2bce1a0af86a3ceebd70ef1aaa3633d1"
+action.hostGroupUuid = "15b9f0a9a3c43708890eef7552959746"
+action.rule = "AFFINITY"
+action.mode = "HARD"
+action.zoneUuid = "538bdbde4d9d3b919e2cc9ae44542f09"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ValidateVmSchedulingRuleAction.Result res = action.call()
+```
+
+</APIPage>

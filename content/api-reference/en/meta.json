@@ -1,0 +1,21 @@
+{
+  "title": "API Documentation",
+  "pages": [
+    "index",
+    "introduction",
+    "usage-specifications",
+    "sdk-specifications",
+    "access-key",
+    "compute",
+    "bare-metal-management",
+    "storage-management",
+    "storage-services",
+    "network-management",
+    "reliable-services",
+    "data-protection",
+    "o-m-management",
+    "system-management",
+    "system-global"
+  ],
+  "pagesIndex": "index"
+}

@@ -1,0 +1,65 @@
+---
+title: 'zsphere_security_groups'
+description: 'Fetches a list of security groups and their associated attributes from the ZSvirt environment.'
+---
+
+<HistoricalNamingNote locale="en" />
+
+# zsphere_security_groups (Data Source)
+
+Fetches a list of security groups and their associated attributes from the ZSvirt environment.
+
+
+
+## Schema
+
+### Optional
+
+- `filter` (Block List) Filter resources based on any field in the schema. For example, to filter by state, use `name = "state"` and `values = ["Enabled"]`. (see [below for nested schema](#nestedblock--filter))
+- `name` (String) Exact name for searching security groups.
+- `name_pattern` (String) Pattern for fuzzy name search, similar to MySQL LIKE. Use % for multiple characters and _ for exactly one character.
+
+### Read-Only
+
+- `rules` (Block List) Security group rules. (see [below for nested schema](#nestedblock--rules))
+- `security_groups` (Attributes List) List of security groups matching the specified filters. (see [below for nested schema](#nestedatt--security_groups))
+
+<a id="nestedblock--filter"></a>
+### Nested Schema for `filter`
+
+Required:
+
+- `name` (String) Name of the field to filter by (e.g., state, name).
+- `values` (Set of String) Values to filter by. Multiple values will be treated as an OR condition.
+
+
+<a id="nestedblock--rules"></a>
+### Nested Schema for `rules`
+
+Read-Only:
+
+- `action` (String) Rule action: ACCEPT or DROP.
+- `allowed_cidr` (String) Allowed CIDR block.
+- `description` (String) Description of the rule.
+- `dst_ip_range` (String) Destination IP range.
+- `dst_port_range` (String) Destination port range.
+- `priority` (Number) Rule priority.
+- `protocol` (String) Protocol: TCP, UDP, ICMP, or ALL.
+- `remote_security_group_uuid` (String) Remote security group UUID.
+- `src_ip_range` (String) Source IP range.
+- `state` (String) Rule state: Enabled or Disabled.
+- `type` (String) Rule type: Ingress or Egress.
+
+
+<a id="nestedatt--security_groups"></a>
+### Nested Schema for `security_groups`
+
+Read-Only:
+
+- `attached_l3_network_uuids` (List of String) UUIDs of L3 networks that the security group is attached to.
+- `description` (String) Description of the security group.
+- `ip_version` (Number) IP version (4 or 6).
+- `name` (String) Name of the security group.
+- `state` (String) State of the security group.
+- `uuid` (String) UUID of the security group.
+- `vm_nic_uuids` (List of String) UUIDs of VM nics bound to the security group.

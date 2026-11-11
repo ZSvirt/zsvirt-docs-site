@@ -1,0 +1,82 @@
+---
+title: "检查IP可用性"
+---
+
+<APIPage method="GET" path="/v1/l3-networks/{l3NetworkUuid}/ip/{ip}/availability">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/l3-networks/44fc110c3d87326299b46975aacb1705/ip/192.168.10.100/availability?arpCheck=false&ipRangeCheck=true
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|l3NetworkUuid|String|url|分布式端口组UUID| |0.6|
+|ip|String|url|IP地址| |0.6|
+|systemTags \(可选\)|List|query|系统标签| |0.6|
+|userTags \(可选\)|List|query|用户标签| |0.6|
+|arpCheck \(可选\)|Boolean|query|使用arping检测| |4.10.16|
+|ipRangeCheck \(可选\)|Boolean|query|在数据库可用地址段内检测| |4.10.16|
+
+## API返回
+返回示例
+
+```
+{
+  "available": true
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|available|boolean|可用|0.6|
+|success|boolean|成功|0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_nl2_5dh_m1b)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+CheckIpAvailabilityAction action = new CheckIpAvailabilityAction();
+action.l3NetworkUuid = "44fc110c3d87326299b46975aacb1705";
+action.ip = "192.168.10.100";
+action.arpCheck = false;
+action.ipRangeCheck = true;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CheckIpAvailabilityAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = CheckIpAvailabilityAction()
+action.l3NetworkUuid = "44fc110c3d87326299b46975aacb1705"
+action.ip = "192.168.10.100"
+action.arpCheck = false
+action.ipRangeCheck = true
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

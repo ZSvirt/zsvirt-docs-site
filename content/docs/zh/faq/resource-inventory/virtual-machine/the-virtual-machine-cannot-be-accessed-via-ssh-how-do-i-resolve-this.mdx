@@ -1,0 +1,17 @@
+---
+title: "虚拟机无法SSH登录，如何解决？"
+---
+
+## 原因
+封装镜像时SSH配置文件错误。
+
+## 解决方案
+1.  登录虚拟机控制台，修改`/etc/ssh/sshd_config`配置文件，将**PasswordAuthentication**参数修改为yes。
+
+    如[Figure 1](#fig_t2k_bnb_q5b)所示：
+
+    ![修改配置](/docs/faq/images/ZStack_FAQ_Summary_0001_63_1.png)
+
+2.  修改`/etc/cloud/cloud.cfg`配置文件，将**ssh\_pwauth**参数修改为1。
+
+3.  修改配置后，重新封装镜像。

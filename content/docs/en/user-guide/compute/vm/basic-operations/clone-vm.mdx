@@ -1,0 +1,49 @@
+---
+title: 'Clone a Virtual Machine'
+---
+
+If you want to reuse the configuration of a virtual machine, you can clone the virtual machine. ZSvirt provides full VM cloning with two methods: full cloning and instant full cloning
+
+-   The source virtual machine must be in a running, paused, or shut down state.
+
+    <Callout type="info">
+    Cloning running VMs only clones the data that has already been written to disk at the start of cloning and does not include real-time cache data.
+    </Callout>
+
+-   To ensure data integrity, it is recommended to pause or power off high I/O virtual machines before the cloning.
+-   Detach all shared disks from the source virtual machine. Cloning of virtual machines with shared disks is currently unsupported.
+-   To avoid login errors, do not set a static IP address on the source virtual machine.
+-   The cluster where the virtual machine resides has sufficient compute, storage, and network resources.
+
+1.  On the target VM page, click **Actions** &gt; **Clone** &gt; **Clone Virtual Machine**.
+
+2.  In the Clone Virtual Machine dialog, set the following parameters:
+
+    -   **Name**: Set the name for the cloned virtual machine.
+    -   **Quantity**: Set the number of virtual machines to be cloned.
+
+        When cloning multiple VMs, the system automatically appends suffixes "-1/-2/-3" to distinguish between cloned resources.
+
+    -   **Clone Method**: Choose a type of cloning method.
+        -   **Full Clone**: The cloned VM is independent of the source VM, and the performance is completely unaffected after cloning, but the VM starts slow.
+        -   **Instant Full Clone**: The cloned VM starts quickly, the VM is eventually independent of the source VM, and the performance is completely unaffected after cloning.
+
+            <Callout type="info">
+            When you use Instant Full Clone to clone a VM, the system automatically performs Flatten to eventually achieve data independence. During flattening, operations on VMs/disks will be conducted after the flattening is completed.
+            </Callout>
+
+    -   **Data Storage**: By default, the system automatically assigns data storage for cloned virtual machines, but you can manually specify a data storage.
+
+        -   Auto Allocated: The cloned VM and its disks will use the same data storage as the source VM and its disks.
+        -   Manual Allocation: The cloned VM and its disks will use the data storage you specify.
+        <Callout type="info">
+        </Callout>
+        1.  You can only specify data storage when using full clone.
+        2.  If Disk 1 of the source VM uses local storage while the other disks use different types of data storage, the clone operation will fail if local storage is unavailable.
+        3.  When specifying SAN storage as the data storage, you can set separate provisioning methods for Disk 1 and other disks.
+    -   **VM Scheduling Group**: Add cloned VMs to a virtual machine scheduling group. The virtual machine will be scheduled based on the scheduling policy associated with group. A virtual machine can join only one VM scheduling group. For more information, see [VM Scheduling Policy](/en/docs/user-guide/compute/vm/scheduling).
+    -   **Power Status**: Select whether to automatically power on virtual machines after the cloning.
+
+The cloning operation duplicates the source virtual machine's configuration, installed applications, and credentials to the new cloned VM. However, the cloning operation does not automatically replicate all associated settings. You must manually configure additional parameters for the cloned VM as needed. For example, to maintain consistency with the source VM, you may need to manually assign identical tags to the cloned VM.
+
+If the source virtual machine has a console password configured, you can restart the cloned virtual machine to activate the password setting.

@@ -1,0 +1,9 @@
+{
+  "title": "数据盘",
+  "pages": [
+    "index",
+    "create-node-data-disk",
+    "manage-node-data-disk"
+  ],
+  "pagesIndex": "index"
+}

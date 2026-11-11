@@ -1,0 +1,494 @@
+---
+title: "快速开始"
+description: "从安装部署到创建第一台虚拟机的完整最小可用流程：准备安装环境、部署管理节点、基础初始化、添加主机/存储/网络/镜像，并创建第一台可登录的虚拟机。"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+**ZSvirt QuickStart：安装部署到创建第一台虚拟机**
+
+本文用于指导初次接触 ZSvirt 的管理员完成一条完整的最小可用流程：准备安装环境、部署管理节点、完成基础初始化、添加主机/存储/网络/镜像，并创建第一台可登录的虚拟机。
+
+适用场景：
+
+- 需要从安装部署开始搭建一套 ZSvirt 单管理节点环境。
+- 已准备好 ZSvirt 安装包、服务器、存储和网络规划信息。
+- 目标是先跑通平台的计算、存储、网络、镜像和虚拟机链路。
+
+不覆盖范围：
+
+- 双管理节点 HA 部署。
+- 灾备、迁移、统一认证、裸金属等模块。
+- 生产割接方案、容量规划和安全加固方案。
+
+<Callout type="info" title="说明">
+
+- 本文使用 ZSvirt 平台术语：虚拟机、主机、数据存储、镜像存储、硬盘、分布式交换机、分布式端口组。
+- 底层命令和 API 名称仍保留 `zstack-ctl`、`zstack-cli`、PrimaryStorage、BackupStorage 等历史字段，这是命令层命名，不作为本文正文术语。
+- 不同版本的菜单名称可能略有差异，建议优先使用页面搜索或资源名称定位。
+
+</Callout>
+
+## 一、总体流程
+
+QuickStart 的完整流程如下：
+
+```text
+准备 h84r ISO 安装介质
+  -> 使用 h84r ISO 安装管理节点操作系统（计算节点模式）
+  -> 配置管理节点基础网络和时间
+  -> 准备 ZSvirt 安装包
+  -> 安装 ZSvirt 管理节点
+  -> 验证管理节点和 Web UI
+  -> 登录 ZSvirt
+  -> 初始化数据中心和集群
+  -> 添加主机
+  -> 添加数据存储
+  -> 添加镜像存储
+  -> 创建分布式交换机
+  -> 创建分布式端口组
+  -> 添加系统镜像
+  -> 使用系统镜像创建第一台虚拟机
+  -> 验证控制台、IP、网关和登录能力
+```
+
+最小资源关系：
+
+```text
+数据中心
+  └─ 集群
+      ├─ 主机
+      ├─ 数据存储
+      └─ 分布式交换机
+          └─ 分布式端口组
+              └─ 虚拟机网卡
+数据中心
+  └─ 镜像存储
+      └─ 系统镜像
+虚拟机
+  ├─ 系统镜像
+  ├─ 数据存储
+  └─ 分布式端口组
+```
+
+## 二、安装前准备
+
+### 1. 管理节点硬件建议
+
+QuickStart 环境至少准备 1 台管理节点服务器，以最小环境 All-in-One 为例，硬件要求如下：
+
+| 项目 | 最低要求 | 建议配置 |
+| --- | --- | --- |
+| CPU | 支持 Intel VT 或 AMD-V 硬件虚拟化技术，不低于 8 核心 | 24 核及以上 |
+| 内存 | 8 GB | 24 GB 及以上 |
+| 系统盘 | 100 GB | 200 GB 及以上 |
+| 网卡 | 1 张管理网卡 | 管理、存储、业务网络分离 |
+| IP | 固定 IP | 固定 IP，提前配置 DNS/NTP |
+
+<Callout type="warn" title="注意">
+
+- 管理节点 IP 安装后会写入平台配置，不建议使用 DHCP。
+- 管理节点时间不能早于安装包构建时间，否则安装脚本可能失败。
+
+</Callout>
+
+### 2. 使用 h84r ISO 安装操作系统并部署 ZSvirt 管理节点
+
+本步骤在管理节点服务器上执行，用于安装管理节点自身的操作系统，不是在 ZSvirt 中创建虚拟机。
+
+**准备 h84r ISO 安装介质**：
+
+1. h84r ISO：`ZSvirt-x86_64-DVD-<version>-h84r.iso`
+2. 安装方式：物理光驱、U 盘启动盘，或服务器远程控制台挂载 ISO
+3. 安装目标：管理节点服务器本地系统盘
+
+<Callout type="info">
+U 盘刻录启动盘，推荐使用 Rufus / Fedora Media Writer 工具刻录，同时支持 Legacy 模式和 UEFI 模式引导。
+</Callout>
+
+在服务器启动后，按照 h84r 安装界面向导完成系统安装和管理节点安装：
+
+<Steps>
+
+<Step>
+
+#### 步骤 1：从 h84r ISO 启动安装
+
+默认从 **Install ZSVirt** 启动安装，无需手动选择，然后进入到 **INSTALLATION SUMMARY** 配置界面：
+
+![从 h84r ISO 启动安装](/docs/quick-start/images/01-boot-menu.png)
+
+![INSTALLATION SUMMARY 配置界面](/docs/quick-start/images/02-installation-summary.png)
+
+</Step>
+
+<Step>
+
+#### 步骤 2：选择系统磁盘
+
+选择 **Installation Destination**，进入硬盘分区界面，选中一个磁盘做为系统磁盘，选择完毕后，点击 **Done** 进行确认：
+
+![选择系统磁盘](/docs/quick-start/images/03-installation-destination.png)
+
+</Step>
+
+<Step>
+
+#### 步骤 3：选择安装模式
+
+进入到 **Software Selection** 配置界面，选择 **ZSvirt Management Node** 安装，点击 **Done** 进行安装模式选择：
+
+![选择 ZSvirt Management Node 安装模式](/docs/quick-start/images/04-software-selection.png)
+
+</Step>
+
+<Step>
+
+#### 步骤 4：配置网络
+
+进入到 **Network & Host Name** 配置网络界面，选择 **Configure...**，弹出 ens3 配置界面：
+
+（1）点击 **IPv4 Settings** > **Method** > **Manual**，用于切换 IP 地址获取方式为手动指定；
+
+（2）点击 **Add** 添加 IP 地址条目，根据按需配置 IP 地址、子网掩码、网关地址，完成后点击 **Save** 保存配置；
+
+![配置 ens3 IPv4 地址](/docs/quick-start/images/05-network-ipv4.png)
+
+（3）在 **ens3** 配置界面，点击 **General** > **Connect automatically with priority (0)** > **Save**，修改网卡自动激活；
+
+![配置网卡自动激活](/docs/quick-start/images/06-network-general.png)
+
+</Step>
+
+<Step>
+
+#### 步骤 5：配置 Root 密码
+
+进入到 **Root Password** 的配置界面，输入 root 的密码并进行二次输入确认，点击 **Done**，完成 root 的密码配置。
+
+![配置 Root 密码](/docs/quick-start/images/07-root-password.png)
+
+</Step>
+
+<Step>
+
+#### 步骤 6：开始安装
+
+**Installation Destination、Software Selection、Network & Host Name、Root Password** 均已配置完成后，点击 **Begin Installation** 进行系统和 ZSvirt 管理节点模式安装，此过程需要稍微等待约 10 分钟左右，等安装完成之后，系统会自动重启。
+
+![开始安装](/docs/quick-start/images/08-begin-installation.png)
+
+</Step>
+
+<Step>
+
+#### 步骤 7：确认管理节点安装完成
+
+系统自动重启后，会自动安装 ZSvirt 管理节点服务：
+
+![自动安装管理节点服务](/docs/quick-start/images/09-auto-install-mn.png)
+
+ZSvirt 管理节点服务安装完成之后，会自动进入到 TUI 界面，TUI 界面 **MN 和 UI 的状态均为 Running** 状态，表明 ZSvirt 管理节点已经安装完成：
+
+![TUI 界面 MN 和 UI 均为 Running](/docs/quick-start/images/10-tui-running.png)
+
+</Step>
+
+</Steps>
+
+### 3. 安装日志位置
+
+安装失败时优先查看：
+
+```bash
+ls -lh /tmp/zstack_installation-*.log
+ls -lh /tmp/zstack_ctl_installation-*.log
+ls -lh /tmp/zstack_installation_timestamp-*.log
+```
+
+常用查看方式：
+
+```bash
+tail -n 200 /tmp/zstack_installation-*.log
+tail -n 200 /tmp/zstack_ctl_installation-*.log
+```
+
+如果 Web UI 安装失败，重点查看：
+
+```bash
+tail -n 200 /usr/local/zstack/zstack-ui/logs/ui-install.log
+```
+
+### 4. 安装后验证
+
+**（1）检查管理节点服务、UI 服务、版本信息**
+
+```bash
+zstack-ctl status
+```
+
+如未启动：
+
+```bash
+zstack-ctl start_node
+```
+
+检查管理节点 IP：
+
+```bash
+zstack-ctl show_configuration | grep management.server.ip
+```
+
+## 三、初始化 ZSvirt 管理节点
+
+<Steps>
+
+<Step>
+
+#### 登录管理平台
+
+在浏览器中直接输入**管理节点的 IP 地址**，即可访问 ZSvirt 的管理平台，默认用户名和密码为 **admin/password**。
+
+使用默认密码进行登录，首次登录后建议立即完成：
+
+- 在个人右上角，点击修改默认密码。
+- 确认平台时间。
+- 确认首页无管理节点级别异常告警。
+
+<Callout type="error" title="安全提醒">
+生产环境请务必在首次登录后立即修改默认密码 `admin/password`。
+</Callout>
+
+![登录 ZSvirt 管理平台](/docs/quick-start/images/11-login.png)
+
+</Step>
+
+<Step>
+
+#### 初始化数据中心和集群
+
+输入数据中心的名称：**Datacenter-1**，点击 **OK**，进入新建集群界面，输入集群名称：**Cluster-1**，点击 **OK** 按钮。
+
+<Callout type="info" title="原则">
+
+- 数据中心用于承载一组计算、存储、网络资源。
+- 集群用于组织主机、数据存储和分布式交换机。
+- QuickStart 只需要 1 个数据中心和 1 个集群。
+
+</Callout>
+
+![新建数据中心](/docs/quick-start/images/12-create-datacenter.png)
+
+![新建集群](/docs/quick-start/images/13-create-cluster.png)
+
+</Step>
+
+<Step>
+
+#### 添加主机
+
+输入**名称**、**IP 地址**（此处填写管理节点的 IP）、root 的**密码**，点击 **OK** 按钮，添加主机，等待主机添加完成。
+
+再检查主机时间、网关、DNS、主机名和防火墙策略。
+
+![添加主机](/docs/quick-start/images/14-add-host.png)
+
+</Step>
+
+<Step>
+
+#### 添加数据存储
+
+添加**本地存储**，输入**名称**和**挂载路径**，点击 **OK**，完成本地存储添加。
+
+<Callout type="warn" title="注意">
+
+- 本地存储适合单主机验证，但不适合验证跨主机迁移。
+- 共享存储需要所有目标主机都能访问。
+- 数据存储路径不要复用系统根目录或临时目录。
+
+</Callout>
+
+![添加数据存储](/docs/quick-start/images/15-add-datastore.png)
+
+</Step>
+
+<Step>
+
+#### 添加镜像存储
+
+输入**名称**、**镜像存储的 IP**（此处填写管理节点的 IP）、**密码**，点击 **Test Connection**，选择 **Local Directory**，点击 **OK**。
+
+![添加镜像存储](/docs/quick-start/images/16-add-backup-storage.png)
+
+</Step>
+
+<Step>
+
+#### 添加镜像
+
+如果只是测试，选择默认即可，直接点击 **OK** 即可。
+
+<Callout type="info" title="注意">
+
+- 镜像导入速度受镜像存储、管理节点、主机和数据存储之间的网络链路影响。
+- 如果添加镜像失败，优先确认镜像文件 URL 或本地路径对平台可读。
+
+</Callout>
+
+![添加镜像](/docs/quick-start/images/17-add-image.png)
+
+</Step>
+
+<Step>
+
+#### 新建分布式交换机与分布式端口组
+
+以 vlan-2344 为例，按照以下配置 vlan id 和 IP 分配方式、DNS 等信息，点击 **OK** 即可完成网络配置。
+
+<Callout type="warn" title="注意">
+
+- 集群内所有主机必须存在同名物理接口或 bond。
+- 使用 VLAN 时，交换机侧 trunk/access 配置必须与平台配置一致。
+- 生产环境建议管理网络、存储网络、业务网络分离。
+- QuickStart 优先开启 IP 地址管理和 DHCP，方便虚拟机自动获取 IP。
+- 网络段不要覆盖网关、DHCP 服务 IP、保留地址或已有业务地址。
+- 如果网络段使用 CIDR 方式，创建前先确认可分配范围。
+
+</Callout>
+
+![新建分布式交换机与分布式端口组](/docs/quick-start/images/18-create-network.png)
+
+</Step>
+
+<Step>
+
+#### 使用系统镜像创建第一台虚拟机
+
+点击**新建虚拟机**操作，输入**虚拟机名称**、选择硬盘 1 的**系统镜像（qcow2、raw）**，选择**网卡 1**，点击确定。本节适用于已经准备好 qcow2/raw 系统镜像，想直接从系统镜像创建虚拟机的场景。
+
+![新建虚拟机](/docs/quick-start/images/19-create-vm.png)
+
+</Step>
+
+<Step>
+
+#### 验证虚拟机
+
+**（1）UI 验证**：进入虚拟机详情页，检查：
+
+- 状态：运行中
+- 所在主机：已分配
+- IP 地址：已获取
+- 网卡：已加载
+- 系统盘：已加载
+
+打开控制台，确认系统进入登录界面或已经启动完成。
+
+**（2）系统内验证**
+
+如果可以登录虚拟机，执行：
+
+```bash
+ip addr
+ip route
+ping -c 4 <网关IP>
+ping -c 4 223.5.5.5
+ping -c 4 www.baidu.com
+```
+
+<Callout type="info" title="判断">
+
+- 能 ping 通网关：分布式交换机、分布式端口组、DHCP 和 VLAN 基本正常。
+- 能 ping 通外部 IP：上游路由基本正常。
+- 能 ping 通域名：DNS 正常。
+
+</Callout>
+
+</Step>
+
+</Steps>
+
+## 四、管理节点 CLI 验证
+
+在管理节点进入 CLI：
+
+```bash
+zstack-cli
+```
+
+登录：
+
+```text
+LogInByAccount accountName=admin password=<管理员密码>
+```
+
+查询基础资源：
+
+```text
+QueryHost fields=uuid,name,managementIp,state,status
+QueryPrimaryStorage fields=uuid,name,type,state,status
+QueryBackupStorage fields=uuid,name,type,state,status,availableCapacity,totalCapacity
+QueryL3Network fields=uuid,name,type
+QueryImage fields=uuid,name,state,status
+QueryVmInstance name=<vm-name> fields=uuid,name,state,hostUuid
+```
+
+期望：
+
+```text
+Host state=Enabled status=Connected
+PrimaryStorage state=Enabled status=Connected
+BackupStorage state=Enabled status=Connected
+Image state=Enabled status=Ready
+VmInstance state=Running
+```
+
+## 五、常见问题快速排查
+
+| 现象 | 优先检查项 | 常用命令或位置 |
+| --- | --- | --- |
+| 安装脚本退出 | root 权限、CPU/内存、系统时间、安装介质、旧安装目录 | `/tmp/zstack_installation-*.log` |
+| Web UI 安装失败 | UI 安装日志、证书配置、数据库初始化 | `/usr/local/zstack/zstack-ui/logs/ui-install.log` |
+| 管理节点未运行 | 管理节点服务、数据库、配置文件 | `zstack-ctl status` |
+| Web UI 无法访问 | UI 服务、端口、浏览器证书、管理节点 IP | `zstack-ctl ui_status` |
+| 主机添加失败 | SSH、root 密码、时间同步、网关、防火墙 | `ssh root@<主机IP>` |
+| 主机未连接 | 管理网络、host agent、libvirt/qemu 状态 | 主机侧 `systemctl status libvirtd` |
+| 数据存储未连接 | 挂载路径、共享存储连通性、主机权限 | `df -h`、`mount`、`multipath -ll`、`ceph -s` |
+| 镜像存储未连接 | 存储节点状态、容量、网络链路 | UI 事件、管理节点日志 |
+| 镜像添加失败 | 镜像 URL、镜像格式、镜像存储容量 | `curl -I <镜像URL>`、`qemu-img info <镜像文件>` |
+| 虚拟机长时间创建中 | 镜像缓存、数据存储 I/O、主机容量、调度事件 | 任务中心、事件、管理节点日志 |
+| 虚拟机未获取 IP | DHCP、IP 地址管理、网络段余量、端口组配置 | 分布式端口组详情、虚拟机网卡详情 |
+| 虚拟机网络不通 | 网关、VLAN、上游路由、DNS、安全策略 | 虚拟机内 `ip route`、`ping <网关>` |
+| 控制台打不开 | 控制台代理、浏览器证书、管理节点服务 | `zstack-ctl status`、UI 事件 |
+| 监控无数据 | Prometheus 服务、VMTools、时间同步 | `systemctl status prometheus2` |
+
+## 六、最小成功标准
+
+完成后至少满足：
+
+- ZSvirt 管理节点安装成功。
+- Web UI 可登录。
+- 至少 1 台主机处于已启用、已连接状态。
+- 至少 1 个数据存储处于已启用、已连接状态。
+- 至少 1 个镜像存储处于已启用、已连接状态。
+- 至少 1 个分布式交换机已加载到集群。
+- 至少 1 个分布式端口组有可用 IP 地址。
+- 至少 1 个系统镜像可用。
+- 第一台虚拟机处于运行中状态。
+- 虚拟机控制台可打开。
+- 虚拟机可以获取 IP，并能 ping 通网关。
+
+如果以上全部通过，说明 ZSvirt 最小安装部署和资源链路已跑通。
+
+## 七、生产前建议补齐
+
+QuickStart 完成后，进入生产前建议继续完成：
+
+- 修改默认管理员密码，创建个人管理员账号。
+- 配置 NTP，确保管理节点、主机、存储和网络设备时间一致。
+- 按业务规划创建分布式交换机、分布式端口组和网络段。
+- 准备标准 Linux/Windows 模板镜像。
+- 安装或配置 VMTools，用于获取更完整的虚拟机内部监控和管理能力。
+- 配置管理节点、数据库、镜像和关键业务虚拟机的备份策略。
+- 记录数据中心、集群、主机、数据存储、镜像存储、VLAN、IP 段、网关、DNS 和业务归属。

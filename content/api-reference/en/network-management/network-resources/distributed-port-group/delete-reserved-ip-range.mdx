@@ -1,0 +1,64 @@
+---
+title: "Delete Reserved IP Range"
+---
+
+<APIPage method="DELETE" path="/v1/l3-networks/reserved-ip-ranges/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Sample
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/l3-networks/reserved-ip-ranges/c01027fecc013c338e25d67581eed865?deleteMode=Permissive
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|l3NetworkUuid|String|url|The L3 Network UUID.| |4.10.16|
+|deleteMode \(Optional\)|String|query|The delete mode \(Permissive / Enforcing, Permissive\).| |4.10.16|
+|systemTags \(Optional\)|List|query|The system tags.| |4.10.16|
+|userTags \(Optional\)|List|query|The user tags.| |4.10.16|
+
+## API Response
+On success, the API returns an empty JSON structure `{}`. On failure, the API returns a JSON structure with an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Sample
+Java SDK
+
+```
+DeleteReservedIpRangeAction action = new DeleteReservedIpRangeAction();
+action.uuid = "c01027fecc013c338e25d67581eed865";
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteReservedIpRangeAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = DeleteReservedIpRangeAction()
+action.uuid = "c01027fecc013c338e25d67581eed865"
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

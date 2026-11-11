@@ -1,0 +1,29 @@
+---
+title: 'Hot Migration'
+---
+
+Hot migration migrates a running virtual machine. This action mainly copies the CPU register status and memory information.
+
+-   The virtual machine's data storage is local storage, NFS, ZCE distributed storage, SAN storage, or ZHPS distributed storage.
+-   Before you hot migrate a virtual machine, detach the data disks, ISOs, or peripheral devices (if any) from the virtual machine first. If the virtual machine uses a local storage, you can hot migrate the virtual machine with local data disks attached. If the virtual machine uses a shared storage, you can hot migrate the virtual machine with local data disks, shared disks, and ISOs attached.
+-   If vNUMA is enabled for a virtual machine, make sure the pNUMA architecture of the destination host is consistent with that of the source host.
+-   Before you hot migrate a virtual machine with VF NICs attached, make sure:
+    -   The virtual machine has VMTools installed and the VMTools is running.
+    -   VF NIC VM migration may fail if the internal driver version of the VM is too low. Check and update the driver version as needed
+-   If the selected virtual machine has associated with VM scheduling policies, modify these policies based on your business needs to avoid policy conflicts.
+
+1.  In the navigation pane, choose **Inventory** &gt; **VM and Host**.
+
+2.  Select the target virtual machine and click **Actions** &gt; **Migration Management** &gt; **Change Host**.
+
+3.  In the Change Host dialog, choose a destination host.
+
+    If the migration is blocked because the VM has been high-loaded for a long time, you can enable auto-converge to improve the success rate of the migration.
+
+4.  Review the configuration and click **OK**.
+
+    <Callout type="info">
+    If the virtual machines have VF NICs attached, depending on the actual network environment, short network interruptions may occur during the migration of VMs with VF NICs attached. Proceed with caution.
+    </Callout>
+
+After the migration, you can re-attach those data disks, ISOs, or peripheral devices to the virtual machine.

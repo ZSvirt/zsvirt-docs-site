@@ -1,0 +1,334 @@
+---
+title: "Check SCSI LUN and Cluster Connection Status"
+---
+
+<APIPage method="PUT" path="/v1/storage-devices/scsi-lun/{uuid}/cluster/{clusterUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "checkScsiLunClusterStatus": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, the **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"checkScsiLunClusterStatus":{}}' \
+http://localhost:8080/zstack/v1/storage-devices/scsi-lun/abe6bf1e763739f88f97055c14246245/cluster/5415c2beb8a93447a27f69c109cdfb23
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Resource UUID, uniquely identifies the resource| |3.1.0|
+|clusterUuid|String|url|Cluster UUID| |3.1.0|
+|systemTags \(Optional\)|List|body| | |3.1.0|
+|userTags \(Optional\)|List|body| | |3.1.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "attachedHosts": [
+      {
+        "zoneUuid": "5899ac6fab7d3951acae1d43c4fd7f97",
+        "name": "example",
+        "uuid": "161616a23a4834cfbe3dd7000a75ef51",
+        "clusterUuid": "b886a9367ff9362d8955443cc5065fab",
+        "description": "example",
+        "managementIp": "192.168.0.1",
+        "hypervisorType": "KVM",
+        "state": "Enabled",
+        "status": "Connected",
+        "totalCpuCapacity": 4.0,
+        "availableCpuCapacity": 2.0,
+        "totalMemoryCapacity": 4.0,
+        "availableMemoryCapacity": 4.0
+      }
+    ],
+    "unattachedHosts": [
+      {
+        "zoneUuid": "ee802d3432203cc99a9711b3d26e047d",
+        "name": "example",
+        "uuid": "0d28db87cedc3c729300bcc7f426f9b6",
+        "clusterUuid": "5d5325e38b4331c28efe5367dc583110",
+        "description": "example",
+        "managementIp": "192.168.0.2",
+        "hypervisorType": "KVM",
+        "state": "Enabled",
+        "status": "Connected",
+        "totalCpuCapacity": 4.0,
+        "availableCpuCapacity": 2.0,
+        "totalMemoryCapacity": 4.0,
+        "availableMemoryCapacity": 4.0
+      }
+    ],
+    "isAllHostsAttached": false
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. For details, see [error](#p_lr3_4lm_qfb)|3.1.0|
+|inventory|ScsiLunClusterStatusInventory|For details, see [inventory](#p_l2q_4lm_qfb)|3.1.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, e.g. SYS.1000, HOST.1001|3.1.0|
+|description|String|Brief description of the error|3.1.0|
+|details|String|Detailed error information|3.1.0|
+|elaboration|String|Reserved field, defaults to null|3.1.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|3.1.0|
+|cause|ErrorCode|Root cause. The error that caused the current error. If there is no original error, this field is null|3.1.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|isAllHostsAttached|Boolean|Whether the SCSI LUN is connected to all hosts in the cluster|3.1.0|
+|attachedHosts|List|For details, see [attachedHosts](#p_b4x_4lm_qfb)|3.1.0|
+|unattachedHosts|List|For details, see [unattachedHosts](#p_o2d_plm_qfb)|3.1.0|
+
+### attachedHosts
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|zoneUuid|String|Data Center UUID|3.1.0|
+|name|String|Resource name|3.1.0|
+|uuid|String|Resource UUID, uniquely identifies the resource|3.1.0|
+|clusterUuid|String|Cluster UUID|3.1.0|
+|description|String|Resource description|3.1.0|
+|managementIp|String| |3.1.0|
+|hypervisorType|String| |3.1.0|
+|state|String| |3.1.0|
+|status|String| |3.1.0|
+|totalCpuCapacity|Long| |3.1.0|
+|availableCpuCapacity|Long| |3.1.0|
+|cpuSockets|Integer|Number of physical CPU sockets|0.6|
+|totalMemoryCapacity|Long| |3.1.0|
+|availableMemoryCapacity|Long| |3.1.0|
+|cpuNum|Integer|Number of logical CPUs|0.6|
+|ipmiAddress|String|IPMI address|0.6|
+|ipmiUsername|String|IPMI username|0.6|
+|ipmiPort|Integer|IPMI port|0.6|
+|ipmiPowerStatus|String|IPMI power status|0.6|
+|architecture|String| |0.6|
+|nqn|String|NVMe Qualified Name|4.10.6|
+|hostname|String|Hostname|4.10.20|
+|createDate|Timestamp|Creation time|3.1.0|
+|lastOpDate|Timestamp|Last modification time|3.1.0|
+|cpuStatus|HwMonitorStatus|For details, see [cpuStatus](#p_wvd_kkm_lhc)|4.10.0|
+|memoryStatus|HwMonitorStatus|For details, see [memoryStatus](#p_nhh_kkm_lhc)|4.10.0|
+|diskStatus|HwMonitorStatus|For details, see [diskStatus](#p_esk_kkm_lhc)|4.10.0|
+|nicStatus|HwMonitorStatus|For details, see [nicStatus](#p_n24_kkm_lhc)|4.10.0|
+|gpuStatus|HwMonitorStatus|For details, see [gpuStatus](#p_zgr_kkm_lhc)|4.10.0|
+|powerSupplyStatus|HwMonitorStatus|For details, see [powerSupplyStatus](#p_o35_kkm_lhc)|4.10.0|
+|fanStatus|HwMonitorStatus|For details, see [fanStatus](#p_m2x_kkm_lhc)|4.10.0|
+|raidStatus|HwMonitorStatus|For details, see [raidStatus](#p_oc1_lkm_lhc)|4.10.0|
+|temperatureStatus|HwMonitorStatus|For details, see [temperatureStatus](#p_cyd_lkm_lhc)|4.10.0|
+
+### cpuStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### memoryStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### diskStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### nicStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### gpuStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### powerSupplyStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### fanStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### raidStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### temperatureStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### unattachedHosts
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|zoneUuid|String|Data Center UUID|3.1.0|
+|name|String|Resource name|3.1.0|
+|uuid|String|Resource UUID, uniquely identifies the resource|3.1.0|
+|clusterUuid|String|Cluster UUID|3.1.0|
+|description|String|Resource description|3.1.0|
+|managementIp|String| |3.1.0|
+|hypervisorType|String| |3.1.0|
+|state|String| |3.1.0|
+|status|String| |3.1.0|
+|totalCpuCapacity|Long| |3.1.0|
+|availableCpuCapacity|Long| |3.1.0|
+|cpuSockets|Integer|Number of physical CPU sockets|0.6|
+|totalMemoryCapacity|Long| |3.1.0|
+|availableMemoryCapacity|Long| |3.1.0|
+|cpuNum|Integer|Number of logical CPUs|0.6|
+|ipmiAddress|String|IPMI address|0.6|
+|ipmiUsername|String|IPMI username|0.6|
+|ipmiPort|Integer|IPMI port|0.6|
+|ipmiPowerStatus|String|IPMI power status|0.6|
+|architecture|String| |0.6|
+|nqn|String|NVMe Qualified Name|4.10.6|
+|hostname|String|Hostname|4.10.20|
+|createDate|Timestamp|Creation time|3.1.0|
+|lastOpDate|Timestamp|Last modification time|3.1.0|
+|cpuStatus|HwMonitorStatus|For details, see [cpuStatus](#p_el2_lw3_mhc)|4.10.0|
+|memoryStatus|HwMonitorStatus|For details, see [memoryStatus](#p_msk_lw3_mhc)|4.10.0|
+|diskStatus|HwMonitorStatus|For details, see [diskStatus](#p_wz4_lw3_mhc)|4.10.0|
+|nicStatus|HwMonitorStatus|For details, see [nicStatus](#p_dps_lw3_mhc)|4.10.0|
+|gpuStatus|HwMonitorStatus|For details, see [gpuStatus](#p_nbw_lw3_mhc)|4.10.0|
+|powerSupplyStatus|HwMonitorStatus|For details, see [powerSupplyStatus](#p_ip1_mw3_mhc)|4.10.0|
+|fanStatus|HwMonitorStatus|For details, see [fanStatus](#p_wj2_mw3_mhc)|4.10.0|
+|raidStatus|HwMonitorStatus|For details, see [raidStatus](#p_tvh_mw3_mhc)|4.10.0|
+|temperatureStatus|HwMonitorStatus|For details, see [temperatureStatus](#p_g2m_mw3_mhc)|4.10.0|
+
+### cpuStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### memoryStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### diskStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### nicStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### gpuStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### powerSupplyStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### fanStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### raidStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### temperatureStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+## SDK Examples
+Java SDK
+
+```
+CheckScsiLunClusterStatusAction action = new CheckScsiLunClusterStatusAction();
+action.uuid = "abe6bf1e763739f88f97055c14246245";
+action.clusterUuid = "5415c2beb8a93447a27f69c109cdfb23";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CheckScsiLunClusterStatusAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = CheckScsiLunClusterStatusAction()
+action.uuid = "abe6bf1e763739f88f97055c14246245"
+action.clusterUuid = "5415c2beb8a93447a27f69c109cdfb23"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

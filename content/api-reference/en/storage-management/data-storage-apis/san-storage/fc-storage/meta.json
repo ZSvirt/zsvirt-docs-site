@@ -1,0 +1,13 @@
+{
+  "title": "FC Storage Related Interfaces",
+  "pages": [
+    "query-fiber-channel-storage",
+    "refresh-fiber-channel-storage",
+    "update-scsi-lun",
+    "attach-scsi-lun-to-vm-instance",
+    "detach-scsi-lun-from-vm-instance",
+    "check-scsi-lun-cluster-status",
+    "get-scsi-lun-candidates-for-attaching-vm"
+  ],
+  "pagesIndex": "index"
+}

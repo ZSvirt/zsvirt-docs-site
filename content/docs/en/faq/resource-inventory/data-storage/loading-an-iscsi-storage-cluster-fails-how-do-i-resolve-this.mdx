@@ -1,0 +1,15 @@
+---
+title: "Loading an iSCSI Storage cluster fails. How do I resolve this?"
+---
+
+## Solution
+1.  Try the following approaches:
+2.  Verify that all hosts in the cluster can recognize the same LUN device information.
+
+    Run `multipath -ll` to check whether the multipath output is consistent across all hosts.
+
+3.  If the output is inconsistent, run `service multipathd restart` on the affected host to restart the multipath service.
+
+4.  Run `rescan-scsi-bus.sh -a` to rescan the SAN storage.
+
+5.  Reload the iSCSI Storage cluster.

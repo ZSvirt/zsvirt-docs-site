@@ -1,0 +1,76 @@
+---
+title: "Validate Disk Snapshot Chain"
+---
+
+<APIPage method="PUT" path="/v1/volumes/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "validateVolumeSnapshotChain": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The `systemTags` and `userTags` fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"validateVolumeSnapshotChain":{}}' \
+http://localhost:8080/zstack/v1/volumes/c741336c9efe334490ed027e7130af1e/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|The UUID of the resource. Uniquely identifies the resource. Validates the current snapshot chain of this disk| |4.3.0|
+|systemTags \(Optional\)|List|body|System tags| |4.3.0|
+|userTags \(Optional\)|List|body|User tags| |4.3.0|
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On failure, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+ValidateVolumeSnapshotChainAction action = new ValidateVolumeSnapshotChainAction();
+action.uuid = "c741336c9efe334490ed027e7130af1e";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ValidateVolumeSnapshotChainAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ValidateVolumeSnapshotChainAction action = ValidateVolumeSnapshotChainAction()
+action.uuid = "c741336c9efe334490ed027e7130af1e"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ValidateVolumeSnapshotChainAction.Result res = action.call()
+```
+
+</APIPage>

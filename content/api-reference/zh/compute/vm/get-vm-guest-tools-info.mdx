@@ -1,0 +1,86 @@
+---
+title: "获取虚拟机内部增强工具的信息"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/{uuid}/guest-tools-infos">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8"\
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/5ecc83bf3f5033b9b78b4f9406c01f8f/guest-tools-infos
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |3.7.0|
+|systemTags \(可选\)|List|query|系统标签| |3.7.0|
+|userTags \(可选\)|List|query|用户标签| |3.7.0|
+
+<Callout type="info">
+-   ZSvirt支持记录虚拟机内安装的GuestTools版本，与主机GuestTools ISO版本对比，决定是否需要升级，**SystemTags**增加**GuestTools**选项。
+</Callout>
+    -   选项格式为：`GuestTools::TOOLS_VERSION`。其中TOOLS\_VERSION初值为1.0.0，未来随着工具版本的提升，这个值会随之变化。
+    -   例如：`GuestTools::1.0.0`
+    -   补充说明：该API用于获取虚拟机内部安装的GuestTools版本信息和当前运行状态，如果有返回且虚拟机当前没有GuestTools标签，则创建该标签； 如果有返回且与虚拟机当前GuestTools标签值不同，则更新该标签。
+
+## API返回
+返回示例
+
+```
+{
+  "version": "1.0.0",
+  "status": "Running",
+  "features": {
+    "pvpanic": "enable"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|version|String|增强工具版本|3.7.0|
+|status|String|增强工具运行状态|3.7.0|
+|features|Map|增强工具支持的功能, 以及功能模块的相关状态|4.2.0|
+|success|boolean|成功|3.7.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_kkf_ncb_mjb)|3.7.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.7.0|
+|description|String|错误的概要描述|3.7.0|
+|details|String|错误的详细信息|3.7.0|
+|elaboration|String|保留字段，默认为null|3.7.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.7.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.7.0|
+
+## SDK示例
+Java SDK
+
+```
+GetVmGuestToolsInfoAction action = new GetVmGuestToolsInfoAction();
+action.uuid = "5ecc83bf3f5033b9b78b4f9406c01f8f";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetVmGuestToolsInfoAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetVmGuestToolsInfoAction action = GetVmGuestToolsInfoAction()
+action.uuid = "5ecc83bf3f5033b9b78b4f9406c01f8f"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetVmGuestToolsInfoAction.Result res = action.call()
+```
+
+</APIPage>

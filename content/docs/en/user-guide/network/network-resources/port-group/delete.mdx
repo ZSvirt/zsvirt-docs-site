@@ -1,0 +1,19 @@
+---
+title: 'Delete a Distributed Port Group'
+---
+
+-   You cannot delete the default distributed port group.
+-   You cannot delete a distributed port group if it is referenced by a VM memory snapshot.
+-   You cannot delete a distributed port group if it is associated with a Kernel adapter.
+
+1.  In the navigation pane, choose **Inventory** &gt; **Network Resource**.
+
+2.  In the resource tree, select a target distributed port group.
+
+3.  On the distributed port group's details page, click **Actions** &gt; **Delete**.
+
+    <Callout type="info">
+    Deleting a distributed port group detaches the VM NICs that are using this network. Proceed with caution.
+    </Callout>
+
+4.  After acknowledging the risk, click **OK**.

@@ -1,0 +1,78 @@
+---
+title: "Reload External Service"
+---
+
+<APIPage method="PUT" path="/v1/external/services">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "reloadExternalService": {
+    "name": "prometheus"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the `systemTags` and `userTags` fields are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"reloadExternalService":{"name":"prometheus"}}' \
+http://localhost:8080/zstack/v1/external/services
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|name|String|body \(included in the `reloadExternalService` structure\)|Resource name| |4.7.0|
+|systemTags \(Optional\)|List|body|System tags| |4.7.0|
+|userTags \(Optional\)|List|body|User tags| |4.7.0|
+
+## API Response
+When the API succeeds, it returns an empty JSON structure `{}`. When an error occurs, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+ReloadExternalServiceAction action = new ReloadExternalServiceAction();
+action.name = "prometheus";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ReloadExternalServiceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ReloadExternalServiceAction action = ReloadExternalServiceAction()
+action.name = "prometheus"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ReloadExternalServiceAction.Result res = action.call()
+```
+
+</APIPage>

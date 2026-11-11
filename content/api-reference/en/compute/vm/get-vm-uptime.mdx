@@ -1,0 +1,73 @@
+---
+title: "Get VM Uptime"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/{uuid}/uptime">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/f02cf46cd553364bb4ccebcce7728e14/uptime
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Virtual Machine UUID| |4.2.0|
+|systemTags \(Optional\)|List|query|System Tag| |4.2.0|
+|userTags \(Optional\)|List|query|User Tag| |4.2.0|
+
+## API Response
+Response Example
+
+```
+{
+  "uptime": "2023-10-01 10:12:15"
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.2.0|
+|uptime|String| |4.2.0|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation succeeds, this field is null. For details, see [error](#p_gvh_fqf_y1c)|4.2.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier of the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause. The error that triggered the current error. If there is no original error, this field is null|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+GetVmUptimeAction action = new GetVmUptimeAction();
+action.uuid = "f02cf46cd553364bb4ccebcce7728e14";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetVmUptimeAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetVmUptimeAction action = GetVmUptimeAction()
+action.uuid = "f02cf46cd553364bb4ccebcce7728e14"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetVmUptimeAction.Result res = action.call()
+```
+
+</APIPage>

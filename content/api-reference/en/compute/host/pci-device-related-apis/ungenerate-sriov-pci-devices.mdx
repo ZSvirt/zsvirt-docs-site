@@ -1,0 +1,75 @@
+---
+title: "Restore SR-IOV Virtualized PCI Devices"
+---
+
+<APIPage method="PUT" path="/v1/pci-devices/{pciDeviceUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "ungenerateSriovPciDevices": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+systemTags and userTags fields can be omitted in the above example. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"ungenerateSriovPciDevices":{}}' http://localhost:8080/zstack/v1/pci-devices/31f8b8c366c63901ac928106568eca85/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|pciDeviceUuid|String|url|PCI UUID| |3.5.0|
+|systemTags \(Optional\)|List|body|System tags| |3.5.0|
+|userTags \(Optional\)|List|body|User tags| |3.5.0|
+
+## API Response
+This API returns an empty JSON structure `{}` on success. On error, the returned JSON contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+UngenerateSriovPciDevicesAction action = new UngenerateSriovPciDevicesAction();
+action.pciDeviceUuid = "31f8b8c366c63901ac928106568eca85";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UngenerateSriovPciDevicesAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UngenerateSriovPciDevicesAction action = UngenerateSriovPciDevicesAction()
+action.pciDeviceUuid = "31f8b8c366c63901ac928106568eca85"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UngenerateSriovPciDevicesAction.Result res = action.call()
+```
+
+</APIPage>

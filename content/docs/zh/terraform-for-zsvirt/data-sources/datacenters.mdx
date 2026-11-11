@@ -1,0 +1,67 @@
+---
+title: 'zsphere_datacenters'
+description: '查询 ZSvirt 数据中心列表及其属性。'
+---
+
+<HistoricalNamingNote locale="zh" />
+
+
+# zsphere_datacenters（数据源）
+
+查询 ZSvirt 数据中心列表及其属性。
+
+## 示例用法
+```terraform
+data "zsphere_datacenters" "test" {
+}
+
+output "zstack_secs" {
+  value = data.zsphere_datacenters.test
+}
+
+# 示例输出：
+# zstack_secs = {
+#   "data_centers" = tolist([
+#     {
+#       "name" = "Datacenter-1"
+#       "state" = "Enabled"
+#       "type" = "zstack"
+#       "uuid" = "86643f5442164890b8b71de5b582dc9f"
+#     },
+#   ])
+#   "filter" = tolist([])
+#   "name" = tostring(null)
+#   "name_pattern" = tostring(null)
+# }
+```
+
+## 参数说明
+
+### 可选参数
+
+- `filter`（块列表）（参见下方嵌套结构）
+- `name`（字符串）按精确名称查询
+- `name_pattern`（字符串）按名称模糊查询，类似 MySQL LIKE。`%` 匹配多个字符，`_` 匹配单个字符
+
+### 只读属性
+
+- `data_centers`（属性列表）（参见下方嵌套结构）
+
+<a id="nestedblock--filter"></a>
+### `filter` 嵌套结构
+
+必填参数：
+
+- `name`（字符串）用于过滤的字段名。
+- `values`（字符串集合）过滤值，多个值之间为 OR 关系。
+
+
+<a id="nestedatt--data_centers"></a>
+### `data_centers` 嵌套结构
+
+只读属性：
+
+- `name` (String)
+- `state` (String)
+- `type` (String)
+- `uuid` (String)

@@ -1,0 +1,54 @@
+---
+title: 'zsphere_nfs_primary_storage'
+description: '管理 ZSvirt NFS 主存储，通过 NFS 协议提供共享存储。'
+---
+
+<HistoricalNamingNote locale="zh" />
+
+
+# zsphere_nfs_primary_storage（资源）
+
+管理 ZSvirt NFS 主存储，通过 NFS 协议提供共享存储。
+
+## 示例用法
+```terraform
+resource "zsphere_nfs_primary_storage" "nfs_storage" {
+  name            = "nfs-storage-from-terraform"
+  description     = "Add an example NFS primary storage from terraform"
+  datacenter_uuid = "datacenter-uuid-here"
+  cluster_uuid    = "cluster-uuid-here"
+  url             = "192.168.1.100:/share/nfs"
+  cidr            = "192.168.1.0/24"
+  mount_options   = "rw,sync"
+}
+
+output "zsphere_nfs_primary_storage" {
+  value = zsphere_nfs_primary_storage.nfs_storage
+}
+```
+
+## 参数说明
+
+### 必填参数
+
+- `datacenter_uuid`（字符串）NFS所属数据中心 UUID primary storage
+- `name`（字符串）NFS名称 primary storage
+- `url`（字符串）NFS挂载路径 primary storage
+
+### 可选参数
+
+- `cidr`（字符串）CIDR for the NFS primary storage gateway
+- `cluster_uuid`（字符串）Cluster UUID to attach the NFS primary storage to
+- `description`（字符串）NFS 主存储描述
+- `mount_options`（字符串）Mount options for the NFS primary storage
+
+### 只读属性
+
+- `attached_cluster_uuids`（字符串列表）List of cluster UUIDs attached to the NFS primary storage
+- `available_capacity`（数字）Available capacity of the NFS primary storage
+- `mount_path`（字符串）NFS挂载路径 primary storage
+- `state`（字符串）State of the NFS primary storage
+- `status`（字符串）Status of the NFS primary storage
+- `total_capacity`（数字）Total capacity of the NFS primary storage
+- `type`（字符串）NFS类型 primary storage
+- `uuid`（字符串）NFS 主存储 UUID

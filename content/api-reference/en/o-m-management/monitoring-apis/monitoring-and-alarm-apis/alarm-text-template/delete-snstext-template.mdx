@@ -1,0 +1,70 @@
+---
+title: "Delete Alarm Message Template"
+---
+
+<APIPage method="DELETE" path="/v1/zwatch/alarms/sns/text-templates/{uuid}?deleteMode={deleteMode}">
+
+Delete an alarm message template.
+
+Headers
+
+```
+
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/zwatch/alarms/sns/text-templates/a4ce47e628303c4fa55743f1b84c61b4?deleteMode=Permissive
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|The UUID of the resource. Uniquely identifies the resource| |2.3|
+|deleteMode \(Optional\)|String|url| | |2.3|
+|systemTags \(Optional\)|List|body|System tags| |2.3|
+|userTags \(Optional\)|List|body|User tags| |2.3|
+
+## API Response
+This API returns an empty JSON structure `{}` on success. On failure, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+
+DeleteSNSTextTemplateAction action = new DeleteSNSTextTemplateAction();
+action.uuid = "a4ce47e628303c4fa55743f1b84c61b4";
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteSNSTextTemplateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+
+DeleteSNSTextTemplateAction action = DeleteSNSTextTemplateAction()
+action.uuid = "a4ce47e628303c4fa55743f1b84c61b4"
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DeleteSNSTextTemplateAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,19 @@
+---
+title: "A host has no monitoring data. What should I do?"
+---
+
+## Cause
+Port 9092, used for monitoring communication between the Management Node and the affected host, is not open.
+
+## Solution
+1.  Log in to the affected host and run the following command to check whether port 9092 is being listened on:
+
+    ```
+    [root@localhost ~]# netstat -tunlp | grep 9092
+    ```
+
+2.  Log in to the Management Node and run the following command to verify connectivity to port 9092 on the affected host, then open port 9092 if it is blocked:
+
+    ```
+    [root@localhost ~]# curl -v IP:9092
+    ```

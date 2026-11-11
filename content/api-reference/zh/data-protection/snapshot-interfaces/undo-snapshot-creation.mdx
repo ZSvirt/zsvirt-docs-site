@@ -1,0 +1,135 @@
+---
+title: "撤销创建快照"
+---
+
+<APIPage method="PUT" path="/v1/volumes/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "undoSnapshotCreation": {
+    "snapShotUuid": "7677380457d136629f44c93c99978acc"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"undoSnapshotCreation":{"snapShotUuid":"7677380457d136629f44c93c99978acc"}}' \
+http://localhost:8080/zstack/v1/volumes/7fc32ad187c939d8aca65977560c2714/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |4.7.0|
+|snapShotUuid|String|body\(包含在`undoSnapshotCreation`结构中\)| | |4.7.0|
+|systemTags \(可选\)|List|body|系统标签| |4.7.0|
+|userTags \(可选\)|List|body|用户标签| |4.7.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "7c3af161f36e3c2ca8661e8f825a9a4d",
+    "name": "test-volume",
+    "primaryStorageUuid": "c5b8c1bc2db337ac83b5a867046e145d",
+    "vmInstanceUuid": "d6d25288e0973da58921dc13cb58c653",
+    "diskOfferingUuid": "5547f17f3df234278ce7f44bb8fdf131",
+    "rootImageUuid": "a976ad9fc6493bd88ea7ef05e9028dc1",
+    "installPath": "/zstack_ps/rootVolumes/acct-36c27e8ff05c4780bf6d2fa65700f22e/vol-7c3af161f36e3c2ca8661e8f825a9a4d/7c3af161f36e3c2ca8661e8f825a9a4d.qcow2",
+    "type": "Root",
+    "format": "qcow2",
+    "size": 107374182400,
+    "actualSize": 21474836480,
+    "deviceId": 0,
+    "state": "Enabled",
+    "status": "Ready",
+    "createDate": "Nov 14, 2017 2:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.7.0|
+|inventory|VolumeInventory|详情参考[inventory](#p_cm1_hkv_v2c)|4.7.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_ebq_3kv_v2c)|4.7.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.7.13|
+|name|String|资源名称|4.7.13|
+|description|String|资源的详细描述|4.7.13|
+|primaryStorageUuid|String|数据存储UUID|4.7.13|
+|vmInstanceUuid|String|虚拟机UUID|4.7.13|
+|diskOfferingUuid|String|硬盘规格UUID|4.7.13|
+|rootImageUuid|String| |4.7.13|
+|installPath|String| |4.7.13|
+|type|String| |4.7.13|
+|format|String| |4.7.13|
+|size|Long| |4.7.13|
+|actualSize|Long| |4.7.13|
+|deviceId|Integer| |4.7.13|
+|state|String| |4.7.13|
+|status|String| |4.7.13|
+|createDate|Timestamp|创建时间|4.7.13|
+|lastOpDate|Timestamp|最后一次修改时间|4.7.13|
+|isShareable|Boolean| |4.7.13|
+|volumeQos|String| |4.7.13|
+|lastDetachDate|Timestamp| |4.7.13|
+|lastVmInstanceUuid|String| |4.7.13|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+UndoSnapshotCreationAction action = new UndoSnapshotCreationAction();
+action.uuid = "7fc32ad187c939d8aca65977560c2714";
+action.snapShotUuid = "7677380457d136629f44c93c99978acc";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UndoSnapshotCreationAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UndoSnapshotCreationAction action = UndoSnapshotCreationAction()
+action.uuid = "7fc32ad187c939d8aca65977560c2714"
+action.snapShotUuid = "7677380457d136629f44c93c99978acc"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UndoSnapshotCreationAction.Result res = action.call()
+```
+
+</APIPage>

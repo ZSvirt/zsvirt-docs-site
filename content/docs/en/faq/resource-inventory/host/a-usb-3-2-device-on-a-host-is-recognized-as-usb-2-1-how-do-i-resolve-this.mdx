@@ -1,0 +1,24 @@
+---
+title: "A USB 3.2 device on a host is recognized as USB 2.1. How do I resolve this?"
+---
+
+## Symptom
+A USB 3.2 device is recognized as USB 2.1 on the host.
+
+## Cause
+USB 3.0 support is not enabled in the host BIOS.
+
+## Solution
+1.  Log in to the host and run the `lsusb` command to check whether the host recognizes the USB device correctly.
+
+2.  Verify that the USB port being used on the host is correct.
+
+3.  Migrate all virtual machines off the host, then restart the host and check whether USB 3.0 support is enabled in the BIOS configuration.
+
+    See [Figure 1](#fig_bpp_cxc_5xb) and [Figure 2](#fig_f4q_nxc_5xb):
+
+    ![Check USB configuration 1](/docs/en/faq/images/ZStack_FAQ_Summary_0012_49_1.png)
+
+    ![Check USB configuration 2](/docs/en/faq/images/ZStack_FAQ_Summary_0012_49_2.png)
+
+4.  Set the XHCI USB 3.0 Port to **Enable**. The host will then correctly recognize the USB device version.

@@ -1,0 +1,59 @@
+---
+title: "Get Two-Factor Authentication State"
+---
+
+<APIPage method="GET" path="/v1/twofactorauthentication/state">
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" -X GET http://localhost:8080/zstack/v1/twofactorauthentication/state
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|systemTags \(Optional\)|List|query| | |2.6.0|
+|userTags \(Optional\)|List|query| | |2.6.0|
+
+## API Response
+Response example
+
+```
+{
+  "state": "Disable"
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|state|String| |2.6.0|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null on success. For details, see [error](#p_n3b_wlt_42b)|2.6.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, e.g., SYS.1000, HOST.1001|2.6.0|
+|description|String|A brief description of the error|2.6.0|
+|details|String|Detailed information about the error|2.6.0|
+|elaboration|String|Reserved field. Default is null|2.6.0|
+|opaque|LinkedHashMap|Reserved field. Default is null|2.6.0|
+|cause|ErrorCode|The root error that caused the current error. This field is null if there is no root cause|2.6.0|
+
+## SDK Examples
+Java SDK
+
+```
+GetTwoFactorAuthenticationStateAction action = new GetTwoFactorAuthenticationStateAction();
+GetTwoFactorAuthenticationStateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetTwoFactorAuthenticationStateAction action = GetTwoFactorAuthenticationStateAction()
+GetTwoFactorAuthenticationStateAction.Result res = action.call()
+```
+
+</APIPage>

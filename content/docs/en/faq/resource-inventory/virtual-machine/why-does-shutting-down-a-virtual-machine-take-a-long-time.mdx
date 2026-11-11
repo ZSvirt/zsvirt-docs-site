@@ -1,0 +1,19 @@
+---
+title: "Why does shutting down a virtual machine take a long time?"
+---
+
+## Cause
+This issue typically occurs on Linux virtual machines due to a missing ACPID service \(the daemon that handles power-related events\). KVM virtual machines running Linux do not install ACPID by default, so shutdown signals are not handled. After one minute, the virtualization platform forcibly terminates the virtual machine process.
+
+## Solution
+1.  Run the following command in the virtual machine to install and start the ACPID service:
+
+    ```
+    [root@kvm_client_00 ~]# yum install acpid -y
+    ```
+
+2.  Run the following command to restart the ACPID service. The service is added to the system startup by default after installation:
+
+    ```
+    [root@kvm_client_00 ~]# /etc/init.d/acpid restart 
+    ```

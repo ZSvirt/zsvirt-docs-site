@@ -1,0 +1,154 @@
+---
+title: "添加分布式存储"
+---
+
+<APIPage method="POST" path="/v1/primary-storage/ceph">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "monUrls": [
+      "root:password@localhost/?monPort=7777"
+    ],
+    "rootVolumePoolName": "zs-images",
+    "dataVolumePoolName": "zs-data-volume",
+    "imageCachePoolName": "zs-image-cache",
+    "name": "My Ceph Primary Storage",
+    "zoneUuid": "d42197a462c34a44989bdf38d5aa2424"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"monUrls":["root:password@localhost/?monPort=7777"],"rootVolumePoolName":"zs-images","dataVolumePoolName":"zs-data-volume","imageCachePoolName":"zs-image-cache","name":"My Ceph Primary Storage","zoneUuid":"251a3dffccaf39fc8d190eedcf4395bf"}}' \
+http://localhost:8080/zstack/v1/primary-storage/ceph
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|monUrls|List|body\(包含在**params**结构中\)|分布式存储 mon 的地址列表| |0.6|
+|rootVolumePoolName \(可选\)|String|body\(包含在**params**结构中\)|指定 Root Volume 可使用的 分布式存储 pool 名字| |0.6|
+|dataVolumePoolName \(可选\)|String|body\(包含在**params**结构中\)|指定 Data Volume 可使用的分布式存储 pool 名字| |0.6|
+|imageCachePoolName \(可选\)|String|body\(包含在**params**结构中\)|指定镜像缓存可使用的分布式存储 pool 名字| |0.6|
+|url|String|body\(包含在**params**结构中\)|未使用| |0.6|
+|name|String|body\(包含在**params**结构中\)|分布式存储的名称| |0.6|
+|description \(可选\)|String|body\(包含在**params**结构中\)|分布式存储的详细描述| |0.6|
+|type \(可选\)|String|body\(包含在**params**结构中\)|分布式存储的类型，此处为 Ceph| |0.6|
+|zoneUuid|String|body\(包含在**params**结构中\)|数据中心UUID| |0.6|
+|resourceUuid \(可选\)|String|body\(包含在**params**结构中\)|资源UUID。若指定，分布式存储会使用该字段值作为UUID。| |0.6|
+|systemTags \(可选\)|List|body|系统标签| |0.6|
+|userTags \(可选\)|List|body|用户标签| |0.6|
+
+<Callout type="info">
+-   ZSvirt添加分布式存储时支持标识分布式存储的类型为xsky、sandstone、或open-source，**SystemTags**增加**manufacturer**选项。
+</Callout>
+    -   选项格式为：`ceph::manufacturer::Platform`
+    -   例如：`ceph::manufacturer::xsky`
+-   ZSvirt添加分布式存储时支持标识分布式存储的类型为xsky，且支持调用xsky类型分布式存储的SDK，**SystemTags**增加**thirdPartyPlatform**选项。
+    -   选项格式为：`ceph::thirdPartyPlatform::TOKEN`
+    -   例如：`ceph::thirdPartyPlatform::68b329da9893e34099c7d8ad5cb9c940`
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "name": "Ceph-1",
+    "url": "not used",
+    "type": "Ceph",
+    "state": "Enabled",
+    "status": "Connected",
+    "attachedClusterUuids": [
+      "2d8583d86bd1472e8ec0e04e26ea273f"
+    ]
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_mhw_vw1_n1b)|0.6|
+|inventory|PrimaryStorageInventory|详情参考[inventory](#p_ovz_vw1_n1b)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|zoneUuid|String|数据中心UUID|0.6|
+|name|String|资源名称|0.6|
+|url|String| |0.6|
+|description|String|资源的详细描述|0.6|
+|totalCapacity|Long| |0.6|
+|availableCapacity|Long| |0.6|
+|totalPhysicalCapacity|Long| |0.6|
+|availablePhysicalCapacity|Long| |0.6|
+|systemUsedCapacity|Long| |0.6|
+|type|String| |0.6|
+|state|String| |0.6|
+|status|String| |0.6|
+|mountPath|String| |0.6|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+|attachedClusterUuids|List| |0.6|
+
+## SDK示例
+Java SDK
+
+```
+AddCephPrimaryStorageAction action = new AddCephPrimaryStorageAction();
+action.monUrls = asList("root:password@localhost/?monPort=7777");
+action.rootVolumePoolName = "zs-images";
+action.dataVolumePoolName = "zs-data-volume";
+action.imageCachePoolName = "zs-image-cache";
+action.name = "My Ceph Primary Storage";
+action.zoneUuid = "88b49879acd34e11afa5bb3ea9164d5a";
+action.sessionId = "33a01ee65ac64450940359dc3181f9b1";
+AddCephPrimaryStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddCephPrimaryStorageAction action = AddCephPrimaryStorageAction()
+action.monUrls = [root:password@localhost/?monPort=7777]
+action.rootVolumePoolName = "zs-images"
+action.dataVolumePoolName = "zs-data-volume"
+action.imageCachePoolName = "zs-image-cache"
+action.name = "My Ceph Primary Storage"
+action.zoneUuid = "0f05052514554462b437f9cfa272f57f"
+action.sessionId = "cb3d5ecb63634ca093ea223c55e6a30a"
+AddCephPrimaryStorageAction.Result res = action.call()
+```
+
+</APIPage>

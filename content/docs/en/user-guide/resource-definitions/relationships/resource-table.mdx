@@ -1,0 +1,179 @@
+---
+title: 'Platform Resource Relationship'
+---
+
+The following table illustrates the subordinate and quantitative relationships between various fundamental resources on the platform from the perspective of a data center:
+
+<table className="doc-feature-table">
+  <thead>
+    <tr>
+      <th>Resource A</th>
+      <th>Resource B</th>
+      <th>Subordinate Relationship</th>
+      <th>Quantitative Relationship</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowSpan="8">Data Center</td>
+      <td>Image Storage</td>
+      <td>Friend</td>
+      <td>n:n</td>
+    </tr>
+    <tr>
+      <td>Cluster</td>
+      <td>Parent-Child</td>
+      <td>1:n</td>
+    </tr>
+    <tr>
+      <td>Host</td>
+      <td>Grandparent-Grandchild</td>
+      <td>1:n</td>
+    </tr>
+    <tr>
+      <td>VM Group</td>
+      <td>Parent-Child</td>
+      <td>1:n</td>
+    </tr>
+    <tr>
+      <td>Virtual Machine</td>
+      <td>Grandparent-Grandchild</td>
+      <td>1:n</td>
+    </tr>
+    <tr>
+      <td>Data Storage</td>
+      <td>Parent-Child</td>
+      <td>1:n</td>
+    </tr>
+    <tr>
+      <td>Distributed Switch</td>
+      <td>Parent-Child</td>
+      <td>1:n</td>
+    </tr>
+    <tr>
+      <td>Distributed Port Group</td>
+      <td>Grandparent-Grandchild</td>
+      <td>1:n</td>
+    </tr>
+  </tbody>
+</table>
+
+<table className="doc-feature-table">
+  <thead>
+    <tr>
+      <th>Resource A</th>
+      <th>Resource B</th>
+      <th>Subordinate Relationship</th>
+      <th>Quantitative Relationship</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowSpan="5">Cluster</td>
+      <td>Host</td>
+      <td>Parent-Child</td>
+      <td>1:n</td>
+    </tr>
+    <tr>
+      <td>VM Group</td>
+      <td>Sibling</td>
+      <td>/</td>
+    </tr>
+    <tr>
+      <td>Virtual Machine</td>
+      <td>Grandparent-Grandchild</td>
+      <td>1:n</td>
+    </tr>
+    <tr>
+      <td>Data Storage</td>
+      <td>Sibling</td>
+      <td><a href="/en/docs/user-guide/resource-definitions/relationships/cluster-datastore-image-storage">n:n</a></td>
+    </tr>
+    <tr>
+      <td>Distributed Switch</td>
+      <td>Sibling</td>
+      <td>n:n</td>
+    </tr>
+  </tbody>
+</table>
+
+<table className="doc-feature-table">
+  <thead>
+    <tr>
+      <th>Resource A</th>
+      <th>Resource B</th>
+      <th>Subordinate Relationship</th>
+      <th>Quantitative Relationship</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Host</td>
+      <td>Virtual Machine</td>
+      <td>Parent-Child</td>
+      <td>1:n</td>
+    </tr>
+  </tbody>
+</table>
+
+<table className="doc-feature-table">
+  <thead>
+    <tr>
+      <th>Resource A</th>
+      <th>Resource B</th>
+      <th>Subordinate Relationship</th>
+      <th>Quantitative Relationship</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>VM Group</td>
+      <td>Virtual Machine</td>
+      <td>Parent-Child</td>
+      <td>1:n</td>
+    </tr>
+  </tbody>
+</table>
+
+<table className="doc-feature-table">
+  <thead>
+    <tr>
+      <th>Resource A</th>
+      <th>Resource B</th>
+      <th>Subordinate Relationship</th>
+      <th>Quantitative Relationship</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowSpan="2">Data Storage</td>
+      <td>Image Storage</td>
+      <td><a href="/en/docs/user-guide/resource-definitions/relationships/cluster-datastore-image-storage">Friend</a></td>
+      <td>/</td>
+    </tr>
+    <tr>
+      <td>Distributed Switch</td>
+      <td>Friend</td>
+      <td>/</td>
+    </tr>
+  </tbody>
+</table>
+
+<table className="doc-feature-table">
+  <thead>
+    <tr>
+      <th>Resource A</th>
+      <th>Resource B</th>
+      <th>Subordinate Relationship</th>
+      <th>Quantitative Relationship</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Distributed Switch</td>
+      <td>Distributed Port Group</td>
+      <td>Parent-Child</td>
+      <td>1:n</td>
+    </tr>
+  </tbody>
+</table>

@@ -1,0 +1,64 @@
+---
+title: "删除IP地址范围"
+---
+
+<APIPage method="DELETE" path="/v1/l3-networks/ip-ranges/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/l3-networks/ip-ranges/6ab14473fbfa340a807c5987cafa8f7f
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|IP地址范围的UUID| |0.6|
+|deleteMode \(可选\)|String|body|删除模式| |0.6|
+|systemTags \(可选\)|List|body|系统标签| |0.6|
+|userTags \(可选\)|List|body|用户标签| |0.6|
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+DeleteIpRangeAction action = new DeleteIpRangeAction();
+action.uuid = "6d1f44d0fe1440189eb293f18d7bf682";
+action.deleteMode = "Permissive";
+action.sessionId = "4a3745cb42f5430f874c6f6c4b298e95";
+DeleteIpRangeAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteIpRangeAction action = DeleteIpRangeAction()
+action.uuid = "0f1fcf2e779543baa416deb89eeeb2db"
+action.deleteMode = "Permissive"
+action.sessionId = "d07fb42a181d43dda2b6992536b02804"
+DeleteIpRangeAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,45 @@
+---
+title: 'zsphere_tags'
+description: 'Fetches a list of tags and their associated attributes.'
+---
+
+<HistoricalNamingNote locale="en" />
+
+# zsphere_tags (Data Source)
+
+Fetches a list of tags and their associated attributes.
+
+
+
+## Schema
+
+### Optional
+
+- `filter` (Block List) Filter resources based on any field in the schema. For example, to filter by color, use `name = "color"` and `values = ["#3185FC"]`. (see [below for nested schema](#nestedblock--filter))
+- `name` (String) Exact name for searching tag
+- `name_pattern` (String) Pattern for fuzzy name search, similar to MySQL LIKE. Use % for multiple characters and _ for exactly one character.
+
+### Read-Only
+
+- `tags` (Attributes List) List of tags matching the specified filters (see [below for nested schema](#nestedatt--tags))
+
+<a id="nestedblock--filter"></a>
+### Nested Schema for `filter`
+
+Required:
+
+- `name` (String) Name of the field to filter by (e.g., color, type).
+- `values` (Set of String) Values to filter by. Multiple values will be treated as an OR condition.
+
+
+<a id="nestedatt--tags"></a>
+### Nested Schema for `tags`
+
+Read-Only:
+
+- `color` (String) Color of the tag in hex format
+- `description` (String) Description of the tag
+- `name` (String) Name of the tag
+- `type` (String) Type of the tag
+- `uuid` (String) UUID identifier of the tag
+- `value` (String) Value of the tag

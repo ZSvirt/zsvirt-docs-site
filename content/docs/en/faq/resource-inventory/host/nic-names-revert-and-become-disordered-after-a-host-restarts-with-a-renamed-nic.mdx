@@ -1,0 +1,17 @@
+---
+title: "NIC names revert and become disordered after a host restarts with a renamed NIC"
+---
+
+## Solution
+1.  Follow these steps to resolve the issue:
+2.  Edit the kernel configuration in the `grub.cfg` file and add *net.ifnames=0 biosdevname=0*:
+
+    ```
+    # View the modified grub.cfg file
+    cat /boot/grub2/grub.cfg
+          ... crashkernel=auto rhgb quiet LANG=en_US.UTF-8 net.ifnames=0 biosdevname=0
+    ```
+
+3.  Check the name of the NIC that was not renamed. Open the corresponding NIC configuration file at `/etc/sysconfig/network-scripts/ifcfg-$xx` and add the mapping of NIC name to MAC address to the `/etc/udev/rules.d/70-persistent-net.rule` file.
+
+4.  Restart the host to apply the configuration.

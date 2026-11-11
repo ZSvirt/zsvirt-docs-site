@@ -1,0 +1,19 @@
+---
+title: "Creating a Bare Metal Instance on distributed storage failed. How do I resolve this?"
+---
+
+<HistoricalNamingNote locale="en" />
+
+## Cause
+Low bandwidth caused the creation to time out.
+
+## Solution
+1.  Connect to the Management Node via SSH.
+
+2.  Run the following commands in sequence to set the timeout to 24 hours:
+
+    ```
+    [root@localhost ~]# zstack-cli
+    admin >>>LogInByAccount accountName=admin password=$password //the password of the admin
+    admin >>> UpdateGlobalConfig category=baremetal2 name=convert.volume.to.local.disk.timeout value=24h
+    ```

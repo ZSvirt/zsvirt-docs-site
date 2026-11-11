@@ -1,0 +1,127 @@
+---
+title: "更新镜像包信息"
+---
+
+<APIPage method="PUT" path="/v1/image-packages/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateImagePackage": {
+    "name": "ova-update",
+    "description": "description-update"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/image-packages/eeed157556d2328c9c3aeec71ab75463
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |4.4.6|
+|name \(可选\)|String|body\(包含在`updateImagePackage`结构中\)|资源名称| |4.4.6|
+|description \(可选\)|String|body\(包含在`updateImagePackage`结构中\)|资源的详细描述| |4.4.6|
+|systemTags \(可选\)|List|body|系统标签| |4.4.6|
+|userTags \(可选\)|List|body|用户标签| |4.4.6|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "ecdea1f236a13e74a5712edabb4cfe9e",
+    "name": "ova",
+    "description": "description",
+    "vmUuid": "21c4183acbf737128aba034313e1f909",
+    "backupStorageUuid": "99630920a09138ab93823380286efc57",
+    "state": "Exported",
+    "exportUrl": "http://bs-host-name/path/to/ova.ova",
+    "md5Sum": "sampleMd5Sum",
+    "format": "OVA",
+    "size": 10737418240.0,
+    "createDate": "May 10, 2022 5:27:16 AM",
+    "lastOpDate": "May 10, 2022 5:27:16 AM"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.4.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_sry_hp2_wmb)|4.4.6|
+|inventory|ImagePackageInventory|详情参考[inventory](#p_ks2_kp2_wmb)|4.4.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.4.6|
+|description|String|错误的概要描述|4.4.6|
+|details|String|错误的详细信息|4.4.6|
+|elaboration|String|保留字段，默认为null|4.4.6|
+|opaque|LinkedHashMap|保留字段，默认为null|4.4.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.4.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.4.6|
+|name|String|资源名称|4.4.6|
+|description|String|资源的详细描述|4.4.6|
+|vmUuid|String|源虚拟机UUID|4.4.6|
+|backupStorageUuid|String|镜像包文件位于的镜像存储UUID|4.4.6|
+|exportUrl|String|下载地址|4.4.6|
+|md5Sum|String|镜像包文件MD5校验码|4.4.6|
+|format|String|镜像包文件格式|4.4.6|
+|size|Long|镜像包文件大小|4.4.6|
+|createDate|Timestamp|创建时间|4.4.6|
+|lastOpDate|Timestamp|最后一次修改时间|4.4.6|
+|state|ImagePackageState|详情参考[state](#p_lqz_lp2_wmb)|4.4.6|
+
+### state
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Exporting|ImagePackageState|导出中|4.4.6|
+|Exported|ImagePackageState|已导出|4.4.6|
+
+## SDK示例
+Java SDK
+
+```
+QueryImagePackageAction action = new QueryImagePackageAction();
+action.conditions = asList("uuid=5319396fe8f0393d998ac6c0939e780e");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryImagePackageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryImagePackageAction action = QueryImagePackageAction()
+action.conditions = ["uuid=99435bfd7903372289db27c8a2b1038c"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryImagePackageAction.Result res = action.call()
+```
+
+</APIPage>

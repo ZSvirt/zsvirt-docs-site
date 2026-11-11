@@ -1,0 +1,28 @@
+---
+title: "How do I add multiple network adapters to a virtual machine?"
+---
+
+## Symptom
+When creating a virtual machine with multiple networks attached, the virtual machine console shows multiple network adapters but no IP addresses.
+
+## Cause
+Each network corresponds to one network adapter on the virtual machine. Attaching a network to a virtual machine is equivalent to inserting a physical network card into a server. Running the `ifconfig` command shows the eth devices. If no IP address appears, the network adapter is not configured correctly.
+
+## Solution
+1.  Create a configuration file for the new network adapter by following the eth0 configuration file as a template. The following example applies to a CentOS 7.2 environment. Paths and files may differ for other Linux versions:
+2.  Run the following commands in the console to copy the eth0 configuration file:
+
+    ```
+    # Replace eth0 with eth1 in the configuration file, and delete the UUID entry
+    cp /etc/sysconfig/network-scripts/ifcfg-eth0 /etc/sysconfig/network-scripts/ifcfg-eth1
+    sed -i 's/eth0/eth1/g' ifcfg-eth0
+    sed -i '/UUID*/d' /etc/sysconfig/network-scripts/ifcfg-eth1
+    ```
+
+3.  Restart the network to apply the changes:
+
+    ```
+    /etc/init.d/network restart
+    ```
+
+4.  Run the `ifconfig` command to verify that the new network adapter shows an IP address. To attach additional networks to the virtual machine, repeat the steps above.

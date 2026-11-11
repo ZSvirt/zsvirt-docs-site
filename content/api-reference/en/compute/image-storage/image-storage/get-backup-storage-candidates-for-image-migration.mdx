@@ -1,0 +1,95 @@
+---
+title: "Get Backup Storage Candidates for Image Migration"
+---
+
+<APIPage method="GET" path="/v1/backup-storage/{srcBackupStorageUuid}/migration-candidates">
+
+Get the candidate list of target backup storage for image migration.
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/backup-storage/3c738531e0b64399a354022d59a46ebb/migration-candidates
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|srcBackupStorageUuid|String|url|UUID of the backup storage where the image to be migrated is located| |2.2|
+|systemTags \(Optional\)|List|query|System tags| |2.2|
+|userTags \(Optional\)|List|query|User tags| |2.2|
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "7ed005f5dcfd4ca7b1883b97c803f53b",
+      "name": "BS-1"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_gkf_1qz_qbb)|2.2|
+|inventories|List|See [inventories](#p_owz_zpz_qbb)|2.2|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier, for example SYS.1000, HOST.1001|2.2|
+|description|String|Brief description of the error|2.2|
+|details|String|Detailed error information|2.2|
+|elaboration|String|Reserved field, defaults to null|2.2|
+|opaque|LinkedHashMap|Reserved field, defaults to null|2.2|
+|cause|ErrorCode|Root cause. The source error that triggered the current error. This field is null if there is no original error|2.2|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|2.2|
+|name|String|Resource name|2.2|
+|url|String| |2.2|
+|description|String|Detailed description of the resource|2.2|
+|totalCapacity|Long| |2.2|
+|availableCapacity|Long| |2.2|
+|type|String| |2.2|
+|state|String| |2.2|
+|status|String| |2.2|
+|createDate|Timestamp|Creation time|2.2|
+|lastOpDate|Timestamp|Last modification time|2.2|
+|attachedZoneUuids|List| |2.2|
+
+## SDK Examples
+Java SDK
+
+```
+GetBackupStorageCandidatesForImageMigrationAction action = new GetBackupStorageCandidatesForImageMigrationAction();
+action.srcBackupStorageUuid = "cf9fb97b3045411ab5345fe678116bf8";
+action.sessionId = "2887bb5380f242f8ab43ae2d8649cb73";
+GetBackupStorageCandidatesForImageMigrationAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetBackupStorageCandidatesForImageMigrationAction action = GetBackupStorageCandidatesForImageMigrationAction()
+action.srcBackupStorageUuid = "962c8f5399354df591c08fc3d25b58c1"
+action.sessionId = "ab7451c36d8c4c3ea85d3c7395389fda"
+GetBackupStorageCandidatesForImageMigrationAction.Result res = action.call()
+```
+
+</APIPage>

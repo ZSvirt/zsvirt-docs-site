@@ -1,0 +1,88 @@
+---
+title: "查询统一认证用户来源绑定关系"
+---
+
+<APIPage method="GET" path="/v1/account-import/bindings">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X GET http://localhost:8080/zstack/v1/account-import/bindings?q=accountUuid=bcfc6b1c7aaf3a43a39ab4edf8b9107d
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryThirdPartyAccountSourceBinding`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "id": 1,
+      "credentials": "ou=Employee,uid=test",
+      "accountSourceUuid": "617cef7cda233b559d134245cf8211d5",
+      "accountUuid": "f29adf4e230831f3b34f4d4bf7cfa1dc"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean|API是否成功|4.3.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_vqn_jrf_fcc)|4.3.0|
+|inventories|List|详情参考[inventories](#p_cys_jrf_fcc)|4.3.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|id|Long|唯一标示该关系|4.3.0|
+|credentials|String|导入源使用的用户唯一标识，例如LDAP源导入的用户则为登录使用的UID|4.3.0|
+|accountSourceUuid|String|导入源服务器UUID|4.3.0|
+|accountUuid|String|账户UUID|4.3.0|
+|createDate|Timestamp|创建时间|4.3.0|
+|lastOpDate|Timestamp|最后一次修改时间|4.3.0|
+
+## SDK示例
+Java SDK
+
+```
+QueryThirdPartyAccountSourceBindingAction action = new QueryThirdPartyAccountSourceBindingAction();
+action.conditions = asList("accountUuid=5ec5476a24423683ad3f51da0891682e");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryThirdPartyAccountSourceBindingAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+QueryThirdPartyAccountSourceBindingAction action = QueryThirdPartyAccountSourceBindingAction()
+action.conditions = ["accountUuid=c02ff535be723284947cad9f679cc1b9"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryThirdPartyAccountSourceBindingAction.Result res = action.call()
+
+```
+
+</APIPage>

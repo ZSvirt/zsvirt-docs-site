@@ -1,0 +1,317 @@
+---
+title: "获取Raid物理盘SMART信息"
+---
+
+<APIPage method="GET" path="/v1/storage-devices/local-raid/physical-drives/{uuid}/smart">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/storage-devices/local-raid/physical-drives/4608455038ef362b809cf8aff74e0131/smart
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |3.6|
+|systemTags \(可选\)|List|query| | |3.6|
+|userTags \(可选\)|List|query| | |3.6|
+
+## API返回
+返回示例
+
+```
+{
+  "result": [
+    {
+      "id": 1,
+      "attributeName": "Raw_Read_Error_Rate",
+      "flag": "0x002f",
+      "value": 200,
+      "worst": 200,
+      "thresh": 41,
+      "type": "Pre-fail",
+      "updated": "Always",
+      "whenFailed": "-",
+      "rawValue": 0
+    },
+    {
+      "id": 3,
+      "attributeName": "Spin_Up_Time",
+      "flag": "0x0027",
+      "value": 142,
+      "worst": 142,
+      "thresh": 17,
+      "type": "Pre-fail",
+      "updated": "Always",
+      "whenFailed": "-",
+      "rawValue": 3866
+    },
+    {
+      "id": 4,
+      "attributeName": "Start_Stop_Count",
+      "flag": "0x0032",
+      "value": 100,
+      "worst": 100,
+      "thresh": 0,
+      "type": "Old_age",
+      "updated": "Always",
+      "whenFailed": "-",
+      "rawValue": 22
+    },
+    {
+      "id": 5,
+      "attributeName": "Reallocated_Sector_Ct",
+      "flag": "0x0033",
+      "value": 200,
+      "worst": 200,
+      "thresh": 140,
+      "type": "Pre-fail",
+      "updated": "Always",
+      "whenFailed": "-",
+      "rawValue": 0
+    },
+    {
+      "id": 7,
+      "attributeName": "Seek_Error_Rate",
+      "flag": "0x002e",
+      "value": 200,
+      "worst": 200,
+      "thresh": 0,
+      "type": "Old_age",
+      "updated": "Always",
+      "whenFailed": "-",
+      "rawValue": 0
+    },
+    {
+      "id": 9,
+      "attributeName": "Power_On_Hours",
+      "flag": "0x0032",
+      "value": 97,
+      "worst": 97,
+      "thresh": 0,
+      "type": "Old_age",
+      "updated": "Always",
+      "whenFailed": "-",
+      "rawValue": 2585
+    },
+    {
+      "id": 10,
+      "attributeName": "Spin_Retry_Count",
+      "flag": "0x0032",
+      "value": 100,
+      "worst": 253,
+      "thresh": 0,
+      "type": "Old_age",
+      "updated": "Always",
+      "whenFailed": "-",
+      "rawValue": 0
+    },
+    {
+      "id": 11,
+      "attributeName": "Calibration_Retry_Count",
+      "flag": "0x0032",
+      "value": 100,
+      "worst": 253,
+      "thresh": 0,
+      "type": "Old_age",
+      "updated": "Always",
+      "whenFailed": "-",
+      "rawValue": 0
+    },
+    {
+      "id": 12,
+      "attributeName": "Power_Cycle_Count",
+      "flag": "0x0032",
+      "value": 100,
+      "worst": 100,
+      "thresh": 0,
+      "type": "Old_age",
+      "updated": "Always",
+      "whenFailed": "-",
+      "rawValue": 22
+    },
+    {
+      "id": 16,
+      "attributeName": "Unknown_Attribute",
+      "flag": "0x0022",
+      "value": 0,
+      "worst": 200,
+      "thresh": 0,
+      "type": "Old_age",
+      "updated": "Always",
+      "whenFailed": "-",
+      "rawValue": 34516442916
+    },
+    {
+      "id": 183,
+      "attributeName": "Runtime_Bad_Block",
+      "flag": "0x0032",
+      "value": 100,
+      "worst": 100,
+      "thresh": 0,
+      "type": "Old_age",
+      "updated": "Always",
+      "whenFailed": "-",
+      "rawValue": 0
+    },
+    {
+      "id": 192,
+      "attributeName": "Power-Off_Retract_Count",
+      "flag": "0x0032",
+      "value": 200,
+      "worst": 200,
+      "thresh": 0,
+      "type": "Old_age",
+      "updated": "Always",
+      "whenFailed": "-",
+      "rawValue": 20
+    },
+    {
+      "id": 193,
+      "attributeName": "Load_Cycle_Count",
+      "flag": "0x0032",
+      "value": 200,
+      "worst": 200,
+      "thresh": 0,
+      "type": "Old_age",
+      "updated": "Always",
+      "whenFailed": "-",
+      "rawValue": 4
+    },
+    {
+      "id": 194,
+      "attributeName": "Temperature_Celsius",
+      "flag": "0x0022",
+      "value": 112,
+      "worst": 106,
+      "thresh": 0,
+      "type": "Old_age",
+      "updated": "Always",
+      "whenFailed": "-",
+      "rawValue": 31
+    },
+    {
+      "id": 196,
+      "attributeName": "Reallocated_Event_Count",
+      "flag": "0x0032",
+      "value": 200,
+      "worst": 200,
+      "thresh": 0,
+      "type": "Old_age",
+      "updated": "Always",
+      "whenFailed": "-",
+      "rawValue": 0
+    },
+    {
+      "id": 197,
+      "attributeName": "Current_Pending_Sector",
+      "flag": "0x0032",
+      "value": 200,
+      "worst": 200,
+      "thresh": 0,
+      "type": "Old_age",
+      "updated": "Always",
+      "whenFailed": "-",
+      "rawValue": 0
+    },
+    {
+      "id": 198,
+      "attributeName": "Offline_Uncorrectable",
+      "flag": "0x0030",
+      "value": 200,
+      "worst": 200,
+      "thresh": 0,
+      "type": "Old_age",
+      "updated": "Offline",
+      "whenFailed": "-",
+      "rawValue": 0
+    },
+    {
+      "id": 199,
+      "attributeName": "UDMA_CRC_Error_Count",
+      "flag": "0x0032",
+      "value": 200,
+      "worst": 200,
+      "thresh": 0,
+      "type": "Old_age",
+      "updated": "Always",
+      "whenFailed": "-",
+      "rawValue": 0
+    },
+    {
+      "id": 200,
+      "attributeName": "Multi_Zone_Error_Rate",
+      "flag": "0x08",
+      "value": 200,
+      "worst": 200,
+      "thresh": 0,
+      "type": "Old_age",
+      "updated": "Offline",
+      "whenFailed": "-",
+      "rawValue": 0
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_ggg_hzl_s2c)|3.6|
+|result|List|详情参考[result](#p_y2v_dgs_s2c)|3.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### result
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|id|Integer|Id|3.6|
+|attributeName|String|属性名|3.6|
+|flag|String|标志|3.6|
+|value|Integer|当前归一化值|3.6|
+|worst|Integer|最差归一化值|3.6|
+|thresh|Integer|阈值|3.6|
+|type|String|类型|3.6|
+|updated|String|更新|3.6|
+|whenFailed|String|磁盘失效|3.6|
+|rawValue|Long|原始值|3.6|
+|state|String|健康状态|3.6|
+
+## SDK示例
+Java SDK
+
+```
+GetLocalRaidPhysicalDriveSmartAction action = new GetLocalRaidPhysicalDriveSmartAction();
+action.uuid = "4608455038ef362b809cf8aff74e0131";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetLocalRaidPhysicalDriveSmartAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetLocalRaidPhysicalDriveSmartAction action = GetLocalRaidPhysicalDriveSmartAction()
+action.uuid = "4608455038ef362b809cf8aff74e0131"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetLocalRaidPhysicalDriveSmartAction.Result res = action.call()
+```
+
+</APIPage>

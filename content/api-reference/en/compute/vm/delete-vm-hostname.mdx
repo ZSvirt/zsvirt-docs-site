@@ -1,0 +1,70 @@
+---
+title: "Delete Virtual Machine Hostname"
+---
+
+<APIPage method="DELETE" path="/v1/vm-instances/{uuid}/hostnames">
+
+Delete the hostname of a Virtual Machine.
+
+<Callout type="info">
+This delete operation only deletes the hostname configured in the database and on the DHCP server. It cannot change the hostname manually configured inside the Virtual Machine.
+</Callout>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/vm-instances/6932e80b9bfe39d191e96a237ad35814/hostnames
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Virtual Machine UUID| |0.6|
+|deleteMode \(Optional\)|String|body| | |0.6|
+|systemTags \(Optional\)|List|body|System Tag| |0.6|
+|userTags \(Optional\)|List|body|User Tag| |0.6|
+
+## API Response
+This API returns an empty JSON structure **`{}`** on success. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DeleteVmHostnameAction action = new DeleteVmHostnameAction();
+action.uuid = "6932e80b9bfe39d191e96a237ad35814";
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteVmHostnameAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteVmHostnameAction action = DeleteVmHostnameAction()
+action.uuid = "6932e80b9bfe39d191e96a237ad35814"
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DeleteVmHostnameAction.Result res = action.call()
+```
+
+</APIPage>

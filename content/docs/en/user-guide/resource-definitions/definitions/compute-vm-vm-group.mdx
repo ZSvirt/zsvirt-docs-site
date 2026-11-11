@@ -1,0 +1,36 @@
+---
+title: 'Compute Resource|Virtual Machine & VM Group'
+---
+
+Virtual Machine: A virtual machine is a virtualized host running on a physical host, capable of running an operation system and applications just like a physical host.
+
+## Functional Components
+**Operating System**: Installing an operating system on a virtual machine is similar to installing it on a physical host. ZSvirt supports installing operating systems via images. You can upload the image to the corresponding image storage, and after creating a new virtual machine using this image, install the operating system on it. ZSvirt supports all mainstream operating systems, including Windows and Linux.
+
+**Hardware Devices**: Virtual hardware devices work in virtual machines similarly to how physical hardware works on physical hosts. The host Hypervisor provides virtual machines with virtual CPU, memory, disks, NICs, GPU, USB devices, and more. You can customize the configuration of virtual machine hardware devices and their features, such as:
+
+-   **CPU**: Supports customizing the number of vCPU cores; setting CPU modes to inherit some or all CPU characteristics from the host; binding vCPUs to specific pCPUs; or configuring CPU hot-plug for online modification of the number of CPU cores.
+-   **Memory**: Supports customizing virtual machine memory; setting higher memory resource priority for critical virtual machines; or configuring memory hot-plug for online memory modifications.
+-   **Disk**: Supports customizing disk capacity for virtual machines; setting cache modes to enhance IO performance; and configuring disk bandwidth/IOPS limits.
+-   **NIC**: Supports customizing NIC models; setting multiple queues for sending and receiving network packets to improve network PPS and bandwidth performance; and configuring inbound/outbound bandwidth limits for NICs.
+-   **Peripherals**: Supports loading external devices, such as physical GPUs, virtual GPUs, USB devices, etc.
+
+**VMTools**: VMTools is a collection of drivers and utilities that enrich virtual machine functionality, improve performance, and provide advanced monitoring capabilities for virtual machines. It is recommended to install this tool after creating a new virtual machine.
+
+## Feature Characteristics
+ZSvirt offers a wide range of virtual machine features, allowing you to configure different features according to various environments, for example:
+
+-   Hardware Feature Configuration: [Refer to Hardware Devices](#section_smx_4ml_vyb).
+-   High Availability Configuration:
+    -   It provides high availability configurations at three levels: virtual machine, cluster, and global. This is used to set up automatic restarts when a virtual machine shuts down abnormally, ensuring business high availability.
+    -   Supports configuring cross-cluster high availability for virtual machines, enabling automatic migration to clusters with sufficient resources.
+-   Security Configuration:
+    -   Supports setting remote login console mode and password for virtual machines, as well as login authentication configurations, ensuring only users with the appropriate permissions and passwords can log in.
+    -   Supports installing VMTools on virtual machines, which can automatically restart or shut down the virtual machine in case of a fault.
+    -   Supports creating snapshots for virtual machines before important operations, preserving the data state at specific time points for quick rollback in case of faults.
+    -   Supports a recycle bin policy for virtual machines: deleted virtual machines enter the recycle bin from the UI. If a deletion was accidental, you can restore the virtual machine; if it's no longer needed, you can delete it permanently.
+    -   Supports operation logs and auditing for virtual machines, facilitating security analysis, intrusion detection, resource change tracking, and compliance audits.
+-   Migration and Scheduling Configuration:
+    -   Supports manually changing the host and/or data storage where a virtual machine resides, supporting both cold and hot migrations.
+    -   Supports assigning specific host groups to virtual machines through scheduling policies to ensure high performance and high availability of services.
+-   Group Management: Virtual machine grouping is a sub-resource of the data center. You can organize virtual machines across the entire data center into multiple levels of groups for easier viewing and management.

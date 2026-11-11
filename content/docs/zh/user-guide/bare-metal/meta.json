@@ -1,0 +1,13 @@
+{
+  "title": "裸金属管理",
+  "pages": [
+    "overview",
+    "prerequisites",
+    "quick-start",
+    "templates",
+    "clusters",
+    "devices",
+    "hosts"
+  ],
+  "pagesIndex": "overview"
+}

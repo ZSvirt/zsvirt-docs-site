@@ -1,0 +1,124 @@
+---
+title: "Update Data Storage Information"
+---
+
+<APIPage method="PUT" path="/v1/primary-storage/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updatePrimaryStorage": {
+    "name": "New PS1"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updatePrimaryStorage":{"name":"New PS1"}}' \
+http://localhost:8080/zstack/v1/primary-storage/1ed3e2350ff736918ac97c2a4d7d2f6e/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Data Storage UUID, uniquely identifies the resource| |0.6|
+|name \(Optional\)|String|body\(contained in the **updatePrimaryStorage** structure\)|New name for the Data Storage| |0.6|
+|description \(Optional\)|String|body\(contained in the **updatePrimaryStorage** structure\)|New description for the Data Storage| |0.6|
+|url \(Optional\)|String|body\(contained in the **updatePrimaryStorage** structure\)|New address for the Data Storage| |0.6|
+|systemTags \(Optional\)|List|body|System Tags| |0.6|
+|userTags \(Optional\)|List|body|User Tags| |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "name": "New PS1",
+    "url": "/Cloud_ps",
+    "type": "LocalStorage",
+    "state": "Enabled",
+    "status": "Connected",
+    "attachedClusterUuids": [
+      "31d01fe839da465ca540292132b50209"
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation succeeds, this field is null. See [error](#p_h1q_bm1_n1b)|0.6|
+|inventory|PrimaryStorageInventory|See [inventory](#p_zyk_bm1_n1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause, the source error that caused the current error. If there is no original error, this field is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|zoneUuid|String|Data Center UUID|0.6|
+|name|String|Resource Name|0.6|
+|url|String| |0.6|
+|description|String|Resource Description|0.6|
+|totalCapacity|Long| |0.6|
+|availableCapacity|Long| |0.6|
+|totalPhysicalCapacity|Long| |0.6|
+|availablePhysicalCapacity|Long| |0.6|
+|systemUsedCapacity|Long| |0.6|
+|type|String| |0.6|
+|state|String| |0.6|
+|status|String| |0.6|
+|mountPath|String| |0.6|
+|createDate|Timestamp|Create Time|0.6|
+|lastOpDate|Timestamp|Last Modification Time|0.6|
+|attachedClusterUuids|List| |0.6|
+
+## SDK Examples
+Java SDK
+
+```
+UpdatePrimaryStorageAction action = new UpdatePrimaryStorageAction();
+action.uuid = "7253221c336c4510b97607943f3b1a3c";
+action.name = "New PS1";
+action.sessionId = "0f4cfa5daeb2408da149a88d99c90df4";
+UpdatePrimaryStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdatePrimaryStorageAction action = UpdatePrimaryStorageAction()
+action.uuid = "e75ab68c9201465496fb27c9f6ff234b"
+action.name = "New PS1"
+action.sessionId = "b18ea5e60dcc445abfb3ffa28761c77e"
+UpdatePrimaryStorageAction.Result res = action.call()
+```
+
+</APIPage>

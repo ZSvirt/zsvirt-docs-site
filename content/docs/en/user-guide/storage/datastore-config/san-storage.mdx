@@ -1,0 +1,46 @@
+---
+title: 'Modify SAN Storage Configuration'
+---
+
+If you have added SAN storage, you can modify the SAN storage configuration as needed based on your business scenarios, including basic configuration, advanced configuration, and expanding the SAN storage.
+
+-   [Modify Basic Configuration](#section_rb1_333_bzb)
+-   [Modify Advanced Configuration](#section_ovl_333_bzb)
+-   [Expand SAN Storage](#section_dpw_333_bzb)
+
+## Modify Basic Configuration
+If you only need to modify the name and description of the SAN storage, you can click **Action** &gt; **Edit Name and Description** on the target SAN storage page to make the changes.
+
+## Modify Advanced Configuration
+If you want to modify the advanced configuration information for SAN storage, including the hard disk pre-allocation strategy, storage allocation strategy, and storage over-provisioning ratio, you can follow these steps:
+
+1.  Navigate to the target SAN storage page.
+2.  Enter the Advanced Settings sub-page.
+3.  Click **Edit**.
+
+ZSvirt supports modifying the following advanced configurations for SAN storage:
+
+-   **Disk Preallocation Policy**: Used to set the hard disk pre-allocation strategy in SAN storage. The default is metadata.
+    -   metadata: Only pre-allocates the space required for hard disk metadata, without allocating any space for the data. With this strategy, the required storage space for the hard disk is dynamically allocated as data is written.
+    -   none: Does not use pre-allocation strategy.
+-   **SAN Storage Allocation Strategy**: Used to set the landing strategy for hard disks and snapshots on SAN storage LUN devices. The default is according to system allocation. Available strategies include according to system allocation, hard disks created in the LUN with the most remaining capacity, and hard disks created in the LUN with the least number of LVs (snapshots + hard disks).
+-   **Data Storage Overcommit Ratio**: Used to control the allocatable space of data storage for virtual machines.
+
+    Calculation formula: Data storage allocatable capacity = \[(actual capacity - reserved capacity) × over-provisioning ratio\] - (threshold capacity + sum of all hard disks allocated to virtual machines + snapshots + image cache + migration cache)
+
+## Expand SAN Storage
+If during the use of SAN storage, you find that the storage capacity is insufficient to meet your business needs, you can add new LUN devices or expand existing LUN devices. You can follow these steps to add LUN devices:
+
+1.  In the physical environment, expand the LUN device for iSCSI storage, FC storage, or NVMe storage.
+
+    After successfully expanding the LUN device, return to the platform. You can view the usage of block devices on the **Data Center** &gt; **Storage Target** sub-page. You can also manually click the refresh button to get the latest storage information.
+
+2.  Navigate to the target SAN storage page.
+3.  Enter the Shared Block sub-page.
+4.  Click **Add** and select the newly expanded LUN device.
+
+    <Callout type="info">
+    If the LUN device contains data, it may cause failure when adding the LUN device or mounting the SAN storage. You can check **Cleanup Block Device** on the Add Shared Block page.
+    </Callout>
+
+If you need to obtain the latest capacity information for a LUN device, you can do so on the Shared Block sub-page by selecting the target LUN device and clicking **Refresh Capacity**.

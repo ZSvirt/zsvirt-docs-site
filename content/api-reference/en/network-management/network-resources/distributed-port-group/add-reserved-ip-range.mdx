@@ -1,0 +1,118 @@
+---
+title: "Add Reserved IP Range"
+---
+
+<APIPage method="POST" path="/v1/l3-networks/{l3NetworkUuid}/reserved-ip-ranges">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "startIp": "192.168.100.10",
+    "endIp": "192.168.100.250"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding sample, `systemTags` and `userTags` are optional. These two fields can be included in the body structure.
+</Callout>
+
+Curl Sample
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"startIp":"192.168.100.10","endIp":"192.168.100.250"}}' \
+http://localhost:8080/zstack/v1/l3-networks/dc9fb647bbd73a768da652b6cd100495/reserved-ip-ranges
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|l3NetworkUuid|String|url|The L3 Network UUID.| |4.10.16|
+|startIp|String|body\(contained in the `params` structure\)|The start IP \(included in the IP range\).| |4.10.16|
+|endIp|String|body\(contained in the `params` structure\)|The end IP \(included in the IP range\).| |4.10.16|
+|resourceUuid \(Optional\)|String|body\(contained in the `params` structure\)|The resource UUID.| |4.10.16|
+|tagUuids \(Optional\)|List|body\(contained in the `params` structure\)|The list of tag UUIDs.| |4.10.16|
+|systemTags \(Optional\)|List|body|The system tags.| |4.10.16|
+|userTags \(Optional\)|List|body|The user tags.| |4.10.16|
+
+## API Response
+Sample Response
+
+```
+{
+  "inventory": {
+    "l3NetworkUuid": "9bb0926251903385928489eba7388cd4",
+    "name": "Test-IP-Range",
+    "startIp": "192.168.100.10",
+    "endIp": "192.168.100.250",
+    "ipVersion": 4
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.10.16|
+|inventory|ReservedIpRangeInventory|For more information, see [inventory](#p_ux3_4px_3gc)|4.10.16|
+|error|ErrorCode|The error code. If not null, the operation fails, or vice versa. For more information, see [error](#p_zkk_gx4_llb)|4.10.16|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The resource UUID, which uniquely identifies the resource.|4.10.16|
+|l3NetworkUuid|String|The L3 Network UUID.|4.10.16|
+|name|String|The resource name.|4.10.16|
+|description|String|The detailed description of the resource.|4.10.16|
+|startIp|String|The start IP \(included in the reserved IP range\).|4.10.16|
+|endIp|String|The end IP \(included in the reserved IP range\).|4.10.16|
+|ipVersion|Integer|The IP protocol number.|4.10.16|
+|createDate|Timestamp|The creation date.|4.10.16|
+|lastOpDate|Timestamp|The last operation date.|4.10.16|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code, which is a numbered or alphanumeric code that specifies an error. For example, SYS.1000, HOST.1001|3.9.0|
+|description|String|The brief description of the error.|3.9.0|
+|details|String|The details about the error.|3.9.0|
+|elaboration|String|The reserved field. Default value: null|3.9.0|
+|opaque|LinkedHashMap|The reserved field. Default value: null|3.9.0|
+|cause|ErrorCode|The root error, which is the associated root cause of the current error. If no root error exists, this parameter is null|3.9.0|
+
+## SDK Sample
+Java SDK
+
+```
+AddReservedIpRangeAction action = new AddReservedIpRangeAction();
+action.l3NetworkUuid = "dc9fb647bbd73a768da652b6cd100495";
+action.startIp = "192.168.100.10";
+action.endIp = "192.168.100.250";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddReservedIpRangeAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = AddReservedIpRangeAction()
+action.l3NetworkUuid = "dc9fb647bbd73a768da652b6cd100495"
+action.startIp = "192.168.100.10"
+action.endIp = "192.168.100.250"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

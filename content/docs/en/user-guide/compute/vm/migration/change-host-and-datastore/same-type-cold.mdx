@@ -1,0 +1,24 @@
+---
+title: 'Clod Migration Across Data Storage of the Same Type'
+---
+
+-   Make sure the data storage where the virtual machine resides meet the storage combination requirements.
+
+    Supported storage combination:
+
+    -   Cold migration between ZCE distributed storage and ZCE distributed storage
+    -   Cold migration between NFS storage and NFS storage
+-   Detach all data disks, shared disks, ISOs, or peripheral devices (if any) from the virtual machine before the migration.
+-   If the selected virtual machine has associated with VM scheduling policies, modify these policies based on your business needs to avoid policy conflicts.
+-   For cold migration between ZCE distributed storage and ZCE distributed storage: If you set a cold migration network for the target data storage, the virtual machine is migrated through the cold migration network. Otherwise, the virtual machine is migrated through the management network.
+-   For cold migration between NFS storage and NFS storage: The destination NFS storage can be attached to the cluster where the virtual machine to be migrated is located.
+
+1.  In the navigation pane, choose **Inventory** &gt; **VM and Host**.
+
+2.  Select the target virtual machine and click **Shut Down**.
+
+3.  After shutdown, click **Actions** &gt; **Migration Management** &gt; **Change Host and Data Storage**.
+
+4.  In the Change Host and Data Storage dialog, choose the destination data storage and destination host.
+
+5.  Review the configuration and click **OK**.

@@ -1,0 +1,334 @@
+---
+title: "检查SCSI LUN与集群连接关系"
+---
+
+<APIPage method="PUT" path="/v1/storage-devices/scsi-lun/{uuid}/cluster/{clusterUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "checkScsiLunClusterStatus": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"checkScsiLunClusterStatus":{}}' \
+http://localhost:8080/zstack/v1/storage-devices/scsi-lun/abe6bf1e763739f88f97055c14246245/cluster/5415c2beb8a93447a27f69c109cdfb23
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |3.1.0|
+|clusterUuid|String|url|集群UUID| |3.1.0|
+|systemTags \(可选\)|List|body| | |3.1.0|
+|userTags \(可选\)|List|body| | |3.1.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "attachedHosts": [
+      {
+        "zoneUuid": "5899ac6fab7d3951acae1d43c4fd7f97",
+        "name": "example",
+        "uuid": "161616a23a4834cfbe3dd7000a75ef51",
+        "clusterUuid": "b886a9367ff9362d8955443cc5065fab",
+        "description": "example",
+        "managementIp": "192.168.0.1",
+        "hypervisorType": "KVM",
+        "state": "Enabled",
+        "status": "Connected",
+        "totalCpuCapacity": 4.0,
+        "availableCpuCapacity": 2.0,
+        "totalMemoryCapacity": 4.0,
+        "availableMemoryCapacity": 4.0
+      }
+    ],
+    "unattachedHosts": [
+      {
+        "zoneUuid": "ee802d3432203cc99a9711b3d26e047d",
+        "name": "example",
+        "uuid": "0d28db87cedc3c729300bcc7f426f9b6",
+        "clusterUuid": "5d5325e38b4331c28efe5367dc583110",
+        "description": "example",
+        "managementIp": "192.168.0.2",
+        "hypervisorType": "KVM",
+        "state": "Enabled",
+        "status": "Connected",
+        "totalCpuCapacity": 4.0,
+        "availableCpuCapacity": 2.0,
+        "totalMemoryCapacity": 4.0,
+        "availableMemoryCapacity": 4.0
+      }
+    ],
+    "isAllHostsAttached": false
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_lr3_4lm_qfb)|3.1.0|
+|inventory|ScsiLunClusterStatusInventory|详情参考[inventory](#p_l2q_4lm_qfb)|3.1.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.1.0|
+|description|String|错误的概要描述|3.1.0|
+|details|String|错误的详细信息|3.1.0|
+|elaboration|String|保留字段，默认为null|3.1.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.1.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.1.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|isAllHostsAttached|Boolean|SCSI Lun是否已与集群全部主机连接|3.1.0|
+|attachedHosts|List|详情参考[attachedHosts](#p_b4x_4lm_qfb)|3.1.0|
+|unattachedHosts|List|详情参考[unattachedHosts](#p_o2d_plm_qfb)|3.1.0|
+
+### attachedHosts
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|zoneUuid|String|数据中心UUID|3.1.0|
+|name|String|资源名称|3.1.0|
+|uuid|String|资源的UUID，唯一标示该资源|3.1.0|
+|clusterUuid|String|集群UUID|3.1.0|
+|description|String|资源的详细描述|3.1.0|
+|managementIp|String| |3.1.0|
+|hypervisorType|String| |3.1.0|
+|state|String| |3.1.0|
+|status|String| |3.1.0|
+|totalCpuCapacity|Long| |3.1.0|
+|availableCpuCapacity|Long| |3.1.0|
+|cpuSockets|Integer|物理CPU插槽数量|0.6|
+|totalMemoryCapacity|Long| |3.1.0|
+|availableMemoryCapacity|Long| |3.1.0|
+|cpuNum|Integer|逻辑CPU数量|0.6|
+|ipmiAddress|String|IPMI地址|0.6|
+|ipmiUsername|String|IPMI用户名|0.6|
+|ipmiPort|Integer|IPMI端口|0.6|
+|ipmiPowerStatus|String|IPMI电源状态|0.6|
+|architecture|String| |0.6|
+|nqn|String|NVMe 限定名称|4.10.6|
+|hostname|String|主机名|4.10.20|
+|createDate|Timestamp|创建时间|3.1.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.1.0|
+|cpuStatus|HwMonitorStatus|详情参考[cpuStatus](#p_wvd_kkm_lhc)|4.10.0|
+|memoryStatus|HwMonitorStatus|详情参考[memoryStatus](#p_nhh_kkm_lhc)|4.10.0|
+|diskStatus|HwMonitorStatus|详情参考[diskStatus](#p_esk_kkm_lhc)|4.10.0|
+|nicStatus|HwMonitorStatus|详情参考[nicStatus](#p_n24_kkm_lhc)|4.10.0|
+|gpuStatus|HwMonitorStatus|详情参考[gpuStatus](#p_zgr_kkm_lhc)|4.10.0|
+|powerSupplyStatus|HwMonitorStatus|详情参考[powerSupplyStatus](#p_o35_kkm_lhc)|4.10.0|
+|fanStatus|HwMonitorStatus|详情参考[fanStatus](#p_m2x_kkm_lhc)|4.10.0|
+|raidStatus|HwMonitorStatus|详情参考[raidStatus](#p_oc1_lkm_lhc)|4.10.0|
+|temperatureStatus|HwMonitorStatus|详情参考[temperatureStatus](#p_cyd_lkm_lhc)|4.10.0|
+
+### cpuStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|HwMonitorStatus|正常|4.10.0|
+|Error|HwMonitorStatus|异常|4.10.0|
+|Unknown|HwMonitorStatus|未知|4.10.0|
+
+### memoryStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|HwMonitorStatus|正常|4.10.0|
+|Error|HwMonitorStatus|异常|4.10.0|
+|Unknown|HwMonitorStatus|未知|4.10.0|
+
+### diskStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|HwMonitorStatus|正常|4.10.0|
+|Error|HwMonitorStatus|异常|4.10.0|
+|Unknown|HwMonitorStatus|未知|4.10.0|
+
+### nicStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|HwMonitorStatus|正常|4.10.0|
+|Error|HwMonitorStatus|异常|4.10.0|
+|Unknown|HwMonitorStatus|未知|4.10.0|
+
+### gpuStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|HwMonitorStatus|正常|4.10.0|
+|Error|HwMonitorStatus|异常|4.10.0|
+|Unknown|HwMonitorStatus|未知|4.10.0|
+
+### powerSupplyStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|HwMonitorStatus|正常|4.10.0|
+|Error|HwMonitorStatus|异常|4.10.0|
+|Unknown|HwMonitorStatus|未知|4.10.0|
+
+### fanStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|HwMonitorStatus|正常|4.10.0|
+|Error|HwMonitorStatus|异常|4.10.0|
+|Unknown|HwMonitorStatus|未知|4.10.0|
+
+### raidStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|HwMonitorStatus|正常|4.10.0|
+|Error|HwMonitorStatus|异常|4.10.0|
+|Unknown|HwMonitorStatus|未知|4.10.0|
+
+### temperatureStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|HwMonitorStatus|正常|4.10.0|
+|Error|HwMonitorStatus|异常|4.10.0|
+|Unknown|HwMonitorStatus|未知|4.10.0|
+
+### unattachedHosts
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|zoneUuid|String|数据中心UUID|3.1.0|
+|name|String|资源名称|3.1.0|
+|uuid|String|资源的UUID，唯一标示该资源|3.1.0|
+|clusterUuid|String|集群UUID|3.1.0|
+|description|String|资源的详细描述|3.1.0|
+|managementIp|String| |3.1.0|
+|hypervisorType|String| |3.1.0|
+|state|String| |3.1.0|
+|status|String| |3.1.0|
+|totalCpuCapacity|Long| |3.1.0|
+|availableCpuCapacity|Long| |3.1.0|
+|cpuSockets|Integer|物理CPU插槽数量|0.6|
+|totalMemoryCapacity|Long| |3.1.0|
+|availableMemoryCapacity|Long| |3.1.0|
+|cpuNum|Integer|逻辑CPU数量|0.6|
+|ipmiAddress|String|IPMI地址|0.6|
+|ipmiUsername|String|IPMI用户名|0.6|
+|ipmiPort|Integer|IPMI端口|0.6|
+|ipmiPowerStatus|String|IPMI电源状态|0.6|
+|architecture|String| |0.6|
+|nqn|String|NVMe 限定名称|4.10.6|
+|hostname|String|主机名|4.10.20|
+|createDate|Timestamp|创建时间|3.1.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.1.0|
+|cpuStatus|HwMonitorStatus|详情参考[cpuStatus](#p_el2_lw3_mhc)|4.10.0|
+|memoryStatus|HwMonitorStatus|详情参考[memoryStatus](#p_msk_lw3_mhc)|4.10.0|
+|diskStatus|HwMonitorStatus|详情参考[diskStatus](#p_wz4_lw3_mhc)|4.10.0|
+|nicStatus|HwMonitorStatus|详情参考[nicStatus](#p_dps_lw3_mhc)|4.10.0|
+|gpuStatus|HwMonitorStatus|详情参考[gpuStatus](#p_nbw_lw3_mhc)|4.10.0|
+|powerSupplyStatus|HwMonitorStatus|详情参考[powerSupplyStatus](#p_ip1_mw3_mhc)|4.10.0|
+|fanStatus|HwMonitorStatus|详情参考[fanStatus](#p_wj2_mw3_mhc)|4.10.0|
+|raidStatus|HwMonitorStatus|详情参考[raidStatus](#p_tvh_mw3_mhc)|4.10.0|
+|temperatureStatus|HwMonitorStatus|详情参考[temperatureStatus](#p_g2m_mw3_mhc)|4.10.0|
+
+### cpuStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|HwMonitorStatus|正常|4.10.0|
+|Error|HwMonitorStatus|异常|4.10.0|
+|Unknown|HwMonitorStatus|未知|4.10.0|
+
+### memoryStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|HwMonitorStatus|正常|4.10.0|
+|Error|HwMonitorStatus|异常|4.10.0|
+|Unknown|HwMonitorStatus|未知|4.10.0|
+
+### diskStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|HwMonitorStatus|正常|4.10.0|
+|Error|HwMonitorStatus|异常|4.10.0|
+|Unknown|HwMonitorStatus|未知|4.10.0|
+
+### nicStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|HwMonitorStatus|正常|4.10.0|
+|Error|HwMonitorStatus|异常|4.10.0|
+|Unknown|HwMonitorStatus|未知|4.10.0|
+
+### gpuStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|HwMonitorStatus|正常|4.10.0|
+|Error|HwMonitorStatus|异常|4.10.0|
+|Unknown|HwMonitorStatus|未知|4.10.0|
+
+### powerSupplyStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|HwMonitorStatus|正常|4.10.0|
+|Error|HwMonitorStatus|异常|4.10.0|
+|Unknown|HwMonitorStatus|未知|4.10.0|
+
+### fanStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|HwMonitorStatus|正常|4.10.0|
+|Error|HwMonitorStatus|异常|4.10.0|
+|Unknown|HwMonitorStatus|未知|4.10.0|
+
+### raidStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|HwMonitorStatus|正常|4.10.0|
+|Error|HwMonitorStatus|异常|4.10.0|
+|Unknown|HwMonitorStatus|未知|4.10.0|
+
+### temperatureStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|HwMonitorStatus|正常|4.10.0|
+|Error|HwMonitorStatus|异常|4.10.0|
+|Unknown|HwMonitorStatus|未知|4.10.0|
+
+## SDK示例
+Java SDK
+
+```
+CheckScsiLunClusterStatusAction action = new CheckScsiLunClusterStatusAction();
+action.uuid = "abe6bf1e763739f88f97055c14246245";
+action.clusterUuid = "5415c2beb8a93447a27f69c109cdfb23";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CheckScsiLunClusterStatusAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = CheckScsiLunClusterStatusAction()
+action.uuid = "abe6bf1e763739f88f97055c14246245"
+action.clusterUuid = "5415c2beb8a93447a27f69c109cdfb23"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

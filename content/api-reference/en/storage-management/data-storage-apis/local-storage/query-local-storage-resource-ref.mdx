@@ -1,0 +1,59 @@
+---
+title: "Query Local Storage Resource Reference"
+---
+
+<APIPage method="GET" path="/v1/primary-storage/local-storage/resource-refs">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Examples
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/primary-storage/local-storage/resource-refs?q=uuid=18b4bc6daf0542b09b6756ddce3f87cd
+```
+
+Queryable Fields
+
+Run the CLI command tool, enter `QueryLocalStorageResourceRef` and press Tab to view all queryable fields and resource names that support cross-table queries.
+
+API Response
+
+When the API succeeds, it returns an empty JSON structure `{}`. When an error occurs, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+QueryLocalStorageResourceRefAction action = new QueryLocalStorageResourceRefAction();
+action.conditions = asList("uuid=46e9ff5cd91a404382107d52a1947614");
+action.sessionId = "aaaf8ed4fe224287afff3c38083279a9";
+QueryLocalStorageResourceRefAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+QueryLocalStorageResourceRefAction action = QueryLocalStorageResourceRefAction()
+action.conditions = ["uuid=8249a62afd0e440981775795244ab276"]
+action.sessionId = "62b361c83e6a4685b13f629f3d402ed7"
+QueryLocalStorageResourceRefAction.Result res = action.call()
+```
+
+</APIPage>

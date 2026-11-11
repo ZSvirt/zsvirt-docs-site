@@ -1,0 +1,85 @@
+---
+title: "Check Snapshot Group Availability"
+---
+
+<APIPage method="GET" path="/v1/volume-snapshots/groups/availabilities">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/volume-snapshots/groups/availabilities?uuids=cc389f9eb3223c698f565621d2abcf72
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuids|List|query|Snapshot group UUIDs| |3.6.0|
+|systemTags \(Optional\)|List|query| | |3.6.0|
+|userTags \(Optional\)|List|query| | |3.6.0|
+
+## API Response
+Response Example
+
+```
+{
+  "results": [
+    {
+      "uuid": "78dd38e3e58134cead860f270143a474",
+      "available": true,
+      "reason": ""
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_tnb_sng_x3b)|3.6.0|
+|results|List|For details, see [results](#p_h1n_rng_x3b)|3.6.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|3.6.0|
+|description|String|A brief description of the error|3.6.0|
+|details|String|The detailed error information|3.6.0|
+|elaboration|String|A reserved field. The default value is null|3.6.0|
+|opaque|LinkedHashMap|A reserved field. The default value is null|3.6.0|
+|cause|ErrorCode|The root error. The source error that caused the current error. If no root error exists, this field is null|3.6.0|
+
+### results
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource|3.6.0|
+|available|boolean|Whether the snapshot group can be reverted|3.6.0|
+|reason|String|The reason why the snapshot group cannot be reverted. Empty if it can be reverted|3.6.0|
+
+## SDK Examples
+Java SDK
+
+```
+CheckVolumeSnapshotGroupAvailabilityAction action = new CheckVolumeSnapshotGroupAvailabilityAction();
+action.uuids = asList("cc389f9eb3223c698f565621d2abcf72");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CheckVolumeSnapshotGroupAvailabilityAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CheckVolumeSnapshotGroupAvailabilityAction action = CheckVolumeSnapshotGroupAvailabilityAction()
+action.uuids = [cc389f9eb3223c698f565621d2abcf72]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CheckVolumeSnapshotGroupAvailabilityAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,91 @@
+---
+title: "增加IP访问控制规则"
+---
+
+<APIPage method="POST" path="/v1/login-control/access-control/rules">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "rule1",
+    "description": "this is a rule",
+    "rule": "172.20.1.1,172.20.1.2",
+    "controlStrategy": "ACCEPT"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X POST -d '{"params":{"name":"rule1","description":"this is a rule","rule":"172.20.1.1,172.20.1.2","controlStrategy":"ACCEPT"}}' http://localhost:8080/zstack/v1/login-control/access-control/rules
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|name|String|body\(包含在**params**结构中\)|资源名称| |3.5.1|
+|description \(可选\)|String|body\(包含在**params**结构中\)|资源的详细描述| |3.5.1|
+|rule|String|body\(包含在**params**结构中\)| | |3.5.1|
+|controlStrategy|String|body\(包含在**params**结构中\)| | |3.5.1|
+|resourceUuid \(可选\)|String|body\(包含在**params**结构中\)| | |3.5.1|
+|tagUuids \(可选\)|List|body\(包含在**params**结构中\)|标签UUID列表| |3.5.1|
+|systemTags \(可选\)|List|body| | |3.5.1|
+|userTags \(可选\)|List|body| | |3.5.1|
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+AddAccessControlRuleAction action = new AddAccessControlRuleAction();
+action.name = "rule1";
+action.description = "this is a rule";
+action.rule = "172.20.1.1,172.20.1.2";
+action.controlStrategy = "ACCEPT";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddAccessControlRuleAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddAccessControlRuleAction action = AddAccessControlRuleAction()
+action.name = "rule1"
+action.description = "this is a rule"
+action.rule = "172.20.1.1,172.20.1.2"
+action.controlStrategy = "ACCEPT"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddAccessControlRuleAction.Result res = action.call()
+```
+
+</APIPage>

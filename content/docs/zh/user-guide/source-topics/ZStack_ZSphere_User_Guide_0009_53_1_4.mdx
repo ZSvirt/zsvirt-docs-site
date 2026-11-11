@@ -1,0 +1,140 @@
+---
+title: "使用 Thales 密钥提供程序"
+---
+
+1.  在 ZSvirt 中添加 Thales 密钥提供程序
+2.  在 Thales 中创建 localhost 用户并加入 admin 用户组
+3.  （可选）使用**新建签名请求 (CSR)** 方式使 Thales 信任 ZSvirt
+4.  （可选）使用 **KMS 证书和私钥**方式使 Thales 信任 ZSvirt
+
+1.  在 ZSvirt 中添加 Thales 密钥提供程序。
+
+    详细完整步骤请参阅 [添加标准密钥提供程序](/docs/user-guide/source-topics/ZStack_ZSphere_User_Guide_0009_53_1_1)。
+
+2.  在 Thales 中创建 localhost 用户并加入 admin 用户组。
+
+    1.  登录 Thales 平台。
+
+    2.  点击**Access Management** > **Users** > **Add User**。
+
+        <img src="/docs/user-guide/images/ZStack_ZSphere_User_Guide_0009_53_1_4_1.png" alt="添加用户" />
+
+    3.  创建 localhost 用户。
+
+        <img src="/docs/user-guide/images/ZStack_ZSphere_User_Guide_0009_53_1_4_2.png" alt="创建localhost用户" />
+
+    4.  点击用户名称，进入其详情页。
+
+    5.  展开**GROUP MEMBERSHIP**区域，然后点击**Add Group**。
+
+        <img src="/docs/user-guide/images/ZStack_ZSphere_User_Guide_0009_53_1_4_3.png" alt="将用户添加至组" />
+
+    6.  在Add member to group(s)弹窗中，勾选**admin**，然后点击**Add Group**。
+
+3.  （可选）使用**新建签名请求 (CSR)** 方式使 Thales 信任 ZSvirt。
+
+    1.  登录 ZSvirt。
+
+    2.  导航至密钥提供程序页面。
+
+    3.  找到添加的 Thales 标准密钥提供程序，点击**操作** > **建立信任** > **使KMS信任**。
+
+    4.  在使KMS信任弹窗中，选择**新建证书签名请求 (CSR)**作为信任方式。
+
+    5.  点击**下一步**。
+
+    6.  复制 CSR 完整内容。
+
+    7.  登录 Thales。
+
+    8.  点击**Products** > **KMIP**。
+
+        <img src="/docs/user-guide/images/ZStack_ZSphere_User_Guide_0009_53_1_4_4.png" alt="进入KMIP模块" />
+
+    9.  点击**Client Profile** > **Add Profile**。
+
+        <img src="/docs/user-guide/images/ZStack_ZSphere_User_Guide_0009_53_1_4_5.png" alt="添加Profile" />
+
+    10. 在Add Profile弹窗中，设置 Profile 基础信息并粘贴 CSR 信息，然后点击**Save**。
+
+        <img src="/docs/user-guide/images/ZStack_ZSphere_User_Guide_0009_53_1_4_6.png" alt="配置Profile" />
+
+    11. 点击**Registration Token** > **New Registration Token**。
+
+        <img src="/docs/user-guide/images/ZStack_ZSphere_User_Guide_0009_53_1_4_7.png" alt="New Registration Token" />
+
+    12. 在Create New Registration Token弹窗中，跟随操作引导完成配置。
+
+        -   在第三步**Select Profile**中选择之前创建的 Profile。
+        -   在第四步**Create Token**中复制创建出的 Token。
+        <img src="/docs/user-guide/images/ZStack_ZSphere_User_Guide_0009_53_1_4_8.png" alt="创建Token" />
+
+    13. 点击**Registered Clients** > **Add Client**。
+
+        <img src="/docs/user-guide/images/ZStack_ZSphere_User_Guide_0009_53_1_4_9.png" alt="Add Client" />
+
+    14. 在Add Client弹窗中，设置 Client 名称并粘贴 Registration Token，然后点击**Save**。
+
+        <img src="/docs/user-guide/images/ZStack_ZSphere_User_Guide_0009_53_1_4_10.png" alt="配置Client" />
+
+    15. 保存成功后，点击**Save CSR**和**Save Certificate**，下载 CSR 和证书。
+
+        <img src="/docs/user-guide/images/ZStack_ZSphere_User_Guide_0009_53_1_4_11.png" alt="下载CSR和证书" />
+
+    16. 登录 ZSvirt。
+
+    17. 导航至密钥提供程序页面，然后点击**操作** > **建立信任** > **上传签名CSR证书**。
+
+    18. 将从 Thales 下载的证书上传。
+
+4.  （可选）使用 **KMS 证书和私钥**方式使 Thales 信任 ZSvirt。
+
+    1.  登录 Thales。
+
+    2.  点击**Products** > **KMIP**。
+
+        <img src="/docs/user-guide/images/ZStack_ZSphere_User_Guide_0009_53_1_4_4.png" alt="进入KMIP模块" />
+
+    3.  点击**Client Profile** > **Add Profile**。
+
+        <img src="/docs/user-guide/images/ZStack_ZSphere_User_Guide_0009_53_1_4_5.png" alt="添加Profile" />
+
+    4.  在Add Profile弹窗中，设置 Profile 名称，然后点击**Save**。
+
+        <img src="/docs/user-guide/images/ZStack_ZSphere_User_Guide_0009_53_1_4_12.png" alt="添加Profile" />
+
+    5.  点击**Registration Token** > **New Registration Token**。
+
+        <img src="/docs/user-guide/images/ZStack_ZSphere_User_Guide_0009_53_1_4_7.png" alt="New Registration Token" />
+
+    6.  在Create New Registration Token弹窗中，跟随操作引导完成配置。
+
+        -   在第三步**Select Profile**中选择之前创建的 Profile。
+        -   在第四步**Create Token**中复制创建出的 Token。
+        <img src="/docs/user-guide/images/ZStack_ZSphere_User_Guide_0009_53_1_4_8.png" alt="创建Token" />
+
+    7.  点击**Registered Clients** > **Add Client**。
+
+        <img src="/docs/user-guide/images/ZStack_ZSphere_User_Guide_0009_53_1_4_9.png" alt="Add Client" />
+
+    8.  在Add Client弹窗中，设置 Client 名称并粘贴 Registration Token，然后点击**Save**。
+
+        <img src="/docs/user-guide/images/ZStack_ZSphere_User_Guide_0009_53_1_4_10.png" alt="配置Client" />
+
+    9.  保存成功后，点击**Save Certificate**和**Save Private Key**，下载证书和私钥。
+
+        <img src="/docs/user-guide/images/ZStack_ZSphere_User_Guide_0009_53_1_4_13.png" alt="下载证书和私钥" />
+
+    10. 登录 ZSvirt。
+
+    11. 导航至密钥提供程序页面。
+
+    12. 找到添加的 Thales 标准密钥提供程序，点击**操作** > **建立信任** > **使KMS信任**。
+
+    13. 在使KMS信任弹窗中，选择**KMS证书和私钥**作为信任方式。
+
+    14. 点击**下一步**。
+
+    15. 上传从 Thales 下载的 KMS 证书和私钥。
+
+    16. 点击**确定**。

@@ -1,0 +1,130 @@
+---
+title: "获取管理节点信息"
+---
+
+<APIPage method="GET" path="/v1/management-nodes/status">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/management-nodes/status
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|systemTags \(可选\)|List|query|系统标签| |4.10.20|
+|userTags \(可选\)|List|query|用户标签| |4.10.20|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "vip": "172.26.30.7",
+    "uiHttpPath": "https://172.26.30.7:443",
+    "nodes": [
+      {
+        "ip": "172.26.21.212",
+        "gatewayIp": "172.26.0.1",
+        "ownsVip": true,
+        "peerReachable": true,
+        "gatewayReachable": true,
+        "vipReachable": true,
+        "keepalivedStatus": "active",
+        "haMonitorStatus": "active",
+        "databaseStatus": "mysqld is alive",
+        "uiStatus": "running",
+        "managementsNodeStatus": "running",
+        "slaveIoRunning": true,
+        "slaveSqlRunning": true
+      },
+      {
+        "ip": "172.26.30.106",
+        "gatewayIp": "172.26.0.1",
+        "ownsVip": false,
+        "peerReachable": true,
+        "gatewayReachable": true,
+        "vipReachable": true,
+        "keepalivedStatus": "active",
+        "haMonitorStatus": "active",
+        "databaseStatus": "mysqld is alive",
+        "uiStatus": "running",
+        "managementsNodeStatus": "running",
+        "slaveIoRunning": true,
+        "slaveSqlRunning": true
+      }
+    ]
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean|获取是否成功|4.10.20|
+|inventory|ManagementsStatusView|详情参考[inventory](#p_vkj_21r_dfc)|4.10.20|
+|error|ErrorCode|详情参考[error](#p_vd4_21r_dfc)|4.10.20|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|vip|String|VIP 地址|4.10.20|
+|uiHttpPath|String|UI HTTP 路径|4.10.20|
+|nodes|List|详情参考[nodes](#p_sbw_rzg_mhc)|4.10.20|
+
+### nodes
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|ip|String|管理节点 IP|4.10.20|
+|gatewayIp|String|网关 IP|4.10.20|
+|ownsVip|boolean|是否拥有 VIP|4.10.20|
+|peerReachable|boolean|对端管理节点是否可访问|4.10.20|
+|gatewayReachable|boolean|网关是否可访问|4.10.20|
+|vipReachable|boolean|VIP 是否可访问|4.10.20|
+|keepalivedStatus|String|keepalived 服务状态, 一般为 'alive'|4.10.20|
+|haMonitorStatus|String|HA monitor 服务状态, 一般为 'alive'|4.10.20|
+|databaseStatus|String|数据库状态, 一般为短语 'mysqld is alive'|4.10.20|
+|uiStatus|String|UI 状态, 一般为 'running'|4.10.20|
+|managementsNodeStatus|String|管理节点状态, 一般为 'running'|4.10.20|
+|slaveIoRunning|boolean|Slave IO 是否运行|4.10.20|
+|slaveSqlRunning|boolean|Slave SQL 是否运行|4.10.20|
+|error|ErrorCode|最近一次操作产生的错误信息|4.10.20|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+GetManagementNodesStatusAction action = new GetManagementNodesStatusAction();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetManagementNodesStatusAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = GetManagementNodesStatusAction()
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,93 @@
+---
+title: "指定虚拟机IP"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/{vmInstanceUuid}/actions">
+
+给虚拟机网卡指定IP，用户可以通过该API控制虚拟化平台分配给虚拟机网卡的IP。
+
+用户要确保指定的IP在指定分布式端口组，并且IP未被占用。
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "setVmStaticIp": {
+    "l3NetworkUuid": "61e66d487dff454f9509a1f19606d274",
+    "ip": "192.168.10.10"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"setVmStaticIp":{"l3NetworkUuid":"9fcbd78edb58391f8d9b879ea87598fd","ip":"192.168.10.10"}}' http://localhost:8080/zstack/v1/vm-instances/e3749802228a36038d0e17041414fd17/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|vmInstanceUuid|String|url|虚拟机UUID| |0.6|
+|l3NetworkUuid|String|body\(包含在**setVmStaticIp**结构中\)|分布式端口组UUID| |0.6|
+|ip \(可选\)|String|body\(包含在**setVmStaticIp**结构中\)|指定IP地址| |4.6.21|
+|ip6 \(可选\)|String|body\(包含在**setVmStaticIp**结构中\)|指定IPv6地址| |3.10.0|
+|systemTags \(可选\)|List|body|系统标签| |0.6|
+|userTags \(可选\)|List|body|用户标签| |0.6|
+|netmask \(可选\)|String|body\(包含在**setVmStaticIp**结构中\)|IPv4子网掩码| |4.6.21|
+|gateway \(可选\)|String|body\(包含在**setVmStaticIp**结构中\)|IPv4网关| |4.6.21|
+|ipv6Gateway \(可选\)|String|body\(包含在**setVmStaticIp**结构中\)|IPv6网关| |4.6.21|
+|ipv6Prefix \(可选\)|String|body\(包含在**setVmStaticIp**结构中\)|IPv6前缀长度| |4.6.21|
+
+## API返回
+该API成功时返回一个空的JSON结构**`{}`**，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+SetVmStaticIpAction action = new SetVmStaticIpAction();
+action.vmInstanceUuid = "e3749802228a36038d0e17041414fd17";
+action.l3NetworkUuid = "9fcbd78edb58391f8d9b879ea87598fd";
+action.ip = "192.168.10.10";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+SetVmStaticIpAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SetVmStaticIpAction action = SetVmStaticIpAction()
+action.vmInstanceUuid = "e3749802228a36038d0e17041414fd17"
+action.l3NetworkUuid = "9fcbd78edb58391f8d9b879ea87598fd"
+action.ip = "192.168.10.10"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+SetVmStaticIpAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,69 @@
+---
+title: "Check Whether Management Node Is Ready"
+---
+
+<APIPage method="GET" path="/v1/management-nodes/ready">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/management-nodes/ready?
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|managementNodeId \(Optional\)|String|query| | |0.6|
+|systemTags \(Optional\)|List|query|System tags| |0.6|
+|userTags \(Optional\)|List|query|User tags| |0.6|
+
+## API Response
+Response Example:
+
+```
+{
+  "managementNodeId": "28ff5884cbf83d48b2e50203a5f2e636"
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation has failed. This field is null when the operation succeeds. For details, see [error](#p_xj3_rpw_wbb)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001.|0.6|
+|description|String|A brief description of the error.|0.6|
+|details|String|The detailed error information.|0.6|
+|elaboration|String|A reserved field. Default is null.|0.6|
+|opaque|LinkedHashMap|A reserved field. Default is null.|0.6|
+|cause|ErrorCode|The root error. The source error that caused the current error. If there is no root error, this field is null.|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+IsReadyToGoAction action = new IsReadyToGoAction();
+action.sessionId = "4feaf1772217415a876735801e468fac";
+IsReadyToGoAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+IsReadyToGoAction action = IsReadyToGoAction()
+action.sessionId = "432b9a5c589c4c09b33b79d8272528be"
+IsReadyToGoAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,21 @@
+---
+title: "虚拟机状态未知，无法操作，如何解决？"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+## 原因
+主机状态异常，导致无法通过虚拟化平台UI界面操作虚拟机。
+
+## 解决方案
+1.  检查虚拟机所在主机状态是否为失联。
+
+2.  登录管理节点，依次执行以下命令停止虚拟机：
+
+    ```
+    [root@localhost ~]# zstack-cli
+    admin >>> LogInByAccount accountName=admin password=$password  //admin的密码
+    admin >>>  UpdateVmInstance state=Stopped uuid=$UUID  //对应虚拟机的UUID
+    ```
+
+3.  在虚拟化平台UI界面重启虚拟机。

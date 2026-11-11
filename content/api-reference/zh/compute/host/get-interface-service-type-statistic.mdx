@@ -1,0 +1,480 @@
+---
+title: "获取物理网口网络类型信息"
+---
+
+<APIPage method="GET" path="/v1/hosts/hosts-network-interfaces/service-type-statistic">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/hosts/hosts-network-interfaces/service-type-statistic? \
+interfaceUuid=d8797841479d3951bcb698164b56bd9e&interfaceType=All&sortBy=CreateDate&sortDirection=asc&start=0&limit=20&replyWithCount=false
+```
+
+参数列表
+
+<table id="table_wy3_qlk_mlb"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+interfaceUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+主机网卡UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+vlanId \(可选\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+query
+
+</td><td>
+
+vlan接口ID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+interfaceType \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+网卡类型
+
+</td><td>
+
+-   All
+-   Interface
+-   Bonding
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+serviceType \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+统计网络类型
+
+</td><td>
+
+-   All
+-   ManagementNetwork
+-   TenantNetwork
+-   StorageNetwork
+-   MigrationNetwork
+-   BackupNetwork
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+zoneUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+数据中心UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+clusterUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+集群UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+hostUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+主机UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+sortBy \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+排序方式
+
+</td><td>
+
+-   InterfaceName
+-   VlanId
+-   HostIp
+-   HostName
+-   ClusterName
+-   CreateDate
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+sortDirection \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+排序方向
+
+</td><td>
+
+-   asc
+-   desc
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+start \(可选\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+query
+
+</td><td>
+
+统计结果起始位置
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+limit \(可选\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+query
+
+</td><td>
+
+统计结果数量
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+replyWithCount \(可选\)
+
+</td><td>
+
+boolean
+
+</td><td>
+
+query
+
+</td><td>
+
+同时返回统计结果总数
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.11
+
+</td></tr></tbody>
+</table>
+
+## API返回
+返回示例
+
+```
+{
+  "serviceTypeStatistics": [
+    {
+      "interfaceUuid": "474f9d7d7a1d3b46b8f17363dca7ebef",
+      "serviceTypes": [
+        "ManagementNetwork"
+      ]
+    }
+  ],
+  "total": 1
+}}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|total|Long|统计结果总数|4.7.11|
+|success|boolean|成功|4.7.11|
+|serviceTypeStatistics|List|详情参考[serviceTypeStatistics](#p_e4h_nsc_2yb)|4.7.11|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_yzk_5lk_mlb)|4.7.11|
+
+### serviceTypeStatistics
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|interfaceUuid|String|网卡UUID|4.7.11|
+|interfaceName|String|网卡名|4.7.11|
+|vlanId|Integer|vlan接口ID|4.7.11|
+|serviceTypes|List|网络类型集|4.7.11|
+|hostUuid|String|主机UUID|4.7.11|
+|hostName|String|主机名称|4.7.11|
+|hostIp|String|主机IP|4.7.11|
+|clusterUuid|String|集群UUID|4.7.11|
+|clusterName|String|集群名称|4.7.11|
+|zoneUuid|String|数据中心UUID|4.7.11|
+|createDate|Timestamp|创建时间|4.7.11|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.7.11|
+|description|String|错误的概要描述|4.7.11|
+|details|String|错误的详细信息|4.7.11|
+|elaboration|String|保留字段，默认为null|4.7.11|
+|opaque|LinkedHashMap|保留字段，默认为null|4.7.11|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.7.11|
+
+## SDK示例
+Java SDK
+
+```
+GetInterfaceServiceTypeStatisticAction action = new GetInterfaceServiceTypeStatisticAction();
+action.interfaceUuid = "d8797841479d3951bcb698164b56bd9e";
+action.interfaceType = "All";
+action.sortBy = "CreateDate";
+action.sortDirection = "asc";
+action.start = 0;
+action.limit = 20;
+action.replyWithCount = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetInterfaceServiceTypeStatisticAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetInterfaceServiceTypeStatisticAction action = GetInterfaceServiceTypeStatisticAction()
+action.interfaceUuid = "d8797841479d3951bcb698164b56bd9e"
+action.interfaceType = "All"
+action.sortBy = "CreateDate"
+action.sortDirection = "asc"
+action.start = 0
+action.limit = 20
+action.replyWithCount = false
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetInterfaceServiceTypeStatisticAction.Result res = action.call()
+```
+
+</APIPage>

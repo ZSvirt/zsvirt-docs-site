@@ -1,0 +1,18 @@
+---
+title: "对于Ubuntu系统的虚拟机，qemu-guest-agent版本过低导致无法在线修改密码，怎么办？"
+---
+
+## 解决方案
+1.  下载2.5版本的qemu-ga离线deb包。
+
+    下载地址：[点击这里](http://launchpadlibrarian.net/254585564/qemu-guest-agent_2.5+dfsg-5ubuntu10_amd64.deb)
+
+2.  上传至虚拟机`/root`目录。
+
+3.  登录虚拟机系统执行以下命令，安装2.5版本的qemu-ga离线deb包：
+
+    ```
+    [root@localhost ~]# dpkg -i <package.deb>  //<package.deb>为下载的2.5版本的qemu-ga离线deb包
+    ```
+
+4.  登录虚拟化平台重新尝试修改密码。

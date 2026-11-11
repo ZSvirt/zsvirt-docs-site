@@ -1,0 +1,46 @@
+---
+title: 'zsphere_tags'
+description: '查询 ZSvirt 标签列表及其属性。'
+---
+
+<HistoricalNamingNote locale="zh" />
+
+
+# zsphere_tags（数据源）
+
+查询 ZSvirt 标签列表及其属性。
+
+
+
+## 参数说明
+
+### 可选参数
+
+- `filter`（块列表）（参见下方嵌套结构）
+- `name`（字符串）按精确名称查询
+- `name_pattern`（字符串）按名称模糊查询，类似 MySQL LIKE。`%` 匹配多个字符，`_` 匹配单个字符
+
+### 只读属性
+
+- `tags`（属性列表）（参见下方嵌套结构）
+
+<a id="nestedblock--filter"></a>
+### `filter` 嵌套结构
+
+必填参数：
+
+- `name`（字符串）用于过滤的字段名。
+- `values`（字符串集合）过滤值，多个值之间为 OR 关系。
+
+
+<a id="nestedatt--tags"></a>
+### `tags` 嵌套结构
+
+只读属性：
+
+- `color`（字符串）标签颜色（十六进制）
+- `description`（字符串）标签描述
+- `name`（字符串）标签名称
+- `type`（字符串）标签类型
+- `uuid`（字符串）标签 UUID
+- `value`（字符串）标签值

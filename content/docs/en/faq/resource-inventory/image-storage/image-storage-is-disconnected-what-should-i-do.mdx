@@ -1,0 +1,29 @@
+---
+title: "Image Storage is disconnected. What should I do?"
+---
+
+Image Storage disconnection is typically caused by one of three reasons. Identify the cause and follow the corresponding solution to troubleshoot.
+
+## Cause 1
+The storage pool UUID specified for the distributed storage Image Storage is incorrect.
+
+## Solution
+-   Confirm the UUID of the storage pool you created in the distributed storage cluster, and provide the correct UUID when creating the Image Storage.
+
+## Cause 2
+The Image Storage username or password is incorrect, or port 22 on the Image Storage is blocked.
+
+## Solution
+1.  Click **Resource Inventory** &gt; **Images and Templates**, select the Image Storage, and click **Actions** &gt; **Update Password**. For a Distributed Image Storage, update the root password of the monitor node.
+
+2.  Log in to the Management Node and use SSH to connect to the Image Storage to check connectivity.
+
+## Cause 3
+The centralized storage mounted to the Image Storage is abnormal and an I/O error has occurred.
+
+## Solution
+1.  Restore the storage link, and use the `umount` command to unmount the Image Storage directory.
+
+2.  Manually remount the Image Storage directory.
+
+3.  Click **Resource Inventory** &gt; **Images and Templates**, select the Image Storage, and click **Actions** &gt; **Reconnect** to reconnect the Image Storage.

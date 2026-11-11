@@ -1,0 +1,94 @@
+---
+title: "Get Latest Guest Tools For VM"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/{uuid}/latest-guest-tools">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/f7be56d67fb731ac9e201c69428c6a69/latest-guest-tools
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Resource UUID, uniquely identifies the resource| |3.7.0|
+|systemTags \(Optional\)|List|query|System Tag| |3.7.0|
+|userTags \(Optional\)|List|query|User Tag| |3.7.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "281ed8f30eff42c4a8d788384b782977",
+    "managementNodeUuid": "9fbb4361b1e2466f933558d45746bb59",
+    "architecture": "x86_64",
+    "hypervisorType": "kvm",
+    "version": "1.0.0",
+    "createDate": "Oct 9, 2019 7:37:57 PM",
+    "lastOpDate": "Oct 9, 2019 7:37:57 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean|Success|3.7.0|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation succeeds, this field is null. For details, see [error](#p_md3_xz1_mjb)|3.7.0|
+|inventory|GuestToolsInventory|For details, see [inventory](#p_byw_wz1_mjb)|3.7.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier of the error, for example SYS.1000, HOST.1001|3.7.0|
+|description|String|Brief description of the error|3.7.0|
+|details|String|Detailed error information|3.7.0|
+|elaboration|String|Reserved field, defaults to null|3.7.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|3.7.0|
+|cause|ErrorCode|Root cause. The error that triggered the current error. If there is no original error, this field is null|3.7.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|3.7.0|
+|name|String|Resource name|3.7.0|
+|description|String|Resource description|3.7.0|
+|managementNodeUuid|String|Management Node UUID|3.7.0|
+|architecture|String|Architecture|3.7.0|
+|hypervisorType|String|Hypervisor type|3.7.0|
+|version|String|Version|3.7.0|
+|createDate|Timestamp|Create time|3.7.0|
+|lastOpDate|Timestamp|Last update time|3.7.0|
+
+## SDK Examples
+Java SDK
+
+```
+GetLatestGuestToolsForVmAction action = new GetLatestGuestToolsForVmAction();
+action.uuid = "f7be56d67fb731ac9e201c69428c6a69";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetLatestGuestToolsForVmAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetLatestGuestToolsForVmAction action = GetLatestGuestToolsForVmAction()
+action.uuid = "f7be56d67fb731ac9e201c69428c6a69"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetLatestGuestToolsForVmAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,126 @@
+---
+title: "Get Virtualization Software Info"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/virtualizer-info">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/virtualizer-info? uuids=b5432fcc423434e7a5f5876f1fe1e910&uuids=67e54311bbef3b43b9c523b349b08ca9&uuids=d64aeea721f7331aa15e7fb95eee7390
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuids|List|query|Resource UUID, can be Virtual Machine or Host UUID| |4.6.21|
+|systemTags \(optional\)|List|query|System Tags| |4.6.21|
+|userTags \(optional\)|List|query|User Tags| |4.6.21|
+
+## API Response
+Return Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "3ce46fb7eb2e369c88d5fd671d1c1694",
+      "resourceType": "HostVO",
+      "infoList": [
+        {
+          "hypervisor": "qemu-kvm",
+          "currentVersion": "4.2.0-632.g6a6222b.el7",
+          "expectVersion": "4.2.0-632.g6a6222b.el7",
+          "matchState": "Matched"
+        }
+      ]
+    },
+    {
+      "uuid": "5c10fab3f649380e9dce16bb22ffd572",
+      "resourceType": "VmInstanceVO",
+      "infoList": [
+        {
+          "hypervisor": "qemu-kvm",
+          "currentVersion": "4.2.0-632.g6a6222b.el7",
+          "expectVersion": "4.2.0-632.g6a6222b.el7",
+          "matchState": "Matched"
+        }
+      ]
+    },
+    {
+      "uuid": "78a8b78906233d57bce710e89b24ebc0",
+      "resourceType": "VmInstanceVO",
+      "infoList": [
+        {
+          "hypervisor": "qemu-kvm",
+          "currentVersion": "4.2.0-632.g6a6222b.el7",
+          "expectVersion": "4.2.0-632.g6a6222b.el7",
+          "matchState": "Matched"
+        }
+      ]
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean|Whether the operation succeeded|4.6.21|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. For details, see [error](#p_frs_xfz_zz)|4.6.21|
+|inventories|List|For details, see [inventories](#p_awf_yfz_zz)|4.6.21|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|4.6.21|
+|description|String|Brief description of the error|4.6.21|
+|details|String|Detailed error information|4.6.21|
+|elaboration|String|Reserved field, defaults to null|4.6.21|
+|opaque|LinkedHashMap|Reserved field, defaults to null|4.6.21|
+|cause|ErrorCode|Root cause: the source error that triggered the current error. If there is no original error, this field is null|4.6.21|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, a unique identifier for the resource|4.6.21|
+|resourceType|String|Resource Type|4.6.21|
+|error|List|Query errors that occurred, may be null|4.6.21|
+|infoList|List|For details, see [infoList](#p_ezw_yfz_zz)|4.6.21|
+
+### infoList
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|hypervisor|String|Virtualization software, typically **qemu-kvm**|4.6.21|
+|currentVersion|String|Current virtualization software version used by the VM / Currently installed virtualization software version on the Host|4.6.21|
+|expectVersion|String|Expected virtualization software version. If querying a VM, the expected version comes from the Host. If querying a Host, the expected version comes from the Management Node|4.6.21|
+|matchState|String|Whether the current virtualization software version matches the expected version. If either the current or expected version is not found, **Unknown** is returned|4.6.21|
+
+## SDK Examples
+Java SDK
+
+```
+GetVirtualizerInfoAction action = new GetVirtualizerInfoAction();
+action.uuids = asList("b5432fcc423434e7a5f5876f1fe1e910","67e54311bbef3b43b9c523b349b08ca9","d64aeea721f7331aa15e7fb95eee7390");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetVirtualizerInfoAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetVirtualizerInfoAction action = GetVirtualizerInfoAction()
+action.uuids = [b5432fcc423434e7a5f5876f1fe1e910, 67e54311bbef3b43b9c523b349b08ca9, d64aeea721f7331aa15e7fb95eee7390]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetVirtualizerInfoAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,131 @@
+---
+title: "跨数据存储迁移硬盘"
+---
+
+<APIPage method="PUT" path="/v1/primary-storage/volumes/{volumeUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "primaryStorageMigrateVolume": {
+    "dstPrimaryStorageUuid": "aafceb95938e42a6be5475f19a92eec9"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"primaryStorageMigrateVolume":{"dstPrimaryStorageUuid":"ed4370b338da37d8a537bfb738e736f2"}}' \
+http://localhost:8080/zstack/v1/primary-storage/volumes/b6e9b22601f7319fadd329d065b0cd1b/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|volumeUuid|String|url|硬盘UUID| |2.2|
+|dstPrimaryStorageUuid|String|body\(包含在**primaryStorageMigrateVolume**结构中\)|目标数据存储UUID| |2.2|
+|systemTags \(可选\)|List|body|系统标签| |2.2|
+|userTags \(可选\)|List|body|用户标签| |2.2|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "5fa2d1c7adcd4963b1f9016075764fcb",
+    "name": "test-volume",
+    "primaryStorageUuid": "6ebc0be6faaa41f28874daa6076322bd",
+    "vmInstanceUuid": "2c528326ddcf43dd9bdd1d80da7a15ef",
+    "diskOfferingUuid": "2af3082d23444be9833c32c53ea2b1ed",
+    "rootImageUuid": "254bdaf01a33407082d8afe540b76796",
+    "installPath": "/Cloud_ps/rootVolumes/acct-36c27e8ff05c4780bf6d2fa65700f22e/vol-5fa2d1c7adcd4963b1f9016075764fcb/5fa2d1c7adcd4963b1f9016075764fcb.qcow2",
+    "type": "Root",
+    "format": "qcow2",
+    "size": 107374182400.0,
+    "actualSize": 21474836480.0,
+    "deviceId": 0.0,
+    "state": "Enabled",
+    "status": "Ready",
+    "createDate": "Oct 26, 2017 3:38:58 PM",
+    "lastOpDate": "Oct 26, 2017 3:38:58 PM"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_z2d_331_rbb)|2.2|
+|inventory|VolumeInventory|详情参考[inventory](#p_hlh_331_rbb)|2.2|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|2.2|
+|description|String|错误的概要描述|2.2|
+|details|String|错误的详细信息|2.2|
+|elaboration|String|保留字段，默认为null|2.2|
+|opaque|LinkedHashMap|保留字段，默认为null|2.2|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|2.2|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|2.2|
+|name|String|资源名称|2.2|
+|description|String|资源的详细描述|2.2|
+|primaryStorageUuid|String|数据存储UUID|2.2|
+|vmInstanceUuid|String|虚拟机UUID|2.2|
+|diskOfferingUuid|String|硬盘规格UUID|2.2|
+|rootImageUuid|String| |2.2|
+|installPath|String| |2.2|
+|type|String| |2.2|
+|format|String| |2.2|
+|size|Long| |2.2|
+|actualSize|Long| |2.2|
+|deviceId|Integer| |2.2|
+|state|String| |2.2|
+|status|String| |2.2|
+|createDate|Timestamp|创建时间|2.2|
+|lastOpDate|Timestamp|最后一次修改时间|2.2|
+|isShareable|Boolean| |2.2|
+
+## SDK示例
+Java SDK
+
+```
+PrimaryStorageMigrateVolumeAction action = new PrimaryStorageMigrateVolumeAction();
+action.volumeUuid = "af5d94f0f24c45f79280fc4661919b2c";
+action.dstPrimaryStorageUuid = "e8d756d48e5d48a69f5bec6221ddbc79";
+action.sessionId = "c186caf64d0043158b2c5ea9784697ab";
+PrimaryStorageMigrateVolumeAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+PrimaryStorageMigrateVolumeAction action = PrimaryStorageMigrateVolumeAction()
+action.volumeUuid = "7e170d744c014517b3b38f20111f400d"
+action.dstPrimaryStorageUuid = "8c2cc857b81d4d75b404809e57e02deb"
+action.sessionId = "ec12693efdf14d72b2a59de9c039870a"
+PrimaryStorageMigrateVolumeAction.Result res = action.call()
+```
+
+</APIPage>

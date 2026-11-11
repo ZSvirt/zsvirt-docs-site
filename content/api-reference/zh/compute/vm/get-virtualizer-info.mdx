@@ -1,0 +1,126 @@
+---
+title: "获取资源虚拟化软件信息"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/virtualizer-info">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/virtualizer-info? uuids=b5432fcc423434e7a5f5876f1fe1e910&uuids=67e54311bbef3b43b9c523b349b08ca9&uuids=d64aeea721f7331aa15e7fb95eee7390
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuids|List|query|资源的 uuid，可以为虚拟机或主机的 uuid| |4.6.21|
+|systemTags \(可选\)|List|query|系统标签| |4.6.21|
+|userTags \(可选\)|List|query|用户标签| |4.6.21|
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "3ce46fb7eb2e369c88d5fd671d1c1694",
+      "resourceType": "HostVO",
+      "infoList": [
+        {
+          "hypervisor": "qemu-kvm",
+          "currentVersion": "4.2.0-632.g6a6222b.el7",
+          "expectVersion": "4.2.0-632.g6a6222b.el7",
+          "matchState": "Matched"
+        }
+      ]
+    },
+    {
+      "uuid": "5c10fab3f649380e9dce16bb22ffd572",
+      "resourceType": "VmInstanceVO",
+      "infoList": [
+        {
+          "hypervisor": "qemu-kvm",
+          "currentVersion": "4.2.0-632.g6a6222b.el7",
+          "expectVersion": "4.2.0-632.g6a6222b.el7",
+          "matchState": "Matched"
+        }
+      ]
+    },
+    {
+      "uuid": "78a8b78906233d57bce710e89b24ebc0",
+      "resourceType": "VmInstanceVO",
+      "infoList": [
+        {
+          "hypervisor": "qemu-kvm",
+          "currentVersion": "4.2.0-632.g6a6222b.el7",
+          "expectVersion": "4.2.0-632.g6a6222b.el7",
+          "matchState": "Matched"
+        }
+      ]
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean|操作是否成功|4.6.21|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_frs_xfz_zz)|4.6.21|
+|inventories|List|详情参考[inventories](#p_awf_yfz_zz)|4.6.21|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.6.21|
+|description|String|错误的概要描述|4.6.21|
+|details|String|错误的详细信息|4.6.21|
+|elaboration|String|保留字段，默认为null|4.6.21|
+|opaque|LinkedHashMap|保留字段，默认为null|4.6.21|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.6.21|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.6.21|
+|resourceType|String|资源类型|4.6.21|
+|error|List|出现的查询错误，可能为 null|4.6.21|
+|infoList|List|详情参考[infoList](#p_ezw_yfz_zz)|4.6.21|
+
+### infoList
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|hypervisor|String|虚拟化软件，一般**qemu-kvm**|4.6.21|
+|currentVersion|String|虚拟机当前使用的虚拟化软件版本 / 主机当前安装的虚拟化软件版本|4.6.21|
+|expectVersion|String|期望的虚拟化软件版本。如果待查询的是 VM，则期望的虚拟化软件版本来自主机；如果待查询的是主机，则期望的虚拟化软件版本来自管理节点|4.6.21|
+|matchState|String|当前虚拟化软件版本和期望是否匹配。如果当前版本或期望有一方没有查到，则返回**Unknown**|4.6.21|
+
+## SDK示例
+Java SDK
+
+```
+GetVirtualizerInfoAction action = new GetVirtualizerInfoAction();
+action.uuids = asList("b5432fcc423434e7a5f5876f1fe1e910","67e54311bbef3b43b9c523b349b08ca9","d64aeea721f7331aa15e7fb95eee7390");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetVirtualizerInfoAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetVirtualizerInfoAction action = GetVirtualizerInfoAction()
+action.uuids = [b5432fcc423434e7a5f5876f1fe1e910, 67e54311bbef3b43b9c523b349b08ca9, d64aeea721f7331aa15e7fb95eee7390]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetVirtualizerInfoAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,10 @@
+{
+  "title": "网络资源",
+  "pages": [
+    "index",
+    "distributed-switch",
+    "port-group",
+    "kernel-adapter"
+  ],
+  "pagesIndex": "index"
+}

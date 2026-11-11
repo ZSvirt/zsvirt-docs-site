@@ -1,0 +1,65 @@
+---
+title: "Delete Backup Storage"
+---
+
+<APIPage method="DELETE" path="/v1/backup-storage/{uuid}?deleteMode={deleteMode}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/backup-storage/12b157dc061a46739168b6e87bf2657f?deleteMode=Permissive
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|UUID of the resource, uniquely identifies the resource| |0.6|
+|deleteMode \(Optional\)|String|body|Delete mode \(Permissive or Enforcing, default is Permissive\)| |0.6|
+|systemTags \(Optional\)|List|body|System tags| |0.6|
+|userTags \(Optional\)|List|body|User tags| |0.6|
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+SDK Examples
+
+Java SDK
+
+```
+DeleteBackupStorageAction action = new DeleteBackupStorageAction();
+action.uuid = "1c8acbc2af8445a5b631350276787580";
+action.deleteMode = "Permissive";
+action.sessionId = "4caf9cc241604dbca3088779d6772dbe";
+DeleteBackupStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteBackupStorageAction action = DeleteBackupStorageAction()
+action.uuid = "06473459fd474a26bb1d79e2edd004f3"
+action.deleteMode = "Permissive"
+action.sessionId = "a6fead8970fe45cfa6ba92e7dcf08d66"
+DeleteBackupStorageAction.Result res = action.call()
+```
+
+</APIPage>

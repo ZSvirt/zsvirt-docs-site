@@ -1,0 +1,23 @@
+---
+title: "Host addition fails"
+---
+
+## Solution
+-   Check the error message in the operation log to identify the cause. If the failure persists, check the following:
+-   Verify that the host information is entered correctly and that the host and the Management Node can communicate bidirectionally.
+
+-   Verify that the operating system version, CPU model, type, and architecture of the host match those of all other hosts in the Cluster.
+
+-   Verify that CPU hardware virtualization is enabled on the host.
+
+    Run `egrep "vmx|svm" /proc/cpuinfo` to verify whether CPU hardware virtualization is enabled. If the command produces output, hardware virtualization is enabled.
+
+-   Verify that the host NIC matches the NIC used by the Distributed Switch attached to the Cluster.
+
+-   Verify that the host can access the Data Storage.
+
+    <Callout type="info">
+    If distributed storage is deployed separately from Compute Nodes, you must add the distributed storage node as a gateway server role on the host; otherwise, the host cannot access storage.
+    </Callout>
+
+-   Verify that no manually installed software packages on the host are causing conflicts.

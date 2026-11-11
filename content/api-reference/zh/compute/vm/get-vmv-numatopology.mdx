@@ -1,0 +1,116 @@
+---
+title: "查询虚拟机的vNUMA拓扑信息"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/{uuid}/vnuma-topology">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/21529457e42c30f0a9b2a137915a0b28/vnuma-topology
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|虚拟机UUID| |4.3.12|
+
+## API返回
+该API成功时返回一个空的JSON结构**`{}`**，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "hostUuid": "7fd86bbe6ca94a8d810aa1d33e29932c",
+  "topology": [
+    {
+      "CPUsID": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "distance": [
+        "10",
+        "21"
+      ],
+      "nodeID": 0,
+      "memSize": 1024,
+      "phyNodeID": 0
+    },
+    {
+      "CPUsID": [
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      "distance": [
+        "21",
+        "10"
+      ],
+      "nodeID": 1,
+      "memSize": 2048,
+      "phyNodeID": 1
+    }
+  ],
+  "name": "vm0",
+  "uuid": "71b30db8bca34e9191ed09bff2990e80"
+}
+```
+
+|名字|类型|描述|起始版|
+|---|---|---|---|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_nnf_25v_k1b)|4.3.12|
+|name|String|虚拟机名称|4.3.12|
+|uuid|String|虚拟机的UUID，唯一标示该资源|4.3.12|
+|hostUuid|String|虚拟机所在主机的UUID，唯一标示该资源|4.3.12|
+|topology|array\[json\]|vNUMA拓扑信息，详情见[topology](#p_g3n_byj_zz)|4.3.12|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.3.12|
+|description|String|错误的概要描述|4.3.12|
+|details|String|错误的详细信息|4.3.12|
+|elaboration|String|保留字段，默认为null|4.3.12|
+|opaque|LinkedHashMap|保留字段，默认为null|4.3.12|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.3.12|
+
+### topology
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|nodeID|int|vNUMA node ID|4.3.12|
+|CPUsID|array\[string\]|vNUMA node包含的vCPUs id列表|4.3.12|
+|phyNodeID|int|主机NUMA node id|4.3.12|
+|distance|array\[string\]|虚拟机vNUMA node的距离信息|4.3.12|
+|memSize|long|虚拟机vNUMA node的内存大小\(单位为B\)|4.3.12|
+
+## SDK示例
+Java SDK
+
+```
+GetVmvNUMATopologyAction action = new GetVmvNUMATopologyAction()
+action.uuid ="ff6d905e75d63e18ab0a9fc2ac14951c"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetVmvNUMATopologyAction.Result res = action.call()
+```
+
+Python SDK
+
+```
+GetVmvNUMATopologyAction action = new GetVmvNUMATopologyAction()
+action.uuid ="ff6d905e75d63e18ab0a9fc2ac14951c"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetVmvNUMATopologyAction.Result res = action.call()
+```
+
+</APIPage>

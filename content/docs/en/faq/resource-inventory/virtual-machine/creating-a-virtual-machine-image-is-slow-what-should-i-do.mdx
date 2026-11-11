@@ -1,0 +1,26 @@
+---
+title: "Creating a virtual machine image is slow. What should I do?"
+---
+
+<HistoricalNamingNote locale="en" />
+
+## Cause
+The Data Storage uses Ceph while the Image Storage uses a Standalone Image Storage type.
+
+<Callout type="info">
+When using Ceph-type Data Storage, add an Image Storage that also uses Ceph.
+</Callout>
+## Solution
+1.  Log in to the mon node and run the following command to manually export the image from Ceph Image Storage:
+
+    ```
+    [root@localhost ~]# rbd export pool-uuid/uuid /root/ZStack.iamge
+    ```
+
+2.  Run the following command to convert the exported raw image to qcow2 format:
+
+    ```
+    [root@localhost ~]# qemu-img convert -f raw /root/ZStack.iamge -O qcow2 /root/ZStack.qcow2
+    ```
+
+3.  Upload the exported qcow2 image to the Standalone Image Storage.

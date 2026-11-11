@@ -1,0 +1,192 @@
+---
+title: "DeleteSecurityGroup"
+---
+
+<APIPage method="DELETE" path="/v1/security-groups/{uuid}?deleteMode={deleteMode}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/security-groups/6791f54e4fb147d1b26030723efe03bd?deleteMode=Permissive
+```
+
+Parameter List
+
+<table id="table_t24_d45_m1b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+The UUID of the resource, uniquely identifying the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+deleteMode \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body
+
+</td><td>
+
+-   Permissive:
+
+If an error occurs during the deletion or the deletion is not allowed, the virtualization platform stops the deletion.
+
+In this case, an error code containing the failure reason is returned.
+
+-   Enforcing:
+
+The virtualization platform ignores all errors and permissions and deletes the resource directly.
+
+In this case, the deletion always succeeds.
+
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr></tbody>
+</table>
+
+## API Response
+This API returns a null JSON object `{}` when it succeeds, and returns a JSON object containing an `error` field when it fails. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DeleteSecurityGroupAction action = new DeleteSecurityGroupAction();
+action.uuid = "86efff16586b4d82bfea66deba85cc50";
+action.deleteMode = "Permissive";
+action.sessionId = "079653952584401b997df37fd7044433";
+DeleteSecurityGroupAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+DeleteSecurityGroupAction action = DeleteSecurityGroupAction()
+action.uuid = "59098134c4214c79a48ced0ed7952ecd"
+action.deleteMode = "Permissive"
+action.sessionId = "2fb58330c68d46f6aa700740d52b02c0"
+DeleteSecurityGroupAction.Result res = action.call()
+```
+
+</APIPage>

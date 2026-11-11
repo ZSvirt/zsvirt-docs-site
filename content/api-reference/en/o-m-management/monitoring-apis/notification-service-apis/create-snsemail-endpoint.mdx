@@ -1,0 +1,126 @@
+---
+title: "Create Email Endpoint"
+---
+
+<APIPage method="POST" path="/v1/sns/application-endpoints/emails">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "email": "example@cloud.io",
+    "emails": [
+      "example@cloud.io"
+    ],
+    "name": "email",
+    "platformUuid": "5efc525948a537e39a91290c57d6d37b"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the **systemTags** and **userTags** fields are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"email":"example@cloud.io","emails":["example@cloud.io"],"name":"email","platformUuid":"5efc525948a537e39a91290c57d6d37b"}}' http://localhost:8080/zstack/v1/sns/application-endpoints/emails
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|email \(Optional\)|String|body \(contained in the **params** structure\)|Email address| |5.0.0|
+|emails \(Optional\)|List|body \(contained in the **params** structure\)| | |3.7.0|
+|name|String|body \(contained in the **params** structure\)|Resource name| |5.0.0|
+|description \(Optional\)|String|body \(contained in the **params** structure\)|Detailed description of the resource| |5.0.0|
+|platformUuid \(Optional\)|String|body \(contained in the **params** structure\)|Application platform UUID| |5.0.0|
+|resourceUuid \(Optional\)|String|body \(contained in the **params** structure\)| | |5.0.0|
+|tagUuids \(Optional\)|List|body \(contained in the **params** structure\)|Tag UUID list| |3.7.0|
+|systemTags \(Optional\)|List|body|System tags| |2.3.0|
+|userTags \(Optional\)|List|body|User tags| |2.3.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "name": "example",
+    "uuid": "917fe66f76b241f0843dfbd6be685fc1",
+    "description": "description example",
+    "type": "Email",
+    "state": "Enabled",
+    "platformUuid": "4eb0ceebf95b452585ebeacd647d9f35",
+    "createDate": "Mar 26, 2024 2:41:57 AM",
+    "lastOpDate": "Mar 26, 2024 2:41:57 AM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |5.0.0|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null on success. See [error](#p_rhr_jsx_bdb)|2.3|
+|inventory|SNSApplicationEndpointInventory|See [inventory](#p_eq5_jsx_bdb)|2.3|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Default is null|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null|0.6|
+|cause|ErrorCode|The root error that caused the current error. If there is no root error, this field is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name|2.3|
+|uuid|String|The UUID of the resource, which uniquely identifies the resource|2.3|
+|description|String|Detailed description of the resource|2.3|
+|type|String|Type|2.3|
+|platformUuid|String|Application platform UUID|2.3|
+|createDate|Timestamp|Creation time|2.3|
+|lastOpDate|Timestamp|Last modification time|2.3|
+
+## SDK Examples
+Java SDK
+
+```
+CreateSNSEmailEndpointAction action = new CreateSNSEmailEndpointAction();
+action.email = "example@zstack.io";
+action.emails = asList("example@zstack.io");
+action.name = "email";
+action.platformUuid = "5efc525948a537e39a91290c57d6d37b";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateSNSEmailEndpointAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateSNSEmailEndpointAction action = CreateSNSEmailEndpointAction()
+action.email = "example@zstack.io"
+action.emails = [example@zstack.io]
+action.name = "email"
+action.platformUuid = "5efc525948a537e39a91290c57d6d37b"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateSNSEmailEndpointAction.Result res = action.call()
+```
+
+</APIPage>

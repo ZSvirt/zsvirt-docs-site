@@ -1,0 +1,9 @@
+{
+  "title": "Migration Service APIs",
+  "pages": [
+    "get-zmigrate-gateway-vm-instances",
+    "get-zmigrate-images",
+    "get-zmigrate-infos"
+  ],
+  "pagesIndex": "index"
+}

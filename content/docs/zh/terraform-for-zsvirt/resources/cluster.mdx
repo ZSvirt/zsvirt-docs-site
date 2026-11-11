@@ -1,0 +1,68 @@
+---
+title: 'zsphere_cluster'
+description: '管理 ZSvirt 集群。集群是共享相同 Hypervisor 类型与存储的逻辑主机集合，提供资源隔离，是 ZSvirt 资源管理的基本单元。'
+---
+
+<HistoricalNamingNote locale="zh" />
+
+
+# zsphere_cluster（资源）
+
+管理 ZSvirt 集群。集群是共享相同 Hypervisor 类型与存储的逻辑主机集合，提供资源隔离，是 ZSvirt 资源管理的基本单元。
+
+## 示例用法
+```terraform
+resource "zsphere_cluster" "cluster" {
+  name            = "cluster_from_terraform"
+  description     = "Add an example cluster from terraform"
+  hypervisor_type = "KVM"
+  type            = "zstack"
+  datacenter_uuid = "3b03dd8222294d86ac7f7ed6ca02baa6" # "uuid_of_parent_zone"
+  architecture    = "x86_64"
+
+  # Advanced features
+  cpu_mode   = "hostPassthrough"
+  network_hp = false
+
+  # DRS settings (requires hypervisor_type = KVM)
+  drs_enabled            = false
+  drs_threshold_cpu      = 80
+  drs_threshold_memory   = 80
+  drs_threshold_duration = 300
+}
+
+output "zsphere_cluster" {
+  value = zsphere_cluster.cluster
+}
+```
+
+## 参数说明
+
+### 必填参数
+
+- `datacenter_uuid`（字符串）集群所属数据中心（区域）UUID。
+- `hypervisor_type`（字符串）集群 Hypervisor 类型。 可选值： KVM, Simulator, baremetal, baremetal2, xdragon.
+- `name`（字符串）集群名称。 必填项。
+
+### 可选参数
+
+- `architecture`（字符串）集群 CPU 架构。 可选值： x86_64, aarch64, mips64el, loongarch64.
+- `automation_level`（字符串）DRS 自动化级别。 可选值： Manual, Automatic, closed
+- `check_cpu_model`（字符串）CPU 型号校验。 可选值： default, false, true
+- `cpu_mode`（字符串）CPU 模式。 可选值： hostPassthrough, virtio, kvm
+- `cpu_over_provisioning_ratio`（字符串）CPU 超分比。 示例： 4
+- `description`（字符串）集群描述信息。
+- `display_network_cidr`（字符串）展示网络 CIDR。 示例： 192.168.1.0/24
+- `drs_enabled`（布尔值）启用动态资源调度（DRS）。
+- `drs_threshold_cpu`（数字）DRS CPU 阈值百分比。 示例： 80
+- `drs_threshold_duration`（数字）DRS 阈值持续时间（秒）。 示例： 300
+- `drs_threshold_memory`（数字）DRS 内存阈值百分比。 示例： 80
+- `migrate_network_cidr`（字符串）迁移网络 CIDR。 示例： 192.168.2.0/24
+- `network_hp`（布尔值）启用网络高性能模式（ovsdpdk）。
+- `type`（字符串）集群类型。 可选值： zstack, baremetal, baremetal2.
+- `vm_ha_level`（字符串）云主机 HA 级别。 可选值： NeverStop, BestEffort
+
+### 只读属性
+
+- `state`（字符串）集群状态，如 Enabled、Disabled。
+- `uuid`（字符串）唯一标识符，由 ZSvirt 管理。 cluster. 由 ZSvirt 自动生成。

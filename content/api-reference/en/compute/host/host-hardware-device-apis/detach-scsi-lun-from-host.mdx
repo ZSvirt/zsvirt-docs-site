@@ -1,0 +1,143 @@
+---
+title: "Detach LUN Device from Host"
+---
+
+<APIPage method="PUT" path="/v1/storage-devices/scsi-lun/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "detachScsiLunFromHost": {
+    "hostUuid": "dce542427a3a3d1fa13324c9f67352cb"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, `systemTags` and `userTags` fields can be omitted. They are listed to show that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"detachScsiLunFromHost":{"hostUuid":"dce542427a3a3d1fa13324c9f67352cb"}}' \
+http://localhost:8080/zstack/v1/storage-devices/scsi-lun/fb5d3f596f683bd7a3b1bf1c396d5f4d/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|SCSI LUN UUID| |4.1.6|
+|hostUuid \(Optional\)|String|body \(contained in the `detachScsiLunFromHost` structure\)|Host UUID| |4.1.6|
+|systemTags \(Optional\)|List|body|System Tags| |4.1.6|
+|userTags \(Optional\)|List|body|User Tags| |4.1.6|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "scsiLunHostRefs": [],
+    "scsiLunVmInstanceRefs": [],
+    "name": "test-scsi-lun",
+    "uuid": "e09fbca6d27332a1946326f3ae114fc3",
+    "wwid": "36b083fe000daf018000022905ba35d8f",
+    "vendor": "DELL",
+    "model": "MD32xx",
+    "wwn": "0x6f01faf000d5c3e7",
+    "serial": "6b083fe000daf018000015505abbe00a",
+    "type": "mpath",
+    "path": "pci-0000:05:00.0-fc-0x2012b083fedaf018-lun-11",
+    "size": 5497558138880,
+    "createDate": "Nov 14, 2017 2:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See [error](#p_ggg_hzl_s2c) for details|4.1.6|
+|inventory|ScsiLunInventory|See [inventory](#p_ix1_jzl_s2c) for details|4.1.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. Globally unique identifier of the error, for example SYS.1000, HOST.1001.|0.6|
+|description|String|Brief error description|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause error. The error that caused the current error. If there is no original error, this field is null.|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name|3.1.0|
+|uuid|String|UUID of the resource. Uniquely identifies the resource.|3.1.0|
+|wwid|String|Disk globally unique identifier|3.1.0|
+|vendor|String|Disk vendor|3.1.0|
+|model|String|Disk model|3.1.0|
+|wwn|String|Disk WWN|3.1.0|
+|serial|String|Disk serial number|3.1.0|
+|type|String|Disk type|3.1.0|
+|path|String|Disk path|3.1.0|
+|state|String|Disk status|3.1.0|
+|size|Long|Disk size|3.1.0|
+|createDate|Timestamp|Create time|3.1.0|
+|lastOpDate|Timestamp|Last update time|3.1.0|
+|scsiLunHostRefs|List|See [scsiLunHostRefs](#p_qgl_xbs_s2c) for details|3.1.0|
+|scsiLunVmInstanceRefs|List|See [scsiLunVmInstanceRefs](#p_d3v_zbs_s2c) for details|3.1.0|
+
+### scsiLunHostRefs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|scsiLunUuid|String|SCSI Lun UUID|3.1.0|
+|hostUuid|String|Host UUID|3.1.0|
+|createDate|Timestamp|Create time|3.1.0|
+|lastOpDate|Timestamp|Last update time|3.1.0|
+
+### scsiLunVmInstanceRefs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|scsiLunUuid|String|SCSI Lun UUID|3.1.0|
+|vmInstanceUuid|String|Virtual Machine UUID|3.1.0|
+|createDate|Timestamp|Create time|3.1.0|
+|lastOpDate|Timestamp|Last update time|3.1.0|
+
+## SDK Examples
+Java SDK
+
+```
+DetachScsiLunFromHostAction action = new DetachScsiLunFromHostAction();
+action.uuid = "fb5d3f596f683bd7a3b1bf1c396d5f4d";
+action.hostUuid = "dce542427a3a3d1fa13324c9f67352cb";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DetachScsiLunFromHostAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DetachScsiLunFromHostAction action = DetachScsiLunFromHostAction()
+action.uuid = "fb5d3f596f683bd7a3b1bf1c396d5f4d"
+action.hostUuid = "dce542427a3a3d1fa13324c9f67352cb"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DetachScsiLunFromHostAction.Result res = action.call()
+```
+
+</APIPage>

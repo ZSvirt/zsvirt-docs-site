@@ -1,0 +1,20 @@
+{
+  "title": "Single Sign-On Server Interfaces",
+  "pages": [
+    "query-third-party-account-source-binding",
+    "add-ldap-server",
+    "delete-ldap-server",
+    "query-ldap-server",
+    "update-ldap-server",
+    "create-ldap-binding",
+    "delete-ldap-binding",
+    "get-candidate-ldap-entry-for-binding",
+    "get-ldap-entry",
+    "sync-accounts-from-ldap-server",
+    "create-ssoredirect-template",
+    "delete-ssoredirect-template",
+    "update-ssoredirect-template",
+    "get-oauth-client-secret"
+  ],
+  "pagesIndex": "index"
+}

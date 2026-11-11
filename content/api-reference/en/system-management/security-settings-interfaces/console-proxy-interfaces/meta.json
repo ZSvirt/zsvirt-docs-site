@@ -1,0 +1,10 @@
+{
+  "title": "Console Proxy Interfaces",
+  "pages": [
+    "request-console-access",
+    "query-console-proxy-agent",
+    "reconnect-console-proxy-agent",
+    "accesskey-management-interfaces"
+  ],
+  "pagesIndex": "index"
+}

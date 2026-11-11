@@ -1,0 +1,86 @@
+---
+title: "测试 ZStone 连接性"
+---
+
+<APIPage method="PUT" path="/v1/zstone-plugin/test-connection">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "zStoneTestConnection": {
+    "managementIp": "172.0.0.1",
+    "port": 4010,
+    "url": "/open/ping"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"zStoneTestConnection":{"managementIp":"172.0.0.1","port":4010,"url":"/open/ping"}}' \
+http://localhost:8080/zstack/v1/zstone-plugin/test-connection
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|managementIp|String|body\(包含在`zStoneTestConnection`结构中\)|ZStone 的管理节点 IP| |4.10.6|
+|port \(可选\)|Integer|body\(包含在`zStoneTestConnection`结构中\)|ZStone API 服务端口| |4.10.6|
+|url \(可选\)|String|body\(包含在`zStoneTestConnection`结构中\)|ZStone 测试连接使用 URL| |4.10.6|
+|systemTags \(可选\)|List|body|系统标签| |4.10.6|
+|userTags \(可选\)|List|body|用户标签| |4.10.6|
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+ZStoneTestConnectionAction action = new ZStoneTestConnectionAction();
+action.managementIp = "172.0.0.1";
+action.port = 4010;
+action.url = "/open/ping";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ZStoneTestConnectionAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ZStoneTestConnectionAction action = ZStoneTestConnectionAction()
+action.managementIp = "172.0.0.1"
+action.port = 4010
+action.url = "/open/ping"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ZStoneTestConnectionAction.Result res = action.call()
+```
+
+</APIPage>

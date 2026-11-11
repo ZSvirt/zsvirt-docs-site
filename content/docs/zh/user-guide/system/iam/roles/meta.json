@@ -1,0 +1,13 @@
+{
+  "title": "角色管理",
+  "pages": [
+    "index",
+    "permission-hierarchy",
+    "built-in-roles",
+    "create-custom-role",
+    "clone-role",
+    "modify-permissions",
+    "delete-role"
+  ],
+  "pagesIndex": "index"
+}

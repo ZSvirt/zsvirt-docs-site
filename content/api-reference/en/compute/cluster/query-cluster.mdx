@@ -1,0 +1,99 @@
+---
+title: "Query Cluster"
+---
+
+<APIPage method="GET" path="/v1/clusters" altPaths={["/v1/clusters/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/clusters?q=hypervisorType=KVM
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/clusters/a8d5ea1ceda34616a26bec2fce3b4d8a
+```
+
+Queryable Fields
+
+Run the CLI command tool, enter `QueryCluster` and press Tab to view all queryable fields and resource names that can be queried across tables.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "name": "cluster1",
+      "uuid": "41f3a4eb130347a2af6d7f2e0d21fab0",
+      "description": "test",
+      "state": "Enabled",
+      "hypervisorType": "KVM",
+      "createDate": "Jun 7, 2017 9:20:13 PM",
+      "lastOpDate": "Jun 7, 2017 9:20:13 PM",
+      "zoneUuid": "aad01c8b25774796b2e341ec51a7c9c1",
+      "type": "zstack"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See details [error](#p_j1h_h1t_l1b)|0.6|
+|inventories|List|See details [inventories](#p_jxw_g1t_l1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, e.g. SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, default is null|0.6|
+|opaque|LinkedHashMap|Reserved field, default is null|0.6|
+|cause|ErrorCode|Root cause, the error that caused the current error. If there is no original error, this field is null|0.6|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name|0.6|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|description|String|Resource description|0.6|
+|state|String|Cluster state|0.6|
+|hypervisorType|String|Hypervisor type|0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+|zoneUuid|String|Data Center UUID|0.6|
+|type|String|Reserved field|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+QueryClusterAction action = new QueryClusterAction();
+action.conditions = asList("hypervisorType=KVM");
+action.sessionId = "3e214b652cc947ea9e1aa256d05752ea";
+QueryClusterAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryClusterAction action = QueryClusterAction()
+action.conditions = ["hypervisorType=KVM"]
+action.sessionId = "ad8f3cd4b5bc4da0a3a91dc8bcbdd18c"
+QueryClusterAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,64 @@
+---
+title: "删除数据库备份"
+---
+
+<APIPage method="DELETE" path="/v1/database-backups/{uuid}?backupStorageUuids={backupStorageUuids}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/database-backups/9caf0430ce473651ae7033e1a16a0097?backupStorageUuids=0c54ad64cd8d3ca1ba9d98864bb83571
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |3.0.0|
+|backupStorageUuids\(可选\)|List|url|镜像存储UUID列表| |3.0.0|
+|systemTags \(可选\)|List|body| | |3.0.0|
+|userTags \(可选\)|List|body| | |3.0.0|
+
+## API返回
+该API成功时返回一个空的JSON结构**`{}`**，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+DeleteDatabaseBackupAction action = new DeleteDatabaseBackupAction();
+action.uuid = "9caf0430ce473651ae7033e1a16a0097";
+action.backupStorageUuids = asList("0c54ad64cd8d3ca1ba9d98864bb83571");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteDatabaseBackupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteDatabaseBackupAction action = DeleteDatabaseBackupAction()
+action.uuid = "9caf0430ce473651ae7033e1a16a0097"
+action.backupStorageUuids = [0c54ad64cd8d3ca1ba9d98864bb83571]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DeleteDatabaseBackupAction.Result res = action.call()
+```
+
+</APIPage>

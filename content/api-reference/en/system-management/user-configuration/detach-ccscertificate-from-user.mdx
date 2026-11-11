@@ -1,0 +1,76 @@
+---
+title: "Detach CCS Certificate from Account"
+---
+
+<APIPage method="POST" path="/v1/crypto/ccs-certificate/detach-account/{accountUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding example, the `systemTags` and `userTags` fields are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{}}' \
+http://localhost:8080/zstack/v1/crypto/ccs-certificate/detach-account/0f708fb369393654acdf1f145a2408c2
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|accountUuid|String|url|UUID of the user to detach| |4.10.0|
+|system Tags \(Optional\)|List|body|System tags| |4.10.0|
+|userTags \(Optional\)|List|body|User tags| |4.10.0|
+
+## API Response
+This API returns an empty JSON structure `{}` on success. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DetachCCSCertificateFromAccountAction action = new DetachCCSCertificateFromAccountAction();
+action.accountUuid = "0f708fb369393654acdf1f145a2408c2";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DetachCCSCertificateFromAccountAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DetachCCSCertificateFromAccountAction action = DetachCCSCertificateFromAccountAction()
+action.accountUuid = "0f708fb369393654acdf1f145a2408c2"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DetachCCSCertificateFromAccountAction.Result res = action.call()
+```
+
+</APIPage>

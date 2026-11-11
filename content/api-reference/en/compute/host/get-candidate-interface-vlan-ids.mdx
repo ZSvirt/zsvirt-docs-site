@@ -1,0 +1,82 @@
+---
+title: "Get Candidate Interface VLAN Sub-interface Information"
+---
+
+<APIPage method="GET" path="/v1/host/network-interface-vlan-ids">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/host/network-interface-vlan-ids?interfaceUuids=d25e83af6ccf3d9ca8baa1702861a0c8&limit=1000&start=0
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|interfaceUuids|List|query|NIC UUID| |4.7.11|
+|limit \(optional\)|Integer|query| | |4.7.11|
+|start \(optional\)|Integer|query| | |4.7.11|
+|systemTags \(optional\)|List|query|System tag| |4.7.11|
+|userTags \(optional\)|List|query|User tag| |4.7.11|
+
+## API Response
+Response Example
+
+```
+{
+  "vlanIds": [
+    1,
+    2
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|vlanIds|List|VLAN interface ID|4.7.11|
+|success|boolean| |4.7.11|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See details [error](#p_sry_hp2_wmb)|4.7.11|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, e.g. SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, default is null|0.6|
+|opaque|LinkedHashMap|Reserved field, default is null|0.6|
+|cause|ErrorCode|Root cause, the error that caused the current error. If there is no original error, this field is null|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+GetCandidateInterfaceVlanIdsAction action = new GetCandidateInterfaceVlanIdsAction();
+action.interfaceUuids = asList("d25e83af6ccf3d9ca8baa1702861a0c8");
+action.limit = 1000;
+action.start = 0;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetCandidateInterfaceVlanIdsAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetCandidateInterfaceVlanIdsAction action = GetCandidateInterfaceVlanIdsAction()
+action.interfaceUuids = [d25e83af6ccf3d9ca8baa1702861a0c8]
+action.limit = 1000
+action.start = 0
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetCandidateInterfaceVlanIdsAction.Result res = action.call()
+```
+
+</APIPage>

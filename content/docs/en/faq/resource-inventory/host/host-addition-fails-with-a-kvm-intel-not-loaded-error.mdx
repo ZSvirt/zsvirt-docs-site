@@ -1,0 +1,32 @@
+---
+title: "Host addition fails with a \"kvm\\_intel not loaded\" error"
+---
+
+## Symptom
+Host addition fails with the error: "The host has not loaded the kvm\_intel \(virtualization\) module and cannot perform this operation."
+
+## Cause
+The VMX and CPU VT options are not enabled.
+
+## Solution
+1.  Configure Enable Monitor MWAIT
+
+    In the BIOS, navigate to the **Socket Configuration** page and select **Advanced Power** to open the Advanced Power management configuration.
+
+    In the Advanced Power management configuration, select **CPU C State Control** and set **Enable Monitor MWAIT** to **Disabled**.
+
+2.  Configure Intel VT for Directed I/O
+
+    Return to the **Socket Configuration** page and select **IIO Configuration**.
+
+    Set **Intel VT for Directed I/O** to **Enabled**.
+
+3.  Configure VMX
+
+    Return to the **Socket Configuration** page and select **Processor Configuration**.
+
+    Set **VMX** to **Enabled**.
+
+4.  Save and exit
+
+    The VMX and CPU VT options are now configured. Press F10 to save and exit the BIOS settings.

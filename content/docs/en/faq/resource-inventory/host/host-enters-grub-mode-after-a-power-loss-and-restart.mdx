@@ -1,0 +1,51 @@
+---
+title: "Host enters grub mode after a power loss and restart"
+---
+
+## Cause
+An unexpected power loss caused the `/boot/grub2/grub.cfg` file to be lost. The system cannot boot and enters grub&gt; mode.
+
+## Solution
+1.  Resolve the issue from the grub page by following these steps:
+2.  In grub mode, run `ls` to list partitions. Use `ls (hd0,gpt1)/grub2` or `ls (hd0,gpt2)/grub2` to find the partition containing the `grub2` directory \(the boot partition\). The correct partition returns `device.map i386-pc/ locale/ fonts/ grubenv`.
+
+    ```
+    grub> ls (hd0,gpt1)/grub2
+    ```
+
+3.  Set the system partition:
+
+    ```
+    grub> set root=(hd0,gpt1)
+    ```
+
+4.  Mount the root device \(set the boot partition as the startup partition; determine the system location based on a working host\):
+
+    ```
+    grub> linuxefi /vmlinuz-3.10.0-957.27.6.da38eal.el7.x86_64 root=/dev/sde3  //`/dev/sde3` is the original `/` partition mount point; confirm this from another working physical node
+    ```
+
+5.  Specify the initialization image:
+
+    ```
+    grub> initrdefi /initramfs-3.10.0-957.27.6.da38eal.el7.x86_64.img
+    ```
+
+6.  Boot the system:
+
+    ```
+    grub> boot
+    ```
+
+7.  After the system boots, repair the EFI partition with the following steps:
+
+    ```
+    # Generate the grub.cfg file
+    [root@localhost ~]# grub2-mkconfig -o /root/grub.cfg
+    # Unmount the `efi` partition to remount with updated permissions
+    [root@localhost ~]# umount /boot/efi
+    # Remount the `efi` partition with read-write permissions
+    [root@localhost ~]# mount /dev/sde1 /boot/efi
+    # Replace the damaged grub.cfg with the newly generated one
+    [root@localhost ~]# mv /root/grub.cfg /boot/efi/EFI/helix/grub.cfg
+    ```

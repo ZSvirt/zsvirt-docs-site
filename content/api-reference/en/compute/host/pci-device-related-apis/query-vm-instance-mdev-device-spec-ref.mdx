@@ -1,0 +1,96 @@
+---
+title: "Query VM and MDEV Device Spec Relationship"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/{vmInstanceUuid}/mdev-device-specs">
+
+```
+GET zstack/v1/vm-instances/{vmInstanceUuid}/mdev-device-specs/{mdevSpecUuid}
+```
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/{vmInstanceUuid}/mdev-device-specs?q=vmInstanceUuid=15ea1f7027833d9ea566ea590184d5d2
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/{vmInstanceUuid}/mdev-device-specs/{mdevSpecUuid}?q=vmInstanceUuid=5e3c68fed5ef39089614830ff30dfd50
+```
+
+Queryable Fields
+
+Run the CLI command tool, enter `QueryVmInstanceMdevDeviceSpecRef` and press Tab to view all queryable fields and resource names that support cross-table queries.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "vmInstanceUuid": "87fbb32e8d5b47be9c79611ea8b8dbca",
+      "mdevSpecUuid": "75c34cf335f84f7e85bba4289a9d5257",
+      "mdevDeviceNumber": 1,
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_vrh_k2g_xhb)|3.5.0|
+|inventories|List|See [inventories](#p_utb_k2g_xhb)|3.5.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code, a globally unique identifier of the error, e.g. SYS.1000, HOST.1001|3.5.0|
+|description|String|Brief description of the error|3.5.0|
+|details|String|Detailed error information|3.5.0|
+|elaboration|String|Reserved field, defaults to null|3.5.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|3.5.0|
+|cause|ErrorCode|Root cause, the source error that caused the current error, null if no original error|3.5.0|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|vmInstanceUuid|String|Virtual Machine UUID|3.5.0|
+|mdevSpecUuid|String|MDEV device spec UUID|3.5.0|
+|mdevDeviceNumber|Integer|Number of mdev devices that meet the spec to attach to the VM, defaults to 1|3.5.0|
+|createDate|Timestamp|Create date|3.5.0|
+|lastOpDate|Timestamp|Last update date|3.5.0|
+
+## SDK Examples
+Java SDK
+
+```
+QueryVmInstanceMdevDeviceSpecRefAction action = new QueryVmInstanceMdevDeviceSpecRefAction();
+action.conditions = asList("vmInstanceUuid=308f8eccec9b320bbe082f233e7f822c");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryVmInstanceMdevDeviceSpecRefAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryVmInstanceMdevDeviceSpecRefAction action = QueryVmInstanceMdevDeviceSpecRefAction()
+action.conditions = ["vmInstanceUuid=254f7f2f30bb3b7bb26595fc5120a63b"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryVmInstanceMdevDeviceSpecRefAction.Result res = action.call()
+```
+
+</APIPage>

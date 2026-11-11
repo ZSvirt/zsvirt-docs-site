@@ -1,0 +1,12 @@
+{
+  "title": "Distributed Switch",
+  "pages": [
+    "index",
+    "create",
+    "uplinks",
+    "topology",
+    "load-unload-cluster",
+    "delete"
+  ],
+  "pagesIndex": "index"
+}

@@ -1,0 +1,11 @@
+{
+  "title": "Tag Management",
+  "pages": [
+    "overview",
+    "create",
+    "bind-unbind",
+    "delete",
+    "search-resources"
+  ],
+  "pagesIndex": "overview"
+}

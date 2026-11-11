@@ -1,0 +1,89 @@
+---
+title: "Update Tag"
+---
+
+<APIPage method="PUT" path="/v1/tags/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateTag": {
+    "value": "new-tag",
+    "description": "tag-for-volume",
+    "color": "#FFFFFF"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the `systemTags` and `userTags` fields can be omitted. They are listed to show that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateTag":{"value":"new-tag","description":"tag-for-volume","color":"#FFFFFF"}}' http://localhost:8080/zstack/v1/tags/bc54e798f6ad4b9aa6a71365271d9464/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|The resource UUID, uniquely identifying this resource| |3.2.0|
+|name \(optional\)|String|body \(contained in the **updateTag** structure\)|Resource name| |3.2.0|
+|value \(optional\)|String|body \(contained in the **updateTag** structure\)|Tag value| |3.2.0|
+|description \(optional\)|String|body \(contained in the **updateTag** structure\)|Detailed description of the resource| |3.2.0|
+|color \(optional\)|String|body \(contained in the **updateTag** structure\)|Tag color| |3.2.0|
+|systemTags \(optional\)|List|body| | |3.2.0|
+|userTags \(optional\)|List|body| | |3.2.0|
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+UpdateTagAction action = new UpdateTagAction();
+action.uuid = "a2bdf841dfdd48ecae5cabf44d0088e1";
+action.value = "new-tag";
+action.description = "tag-for-volume";
+action.color = "#FFFFFF";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateTagAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateTagAction action = UpdateTagAction()
+action.uuid = "982dddcd308b423baf8f82a74afc4e1c"
+action.value = "new-tag"
+action.description = "tag-for-volume"
+action.color = "#FFFFFF"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateTagAction.Result res = action.call()
+```
+
+</APIPage>

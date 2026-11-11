@@ -1,0 +1,182 @@
+---
+title: "Get Host Candidates for VM Migration"
+---
+
+<APIPage method="GET" path="/v1/primary-storage/hosts/{vmInstanceUuid}/migration-candidates">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/primary-storage/hosts/73e5ee655c3d3ef7b9fc0f3a3b560270/migration-candidates?dstPrimaryStorageUuid=cc8db724e1b334568026ca38d5c27b0f
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|vmInstanceUuid|String|url|VM Instance UUID| |4.0.0|
+|dstPrimaryStorageUuid|String|query|Destination Data Storage UUID| |4.0.0|
+|limit \(Optional\)|Integer|query|Number of hosts to return| |4.0.0|
+|systemTags \(Optional\)|List|query|System Tags| |4.0.0|
+|userTags \(Optional\)|List|query|User Tags| |4.0.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "name": "HOST-1",
+      "uuid": "b72c8853294a3e08abe838c58a61efb9"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean|Whether the request was successful|3.10.0|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation succeeds, this field is null. See [error](#p_hw2_rwg_v3b)|4.0.0|
+|inventories|List|See [inventories](#p_sk5_swg_v3b)|4.0.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|4.0.0|
+|description|String|Brief description of the error|4.0.0|
+|details|String|Detailed error information|4.0.0|
+|elaboration|String|Reserved field, defaults to null|4.0.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|4.0.0|
+|cause|ErrorCode|Root cause, the source error that caused the current error. If there is no original error, this field is null|4.0.0|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|zoneUuid|String|Data Center UUID|4.0.0|
+|name|String|Resource Name|4.0.0|
+|uuid|String|Resource UUID, uniquely identifies the resource|4.0.0|
+|clusterUuid|String|Cluster UUID|4.0.0|
+|description|String|Resource Description|4.0.0|
+|managementIp|String| |4.0.0|
+|hypervisorType|String| |4.0.0|
+|state|String| |4.0.0|
+|status|String| |4.0.0|
+|totalCpuCapacity|Long| |4.0.0|
+|availableCpuCapacity|Long| |4.0.0|
+|cpuSockets|Integer| |4.0.0|
+|totalMemoryCapacity|Long| |4.0.0|
+|availableMemoryCapacity|Long| |4.0.0|
+|cpuNum|Integer|Number of logical CPUs|4.0.0|
+|ipmiAddress|String|IPMI Address|0.6|
+|ipmiUsername|String|IPMI Username|0.6|
+|ipmiPort|Integer|IPMI Port|0.6|
+|ipmiPowerStatus|String|IPMI Power Status|0.6|
+|architecture|String| |0.6|
+|nqn|String|NVMe Qualified Name|4.10.6|
+|hostname|String|Hostname|4.10.20|
+|createDate|Timestamp|Create Time|4.0.0|
+|lastOpDate|Timestamp|Last Modification Time|4.0.0|
+|cpuStatus|HwMonitorStatus|See [cpuStatus](#p_wvd_kkm_lhc)|4.10.0|
+|memoryStatus|HwMonitorStatus|See [memoryStatus](#p_nhh_kkm_lhc)|4.10.0|
+|diskStatus|HwMonitorStatus|See [diskStatus](#p_esk_kkm_lhc)|4.10.0|
+|nicStatus|HwMonitorStatus|See [nicStatus](#p_n24_kkm_lhc)|4.10.0|
+|gpuStatus|HwMonitorStatus|See [gpuStatus](#p_zgr_kkm_lhc)|4.10.0|
+|powerSupplyStatus|HwMonitorStatus|See [powerSupplyStatus](#p_o35_kkm_lhc)|4.10.0|
+|fanStatus|HwMonitorStatus|See [fanStatus](#p_m2x_kkm_lhc)|4.10.0|
+|raidStatus|HwMonitorStatus|See [raidStatus](#p_oc1_lkm_lhc)|4.10.0|
+|temperatureStatus|HwMonitorStatus|See [temperatureStatus](#p_cyd_lkm_lhc)|4.10.0|
+
+### cpuStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### memoryStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### diskStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### nicStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### gpuStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### powerSupplyStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### fanStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### raidStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### temperatureStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+## SDK Examples
+Java SDK
+
+```
+GetHostCandidatesForVmMigrationAction action = new GetHostCandidatesForVmMigrationAction();
+action.vmInstanceUuid = "73e5ee655c3d3ef7b9fc0f3a3b560270";
+action.dstPrimaryStorageUuid = "cc8db724e1b334568026ca38d5c27b0f";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetHostCandidatesForVmMigrationAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = GetHostCandidatesForVmMigrationAction()
+action.vmInstanceUuid = "73e5ee655c3d3ef7b9fc0f3a3b560270"
+action.dstPrimaryStorageUuid = "cc8db724e1b334568026ca38d5c27b0f"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

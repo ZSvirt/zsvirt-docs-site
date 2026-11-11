@@ -1,0 +1,303 @@
+---
+title: "Update USB Device"
+---
+
+<APIPage method="PUT" path="/v1/usb-device/usb-devices/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateUsbDevice": {
+    "name": "usb",
+    "description": "this is a usb device",
+    "state": "Enabled"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The **systemTags** and **userTags** fields can be omitted in the above example. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateUsbDevice":{"name":"usb","description":"this is a usb device","state":"Enabled"}}' \
+http://localhost:8080/zstack/v1/usb-device/usb-devices/9d1ab4950ce933edabbaf8e73ca7e879/actions
+```
+
+Parameter List
+
+<table id="table_zp3_33f_sbb"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+UUID of the resource, uniquely identifies the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.2
+
+</td></tr><tr><td>
+
+name \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in **updateUsbDevice** structure\)
+
+</td><td>
+
+Resource name
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.2
+
+</td></tr><tr><td>
+
+description \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in **updateUsbDevice** structure\)
+
+</td><td>
+
+Resource description
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.2
+
+</td></tr><tr><td>
+
+state \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in **updateUsbDevice** structure\)
+
+</td><td>
+
+USB device state
+
+</td><td>
+
+-   Enabled
+-   Disabled
+
+</td><td>
+
+2.2
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.2
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.2
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "2695f7ce0bda4587bbabbbfaad080554",
+    "description": "test usb",
+    "hostUuid": "4261ceb358ce473fa62c137c1ba8d3ef",
+    "vmInstanceUuid": "4c059c5e0a834d86984d3141d8ec42cb",
+    "state": "Disabled",
+    "idVendor": "10de",
+    "idProduct": "0e0f",
+    "iManufacturer": "SanDisk",
+    "iProduct": "USB Storage",
+    "iSerial": "000000000001",
+    "usbVersion": "3.0",
+    "attachType": "PassThrough"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_jgd_1jf_sbb)|2.2|
+|inventory|UsbDeviceInventory|See [inventory](#p_mk3_1jf_sbb)|2.2|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code, a globally unique identifier of the error, e.g. SYS.1000, HOST.1001|2.2|
+|description|String|Brief description of the error|2.2|
+|details|String|Detailed error information|2.2|
+|elaboration|String|Reserved field, defaults to null|2.2|
+|opaque|LinkedHashMap|Reserved field, defaults to null|2.2|
+|cause|ErrorCode|Root cause, the source error that caused the current error, null if no original error|2.2|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifies the resource|2.2|
+|name|String|Resource name|2.2|
+|description|String|Resource description|2.2|
+|hostUuid|String|Host UUID|2.2|
+|vmInstanceUuid|String|Virtual Machine UUID|2.2|
+|busNum|String|Bus number|2.2|
+|devNum|String|Device number|2.2|
+|idVendor|String|VendorID|2.2|
+|idProduct|String|ProductID|2.2|
+|iManufacturer|String|Manufacturer|2.2|
+|iProduct|String|Device type|2.2|
+|iSerial|String|Serial number|2.2|
+|usbVersion|String|USB version|2.2|
+|attachType|String|Attach method|3.6.0|
+|createDate|Timestamp|Create date|2.2|
+|lastOpDate|Timestamp|Last update date|2.2|
+|state|UsbDeviceState|See [state](#p_t1q_1jf_sbb)|2.2|
+
+### state
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name|2.2|
+|ordinal|int| |2.2|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateUsbDeviceAction action = new UpdateUsbDeviceAction();
+action.uuid = "86d05b807cfa47a7969745f0ffe8ee4b";
+action.name = "usb";
+action.description = "this is a usb device";
+action.state = "Enabled";
+action.sessionId = "86600ceaed5642ad810828129fe0e4a0";
+UpdateUsbDeviceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateUsbDeviceAction action = UpdateUsbDeviceAction()
+action.uuid = "f16940abc205404bb17b00367f5b6a8d"
+action.name = "usb"
+action.description = "this is a usb device"
+action.state = "Enabled"
+action.sessionId = "a65b10bd9a164d33a42d8bacfab5acd6"
+UpdateUsbDeviceAction.Result res = action.call()
+```
+
+</APIPage>

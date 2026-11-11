@@ -1,0 +1,62 @@
+---
+title: 'Bare Metal Chassis Status Management'
+---
+
+Bare metal chassis have the following deployment status, status, and power status:
+
+## Deployment Status
+
+Description
+
+## Unknown Hardware Info
+
+The system failed to collect the hardware information of the bare metal chassis.
+
+-   Possible cause: You did not select the reboot bare metal chassis to obtain hardware information checkbox when adding the bare metal chassis.
+-   Solution: Manually reboot the bare metal chassis or obtain hardware information.
+
+## PXE Booting
+
+The deployment server (PXE server) is remotely instructing the bare metal chassis to boot from the PXE NIC and assigning a dynamic IP.
+
+## PXE Boot Failed
+
+The bare metal chassis failed to boot from the PXE NIC.
+
+<Callout type="info">
+Check these requirements:
+</Callout>
+
+-   Make sure no other DHCP services exist in the deployment network.
+-   Make sure PXE is enabled in BIOS for the NIC connected to the deployment network.
+
+For some models, make sure the PXE NIC is the first boot NIC or disable PXE on all NICs with higher boot priority.
+
+-   Confirm the bare metal chassis boot mode is set to Legacy.
+
+## Available
+
+The bare metal chassis is ready for creating bare metal instances.
+
+## Allocated
+
+The bare metal chassis has been used to create a bare metal instance.
+
+## Rebooting
+
+The bare metal chassis is rebooting.
+
+## Status
+
+## Power Status
+
+Status includes:
+
+-   Enabled
+-   Disabled
+
+Power status includes:
+
+-   Power on
+-   Rebooting
+-   Power off

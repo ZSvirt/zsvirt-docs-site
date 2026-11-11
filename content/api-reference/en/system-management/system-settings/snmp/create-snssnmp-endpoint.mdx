@@ -1,0 +1,114 @@
+---
+title: "Create SNMP Endpoint"
+---
+
+<APIPage method="POST" path="/v1/sns/application-endpoints/snmp">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "snmp endpoint",
+    "platformUuid": "c453382b049c3280b69157501914870d"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+The `systemTags` and `userTags` fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"snmp endpoint","platformUuid":"c453382b049c3280b69157501914870d"}}' http://localhost:8080/zstack/v1/sns/application-endpoints/snmp
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|name|String|body \(contained in the **params** structure\)|Resource name| |4.10.0|
+|description \(optional\)|String|body \(contained in the **params** structure\)|Detailed description of the resource| |4.10.0|
+|platformUuid \(optional\)|String|body \(contained in the **params** structure\)|Application platform UUID| |4.10.0|
+|resourceUuid \(optional\)|String|body \(contained in the **params** structure\)|Resource UUID| |4.10.0|
+|tagUuids \(optional\)|List|body \(contained in the **params** structure\)|Tag UUID list| |4.10.0|
+|systemTags \(optional\)|List|body|System tags| |4.10.0|
+|userTags \(optional\)|List|body|User tags| |4.10.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "name": "example",
+    "uuid": "917fe66f76b241f0843dfbd6be685fc1",
+    "description": "description example",
+    "type": "Email",
+    "state": "Enabled",
+    "platformUuid": "4eb0ceebf95b452585ebeacd647d9f35",
+    "createDate": "Sep 28, 2023 4:35:44 PM",
+    "lastOpDate": "Sep 28, 2023 4:35:44 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.10.0|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_bcl_x1v_m1b)|4.10.0|
+|inventory|SNSApplicationEndpointInventory|See [inventory](#p_nqg_y1v_m1b)|4.10.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. A globally unique identifier for the error, e.g., SYS.1000, HOST.1001|4.10.0|
+|description|String|Brief description of the error|4.10.0|
+|details|String|Detailed error information|4.10.0|
+|elaboration|String|Reserved field. Defaults to null|4.10.0|
+|opaque|LinkedHashMap|Reserved field. Defaults to null|4.10.0|
+|cause|ErrorCode|Root error. The source error that caused this error. Null if no root cause exists|4.10.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name|4.10.0|
+|uuid|String|Resource UUID. Uniquely identifies the resource|4.10.0|
+|description|String|Detailed description of the resource|4.10.0|
+|type|String|Type|4.10.0|
+|platformUuid|String|Application platform UUID|4.10.0|
+|createDate|Timestamp|Creation time|4.10.0|
+|lastOpDate|Timestamp|Last modification time|4.10.0|
+
+## SDK Examples
+Java SDK
+
+```
+CreateSNSSnmpEndpointAction action = new CreateSNSSnmpEndpointAction();
+action.name = "snmp endpoint";
+action.platformUuid = "c453382b049c3280b69157501914870d";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateSNSSnmpEndpointAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateSNSSnmpEndpointAction action = CreateSNSSnmpEndpointAction()
+action.name = "snmp endpoint"
+action.platformUuid = "c453382b049c3280b69157501914870d"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateSNSSnmpEndpointAction.Result res = action.call()
+```
+
+</APIPage>

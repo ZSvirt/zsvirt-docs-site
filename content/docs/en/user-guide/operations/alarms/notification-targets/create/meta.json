@@ -1,0 +1,8 @@
+{
+  "title": "New Endpoint",
+  "pages": [
+    "index",
+    "email"
+  ],
+  "pagesIndex": "index"
+}

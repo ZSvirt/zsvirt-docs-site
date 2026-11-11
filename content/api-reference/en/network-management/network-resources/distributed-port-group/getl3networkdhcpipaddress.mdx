@@ -1,0 +1,75 @@
+---
+title: "GetL3NetworkDhcpIpAddress"
+---
+
+<APIPage method="GET" path="/v1/l3-networks/{l3NetworkUuid}/dhcp-ip">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Sample
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/l3-networks/82cae6542d3b3e7ea50dab8681f3785c/dhcp-ip
+```
+
+Request Parameters
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|l3NetworkUuid|String|url|The L3 network UUID.| |0.6|
+|systemTags|List|query|Optional. The system tags.| |0.6|
+|userTags|List|query|Optional. The user tags.| |0.6|
+
+## API Response
+Sample Response
+
+```
+{
+  "ip": "192.168.100.3"
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|ip|String|The IP address.|0.6|
+|ip6|String|The IPv6 address.|3.10.0|
+|success|boolean|Indicates whether the operation is successful.|0.6|
+|error|ErrorCode|The error code. If not null, the operation fails, or vice versa. For more information, see [error](#p_f54_wzg_m1b).|0.6|
+
+error
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code, which is a numbered or alphanumeric code that specifies an error. For example, SYS.1000, HOST.1001.|0.6|
+|description|String|The brief description of the error.|0.6|
+|details|String|The details about the error.|0.6|
+|elaboration|String|The reserved field. Default value: null.|0.6|
+|opaque|LinkedHashMap|The reserved field. Default value: null.|0.6|
+|cause|ErrorCode|The root error, which is the associated root cause of the current error. If no root error exists, this parameter is null.|0.6|
+
+## SDK Sample
+Java SDK
+
+```
+GetL3NetworkDhcpIpAddressAction action = new GetL3NetworkDhcpIpAddressAction();
+action.l3NetworkUuid = "1c311c313859434f8586d4288a31952e";
+action.sessionId = "dd1a8993de0e41e18d8718ea2e2d8259";
+GetL3NetworkDhcpIpAddressAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetL3NetworkDhcpIpAddressAction action = GetL3NetworkDhcpIpAddressAction()
+action.l3NetworkUuid = "4970a85c53a24e35a55f44830058e719"
+action.sessionId = "50fd78e250d94c5d944a5fa1a5d6bde0"
+GetL3NetworkDhcpIpAddressAction.Result res = action.call()
+```
+
+</APIPage>

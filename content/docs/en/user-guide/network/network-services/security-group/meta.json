@@ -1,0 +1,9 @@
+{
+  "title": "Security Group",
+  "pages": [
+    "overview",
+    "quick-start",
+    "actions"
+  ],
+  "pagesIndex": "overview"
+}

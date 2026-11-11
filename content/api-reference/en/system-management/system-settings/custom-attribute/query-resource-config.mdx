@@ -1,0 +1,92 @@
+---
+title: "Query Resource Custom Attributes"
+---
+
+<APIPage method="GET" path="/v1/resource-configurations">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/resource-configurations
+```
+
+Queryable Fields
+
+Run the CLI command line tool, enter `QueryResourceConfig` and press the Tab key to view all queryable fields and cross-table queryable resource names.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "4944c2599c394bd5be5ccc1099dfdb4b",
+      "resourceUuid": "45a511dfef1b474dbef3c1ff88275465",
+      "resourceType": "ClusterVO",
+      "name": "cpu.overProvisioning.ratio",
+      "category": "host",
+      "value": "10",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_h14_lll_zgb) for details|3.4.0|
+|inventories|List|See [inventories](#p_jst_lll_zgb) for details|3.4.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|3.4.0|
+|description|String|A brief description of the error|3.4.0|
+|details|String|The detailed error information|3.4.0|
+|elaboration|String|Reserved field. Default is null|3.4.0|
+|opaque|LinkedHashMap|Reserved field. Default is null|3.4.0|
+|cause|ErrorCode|The root error that caused the current error. If no root error exists, this field is null|3.4.0|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource, uniquely identifying the resource|3.4.0|
+|resourceUuid|String|The resource UUID associated with the configuration|3.4.0|
+|resourceType|String|The resource type associated with the configuration|3.4.0|
+|name|String|Configuration name|3.4.0|
+|description|String|The detailed description of the configuration|3.4.0|
+|category|String|Configuration category|3.4.0|
+|value|String|The configuration value|3.4.0|
+|createDate|Timestamp|Creation time|3.4.0|
+|lastOpDate|Timestamp|Last modification time|3.4.0|
+
+## SDK Examples
+Java SDK
+
+```
+QueryResourceConfigAction action = new QueryResourceConfigAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryResourceConfigAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryResourceConfigAction action = QueryResourceConfigAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryResourceConfigAction.Result res = action.call()
+```
+
+</APIPage>

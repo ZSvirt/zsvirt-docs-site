@@ -1,0 +1,767 @@
+---
+title: "修改安全组规则"
+---
+
+<APIPage method="PUT" path="/v1/security-groups/rules/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "changeSecurityGroupRule": {
+    "description": "test",
+    "remoteSecurityGroupUuid": "bd2dcc93fbd73999bf920aeaab3c9e4e",
+    "action": "DROP",
+    "state": "Enabled",
+    "priority": 1,
+    "protocol": "TCP",
+    "srcIpRange": "1.1.1.1,2.2.2.0/24,3.3.3.1-3.3.3.10",
+    "dstPortRange": "1001,2000-2023,6001"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" 
+-H "Authorization: OAuth YOUR_SESSION_UUID" 
+-X PUT -d '{"changeSecurityGroupRule":{"description":"test","remoteSecurityGroupUuid":"bd2dcc93fbd73999bf920aeaab3c9e4e","action":"DROP","state":"Enabled","priority":1,"protocol":"TCP","srcIpRange":"1.1.1.1,2.2.2.0/24,3.3.3.1-3.3.3.10","dstPortRange":"1001,2000-2023,6001"}}'
+http://localhost:8080/zstack/v1/security-groups/85a1d77188d836eab47b34e7129fb5fb/actions
+```
+
+参数列表
+
+<table id="table_fyf_nq5_m1b"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+安全组规则的UUID，唯一标示该资源
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+description\(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**changeSecurityGroupState**结构中\)
+
+</td><td>
+
+规则的描述
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+remoteSecurityGroupUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**changeSecurityGroupState**结构中\)
+
+</td><td>
+
+应用组间策略的远端安全组UUID
+
+</td><td>
+
+enabledisable
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+action \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**changeSecurityGroupState**结构中\)
+
+</td><td>
+
+规则的默认动作
+
+</td><td>
+
+-   DROP
+-   ACCEPT
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+state \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**changeSecurityGroupState**结构中\)
+
+</td><td>
+
+规则的状态
+
+</td><td>
+
+-   Enabled
+-   Disabled
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+priority \(可选\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+body\(包含在**changeSecurityGroupState**结构中\)
+
+</td><td>
+
+规则的优先级
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+protocol \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**changeSecurityGroupState**结构中\)
+
+</td><td>
+
+规则的协议类型
+
+</td><td>
+
+-   ALL
+-   TCP
+-   UDP
+-   ICMP
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+srcIpRange \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**changeSecurityGroupState**结构中\)
+
+</td><td>
+
+规则的源方向IP范围
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+dstIpRange \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**changeSecurityGroupState**结构中\)
+
+</td><td>
+
+规则的目的方向IP范围
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+dstPortRange \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**changeSecurityGroupState**结构中\)
+
+</td><td>
+
+规则的目的方向端口范围
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr></tbody>
+</table>
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "68e4f4b48b51369c8c2ada5cb6c2c3c3",
+    "securityGroupUuid": "c80ad90499213d3b9989afdbfe498390",
+    "type": "ingress",
+    "protocol": "tcp",
+    "state": "enable",
+    "srcIpRange": "10.10.10.1-10.10.10.10",
+    "dstPortRange": "2001-2023",
+    "action": "RETURN",
+    "createDate": "Sep 15, 2023 9:57:59 AM",
+    "lastOpDate": "Sep 15, 2023 9:57:59 AM"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.7.21|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_ec3_mr5_m1b)|4.7.21|
+|inventory|SecurityGroupInventory|详情参考[inventory](#p_bkq_mr5_m1b)|4.7.21|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.7.21|
+|description|String|错误的概要描述|4.7.21|
+|details|String|错误的详细信息|4.7.21|
+|elaboration|String|保留字段，默认为null|4.7.21|
+|opaque|LinkedHashMap|保留字段，默认为null|4.7.21|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.7.21|
+
+### inventory
+<table id="table_hv3_sv5_m1b"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+描述
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+资源的UUID，唯一标示该资源
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+securityGroupUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+安全组UUID
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+type
+
+</td><td>
+
+String
+
+</td><td>
+
+流量类型
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+ipVersion
+
+</td><td>
+
+Integer
+
+</td><td>
+
+ip协议号
+
+</td><td>
+
+3.1.0
+
+</td></tr><tr><td>
+
+protocol
+
+</td><td>
+
+String
+
+</td><td>
+
+流量协议类型
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+state
+
+</td><td>
+
+String
+
+</td><td>
+
+规则的可用状态
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+priority
+
+</td><td>
+
+Integer
+
+</td><td>
+
+规则优先级
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+description
+
+</td><td>
+
+String
+
+</td><td>
+
+规则描述
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+srcIpRange
+
+</td><td>
+
+String
+
+</td><td>
+
+源IP范围
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+dstIpRange
+
+</td><td>
+
+String
+
+</td><td>
+
+目的IP范围
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+srcPortRange
+
+</td><td>
+
+String
+
+</td><td>
+
+源端口范围，当前版本未实现
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+dstPortRange
+
+</td><td>
+
+String
+
+</td><td>
+
+目的端口范围
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+action
+
+</td><td>
+
+String
+
+</td><td>
+
+规则的默认动作
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+remoteSecurityGroupUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+allowedCidr
+
+</td><td>
+
+String
+
+</td><td>
+
+允许的CIDR，根据流量类型的不同, 允许的CIDR有不同的含义-   如果流量类型是Ingress，允许的CIDR是允许访问虚拟机网卡的源CIDR
+-   如果流量类型是Egress，允许的CIDR是允许从虚拟机网卡离开并到达的目的地CIDR
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+startPort
+
+</td><td>
+
+Integer
+
+</td><td>
+
+-   如果协议是TCP/UDP，它是端口范围（port range）的起始端口号
+-   如果协议是ICMP，它是ICMP类型（type）
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+endPort
+
+</td><td>
+
+Integer
+
+</td><td>
+
+-   如果协议是TCP/UDP, 它是端口范围（port range）的起始端口号
+-   如果协议是ICMP, 它是ICMP类型（type）
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+createDate
+
+</td><td>
+
+Timestamp
+
+</td><td>
+
+创建时间
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+lastOpDate
+
+</td><td>
+
+Timestamp
+
+</td><td>
+
+最后一次修改时间
+
+</td><td>
+
+4.7.21
+
+</td></tr></tbody>
+</table>
+
+## SDK示例
+Java SDK
+
+```
+ChangeSecurityGroupRuleAction action = new ChangeSecurityGroupRuleAction();
+action.uuid = "33869c6c323d30599da314fe1e46b01c";
+action.description = "test";
+action.remoteSecurityGroupUuid = "bd2dcc93fbd73999bf920aeaab3c9e4e";
+action.action = "DROP";
+action.state = "Enabled";
+action.priority = 1;
+action.protocol = "TCP";
+action.srcIpRange = "1.1.1.1,2.2.2.0/24,3.3.3.1-3.3.3.10";
+action.dstPortRange = "1001,2000-2023,6001";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ChangeSecurityGroupRuleAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+ChangeSecurityGroupRuleAction action = ChangeSecurityGroupRuleAction()
+action.uuid = "33869c6c323d30599da314fe1e46b01c"
+action.description = "test"
+action.remoteSecurityGroupUuid = "bd2dcc93fbd73999bf920aeaab3c9e4e"
+action.action = "DROP"
+action.state = "Enabled"
+action.priority = 1
+action.protocol = "TCP"
+action.srcIpRange = "1.1.1.1,2.2.2.0/24,3.3.3.1-3.3.3.10"
+action.dstPortRange = "1001,2000-2023,6001"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ChangeSecurityGroupRuleAction.Result res = action.call()
+
+```
+
+</APIPage>

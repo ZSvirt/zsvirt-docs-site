@@ -1,0 +1,116 @@
+---
+title: "Query PXE Server"
+---
+
+<APIPage method="GET" path="/v1/baremetal/pxeservers" altPaths={["/v1/baremetal/pxeservers/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/baremetal/pxeservers?q=uuid=b56be5d49df637308e7db1ae725a311e
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/baremetal/pxeservers/fdefdaf042463cfb8939563c5f910c8f
+```
+
+Queryable Fields
+
+Run the CLI command tool, enter `QueryBaremetalPxeServer` and press Tab to view all queryable fields and resource names that can be queried across tables.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "90afdd2b218b376592a25421e396597e",
+      "name": "test",
+      "hostname": "127.0.0.1",
+      "sshUsername": "root",
+      "sshPassword": "password",
+      "sshPort": 22,
+      "storagePath": "/zstack_bm_cache",
+      "dhcpInterface": "eth0",
+      "dhcpRangeBegin": "10.0.0.1",
+      "dhcpRangeEnd": "10.0.0.255",
+      "dhcpRangeNetmask": "255.255.255.0",
+      "state": "Enabled",
+      "status": "Connected"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation is successful, this field is null. For details, see [error](#p_wk2_hyy_3gc)|2.6.0|
+|inventories|List|For details, see [inventories](#p_oxq_lp2_jgc)|2.6.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, default is null|0.6|
+|opaque|LinkedHashMap|Reserved field, default is null|0.6|
+|cause|ErrorCode|Root cause: the source error that triggered the current error. If there is no original error, this field is null|0.6|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifying the resource|3.1.1|
+|zoneUuid|String|Data Center UUID|3.1.1|
+|name|String|Resource name|3.1.1|
+|description|String|Detailed description of the resource|3.1.1|
+|hostname|String|Deployment server address|3.1.1|
+|sshUsername|String|Deployment server SSH account|3.1.1|
+|sshPassword|String|Deployment server SSH password|3.1.1|
+|sshPort|Integer|Deployment server SSH port|3.1.1|
+|storagePath|String|Deployment server storage path|3.1.1|
+|dhcpInterface|String|DHCP request listening NIC|3.1.1|
+|dhcpInterfaceAddress|String|DHCP request listening NIC IP address|3.1.1|
+|dhcpRangeBegin|String|DHCP address range start|3.1.1|
+|dhcpRangeEnd|String|DHCP address range end|3.1.1|
+|dhcpRangeNetmask|String|DHCP subnet mask|3.1.1|
+|state|String|Deployment server running state|3.1.1|
+|status|String|Deployment server connection status|3.1.1|
+|createDate|Timestamp|Create time|3.1.1|
+|lastOpDate|Timestamp|Last modification time|3.1.1|
+|totalCapacity|Long|Storage path total capacity|3.1.1|
+|availableCapacity|Long|Storage path available capacity|3.1.1|
+|attachedClusterUuids|List|Deployment server attached cluster UUID list|3.1.1|
+
+## SDK Examples
+Java SDK
+
+```
+QueryBaremetalPxeServerAction action = new QueryBaremetalPxeServerAction();
+action.conditions = asList("uuid=543c0df623633fe0a0158e955b1a5702");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryBaremetalPxeServerAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = QueryBaremetalPxeServerAction()
+action.conditions = ["uuid=a065f4830c9f301ead495e941ce7bd4e"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

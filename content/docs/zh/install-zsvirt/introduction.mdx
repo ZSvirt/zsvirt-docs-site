@@ -1,0 +1,67 @@
+---
+title: "简介"
+---
+
+## 关于本文档
+本文档介绍了如何安装 ZSvirt 管理节点，以及如何设置管理节点 HA。
+
+如[Figure 1](#fig_jz4_cg3_hhc)所示：
+
+![安装流程](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0002_1.png)
+
+## 目标读者
+本文档的目标读者是希望安装 ZSvirt 并具有丰富经验的管理员。
+
+## 安装模式
+ZSvirt 提供三种安装模式。不同安装模式的安装内容、适用场景各不相同。
+
+<table><thead><tr><th>
+
+安装模式
+
+</th><th>
+
+安装内容
+
+</th><th>
+
+适用场景
+
+</th></tr></thead><tbody><tr><td>
+
+管理节点模式
+
+</td><td>
+
+-   基础操作系统
+-   `MariaDB`、`CloudBus`消息总线等依赖包
+
+</td><td>
+
+适用于安装为虚拟化平台的管理节点。
+
+</td></tr><tr><td>
+
+计算节点模式
+
+</td><td>
+
+-   基础操作系统
+-   `libvirt`、`QEMU`等虚拟化组件
+
+</td><td rowSpan="2">
+
+适用于安装为除管理节点外的其他节点，例如：-   计算节点
+-   单机镜像存储、分布式镜像存储、分布式镜像存储监控节点
+-   分布式存储节点、分布式存储监控节点
+
+</td></tr><tr><td>
+
+专家模式
+
+</td><td>
+
+基础操作系统
+
+</td></tr></tbody>
+</table>

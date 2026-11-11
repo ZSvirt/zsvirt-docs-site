@@ -1,0 +1,10 @@
+{
+  "title": "管理迁移服务",
+  "pages": [
+    "index",
+    "upgrade",
+    "enable-disable",
+    "delete"
+  ],
+  "pagesIndex": "index"
+}

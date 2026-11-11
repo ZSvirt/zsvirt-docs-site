@@ -1,0 +1,67 @@
+---
+title: "Delete IP Address"
+---
+
+<APIPage method="DELETE" path="/v1/l3-networks/{l3NetworkUuid}/ip-address">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Sample
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/l3-networks/b6e5c225bf553bc8bd5a5fcf3fac9fa3/ip-address?usedIpUuids=ff010728f1f63b86be83482e1c436700&deleteMode=Permissive
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|l3NetworkUuid|String|url|The L3 Network UUID.| |4.10.16|
+|usedIpUuids|List|query|The UUID of the IP address to be deleted.| |4.10.16|
+|deleteMode \(Optional\)|String|query|The delete mode \(Permissive / Enforcing, Permissive\).| |4.10.16|
+|systemTags \(Optional\)|List|query|The system tags.| |4.10.16|
+|userTags \(Optional\)|List|query|The user tags.| |4.10.16|
+
+## API Response
+On success, the API returns an empty JSON structure `{}`. On failure, the API returns a JSON structure with an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Sample
+Java SDK
+
+```
+DeleteIpAddressAction action = new DeleteIpAddressAction();
+action.l3NetworkUuid = "b6e5c225bf553bc8bd5a5fcf3fac9fa3";
+action.usedIpUuids = asList("ff010728f1f63b86be83482e1c436700");
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteIpAddressAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = DeleteIpAddressAction()
+action.l3NetworkUuid = "b6e5c225bf553bc8bd5a5fcf3fac9fa3"
+action.usedIpUuids = [ff010728f1f63b86be83482e1c436700]
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

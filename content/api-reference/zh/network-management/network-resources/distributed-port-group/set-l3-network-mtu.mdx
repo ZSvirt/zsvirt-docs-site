@@ -1,0 +1,81 @@
+---
+title: "设置分布式端口组MTU值"
+---
+
+<APIPage method="POST" path="/v1/l3-networks/{l3NetworkUuid}/mtu">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "mtu": 9216.0
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"mtu":9216.0}}' \
+http://localhost:8080/zstack/v1/l3-networks/817672c1bb903264a9a41c34332c3145/mtu
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|l3NetworkUuid|String|url|分布式端口组UUID| |2.1|
+|mtu|Integer|body\(包含在**params**结构中\)| | |2.1|
+|systemTags \(可选\)|List|body| | |2.1|
+|userTags \(可选\)|List|body| | |2.1|
+
+## API返回
+该API成功时返回一个空的JSON结构**`{}`**，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+SetL3NetworkMtuAction action = new SetL3NetworkMtuAction();
+action.l3NetworkUuid = "b19ce058b0f54c6d83c14078c0079c2c";
+action.mtu = 9216.0;
+action.sessionId = "b441c616886c4183a51ba044e35c7d66";
+SetL3NetworkMtuAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SetL3NetworkMtuAction action = SetL3NetworkMtuAction()
+action.l3NetworkUuid = "67dc01887dfc4142aabe4221675c1b98"
+action.mtu = 9216.0
+action.sessionId = "d5188e0801994e3a9dfb3d3ebc2f7a39"
+SetL3NetworkMtuAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,23 @@
+{
+  "title": "虚拟机",
+  "defaultOpen": true,
+  "pages": [
+    "index",
+    "basic-operations",
+    "group-management",
+    "power-management",
+    "vmtools",
+    "troubleshooting",
+    "time-sync",
+    "user-data",
+    "templates",
+    "specifications",
+    "migration",
+    "performance",
+    "snapshots",
+    "scheduling",
+    "high-availability",
+    "security"
+  ],
+  "pagesIndex": "index"
+}

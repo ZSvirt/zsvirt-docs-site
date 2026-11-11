@@ -1,0 +1,9 @@
+{
+  "title": "Deploy Migration Service",
+  "pages": [
+    "index",
+    "upload-package",
+    "install-service"
+  ],
+  "pagesIndex": "index"
+}

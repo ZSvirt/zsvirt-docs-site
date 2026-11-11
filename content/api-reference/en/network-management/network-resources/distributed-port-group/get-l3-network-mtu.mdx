@@ -1,0 +1,84 @@
+---
+title: "Get L3 Network MTU Value"
+---
+
+<APIPage method="GET" path="/v1/l3-networks/{l3NetworkUuid}/mtu">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Sample
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/l3-networks/be54f79eb90f4f929da7fe64e1aea8e4/mtu
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|l3NetworkUuid|String|url|The L3 Network UUID.| |2.1|
+|systemTags \(Optional\)|List|query| | |2.1|
+|userTags \(Optional\)|List|query| | |2.1|
+
+## API Response
+Sample Response
+
+```
+{
+  "mtu": 9216.0
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|mtu|Integer| |2.1|
+|success|boolean| |2.1|
+|error|ErrorCode|The error code. If not null, the operation fails, or vice versa. For more information, see [error](#p_h22_ysg_vbb)|2.1|
+|error|ErrorCode|For more information, see [error](#p_vjj_ysg_vbb)|2.1|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code, which is a numbered or alphanumeric code that specifies an error. For example, SYS.1000, HOST.1001|2.1|
+|description|String|The brief description of the error.|2.1|
+|details|String|The details about the error.|2.1|
+|elaboration|String|The reserved field. Default value: null|2.1|
+|opaque|LinkedHashMap|The reserved field. Default value: null|2.1|
+|cause|ErrorCode|The root error, which is the associated root cause of the current error. If no root error exists, this parameter is null|2.1|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code, which is a numbered or alphanumeric code that specifies an error. For example, SYS.1000, HOST.1001|2.1|
+|description|String|The brief description of the error.|2.1|
+|details|String|The details about the error.|2.1|
+|elaboration|String|The reserved field. Default value: null|2.1|
+|opaque|LinkedHashMap|The reserved field. Default value: null|2.1|
+|cause|ErrorCode|The root error, which is the associated root cause of the current error. If no root error exists, this parameter is null|2.1|
+
+## SDK Sample
+Java SDK
+
+```
+GetL3NetworkMtuAction action = new GetL3NetworkMtuAction();
+action.l3NetworkUuid = "fd8d572d777d4383b201ddfce629d50e";
+action.sessionId = "0cc5202de3ce4881a305e5fa1d431aaa";
+GetL3NetworkMtuAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetL3NetworkMtuAction action = GetL3NetworkMtuAction()
+action.l3NetworkUuid = "7615cfd154a048dcab07a1114ee6205d"
+action.sessionId = "d0f3cf05a49345438a92108d2fd86cfe"
+GetL3NetworkMtuAction.Result res = action.call()
+```
+
+</APIPage>

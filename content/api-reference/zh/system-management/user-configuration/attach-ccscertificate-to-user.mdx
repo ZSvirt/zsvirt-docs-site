@@ -1,0 +1,279 @@
+---
+title: "为账户绑定 CCS 证书"
+---
+
+## API 请求
+URLs
+
+```
+POST zstack/v1/crypto/ccs-certificate/attach-account/{accountUuid}
+```
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "certificateUuid": "37efdf76b03a3028926549ea5f1253f3",
+    "state": "enable"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X POST -d '{"params":{"certificateUuid":"37efdf76b03a3028926549ea5f1253f3","state":"enable"}}' \
+http://localhost:8080/zstack/v1/crypto/ccs-certificate/attach-account/e0deabb1107f32e7b715d6b5e7f39334
+```
+
+参数列表
+
+<table id="table_t2k_jky_2dc"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+certificateUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+CCS 证书的 UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+accountUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+账户 UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+state \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`params`结构中\)vv
+
+</td><td>
+
+启用或禁用，在用户绑定 CCS 证书的同时是否启用通过 UKey 认证登录，enable 表示启用，则后续该用户登录时必须要通过 UKey 认证；disable 表示暂时不启用，但可以通过 UpdateCCSCertificateUserState 开启
+
+</td><td>
+
+-   enable
+-   disable
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+system Tags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.0
+
+</td></tr></tbody>
+</table>
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "271c21f7ef8c4385b09846341cc9deac",
+    "algorithm": "SM2",
+    "format": "CER",
+    "issuerDN": "C=cn,O=infosec,OU=system,CN=ca62_sm2",
+    "subjectDN": "C=CN,O=ZStack,OU=ZStack,CN=ZStackTest2",
+    "serNumber": "13055887750776402041",
+    "effectiveTime": "Oct 15, 2021 10:50:09 AM",
+    "expirationTime": "Oct 15, 2024 10:50:09 AM"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean|绑定操作是否成功|4.10.0|
+|inventory|CCSCertificateInventory|详情参考[inventory](#p_i5x_rvl_q2c)|4.10.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_skp_32r_ndb)|4.10.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.3.12|
+|algorithm|String|证书类型|4.3.12|
+|format|String|证书格式，国密是 CER，还有 CRT、DER、JKS 等|4.3.12|
+|issuerDN|String|签发人 DN， 又叫 issuer-DN-distinguished name 比如 CN=sm2,O=test,C=cn|4.3.12|
+|subjectDN|String|主题 DN|4.3.12|
+|serNumber|Long|证书序列号，加上 subjectDN 一起作为双键是全网唯一|4.3.12|
+|effectiveTime|Timestamp|开始生效的日期|4.3.12|
+|expirationTime|Timestamp|过期日期|4.3.12|
+|createDate|Timestamp|创建时间|4.3.12|
+|lastOpDate|Timestamp|最后一次修改时间|4.3.12|
+|userCertificateRefs|List|详情参考[userCertificateRefs](#p_kpc_svl_q2c)|4.3.12|
+
+### userCertificateRefs
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|userUuid|String|用户UUID|4.3.12|
+|certificateUuid|String|CCS 证书 UUID|4.3.12|
+|createDate|Timestamp|创建时间|4.3.12|
+|lastOpDate|Timestamp|最后一次修改时间|4.3.12|
+|state|CCSCertificateUserState|详情参考[state](#p_oj3_svl_q2c)|4.3.12|
+
+### state
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Enabled|CCSCertificateUserState|需要验证|4.3.12|
+|Disabled|CCSCertificateUserState|不需要验证|4.3.12|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+AttachCCSCertificateToAccountAction action = new AttachCCSCertificateToAccountAction();
+action.certificateUuid = "37efdf76b03a3028926549ea5f1253f3";
+action.accountUuid = "e0deabb1107f32e7b715d6b5e7f39334";
+action.state = "enable";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AttachCCSCertificateToAccountAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AttachCCSCertificateToAccountAction action = AttachCCSCertificateToAccountAction()
+action.certificateUuid = "37efdf76b03a3028926549ea5f1253f3"
+action.accountUuid = "e0deabb1107f32e7b715d6b5e7f39334"
+action.state = "enable"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AttachCCSCertificateToAccountAction.Result res = action.call()
+```

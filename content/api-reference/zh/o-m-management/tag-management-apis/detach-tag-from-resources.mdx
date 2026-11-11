@@ -1,0 +1,64 @@
+---
+title: "卸载资源标签"
+---
+
+<APIPage method="DELETE" path="/v1/tags/{tagUuid}/resources?resourceUuids={resourceUuids}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/tags/a8d23deaee2f4e7f96d11f066a180b92/resources?resourceUuids=44f7b0ec930f458c9f4e7705ad7a0cb9
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|tagUuid|String|url|标签UUID| |3.2.0|
+|resourceUuids|List|url|资源UUID| |3.2.0|
+|systemTags \(可选\)|List|body| | |3.2.0|
+|userTags \(可选\)|List|body| | |3.2.0|
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+DetachTagFromResourcesAction action = new DetachTagFromResourcesAction();
+action.tagUuid = "09f0323668dc47fdac599724f1e6eb26";
+action.resourceUuids = asList("170664525bde452db0923d200ac8e57b");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DetachTagFromResourcesAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DetachTagFromResourcesAction action = DetachTagFromResourcesAction()
+action.tagUuid = "ff438628636242909e58eed72696aae8"
+action.resourceUuids = [7719cc49d1574d479316d43f77183899]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DetachTagFromResourcesAction.Result res = action.call()
+```
+
+</APIPage>

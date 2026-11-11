@@ -1,0 +1,67 @@
+---
+title: 'zsphere_host'
+description: '管理 ZSvirt 物理主机。主机是运行虚拟机的计算节点，需归属于某个集群。'
+---
+
+<HistoricalNamingNote locale="zh" />
+
+
+# zsphere_host（资源）
+
+管理 ZSvirt 物理主机。主机是运行虚拟机的计算节点，需归属于某个集群。
+
+## 示例用法
+```terraform
+resource "zsphere_host" "host" {
+  name          = "host_from_terraform"
+  description   = "Add an example host from terraform"
+  management_ip = "192.168.1.100"
+  cluster_uuid  = "uuid of the cluster"
+  username      = "root"
+  password      = "password"
+  ssh_port      = 22
+  iommu         = false
+  ept           = true
+}
+
+output "zsphere_host" {
+  value = zsphere_host.host
+}
+
+output "host_uuid" {
+  value       = zsphere_host.host.uuid
+  description = "The UUID of the host"
+}
+
+output "host_status" {
+  value       = zsphere_host.host.status
+  description = "The status of the host"
+}
+```
+
+## 参数说明
+
+### 必填参数
+
+- `cluster_uuid`（字符串）物理主机所属集群 UUID。
+- `management_ip`（字符串）The management IP address of the host.
+- `name`（字符串）The name of the host. 必填项。
+- `password`（字符串，敏感）The password for SSH authentication to the host.
+- `username`（字符串，敏感）The username for SSH authentication to the host.
+
+### 可选参数
+
+- `description`（字符串）A description of the host, providing additional context or details.
+- `ept`（布尔值）Enable Intel EPT hardware-assisted virtualization. Default is true. Note: Only applicable for Intel CPUs.
+- `iommu`（布尔值）Enable scanning host IOMMU settings. This is required for GPU passthrough, vGPU virtualization, and SR-IOV features. Default is false.
+- `ssh_port`（数字）连接物理主机的 SSH 端口，默认 22。
+
+### 只读属性
+
+- `architecture`（字符串）物理主机 CPU 架构。 可选值： x86_64, aarch64, mips64el, loongarch64.
+- `hypervisor_type`（字符串）The hypervisor type of the host. 可选值： KVM, Simulator, baremetal, baremetal2, xdragon.
+- `state`（字符串）The state of the host, 如 'Enabled' or 'Disabled'.
+- `status`（字符串）The operational status of the host, 如 'Connected' or 'Disconnected'.
+- `type`（字符串）The type of the host. Same as hypervisor_type.
+- `uuid`（字符串）唯一标识符，由 ZSvirt 管理。 host. 由 ZSvirt 自动生成。
+- `zone_uuid`（字符串）物理主机所属区域 UUID。

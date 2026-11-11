@@ -1,0 +1,22 @@
+---
+title: "Windows 2016 virtual machine can ping an internet address but cannot access it through a browser"
+---
+
+## Symptom
+A Windows 2016 virtual machine can ping an internet address but cannot access it through a browser.
+
+## Cause
+Virtual machines running Windows 2008 or later have a maximum of 16,384 ephemeral TCP ports. When traffic is heavy and too many TCP connections are established, the available ephemeral TCP ports are exhausted, making it impossible to allocate new ports. In this state, the virtual machine cannot establish TCP connections to the internet.
+
+## Solution
+1.  Check the virtual machine event log for TCP port allocation failure warnings.
+
+2.  Press Windows+R, enter `CMD`, and press Enter. In the Command Prompt window, run the following command to adjust the number of available ephemeral TCP ports for the Windows 2016 virtual machine. The browser can then access the internet normally.
+
+    ```
+    netsh int ipv4 set dynamicport tcp start=30000 num=35535
+    ```
+
+    <Callout type="info">
+    In this example, the starting port number is 30000 and the number of available ephemeral ports is 35535.
+    </Callout>

@@ -1,0 +1,84 @@
+---
+title: "Completely Delete Image"
+---
+
+<APIPage method="PUT" path="/v1/images/{imageUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "expungeImage": {
+    "backupStorageUuids": [
+      "ef3843bdde80427e9c8c0d4f05aa5cde"
+    ]
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"expungeImage":{"backupStorageUuids":["3be136c8d8b8323bb94b8464aae4b0a7"]}}' \
+http://localhost:8080/zstack/v1/images/4dcddfadcd113b5f89f181c4f4a080c7/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|body \(contained in **params** structure\)|Resource UUID, uniquely identifies the resource| |0.6|
+|imageUuid|String|url|Image UUID| |0.6|
+|backupStorageUuids \(Optional\)|List|body \(contained in **params** structure\)|List of image storage UUIDs| |0.6|
+|systemTags \(Optional\)|List|body|System tags| |0.6|
+|userTags \(Optional\)|List|body|User tags| |0.6|
+
+## API Response
+This API returns an empty JSON structure **`{}`** on success. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+ExpungeImageAction action = new ExpungeImageAction();
+action.imageUuid = "ddb63556ae714ee78bf468d5067beedd";
+action.backupStorageUuids = asList("6f21a1307fb24117a25ed907c00a3e47");
+action.sessionId = "b12c879167d3459a844b6ac1f8ff3b74";
+ExpungeImageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ExpungeImageAction action = ExpungeImageAction()
+action.imageUuid = "59fcc3775336469facfd93c5c16bdb2d"
+action.backupStorageUuids = [2dfcf2dfadb14022ac09172a82fb3aac]
+action.sessionId = "11fe68c420514cb0a8d8e1d1c5755d11"
+ExpungeImageAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,81 @@
+---
+title: "查询网络服务与分布式端口组引用"
+---
+
+<APIPage method="GET" path="/v1/l3-networks/network-services/refs">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/l3-networks/network-services/refs
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryNetworkServiceL3NetworkRef`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "l3NetworkUuid": "fc5bd613a8fd45ed9b96ff5d99ae6717",
+      "networkServiceProviderUuid": "f79573afadc44f4fb83aaf67eeb98cde",
+      "networkServiceType": "PortForwarding"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_ov4_5yg_m1b)|0.6|
+|inventories|List|详情参考[inventories](#p_t41_wyg_m1b)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|l3NetworkUuid|String|分布式端口组UUID|0.6|
+|networkServiceProviderUuid|String|网络服务提供模块UUID|0.6|
+|networkServiceType|String| |0.6|
+
+## SDK示例
+Java SDK
+
+```
+QueryNetworkServiceL3NetworkRefAction action = new QueryNetworkServiceL3NetworkRefAction();
+action.conditions = asList();
+action.sessionId = "01368722cb7e4c7eac03e7040f8b73e1";
+QueryNetworkServiceL3NetworkRefAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryNetworkServiceL3NetworkRefAction action = QueryNetworkServiceL3NetworkRefAction()
+action.conditions = []
+action.sessionId = "237996a7dddf4cf3a42f6ea15893bc76"
+QueryNetworkServiceL3NetworkRefAction.Result res = action.call()
+```
+
+</APIPage>

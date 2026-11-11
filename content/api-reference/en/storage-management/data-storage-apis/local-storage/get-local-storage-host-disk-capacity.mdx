@@ -1,0 +1,95 @@
+---
+title: "Get Host Local Storage Capacity"
+---
+
+## **API Request**
+URLs
+
+```
+GET zstack/v1/primary-storage/local-storage/{primaryStorageUuid}/capacities
+```
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Examples
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/primary-storage/local-storage/b839f809d5954d47aecf0b0d56fb98fa/capacities?hostUuid=b3a59363895143cf847518a0badd3ea3
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|hostUuid \(optional\)|String|query|Host UUID| |0.6|
+|primaryStorageUuid|String|url|Data Storage UUID| |0.6|
+|systemTags \(optional\)|List|query|System tags| |0.6|
+|userTags \(optional\)|List|query|User tags| |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "hostUuid": "02b36a53204d496290c4f2f8b31a7575",
+      "totalCapacity": 1073741824.0,
+      "availableCapacity": 973078528.0,
+      "totalPhysicalCapacity": 1073741824.0,
+      "availablePhysicalCapacity": 973078528.0
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, indicates the operation failed. This field is null when the operation succeeds. For details, see [error](#p_bmj_xr1_n1b)|0.6|
+|inventories|List|For details, see [inventories](#p_k52_xr1_n1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier for the error, such as SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause. The source error that triggered the current error. If there is no original error, this field is null|0.6|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|hostUuid|String|Host UUID|0.6|
+|totalCapacity|long| |0.6|
+|availableCapacity|long| |0.6|
+|totalPhysicalCapacity|long| |0.6|
+|availablePhysicalCapacity|long| |0.6|
+
+## SDK Examples
+Java SDK
+
+```
+GetLocalStorageHostDiskCapacityAction action = new GetLocalStorageHostDiskCapacityAction();
+action.hostUuid = "e63ea47c5aa14106a6abd89ddc8f43de";
+action.primaryStorageUuid = "a193ec73e0824726bc30fa88f7f906cc";
+action.sessionId = "0d48347e758c4089a85b586f6d2c0953";
+GetLocalStorageHostDiskCapacityAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetLocalStorageHostDiskCapacityAction action = GetLocalStorageHostDiskCapacityAction()
+action.hostUuid = "fbaace8b570a4be6998dc376b95dcdf1"
+action.primaryStorageUuid = "71d63b28517243538d83c326bc21423a"
+action.sessionId = "cc34ee291d8a4d7bad091c4a66d97094"
+GetLocalStorageHostDiskCapacityAction.Result res = action.call()
+```

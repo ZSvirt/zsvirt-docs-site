@@ -1,0 +1,16 @@
+---
+title: "使用共享存储且CPU模式为host-passthrough的虚拟机，在相同集群内热迁移失败，如何解决？"
+---
+
+## 现象
+迁移时出现如下报错信息：
+
+```
+Assertion `ret == cpu >kvm_msr_buf->nmsrs`failed
+```
+
+## 原因
+对端主机的CPU型号和当前服务器CPU型号不同。
+
+## 解决方案
+-   迁移至使用相同CPU的主机，或者关闭虚拟机进行迁移。

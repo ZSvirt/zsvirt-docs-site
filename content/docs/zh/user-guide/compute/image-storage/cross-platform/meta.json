@@ -1,0 +1,9 @@
+{
+  "title": "镜像跨平台使用篇",
+  "pages": [
+    "index",
+    "export-image",
+    "export-ova-template"
+  ],
+  "pagesIndex": "index"
+}

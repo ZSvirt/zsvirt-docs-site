@@ -1,0 +1,135 @@
+---
+title: "对指定密钥重新加密"
+---
+
+<APIPage method="PUT" path="/v1/key-providers/{providerUuid}/rekey">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "rekeyKeyProviderRefs": {
+    "refIds": [
+      1,
+      2
+    ],
+    "rekeyAll": false
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"rekeyKeyProviderRefs":{"refIds":[1,2],"rekeyAll":false}}' \
+http://localhost:8080/zstack/v1/key-providers/ff0340e5866e385b9a86e592dd7e1900/rekey
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|refIds \(可选\)|List|body\(包含在`rekeyKeyProviderRefs`结构中\)|需要重加密的密钥引用ID列表| |5.0.0|
+|resourceUuids \(可选\)|List|body\(包含在`rekeyKeyProviderRefs`结构中\)|关联资源UUID列表，与resourceType配对使用| |5.0.0|
+|resourceType \(可选\)|String|body\(包含在`rekeyKeyProviderRefs`结构中\)|关联资源类型，与resourceUuids配对使用| |5.0.0|
+|providerUuid|String|url|密钥提供程序UUID| |5.0.0|
+|rekeyAll \(可选\)|boolean|body\(包含在`rekeyKeyProviderRefs`结构中\)|是否执行全量重加密；为true时不能再指定refIds或resourceType/resourceUuids| |5.0.0|
+|systemTags \(可选\)|List|body|系统标签| |5.0.0|
+|userTags \(可选\)|List|body|用户标签| |5.0.0|
+
+## API返回
+返回示例
+
+```
+{
+  "totalCount": 3,
+  "successCount": 1,
+  "skippedCount": 1,
+  "failedCount": 1,
+  "providerResults": [
+    {
+      "providerUuid": "provider-uuid-1",
+      "providerName": "provider-1",
+      "totalRefCount": 3,
+      "successRefCount": 1,
+      "skippedRefCount": 1,
+      "failedRefCount": 1,
+      "skippedResources": [
+        {
+          "keyRefId": 11,
+          "resourceType": "TpmVO",
+          "resourceUuid": "ff00de2d3ab43127b1abdac68f1e7f00",
+          "reason": "encrypted resource key ref[id:11, resourceType:TpmVO, resourceUuid:ff00de2d3ab43127b1abdac68f1e7f00] has empty secret ref"
+        }
+      ],
+      "failedResources": [
+        {
+          "keyRefId": 12,
+          "resourceType": "TpmVO",
+          "resourceUuid": "ff00de2d3ab43127b1abdac68f1e7f00",
+          "reason": "key-tool rekey failed: failed to decrypt wrapper DEK with KEK"
+        }
+      ]
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |5.0.0|
+|totalCount|int|本次涉及的源密钥提供者数量（按 resource ref 关联的 provider 去重）|5.0.0|
+|successCount|int|未出现失败 ref 的 provider 数量（含仅有 skip 的 provider）|5.0.0|
+|skippedCount|int|存在被跳过 ref 的 provider 数量|5.0.0|
+|failedCount|int|存在失败 ref 的 provider 数量|5.0.0|
+|providerResults|List|按源密钥提供者聚合的结果；每个元素内含该 provider 下的 skippedResources、failedResources 及各类 ref 计数|5.0.0|
+|error|ErrorCode|详情参考[error](#p_t4f_pp2_2jc)|5.0.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+RekeyKeyProviderRefsAction action = new RekeyKeyProviderRefsAction();
+action.refIds = asList(1,2);
+action.providerUuid = "ff0340e5866e385b9a86e592dd7e1900";
+action.rekeyAll = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RekeyKeyProviderRefsAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = RekeyKeyProviderRefsAction()
+action.refIds = [1, 2]
+action.providerUuid = "ff0340e5866e385b9a86e592dd7e1900"
+action.rekeyAll = false
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

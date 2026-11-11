@@ -1,0 +1,167 @@
+---
+title: "Create PCI Device Offering"
+---
+
+<APIPage method="POST" path="/v1/pci-device/pci-device-offerings">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "test",
+    "vendorId": "10de",
+    "deviceId": "0e0f"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, the **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+## Curl Example
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"test","vendorId":"10de","deviceId":"0e0f"}}' \
+http://localhost:8080/zstack/v1/pci-device/pci-device-offerings
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|name \(Optional\)|String|body \(contained in the **params** structure\)|Resource name| |2.1|
+|description \(Optional\)|String|body \(contained in the **params** structure\)|Resource description| |2.1|
+|vendorId|String|body \(contained in the **params** structure\)|Vendor ID| |2.1|
+|deviceId|String|body \(contained in the **params** structure\)|Device ID| |2.1|
+|subvendorId \(Optional\)|String|body \(contained in the **params** structure\)|Sub-vendor ID| |2.1|
+|subdeviceId \(Optional\)|String|body \(contained in the **params** structure\)|Sub-device ID| |2.1|
+|ramSize \(Optional\)|String|body \(contained in the **params** structure\)|RAM capacity| |3.5.0|
+|resourceUuid \(Optional\)|String|body \(contained in the **params** structure\)| | |2.1|
+|systemTags \(Optional\)|List|body| | |2.1|
+|userTags \(Optional\)|List|body| | |2.1|
+|tagUuids \(Optional\)|List|body \(contained in the **params** structure\)|Tag UUID list| |3.4.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "type": "GPU_Video",
+    "vendorId": "10de",
+    "deviceId": "0e0f",
+    "subvendorId": "10de",
+    "subdeviceId": "118b"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_o2d_wfq_s1b)|2.1|
+|inventory|PciDeviceOfferingInventory|See [inventory](#p_yhz_tfq_s1b)|2.1|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code, a globally unique identifier of the error, e.g. SYS.1000, HOST.1001|2.1|
+|description|String|Brief description of the error|2.1|
+|details|String|Detailed error information|2.1|
+|elaboration|String|Reserved field, defaults to null|2.1|
+|opaque|LinkedHashMap|Reserved field, defaults to null|2.1|
+|cause|ErrorCode|Root cause, the source error that caused the current error, null if no original error|2.1|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifies the resource|2.1|
+|name|String|Resource name|2.1|
+|description|String|Resource description|2.1|
+|vendorId|String|Vendor ID|2.1|
+|deviceId|String|Device ID|2.1|
+|subvendorId|String|Sub-vendor ID|2.1|
+|subdeviceId|String|Sub-device ID|2.1|
+|ramSize|String|GPU memory capacity|3.5.0|
+|createDate|Timestamp|Create date|2.1|
+|lastOpDate|Timestamp|Last update date|2.1|
+|type|PciDeviceOfferingType|See [type](#p_t2q_sfq_s1b)|2.1|
+|attachedInstanceOfferings|List|See [attachedInstanceOfferings](#p_tzl_tfq_s1b)|2.1|
+|matchedPciDevices|List|See [matchedPciDevices](#p_srm_mfq_s1b)|2.1|
+
+### type
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|GPU\_Video|PciDeviceOfferingType|GPU video|2.1|
+|GPU\_Audio|PciDeviceOfferingType|GPU audio|2.1|
+|Generic|PciDeviceOfferingType|Generic device|2.1|
+
+### attachedInstanceOfferings
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|id|long| |2.1|
+|instanceOfferingUuid|String|Compute offering UUID|2.1|
+|pciDeviceOfferingUuid|String| |2.1|
+|pciDeviceCount|Integer| |2.1|
+|metadata|PciDeviceMetaData|See [metadata](#p_jh5_rfq_s1b)|2.1|
+
+### metadata
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|metaData|String| |2.1|
+|metaDataEntries|List|See [metaDataEntries](#p_jvg_qfq_s1b)|2.1|
+
+### metaDataEntries
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|key|String|Key|2.1|
+|value|String|Value|2.1|
+|op|PciDeviceMetaDataOperator|See [op](#p_nts_mfq_s1b)|2.1|
+
+### op
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Equal|PciDeviceMetaDataOperator|Equal|2.1|
+|Unequal|PciDeviceMetaDataOperator|Unequal|2.1|
+
+### matchedPciDevices
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|pciDeviceUuid|String| |2.1|
+|pciDeviceOfferingUuid|String| |2.1|
+
+## SDK Examples
+Java SDK
+
+```
+CreatePciDeviceOfferingAction action = new CreatePciDeviceOfferingAction();
+action.name = "test";
+action.vendorId = "10de";
+action.deviceId = "0e0f";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreatePciDeviceOfferingAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreatePciDeviceOfferingAction action = CreatePciDeviceOfferingAction()
+action.name = "test"
+action.vendorId = "10de"
+action.deviceId = "0e0f"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreatePciDeviceOfferingAction.Result res = action.call()
+```
+
+</APIPage>

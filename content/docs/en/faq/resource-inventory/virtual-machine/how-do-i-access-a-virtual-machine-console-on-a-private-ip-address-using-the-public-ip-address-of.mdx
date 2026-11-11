@@ -1,0 +1,15 @@
+---
+title: "How do I access a virtual machine console on a private IP address using the public IP address of the Management Node?"
+---
+
+## Solution
+-   Map port 4900 between the public IP address and the private IP address.
+
+    For a dual-Management Node environment with only one public IP address, the port mappings are as follows:
+
+    -   Virtual IP port 5000 — custom public port \(mapping not required\) — UI
+    -   Management Node 1 port 4900 — public port 4900 \(mapping required\) — Console
+    -   Management Node 2 port 4901 \(requires file modification\) — public port 4901 \(mapping required\) — Console
+-   Change the Console Proxy address to the public IP address on the virtualization platform.
+
+    For a dual-Management Node environment with three or more public IP addresses, each port must have a one-to-one mapping.

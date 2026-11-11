@@ -1,0 +1,25 @@
+---
+title: 'Access a VM by using SSH'
+---
+
+You can access a virtual machine by using the SSH connection protocol.
+
+-   You have network connection and root access privileges to the target VM.
+-   (Optional) Set SSH Key for password-free login and change VM password as needed. For more information, see [Manage Login Authentication Settings](/en/docs/user-guide/compute/vm/basic-operations/access-options).
+
+1.  Log in to the virtual machine directly using a remote login software on your local computer.
+
+    ```
+    # ssh root@192.0.2.1
+    root@192.0.2.1's password:
+    Last login: Mon Sep 24 12:05:36 2021
+    root~#
+    ```
+
+2.  To log in using an SSH private key, first add the SSH public key to the target virtual machine, then run the following command:
+
+    ```
+    # ssh -i ${private_key.pem} ${UserName}@${IpAddress}
+    ```
+
+    `${private_key.pem}` is the path to your private key file, `${UserName}` is your login username, and `${IpAddress}` is the target VM IP address.

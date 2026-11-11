@@ -1,0 +1,124 @@
+---
+title: "Query Shared Block"
+---
+
+<APIPage method="GET" path="/v1/sharedblock-group/sharedblocks" altPaths={["/v1/sharedblock-group/", "/v1/sharedblock-group/sharedblock/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/sharedblock-group/sharedblocks
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/sharedblock-group/
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/sharedblock-group/sharedblock/e6076fa169ed38ba8f66e73c2db7158d
+```
+
+Queryable Fields
+
+Run the CLI command, enter `QuerySharedBlock` and press Tab to view all queryable fields and resources that support cross-table queries.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "3787d759b8323d2e8f0b19ef0bfe930b",
+      "sharedBlockGroupUuid": "0dcfcb85f7613689886ae34114064cbd",
+      "type": "LvmLogicalVolumeBasic",
+      "name": "test shared block",
+      "description": "description",
+      "state": "Enabled",
+      "status": "Connected",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_l1n_mpk_n2b)|2.3.2|
+|inventories|List|For details, see [inventories](#p_ols_npk_n2b)|2.3.2|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, e.g. SYS.1000, HOST.1001|2.3.2|
+|description|String|Brief description of the error|2.3.2|
+|details|String|Detailed error information|2.3.2|
+|elaboration|String|Reserved field, defaults to null|2.3.2|
+|opaque|LinkedHashMap|Reserved field, defaults to null|2.3.2|
+|cause|ErrorCode|Root cause: the source error that caused the current error. If there is no original error, this field is null|2.3.2|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|2.3.2|
+|sharedBlockGroupUuid|String|Shared block device group UUID|2.3.2|
+|diskUuid|String|Disk unique identifier \(e.g. UUID, WWN, WWID\)|2.3.2|
+|name|String|Resource name|2.3.2|
+|description|String|Detailed description of the resource|2.3.2|
+|createDate|Timestamp|Create date|2.3.2|
+|lastOpDate|Timestamp|Last update date|2.3.2|
+|type|SharedBlockType|For details, see [type](#p_cjq_4pk_n2b)|2.3.2|
+|state|SharedBlockState|For details, see [state](#p_gcp_qpk_n2b)|2.3.2|
+|status|SharedBlockStatus|For details, see [status](#p_slv_rpk_n2b)|2.3.2|
+
+### type
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name|2.3.2|
+|ordinal|int| |2.3.2|
+
+### state
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name|2.3.2|
+|ordinal|int| |2.3.2|
+
+### status
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name|2.3.2|
+|ordinal|int| |2.3.2|
+
+## SDK Examples
+Java SDK
+
+```
+QuerySharedBlockAction action = new QuerySharedBlockAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QuerySharedBlockAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QuerySharedBlockAction action = QuerySharedBlockAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QuerySharedBlockAction.Result res = action.call()
+```
+
+</APIPage>

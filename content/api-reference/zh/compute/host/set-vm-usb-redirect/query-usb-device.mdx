@@ -1,0 +1,118 @@
+---
+title: "查询USB设备"
+---
+
+<APIPage method="GET" path="/v1/usb-device/usb-devices" altPaths={["/v1/usb-device/usb-devices/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/usb-device/usb-devices
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/usb-device/usb-devices/d2da293d46ac46279168ae02b361c69f
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryUsbDevice`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "0beadc00381c4ca09216dc2ebfb0fba3",
+      "name": "usb",
+      "hostUuid": "648749ea79fb412aab27712c5813600a",
+      "vmInstanceUuid": "f862f3c01f3340d6ab68e7a79757342f",
+      "state": "Enabled",
+      "busNum": "001",
+      "devNum": "001",
+      "idVendor": "0781",
+      "idProduct": "5591",
+      "iManufacturer": "SanDisk",
+      "iProduct": "Ultra USB 3.0",
+      "iSerial": "000000000001",
+      "usbVersion": "3.0",
+      "attachType": "PassThrough"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_ssc_whf_sbb)|2.2|
+|inventories|List|详情参[inventories](#p_d5h_whf_sbb)|2.2|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|2.2|
+|description|String|错误的概要描述|2.2|
+|details|String|错误的详细信息|2.2|
+|elaboration|String|保留字段，默认为null|2.2|
+|opaque|LinkedHashMap|保留字段，默认为null|2.2|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|2.2|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|2.2|
+|name|String|资源名称|2.2|
+|description|String|资源的详细描述|2.2|
+|hostUuid|String|主机UUID|2.2|
+|vmInstanceUuid|String|虚拟机UUID|2.2|
+|busNum|String|总线号|2.2|
+|devNum|String|设备号|2.2|
+|idVendor|String|VendorID|2.2|
+|idProduct|String|ProductID|2.2|
+|iManufacturer|String|生产商|2.2|
+|iProduct|String|设备类型|2.2|
+|iSerial|String|序列号|2.2|
+|usbVersion|String|USB版本|2.2|
+|attachType|String|加载方式|3.6.0|
+|createDate|Timestamp|创建时间|2.2|
+|lastOpDate|Timestamp|最后一次修改时间|2.2|
+|state|UsbDeviceState|详情参考[state](#p_i5t_shf_sbb)|2.2|
+
+### state
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|name|String|资源名称|2.2|
+|ordinal|int| |2.2|
+
+## SDK示例
+Java SDK
+
+```
+QueryUsbDeviceAction action = new QueryUsbDeviceAction();
+action.conditions = asList();
+action.sessionId = "b51bb939a8844869abb32e9cedbc9a1f";
+QueryUsbDeviceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryUsbDeviceAction action = QueryUsbDeviceAction()
+action.conditions = []
+action.sessionId = "9f884d4333ba46369cd1039c9ea44965"
+QueryUsbDeviceAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,18 @@
+---
+title: "An attached disk is not recognized in a Windows virtual machine"
+---
+
+## Solution
+1.  Try the following steps:
+2.  Open Disk Management and bring the attached disk online.
+
+3.  Initialize the disk, then format and partition it. The disk is recognized successfully.
+
+4.  Open a DOS prompt in the virtual machine and run the following commands in sequence to configure the disk offline prevention policy:
+
+    ```
+    DOS> DISKPART
+    DISKPART> san
+    DISKPART> san policy=onlineall
+    DISKPART> exit
+    ```

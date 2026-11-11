@@ -1,0 +1,9 @@
+{
+  "title": "迁移服务相关接口",
+  "pages": [
+    "get-zmigrate-gateway-vm-instances",
+    "get-zmigrate-images",
+    "get-zmigrate-infos"
+  ],
+  "pagesIndex": "index"
+}

@@ -1,0 +1,129 @@
+---
+title: "将PCI设备切分出的MDEV设备从虚拟机卸载"
+---
+
+<APIPage method="DELETE" path="/v1/mdev-devices/{mdevDeviceUuid}/vm-instances/{vmInstanceUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/mdev-devices/4c2897ae50b8370489aa2e0caa96d370/vm-instances/16aefa196d5535f6836ec25d301ee3aa
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|mdevDeviceUuid|String|url|MDEV设备UUID| |3.5.0|
+|vmInstanceUuid|String|url|虚拟机UUID| |3.5.0|
+|systemTags \(可选\)|List|body|系统标签| |3.5.0|
+|userTags \(可选\)|List|body|用户标签| |3.5.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "b90d8a5edba0445e9d6380e63088c093",
+    "name": "GRID M60-2A",
+    "parentUuid": "9fecab9ef7624472be4be166cff7feb7",
+    "hostUuid": "102b8a84cae6470c907d6a9de3265b05",
+    "mdevSpecUuid": "70130eb2ba7c4ac9bc139808bf4d4ef1",
+    "type": "GPU_Video_Controller",
+    "state": "Enabled",
+    "status": "Active",
+    "chooser": "None",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_s3l_51h_xhb)|3.5.0|
+|inventory|MdevDeviceInventory|详情参考[inventory](#p_dsg_51h_xhb)|3.5.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.5.0|
+|description|String|错误的概要描述|3.5.0|
+|details|String|错误的详细信息|3.5.0|
+|elaboration|String|保留字段，默认为null|3.5.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.5.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.5.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.5.0|
+|name|String|资源名称|3.5.0|
+|description|String|资源的详细描述|3.5.0|
+|parentUuid|String|物理PCI设备UUID|3.5.0|
+|hostUuid|String|主机UUID|3.5.0|
+|vmInstanceUuid|String|虚拟机UUID|3.5.0|
+|mdevSpecUuid|String|MDEV设备规格UUID|3.5.0|
+|createDate|Timestamp|创建时间|3.5.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.5.0|
+|type|MdevDeviceType|详情参考[type](#p_pkb_51h_xhb)|3.5.0|
+|state|MdevDeviceState|详情参考[state](#p_cqx_t1h_xhb)|3.5.0|
+|status|MdevDeviceStatus|详情参考[status](#p_htt_t1h_xhb)|3.5.0|
+|chooser|MdevDeviceChooser|详情参考[chooser](#p_cjf_3qn_y1c)|4.1.0|
+
+### type
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|GPU\_Video\_Controller|MdevDeviceType|GPU显卡控制器|3.5.0|
+
+### state
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Enabled|MdevDeviceState|启用|3.5.0|
+|Disabled|MdevDeviceState|停用|3.5.0|
+
+### status
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Active|MdevDeviceStatus|就绪|3.5.0|
+|Attached|MdevDeviceStatus|已挂载|3.5.0|
+
+### chooser
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|None|PciDeviceChooser| |4.2.0|
+|Device|PciDeviceChooser| |4.2.0|
+|Spec|PciDeviceChooser| |4.2.0|
+
+## SDK示例
+Java SDK
+
+```
+DetachMdevDeviceFromVmAction action = new DetachMdevDeviceFromVmAction();
+action.mdevDeviceUuid = "4c2897ae50b8370489aa2e0caa96d370";
+action.vmInstanceUuid = "16aefa196d5535f6836ec25d301ee3aa";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DetachMdevDeviceFromVmAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DetachMdevDeviceFromVmAction action = DetachMdevDeviceFromVmAction()
+action.mdevDeviceUuid = "4c2897ae50b8370489aa2e0caa96d370"
+action.vmInstanceUuid = "16aefa196d5535f6836ec25d301ee3aa"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DetachMdevDeviceFromVmAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,262 @@
+---
+title: "Set Virtual Machine Boot Order"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/{uuid}/actions">
+
+Set the boot device for a Virtual Machine.
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "setVmBootOrder": {
+    "bootOrder": [
+      "CdRom",
+      "HardDisk"
+    ]
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"setVmBootOrder":{"bootOrder":["CdRom","HardDisk"]}}' \
+http://localhost:8080/zstack/v1/vm-instances/f757785b3980305095c89eb2b4e1b785/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Virtual Machine UUID| |0.6|
+|bootOrder \(Optional\)|List|body\(contained in the **setVmBootOrder** structure\)|Boot device. **CdRom**: CD-ROM, **HardDisk**: Hard Disk, **Network**: Network. If this field is not specified, the system default boot order will be used \(HardDisk, CdRom, Network\)| |3.8.0|
+|systemTags \(Optional\)|List|body|System Tag| |0.6|
+|userTags \(Optional\)|List|body|User Tag| |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "16a1759999f43522989d50257c148f03",
+    "name": "Test-VM",
+    "description": "web server VM",
+    "zoneUuid": "52c0c4d3965330c78035324338caca26",
+    "clusterUuid": "0d18aab547103bcfb2098655bd1fc71b",
+    "imageUuid": "f2a2344a96a93d84958cdd8e9396ac53",
+    "hostUuid": "fbd24b0405723d06b41fb0d41d126a53",
+    "lastHostUuid": "3e0502a12a413e5a8cea8022d774e8f7",
+    "instanceOfferingUuid": "bac644877b783182ace705f49d8b0d5d",
+    "rootVolumeUuid": "963beb34a38a31c6a663861152ebdfa7",
+    "platform": "Linux",
+    "defaultL3NetworkUuid": "58e3259d7ac63196bab7b4fde66a63e4",
+    "type": "UserVm",
+    "hypervisorType": "KVM",
+    "memorySize": 8589934592,
+    "cpuNum": 1,
+    "allocatorStrategy": "LastHostPreferredAllocatorStrategy",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM",
+    "state": "Stopped",
+    "vmNics": [
+      {
+        "uuid": "843c879cfd36341a845551d4f3f80adc",
+        "vmInstanceUuid": "16a1759999f43522989d50257c148f03",
+        "usedIpUuid": "34e14b0d570930bbaf521e6cf11703ad",
+        "l3NetworkUuid": "58e3259d7ac63196bab7b4fde66a63e4",
+        "ip": "192.168.1.10",
+        "mac": "00:0c:29:bd:99:fc",
+        "hypervisorType": "KVM",
+        "netmask": "255.255.255.0",
+        "gateway": "192.168.1.1",
+        "deviceId": 0,
+        "state": "enable",
+        "createDate": "Nov 14, 2017 10:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+      }
+    ],
+    "allVolumes": [
+      {
+        "uuid": "963beb34a38a31c6a663861152ebdfa7",
+        "name": "Root-Volume-For-VM-16a1759999f43522989d50257c148f03",
+        "primaryStorageUuid": "bb0ef0006c0831bcba36bf8cb449e4e5",
+        "vmInstanceUuid": "16a1759999f43522989d50257c148f03",
+        "diskOfferingUuid": "d3208f0181f1312b8807e228e1f89bc9",
+        "rootImageUuid": "f2a2344a96a93d84958cdd8e9396ac53",
+        "installPath": "/zstack_ps/rootVolumes/acct-36c27e8ff05c4780bf6d2fa65700f22e/vol-963beb34a38a31c6a663861152ebdfa7/963beb34a38a31c6a663861152ebdfa7.qcow2",
+        "type": "Root",
+        "format": "qcow2",
+        "size": 107374182400,
+        "actualSize": 21474836480,
+        "deviceId": 0,
+        "state": "Enabled",
+        "status": "Ready",
+        "createDate": "Nov 14, 2017 10:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+      }
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation is successful. For details, see [error](#p_y1x_lbr_zz)|0.6|
+|inventory|VmInstanceInventory|For details, see [inventory](#p_s1f_mbr_zz)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause. The source error that caused the current error. If there is no original error, this field is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifying the resource|0.6|
+|name|String|Resource name|0.6|
+|description|String|Resource description|0.6|
+|zoneUuid|String|Data Center UUID|0.6|
+|clusterUuid|String|Cluster UUID|0.6|
+|imageUuid|String|Image UUID|0.6|
+|hostUuid|String|Host UUID|0.6|
+|lastHostUuid|String| |0.6|
+|instanceOfferingUuid|String|Instance Offering UUID|0.6|
+|rootVolumeUuid|String|Root Volume UUID|0.6|
+|platform|String| |0.6|
+|architecture|String| |0.6|
+|defaultL3NetworkUuid|String| |0.6|
+|type|String| |0.6|
+|hypervisorType|String| |0.6|
+|memorySize|Long| |0.6|
+|cpuNum|Integer| |0.6|
+|cpuSpeed|Long| |0.6|
+|allocatorStrategy|String| |0.6|
+|createDate|Timestamp|Create date|0.6|
+|lastOpDate|Timestamp|Last update date|0.6|
+|state|String| |0.6|
+|guestOsType|String| |4.1.2|
+|vmNics|List|For details, see [vmNics](#p_qb4_mbr_zz)|0.6|
+|allVolumes|List|For details, see [allVolumes](#p_uw5_mbr_zz)|0.6|
+|vmCdRoms|List|For details, see [vmCdRoms](#p_tsc_jtf_y1c)|0.6|
+
+### vmNics
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifying the resource|0.6|
+|vmInstanceUuid|String|Virtual Machine UUID|0.6|
+|l3NetworkUuid|String|L3 Network UUID|0.6|
+|ip|String| |0.6|
+|mac|String| |0.6|
+|hypervisorType|String| |4.7.13|
+|netmask|String| |0.6|
+|gateway|String| |0.6|
+|metaData|String| |0.6|
+|ipVersion|Integer|IP version|3.1.0|
+|driverType|String| |4.7.13|
+|internalName|String| |4.7.13|
+|deviceId|Integer| |0.6|
+|type|String| |4.7.13|
+|state|String|NIC status|4.7.13|
+|createDate|Timestamp|Create date|0.6|
+|lastOpDate|Timestamp|Last update date|0.6|
+|usedIps|List|For details, see [usedIps](#p_gwc_4dc_pfb)|0.6|
+
+### usedIps
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifying the resource|0.6|
+|ipRangeUuid|String|IP Range UUID|0.6|
+|l3NetworkUuid|String|L3 Network UUID|0.6|
+|ipVersion|Integer|IP version|3.1.0|
+|ip|String|IP address|0.6|
+|netmask|String|Netmask|0.6|
+|gateway|String|Gateway address|0.6|
+|usedFor|String| |0.6|
+|ipInLong|long| |0.6|
+|vmNicUuid|String|Virtual Machine NIC UUID|3.1.0|
+|createDate|Timestamp|Create date|0.6|
+|lastOpDate|Timestamp|Last update date|0.6|
+
+### allVolumes
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifying the resource|0.6|
+|name|String|Resource name|0.6|
+|description|String|Resource description|0.6|
+|primaryStorageUuid|String|Primary Storage UUID|0.6|
+|vmInstanceUuid|String|Virtual Machine UUID|0.6|
+|diskOfferingUuid|String|Disk Offering UUID|0.6|
+|rootImageUuid|String|Root Image UUID|0.6|
+|installPath|String|Disk install path on Primary Storage|0.6|
+|type|String|Disk type, data disk or root disk|0.6|
+|format|String|Disk format|0.6|
+|size|Long|Disk size|0.6|
+|actualSize|Long|Disk actual size|0.6|
+|deviceId|Integer| |0.6|
+|state|String|Disk state|0.6|
+|status|String|Disk status|0.6|
+|createDate|Timestamp|Create date|0.6|
+|lastOpDate|Timestamp|Last update date|0.6|
+|isShareable|Boolean|Whether the disk is shareable|0.6|
+|volumeQos|String|Disk QoS, format such as total=1048576|3.2.0|
+|lastDetachDate|Timestamp| |4.7.13|
+|lastVmInstanceUuid|String| |4.7.13|
+
+### vmCdRoms
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifying the resource|4.7.13|
+|vmInstanceUuid|String|Virtual Machine UUID|4.7.13|
+|deviceId|Integer| |4.7.13|
+|isoUuid|String| |4.7.13|
+|isoInstallPath|String| |4.7.13|
+|name|String|Resource name|4.7.13|
+|description|String|Resource description|4.7.13|
+|createDate|Timestamp|Create date|4.7.13|
+|lastOpDate|Timestamp|Last update date|4.7.13|
+
+## SDK Examples
+Java SDK
+
+```
+SetVmBootOrderAction action = new SetVmBootOrderAction();
+action.uuid = "f757785b3980305095c89eb2b4e1b785";
+action.bootOrder = asList("CdRom","HardDisk");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+SetVmBootOrderAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = SetVmBootOrderAction()
+action.uuid = "f757785b3980305095c89eb2b4e1b785"
+action.bootOrder = [CdRom, HardDisk]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

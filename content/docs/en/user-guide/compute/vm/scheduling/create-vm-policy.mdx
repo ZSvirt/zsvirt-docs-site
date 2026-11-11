@@ -1,0 +1,32 @@
+---
+title: 'Create Mutually Exclusive/Affinitive VM Scheduling Policies'
+---
+
+Mutually exclusive/affinitive virtual machine scheduling policies need to be bound to a virtual machine scheduling group to take effect on the virtual machines within the group. Assuming you already have multiple virtual machines running your services, you can follow the steps below to use these scheduling policies:
+
+1.  [Create a VM Scheduling Group](#section_myg_qlr_zyb)
+2.  [Create a Mutually Exclusive/Affinitive VM Scheduling Policy](#section_a1b_njh_bwb)
+
+## Create a VM Scheduling Group
+In the ZSvirt platform, click **Menu** &gt; **Business Reliability** &gt; **VM Scheduling Policy** &gt; **VM Scheduling Group** to enter the VM Scheduling Group page. Click the New VM Scheduling Group operation to create a new group.
+
+Set the following parameters:
+
+-   **Name**: Set the virtual machine scheduling group name, for example, Virtual Machine Scheduling Group A1
+-   **Description**: Optional, can be left blank
+-   **Virtual Machine**: Select one or more target virtual machines to join this scheduling group
+
+After clicking **OK**, the new virtual machine scheduling group will be created successfully.
+
+## Create a Mutually Exclusive/Affinitive VM Scheduling Policy
+Click **VM Scheduling Policy** &gt; **New VM Scheduling Policy**, and set the following parameters:
+
+-   **Name**: Set the virtual machine scheduling policy name, for example, Virtual Machine Scheduling Policy A1
+-   **Description**: Optional, can be left blank
+-   **Type**: Select VM Exclusive from Each Other or VM Affinitive to Each Other
+-   **Execution Mechanism**: Supports Hard and Soft execution mechanisms
+    -   **Hard**: Virtual machines are forcibly assigned hosts based on the associated VM scheduling policies. For example, if you associate the VM Exclusive from Each Other policy with a VM scheduling group and select the Hard mechanism for the policy, any two of the virtual machines in the scheduling group are not allowed to run on the same host. If no host is available to be scheduled based on the policy for a virtual machine, the virtual machine will end up failure upon startup.
+    -   **Soft**: Virtual machines are primarily assigned hosts based on the associated VM scheduling policies. For example, if you associate the VM Exclusive from Each Other policy with a VM scheduling group and select the Soft mechanism for the policy, any two of the virtual machines in the scheduling group will primarily not run on the same host. If no host is available to be scheduled based on the policy for a virtual machine, the virtual machine will attempt to run on a host that does not satisfy the policy.
+-   **Associate VM Scheduling Group**: After binding, the scheduling policy will take effect on all virtual machines within the virtual machine scheduling group. You can bind existing or newly created scheduling groups. Here, select the scheduling group created above.
+
+After clicking **OK**, the new virtual machine scheduling policy will be created successfully. The virtual machines will run according to the scheduling policy.

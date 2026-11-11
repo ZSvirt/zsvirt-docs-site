@@ -1,0 +1,35 @@
+---
+title: 'Revert to a Snapshot'
+---
+
+Reverting a VM to the selected snapshot overwrites the existing data.
+
+1.  In the navigation pane, choose **Inventory** &gt; **VM and Host**.
+
+2.  Select a target VM and click **Snapshot**.
+
+3.  On the Snapshot tab, select a snapshot point and click **Revert**.
+
+4.  In the Revert Snapshot? dialog, set the following parameters:
+
+    -   **Recovery Method**: Support full recovery and custom recovery
+        -   Full Recovery: A full recovery restores both the VM data and disk sequence, which may attach the previously detached disks or detach existing disks.
+        -   Custom Recovery: Select disks for recovery. During recovery, only data from the selected disks is restored, but the disk sequence is not restored.
+
+            <Callout type="info">
+            If a disk in the snapshot has been detached, it is currently not supported for recovery.
+            </Callout>
+
+    -   **Power Status**: Choose whether to automatically power on the virtual machine after reverting the snapshot.
+5.  Review the configuration and click **OK**.
+
+    <Callout type="info">
+    -   Reverting a VM to the selected snapshot automatically powers off the VM and overwrites the existing data.
+    -   If the number of NICs or CD/DVD drives differs from the snapshot configuration, any removed NICs or CD/DVD drives after the snapshot creation will be attached, and any newly added ones after the snapshot creation will be removed.
+    -   When restoring a memory snapshot, if the memory snapshot contains IP or MAC addresses that are currently in use by other VMs, resolve conflicts before restoring the snapshot.
+
+        If you force revert, the platform will handle conflicts as follows:
+
+        -   Conflicting IP addresses: Keeps the IP addresses from the snapshot and you need to manually modify these IP addresses after restoration.
+        -   Conflicting MAC addresses: Keeps the MAC addresses from the snapshot but disables affected NICs after restoration.
+    </Callout>

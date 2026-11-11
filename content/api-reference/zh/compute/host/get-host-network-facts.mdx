@@ -1,0 +1,236 @@
+---
+title: "获取主机物理网络信息"
+---
+
+<APIPage method="GET" path="/v1/hosts/network-facts/{hostUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/hosts/network-facts/9397de8c860231c08b87031e226c691b
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|hostUuid|String|url|主机UUID| |3.5.0|
+|systemTags \(可选\)|List|query| | |3.5.0|
+|userTags \(可选\)|List|query| | |3.5.0|
+
+## API返回
+返回示例
+
+```
+{
+  "bondings": [
+    {
+      "uuid": "c1ff34db684e3b8785572902ef99efea",
+      "hostUuid": "e336fa8ef9283fe4a4d746957284379a",
+      "bondingName": "bond0",
+      "mode": "active-backup 1",
+      "xmitHashPolicy": "layer2 0",
+      "miiStatus": "up",
+      "mac": "ac:1f:6b:93:6c:8c",
+      "ipAddresses": [
+        "172.20.0.116/16"
+      ],
+      "miimon": 100.0,
+      "allSlavesActive": true,
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM",
+      "slaves": [
+        {
+          "uuid": "08643629c29d34a0a4a2d858b49a41a4",
+          "hostUuid": "e336fa8ef9283fe4a4d746957284379a",
+          "bondingUuid": "c1ff34db684e3b8785572902ef99efea",
+          "interfaceName": "eno1",
+          "interfaceType": "bondingSlave",
+          "speed": 1000.0,
+          "slaveActive": true,
+          "carrierActive": true,
+          "mac": "ac:1f:6b:93:6c:8c",
+          "createDate": "Nov 14, 2017 10:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+        },
+        {
+          "uuid": "14ca7ad13e573cfdb6f929b12b750553",
+          "hostUuid": "e336fa8ef9283fe4a4d746957284379a",
+          "bondingUuid": "c1ff34db684e3b8785572902ef99efea",
+          "interfaceName": "eno2",
+          "interfaceType": "bondingSlave",
+          "speed": 1000.0,
+          "slaveActive": false,
+          "carrierActive": false,
+          "mac": "ac:1f:6b:93:6c:8c",
+          "createDate": "Nov 14, 2017 10:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+        }
+      ]
+    }
+  ],
+  "nics": [
+    {
+      "uuid": "08643629c29d34a0a4a2d858b49a41a4",
+      "hostUuid": "e336fa8ef9283fe4a4d746957284379a",
+      "bondingUuid": "c1ff34db684e3b8785572902ef99efea",
+      "interfaceName": "eno1",
+      "interfaceType": "bondingSlave",
+      "speed": 1000.0,
+      "slaveActive": true,
+      "carrierActive": true,
+      "mac": "ac:1f:6b:93:6c:8c",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    },
+    {
+      "uuid": "14ca7ad13e573cfdb6f929b12b750553",
+      "hostUuid": "e336fa8ef9283fe4a4d746957284379a",
+      "bondingUuid": "c1ff34db684e3b8785572902ef99efea",
+      "interfaceName": "eno2",
+      "interfaceType": "bondingSlave",
+      "speed": 1000.0,
+      "slaveActive": false,
+      "carrierActive": false,
+      "mac": "ac:1f:6b:93:6c:8c",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    },
+    {
+      "uuid": "8d871eb89020363ebc764ed41be4c213",
+      "hostUuid": "e336fa8ef9283fe4a4d746957284379a",
+      "interfaceName": "ens2f0",
+      "interfaceType": "noMaster",
+      "speed": 1000.0,
+      "slaveActive": true,
+      "carrierActive": true,
+      "ipAddresses": [
+        "169.254.0.115/24"
+      ],
+      "mac": "98:03:9b:00:ea:f2",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    },
+    {
+      "uuid": "d39d0eead2d53e47a8f7b3aca375c1d3",
+      "hostUuid": "e336fa8ef9283fe4a4d746957284379a",
+      "interfaceName": "ens2f1",
+      "interfaceType": "bridgeSlave",
+      "speed": 1000.0,
+      "slaveActive": false,
+      "carrierActive": false,
+      "mac": "98:03:9b:00:ea:f3",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |3.5.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_yzk_5lk_mlb)|3.5.0|
+|bondings|List|详情参考[bondings](#p_dvv_5lk_mlb)|3.5.0|
+|nics|List|详情参考[nics](#p_ckv_vlk_mlb)|3.5.0|
+|error|ErrorCode|详情参考[error](#p_exg_wlk_mlb)|3.5.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.5.0|
+|description|String|错误的概要描述|3.5.0|
+|details|String|错误的详细信息|3.5.0|
+|elaboration|String|保留字段，默认为null|3.5.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.5.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.5.0|
+
+### bondings
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.5.0|
+|hostUuid|String|主机UUID|3.5.0|
+|bondingName|String|Bond名称|3.5.0|
+|mode|String|Bond模式|3.5.0|
+|xmitHashPolicy|String|哈希策略|3.5.0|
+|miiStatus|String|mii状态|3.5.0|
+|mac|String|MAC地址|3.5.0|
+|ipAddresses|List|IP地址|3.5.0|
+|miimon|Long|mii监控间隔|3.5.0|
+|allSlavesActive|Boolean| |3.5.0|
+|createDate|Timestamp|创建时间|3.5.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.5.0|
+|slaves|List|详情参考[slaves](#p_y1j_vlk_mlb)|3.5.0|
+
+### slaves
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.5.0|
+|hostUuid|String|主机UUID|3.5.0|
+|bondingUuid|String|Bond UUID|3.5.0|
+|interfaceName|String|网卡名称|3.5.0|
+|interfaceType|String|网卡应用状态，有nomaster、bridgeSlave、bondSlave|3.5.0|
+|speed|Long|网卡速率|3.5.0|
+|slaveActive|Boolean|Bond链路状态|3.5.0|
+|carrierActive|Boolean|物理链路状态|3.5.0|
+|ipAddresses|List|IP地址|3.5.0|
+|mac|String|MAC地址|3.5.0|
+|pciDeviceAddress|String|网卡PCI地址|3.5.0|
+|createDate|Timestamp|创建时间|3.5.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.5.0|
+
+### nics
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.5.0|
+|hostUuid|String|主机UUID|3.5.0|
+|bondingUuid|String|Bond UUID|3.5.0|
+|interfaceName|String|网卡名称|3.5.0|
+|interfaceType|String|网卡应用状态，有nomaster、bridgeSlave、bondSlave|3.5.0|
+|speed|Long|网卡速率|3.5.0|
+|slaveActive|Boolean|Bond链路状态|3.5.0|
+|carrierActive|Boolean|物理链路状态|3.5.0|
+|ipAddresses|List|IP地址|3.5.0|
+|mac|String|MAC地址|3.5.0|
+|pciDeviceAddress|String|网卡PCI地址|3.5.0|
+|createDate|Timestamp|创建时间|3.5.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.5.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.5.0|
+|description|String|错误的概要描述|3.5.0|
+|details|String|错误的详细信息|3.5.0|
+|elaboration|String|保留字段，默认为null|3.5.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.5.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.5.0|
+
+## SDK示例
+Java SDK
+
+```
+GetHostNetworkFactsAction action = new GetHostNetworkFactsAction();
+action.hostUuid = "9397de8c860231c08b87031e226c691b";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetHostNetworkFactsAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetHostNetworkFactsAction action = GetHostNetworkFactsAction()
+action.hostUuid = "9397de8c860231c08b87031e226c691b"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetHostNetworkFactsAction.Result res = action.call()
+```
+
+</APIPage>

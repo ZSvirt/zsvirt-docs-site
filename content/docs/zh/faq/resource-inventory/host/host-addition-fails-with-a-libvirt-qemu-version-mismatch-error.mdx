@@ -1,0 +1,21 @@
+---
+title: "主机添加失败，出现“libvirt/qemu版本不一致”报错，怎么办？"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+## 现象
+添加主机失败，出现`cannot be added to cluster because qemu/libvirt version does not match`或者`no candidate host has version`报错。
+
+## 原因
+集群内主机操作系统版本不一致。
+
+## 解决方案
+1.  执行以下命令，格式化主机并重新安装操作系统：
+
+    ```
+    root@localhost ~]# yum --disablerepo=* --enablerepo=zstack-local install -y sudo
+    
+    ```
+
+2.  将使用相同操作系统版本的主机添加至同一集群。

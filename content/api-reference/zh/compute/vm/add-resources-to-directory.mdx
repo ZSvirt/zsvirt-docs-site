@@ -1,0 +1,84 @@
+---
+title: "添加资源至分组目录"
+---
+
+<APIPage method="POST" path="/v1/add/resources/directory">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "resourceUuids": [
+      "ac852a8d7c8f3e15811e8f647f24d0f7",
+      "5bde5466936638648574ac73fa0abeb0"
+    ],
+    "directoryUuid": "1eb4cb0f7ed33305aba79b4af9ac4594"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"resourceUuids":["ac852a8d7c8f3e15811e8f647f24d0f7","5bde5466936638648574ac73fa0abeb0"],"directoryUuid":"1eb4cb0f7ed33305aba79b4af9ac4594"}}' http://localhost:8080/zstack/v1/add/resources/directory
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|resourceUuids|List|body\(包含在**params**结构中\)|批量资源UUID| |4.6.0|
+|directoryUuid|String|body\(包含在**params**结构中\)|目录UUID| |4.6.0|
+|systemTags \(可选\)|List|body|系统标签| |4.6.0|
+|userTags \(可选\)|List|body|用户标签| |4.6.0|
+
+## API返回
+该API成功时返回一个空的JSON结构**`{}`**，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+AddResourcesToDirectoryAction action = new AddResourcesToDirectoryAction();
+action.resourceUuids = asList("ac852a8d7c8f3e15811e8f647f24d0f7","5bde5466936638648574ac73fa0abeb0");
+action.directoryUuid = "1eb4cb0f7ed33305aba79b4af9ac4594";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddResourcesToDirectoryAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddResourcesToDirectoryAction action = AddResourcesToDirectoryAction()
+action.resourceUuids = [ac852a8d7c8f3e15811e8f647f24d0f7, 5bde5466936638648574ac73fa0abeb0]
+action.directoryUuid = "1eb4cb0f7ed33305aba79b4af9ac4594"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddResourcesToDirectoryAction.Result res = action.call()
+```
+
+</APIPage>

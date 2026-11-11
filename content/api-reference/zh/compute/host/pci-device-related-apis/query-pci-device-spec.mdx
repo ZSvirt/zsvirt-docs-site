@@ -1,0 +1,129 @@
+---
+title: "查询PCI设备规格"
+---
+
+<APIPage method="GET" path="/v1/pci-device-specs">
+
+```
+GET zstack/v1/pci-device-specs/{uuid}
+```
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/pci-device-specs?q=uuid=148eb0059a193de59e5278395c36baa7
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/pci-device-specs/f5caf15dfb98366cbf87d41aa01385b9
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryPciDeviceSpec`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "6a2537202e134f9fa240f0455fc507cc",
+      "name": "MSI_GTX1060",
+      "description": "NVIDIA Corporation, GP106 [GeForce GTX 1060 6GB], a1, VGA compatible controller",
+      "vendorId": "10de",
+      "deviceId": "1c03",
+      "subvendorId": "1462",
+      "subdeviceId": "3283",
+      "type": "GPU_Video_Controller",
+      "state": "Enabled",
+      "romVersion": "86.06.0E.00.28",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_n2j_n3g_xhb)|3.5.0|
+|inventories|List|详情参考[inventories](#p_scf_n3g_xhb)|3.5.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.5.0|
+|description|String|错误的概要描述|3.5.0|
+|details|String|错误的详细信息|3.5.0|
+|elaboration|String|保留字段，默认为null|3.5.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.5.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.5.0|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.5.0|
+|name|String|资源名称|3.5.0|
+|description|String|资源的详细描述|3.5.0|
+|vendorId|String|供应商ID|3.5.0|
+|deviceId|String|设备ID|3.5.0|
+|subvendorId|String|子供应商ID|3.5.0|
+|subdeviceId|String|子设备ID|3.5.0|
+|ramSize|String|显存容量|3.5.0|
+|maxPartNum|Integer|最大切分数量|3.5.0|
+|isVirtual|Boolean|是否虚拟设备|3.5.0|
+|romVersion|String|固件版本|3.5.0|
+|romMd5sum|String|固件MD5|3.5.0|
+|createDate|Timestamp|创建时间|3.5.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.5.0|
+|type|PciDeviceType|详情参考[type](#p_x5v_m3g_xhb)|3.5.0|
+|state|PciDeviceSpecState|详情参考[state](#p_ypr_m3g_xhb)|3.5.0|
+
+### type
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|GPU\_Video\_Controller|PciDeviceType|GPU显卡控制器|2.1|
+|GPU\_Audio\_Controller|PciDeviceType|GPU声卡控制器|2.1|
+|GPU\_3D\_Controller|PciDeviceType|GPU 3D控制器|2.1|
+|Moxa\_Device|PciDeviceType|MOXA卡|2.1|
+|Generic|PciDeviceType|一般设备|2.1|
+
+### state
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Enabled|PciDeviceSpecState|启用|3.5.0|
+|Disabled|PciDeviceSpecState|停用|3.5.0|
+
+## SDK示例
+Java SDK
+
+```
+QueryPciDeviceSpecAction action = new QueryPciDeviceSpecAction();
+action.conditions = asList("uuid=96a05dc8dbee32ddb15c63680df63792");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryPciDeviceSpecAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryPciDeviceSpecAction action = QueryPciDeviceSpecAction()
+action.conditions = ["uuid=362f676642ba3288bf02c98fcee26d74"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryPciDeviceSpecAction.Result res = action.call()
+```
+
+</APIPage>

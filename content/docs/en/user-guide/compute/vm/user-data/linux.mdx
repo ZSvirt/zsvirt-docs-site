@@ -1,0 +1,54 @@
+---
+title: 'Import User Data to Linux VMs'
+---
+
+-   Before importing User Data, ensure the VM image has cloud-init installed. Recommended version: 0.7.9, 17.1, 19.4, or later version.
+-   When setting hostname and SSH password via User Data, avoid configuring these parameters again on the platform to prevent conflicts.
+-   For Linux VMs created from images with pre-installed cloud-init, you must import User Data. Otherwise, cloud-init task will wait until timeout.
+
+1.  Prepare the User Data script for your desired functionality.
+
+    Example script:
+
+    ```
+    #cloud-config
+    users:
+     - name: test
+       shell: /bin/bash
+       groups: users
+       sudo: ['ALL=(ALL) NOPASSWD:ALL']
+       ssh-authorized-keys:
+           - ssh-rsa AAAAB3NzaC1LXCJfjroD1lT root@10-0-0-18
+    bootcmd:
+     - mkdir /tmp/temp 
+    write_files:
+     - path: /tmp/Cloud_config
+       content: |
+           Hello,world!
+       permissions: '0755'
+    fqdn: Perf-test
+    disable_root: false
+    ssh_pwauth: yes
+    chpasswd:
+      list: |
+          root:word
+      expire: False
+    runcmd:
+     - echo ls -l / >/root/list.sh
+    ```
+
+    This example script performs the following actions:
+
+    1.  Create user "test" with SSH Key authentication during VM creation.
+    2.  Write to `/etc/hosts`, create directory `/tmp/temp`, and generate files with specified content during boot.
+    3.  Set hostname, enable root user, allow SSH password authentication, and change root password.
+    4.  Run the `echo ls -l /` command.
+2.  In the navigation pane, choose **Inventory**.
+
+3.  In the inventory, right-click a cluster, host, or image, then select **New Virtual Machine**
+
+4.  In the New Virtual Machine dialog, select **Advanced Settings** &gt; **General Options**.
+
+5.  Paste your script into the **User Data** input field.
+
+6.  Complete the VM creation process to import the User Data.

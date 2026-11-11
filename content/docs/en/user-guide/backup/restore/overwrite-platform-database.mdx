@@ -1,0 +1,22 @@
+---
+title: 'Restore Platform Database'
+---
+
+Restore the platform from backup data to the state at a specified backup time point.
+
+-   Restoring the platform database requires a management node restart, during which the management interface will be unavailable. This process typically takes several minutes, and your business resources will not be affected.
+-   Resources that were deleted after the backup point will become invalid data and cannot be restored to normal during the recovery of the platform database.
+
+1.  In the navigation pane, choose **Data Protection** &gt; **Protected Resources**.
+
+2.  On the Protected Resources page, select the **Platform Database** tab.
+
+3.  Select the storage location of the platform database backup files, such as **Local Backup** or **Remote Backup**.
+
+4.  In the platform database backup list, select the backup data you want to restore, then click **Actions** &gt; **Restore**.
+
+5.  In the Restore Platform Database dialog, enter the platform database root password.
+
+6.  Review the configuration and click **OK**.
+
+After successfully restored the database, all platform resources will revert to their state at the time of backup creation. Navigate to the **Data Protection** &gt; **Backup Storage** page, select the backup storage, and then click **Actions** &gt; **Scan Backup Data** to obtain current and accurate backup data information.

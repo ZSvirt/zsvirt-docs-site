@@ -1,0 +1,157 @@
+---
+title: "更新分布式存储监控节点"
+---
+
+<APIPage method="PUT" path="/v1/primary-storage/ceph/mons/{monUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateCephPrimaryStorageMon": {
+    "hostname": "10.0.1.4"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateCephPrimaryStorageMon":{"hostname":"10.0.1.4"}}' \
+http://localhost:8080/zstack/v1/primary-storage/ceph/mons/cda8b731b2e23b8eb1081dec0f7a0a60/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|monUuid|String|url|监控节点UUID| |0.6|
+|hostname \(可选\)|String|body\(包含在**updateCephPrimaryStorageMon**结构中\)|监控节点新主机IP地址| |0.6|
+|sshUsername \(可选\)|String|body\(包含在**updateCephPrimaryStorageMon**结构中\)|监控节点主机 ssh 用户名| |0.6|
+|sshPassword \(可选\)|String|body\(包含在**updateCephPrimaryStorageMon**结构中\)|监控节点主机 ssh 用户密码| |0.6|
+|sshPort \(可选\)|Integer|body\(包含在**updateCephPrimaryStorageMon**结构中\)|监控节点主机 ssh 端口| |0.6|
+|monPort \(可选\)|Integer|body\(包含在**updateCephPrimaryStorageMon**结构中\)|mon的新端口| |0.6|
+|systemTags \(可选\)|List|body|系统标签| |0.6|
+|userTags \(可选\)|List|body|用户标签| |0.6|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "mons": [
+      {
+        "monAddr": "10.0.1.4",
+        "monUuid": "d557e48870b04ef699509d2998084bdb"
+      }
+    ],
+    "name": "My Ceph Primary Storage",
+    "description": "Public Ceph Primary Storage",
+    "totalCapacity": 1073741824.0,
+    "availableCapacity": 968884224.0,
+    "type": "Ceph",
+    "state": "Enabled",
+    "status": "Connected",
+    "createDate": "Jun 7, 2017 9:21:22 PM",
+    "lastOpDate": "Jun 7, 2017 9:21:22 PM",
+    "attachedClusterUuids": [
+      "3fa1f7c2bbb544e1a04ba9f9da935abe"
+    ]
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_flt_mbb_n1b)|0.6|
+|inventory|CephPrimaryStorageInventory|详情参考[inventory](#p_ctm_mbb_n1b)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|fsid|String| |0.6|
+|rootVolumePoolName|String| |0.6|
+|dataVolumePoolName|String| |0.6|
+|imageCachePoolName|String| |0.6|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|zoneUuid|String|数据中心UUID|0.6|
+|name|String|资源名称|0.6|
+|url|String| |0.6|
+|description|String|资源的详细描述|0.6|
+|totalCapacity|Long| |0.6|
+|availableCapacity|Long| |0.6|
+|totalPhysicalCapacity|Long| |0.6|
+|availablePhysicalCapacity|Long| |0.6|
+|systemUsedCapacity|Long| |0.6|
+|type|String| |0.6|
+|state|String| |0.6|
+|status|String| |0.6|
+|mountPath|String| |0.6|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+|attachedClusterUuids|List| |0.6|
+|mons|List|详情参考[mons](#p_g2g_mbb_n1b)|0.6|
+
+### mons
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|hostname|String| |0.6|
+|monPort|Integer| |0.6|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+|primaryStorageUuid|String|数据存储UUID|0.6|
+|monAddr|String| |0.6|
+|sshUsername|String| |0.6|
+|sshPassword|String| |0.6|
+|sshPort|Integer| |0.6|
+|status|String| |0.6|
+|monUuid|String| |0.6|
+
+## SDK示例
+Java SDK
+
+```
+UpdateCephPrimaryStorageMonAction action = new UpdateCephPrimaryStorageMonAction();
+action.monUuid = "3341eaef160045d6b6fd085a22a3c69f";
+action.hostname = "10.0.1.4";
+action.sessionId = "359aceecda5e478e81d4eaea9e86bca8";
+UpdateCephPrimaryStorageMonAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+UpdateCephPrimaryStorageMonAction action = UpdateCephPrimaryStorageMonAction()
+action.monUuid = "70bc5237403848f6b5b6a60079c3ab91"
+action.hostname = "10.0.1.4"
+action.sessionId = "b1737cdb77c4420ba72aab66c4438521"
+UpdateCephPrimaryStorageMonAction.Result res = action.call()
+```
+
+</APIPage>

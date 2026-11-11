@@ -1,0 +1,162 @@
+---
+title: "Create VM Backup"
+---
+
+<APIPage method="POST" path="/v1/volumes/{rootVolumeUuid}/vm-backups">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "backupStorageUuid": "fc50c1ece4753c1981e3e3f65a151e0e",
+    "name": "backup-1",
+    "description": "a critical volume backup"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The **systemTags** and **userTags** fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"backupStorageUuid":"fc50c1ece4753c1981e3e3f65a151e0e","name":"backup-1","description":"a critical volume backup"}}' http://localhost:8080/zstack/v1/volumes/aa6fad9b71af3785a9fdec200bab3ee8/vm-backups
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|rootVolumeUuid|String|url|Root disk UUID| |3.0.0|
+|backupStorageUuid|String|body \(Contained in the **params** structure\)|Image Storage UUID| |3.0.0|
+|name|String|body \(Contained in the **params** structure\)|Resource name| |3.0.0|
+|description \(Optional\)|String|body \(Contained in the **params** structure\)|Detailed description of the resource| |3.0.0|
+|resourceUuid \(Optional\)|String|body \(Contained in the **params** structure\)| | |3.0.0|
+|volumeReadBandwidth \(Optional\)|Long|body \(Contained in the **params** structure\)|Disk read bandwidth| |3.1.0|
+|volumeWriteBandwidth \(Optional\)|Long|body \(Contained in the **params** structure\)|Disk write bandwidth| |3.1.0|
+|networkReadBandwidth \(Optional\)|Long|body \(Contained in the **params** structure\)|Network download bandwidth| |3.1.0|
+|networkWriteBandwidth \(Optional\)|Long|body \(Contained in the **params** structure\)|Network upload bandwidth| |3.1.0|
+|systemTags \(Optional\)|List|body| | |3.0.0|
+|userTags \(Optional\)|List|body| | |3.0.0|
+
+<Callout type="info">
+-   ZSvirt uses the backup network for host-to-image-repository traffic when creating VM backups. The **SystemTags** includes the **backupnetwork** option.
+</Callout>
+    -   Option format: `backup::network::cidr::CIDR`
+    -   Example: `backup::network::cidr::10.0.0.0/8`
+-   ZSvirt sets the transfer method for backup data to Image Storage when creating VM backups. The **SystemTags** includes the **fsInfo** option.
+    -   Option format: `fsInfo::type::$TYPE::url::$URL::options::$OPTIONS`
+    -   Example: `fsInfo::type::nfs::url::172.32.1.119:/nas/nfs2::options::nolock,vers=3,rsize=32768,wsize=32768`
+-   ZSvirt sets the backup concurrency when creating VM backups. The **SystemTags** includes the **volumeLiveBackup** option.
+    -   Option format: `volumeLiveBackup::parallelismDegree::$NUMBER`
+    -   Example: `volumeLiveBackup::parallelismDegree::1`
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "785edb93bb1b3a31857dac1e69cc8392",
+      "volumeUuid": "2ae6b881bb1239cd907d48993e86a2e8",
+      "name": "Root-Volume-Backup-1",
+      "description": "volume backup",
+      "size": 1073741824.0,
+      "groupUuid": "2f7c0a5bb86430e8a5ac48312172d70d",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    },
+    {
+      "uuid": "3084eea905f4311b9d484bfe97142bdf",
+      "volumeUuid": "f6c7d5276c873eba8accddd4a09a1ee6",
+      "name": "Data-Volume-Backup-1",
+      "description": "volume backup",
+      "size": 2147483648.0,
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_u3s_bpx_y2b)|3.0.0|
+|inventories|List|For details, see [inventories](#p_dwz_bpx_y2b)|3.0.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|3.0.0|
+|description|String|A brief description of the error|3.0.0|
+|details|String|The detailed error information|3.0.0|
+|elaboration|String|A reserved field. The default value is null|3.0.0|
+|opaque|LinkedHashMap|A reserved field. The default value is null|3.0.0|
+|cause|ErrorCode|The root error. The source error that caused the current error. If no root error exists, this field is null|3.0.0|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the disk backup. Uniquely identifies the resource|3.0.0|
+|volumeUuid|String|Disk UUID|3.0.0|
+|name|String|Backup name|3.0.0|
+|description|String|Detailed description of the backup|3.0.0|
+|type|String|Disk type|3.0.0|
+|state|String|Enabled state of the disk backup|3.0.0|
+|status|String|Status of the disk backup|3.0.0|
+|size|Long|Size of the current disk backup|3.0.0|
+|metadata|String|Metadata of the disk backup|3.0.0|
+|createDate|Timestamp|Creation time|3.0.0|
+|lastOpDate|Timestamp|Last modification time|3.0.0|
+|backupStorageRefs|List|For details, see [backupStorageRefs](#p_uq5_fpx_y2b)|3.0.0|
+
+### backupStorageRefs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|volumeBackupUuid|String|Disk backup UUID|3.0.0|
+|backupStorageUuid|String|Image Storage UUID|3.0.0|
+|installPath|String|Data path of the disk backup|3.0.0|
+|status|String|Status of the disk backup on the Image Storage|3.0.0|
+|createDate|Timestamp|Creation time|3.0.0|
+|lastOpDate|Timestamp|Last modification time|3.0.0|
+
+## SDK Examples
+Java SDK
+
+```
+CreateVmBackupAction action = new CreateVmBackupAction();
+action.rootVolumeUuid = "aa6fad9b71af3785a9fdec200bab3ee8";
+action.backupStorageUuid = "fc50c1ece4753c1981e3e3f65a151e0e";
+action.name = "backup-1";
+action.description = "a critical volume backup";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateVmBackupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateVmBackupAction action = CreateVmBackupAction()
+action.rootVolumeUuid = "aa6fad9b71af3785a9fdec200bab3ee8"
+action.backupStorageUuid = "fc50c1ece4753c1981e3e3f65a151e0e"
+action.name = "backup-1"
+action.description = "a critical volume backup"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateVmBackupAction.Result res = action.call()
+```
+
+</APIPage>

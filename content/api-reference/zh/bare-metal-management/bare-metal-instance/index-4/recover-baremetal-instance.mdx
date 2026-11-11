@@ -1,0 +1,147 @@
+---
+title: "恢复已删除的裸金属主机"
+---
+
+<APIPage method="PUT" path="/v1/baremetal/instances/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "recoverBaremetalInstance": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"recoverBaremetalInstance":{}}' \
+http://localhost:8080/zstack/v1/baremetal/instances/0a71736890e437928f90415a276ca245/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |2.6.0|
+|systemTags \(可选\)|List|body|系统标签| |2.6.0|
+|userTags \(可选\)|List|body|用户标签| |2.6.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "38471d80059739568ee29b580ee00314",
+    "name": "BM-1",
+    "description": "This is a baremetal instance.",
+    "zoneUuid": "cd3f0df2f33d3d47af58fa92d45e0ed3",
+    "clusterUuid": "fc7f9da7d8a53a939a4163619a2e6264",
+    "chassisUuid": "36d14ed4da51339eae615f7716724d25",
+    "imageUuid": "4eec69d4ae423807bf38164c6d592d86",
+    "platform": "Linux",
+    "state": "Stopped",
+    "status": "Provisioned",
+    "createDate": "Nov 14, 2017 2:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 2:20:57 PM",
+    "bmNics": [
+      {
+        "uuid": "9e01966b83283f9b967be10fe13ce8bf",
+        "baremetalInstanceUuid": "38471d80059739568ee29b580ee00314",
+        "l3NetworkUuid": "294c0bcaa1e43fae9abaadef23d72e24",
+        "mac": "6c:b3:11:1b:0b:1e",
+        "ip": "192.168.0.10",
+        "netmask": "255.255.255.0",
+        "gateway": "192.168.0.1",
+        "pxe": false
+      }
+    ]
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_lvx_yyy_3gc)|2.6.0|
+|inventory|BaremetalInstanceInventory|详情参考[inventory](#p_nsv_ffz_3gc)|2.6.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|2.6.0|
+|name|String|资源名称|2.6.0|
+|description|String|资源的详细描述|2.6.0|
+|zoneUuid|String|数据中心UUID|2.6.0|
+|clusterUuid|String|集群UUID|2.6.0|
+|pxeServerUuid|String| |3.1.1|
+|chassisUuid|String|裸机设备UUID|2.6.0|
+|imageUuid|String|镜像UUID|2.6.0|
+|platform|String|系统平台|2.6.0|
+|state|String| |2.6.0|
+|status|String| |2.6.0|
+|createDate|Timestamp|创建时间|2.6.0|
+|lastOpDate|Timestamp|最后一次修改时间|2.6.0|
+|bmNics|List|详情参考[bmNics](#p_ifq_ffz_3gc)|2.6.0|
+
+### bmNics
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|2.6.0|
+|baremetalInstanceUuid|String|裸机实例UUID|2.6.0|
+|l3NetworkUuid|String|分布式端口组UUID|2.6.0|
+|baremetalBondingUuid|String|BOND UUID|3.4.0|
+|mac|String|网卡MAC|2.6.0|
+|ip|String|IP地址|2.6.0|
+|netmask|String|子网掩码|2.6.0|
+|gateway|String|网关|2.6.0|
+|metadata|String| |2.6.0|
+|pxe|Boolean|是否PXE启动网卡|2.6.0|
+|createDate|Timestamp|创建时间|2.6.0|
+|lastOpDate|Timestamp|最后一次修改时间|2.6.0|
+
+## SDK示例
+Java SDK
+
+```
+RecoverBaremetalInstanceAction action = new RecoverBaremetalInstanceAction();
+action.uuid = "0a71736890e437928f90415a276ca245";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RecoverBaremetalInstanceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = RecoverBaremetalInstanceAction()
+action.uuid = "0a71736890e437928f90415a276ca245"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

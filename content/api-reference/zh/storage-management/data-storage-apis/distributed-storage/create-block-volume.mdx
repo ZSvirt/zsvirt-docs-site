@@ -1,0 +1,131 @@
+---
+title: "创建块存储卷"
+---
+
+<APIPage method="POST" path="/v1/block-volumes">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "example",
+    "description": "block volume test"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"example","description":"block volume test"}}' \
+http://localhost:8080/zstack/v1/block-volumes
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|name|String|body\(包含在`params`结构中\)|资源名称| |4.7.11|
+|description \(可选\)|String|body\(包含在`params`结构中\)|资源的详细描述| |4.7.11|
+|size|Long|body\(包含在`params`结构中\)|容量| |4.7.11|
+|primaryStorageUuid|String|body\(包含在`params`结构中\)|数据存储UUID| |4.7.11|
+|accessPathId|Integer|body\(包含在`params`结构中\)|访问路径id| |4.7.11|
+|accessPathIqn|String|body\(包含在`params`结构中\)|访问路径iqn| |4.7.11|
+|burstTotalBw \(可选\)|Long|body\(包含在`params`结构中\)|突发带宽| |4.7.11|
+|burstTotalIops \(可选\)|Long|body\(包含在`params`结构中\)|突发IOPS| |4.7.11|
+|maxTotalBw \(可选\)|Long|body\(包含在`params`结构中\)|最大带宽| |4.7.11|
+|maxTotalIops \(可选\)|Long|body\(包含在`params`结构中\)|最大IOPS| |4.7.11|
+|resourceUuid \(可选\)|String|body\(包含在`params`结构中\)|资源UUID| |4.7.11|
+|tagUuids \(可选\)|List|body\(包含在`params`结构中\)|标签UUID列表| |4.7.11|
+|systemTags \(可选\)|List|body|系统标签| |4.7.11|
+|userTags \(可选\)|List|body|用户标签| |4.7.11|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {}
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.7.11|
+|inventory|BlockVolumeInventory|详情参考[inventory](#p_d2n_cd2_s2c)|4.7.11|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_rh3_cd2_s2c)|4.7.11|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|iscsiPath|String| |4.7.11|
+|vendor|String| |4.7.11|
+|uuid|String|资源的UUID，唯一标示该资源|4.7.11|
+|name|String|资源名称|4.7.11|
+|description|String|资源的详细描述|4.7.11|
+|primaryStorageUuid|String|数据存储UUID|4.7.11|
+|vmInstanceUuid|String|虚拟机UUID|4.7.11|
+|diskOfferingUuid|String|硬盘规格UUID|4.7.11|
+|rootImageUuid|String| |4.7.11|
+|installPath|String| |4.7.11|
+|type|String| |4.7.11|
+|format|String| |4.7.11|
+|size|Long| |4.7.11|
+|actualSize|Long| |4.7.11|
+|deviceId|Integer| |4.7.11|
+|state|String| |4.7.11|
+|status|String| |4.7.11|
+|createDate|Timestamp|创建时间|4.7.11|
+|lastOpDate|Timestamp|最后一次修改时间|4.7.11|
+|isShareable|Boolean| |4.7.11|
+|volumeQos|String| |4.7.11|
+|lastDetachDate|Timestamp| |4.7.11|
+|lastVmInstanceUuid|String| |4.7.11|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+CreateBlockVolumeAction action = new CreateBlockVolumeAction();
+action.name = "example";
+action.description = "block volume test";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateBlockVolumeAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateBlockVolumeAction action = CreateBlockVolumeAction()
+action.name = "example"
+action.description = "block volume test"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateBlockVolumeAction.Result res = action.call()
+```
+
+</APIPage>

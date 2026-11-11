@@ -1,0 +1,16 @@
+---
+title: "How do I resolve a live migration failure for a virtual machine using shared storage with CPU mode set to host-passthrough, within the same cluster?"
+---
+
+## Symptom
+The following error appears during migration:
+
+```
+Assertion `ret == cpu >kvm_msr_buf->nmsrs`failed
+```
+
+## Cause
+The CPU model of the destination host differs from the CPU model of the source host.
+
+## Solution
+-   Migrate the virtual machine to a host with the same CPU model, or shut down the virtual machine before migrating.

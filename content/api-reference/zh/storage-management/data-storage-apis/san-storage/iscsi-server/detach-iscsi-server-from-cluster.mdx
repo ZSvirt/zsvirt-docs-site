@@ -1,0 +1,169 @@
+---
+title: "将iSCSI服务器从集群卸载"
+---
+
+<APIPage method="DELETE" path="/v1/clusters/{clusterUuid}/storage-devices/iscsi/servers/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/clusters/81ecbd4ae7c9346aa3225592441c36df/storage-devices/iscsi/servers/132d1caceecd3847b30bd901485ccc44
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|iSCSI服务器的UUID| |3.0.0|
+|clusterUuid|String|url|集群UUID| |3.0.0|
+|systemTags \(可选\)|List|body| | |3.0.0|
+|userTags \(可选\)|List|body| | |3.0.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "2c42d5e271e93a91a4467bf936a21018",
+    "ip": "10.0.0.201",
+    "port": 3260.0,
+    "chapUserName": "username",
+    "chapUserPassword": "password",
+    "state": "Enabled",
+    "iscsiTargets": [
+      {
+        "iscsiServerUuid": "2c42d5e271e93a91a4467bf936a21018",
+        "uuid": "84fb04ce8ac03803b99cab5cccd831d1",
+        "iqn": "iqn.2018-01.io.cloud:tsn.00001",
+        "state": "Enabled",
+        "iscsiLuns": [
+          {
+            "uuid": "44d2c6a338123031a55ce32f102432af",
+            "iscsiTargetUuid": "84fb04ce8ac03803b99cab5cccd831d1",
+            "wwid": "36b083fe000daf018000015505abbe00a",
+            "vendor": "DELL",
+            "model": "MD32xx",
+            "wwn": "0x6b083fe000daf018",
+            "serial": "6b083fe000daf018000015505abbe00a",
+            "hctl": "6:0:1:1",
+            "type": "mpath",
+            "path": "ip-0.0.0.201:3260-iscsi-iqn.2018-01.io.cloud:tsn.00001-lun-0",
+            "size": 30003188203520.0,
+            "multipathDeviceUuid": "36b083fe000daf018000015505abbe00a"
+          }
+        ],
+        "createDate": "Nov 14, 2017 10:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+      }
+    ],
+    "iscsiClusterRefs": [
+      {
+        "id": 1.0,
+        "iscsiServerUuid": "2c42d5e271e93a91a4467bf936a21018",
+        "clusterUuid": "ced139d5eded3049bbfe8364804fa8c0",
+        "createDate": "Nov 14, 2017 10:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+      }
+    ],
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_bcg_wsd_z2b)|3.0.0|
+|inventory|IscsiServerInventory|详情参考[inventory](#p_b5m_wsd_z2b)|3.0.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.0.0|
+|description|String|错误的概要描述|3.0.0|
+|details|String|错误的详细信息|3.0.0|
+|elaboration|String|保留字段，默认为null|3.0.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.0.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.0.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.0.0|
+|name|String|资源名称|3.0.0|
+|ip|String|IP地址|3.0.0|
+|port|Integer|端口|3.0.0|
+|chapUserName|String|CHAP用户名|3.0.0|
+|chapUserPassword|String|CHAP密码|3.0.0|
+|state|String|启用状态|3.0.0|
+|createDate|Timestamp|创建时间|3.0.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.0.0|
+|iscsiTargets|List|详情参考[iscsiTargets](#p_zts_wsd_z2b)|3.0.0|
+|iscsiClusterRefs|List|详情参考[iscsiClusterRefs](#p_lzd_xsd_z2b)|3.0.0|
+
+### iscsiTargets
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|iscsiServerUuid|String|iSCSI服务器UUID|3.0.0|
+|uuid|String|资源的UUID，唯一标示该资源|3.0.0|
+|iqn|String|iSCSI IQN|3.0.0|
+|createDate|Timestamp|创建时间|3.0.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.0.0|
+|iscsiLuns|List|详情参考[iscsiLuns](#p_a5y_wsd_z2b)|3.0.0|
+
+### iscsiLuns
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.0.0|
+|iscsiTargetUuid|String|iSCSI目标UUID|3.0.0|
+|wwid|String|唯一识别ID|3.0.0|
+|vendor|String|设备供应商|3.0.0|
+|model|String|设备型号|3.0.0|
+|wwn|String|设备WWN|3.0.0|
+|serial|String|设备序列号|3.0.0|
+|hctl|String|SCSI设备HCTL|3.0.0|
+|type|String|设备类型|3.0.0|
+|path|String|设备路径|3.0.0|
+|size|Long|设备大小|3.0.0|
+|createDate|Timestamp|创建时间|3.0.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.0.0|
+
+### iscsiClusterRefs
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|iscsiServerUuid|String| |3.0.0|
+|clusterUuid|String|集群UUID|3.0.0|
+|createDate|Timestamp|创建时间|3.0.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.0.0|
+
+## SDK示例
+Java SDK
+
+```
+DetachIscsiServerFromClusterAction action = new DetachIscsiServerFromClusterAction();
+action.uuid = "132d1caceecd3847b30bd901485ccc44";
+action.clusterUuid = "81ecbd4ae7c9346aa3225592441c36df";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DetachIscsiServerFromClusterAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DetachIscsiServerFromClusterAction action = DetachIscsiServerFromClusterAction()
+action.uuid = "132d1caceecd3847b30bd901485ccc44"
+action.clusterUuid = "81ecbd4ae7c9346aa3225592441c36df"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DetachIscsiServerFromClusterAction.Result res = action.call()
+```
+
+</APIPage>

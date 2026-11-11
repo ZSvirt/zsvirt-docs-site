@@ -1,0 +1,99 @@
+---
+title: "DetachL2NetworkFromCluster"
+---
+
+## API Request
+URLs
+
+```
+DELETE/v1/l2-networks/{l2NetworkUuid}/clusters/{clusterUuid}
+```
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Sample
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/l2-networks/baef7db345553050846947bb2d818be0/clusters/2fb51e7e35d339c4bac77819a9c4fea1?
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|l2NetworkUuid|String|url|The port group Distributed Switch UUID.| |0.6|
+|clusterUuid|String|url|The cluster UUID.| |0.6|
+|systemTags \(Optional\)|List|body|Optional. The system tags.| |0.6|
+|userTags \(Optional\)|List|body|Optional. The user tags.| |0.6|
+
+## API Response
+Sample Response
+
+```
+{
+  "inventory": {
+    "vlan": 10,
+    "name": "Test-Net",
+    "description": "Test",
+    "zoneUuid": "7a531508c19d396d84abeda34b83d946",
+    "physicalInterface": "eth0",
+    "type": "L2VlanNetwork"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|The error code. If not null, the operation fails, or vice versa. For more information, see [error](#p_ukg_4sg_m1b).|0.6|
+|inventory|L2NetworkInventory|See [inventory](#p_tfk_4sg_m1b).|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code, which is a numbered or alphanumeric code that specifies an error. For example, SYS.1000, HOST.1001.|4.8.0|
+|description|String|The brief description of the error.|4.8.0|
+|details|String|The details about the error.|4.8.0|
+|elaboration|String|The reserved field. Default value: null.|4.8.0|
+|opaque|LinkedHashMap|The reserved field. Default value: null.|4.8.0|
+|cause|ErrorCode|The root error, which is the associated root cause of the current error. If no root error exists, this parameter is null.|4.8.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The resource UUID.|4.8.0|
+|name|String|The resource name.|4.8.0|
+|description|String|The detailed description of the resource.|4.8.0|
+|zoneUuid|String|The Data Center UUID.|4.8.0|
+|physicalInterface|String|The physical NIC.|4.8.0|
+|type|String|The Distributed Switch type.|4.8.0|
+|createDate|Timestamp|The creation date.|4.8.0|
+|lastOpDate|Timestamp|The last operation date.|4.8.0|
+|attachedClusterUuids|List| |4.8.0|
+
+## **SDK Sample**
+Java SDK
+
+```
+DetachL2NetworkFromClusterAction action = new DetachL2NetworkFromClusterAction();
+action.l2NetworkUuid = "baef7db345553050846947bb2d818be0";
+action.clusterUuid = "2fb51e7e35d339c4bac77819a9c4fea1";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DetachL2NetworkFromClusterAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DetachL2NetworkFromClusterAction action = DetachL2NetworkFromClusterAction()
+action.l2NetworkUuid = "baef7db345553050846947bb2d818be0"
+action.clusterUuid = "2fb51e7e35d339c4bac77819a9c4fea1"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DetachL2NetworkFromClusterAction.Result res = action.call()
+```

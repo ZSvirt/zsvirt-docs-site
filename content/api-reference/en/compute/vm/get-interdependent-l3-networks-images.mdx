@@ -1,0 +1,127 @@
+---
+title: "Get Interdependent Images and Distributed Port Groups"
+---
+
+<APIPage method="GET" path="/v1/images-l3networks/dependencies">
+
+ZSvirt In ZStack, a Distributed Port Group belongs to a Data Center, and the Image Storage where Images are stored can be attached to one or more Data Centers. There are also dependencies between Image Storage and Clusters. For example, Distributed Image Storage can only work with Distributed Storage. Due to these dependencies, when creating a Virtual Machine, the specified Distributed Port Group and Image may not be able to work together. Users can use this API to get the interdependencies between Images or Distributed Port Groups.
+
+When the **l3NetworkUuids** parameter is specified, the returned list is Images that can work with these Distributed Port Groups.
+
+When the **imageUuid** parameter is specified, the returned list is Distributed Port Groups that can work with this Image.
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/images-l3networks/dependencies?zoneUuid=97c8f8e07cf23b8789f910cdd7221dda&imageUuid=f3081ae6203d30c49ca7194d6d07f412&raiseException=true
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|zoneUuid|String|query|Data Center UUID. Required, to determine the dependency between Distributed Port Groups and Images.| |0.6|
+|l3NetworkUuids \(Optional\)|List|query|Distributed Port Group UUID list| |0.6|
+|imageUuid \(Optional\)|String|query|Image UUID| |0.6|
+|raiseException \(Optional\)|boolean|query|Whether to raise an exception| |4.6.11|
+|systemTags \(Optional\)|List|query|System Tag| |0.6|
+|userTags \(Optional\)|List|query|User Tag| |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "961b708c480a3f5ba605defbee45eb36",
+      "name": "private L3",
+      "type": "L3BasicNetwork",
+      "zoneUuid": "c0904ef326bf3cc1b69056d1bcf4282d",
+      "l2NetworkUuid": "a6ea56d5a589322082a4b7df3e135aeb",
+      "state": "Enabled",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM",
+      "ipRanges": [
+        {
+          "uuid": "516e170a56283a5bb9fa20f262b17bd0",
+          "l3NetworkUuid": "961b708c480a3f5ba605defbee45eb36",
+          "name": "ip range",
+          "startIp": "192.168.0.10",
+          "endIp": "192.168.0.100",
+          "netmask": "255.255.255.0",
+          "gateway": "192.168.0.1",
+          "createDate": "Nov 14, 2017 10:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+        }
+      ],
+      "networkServices": [
+        {
+          "l3NetworkUuid": "961b708c480a3f5ba605defbee45eb36",
+          "networkServiceProviderUuid": "8b31ada3e7703ae38b43a2b6f9617f96",
+          "networkServiceType": "DHCP"
+        },
+        {
+          "l3NetworkUuid": "961b708c480a3f5ba605defbee45eb36",
+          "networkServiceProviderUuid": "8b31ada3e7703ae38b43a2b6f9617f96",
+          "networkServiceType": "DNS"
+        },
+        {
+          "l3NetworkUuid": "961b708c480a3f5ba605defbee45eb36",
+          "networkServiceProviderUuid": "8b31ada3e7703ae38b43a2b6f9617f96",
+          "networkServiceType": "SNAT"
+        }
+      ]
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|inventories|List|If the input parameter is **l3NetworkUuids**, this is the Image list; if the input parameter is **imageUuid**, this is the Distributed Port Group list|0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation is successful. For details, see [error](#p_mwx_f3j_zz)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause. The source error that caused the current error. If there is no original error, this field is null|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+GetInterdependentL3NetworksImagesAction action = new GetInterdependentL3NetworksImagesAction();
+action.zoneUuid = "97c8f8e07cf23b8789f910cdd7221dda";
+action.imageUuid = "f3081ae6203d30c49ca7194d6d07f412";
+action.raiseException = true;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetInterdependentL3NetworksImagesAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetInterdependentL3NetworksImagesAction action = GetInterdependentL3NetworksImagesAction()
+action.zoneUuid = "97c8f8e07cf23b8789f910cdd7221dda"
+action.imageUuid = "f3081ae6203d30c49ca7194d6d07f412"
+action.raiseException = true
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetInterdependentL3NetworksImagesAction.Result res = action.call()
+```
+
+</APIPage>

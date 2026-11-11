@@ -1,0 +1,9 @@
+{
+  "title": "Add a Bare Metal Chassis",
+  "pages": [
+    "index",
+    "manual",
+    "import-template"
+  ],
+  "pagesIndex": "index"
+}

@@ -1,0 +1,10 @@
+{
+  "title": "规划与准备",
+  "pages": [
+    "index",
+    "hardware-requirements",
+    "network-planning",
+    "server-configuration"
+  ],
+  "pagesIndex": "index"
+}

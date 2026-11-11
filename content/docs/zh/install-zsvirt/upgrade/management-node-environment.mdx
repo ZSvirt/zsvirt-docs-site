@@ -1,0 +1,65 @@
+---
+title: "升级管理节点环境"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+本章节以 H84r 为例，介绍如何升级管理节点环境。
+
+## 操作步骤
+
+1.  查看当前环境版本以及操作系统版本。
+
+    ```
+    [root@localhost ~]# zstack-ctl status
+    [root@localhost ~]# cat /etc/redhat-release
+    ```
+
+2.  获取安装升级包。
+
+    按需下载 zstack-upgrade 脚本、ISO软件包、安装升级包以及管理节点高可用套件。
+
+3.  关闭高可用策略。
+
+    升级前需关闭虚拟机高可用全局开关，避免意外触发虚拟机高可用影响升级。升级完成后再手动开启高可用策略。
+
+    1.  登录 ZSvirt。
+
+    2.  点击**业务可靠** > **高可用策略**，进入高可用策略页面。
+
+    3.  关闭高可用策略开关。
+
+4.  备份数据库和升级脚本。
+
+    登录管理节点操作系统，分别执行以下命令备份数据库和升级脚本用于意外恢复。
+
+    ```
+    # 备份数据库至/var/lib/zstack/mysql-backup/目录
+    [root@localhost ~]# zstack-ctl dump_mysql --file-name zstack-db-backup
+    
+    # 备份升级脚本至/root/目录
+    [root@localhost ~]# cp /usr/local/bin/zstack-upgrade /root/zstack-upgrade-bk
+    ```
+
+5.  升级 ZSvirt。
+
+    ```
+    # 支持两种离线升级方式，推荐使用第一种:
+    # 第一种方式： 升级本地仓库和管理服务
+    [root@zstack-1 opt]# zstack-upgrade ZSvirt-x86_64-DVD-1.0.0-h84r.iso
+    
+    # 第二种方式： 先升级本地仓库再升级管理服务
+    [root@zstack-1 opt]# zstack-upgrade -r ZSvirt-x86_64-DVD-1.0.0-h84r.iso 
+    [root@zstack-1 opt]# bash ZSvirt-installer-1.0.0.bin -u -P MYSQL_ROOT_PASSWORD
+    ```
+
+    ### Note:
+
+    -   若数据库 root 密码采用系统默认密码， 则可省略`-P MYSQL_ROOT_PASSWORD`参数。
+    -   执行`zstack-upgrade`命令前需确认所准备的 ISO 是基于 H84r 版，避免使用其他 ISO 覆盖本地源。
+
+6.  手动清理浏览器缓存。
+
+    为了保证新功能能够正常使用，建议在升级完成后登录 UI 管理界面，按下`Ctrl+F5`或`Ctrl+Shift+R`手动清理浏览器缓存。
+
+7.  开启高可用策略。

@@ -1,0 +1,513 @@
+---
+title: "修改报警器"
+---
+
+<APIPage method="PUT" path="/v1/zwatch/alarms/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateAlarm": {
+    "name": "VM CPU Alarm",
+    "comparisonOperator": "LessThanOrEqualTo",
+    "period": 60.0,
+    "enableRecovery": true
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateAlarm":{"name":"VM CPU Alarm","comparisonOperator":"LessThanOrEqualTo","period":60.0,"enableRecovery":true}}' http://localhost:8080/zstack/v1/zwatch/alarms/28397feb3d083fdc9346edb066fbf589/actions
+```
+
+参数列表
+
+<table id="table_gfv_btj_p2b"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+资源的UUID，唯一标示该资源
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+name \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**updateAlarm**结构中\)
+
+</td><td>
+
+资源名称
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+description \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**updateAlarm**结构中\)
+
+</td><td>
+
+资源的详细描述
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+comparisonOperator \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**updateAlarm**结构中\)
+
+</td><td>
+
+阈值比较符
+
+</td><td>
+
+-   GreaterThanOrEqualTo
+-   GreaterThan
+-   LessThan
+-   LessThanOrEqualTo
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+period \(可选\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+body\(包含在**updateAlarm**结构中\)
+
+</td><td>
+
+阈值持续时间
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+threshold \(可选\)
+
+</td><td>
+
+Double
+
+</td><td>
+
+body\(包含在**updateAlarm**结构中\)
+
+</td><td>
+
+阈值
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+repeatInterval \(可选\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+body\(包含在**updateAlarm**结构中\)
+
+</td><td>
+
+报警重复时间
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+repeatCount \(可选\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+body\(包含在**updateAlarm**结构中\)
+
+</td><td>
+
+报警重复次数
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.3.0
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+repeatCount \(可选\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+body\(包含在**updateAlarm**结构中\)
+
+</td><td>
+
+报警重复次数
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.2
+
+</td></tr><tr><td>
+
+enableRecovery \(可选\)
+
+</td><td>
+
+Boolean
+
+</td><td>
+
+开启恢复通知
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.4.0
+
+</td></tr><tr><td>
+
+emergencyLevel \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**updateAlarm**结构中\)
+
+</td><td>
+
+报警等级
+
+</td><td>
+
+-   Emergent
+-   Important
+-   Normal
+
+</td><td>
+
+3.8.0
+
+</td></tr></tbody>
+</table>
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "33e642a1eb3c4f27a7da7acc5891de0a",
+    "name": "VM CPU Alarm",
+    "comparisonOperator": "LessThanOrEqualTo",
+    "period": 60.0,
+    "namespace": "ZStack/VM",
+    "metricName": "org.zstack.zwatch.datatype.Metric@22c0dd63",
+    "threshold": 30.0,
+    "repeatInterval": 1800.0,
+    "repeatCount": -1.0,
+    "status": "Alarm",
+    "state": "Enabled",
+    "createDate": "Jan 8, 2019 4:11:27 PM",
+    "lastOpDate": "Jan 8, 2019 4:11:27 PM",
+    "labels": [
+      {
+        "uuid": "c4da2db2fa454368a3a05016ae8c8070",
+        "key": "VMUuid",
+        "operator": "=",
+        "value": "396d863211e446938ea01eb10bc9fd18"
+      }
+    ],
+    "actions": [
+      {
+        "alarmUuid": "0d18a844bbf544bb914ab9287651f59f",
+        "actionType": "sns",
+        "actionUuid": "17b884822b284e6e9a0b67307a28955c"
+      }
+    ]
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_ud1_ntj_p2b)|2.3|
+|inventory|AlarmInventory|详情参考[inventory](#p_clx_ntj_p2b)|2.3|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|2.3|
+|description|String|错误的概要描述|2.3|
+|details|String|错误的详细信息|2.3|
+|elaboration|String|保留字段，默认为null|2.3|
+|opaque|LinkedHashMap|保留字段，默认为null|2.3|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|2.3|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|2.3|
+|name|String|资源名称|2.3|
+|description|String|资源的详细描述|2.3|
+|period|Integer|阈值持续时间|2.3|
+|namespace|String|名字空间|2.3|
+|metricName|String|监控项名称|2.3|
+|threshold|Double|阈值|2.3|
+|repeatInterval|Integer|报警重复时间|2.3|
+|enableRecovery|Boolean|开启恢复通知|3.4.0|
+|createDate|Timestamp|创建时间|2.3|
+|lastOpDate|Timestamp|最后一次修改时间|2.3|
+|comparisonOperator|ComparisonOperator|详情参考[comparisonOperator](#p_hlp_ptj_p2b)|2.3|
+|status|AlarmStatus|详情参考[status](#p_ipd_rtj_p2b)|2.3|
+|labels|List|详情参考[labels](#p_f2r_stj_p2b)|2.3|
+|actions|List|详情参考[actions](#p_thw_ttj_p2b)|2.3|
+
+### comparisonOperator
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|name|String|资源名称|2.3|
+|ordinal|int| |2.3|
+
+### status
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|OK|AlarmStatus|监控中|2.3|
+|Alarm|AlarmStatus|已触发|2.3|
+|InsufficientData|AlarmStatus|数据不足|2.3|
+
+### labels
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|2.3|
+|key|String|标签键|2.3|
+|operator|String|比较符|2.3|
+|value|String|标签值|2.3|
+
+### actions
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|alarmUuid|String|报警器UUID|2.3|
+|actionType|String|报警动作类型|2.3|
+|actionUuid|String|报警动作UUID|2.3|
+
+## SDK示例
+Java SDK
+
+```
+UpdateAlarmAction action = new UpdateAlarmAction();
+action.uuid = "28397feb3d083fdc9346edb066fbf589";
+action.name = "VM CPU Alarm";
+action.comparisonOperator = "LessThanOrEqualTo";
+action.period = 60.0;
+action.enableRecovery = true;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateAlarmAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateAlarmAction action = UpdateAlarmAction()
+action.uuid = "28397feb3d083fdc9346edb066fbf589"
+action.name = "VM CPU Alarm"
+action.comparisonOperator = "LessThanOrEqualTo"
+action.period = 60.0
+action.enableRecovery = true
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateAlarmAction.Result res = action.call()
+```
+
+</APIPage>

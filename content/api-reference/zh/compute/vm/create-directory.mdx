@@ -1,0 +1,124 @@
+---
+title: "创建资源分组目录"
+---
+
+<APIPage method="POST" path="/v1/create/directory">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "directory",
+    "parentUuid": "a76994f58191389da72d093afdad61c7",
+    "zoneUuid": "64a7b0eae75d336cb6954c6efedc79dc",
+    "type": "default"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"directory","parentUuid":"a76994f58191389da72d093afdad61c7","zoneUuid":"64a7b0eae75d336cb6954c6efedc79dc","type":"default"}}' http://localhost:8080/zstack/v1/create/directory
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|name|String|body\(包含在**params**结构中\)|资源名称| |4.6.0|
+|parentUuid \(可选\)|String|body\(包含在**params**结构中\)|父级目录UUID| |4.6.0|
+|zoneUuid|String|body\(包含在**params**结构中\)|数据中心UUID| |4.6.0|
+|type|String|body\(包含在**params**结构中\)| | |4.6.0|
+|resourceUuid \(可选\)|String|body\(包含在**params**结构中\)|资源UUID| |4.6.0|
+|tagUuids \(可选\)|List|body\(包含在**params**结构中\)|标签UUID列表| |4.6.0|
+|systemTags \(可选\)|List|body|系统标签| |4.6.0|
+|userTags \(可选\)|List|body|用户标签| |4.6.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "ac818da023833bcd83728b6374c2a4f0",
+    "name": "test",
+    "groupName": "admin/first/second",
+    "parentUuid": "d6e5792bd4ef374ba99948ae83d3a7c3",
+    "rootDirectoryUuid": "cf6a11447d5f38dd95a91cc392105b16",
+    "zoneUuid": "3714f0cd0f3233dc96dc5fec67886c29",
+    "type": "default"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.6.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_rx5_n2s_zz)|4.6.0|
+|inventory|VmInstanceInventory|详情参考[inventory](#p_e23_42s_zz)|4.6.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.6.0|
+|description|String|错误的概要描述|4.6.0|
+|details|String|错误的详细信息|4.6.0|
+|elaboration|String|保留字段，默认为null|4.6.0|
+|opaque|LinkedHashMap|保留字段，默认为null|4.6.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.6.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.6.0|
+|name|String|资源名称|4.6.0|
+|groupName|String|所属分组|4.6.0|
+|parentUuid|String|父级目录UUID|4.6.0|
+|rootDirectoryUuid|String|根目录UUID|4.6.0|
+|zoneUuid|String|数据中心UUID|4.6.0|
+|type|String|目录类型|4.6.0|
+|createDate|Timestamp|创建时间|4.6.0|
+|lastOpDate|Timestamp|最后一次修改时间|4.6.0|
+
+## SDK示例
+Java SDK
+
+```
+CreateDirectoryAction action = new CreateDirectoryAction();
+action.name = "directory";
+action.parentUuid = "a76994f58191389da72d093afdad61c7";
+action.zoneUuid = "64a7b0eae75d336cb6954c6efedc79dc";
+action.type = "default";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateDirectoryAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateDirectoryAction action = CreateDirectoryAction()
+action.name = "directory"
+action.parentUuid = "a76994f58191389da72d093afdad61c7"
+action.zoneUuid = "64a7b0eae75d336cb6954c6efedc79dc"
+action.type = "default"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateDirectoryAction.Result res = action.call()
+```
+
+</APIPage>

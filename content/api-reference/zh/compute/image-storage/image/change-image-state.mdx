@@ -1,0 +1,259 @@
+---
+title: "修改镜像状态"
+---
+
+<APIPage method="PUT" path="/v1/images/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "changeImageState": {
+    "stateEvent": "disable"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"changeImageState":{"stateEvent":"disable"}}' \
+http://localhost:8080/zstack/v1/images/5a4e7e1f1a653505925da09d0a64936b/actions
+```
+
+参数列表
+
+<table id="table_en4_1td_l1b"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+镜像的UUID，唯一标示该镜像
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+stateEvent
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+镜像的状态
+
+</td><td>
+
+-   enable
+-   disable
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr></tbody>
+</table>
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "e4891e6ef3a64ea08ce91ab379a5c856",
+    "name": "TinyLinux",
+    "url": "http://192.168.1.20/share/images/tinylinux.qcow2",
+    "mediaType": "RootVolumeTemplate",
+    "platform": "Linux",
+    "format": "qcow2",
+    "backupStorageRefs": [
+      {
+        "id": 0.0,
+        "imageUuid": "e4891e6ef3a64ea08ce91ab379a5c856",
+        "backupStorageUuid": "8bf8f2f17e7c4cca8d684ae5d89eee9e",
+        "installPath": "ceph://zs-images/f0b149e053b34c7eb7fe694b182ebffd",
+        "status": "Ready"
+      }
+    ]
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_cwn_hyd_l1b)|0.6|
+|inventory|ImageInventory|详情参考[inventory](#p_awv_jyd_l1b)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|name|String|资源名称|0.6|
+|description|String|资源的详细描述|0.6|
+|state|String| |0.6|
+|status|String| |0.6|
+|size|Long| |0.6|
+|actualSize|Long| |0.6|
+|md5Sum|String| |0.6|
+|url|String| |0.6|
+|mediaType|String| |0.6|
+|guestOsType|String| |0.6|
+|type|String| |0.6|
+|platform|String| |0.6|
+|format|String| |0.6|
+|system|Boolean| |0.6|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+|backupStorageRefs|List|详情参考[backupStorageRefs](#p_fm1_3yd_l1b)|0.6|
+
+### backupStorageRefs
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|imageUuid|String|镜像UUID|0.6|
+|backupStorageUuid|String|镜像存储UUID|0.6|
+|installPath|String| |0.6|
+|exportUrl|String| |0.6|
+|exportMd5Sum|String| |0.6|
+|status|String| |0.6|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+
+## SDK示例
+Java SDK
+
+```
+ChangeImageStateAction action = new ChangeImageStateAction();
+action.uuid = "d6d3cf3feace41ae9fe519fcfdf337e1";
+action.stateEvent = "disable";
+action.sessionId = "e510317dfbf64f7c9423652cefba6583";
+ChangeImageStateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ChangeImageStateAction action = ChangeImageStateAction()
+action.uuid = "d33d29f7695a4376a9a37a094f89d9f2"
+action.stateEvent = "disable"
+action.sessionId = "ae3587d0cbf844c2921a97798d4dc37b"
+ChangeImageStateAction.Result res = action.call()
+```
+
+</APIPage>

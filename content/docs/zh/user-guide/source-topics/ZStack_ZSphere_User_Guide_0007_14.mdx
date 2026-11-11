@@ -1,0 +1,86 @@
+---
+title: "集群|数据存储|镜像存储关系详解"
+---
+
+## 集群与数据存储
+
+集群与数据存储均属于数据中心下子资源，二者为兄弟关系。数据存储需加载至集群后才可为集群中虚拟机提供存储服务。不同类型的数据存储加载至集群的数量限制关系不同，如下表所示：
+
+<table class="doc-feature-table">
+  <thead>
+    <tr>
+      <th>资源 A</th>
+      <th>资源 B</th>
+      <th>资源 A 与 B 数量关系</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowSpan="6">集群</td>
+      <td>本地存储</td>
+      <td>1:n</td>
+    </tr>
+    <tr>
+      <td>NFS 存储</td>
+      <td>1:n</td>
+    </tr>
+    <tr>
+      <td>SAN存储</td>
+      <td>1:n</td>
+    </tr>
+    <tr>
+      <td>本地存储 + NFS 存储</td>
+      <td>1:(1 个本地存储 + 1 个 NFS 存储)</td>
+    </tr>
+    <tr>
+      <td>本地存储 + SAN 存储</td>
+      <td>1:(n 个本地存储 + n 个 SAN 存储)</td>
+    </tr>
+    <tr>
+      <td>NFS 存储 + SAN 存储</td>
+      <td>1:(n 个 NFS 存储 + n 个 SAN 存储)</td>
+    </tr>
+  </tbody>
+</table>
+
+## 数据存储与镜像存储
+
+镜像存储加载至数据中心后，将为数据中心内的集群提供镜像存储服务。不同类型的镜像存储需配合对应类型的数据存储才支持在集群中新建虚拟机等操作。具体组合限制关系如下表：
+
+<table class="doc-feature-table">
+  <thead>
+    <tr>
+      <th>镜像存储类型</th>
+      <th>数据存储类型</th>
+      <th>是否支持新建虚拟机</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowSpan="3">单机镜像仓库</td>
+      <td>本地存储</td>
+      <td>是</td>
+    </tr>
+    <tr>
+      <td>NFS 存储</td>
+      <td>是</td>
+    </tr>
+    <tr>
+      <td>SAN 存储</td>
+      <td>是</td>
+    </tr>
+    <tr>
+      <td rowSpan="3">分布式镜像仓库</td>
+      <td>本地存储</td>
+      <td>否</td>
+    </tr>
+    <tr>
+      <td>NFS 存储</td>
+      <td>否</td>
+    </tr>
+    <tr>
+      <td>SAN 存储</td>
+      <td>否</td>
+    </tr>
+  </tbody>
+</table>

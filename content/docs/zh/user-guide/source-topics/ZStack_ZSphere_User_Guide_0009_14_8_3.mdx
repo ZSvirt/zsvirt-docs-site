@@ -1,0 +1,25 @@
+---
+title: "通过 SSH 访问虚拟机"
+---
+
+使用 SSH 连接协议访问虚拟机。
+
+-   本地电脑（登录端）有对目标虚拟机的网络连接和 root 访问权限。
+-   （可选）根据业务按需配置 SSH Key 免密登录和虚拟机密码，有关更多信息，请参阅 [配置登录认证](/docs/user-guide/source-topics/ZStack_ZSphere_User_Guide_0009_14_8_1)。
+
+1.  在本地电脑上，使用远程登录软件直接登录虚拟机。
+
+    ```
+    # ssh root@192.0.2.1
+    root@192.0.2.1's password:
+    Last login: Mon Sep 24 12:05:36 2021
+    root~#
+    ```
+
+2.  如需使用 SSH 私钥登录虚拟机，需先将 SSH 公钥添加至目标虚拟机，然后在登录端执行以下命令：
+
+    ```
+    # ssh -i ${private_key.pem} ${UserName}@${IpAddress}
+    ```
+
+    其中，`${private_key.pem}`是私钥文件路径，`${UserName}`是登录用户名，`${IpAddress}`是目标虚拟机的 IP 地址。

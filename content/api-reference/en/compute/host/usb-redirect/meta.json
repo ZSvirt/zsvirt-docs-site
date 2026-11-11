@@ -1,0 +1,8 @@
+{
+  "title": "USB Redirect Related Interfaces",
+  "pages": [
+    "get-vm-usb-redirect",
+    "usb-passthrough"
+  ],
+  "pagesIndex": "index"
+}

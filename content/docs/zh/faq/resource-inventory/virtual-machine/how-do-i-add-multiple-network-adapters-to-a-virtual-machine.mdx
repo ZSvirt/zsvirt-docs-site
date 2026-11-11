@@ -1,0 +1,28 @@
+---
+title: "如何在一个虚拟机上添加多块网卡？"
+---
+
+## 现象
+创建虚拟机时，可能会遇到一个虚拟机挂载多个网络的情况，此时进入虚拟机控制台可查看到多块网卡，但没有查看到IP地址。
+
+## 原因
+每个网络对虚拟机来说就是一块网卡，加载网络至虚拟机上，等价于将一块物理网卡插到一台服务器上。因此使用 `ifconfig`命令就能看到eth设备了。如果没有看到IP地址，表明网卡没有配置好。
+
+## 解决方案
+1.  请仿照eth0的配置文件，为新网卡创建配置文件。以下示例是Centos 7.2环境，其他版本Linux路径和文件可能有变化：
+2.  在控制台中依次执行以下命令，拷贝一份eth0配置文件：
+
+    ```
+    # 将配置文件中的eth0替换为eth1,并删除其中的uuid信息
+    cp /etc/sysconfig/network-scripts/ifcfg-eth0 /etc/sysconfig/network-scripts/ifcfg-eth1 
+    sed -i 's/eth0/eth1/g' ifcfg-eth0
+    sed -i '/UUID*/d' /etc/sysconfig/network-scripts/ifcfg-eth1
+    ```
+
+3.  将网络重启生效：
+
+    ```
+    /etc/init.d/network restart
+    ```
+
+4.  使用`ifconfig`命令查看，新添加网卡可以查看到IP地址。如果在虚拟机上挂载多个网络，重复以上操作即可。

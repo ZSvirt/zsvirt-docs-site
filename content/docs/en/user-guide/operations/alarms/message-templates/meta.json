@@ -1,0 +1,9 @@
+{
+  "title": "Message Template",
+  "pages": [
+    "index",
+    "create",
+    "manage"
+  ],
+  "pagesIndex": "index"
+}

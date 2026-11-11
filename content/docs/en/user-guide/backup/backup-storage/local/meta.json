@@ -1,0 +1,10 @@
+{
+  "title": "Add a Local Backup Storage",
+  "pages": [
+    "index",
+    "reuse-image-storage",
+    "reuse-host",
+    "dedicated-backup-storage"
+  ],
+  "pagesIndex": "index"
+}

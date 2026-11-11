@@ -1,0 +1,76 @@
+---
+title: "Detach USB Device from VM"
+---
+
+<APIPage method="POST" path="/v1/usb-device/usb-devices/{usbDeviceUuid}/detach">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The **systemTags** and **userTags** fields can be omitted in the above example. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{}}' \
+http://localhost:8080/zstack/v1/usb-device/usb-devices/17a5e98e5f943e8fafa01602d50cf3ad/detach
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|usbDeviceUuid|String|url|USB device UUID| |2.2|
+|systemTags \(Optional\)|List|body|System tags| |2.2|
+|userTags \(Optional\)|List|body|User tags| |2.2|
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DetachUsbDeviceFromVmAction action = new DetachUsbDeviceFromVmAction();
+action.usbDeviceUuid = "5256c889e9f0489e8fd12b66d176fb7d";
+action.sessionId = "8082962f2d304a3fbee969e6b4749338";
+DetachUsbDeviceFromVmAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DetachUsbDeviceFromVmAction action = DetachUsbDeviceFromVmAction()
+action.usbDeviceUuid = "ced1bbb139c54d1d973ddc38ae565244"
+action.sessionId = "f6550a168b9847fca4c98df088d86c09"
+DetachUsbDeviceFromVmAction.Result res = action.call()
+```
+
+</APIPage>

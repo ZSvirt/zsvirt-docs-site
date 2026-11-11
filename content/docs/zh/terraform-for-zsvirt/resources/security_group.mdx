@@ -1,0 +1,50 @@
+---
+title: 'zsphere_security_group'
+description: '管理 ZSvirt 安全组及其访问规则。'
+---
+
+<HistoricalNamingNote locale="zh" />
+
+
+# zsphere_security_group（资源）
+
+管理 ZSvirt 安全组及其访问规则。
+
+
+
+## 参数说明
+
+### 必填参数
+
+- `name`（字符串）安全组名称。
+
+### 可选参数
+
+- `description`（字符串）安全组描述。
+- `l3_network_uuids`（字符串列表）UUIDs of L3 networks to attach the security group to.
+- `rules`（块列表）（参见下方嵌套结构）
+- `vm_nic_uuids`（字符串列表）UUIDs of VM nics to bind to the security group.
+
+### 只读属性
+
+- `attached_l3_network_uuids`（字符串列表）安全组绑定的三层网络 UUID 列表。
+- `ip_version`（数字）IP 版本（4 或 6）。
+- `state`（字符串）安全组状态。
+- `uuid`（字符串）安全组 UUID。
+
+<a id="nestedblock--rules"></a>
+### `rules` 嵌套结构
+
+可选参数：
+
+- `action`（字符串）规则动作：ACCEPT 或 DROP。
+- `allowed_cidr`（字符串）允许的 CIDR 网段。
+- `description`（字符串）规则描述。
+- `dst_ip_range`（字符串）目标 IP 范围。
+- `dst_port_range`（字符串）Destination port range (e.g., '22' or '80-443').
+- `priority`（数字）规则优先级。
+- `protocol`（字符串）协议：TCP、UDP、ICMP 或 ALL。
+- `remote_security_group_uuid`（字符串）远端安全组 UUID。
+- `src_ip_range`（字符串）源 IP 范围。
+- `state`（字符串）规则状态：Enabled 或 Disabled。
+- `type`（字符串）规则类型：Ingress 或 Egress。

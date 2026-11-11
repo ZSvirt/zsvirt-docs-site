@@ -1,0 +1,116 @@
+---
+title: "Query Image Package"
+---
+
+<APIPage method="GET" path="/v1/image-packages">
+
+```
+GET zstack/v1/image-packages/{uuid}
+```
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/image-packages?q=uuid=7cd2f1b456ce3045b78d3c1eb58cc03d
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/image-packages/1c57c91becf431f3b098800fc900c708
+```
+
+Queryable Fields
+
+Run the CLI command tool, enter `QueryImagePackage` and press Tab to view all queryable fields and resource names that support cross-table queries.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "e97e03503a5d3bf19a23f91c9a79e009",
+      "name": "ova",
+      "description": "description",
+      "vmUuid": "b3da643979eb3452abbeb978208cb672",
+      "backupStorageUuid": "6185f4e18a993ece84a06ec8c469b530",
+      "state": "Exported",
+      "exportUrl": "http://bs-host-name/path/to/ova.ova",
+      "md5Sum": "sampleMd5Sum",
+      "format": "OVA",
+      "size": 10737418240.0,
+      "createDate": "May 10, 2022 5:26:20 AM",
+      "lastOpDate": "May 10, 2022 5:26:20 AM"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.4.6|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_sry_hp2_wmb)|4.4.6|
+|inventories|List|See [inventories](#p_ks2_kp2_wmb)|4.4.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|4.4.6|
+|description|String|Brief description of the error|4.4.6|
+|details|String|Detailed error information|4.4.6|
+|elaboration|String|Reserved field, defaults to null|4.4.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|4.4.6|
+|cause|ErrorCode|Root cause. The source error that triggered the current error. This field is null if there is no original error|4.4.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|4.4.6|
+|name|String|Resource name|4.4.6|
+|description|String|Detailed description of the resource|4.4.6|
+|vmUuid|String|Source VM UUID|4.4.6|
+|backupStorageUuid|String|Image Storage UUID where the Image Package file is located|4.4.6|
+|exportUrl|String|Download URL|4.4.6|
+|md5Sum|String|Image Package file MD5 checksum|4.4.6|
+|format|String|Image Package file format|4.4.6|
+|size|Long|Image Package file size|4.4.6|
+|createDate|Timestamp|Creation time|4.4.6|
+|lastOpDate|Timestamp|Last modification time|4.4.6|
+|state|ImagePackageState|See [state](#p_lqz_lp2_wmb)|4.4.6|
+
+### state
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Exporting|ImagePackageState|Exporting|4.4.6|
+|Exported|ImagePackageState|Exported|4.4.6|
+
+## SDK Examples
+Java SDK
+
+```
+QueryImagePackageAction action = new QueryImagePackageAction();
+action.conditions = asList("uuid=5319396fe8f0393d998ac6c0939e780e");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryImagePackageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryImagePackageAction action = QueryImagePackageAction()
+action.conditions = ["uuid=99435bfd7903372289db27c8a2b1038c"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryImagePackageAction.Result res = action.call()
+```
+
+</APIPage>

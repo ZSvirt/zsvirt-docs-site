@@ -1,0 +1,250 @@
+---
+title: "恢复已删除虚拟机"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/{uuid}/actions">
+
+恢复一个处于Destroyed状态的虚拟机。恢复后虚拟机处于Stopped状态并且没有IP地址。
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "recoverVmInstance": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"recoverVmInstance":{}}' \
+http://localhost:8080/zstack/v1/vm-instances/0eb6f6f88ff93da48cfc5bca0dbd5c18/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版|
+|---|---|---|---|---|---|
+|uuid|String|url|虚拟机UUID| |0.6|
+|systemTags \(可选\)|List|body|系统标签| |0.6|
+|userTags \(可选\)|List|body|用户标签| |0.6|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "1b3cdc92c630366285008630dc04cccf",
+    "name": "Test-VM",
+    "description": "web server VM",
+    "zoneUuid": "5e5e70ad37603682bffeeabb1f8ce2ab",
+    "clusterUuid": "eaa8bd07672b362e81fefddf492f3500",
+    "imageUuid": "f4054dad08253b9e815ca27816a6e6b1",
+    "hostUuid": "b274b64311aa3b25ab18d6afe7e62b47",
+    "lastHostUuid": "641b69d147fe37d58979c0bc0a8bb24b",
+    "instanceOfferingUuid": "f7e6c6ad82623a8d9076e09493a52103",
+    "rootVolumeUuid": "a7489a3011c233a4bd89c0b0ac9321bd",
+    "platform": "Linux",
+    "defaultL3NetworkUuid": "02f493cfb1873724949114b8a9bb85f7",
+    "type": "UserVm",
+    "hypervisorType": "KVM",
+    "memorySize": 8589934592,
+    "cpuNum": 1,
+    "allocatorStrategy": "LastHostPreferredAllocatorStrategy",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM",
+    "state": "Stopped",
+    "vmNics": [
+      {
+        "uuid": "0e912b741b5636fcbe4a6555d7ed3c83",
+        "vmInstanceUuid": "1b3cdc92c630366285008630dc04cccf",
+        "l3NetworkUuid": "02f493cfb1873724949114b8a9bb85f7",
+        "mac": "00:0c:29:bd:99:fc",
+        "hypervisorType": "KVM",
+        "deviceId": 0,
+        "state": "enable",
+        "createDate": "Nov 14, 2017 10:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+      }
+    ],
+    "allVolumes": [
+      {
+        "uuid": "a7489a3011c233a4bd89c0b0ac9321bd",
+        "name": "Root-Volume-For-VM-1b3cdc92c630366285008630dc04cccf",
+        "primaryStorageUuid": "5543d328687234f88bb613a383453121",
+        "vmInstanceUuid": "1b3cdc92c630366285008630dc04cccf",
+        "diskOfferingUuid": "367b3392c77b3faf8786fdfa40cafcd3",
+        "rootImageUuid": "f4054dad08253b9e815ca27816a6e6b1",
+        "installPath": "/zstack_ps/rootVolumes/acct-36c27e8ff05c4780bf6d2fa65700f22e/vol-a7489a3011c233a4bd89c0b0ac9321bd/a7489a3011c233a4bd89c0b0ac9321bd.qcow2",
+        "type": "Root",
+        "format": "qcow2",
+        "size": 107374182400,
+        "actualSize": 21474836480,
+        "deviceId": 0,
+        "state": "Enabled",
+        "status": "Ready",
+        "createDate": "Nov 14, 2017 10:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+      }
+    ]
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_kvn_psb_k1b)|0.6|
+|inventory|VmInstanceInventory|详情参考[inventory](#p_hj3_5sb_k1b)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|name|String|资源名称|0.6|
+|description|String|资源的详细描述|0.6|
+|zoneUuid|String|数据中心UUID|0.6|
+|clusterUuid|String|集群UUID|0.6|
+|imageUuid|String|镜像UUID|0.6|
+|hostUuid|String|主机UUID|0.6|
+|lastHostUuid|String| |0.6|
+|instanceOfferingUuid|String|计算规格UUID|0.6|
+|rootVolumeUuid|String|根硬盘UUID|0.6|
+|platform|String| |0.6|
+|architecture|String| |0.6|
+|defaultL3NetworkUuid|String| |0.6|
+|type|String| |0.6|
+|hypervisorType|String| |0.6|
+|memorySize|Long| |0.6|
+|cpuNum|Integer| |0.6|
+|cpuSpeed|Long| |0.6|
+|allocatorStrategy|String| |0.6|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+|state|String| |0.6|
+|guestOsType|String| |4.1.2|
+|vmNics|List|详情参考[vmNics](#p_us1_qsb_k1b)|0.6|
+|allVolumes|List|详情参考[allVolumes](#p_shh_qsb_k1b)|0.6|
+|vmCdRoms|List|详情参考[vmCdRoms](#p_tsc_jtf_y1c)|0.6|
+
+### vmNics
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|vmInstanceUuid|String|虚拟机UUID|0.6|
+|l3NetworkUuid|String|分布式端口组UUID|0.6|
+|ip|String| |0.6|
+|mac|String| |0.6|
+|hypervisorType|String| |4.7.13|
+|netmask|String| |0.6|
+|gateway|String| |0.6|
+|metaData|String| |0.6|
+|ipVersion|Integer|ip协议号|3.1.0|
+|driverType|String| |4.7.13|
+|internalName|String| |4.7.13|
+|deviceId|Integer| |0.6|
+|type|String| |4.7.13|
+|state|String|网卡状态|4.7.13|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+|usedIps|List|详情参考[usedIps](#p_gwc_4dc_pfb)|0.6|
+
+### usedIps
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|ipRangeUuid|String|IP段UUID|0.6|
+|l3NetworkUuid|String|分布式端口组UUID|0.6|
+|ipVersion|Integer|IP协议号|3.1.0|
+|ip|String|IP地址|0.6|
+|netmask|String|网络掩码|0.6|
+|gateway|String|网关地址|0.6|
+|usedFor|String| |0.6|
+|ipInLong|long| |0.6|
+|vmNicUuid|String|虚拟机网卡UUID|3.1.0|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+
+### allVolumes
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|name|String|资源名称|0.6|
+|description|String|资源的详细描述|0.6|
+|primaryStorageUuid|String|数据存储UUID|0.6|
+|vmInstanceUuid|String|虚拟机UUID|0.6|
+|diskOfferingUuid|String|硬盘规格UUID|0.6|
+|rootImageUuid|String| |0.6|
+|installPath|String| |0.6|
+|type|String| |0.6|
+|format|String| |0.6|
+|size|Long| |0.6|
+|actualSize|Long| |0.6|
+|deviceId|Integer| |0.6|
+|state|String| |0.6|
+|status|String| |0.6|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+|isShareable|Boolean| |0.6|
+|volumeQos|String| |4.7.13|
+|lastDetachDate|Timestamp| |4.7.13|
+|lastVmInstanceUuid|String| |4.7.13|
+
+### vmCdRoms
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.7.13|
+|vmInstanceUuid|String|虚拟机UUID|4.7.13|
+|deviceId|Integer| |4.7.13|
+|isoUuid|String| |4.7.13|
+|isoInstallPath|String| |4.7.13|
+|name|String|资源名称|4.7.13|
+|description|String|资源的详细描述|4.7.13|
+|createDate|Timestamp|创建时间|4.7.13|
+|lastOpDate|Timestamp|最后一次修改时间|4.7.13|
+
+## SDK示例
+Java SDK
+
+```
+RecoverVmInstanceAction action = new RecoverVmInstanceAction();
+action.uuid = "526fac8545fb4aa0aa2c78209378d63f";
+action.sessionId = "a52aa10c9d5d445cb44593e21c3895f3";
+RecoverVmInstanceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = RecoverVmInstanceAction()
+action.uuid = "0eb6f6f88ff93da48cfc5bca0dbd5c18"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

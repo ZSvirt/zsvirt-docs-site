@@ -1,0 +1,126 @@
+---
+title: "Get Resource Custom Attribute"
+---
+
+<APIPage method="GET" path="/v1/resource-configurations/{resourceUuid}/{category}/{name}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/resource-configurations/77663dd5ff84460bbf1817aa3c59d125/host/cpu.overProvisioning.ratio
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|category|String|url|Configuration category| |3.4.0|
+|name|String|url|Configuration name| |3.4.0|
+|resourceUuid|String|url|Resource UUID| |3.4.0|
+|systemTags \(Optional\)|List|query| | |3.4.0|
+|userTags \(Optional\)|List|query| | |3.4.0|
+
+## API Response
+Response Example
+
+```
+{
+  "value": "5",
+  "effectiveConfigs": [
+    {
+      "uuid": "dae9aeb6d74e4f44823f2e0c4f1cc79f",
+      "resourceUuid": "46597de31eac41539c4e6eda52885769",
+      "resourceType": "HostVO",
+      "name": "cpu.overProvisioning.ratio",
+      "category": "host",
+      "value": "5",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    },
+    {
+      "uuid": "5c3c94a73d7b4a95a1818241f2e427ae",
+      "resourceUuid": "371519310f344695854de27bb9743121",
+      "resourceType": "ClusterVO",
+      "name": "cpu.overProvisioning.ratio",
+      "category": "host",
+      "value": "10",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|value|String|The configuration value|3.4.0|
+|success|boolean| |3.4.0|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_gzs_vjl_zgb) for details|3.4.0|
+|effectiveConfigs|List|The list of effective configurations, sorted by priority from high to low. See [effectiveConfigs](#p_kxx_vjl_zgb) for details|3.4.0|
+|error|ErrorCode|See [error](#p_rtd_wjl_zgb) for details|3.4.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|3.4.0|
+|description|String|A brief description of the error|3.4.0|
+|details|String|The detailed error information|3.4.0|
+|elaboration|String|Reserved field. Default is null|3.4.0|
+|opaque|LinkedHashMap|Reserved field. Default is null|3.4.0|
+|cause|ErrorCode|The root error that caused the current error. If no root error exists, this field is null|3.4.0|
+
+### effectiveConfigs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource, uniquely identifying the resource|3.4.0|
+|resourceUuid|String|The resource UUID associated with the configuration|3.4.0|
+|resourceType|String|The resource type associated with the configuration|3.4.0|
+|name|String|Configuration name|3.4.0|
+|description|String|The detailed description of the configuration|3.4.0|
+|category|String|Configuration category|3.4.0|
+|value|String|The configuration value|3.4.0|
+|createDate|Timestamp|Creation time|3.4.0|
+|lastOpDate|Timestamp|Last modification time|3.4.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|3.4.0|
+|description|String|A brief description of the error|3.4.0|
+|details|String|The detailed error information|3.4.0|
+|elaboration|String|Reserved field. Default is null|3.4.0|
+|opaque|LinkedHashMap|Reserved field. Default is null|3.4.0|
+|cause|ErrorCode|The root error that caused the current error. If no root error exists, this field is null|3.4.0|
+
+## SDK Examples
+Java SDK
+
+```
+GetResourceConfigAction action = new GetResourceConfigAction();
+action.category = "host";
+action.name = "cpu.overProvisioning.ratio";
+action.resourceUuid = "70fdcc564f564c29af98e48e78be56e4";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetResourceConfigAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetResourceConfigAction action = GetResourceConfigAction()
+action.category = "host"
+action.name = "cpu.overProvisioning.ratio"
+action.resourceUuid = "b1ea1d424bf04a50b15b33bcd0f8a80d"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetResourceConfigAction.Result res = action.call()
+```
+
+</APIPage>

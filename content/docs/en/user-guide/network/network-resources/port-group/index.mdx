@@ -1,0 +1,78 @@
+---
+title: 'Distributed Port Group'
+---
+
+Distributed port groups are used to provide network connections to virtual machines and for Kernel adapter traffic.
+
+After adding the first host to a cluster, ZSvirt automatically creates a default distributed switch, default distributed port group, and default Kernel adapter based on the configuration of this host, for centralized management of the host's management network. Based on your network planning, you can flexibly reuse the default distributed switch to create new distributed port groups, or use custom distributed switches to create new distributed port groups.
+
+You can understand the supported basic operations for distributed port groups from the perspective of adding, deleting, modifying, and querying.
+
+-   [Create a Distributed Port Group](#section_fwc_m1l_xyb)
+-   [Edit Distributed Port Group](#section_e4f_mfl_xyb)
+-   [View Distributed Port Group](#section_xsh_dhj_bzb)
+-   [Delete a Distributed Port Group](#section_xhw_hx3_bzb)
+
+## Create a Distributed Port Group
+The platform provides multiple entry points for creating distributed port groups. You can create one or more distributed port groups from the following two main entry points:
+
+-   Navigate to **Inventory** &gt; **Network Resource**, right-click the target distributed switch, and then select **New Distributed Port Group**.
+-   Navigate to **Inventory** &gt; **Network Resource**, select the target distributed switch. Then, on the right side of the platform page, click **Actions** &gt; **New Distributed Port Group**, or in the Distributed Port Group subpage, click **New Distributed Port Group**.
+
+To create a distributed port group, you need to complete the following information configuration:
+
+-   **Name**: The name of the distributed port group.
+-   **Description**: The description of the distributed port group.
+-   **Distributed Switch**: Select the distributed switch corresponding to the distributed port group.
+-   **VLAN Type**: The VLAN type of the distributed port group, choose either **None** or **Standard VLAN**. If you select Standard VLAN, you can configure the VLAN ID for the distributed port group.
+-   **DHCP Service**: A service for automatically assigning IP addresses to internal resources within the platform. It is disabled by default. This service only affects resources within the platform and will not conflict with any existing DHCP servers. If enabled, you need to configure the network segment, IP allocation policy, and DHCP service IP.
+    -   **Network Segment Method**: Supports IP range and CIDR as two types of network segments.
+        -   If you choose IP range, you need to enter the start IP, end IP, subnet mask, and gateway.
+
+            <Callout type="info">
+            Do not include the gateway, broadcast address, or network address in the added IP range.
+            </Callout>
+
+        -   If you choose CIDR, you need to enter the CIDR block and gateway. The gateway can be the first or last address in the CIDR block. If left blank, the first address in the CIDR block is used as the gateway by default.
+    -   **IP Allocation Policy**: Supports random, sequential, and circular allocation policies:
+        -   Random Allocation: The system randomly assigns IP addresses within the network segment.
+        -   Sequential Allocation: The system allocates all available IP addresses within the network segment in ascending order. IP addresses released during the process will be prioritized for allocation in the next round.
+        -   Circular Allocation: The system allocates IP addresses within the network segment in ascending order. IP addresses released during the process will be allocated after all currently available IP addresses have been assigned once.
+    -   **DHCP Service IP**: The IP address used by the DHCP service. The DHCP service uses this IP to assign IP addresses to resources using this distributed port group.
+        -   When creating a distributed port group for the first time or adding the first network segment to the distributed port group, you can customize the DHCP service IP. If a DHCP service IP already exists for the distributed port group, you cannot customize the DHCP service IP when adding a network segment.
+        -   The DHCP service IP must be within the CIDR of the added IP range and not be in use.
+-   **DNS**: DNS resolution service for the distributed port group.
+
+After clicking **OK**, the creation is complete.
+
+## Edit Distributed Port Group
+If you only need to modify the name and description of the distributed port group, you can do so on the target distributed port group page by clicking **Actions** &gt; **Edit Name and Description**.
+
+If you need to modify the MTU or IP allocation policy of the distributed port group, you can do so on the target distributed port group page by clicking **Actions** &gt; **Edit Configuration**.
+
+If you need to add more IPv4 network segments to or delete IPv4 network segment configurations from the distributed port group, you can do so respectively on the target distributed port group's **Network Segments** page.
+
+<Callout type="info">
+-   Deleting a network segment will cause the network cards of virtual machines using that segment to be unloaded. Proceed with caution.
+-   If the distributed port group already has a DHCP service IP and that IP is within the selected network segment, deleting all network segments under the distributed port group will release the DHCP service IP. Deleting only some network segments will leave the DHCP service IP unchanged.
+</Callout>
+If you need to add more DNS configurations to or delete DNS configurations from the distributed port group, you can do so respectively on the target distributed port group's **DNS** page.
+
+## View Distributed Port Group
+If you want to obtain usage rate data for IP addresses of NICs in a distributed port group over various time periods, you can view this information on the target distributed port group's **Monitoring** page:
+
+-   This page displays a line chart showing the percentage of used and available IP addresses within the selected time range. The chart updates in real-time, facilitating analysis of network resources.
+-   You can select the time range as needed, including: 15 minutes, 1 hour, 6 hours, 1 day, 1 week, 1 month, 1 year, and a custom time range.
+
+## Delete a Distributed Port Group
+If you have determined that you no longer need an existing distributed port group, you can delete it on the target distributed port group page by clicking **Actions** &gt; **Delete**. You can also delete distributed port groups in bulk on the data center resource **Network** &gt; **Network Resource** &gt; **Distributed Port Group** page or on the distributed switch resource **Distributed Port Group** page.
+
+<Callout type="info">
+Deleting a distributed port group will unload the network cards of virtual machines using this port group. Proceed with caution.
+</Callout>
+
+-   **[Create a Distributed Port Group](/en/docs/user-guide/network/network-resources/port-group/create)**  
+
+-   **[Modify Distributed Port Group Configurations](/en/docs/user-guide/network/network-resources/port-group/modify)**  
+
+-   **[Delete a Distributed Port Group](/en/docs/user-guide/network/network-resources/port-group/delete)**

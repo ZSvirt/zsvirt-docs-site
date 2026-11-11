@@ -1,0 +1,247 @@
+---
+title: "Change Host Network Interface LLDP Mode"
+---
+
+<APIPage method="PUT" path="/v1/hostNetworkInterface/lldp/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "changeHostNetworkInterfaceLldpMode": {
+    "interfaceUuids": [
+      "f37102496ac2357aaa214622322adb65"
+    ],
+    "mode": "rx_only"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"changeHostNetworkInterfaceLldpMode":{"interfaceUuids":["f37102496ac2357aaa214622322adb65"],"mode":"rx_only"}}' http://localhost:8080/zstack/v1/hostNetworkInterface/lldp/actions
+```
+
+Parameter List
+
+<table id="table_qsj_1bk_51c"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+interfaceUuids
+
+</td><td>
+
+List
+
+</td><td>
+
+body \(contained in the `changeHostNetworkInterfaceLldpMode` structure\)
+
+</td><td>
+
+Physical Network Interface UUIDs
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+mode \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the `changeHostNetworkInterfaceLldpMode` structure\)
+
+</td><td>
+
+LLDP working mode
+
+</td><td>
+
+-   rx\_only
+-   tx\_only
+-   rx\_and\_tx
+-   disable
+
+</td><td>
+
+ 
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System Tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User Tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "interfaceUuid": "1cae08c11e8530a8bf892df7ef709249",
+      "mode": "rx_only"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.1.0|
+|inventories|List|See [inventories](#p_mh4_sbk_51c) for details|4.1.0|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See [error](#p_m5s_sbk_51c) for details|4.1.0|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource. Uniquely identifies the resource.|4.1.0|
+|interfaceUuid|String|Physical Network Interface UUID|4.1.0|
+|mode|String|LLDP working mode|4.1.0|
+|createDate|Timestamp|Create time|4.1.0|
+|lastOpDate|Timestamp|Last update time|4.1.0|
+|lldp|HostNetworkInterfaceLldpRefInventory|See [lldp](#p_q4c_r2q_51c) for details|4.1.0|
+
+### lldp
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|lldpUuid|String|LLDP UUID|4.1.0|
+|chassisId|String|Chassis identifier|4.1.0|
+|timeToLive|Integer|Time to live|4.1.0|
+|managementAddress|String|Management address|4.1.0|
+|systemName|String|System name|4.1.0|
+|systemDescription|String|System description|4.1.0|
+|systemCapabilities|String|System capabilities|4.1.0|
+|portId|String|Port identifier|4.1.0|
+|portDescription|String|Port description|4.1.0|
+|vlanId|Integer|VLAN identifier|4.1.0|
+|aggregationPortId|Long|Aggregation port identifier|4.1.0|
+|mtu|Integer|Maximum transmission unit|4.1.0|
+|createDate|Timestamp|Create time|4.1.0|
+|lastOpDate|Timestamp|Last update time|4.1.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. Globally unique identifier of the error, for example SYS.1000, HOST.1001.|4.1.0|
+|description|String|Brief error description|4.1.0|
+|details|String|Detailed error information|4.1.0|
+|elaboration|String|Reserved field, defaults to null|4.1.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|4.1.0|
+|cause|ErrorCode|Root cause error. The error that caused the current error. If there is no original error, this field is null.|4.1.0|
+
+## SDK Examples
+Java SDK
+
+```
+ChangeHostNetworkInterfaceLldpModeAction action = new ChangeHostNetworkInterfaceLldpModeAction();
+action.interfaceUuids = asList("f37102496ac2357aaa214622322adb65");
+action.mode = "rx_only";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ChangeHostNetworkInterfaceLldpModeAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ChangeHostNetworkInterfaceLldpModeAction action = ChangeHostNetworkInterfaceLldpModeAction()
+action.interfaceUuids = [f37102496ac2357aaa214622322adb65]
+action.mode = "rx_only"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ChangeHostNetworkInterfaceLldpModeAction.Result res = action.call()
+```
+
+</APIPage>

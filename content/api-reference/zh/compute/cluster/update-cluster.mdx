@@ -1,0 +1,119 @@
+---
+title: "更新集群"
+---
+
+<APIPage method="PUT" path="/v1/clusters/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateCluster": {
+    "name": "cluster1",
+    "description": "test"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateCluster":{"name":"cluster1","description":"test"}}' \
+http://localhost:8080/zstack/v1/clusters/851a3783e1503de2a1b9222014c843c4/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |0.6|
+|name \(可选\)|String|body\(包含在**updateCluster**结构中\)|资源名称| |0.6|
+|description \(可选\)|String|body\(包含在**updateCluster**结构中\)|资源的详细描述| |0.6|
+|systemTags \(可选\)|List|body|系统标签| |0.6|
+|userTags \(可选\)|List|body|用户标签| |0.6|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "name": "cluster1",
+    "uuid": "9dd0fbecb0e04260ad161c66d1da9f96",
+    "description": "test",
+    "state": "Enabled",
+    "hypervisorType": "KVM",
+    "createDate": "Jun 7, 2017 9:20:29 PM",
+    "lastOpDate": "Jun 7, 2017 9:20:29 PM",
+    "zoneUuid": "25b7ddce968f4cbbb58aa5a205e116ee",
+    "type": "zstack"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_nwk_1bt_l1b)|0.6|
+|inventory|ClusterInventory|详情参考[inventory](#p_wnf_1bt_l1b)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|name|String|资源名称|0.6|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|description|String|资源的详细描述|0.6|
+|state|String|集群状态|0.6|
+|hypervisorType|String|虚拟机管理程序类型|0.6|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+|zoneUuid|String|数据中心UUID|0.6|
+|type|String|保留域|0.6|
+
+## SDK示例
+Java SDK
+
+```
+UpdateClusterAction action = new UpdateClusterAction();
+action.uuid = "ce185b26a4f14153941a868435d94498";
+action.name = "cluster1";
+action.description = "test";
+action.sessionId = "5abfadbc97d64b4687ba6281de117d2d";
+UpdateClusterAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateClusterAction action = UpdateClusterAction()
+action.uuid = "a643ba1b98524c60acced530ce2ded1b"
+action.name = "cluster1"
+action.description = "test"
+action.sessionId = "cc779e5d5344493d9bd1cb1ced887321"
+UpdateClusterAction.Result res = action.call()
+```
+
+</APIPage>

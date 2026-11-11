@@ -1,0 +1,14 @@
+@import 'tailwindcss';
+@import 'fumadocs-ui/css/neutral.css';
+@import 'fumadocs-ui/css/preset.css';
+
+@theme {
+  --color-zsphere-blue: #166e3f;
+  --color-ink-black: #111827;
+  --color-true-black: #000000;
+  --color-paper-white: #ffffff;
+  --color-mist-gray: #f6f7f6;
+  --color-cloud-gray: #eef1ef;
+  --font-sans: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}

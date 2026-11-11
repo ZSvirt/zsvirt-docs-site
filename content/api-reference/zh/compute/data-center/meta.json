@@ -1,0 +1,11 @@
+{
+  "title": "数据中心相关接口",
+  "pages": [
+    "create-zone",
+    "delete-zone",
+    "query-zone",
+    "update-zone",
+    "change-zone-state"
+  ],
+  "pagesIndex": "index"
+}

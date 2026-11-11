@@ -1,0 +1,166 @@
+---
+title: "创建自定义属性值"
+---
+
+<APIPage method="POST" path="/v1/resource-attributes/{keyUuid}/resources">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "value": "Kinny",
+    "resourceUuids": [
+      "ff01ec80fd11327cba7519b66119d900"
+    ]
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"value":"Kinny","resourceUuids":["ff01ec80fd11327cba7519b66119d900"]}}' \
+http://localhost:8080/zstack/v1/resource-attributes/ff03a2b491023030bf58b1b35ea9cd00/resources
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|keyUuid|String|url|自定义属性键 UUID| |4.10.16|
+|value|String|body\(包含在`params`结构中\)|值| |4.10.16|
+|resourceUuids|List|body\(包含在`params`结构中\)|资源 UUID| |4.10.16|
+|systemTags \(可选\)|List|body|系统标签| |4.10.16|
+|userTags \(可选\)|List|body|用户标签| |4.10.16|
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "inventory": {
+        "keyUuid": "ff03a2b491023030bf58b1b35ea9cd00",
+        "key": {
+          "uuid": "ff03a2b491023030bf58b1b35ea9cd00",
+          "name": "OperationsPersonnel",
+          "description": "Kinny",
+          "resourceTypes": [
+            "VmInstanceVO"
+          ],
+          "createDate": "Nov 14, 2017 2:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 2:20:57 PM",
+          "constraints": [
+            {
+              "id": 1,
+              "keyUuid": "ff03a2b491023030bf58b1b35ea9cd00",
+              "type": "option",
+              "parameter": "Kinny",
+              "createDate": "Nov 14, 2017 2:20:57 PM",
+              "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+            }
+          ]
+        },
+        "value": "Kinny",
+        "resourceUuid": "ff01ec80fd11327cba7519b66119d900",
+        "resourceType": "VmInstanceVO",
+        "createDate": "Nov 14, 2017 2:20:57 PM"
+      },
+      "success": true
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean|创建是否成功|4.10.16|
+|inventories|List|详情参考[inventories](#p_d44_5mk_l1b)|4.10.16|
+|error|ErrorCode|详情参考[error](#p_ud4_cdy_3gc)|4.10.16|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean|创建是否成功|4.10.16|
+|error|ErrorCode|详情参考[error](#p_xm1_vmk_l1b)|4.10.16|
+|inventory|ResourceAttributeValueInventory|详情参考[inventory](#p_kpg_cdy_3gc)|4.10.16|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|ode|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|keyUuid|String|自定义属性键 UUID|4.10.16|
+|value|String|值|4.10.16|
+|resourceUuid|String|资源 UUID|4.10.16|
+|resourceType|String|资源类型|4.10.16|
+|createDate|Timestamp|创建时间|4.10.16|
+|key|ResourceAttributeKeyInventory|详情参考[key](#p_r2k_cdy_3gc)|4.10.16|
+
+### key
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|自定义属性键 UUID|4.10.16|
+|name|String|自定义属性键名称|4.10.16|
+|description|String|资源的详细描述|4.10.16|
+|createDate|Timestamp|创建时间|4.10.16|
+|lastOpDate|Timestamp|最后一次修改时间|4.10.16|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|ode|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+CreateResourceAttributeValueAction action = new CreateResourceAttributeValueAction();
+action.keyUuid = "ff03a2b491023030bf58b1b35ea9cd00";
+action.value = "Kinny";
+action.resourceUuids = asList("ff01ec80fd11327cba7519b66119d900");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateResourceAttributeValueAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = CreateResourceAttributeValueAction()
+action.keyUuid = "ff03a2b491023030bf58b1b35ea9cd00"
+action.value = "Kinny"
+action.resourceUuids = [ff01ec80fd11327cba7519b66119d900]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

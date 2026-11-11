@@ -1,0 +1,93 @@
+---
+title: "Get Role Policy Actions"
+---
+
+<APIPage method="GET" path="/v1/identities/role/policy-actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/identities/role/policy-actions?showAllPolicies=false
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|systemTags \(Optional\)|List|query|System tags| |4.10.0|
+|userTags \(Optional\)|List|query|User tags| |4.10.0|
+|showAllPolicies \(Optional\)|boolean|query|Whether to query all role policies in the system. If set to true, all role policies in the system are queried. If set to false, only the roles and policies owned by the current account are queried.| |4.10.0|
+
+## API Response
+Response Example
+
+```
+{
+  "policies": [
+    ".header.identity.APIChangeResourceOwnerMsg",
+    ".header.identity.APICheckResourcePermissionMsg",
+    ".header.identity.APICreateAccountMsg",
+    ".header.identity.APIDeleteAccountMsg",
+    ".header.identity.APIGetAccountQuotaUsageMsg",
+    ".header.identity.APIGetResourceAccountMsg",
+    ".header.identity.APILogInByAccountMsg",
+    ".header.identity.APILogOutMsg",
+    ".header.identity.APIQueryAccountMsg",
+    ".header.identity.APIQueryAccountResourceRefMsg",
+    ".header.identity.APIQueryQuotaMsg",
+    ".header.identity.APIRenewSessionMsg",
+    ".header.identity.APIRevokeResourceSharingMsg",
+    ".header.identity.APIShareResourceMsg",
+    ".header.identity.APIUpdateAccountMsg",
+    ".header.identity.APIUpdateQuotaMsg",
+    ".header.identity.APIValidateSessionMsg"
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|inventories|List|All matching actions|4.10.0|
+|success|boolean|Whether the request is successful|4.10.0|
+|error|ErrorCode|Error code. If not null, the operation has failed. This field is null when the operation succeeds. For details, see [error](#p_nkw_y5y_2dc)|4.10.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. The globally unique identifier of the error, for example, SYS.1000 or HOST.1001.|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Default is null.|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null.|0.6|
+|cause|ErrorCode|Root error. The source error that caused the current error. This field is null if no root error exists.|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+GetRolePolicyActionsAction action = new GetRolePolicyActionsAction();
+action.showAllPolicies = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetRolePolicyActionsAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+GetRolePolicyActionsAction action = GetRolePolicyActionsAction()
+action.showAllPolicies = false
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetRolePolicyActionsAction.Result res = action.call()
+
+```
+
+</APIPage>

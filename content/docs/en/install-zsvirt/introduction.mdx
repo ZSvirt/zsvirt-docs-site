@@ -1,0 +1,65 @@
+---
+title: "Introduction"
+---
+
+## About This Guide
+This guide describes how to install ZSvirt management node and how to set up management node HA.
+
+![Installation Process](/docs/en/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0002_1.png)
+
+## Intended Audience
+This guide is intended for experienced administrators who want to install ZSvirt.
+
+## Installation Modes
+ZSvirt provides three installation modes. Each includes different components and is intended for different scenarios.
+
+<table><thead><tr><th>
+
+Installation Mode
+
+</th><th>
+
+Component
+
+</th><th>
+
+Scenario
+
+</th></tr></thead><tbody><tr><td>
+
+Management Node Mode
+
+</td><td>
+
+-   Base operating system
+-   Dependencies such as `MariaDB` and `CloudBus` message bus
+
+</td><td>
+
+Suitable for installing the management node.
+
+</td></tr><tr><td>
+
+Compute Node Mode
+
+</td><td>
+
+-   Base operating system
+-   Virtualization components such as `libvirt` and `QEMU`
+
+</td><td rowSpan="2">
+
+Suitable for installation as nodes other than the management node, for example:-   Compute nodes
+-   Standalone image storage, distributed image storage, and monitoring nodes of distributed image storage
+-   Distributed storage nodes and monitoring nodes of distributed storage
+
+</td></tr><tr><td>
+
+Expert Mode
+
+</td><td>
+
+Base operating system
+
+</td></tr></tbody>
+</table>

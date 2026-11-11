@@ -1,0 +1,13 @@
+{
+  "title": "User Management",
+  "pages": [
+    "index",
+    "create-user",
+    "enable-disable",
+    "modify-user",
+    "change-password",
+    "promote-admin",
+    "delete-user"
+  ],
+  "pagesIndex": "index"
+}

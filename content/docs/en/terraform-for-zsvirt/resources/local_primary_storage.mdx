@@ -1,0 +1,50 @@
+---
+title: 'zsphere_local_primary_storage'
+description: 'Local Primary Storage Resource'
+---
+
+<HistoricalNamingNote locale="en" />
+
+# zsphere_local_primary_storage (Resource)
+
+Local Primary Storage Resource
+
+## Example Usage
+
+```terraform
+resource "zsphere_local_primary_storage" "local_storage" {
+  name            = "local-storage-from-terraform"
+  description     = "Add an example local primary storage from terraform"
+  datacenter_uuid = "datacenter-uuid-here"
+  cluster_uuid    = "cluster-uuid-here"
+  url             = "/vms_ds"
+}
+
+output "zsphere_local_primary_storage" {
+  value = zsphere_local_primary_storage.local_storage
+}
+```
+
+## Schema
+
+### Required
+
+- `datacenter_uuid` (String) Datacenter UUID of the local primary storage
+- `name` (String) Name of the local primary storage
+- `url` (String) Mount path of the local primary storage
+
+### Optional
+
+- `cluster_uuid` (String) Cluster UUID to attach the local primary storage to
+- `description` (String) Description of the local primary storage
+
+### Read-Only
+
+- `attached_cluster_uuids` (List of String) List of cluster UUIDs attached to the local primary storage
+- `available_capacity` (Number) Available capacity of the local primary storage
+- `mount_path` (String) Mount path of the local primary storage
+- `state` (String) State of the local primary storage
+- `status` (String) Status of the local primary storage
+- `total_capacity` (Number) Total capacity of the local primary storage
+- `type` (String) Type of the local primary storage
+- `uuid` (String) The UUID of the local primary storage

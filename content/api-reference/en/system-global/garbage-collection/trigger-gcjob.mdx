@@ -1,0 +1,76 @@
+---
+title: "Trigger GC Job"
+---
+
+<APIPage method="PUT" path="/v1/gc-jobs/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "triggerGCJob": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the **systemTags** and **userTags** fields are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"triggerGCJob":{}}' \
+http://localhost:8080/zstack/v1/gc-jobs/1450275537b53cfeba9e6ac79ebadb16/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|The UUID of the resource. Uniquely identifies the resource| |0.6|
+|systemTags \(Optional\)|List|body| | |0.6|
+|userTags \(Optional\)|List|body| | |0.6|
+
+## API Response
+When the API succeeds, it returns an empty JSON structure **`{}`**. When an error occurs, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+TriggerGCJobAction action = new TriggerGCJobAction();
+action.uuid = "ff4eb99f62364bcab4cbcebe4dea7de7";
+action.sessionId = "7a51dbf52d5d41b0a877491143b6937a";
+TriggerGCJobAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+TriggerGCJobAction action = TriggerGCJobAction()
+action.uuid = "a1d1ab14128e4f7398924591915ac65c"
+action.sessionId = "6dcc50cb3dc5401b8ce03540a225f623"
+TriggerGCJobAction.Result res = action.call()
+```
+
+</APIPage>

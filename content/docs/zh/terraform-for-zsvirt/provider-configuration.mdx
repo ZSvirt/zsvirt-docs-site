@@ -1,0 +1,47 @@
+---
+title: "Provider 配置"
+description: "与 ZStack 云平台交互，管理虚拟机、网络、存储等各类云资源。"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+{/* terraform-source-sha256: a802a2c3262cf1370357fde1e41da443489c594241c117d02f20b30d3d1e0f65 */}
+
+# zsphere Provider
+
+本 Provider 用于在 ZStack 云环境中管理资源，通过 ZStack API 创建、更新和删除虚拟机、网络、存储等资源，适合希望用 Terraform 自动化管理云基础设施的团队。
+
+## 示例用法
+
+使用前需配置认证信息与 API 端点。登录 ZStack 云平台，进入 **运营管理 → 访问控制 → AccessKey 管理**，点击 **生成 AccessKey**。配置示例如下：
+
+```terraform
+terraform {
+  required_providers {
+    zsphere = {
+      source  = "terraform-zstack-modules/zsphere"
+      version = "1.0.0"
+    }
+  }
+}
+
+provider "zsphere" {
+  host              = "ZSvirt 云平台 API 端点 IP 地址"
+  access_key_id     = "AccessKey ID"
+  access_key_secret = "AccessKey Secret"
+}
+```
+
+## 参数说明
+
+### 必填参数
+
+- `host`（字符串）ZSvirt 管理节点（MN）IP 地址。也可通过环境变量 `ZSPHERE_HOST` 设置。
+
+### 可选参数
+
+- `access_key_id`（字符串）ZSvirt API 的 AccessKey ID。在管理节点 **运营管理 → 访问控制 → AccessKey 管理** 中创建。也可通过环境变量 `ZSPHERE_ACCESS_KEY_ID` 设置。使用 AccessKey 认证时必填。与 `account_name`、`account_password` 互斥。
+- `access_key_secret`（字符串，敏感）ZSvirt API 的 AccessKey Secret。也可通过环境变量 `ZSPHERE_ACCESS_KEY_SECRET` 设置。使用 AccessKey 认证时必填。与 `account_name`、`account_password` 互斥。
+- `account_name`（字符串）ZSvirt API 用户名。也可通过环境变量 `ZSPHERE_ACCOUNT_NAME` 设置。使用账号认证时必填，仅支持平台管理员账号（`admin`）。与 `access_key_id`、`access_key_secret` 互斥。推荐使用 AccessKey 认证，灵活性和安全性更好。
+- `account_password`（字符串，敏感）ZSvirt API 密码。也可通过环境变量 `ZSPHERE_ACCOUNT_PASSWORD` 设置。使用账号认证时必填，仅支持平台管理员账号（`admin`）。与 `access_key_id`、`access_key_secret` 互斥。推荐使用 AccessKey 认证。
+- `port`（数字）ZSvirt 管理节点 API 端口。也可通过环境变量 `ZSPHERE_PORT` 设置。

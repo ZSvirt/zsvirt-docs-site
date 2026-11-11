@@ -1,0 +1,46 @@
+---
+title: "A Virtual Machine has no network connectivity. How do I troubleshoot this?"
+---
+
+## Solution
+-   Try the following troubleshooting steps:
+-   Check whether the Virtual Machine operating system is running normally, whether the network configuration \(such as IP address, subnet mask, gateway, and routes\) is correct, whether the network service is running, whether the gateway is reachable, whether Virtual Machines on the same subnet are reachable, whether Virtual Machines on the same host are reachable, whether ARP resolution is normal, and whether there are IP address conflicts.
+
+    -   For Linux Virtual Machines, check the NIC configuration file.
+    -   For Windows Virtual Machines, check the NIC configuration in **Control Panel** &gt; **Network Connections**.
+    -   If an IP address conflict exists, use the `arping` command to identify the conflicting MAC address, locate the conflicting endpoint in the switch MAC address table, and change the IP address of one of the endpoints to resolve the conflict.
+-   Check whether the Virtual Machine or gateway blocks `ping` commands. For Linux Virtual Machines, check iptables rules and firewalld status. For Windows Virtual Machines, check whether the system firewall or iptables rules have any relevant restrictions.
+
+-   If a Linux Virtual Machine has both NetworkManager and network services enabled simultaneously, a service conflict may occur. Disable the NetworkManager service and restart the network service to test.
+
+-   For Windows Virtual Machines, verify that the virtio NIC driver is updated to the latest version. Right-click **Start** in the operating system, select Device Manager, and update the PCI Simple Communications Controller, PCI Device, and SCSI Controller in sequence.
+
+-   If a Virtual Machine cannot `ping` a remote server, check whether the target server has a return route and whether the NIC matched by the return route is the same NIC that receives the packets from the target server.
+
+-   If two Virtual Machines have the HA service enabled and the virtual IP address is unreachable, check whether NIC anti-spoofing mode is enabled. Note that NIC anti-spoofing mode cannot be used together with Virtual Machine VRRP.
+
+-   If DHCP is not enabled on the Virtual Machine's Distributed Port Group but the Virtual Machine NIC is configured in DHCP mode, manually configure a static IP address inside the Virtual Machine.
+
+-   If a Virtual Machine has multiple NICs, Virtual Machines that communicate through a non-default NIC may need to configure static routes manually.
+
+-   Check whether iptables and ebtables rules on the host where the Virtual Machine resides are correct and whether the virtual devices are properly connected — for example, Linux Bridge, Vnic, Tap, and Tun. If anomalies exist, try reconnecting the host to restore the connection.
+
+-   Check whether the host network configuration, NIC status and speed, and the status of NICs bonded to the bond interface are normal.
+
+    -   Run `zs-show-network` on the host to verify that NICs exist in the bond and that each NIC device status is UP.
+    -   Run `ethtool bondX` to check the bond speed. In bond-lacp mode, the normal bond speed should be twice the speed of a single NIC. In bond-ab mode, the normal bond speed should equal the speed of a single NIC.
+    -   Run `cat /proc/net/bonding/bondX` to check the bond protocol status. In bond-lacp mode with two NICs, the normal state should show `port state: 61`.
+-   Check whether the switch port configuration is correct — for example, link aggregation mode, port mode, VLAN allow-list, Distributed Port Group gateway, subnet mask, and route configuration.
+
+    -   For servers using bond-ab mode, the two switch ports corresponding to the two NICs must be configured independently and must not be configured with link aggregation.
+    -   For servers using bond-lacp mode, the two switch ports corresponding to the two NICs must be configured with link aggregation. Note that the naming convention differs by switch vendor:
+        -   Huawei switches: mode lacp \(S-series\) or mode lacp-static \(CE-series\)
+        -   Centec switches: channel-group XX mode active
+        -   H3C switches: link-aggregation mode dynamic
+        -   Cisco switches: channel-protocol lacp, channel-group XX mode active
+        -   Ruijie switches: port-group XX mode active
+    -   If the Distributed Switch type for the Distributed Port Group is L2NoVlanNetwork, verify that the peer switch interface allows the VLAN ID of the Distributed Switch.
+        -   If the switch port mode is Access, configure the Access VLAN ID to match the Distributed Switch VLAN ID.
+        -   If the switch port mode is Trunk, configure the Trunk PVID \(Native VLAN\) to match the Distributed Switch VLAN ID.
+    -   If the Distributed Switch type for the Distributed Port Group is L2VlanNetwork, verify that the peer switch interface is configured in Trunk mode and allows the Distributed Switch VLAN ID.
+-   Check whether the switch has ACL configurations or whether a physical firewall security policy is in place. Contact a network engineer for assistance if needed.

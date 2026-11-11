@@ -1,0 +1,386 @@
+---
+title: "新建集群"
+---
+
+<APIPage method="POST" path="/v1/clusters">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "zoneUuid": "d5629a75f0a24280ac669d93d38a7dcd",
+    "name": "cluster1",
+    "description": "test",
+    "hypervisorType": "KVM"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"zoneUuid":"e1fb7d87073b397c857eaeeb16243103","name":"cluster1","description":"test","hypervisorType":"KVM"}}' \
+http://localhost:8080/zstack/v1/clusters
+```
+
+参数列表
+
+<table id="table_npx_pxs_l1b"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+zoneUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+数据中心UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+name
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+资源名称
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+description \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+资源的详细描述
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+hypervisorType
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+虚拟机管理程序类型
+
+</td><td>
+
+-   KVM
+-   Simulator
+
+</td><td>
+
+4.0.0
+
+</td></tr><tr><td>
+
+type \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+保留域, 请不要使用
+
+</td><td>
+
+-   zstack
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+resourceUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+-   当reourceUuid不等于null, 虚拟化平台使用这个值作为被创建资源的UUID；
+-   否则虚拟化平台会自动生成一个UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+architecture \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+-   x86\_64
+-   aarch64
+-   mips64el
+
+</td><td>
+
+4.0.0
+
+</td></tr><tr><td>
+
+tagUuids \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.0.0
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr></tbody>
+</table>
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "name": "cluster1",
+    "uuid": "dc7442bb39674d779d688369329ba845",
+    "description": "test",
+    "state": "Enabled",
+    "hypervisorType": "KVM",
+    "createDate": "Jun 7, 2017 9:20:31 PM",
+    "lastOpDate": "Jun 7, 2017 9:20:31 PM",
+    "zoneUuid": "342b68c14869412984d6327a58b18f9b",
+    "type": "zstack"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_nxv_yys_l1b)|0.6|
+|inventory|ClusterInventory|详情参考[inventory](#p_ybb_zys_l1b)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|name|String|资源名称|0.6|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|description|String|资源的详细描述|0.6|
+|state|String|集群状态|0.6|
+|hypervisorType|String|虚拟机管理程序类型|0.6|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+|zoneUuid|String|数据中心UUID|0.6|
+|type|String|保留域|0.6|
+
+## SDK示例
+Java SDK
+
+```
+CreateClusterAction action = new CreateClusterAction();
+action.zoneUuid = "70fd596da027478eb22ac9357aed23f4";
+action.name = "cluster1";
+action.description = "test";
+action.hypervisorType = "KVM";
+action.sessionId = "894477861bcc45488978b584908e4ee3";
+CreateClusterAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateClusterAction action = CreateClusterAction()
+action.zoneUuid = "cfe698802c87486986878daa2da7e02f"
+action.name = "cluster1"
+action.description = "test"
+action.hypervisorType = "KVM"
+action.sessionId = "0664130c5d36414bbb3a7a59ef87ea5a"
+CreateClusterAction.Result res = action.call()
+```
+
+</APIPage>

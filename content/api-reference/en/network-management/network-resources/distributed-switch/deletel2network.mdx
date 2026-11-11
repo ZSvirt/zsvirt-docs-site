@@ -1,0 +1,64 @@
+---
+title: "DeleteL2Network"
+---
+
+<APIPage method="DELETE" path="/v1/l2-networks/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Sample
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/l2-networks/254811ac54a04835a8f82871f96ab86f?deleteMode=Permissive
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|The resource UUID.| |4.8.0|
+|deleteMode \(Optional\)|String|body|Delete mode.| |4.8.0|
+|systemTags \(Optional\)|List|body|The system tags.| |4.8.0|
+|userTags \(Optional\)|List|body|The user tags.| |4.8.0|
+
+## API Response
+This API returns an empty JSON structure **`{}`** on success, and returns a JSON structure containing an error field on failure. For example:
+
+```
+{
+    "error": {
+        "code": "SYS.1001",
+        "description": "A message or a operation timeout",
+        "details": "Create VM on KVM timeout after 300s"
+    }
+}/9
+```
+
+## SDK Sample
+Java SDK
+
+```
+DeleteL2NetworkAction action = new DeleteL2NetworkAction();
+action.uuid = "8952ecc352fc49b9a0b22286772e74e2";
+action.deleteMode = "Permissive";
+action.sessionId = "1bece9d1092e47e7ba176ac2e3b03793";
+DeleteL2NetworkAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteL2NetworkAction action = DeleteL2NetworkAction()
+action.uuid = "f1f6deb480d44b77b53b74784c17a1d9"
+action.deleteMode = "Permissive"
+action.sessionId = "9b914d6dc4d64c8f8f45452bad140f9f"
+DeleteL2NetworkAction.Result res = action.call()
+```
+
+</APIPage>

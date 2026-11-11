@@ -1,0 +1,105 @@
+---
+title: "Get License Records"
+---
+
+<APIPage method="GET" path="/v1/licenses/records">
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-X GET http://localhost:8080/zstack/v1/licenses/records?limit=20.0&start=0.0&replyWithCount=true&count=false&sortBy=uploadDate&sortDirection=desc
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|limit \(Optional\)|Integer|query|Maximum number of records to return, similar to MySQL limit. Default value is 20| |4.1.0|
+|start \(Optional\)|Integer|query|Starting query record position, similar to MySQL offset. Used with **limit** to implement pagination| |4.1.0|
+|replyWithCount \(Optional\)|boolean|query|Count query. Specifies whether to return the data record count along with the results. When set to **true**, the API returns both data records and the total count of records that match the query conditions| |4.1.0|
+|count \(Optional\)|boolean|query|Count query, equivalent to the count\(\) function in MySQL. When set to **true**, the API only returns the count of records that match the query conditions| |4.1.0|
+|sortBy \(Optional\)|String|query|Sort by field, equivalent to the sort by keyword in MySQL, for example sortBy=ip. Must be used with **sortDirection**| |4.1.0|
+|sortDirection \(Optional\)|String|query|Field sort direction. Must be used with **sortBy**| |4.1.0|
+|systemTags \(Optional\)|List|query|System tags| |4.1.0|
+|userTags \(Optional\)|List|query|User tags| |4.1.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "user": "example",
+      "hostNum": 10.0,
+      "licenseType": "Free",
+      "issuedDate": "2017-01-19 14:31:06",
+      "managementNodeUuid": "00898b3538e53e70bb7521e54ff80276",
+      "expired": true
+    }
+  ],
+  "total": 1.0
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|total|Long|Total license history authorization data count. This value is returned when count or replyWithCount is set to true|4.1.0|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_ixc_lsq_zdb) for details|4.1.0|
+|inventory|LicenseInventory|See [inventory](#p_pfh_lsq_zdb) for details|4.1.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|4.1.0|
+|description|String|A brief description of the error|4.1.0|
+|details|String|The detailed error information|4.1.0|
+|elaboration|String|Reserved field. Default is null|4.1.0|
+|opaque|LinkedHashMap|Reserved field. Default is null|4.1.0|
+|cause|ErrorCode|The root error that caused the current error. If no root error exists, this field is null|4.1.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String| |4.1.0|
+|licenseType|String| |4.1.0|
+|expiredDate|String| |4.1.0|
+|issuedDate|String| |4.1.0|
+|uploadDate|String|License upload time|4.1.0|
+|user|String| |4.1.0|
+|prodInfo|String|License product name|4.1.0|
+|hostNum|Integer| |4.1.0|
+|cpuNum|Integer| |4.1.0|
+|vmNum|Integer| |4.1.0|
+|expired|boolean| |4.1.0|
+|managementNodeUuid|String| |4.1.0|
+
+## SDK Examples
+Java SDK
+
+```
+GetLicenseRecordsAction action = new GetLicenseRecordsAction();
+action.limit = 20.0;
+action.start = 0.0;
+action.replyWithCount = true;
+action.count = false;
+action.sortBy = "uploadDate";
+action.sortDirection = "desc";
+GetLicenseRecordsAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetLicenseRecordsAction action = GetLicenseRecordsAction()
+action.limit = 20.0
+action.start = 0.0
+action.replyWithCount = true
+action.count = false
+action.sortBy = "uploadDate"
+action.sortDirection = "desc"
+GetLicenseRecordsAction.Result res = action.call()
+```
+
+</APIPage>

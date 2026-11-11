@@ -1,0 +1,260 @@
+---
+title: "AttachL2NetworkToCluster"
+---
+
+<APIPage method="POST" path="/v1/l2-networks/{l2NetworkUuid}/clusters/{clusterUuid}">
+
+Headers
+
+```
+OAuth: the-session-uuid
+```
+
+Curl Sample
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST http://localhost:8080/zstack/v1/l2-networks/e852ba6eb4c03f2fafdb73ce838d8980/clusters/112816423a1a3b50a58d54fd1f6a8665
+```
+
+Parameter List
+
+<table id="table_add_3rg_m1b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+l2NetworkUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+The port group Distributed Switch UUID.
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+clusterUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+The cluster UUID.
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+l2ProviderType \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body
+
+</td><td>
+
+Optional. The Distributed Switch implementation type.
+
+</td><td>
+
+-   LinuxBridge
+
+</td><td>
+
+4.8.0
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+Optional. The system tags.
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+Optional. The user tags.
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+hostParams \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body
+
+</td><td>
+
+Optional. The host parameter list.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Sample Response
+
+```
+{
+  "inventory": {
+    "vlan": 10.0,
+    "name": "Test-Net",
+    "description": "Test",
+    "zoneUuid": "95ab67ece21e3ce39896b9b391a21a94",
+    "physicalInterface": "eth0",
+    "type": "L2VlanNetwork"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.8.0|
+|error|ErrorCode|The error code. If not null, the operation fails, or vice versa. For more information, see [error](#p_rjv_vrg_m1b).|4.8.0|
+|inventory|L2NetworkInventory|See [inventory](#p_hrb_wrg_m1b).|4.8.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code, which is a numbered or alphanumeric code that specifies an error. For example, SYS.1000, HOST.1001.|0.6|
+|description|String|The brief description of the error.|0.6|
+|details|String|The details about the error.|0.6|
+|elaboration|String|The reserved field. Default value: null.|0.6|
+|opaque|LinkedHashMap|The reserved field. Default value: null.|0.6|
+|cause|ErrorCode|The root error, which is the associated root cause of the current error. If no root error exists, this parameter is null.|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The resource UUID.|0.6|
+|name|String|The resource name.|0.6|
+|description|String|The detailed description of the resource.|0.6|
+|zoneUuid|String|The Data Center UUID.|0.6|
+|physicalInterface|String|The physical NIC.|0.6|
+|type|String|The Distributed Switch type.|0.6|
+|createDate|Timestamp|The creation date.|0.6|
+|lastOpDate|Timestamp|The last operation date.|0.6|
+|attachedClusterUuids|List|The list of attached Cluster UUIDs.|0.6|
+
+## **SDK Sample**
+Java SDK
+
+```
+AttachL2NetworkToClusterAction action = new AttachL2NetworkToClusterAction();
+action.l2NetworkUuid = "e852ba6eb4c03f2fafdb73ce838d8980";
+action.clusterUuid = "112816423a1a3b50a58d54fd1f6a8665";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AttachL2NetworkToClusterAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AttachL2NetworkToClusterAction action = AttachL2NetworkToClusterAction()
+action.l2NetworkUuid = "e852ba6eb4c03f2fafdb73ce838d8980"
+action.clusterUuid = "112816423a1a3b50a58d54fd1f6a8665"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AttachL2NetworkToClusterAction.Result res = action.call()
+```
+
+</APIPage>

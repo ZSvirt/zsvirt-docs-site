@@ -1,0 +1,9 @@
+{
+  "title": "物理硬盘",
+  "pages": [
+    "index",
+    "scan-node-disk",
+    "manage-node-disk"
+  ],
+  "pagesIndex": "index"
+}

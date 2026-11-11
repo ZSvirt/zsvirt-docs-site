@@ -1,0 +1,104 @@
+---
+title: "Update Log Server Configuration"
+---
+
+<APIPage method="PUT" path="/v1/log/configurations">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateLogConfiguration": {
+    "configId": 1.0
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The **systemTags** and **userTags** fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateLogConfiguration":{"configId":1.0}}' http://localhost:8080/zstack/v1/log/configurations
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|configId|long|body \(contained in the **updateLogConfiguration** structure\)|Configuration ID| |3.10.0|
+|name \(optional\)|String|body \(contained in the **updateLogConfiguration** structure\)|Resource name| |3.10.0|
+|description \(optional\)|String|body \(contained in the **updateLogConfiguration** structure\)|Detailed description of the resource| |3.10.0|
+|systemTags \(optional\)|List|body|System tags| |3.10.0|
+|userTags \(optional\)|List|body|User tags| |3.10.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "id": 0.0,
+    "labelKey": "log4j2-848dd6e5712e4227ae40447753871ba8",
+    "labelValue": "{\n\"appenderType\": \"Syslog\",\n\"configuration\": {\n\"hostname\": \"192.168.0.11\",\n\"port\": \"514\",\n\"protocol\": \"UDP\",\n\"facility\": \"LOCAL5\"\n}\n}"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_est_fg1_llb)|3.10.0|
+|inventory|VmNicInventory|See [inventory](#p_u33_fg1_llb)|3.10.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. A globally unique identifier for the error, e.g., SYS.1000, HOST.1001|3.10.0|
+|description|String|Brief description of the error|3.10.0|
+|details|String|Detailed error information|3.10.0|
+|elaboration|String|Reserved field. Defaults to null|3.10.0|
+|opaque|LinkedHashMap|Reserved field. Defaults to null|3.10.0|
+|cause|ErrorCode|Root error. The source error that caused this error. Null if no root cause exists|3.10.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|id|long| |3.10.0|
+|labelKey|String| |3.10.0|
+|labelValue|String| |3.10.0|
+|resourceUuid|String|Resource UUID|3.10.0|
+|createDate|Timestamp|Creation time|3.10.0|
+|lastOpDate|Timestamp|Last modification time|3.10.0|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateLogConfigurationAction action = new UpdateLogConfigurationAction();
+action.configId = 1.0;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateLogConfigurationAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateLogConfigurationAction action = UpdateLogConfigurationAction()
+action.configId = 1.0
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateLogConfigurationAction.Result res = action.call()
+```
+
+</APIPage>

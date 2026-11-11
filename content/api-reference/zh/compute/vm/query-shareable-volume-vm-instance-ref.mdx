@@ -1,0 +1,59 @@
+---
+title: "查询共享磁盘所挂载的虚拟机"
+---
+
+<APIPage method="GET" path="/v1/volumes/vm-instances/refs">
+
+查询共享磁盘所挂载的虚拟机
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/volumes/vm-instances/refs?q=0c917562d5954544b37bf5e0ed0735a6&q=cddc1c17e94a43b5b50e1df53e076d11&q=2&q=Jan 22, 2017 2:41:37 PM&q=Jan 22, 2017 2:43:18 PM
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryShareableVolumeVmInstanceRef`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+该API成功时返回一个空的JSON结构**`{}`**，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+QueryShareableVolumeVmInstanceRefAction action = new QueryShareableVolumeVmInstanceRefAction();
+action.conditions = asList("0c917562d5954544b37bf5e0ed0735a6","cddc1c17e94a43b5b50e1df53e076d11","2","Jan 22, 2017 2:41:37 PM","Jan 22, 2017 2:43:18 PM");
+action.sessionId = "9fa1cf123ab04b1691ea509bf48c9071";
+QueryShareableVolumeVmInstanceRefAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryShareableVolumeVmInstanceRefAction action = QueryShareableVolumeVmInstanceRefAction()
+action.conditions = ["0c917562d5954544b37bf5e0ed0735a6","cddc1c17e94a43b5b50e1df53e076d11","2","Jan 22, 2017 2:41:37 PM","Jan 22, 2017 2:43:18 PM"]
+action.sessionId = "730ddea9ae3246a0ad483f7b6e3bb49f"
+QueryShareableVolumeVmInstanceRefAction.Result res = action.call()
+```
+
+</APIPage>

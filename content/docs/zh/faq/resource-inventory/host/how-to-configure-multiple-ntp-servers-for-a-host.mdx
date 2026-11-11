@@ -1,0 +1,29 @@
+---
+title: "如何给主机配置多个时间源服务器？"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+## 解决方案
+1.  可尝试参考以下步骤为主机配置多个时间源服务器：
+2.  进入管理节点系统，修改`zstack.properties`配置文件，增加以下参数指定时间源服务器IP：
+
+    ```
+    [root@localhost ~]# vim /usr/local/zstack/apache-tomcat/webapps/zstack/WEB-INF/classes/zstack.properties
+    ...
+    chrony.serverIp.0 = X.X.X.X
+    chrony.serverIp.1 = X.X.X.X
+    chrony.serverIp.2 = X.X.X.X       //X.X.X.X为各个时间源服务器IP地址
+    ```
+
+3.  重启管理节点服务使配置生效：
+
+    ```
+    [root@localhost ~]# zstack-ctl restart_node
+    ```
+
+4.  确认时间是否同步，输出为\*表示时间同步正常：
+
+    ```
+    [root@localhost ~]# chronyc sources -v
+    ```

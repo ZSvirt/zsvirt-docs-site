@@ -1,0 +1,300 @@
+---
+title: "Allocate Host Compute Resources"
+---
+
+<APIPage method="POST" path="/v1/hosts/{uuid}/allocate-resource">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "strategy": "continuous",
+    "scene": "normal",
+    "vcpu": 2,
+    "memSize": 1234567
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"strategy":"continuous","scene":"normal","vcpu":2,"memSize":1234567}}' \
+http://localhost:8080/zstack/v1/hosts/0ce1fccc44b53601a54c3090233c07dd/allocate-resource
+```
+
+Parameter List
+
+<table id="table_eq3_ytv_m1b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+Resource UUID, uniquely identifies the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+strategy
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Allocation strategy
+
+</td><td>
+
+continuous
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+scene
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Allocation scene
+
+</td><td>
+
+-   normal
+-   performance
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+vcpu
+
+</td><td>
+
+int
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Required vCPU count
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+memSize \(optional\)
+
+</td><td>
+
+Long
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Required memory size
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+systemTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tag
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+userTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tag
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.11
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "name": "example",
+  "uuid": "f7bae73b9874344b8766dfcdda48ad6e",
+  "vCPUPin": [
+    {
+      "vCPU": "0",
+      "pCPU": "13"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.7.11|
+|name|String|Resource name|4.7.11|
+|uuid|String|Resource UUID, uniquely identifies the resource|4.7.11|
+|vCPUPin|List|pCPU information allocated for the corresponding vCPU count|4.7.11|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See details [error](#p_p11_w5v_m1b)|4.7.11|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, e.g. SYS.1000, HOST.1001|4.7.11|
+|description|String|Brief description of the error|4.7.11|
+|details|String|Detailed error information|4.7.11|
+|elaboration|String|Reserved field, default is null|4.7.11|
+|opaque|LinkedHashMap|Reserved field, default is null|4.7.11|
+|cause|ErrorCode|Root cause, the error that caused the current error. If there is no original error, this field is null|4.7.11|
+
+## SDK Examples
+Java SDK
+
+```
+AllocateHostResourceAction action = new AllocateHostResourceAction();
+action.uuid = "0ce1fccc44b53601a54c3090233c07dd";
+action.strategy = "continuous";
+action.scene = "normal";
+action.vcpu = 2;
+action.memSize = 1234567;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AllocateHostResourceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AllocateHostResourceAction action = AllocateHostResourceAction()
+action.uuid = "0ce1fccc44b53601a54c3090233c07dd"
+action.strategy = "continuous"
+action.scene = "normal"
+action.vcpu = 2
+action.memSize = 1234567
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AllocateHostResourceAction.Result res = action.call()
+```
+
+</APIPage>

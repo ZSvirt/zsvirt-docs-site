@@ -1,0 +1,46 @@
+---
+title: "Pressing Ctrl+Alt+Del on the keyboard causes a host to lose connection. What should I do?"
+---
+
+## Symptom
+The host loses connection. The message log shows a virtual USB device being attached and a Received SIGINT signal.
+
+## Cause
+The Ctrl+Alt+Del key combination was pressed on the host.
+
+## Solution
+-   Modify the system configuration file to disable the Ctrl+Alt+Del key combination.
+
+    1.  Log in to the host console as root.
+
+    2.  Run `vi /etc/systemd/system/ctrl-alt-del.target` to open the ctrl-alt-del.target file in edit mode.
+
+    3.  Add the following content to the ctrl-alt-del.target file:
+
+        ```
+        [Unit]
+        Description=Disable Ctrl-Alt-Del
+        
+        [Service]
+        ExecStart=/bin/true
+        Type=oneshot
+        
+        [Install]
+        WantedBy=multi-user.target
+        ```
+
+    4.  Save the changes and exit the file editor.
+
+    5.  Run `systemctl daemon-reload` to reload the systemd configuration.
+
+    6.  Run `systemctl mask ctrl-alt-del.target` to disable ctrl-alt-del.target.
+
+    7.  Restart the system for the changes to take effect.
+
+        <Callout type="warning">
+        Restarting may affect running services. Assess the impact before proceeding.
+        </Callout>
+
+-   Security training: Train operations personnel not to use the Ctrl+Alt+Del key combination to prevent accidental host disconnection.
+
+-   Physical protection: Secure the host by installing cabinet door locks, security cameras, and other measures to prevent unauthorized access.

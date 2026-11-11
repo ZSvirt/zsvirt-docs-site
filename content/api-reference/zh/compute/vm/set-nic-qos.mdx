@@ -1,0 +1,85 @@
+---
+title: "设置虚拟机网卡限速"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "setNicQos": {
+    "outboundBandwidth": 819200.0,
+    "inboundBandwidth": 819200.0
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"setNicQos":{"outboundBandwidth":819200.0,"inboundBandwidth":819200.0}}' \
+http://localhost:8080/zstack/v1/vm-instances/1d86edf8c2e73980b83005e946449c57/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|虚拟机网卡UUID| |0.6|
+|outboundBandwidth \(可选\)|Long|body\(包含在**params**结构中\)|出流量带宽限制| |0.6|
+|inboundBandwidth \(可选\)|Long|body\(包含在**params**结构中\)|入流量带宽限制| |0.6|
+|systemTags \(可选\)|List|body| | |0.6|
+|userTags \(可选\)|List|body| | |0.6|
+
+## API返回
+该API成功时返回一个空的JSON结构**`{}`**，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+SetNicQoSAction action = new SetNicQoSAction();
+action.uuid = "00cc6445774649b488f6a03b023d6701";
+action.outboundBandwidth = 819200.0;
+action.inboundBandwidth = 819200.0;
+action.sessionId = "d5a1b6a5424e4b1c8cc23f77e8ba6d58";
+SetNicQoSAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SetNicQoSAction action = SetNicQoSAction()
+action.uuid = "71548ce2c00240a3a5b065080d47f399"
+action.outboundBandwidth = 819200.0
+action.inboundBandwidth = 819200.0
+action.sessionId = "a86b3caf907045b9a82e3a0cb0597330"
+SetNicQoSAction.Result res = action.call()
+```
+
+</APIPage>

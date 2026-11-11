@@ -1,0 +1,92 @@
+---
+title: "通过命令行安装"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+本场景中，管理员已经将两台服务器安装为 ZSvirt 管理节点。现在，管理员只需对其中一个管理节点安装**高可用套件**，即可设置管理节点高可用。若管理员对**管理节点 1** 安装高可用套件，则管理节点 1 为主管理节点，管理节点 2 为备管理节点。
+
+## 操作步骤
+
+1.  导入高可用套件。
+
+    登录**管理节点 1** 操作系统，从本地 ISO 仓库复制高可用套件文件。
+
+    ```
+    # 从本地 ISO 仓库复制高可用套件文件到管理节点 1
+    [root@localhost ~]# cp /opt/zstack-dvd/x86_64/h84r/zsha2_bins/* /root/
+
+    # 高可用套件包含两个可执行文件：zsha2 和 zstack-hamon，为其赋予可执行权限
+    [root@localhost ~]# chmod +x zsha2 zstack-hamon
+    ```
+
+2.  HA 初始化。
+
+    执行以下命令，在**管理节点 1** 中安装高可用套件：
+
+    ```
+    [root@localhost ~]# chmod +x zsha2 zstack-hamon
+    [root@localhost ~]# ./zsha2 install-ha -nic br_bond0 -gateway 192.168.0.1 -slave "root:password@192.168.196.125" \
+    -vip 192.168.199.151 -myip 192.168.195.200 -db-root-pw zstack.mysql.password -time-server 192.168.196.125 -cidr 192.168.0.0/16 -yes
+    ```
+
+    ### Note:
+
+    -   安装命令执行后，会先自动备份主备管理节点的数据库，再执行安装操作。
+    -   安装高可用套件，需将 **zsha2** 和 **zstack-hamon** 放在一个目录，安装过程中，**zsha2** 会自动部署 **zstack-hamon** 以及相关配置文件。
+
+3.  查看管理节点状态。
+
+    高可用套件初始化完成后，执行以下命令，查看管理节点状态：
+
+    ```
+    # 查看管理节点1的状态
+    [root@localhost ~]# zsha2 status
+    Status report from 192.168.195.200
+    =================================
+    Owns virtual address:            yes //管理节点1已获取VIP，同一时刻只允许一个管理节点获取VIP
+    Self 192.168.195.200 reachable:   yes //管理节点1可达
+    Gateway 192.168.0.1 reachable:    yes //当前网关可达
+    VIP 192.168.199.151 reachable:    yes //VIP可达
+    Peer 192.168.196.125 reachable:   yes //管理节点2可达
+    Keepalived status:               active //Keepalived服务处于工作状态
+    ZStack HA Monitor:               active //高可用监控服务处于工作状态
+    MySQL status:                    mysqld is alive //数据库正常工作
+    MN status: Running [PID:6500] //管理节点正常工作
+    UI status: Running [PID:9785] https://192.168.195.200:443 //UI正常工作
+    
+    Slave Status:
+    -------------
+                 Slave_IO_Running: Yes //Slave IO正常运行
+                Slave_SQL_Running: Yes //Slave SQL正常运行
+                       Last_Error:
+            Seconds_Behind_Master: 0
+                    Last_IO_Error:
+                   Last_SQL_Error:
+    
+    Warning: Permanently added '192.168.196.125' (ECDSA) to the list of known hosts.
+    Status report from 192.168.196.125 //查看管理节点2的状态
+    ================================
+    Owns virtual address:            no
+    Self 192.168.196.125 reachable:    yes
+    Gateway 192.168.0.1 reachable:    yes
+    VIP 192.168.199.151 reachable:     yes
+    Peer 192.168.195.200 reachable:   yes
+    Keepalived status:               active
+    ZStack HA Monitor:               active
+    MySQL status:                    mysqld is alive
+    
+    Slave Status:
+    -------------
+                 Slave_IO_Running: Yes
+                Slave_SQL_Running: Yes
+                       Last_Error:
+            Seconds_Behind_Master: 0
+                    Last_IO_Error:
+                   Last_SQL_Error:
+    
+    Note: visit ZStack UI with https://192.168.199.151:443
+    ```
+
+    **Note:** 安装高可用套件过程中，已自动为两个管理节点做 SSH 免密登录。
+

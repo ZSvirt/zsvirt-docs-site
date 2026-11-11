@@ -1,0 +1,255 @@
+---
+title: "Attach NIC to Virtual Machine"
+---
+
+<APIPage method="POST" path="/v1/vm-instances/{vmInstanceUuid}/nices/{vmNicUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{}}' \
+http://localhost:8080/zstack/v1/vm-instances/4fea63520ff63f5f9856acd619add4f5/nices/8b22e01e4bf43b1dab1530d2b362bbc5
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|vmNicUuid|String|url|Virtual Machine NIC UUID| |4.0.0|
+|vmInstanceUuid|List|url|Virtual Machine UUID| |4.0.0|
+|systemTags \(Optional\)|List|body|System Tag| |4.0.0|
+|userTags \(Optional\)|List|body|User Tag| |4.0.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "afbd67886d773a45af9a20071bcb09bb",
+    "name": "Test-VM",
+    "description": "web server VM",
+    "zoneUuid": "4b9ddab3f5f738f1a0161f5cf5f33f5c",
+    "clusterUuid": "d7061d85666a380cb3dda4cc7f9f16ee",
+    "imageUuid": "179a3412da4a32faa927eae552348907",
+    "hostUuid": "6ee062370eee3df58623fa99be0b2ce0",
+    "lastHostUuid": "09fdbebbaea73df79b744ad0d4bd7088",
+    "instanceOfferingUuid": "6dc0db981e68348e89ac79ed18fa4b24",
+    "rootVolumeUuid": "a876397202ac3d1daf9f4ea67e75e13d",
+    "platform": "Linux",
+    "defaultL3NetworkUuid": "3baaf68d632f3e9aa12be139d58d968e",
+    "type": "UserVm",
+    "hypervisorType": "KVM",
+    "memorySize": 8589934592,
+    "cpuNum": 1,
+    "allocatorStrategy": "LastHostPreferredAllocatorStrategy",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM",
+    "state": "Running",
+    "vmNics": [
+      {
+        "uuid": "b9415d324b50301e923a990bf65352d0",
+        "vmInstanceUuid": "afbd67886d773a45af9a20071bcb09bb",
+        "usedIpUuid": "76a49549cb183d35865276187afb482b",
+        "l3NetworkUuid": "3baaf68d632f3e9aa12be139d58d968e",
+        "ip": "192.168.1.10",
+        "mac": "00:0c:29:bd:99:fc",
+        "hypervisorType": "KVM",
+        "netmask": "255.255.255.0",
+        "gateway": "192.168.1.1",
+        "deviceId": 0,
+        "state": "enable",
+        "createDate": "Nov 14, 2017 10:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+      }
+    ],
+    "allVolumes": [
+      {
+        "uuid": "a876397202ac3d1daf9f4ea67e75e13d",
+        "name": "Root-Volume-For-VM-afbd67886d773a45af9a20071bcb09bb",
+        "primaryStorageUuid": "336625bac9e0326b9a9abc7801ef2c86",
+        "vmInstanceUuid": "afbd67886d773a45af9a20071bcb09bb",
+        "diskOfferingUuid": "475f8e09aae2389ea6945b46601aa683",
+        "rootImageUuid": "179a3412da4a32faa927eae552348907",
+        "installPath": "/zstack_ps/rootVolumes/acct-36c27e8ff05c4780bf6d2fa65700f22e/vol-a876397202ac3d1daf9f4ea67e75e13d/a876397202ac3d1daf9f4ea67e75e13d.qcow2",
+        "type": "Root",
+        "format": "qcow2",
+        "size": 107374182400,
+        "actualSize": 21474836480,
+        "deviceId": 0,
+        "state": "Enabled",
+        "status": "Ready",
+        "createDate": "Nov 14, 2017 10:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+      }
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation is successful. For details, see [error](#p_pvc_gz1_mjb)|4.0.0|
+|inventory|VmInstanceInventory|For details, see [inventory](#p_yn4_jxs_f4b)|4.0.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|4.0.0|
+|description|String|Brief description of the error|4.0.0|
+|details|String|Detailed error information|4.0.0|
+|elaboration|String|Reserved field, defaults to null|4.0.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|4.0.0|
+|cause|ErrorCode|Root cause. The source error that caused the current error. If there is no original error, this field is null|4.0.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifies the resource|4.0.0|
+|name|String|Resource name|4.0.0|
+|description|String|Detailed description of the resource|4.0.0|
+|zoneUuid|String|Data Center UUID|4.0.0|
+|clusterUuid|String|Cluster UUID|4.0.0|
+|imageUuid|String|Image UUID|4.0.0|
+|hostUuid|String|Host UUID|4.0.0|
+|lastHostUuid|String| |4.0.0|
+|instanceOfferingUuid|String| |4.0.0|
+|rootVolumeUuid|String|Root Disk UUID|4.0.0|
+|platform|String| |4.0.0|
+|architecture|String| |0.6|
+|defaultL3NetworkUuid|String| |4.0.0|
+|type|String| |4.0.0|
+|hypervisorType|String| |4.0.0|
+|memorySize|Long| |4.0.0|
+|cpuNum|Integer| |4.0.0|
+|cpuSpeed|Long| |4.0.0|
+|allocatorStrategy|String| |4.0.0|
+|createDate|Timestamp|Create time|4.0.0|
+|lastOpDate|Timestamp|Last modification time|4.0.0|
+|state|String| |4.0.0|
+|guestOsType|String| |4.1.2|
+|vmNics|List|For details, see [vmNics](#p_v2s_jxs_f4b)|4.0.0|
+|allVolumes|List|For details, see [allVolumes](#p_lzy_jxs_f4b)|4.0.0|
+|vmCdRoms|List|For details, see [vmCdRoms](#p_vzt_zd1_y1c)|0.6|
+
+### vmNics
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifies the resource|4.0.0|
+|vmInstanceUuid|String|Virtual Machine UUID|4.0.0|
+|l3NetworkUuid|String|Distributed Port Group UUID|4.0.0|
+|ip|String|IP address|4.0.0|
+|mac|String|MAC address|4.0.0|
+|hypervisorType|String|Hypervisor type|4.0.0|
+|netmask|String|Subnet mask|4.0.0|
+|gateway|String|Gateway|4.0.0|
+|metaData|String| |4.0.0|
+|ipVersion|Integer|IP address version|4.0.0|
+|driverType|String| |4.7.13|
+|internalName|String| |4.7.13|
+|deviceId|Integer|Device ID|4.0.0|
+|type|String|NIC type|4.0.0|
+|state|String|NIC state|4.7.13|
+|createDate|Timestamp|Create time|4.0.0|
+|lastOpDate|Timestamp|Last modification time|4.0.0|
+|usedIps|List|For details, see [usedIps](#p_htv_jxs_f4b)|4.0.0|
+
+### usedIps
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifies the resource|4.0.0|
+|ipRangeUuid|String|IP Range UUID|4.0.0|
+|l3NetworkUuid|String|Distributed Port Group UUID|4.0.0|
+|ipVersion|Integer|IP protocol number|4.0.0|
+|ip|String|IP address|4.0.0|
+|netmask|String|Network mask|4.0.0|
+|gateway|String|Gateway address|4.0.0|
+|usedFor|String| |4.0.0|
+|ipInLong|long| |4.0.0|
+|vmNicUuid|String|Virtual Machine NIC UUID|4.0.0|
+|createDate|Timestamp|Create time|4.0.0|
+|lastOpDate|Timestamp|Last modification time|4.0.0|
+
+### allVolumes
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifies the resource|4.0.0|
+|name|String|Resource name|4.0.0|
+|description|String|Detailed description of the resource|4.0.0|
+|primaryStorageUuid|String|Data Storage UUID|4.0.0|
+|vmInstanceUuid|String|Virtual Machine UUID|4.0.0|
+|diskOfferingUuid|String|Disk Offering UUID|4.0.0|
+|rootImageUuid|String|Root Image UUID|4.0.0|
+|installPath|String|Disk path on Data Storage|4.0.0|
+|type|String|Disk type, data disk/root disk|4.0.0|
+|format|String|Disk format|4.0.0|
+|size|Long|Disk size|4.0.0|
+|actualSize|Long|Actual disk size|4.0.0|
+|deviceId|Integer| |4.0.0|
+|state|String|Whether the disk is enabled|4.0.0|
+|status|String|Disk status|4.0.0|
+|createDate|Timestamp|Create time|4.0.0|
+|lastOpDate|Timestamp|Last modification time|4.0.0|
+|isShareable|Boolean|Whether it is a shared disk|4.0.0|
+|volumeQos|String|Disk QoS, format such as total=1048576|4.0.0|
+|lastDetachDate|Timestamp| |4.7.13|
+|lastVmInstanceUuid|String| |4.7.13|
+
+### vmCdRoms
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifies the resource|4.7.13|
+|vmInstanceUuid|String|Virtual Machine UUID|4.7.13|
+|deviceId|Integer| |4.7.13|
+|isoUuid|String| |4.7.13|
+|isoInstallPath|String| |4.7.13|
+|name|String|Resource name|4.7.13|
+|description|String|Detailed description of the resource|4.7.13|
+|createDate|Timestamp|Create time|4.7.13|
+|lastOpDate|Timestamp|Last modification time|4.7.13|
+
+## SDK Examples
+Java SDK
+
+```
+AttachVmNicToVmAction action = new AttachVmNicToVmAction();
+action.vmNicUuid = "8b22e01e4bf43b1dab1530d2b362bbc5";
+action.vmInstanceUuid = "4fea63520ff63f5f9856acd619add4f5";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AttachVmNicToVmAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = AttachVmNicToVmAction()
+action.vmNicUuid = "8b22e01e4bf43b1dab1530d2b362bbc5"
+action.vmInstanceUuid = "4fea63520ff63f5f9856acd619add4f5"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,9 @@
+{
+  "title": "Network Management",
+  "pages": [
+    "index",
+    "network-resources",
+    "network-services"
+  ],
+  "pagesIndex": "index"
+}

@@ -1,0 +1,81 @@
+---
+title: "Update VM Nic MAC"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/nics/{vmNicUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateVmNicMac": {
+    "mac": "fa:4c:ee:9a:76:00"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateVmNicMac":{"mac":"fa:4c:ee:9a:76:00"}}' \
+http://localhost:8080/zstack/v1/vm-instances/nics/c6a34d551b36322ab83b87f7eab6bd41/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|vmNicUuid|String|url|Virtual Machine NIC UUID| |2.3|
+|mac|String|body \(contained in **updateVmNicMac** structure\)|MAC address| |2.3|
+|systemTags \(Optional\)|List|body|System Tag| |2.3|
+|userTags \(Optional\)|List|body|User Tag| |2.3|
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On error, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+UpdateVmNicMacAction action = new UpdateVmNicMacAction();
+action.vmNicUuid = "c6a34d551b36322ab83b87f7eab6bd41";
+action.mac = "fa:4c:ee:9a:76:00";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateVmNicMacAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateVmNicMacAction action = UpdateVmNicMacAction()
+action.vmNicUuid = "c6a34d551b36322ab83b87f7eab6bd41"
+action.mac = "fa:4c:ee:9a:76:00"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateVmNicMacAction.Result res = action.call()
+```
+
+</APIPage>

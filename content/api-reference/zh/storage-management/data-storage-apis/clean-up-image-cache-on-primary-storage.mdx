@@ -1,0 +1,194 @@
+---
+title: "清除数据存储镜像缓存"
+---
+
+<APIPage method="PUT" path="/v1/primary-storage/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "cleanUpImageCacheOnPrimaryStorage": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"cleanUpImageCacheOnPrimaryStorage":{}}' \
+http://localhost:8080/zstack/v1/primary-storage/06e884ad8dbf3ed0bb061f4645b17075/actions
+```
+
+参数列表
+
+<table id="table_qg3_nm1_n1b"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+数据存储的UUID，唯一标示该资源
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+mode \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body
+
+</td><td>
+
+模式
+
+</td><td>
+
+-   soft
+-   hard
+
+</td><td>
+
+3.10.0
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr></tbody>
+</table>
+
+## **API返回**
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+CleanUpImageCacheOnPrimaryStorageAction action = new CleanUpImageCacheOnPrimaryStorageAction();
+action.uuid = "cb50319265d540e19cbf98137fcbca0e";
+action.sessionId = "5dc546cb18cc46b885412564a39c512f";
+CleanUpImageCacheOnPrimaryStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CleanUpImageCacheOnPrimaryStorageAction action = CleanUpImageCacheOnPrimaryStorageAction()
+action.uuid = "cd35f62a64cd4daf9397f2e3bf5e910b"
+action.sessionId = "e3ef197e97264195903b0fbdf52ae4c7"
+CleanUpImageCacheOnPrimaryStorageAction.Result res = action.call()
+```
+
+</APIPage>

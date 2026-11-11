@@ -1,0 +1,69 @@
+---
+title: 'Data Center Basic Operations'
+---
+
+You can understand the basic operations supported by the data center from the perspective of CRUD (Create, Read, Update, Delete).
+
+<table className="doc-feature-table">
+  <thead>
+    <tr>
+      <th>Operation</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Create a Data Center</td>
+      <td>Create a data center under the root node and set the name and description.</td>
+    </tr>
+    <tr>
+      <td>Edit a Data Center</td>
+      <td>Modify the name or description of an existing data center.</td>
+    </tr>
+    <tr>
+      <td>View a Data Center</td>
+      <td>View the resource topology diagram and summary information on the Overview page.</td>
+    </tr>
+    <tr>
+      <td>Delete a Data Center</td>
+      <td>Delete the data center and all subordinate resources.</td>
+    </tr>
+  </tbody>
+</table>
+
+## Create a Data Center
+Navigate to the root node and click **New Data Center**. Set the following parameters to create a data center:
+
+<table className="doc-feature-table">
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Name</strong></td>
+      <td>Name of the data center.</td>
+    </tr>
+    <tr>
+      <td><strong>Description</strong></td>
+      <td>Description of the data center.</td>
+    </tr>
+  </tbody>
+</table>
+
+After clicking **OK**, the data center will be created.
+
+## Edit a Data Center
+If you need to modify the name or description of an existing data center, you can do so on the corresponding data center page by clicking **More Actions** &gt; **Edit Name and Description**. In the dialog box that appears, you can modify the relevant information.
+
+## View a Data Center
+ZSvirt provides a data center resource topology diagram, which helps you quickly grasp summary information about all resources within a data center. You can view this information on the **Overview** page of the target data center.
+
+## Delete a Data Center
+If you need to delete an existing data center, you can do so on the target data center page by clicking **More Actions** &gt; **Delete**. This will delete the data center.
+
+<Callout type="warning">
+Deleting a data center will also delete clusters, hosts, networks, data stores, and all subordinate resources (such as virtual machines) within them. Please proceed with caution.
+</Callout>

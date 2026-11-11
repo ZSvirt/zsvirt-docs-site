@@ -1,0 +1,83 @@
+---
+title: "AddVmNicToSecurityGroup"
+---
+
+<APIPage method="POST" path="/v1/security-groups/{securityGroupUuid}/vm-instances/nics">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+**Body**
+
+```
+{
+  "params": {
+    "vmNicUuids": [
+      "8432b2608a8a4f639cc56a8c65ee42ef"
+    ]
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding sample, both **systemTags** and **userTags** are optional. These two fields can be included in the body structure.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"vmNicUuids":["c37875cec7133f41adbeb336cdd33ef8"]}}' \
+http://localhost:8080/zstack/v1/security-groups/f52566f939f635629a43cd3e27f78dd9/vm-instances/nics
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|securityGroupUuid|String|url|The security group UUID| |0.6|
+|vmNicUuids|List|body \(included in the **params** structure\)|The list of VM NIC UUIDs| |0.6|
+|systemTags \(Optional\)|List|body|System tags| |0.6|
+|userTags \(Optional\)|List|body|User tags| |0.6|
+
+## API Response
+This API returns a null JSON object `{}` when it succeeds, and returns a JSON object containing an `error` field when it fails. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+AddVmNicToSecurityGroupAction action = new AddVmNicToSecurityGroupAction();
+action.securityGroupUuid = "b651075ffcac475c91d3edaa5e9ade75";
+action.vmNicUuids = asList("ff0f6c13311b46ddb186a95c0d18350a");
+action.sessionId = "605fca0559284eff95d78e418508ff2f";
+AddVmNicToSecurityGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddVmNicToSecurityGroupAction action = AddVmNicToSecurityGroupAction()
+action.securityGroupUuid = "2da1519b9b39451e8742aadaa9241952"
+action.vmNicUuids = [bda4ceec2917426cb9ee20b3bcb20653]
+action.sessionId = "863d503abfbc4334846d67c1eac375f9"
+AddVmNicToSecurityGroupAction.Result res = action.call()
+```
+
+</APIPage>

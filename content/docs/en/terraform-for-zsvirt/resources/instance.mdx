@@ -1,0 +1,356 @@
+---
+title: 'zsphere_instance'
+description: 'This resource allows you to manage virtual machine (VM) instances in ZStack. A VM instance represents a virtualized compute resource that can be created, updated, and deleted. You can define the VM''s properties, such as its name, image, network configuration, disks, and GPU devices.'
+---
+
+<HistoricalNamingNote locale="en" />
+
+# zsphere_instance (Resource)
+
+This resource allows you to manage virtual machine (VM) instances in ZStack. A VM instance represents a virtualized compute resource that can be created, updated, and deleted. You can define the VM's properties, such as its name, image, network configuration, disks, and GPU devices.
+
+## Example Usage
+
+```terraform
+data "zsphere_images" "images" {
+  name = "image_from_terraform"
+}
+
+data "zsphere_port_groups" "networks" {
+  name = "port_group_from_terraform"
+}
+
+# Example 1: Basic VM creation from image
+resource "zsphere_instance" "vm_basic" {
+  name        = "vm_basic_from_terraform"
+  description = "create a basic vm from terraform"
+  image_uuid  = data.zsphere_images.images.images.0.uuid
+  memory_size = 1024
+  cpu_num     = 2
+
+  # Platform configuration
+  platform      = "Linux"
+  guest_os_type = "CentOS 7"
+  architecture  = "x86_64"
+
+  root_disk = {
+    size = 5 * 1024 * 1024 * 1024 # 5 GB in bytes
+  }
+
+  data_disks = [
+    {
+      size = 2 * 1024 * 1024 * 1024 # 2 GB in bytes
+    }
+  ]
+
+  network_interfaces = [
+    {
+      port_group_uuid = data.zsphere_port_groups.networks.port_groups.0.uuid
+      default_l3      = true
+    }
+  ]
+}
+
+# Example 2: Advanced VM with UEFI boot and custom disk bus types
+resource "zsphere_instance" "vm_advanced" {
+  name        = "vm_advanced_from_terraform"
+  description = "create an advanced vm from terraform"
+  image_uuid  = data.zsphere_images.images.images.0.uuid
+  memory_size = 1024
+  cpu_num     = 2
+
+  # Platform configuration
+  platform      = "Linux"
+  guest_os_type = "CentOS 7"
+  architecture  = "x86_64"
+
+  # Boot configuration
+  boot_mode       = "UEFI"
+  vm_machine_type = "q35"
+  cpu_mode        = "host-model"
+
+  # Hostname configuration
+  hostname = "my-server.example.com"
+
+  # Root disk with virtio bus
+  root_disk = {
+    size     = 4 * 1024 * 1024 * 1024 # 4 GB in bytes
+    name     = "root-disk"
+    bus_type = "virtio"
+  }
+
+  # Data disks with different bus types
+  data_disks = [
+    {
+      size     = 2 * 1024 * 1024 * 1024 # 2 GB in bytes
+      bus_type = "virtio-scsi"
+    },
+    {
+      size     = 1 * 1024 * 1024 * 1024 # 1 GB in bytes
+      bus_type = "scsi"
+    }
+  ]
+
+  network_interfaces = [
+    {
+      port_group_uuid = data.zsphere_port_groups.networks.port_groups.0.uuid
+      default_l3      = true
+      static_ip       = "192.168.1.100"
+    }
+  ]
+
+  netmask = "255.255.255.0"
+  gateway = "192.168.1.1"
+
+  strategy   = "InstantStart"
+  never_stop = false
+  user_data  = "#!/bin/bash\necho 'Hello World'"
+}
+
+# Example 3: VM from template
+
+resource "zsphere_instance" "vm_from_template" {
+  name          = "vm_from_template"
+  description   = "create a vm from template"
+  template_uuid = "template uuid"
+  expunge       = true
+  memory_size   = 1024
+  cpu_num       = 2
+
+  network_interfaces = [
+    {
+      port_group_uuid = data.zsphere_port_groups.networks.port_groups.0.uuid
+      default_l3      = true
+    }
+  ]
+}
+
+output "zsphere_instance_basic" {
+  value     = zsphere_instance.vm_basic
+  sensitive = true
+}
+
+output "zsphere_instance_advanced" {
+  value     = zsphere_instance.vm_advanced
+  sensitive = true
+}
+
+output "zsphere_instance_from_template" {
+  value     = zsphere_instance.vm_from_template
+  sensitive = true
+}
+```
+
+## Schema
+
+### Required
+
+- `name` (String) The name of the VM instance.
+
+### Optional
+
+- `affinity_group_uuid` (String) UUID of the affinity group for the VM.
+- `architecture` (String) Architecture of the VM instance. Default is 'x86_64'.
+- `auto_release_gpu_device` (Boolean) Whether to auto-release GPU device when VM stops.
+- `bios_time_sync` (Boolean) Whether to sync VM time with BIOS time.
+- `boot_menu_splash_timeout` (String) Timeout for boot menu splash screen.
+- `boot_mode` (String) Boot mode for the VM instance. Valid values are 'Legacy' and 'UEFI'.
+- `boot_orders` (List of String) Boot order for the VM (e.g., CdRom, HardDisk, Network).
+- `cdrom_list` (Attributes List) List of CD-ROM configurations. (see [below for nested schema](#nestedatt--cdrom_list))
+- `clock_sync_after_resume` (Boolean) Whether to sync clock after VM resume.
+- `clock_sync_interval` (Number) Clock sync interval in seconds.
+- `clock_track` (String) Clock track mode for the VM.
+- `cluster_uuid` (String) The UUID of the cluster where the VM instance is deployed.
+- `console_mode` (String) Console mode for the VM (vnc, spice).
+- `console_password` (String, Sensitive) Password for VM console access.
+- `cpu_bind_list_by_vcpu` (Attributes List) List of CPU binding configurations per vCPU. (see [below for nested schema](#nestedatt--cpu_bind_list_by_vcpu))
+- `cpu_bind_type` (String) CPU binding type.
+- `cpu_hide_kvm_mark` (Boolean) Whether to hide KVM mark from VM CPU.
+- `cpu_mode` (String) CPU mode for the VM. Valid values are 'host-model', 'host-passthrough', or 'custom'.
+- `cpu_num` (Number) The number of CPUs allocated to the VM instance.  When used together with `memory_size`, the `instance_offering_uuid` is not required.
+- `cpu_quota` (Number) CPU quota for the VM.
+- `cpu_resource_level` (String) CPU resource level (Normal, CpuHigh).
+- `data_disks` (Attributes List) The configuration for additional data disks. When creating from template, these are inherited from the template. (see [below for nested schema](#nestedatt--data_disks))
+- `datacenter_uuid` (String) The UUID of the zone where the VM instance is deployed.
+- `description` (String) A description of the VM instance.
+- `disk_aos` (Attributes List) List of disk AO configurations for template creation. (see [below for nested schema](#nestedatt--disk_aos))
+- `emulate_hyperv` (Boolean) Whether to emulate Hyper-V for the VM.
+- `emulator_pinning` (String) Emulator pinning configuration.
+- `expunge` (Boolean) Indicates if the instance should be expunged after deletion.
+- `fault_strategy` (String) Fault handling strategy for the VM.
+- `gateway` (String) Gateway for the VM's network interface (used with static IP).
+- `gpu_device_uuid_list` (List of String) List of GPU device UUIDs.
+- `gpu_type` (String) Type of GPU (e.g., qxl, vga).
+- `group` (String) VM group identifier.
+- `guest_os_type` (String) GuestOsType of the image, such as Linux, Windows, or Other
+- `ha_stick_strategy` (Boolean) Whether to enable HA stick strategy.
+- `host_uuid` (String) The UUID of the host where the VM instance is running.
+- `hostname` (String) Hostname to be set for the VM instance after creation (requires VMtools).
+- `hot_plug_enabled` (Boolean) Whether hot-plug is enabled for PCI devices.
+- `image_uuid` (String) The UUID of the image used to create the VM instance. Either image_uuid or template_uuid must be specified.
+- `memory_resource_level` (String) Memory resource level (Normal, High).
+- `memory_size` (Number) The memory size allocated to the VM instance in megabytes (MB). When used together with `cpu_num`, the `instance_offering_uuid` is not required.
+- `migrate_auto_converge` (Boolean) Whether to enable auto-converge for VM migration.
+- `motherboard_type` (String) Type of motherboard (e.g., q35, pc).
+- `netmask` (String) Netmask for the VM's network interface (used with static IP).
+- `network_interfaces` (Attributes List) Defines network interfaces attached to the VM. Each NIC corresponds to an L3 network, and optionally configures a static IP. (see [below for nested schema](#nestedatt--network_interfaces))
+- `never_stop` (Boolean) Whether the VM instance should never stop automatically.
+- `platform` (String) Platform of the image, such as Linux, Windows, or Other
+- `root_disk` (Attributes) The configuration for the root disk of the VM instance. When creating from template, this is inherited from the template. (see [below for nested schema](#nestedatt--root_disk))
+- `root_password` (String, Sensitive) Root password for the VM (used with user_data).
+- `root_username` (String) Root username for the VM (default is root for Linux, Administrator for Windows).
+- `se` (Boolean) Whether security element is enabled.
+- `socked_num` (Number) Number of CPU sockets.
+- `sound_card` (String) Type of sound card (e.g., ich6, ac97).
+- `spice_streaming_mode` (String) Spice streaming mode for the VM.
+- `ssh_key` (String) SSH public key for VM access.
+- `strategy` (String) The deployment strategy for the VM instance.
+- `template_uuid` (String) The UUID of the templated VM instance to create the VM from. Either image_uuid or template_uuid must be specified.
+- `total_gpu_memory` (Number) Total GPU memory in MB.
+- `usb_redirect` (Boolean) Whether USB redirect is enabled.
+- `user_data` (String) User data injected into the VM instance at boot time.
+- `vdi_monitor_number` (Number) Number of VDI monitors.
+- `vgpu_device` (Attributes) vGPU device configuration. (see [below for nested schema](#nestedatt--vgpu_device))
+- `vm_cpuid_vendor` (String) Custom CPUID vendor string for the VM.
+- `vm_group_uuid` (String) UUID of the VM scheduling group.
+- `vm_machine_type` (String) VM machine type. For UEFI boot mode, 'q35' is recommended.
+- `vm_nic_config` (Attributes List) List of VM NIC configurations for template creation. (see [below for nested schema](#nestedatt--vm_nic_config))
+- `vm_nic_params` (String) JSON string of VM NIC parameters for template creation. Used for advanced NIC configuration.
+- `vm_port_off` (Boolean) Whether to turn off VM ports.
+- `vm_usb_config` (Attributes List) List of USB device configurations. (see [below for nested schema](#nestedatt--vm_usb_config))
+- `vnuma_enabled` (Boolean) Whether vNUMA is enabled.
+
+### Read-Only
+
+- `uuid` (String) The unique identifier of the VM instance.
+- `vm_nics` (Attributes List) The network interfaces assigned to the VM instance. (see [below for nested schema](#nestedatt--vm_nics))
+
+<a id="nestedatt--cdrom_list"></a>
+### Nested Schema for `cdrom_list`
+
+Required:
+
+- `cdrom` (String) CD-ROM identifier.
+
+Optional:
+
+- `iso_uuid` (String) UUID of the ISO image (Empty for empty CD-ROM).
+
+
+<a id="nestedatt--cpu_bind_list_by_vcpu"></a>
+### Nested Schema for `cpu_bind_list_by_vcpu`
+
+Required:
+
+- `pcpu_list` (List of String) List of physical CPUs to bind.
+- `vcpu` (String) vCPU identifier.
+
+
+<a id="nestedatt--data_disks"></a>
+### Nested Schema for `data_disks`
+
+Optional:
+
+- `boot` (Boolean) Whether this disk is the boot disk.
+- `bus_type` (String) Bus type of the disk, such as virtio, ide, virtio-scsi, scsi.
+- `primary_storage_uuid` (String) The UUID of the primary storage for the data disk.
+- `size` (Number) The size of the data disk in bytes.
+
+Read-Only:
+
+- `name` (String) The name of the data disk. Auto-generated as \{vm-name\}-1, \{vm-name\}-2, etc., matching the frontend naming convention.
+
+
+<a id="nestedatt--disk_aos"></a>
+### Nested Schema for `disk_aos`
+
+Optional:
+
+- `boot` (Boolean) Whether this is the boot disk.
+- `bus_type` (String) Bus type of the disk (virtio, ide, virtio-scsi, scsi).
+- `name` (String) Name of the disk.
+- `primary_storage_uuid` (String) UUID of the primary storage.
+- `size` (Number) Size of the disk in bytes.
+- `source_type` (String) Source type of the disk (e.g., TemplatedVmInstanceVO, VolumeVO).
+- `source_uuid` (String) Source UUID of the disk.
+- `system_tags` (List of String) System tags for the disk.
+
+
+<a id="nestedatt--network_interfaces"></a>
+### Nested Schema for `network_interfaces`
+
+Required:
+
+- `default_l3` (Boolean) Whether this NIC is the default route NIC.
+- `port_group_uuid` (String) The UUID of the L3 network for this NIC.
+
+Optional:
+
+- `static_ip` (String) Static IP address to assign. The format will be converted to system tag `staticIp::<l3_uuid>::<ip>`.
+
+
+<a id="nestedatt--root_disk"></a>
+### Nested Schema for `root_disk`
+
+Optional:
+
+- `boot` (Boolean) Whether this disk is the boot disk.
+- `bus_type` (String) Bus type of the disk, such as virtio, ide, virtio-scsi, scsi.
+- `name` (String) The name of the root disk.
+- `primary_storage_uuid` (String) The UUID of the primary storage for the root disk.
+- `size` (Number) The size of the root disk in bytes.
+
+
+<a id="nestedatt--vgpu_device"></a>
+### Nested Schema for `vgpu_device`
+
+Required:
+
+- `type` (String) Type of the vGPU device (e.g., MdevDevice).
+- `uuid` (String) UUID of the vGPU device.
+
+
+<a id="nestedatt--vm_nic_config"></a>
+### Nested Schema for `vm_nic_config`
+
+Required:
+
+- `l3_network_uuid` (String) UUID of the L3 network.
+
+Optional:
+
+- `custom_mac` (String) Custom MAC address.
+- `driver_type` (String) Driver type for the NIC (e.g., virtio, e1000).
+- `inbound_bandwidth` (Number) Inbound bandwidth limit.
+- `ipv4_gateway` (String) IPv4 gateway.
+- `ipv4_netmask` (String) IPv4 netmask.
+- `ipv6_gateway` (String) IPv6 gateway.
+- `ipv6_prefix` (Number) IPv6 prefix length.
+- `multi_queue_num` (String) Number of multi-queues for the NIC.
+- `outbound_bandwidth` (Number) Outbound bandwidth limit.
+- `state` (String) State of the NIC (enable/disable).
+- `static_ip` (String) Static IPv4 address.
+- `static_ipv6` (String) Static IPv6 address.
+
+
+<a id="nestedatt--vm_usb_config"></a>
+### Nested Schema for `vm_usb_config`
+
+Required:
+
+- `usb_device_uuid` (String) UUID of the USB device.
+
+Optional:
+
+- `attach_type` (String) Attachment type for the USB device. Valid values: PassThrough (direct connection, requires USB device on same host), Redirect (forwarding, allows USB device on any host in same datacenter).
+
+
+<a id="nestedatt--vm_nics"></a>
+### Nested Schema for `vm_nics`
+
+Read-Only:
+
+- `gateway` (String) The gateway of the network.
+- `ip` (String) The IP address assigned to the network.
+- `netmask` (String) The netmask of the network.
+- `uuid` (String) The UUID of the network.

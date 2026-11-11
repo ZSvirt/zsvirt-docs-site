@@ -1,0 +1,10 @@
+{
+  "title": "添加 SAN 存储",
+  "pages": [
+    "index",
+    "iscsi-storage",
+    "sync-fc-storage",
+    "nvme-storage"
+  ],
+  "pagesIndex": "index"
+}

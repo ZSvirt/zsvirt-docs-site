@@ -1,0 +1,140 @@
+---
+title: "修改虚拟机网卡分布式端口组"
+---
+
+<APIPage method="POST" path="/v1/vm-instances/nics/{vmNicUuid}/l3-networks/{destL3NetworkUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{}}' http://localhost:8080/zstack/v1/vm-instances/nics/1183a0462aa83243a659ff91326888fb/l3-networks/e46ab07103763f0dbd3e99af2e3be4b0
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|vmNicUuid|String|url|虚拟机网卡UUID| |4.1.0|
+|destL3NetworkUuid|String|url| | |4.1.0|
+|systemTags \(可选\)|List|body|系统标签| |4.1.0|
+|userTags \(可选\)|List|body|用户标签| |4.1.0|
+|staticIp \(可选\)|String|body\(包含在**params**结构中\)| | |0.6|
+|vmNicParams \(可选\)|String|body\(包含在**params**结构中\)|网卡信息| |4.2.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "9d4cdab9192b3de3b2495b1e326910c7",
+    "vmInstanceUuid": "0ae9a1992fb436a58e820bdcb4dd17c4",
+    "usedIpUuid": "c0c5860c05ce3e70b14b4f501fedff71",
+    "l3NetworkUuid": "9390346b3a8a3c829b05dbe30569390a",
+    "ip": "192.168.1.10",
+    "mac": "00:0c:29:bd:99:fc",
+    "netmask": "255.255.255.0",
+    "gateway": "192.168.1.1",
+    "deviceId": 0
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_pvc_gz1_mjb)|4.1.0|
+|inventory|VmNicInventory|详情参考[inventory](#p_adf_qwd_3jb)|4.1.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.1.0|
+|description|String|错误的概要描述|4.1.0|
+|details|String|错误的详细信息|4.1.0|
+|elaboration|String|保留字段，默认为null|4.1.0|
+|opaque|LinkedHashMap|保留字段，默认为null|4.1.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.1.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.1.0|
+|vmInstanceUuid|String|虚拟机UUID|4.1.0|
+|l3NetworkUuid|String|分布式端口组UUID|4.1.0|
+|ip|String|IP地址|4.1.0|
+|mac|String|MAC地址|4.1.0|
+|hypervisorType|String|虚拟化类型|4.1.0|
+|netmask|String|子网掩码|4.1.0|
+|gateway|String|网关|4.1.0|
+|metaData|String| |4.1.0|
+|ipVersion|Integer|IP地址版本|4.1.0|
+|driverType|String| |4.7.13|
+|internalName|String| |4.7.13|
+|deviceId|Integer|设备ID|4.1.0|
+|type|String|网卡类型|4.1.0|
+|state|String|网卡状态|4.7.13|
+|createDate|Timestamp|创建时间|4.1.0|
+|lastOpDate|Timestamp|最后一次修改时间|4.1.0|
+|usedIps|List|详情参考[usedIps](#p_hjs_mjd_fpb)|4.1.0|
+
+### usedIps
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.1.0|
+|ipRangeUuid|String|IP段UUID|4.1.0|
+|l3NetworkUuid|String|分布式端口组UUID|4.1.0|
+|ipVersion|Integer|IP协议号|4.1.0|
+|ip|String|IP地址|4.1.0|
+|netmask|String|网络掩码|4.1.0|
+|gateway|String|网关地址|4.1.0|
+|usedFor|String| |4.1.0|
+|ipInLong|long| |4.1.0|
+|vmNicUuid|String|虚拟机网卡UUID|4.1.0|
+|createDate|Timestamp|创建时间|4.1.0|
+|lastOpDate|Timestamp|最后一次修改时间|4.1.0|
+
+## SDK示例
+Java SDK
+
+```
+ChangeVmNicNetworkAction action = new ChangeVmNicNetworkAction();
+action.vmNicUuid = "1183a0462aa83243a659ff91326888fb";
+action.destL3NetworkUuid = "e46ab07103763f0dbd3e99af2e3be4b0";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ChangeVmNicNetworkAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = ChangeVmNicNetworkAction()
+action.vmNicUuid = "1183a0462aa83243a659ff91326888fb"
+action.destL3NetworkUuid = "e46ab07103763f0dbd3e99af2e3be4b0"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,40 @@
+---
+title: 'Restore from Backup Data'
+---
+
+In the event of a disaster in the local data center, you can rely on the platform's database backup data to rebuild the data center and restore business. You can quickly restore the whole environment from an existing platform database backup using the initialization wizard.
+
+You have at least one valid platform backup.
+
+1.  In the Welcome to Initialization Wizard dialog, choose **Restore from Backup Data**.
+
+2.  Click **Next**.
+
+3.  In the Restore from Backup Data dialog, set the following parameters to complete server configurations:
+
+    -   **Backup Storage IP**: Enter the IP address of the backup storage that stores the platform backup data.
+    -   **URL**: URL of the backup storage.
+    -   **SSH Port**: SSH port of the backup storage. Default is 22.
+    -   **Username**: Username of the backup storage.
+    -   **Password**: Password of the backup storage.
+4.  Click **Test Connection** to validate network connectivity to the backup storage.
+
+5.  After successful connection, set the following parameters to complete backup data configurations:
+
+    -   **Database Backup**: Select a platform backup data.
+
+        <Callout type="info">
+        To avoid management node start failure due to insufficient licensed quota, select the appropriate data to restore. You can click **Update License** to renew your licensed quota.
+        </Callout>
+
+6.  Review the configuration and click **OK**.
+
+7.  In the Restore Platform Database dialog, enter the database root password and click **OK**.
+
+    <Callout type="info">
+    Restoring the platform database requires a management node restart, during which the management interface will be unavailable. This process takes a few minutes and does not affect your resources.
+    </Callout>
+
+8.  After the platform database is successfully restored, click **Log in Again**.
+
+After platform database recovery, all resources on the platform will be recovered to the state at which the backup is created. Click **Scan Backup Data** in the local backup storage to obtain real-time backup data.

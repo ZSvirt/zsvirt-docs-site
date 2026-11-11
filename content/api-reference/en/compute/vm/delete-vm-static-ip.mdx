@@ -1,0 +1,139 @@
+---
+title: "Delete VM Static IP"
+---
+
+<APIPage method="DELETE" path="/v1/vm-instances/{vmInstanceUuid}/static-ips">
+
+Delete the specified static IP from a Virtual Machine's Distributed Port Group.
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/vm-instances/fa0f86bf44593287af480c9151d41d1b/static-ips
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|vmInstanceUuid|String|url|Virtual Machine UUID| |0.6|
+|l3NetworkUuid|String|body|Distributed Port Group UUID| |0.6|
+|deleteMode\(Optional\)|String|body| | |0.6|
+|staticIp \(Optional\)|String|body| | |3.10.0|
+|systemTags \(Optional\)|List|body|System Tags| |0.6|
+|userTags \(Optional\)|List|body|User Tags| |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "8c15f251eba539e49df197a308aee38b",
+    "name": "Test-VM",
+    "description": "web server VM",
+    "zoneUuid": "f173cc88f1393a4398b3bd3e4c21bab6",
+    "clusterUuid": "59c11909378b3fc69e31f7da6b648b35",
+    "imageUuid": "fd8879c7c2e93d6b88ab56fe3140d1f6",
+    "hostUuid": "bd5799aad0023bcb8f61e7a5904ce7ce",
+    "lastHostUuid": "e7b0354e168a37ae85d934c63d6dc945",
+    "instanceOfferingUuid": "6fb498f77efa359e8868f66a6939d6ab",
+    "rootVolumeUuid": "217a529d3ae938fe8df35e737bf1c2a2",
+    "platform": "Linux",
+    "defaultL3NetworkUuid": "1a29368565c43b1c81aec96aeb5c4d3e",
+    "type": "UserVm",
+    "hypervisorType": "KVM",
+    "memorySize": 8589934592,
+    "cpuNum": 1,
+    "allocatorStrategy": "LastHostPreferredAllocatorStrategy",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM",
+    "state": "Running",
+    "vmNics": [
+      {
+        "uuid": "0e9c7c5c5c343d3baed27c8b7ab4012c",
+        "vmInstanceUuid": "8c15f251eba539e49df197a308aee38b",
+        "usedIpUuid": "55b0a960ae9d3b94b787ee6b94f6ab6e",
+        "l3NetworkUuid": "1a29368565c43b1c81aec96aeb5c4d3e",
+        "ip": "192.168.1.10",
+        "mac": "00:0c:29:bd:99:fc",
+        "hypervisorType": "KVM",
+        "netmask": "255.255.255.0",
+        "gateway": "192.168.1.1",
+        "deviceId": 0,
+        "state": "enable",
+        "createDate": "Nov 14, 2017 10:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+      }
+    ],
+    "allVolumes": [
+      {
+        "uuid": "217a529d3ae938fe8df35e737bf1c2a2",
+        "name": "Root-Volume-For-VM-8c15f251eba539e49df197a308aee38b",
+        "primaryStorageUuid": "d4ee62f589a8397491a5a3921b6c8a4b",
+        "vmInstanceUuid": "8c15f251eba539e49df197a308aee38b",
+        "diskOfferingUuid": "d25861266fdb39099ea4f8bffb6df873",
+        "rootImageUuid": "fd8879c7c2e93d6b88ab56fe3140d1f6",
+        "installPath": "/zstack_ps/rootVolumes/acct-36c27e8ff05c4780bf6d2fa65700f22e/vol-217a529d3ae938fe8df35e737bf1c2a2/217a529d3ae938fe8df35e737bf1c2a2.qcow2",
+        "type": "Root",
+        "format": "qcow2",
+        "size": 107374182400,
+        "actualSize": 21474836480,
+        "deviceId": 0,
+        "state": "Enabled",
+        "status": "Ready",
+        "createDate": "Nov 14, 2017 10:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+      }
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation succeeds, this field is null. For details, see [error](#p_cvg_t1y_zz)|0.6|
+|success|boolean| |0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier of the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause. The error that triggered the current error. If there is no original error, this field is null|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+DeleteVmStaticIpAction action = new DeleteVmStaticIpAction();
+action.vmInstanceUuid = "fa0f86bf44593287af480c9151d41d1b";
+action.l3NetworkUuid = "4ef401fb452e3b48af5914bcd336d670";
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteVmStaticIpAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteVmStaticIpAction action = DeleteVmStaticIpAction()
+action.vmInstanceUuid = "fa0f86bf44593287af480c9151d41d1b"
+action.l3NetworkUuid = "4ef401fb452e3b48af5914bcd336d670"
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DeleteVmStaticIpAction.Result res = action.call()
+```
+
+</APIPage>

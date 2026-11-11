@@ -1,0 +1,79 @@
+---
+title: 'Security Settings'
+---
+
+ZSvirt provides security settings suitable for highly secure platform scenarios.
+
+## Before You Begin
+
+-   Modifying Security Settings
+-   Appendix: Security Settings Items
+
+## Modifying Security Settings
+
+You can follow these steps to modify security settings:
+
+## Procedure
+
+1.  Navigate to the **Menu** &gt; **System Management** &gt; **Security Settings**.
+2.  Select the item you want to modify, then click the **Edit** icon to make changes.
+
+## Appendix: Security Settings Items
+
+## Category
+
+## Item Name
+
+## Item Description
+
+Login Policy
+
+## Prohibit Multiple Session Connections for the Same User
+
+Default is off. This setting determines whether multiple session connections for the same user are prohibited. If enabled, only one login session is allowed for the same user, and historical sessions will be forcibly terminated.
+
+## Session Timeout
+
+Default is 2 hours, measured in seconds/minutes/hours/days. After the session time exceeds this duration, the system becomes unavailable and requires re-login.
+
+## Platform Login Verification Code Policy
+
+Default is off. This setting determines whether the verification code function in login control is enabled. If enabled, after exceeding the maximum number of consecutive login failures, the verification code protection mechanism is triggered, requiring the correct username, password, and verification code to successfully log in to the platform. The default maximum number of consecutive login failures is 6 times.
+
+## Platform Login Password Update Cycle
+
+Default is off. This setting determines whether the password should be changed periodically. If enabled, when the password usage time reaches the specified update cycle, a prompt to change the password will appear upon re-login, with the default being 90 days. When resetting the password, the new password cannot repeat any previously used passwords. The non-repetition count can be configured, with the default being 5, indicating that the new password cannot match any of the previous 3 used passwords.
+
+## Platform Consecutive Login Failure User Lockout
+
+Default is off. This setting determines whether consecutive login failures lock the user. If enabled, the account will be locked for a period of time after the specified number of consecutive login failures. The default maximum number of consecutive login failures is 6, and the default lockout duration is 10 minutes.
+
+## Platform Login Password Strength
+
+Default is off. If enabled, manual setting of password length and selection of whether to enable a combination of numbers, upper and lower case letters, and special characters is possible.
+
+## Platform Login Two-Factor Authentication
+
+Default is off. This setting determines whether two-factor authentication is enabled for logging into the platform.
+
+Virtual Machine
+
+## VNC Console Password
+
+Default is off. This setting determines whether password login to the VNC console is enabled. Note: The VNC password length range format is m-n, with values ranging from [6, 8] integers, defaulting to 6-8, and supporting the option to enable a combination of numbers, upper and lower case letters, and special characters.
+
+## Virtual Machine Password Strength
+
+Default is off. This setting determines whether password login to the virtual machine is enabled.
+
+1.  The virtual machine password length range format is m-n, with values ranging from [8, 32] integers, defaulting to 8-18, and supporting the option to enable a combination of numbers, upper and lower case letters, and special characters.
+2.  To set the virtual machine password, ensure that cloud-init is installed in the virtual machine image, and recommended versions of cloud-init are: 0.7.9, 17.1, 19.4, and versions after 19.4.
+
+Host
+
+## Host Password Encryption Storage
+
+Default is None. This setting determines the encryption storage policy for host passwords in the database. Available strategies are: None, LocalEncryption.
+
+-   None: No encryption storage.
+-   LocalEncryption: Encryption storage using the built-in encryption feature of the platform.

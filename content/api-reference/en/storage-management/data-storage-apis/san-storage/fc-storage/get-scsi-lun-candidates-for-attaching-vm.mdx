@@ -1,0 +1,143 @@
+---
+title: "Get Scsi Lun Candidates For Attaching Vm"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/{vmInstanceUuid}/candidate-storage-devices">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/ccd1f4cb76e83c3b997fc4ed16ed529f/candidate-storage-devices?
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|vmInstanceUuid|String|url|Virtual Machine UUID| |3.1.0|
+|systemTags \(Optional\)|List|query| | |3.1.0|
+|userTags \(Optional\)|List|query| | |3.1.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "name": "fc-lun-36b083fe000daf018000022905ba35d8f",
+      "uuid": "d4714249ba273a5c9d1c1cb3a1a16f24",
+      "wwid": "36b083fe000daf018000022905ba35d8f",
+      "vendor": "DELL",
+      "model": "MD32xx",
+      "wwn": "0x6f01faf000d5c3e7",
+      "serial": "6b083fe000daf018000015505abbe00a",
+      "type": "mpath",
+      "path": "pci-0000:05:00.0-fc-0x2012b083fedaf018-lun-11",
+      "size": 5497558138880.0,
+      "scsiLunHostRefs": [
+        {
+          "id": 1.0,
+          "scsiLunUuid": "d4714249ba273a5c9d1c1cb3a1a16f24",
+          "hostUuid": "c922c37f885e35aeb1ae87db3446fc7e",
+          "createDate": "Nov 14, 2017 10:20:57 PM"
+        }
+      ],
+      "scsiLunVmInstanceRefs": [],
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |3.1.0|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. For details, see [error](#p_e44_znm_qfb)|3.1.0|
+|inventories|List|For details, see [inventories](#p_ic5_znm_qfb)|3.1.0|
+|error|ErrorCode|For details, see [error](#p_mwn_14m_qfb)|3.1.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, for example SYS.1000, HOST.1001|3.1.0|
+|description|String|Brief summary of the error|3.1.0|
+|details|String|Detailed error information|3.1.0|
+|elaboration|String|Reserved field, defaults to null|3.1.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|3.1.0|
+|cause|ErrorCode|Root cause: the source error that triggered the current error. If there is no original error, this field is null|3.1.0|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name|3.1.0|
+|uuid|String|Resource UUID, uniquely identifies the resource|3.1.0|
+|wwid|String|Disk global unique identifier|3.1.0|
+|vendor|String|Disk vendor|3.1.0|
+|model|String|Disk model|3.1.0|
+|wwn|String|Disk WWN|3.1.0|
+|serial|String|Disk serial number|3.1.0|
+|type|String|Disk type|3.1.0|
+|path|String|Disk path|3.1.0|
+|state|String|Disk enabled state|3.1.0|
+|size|Long|Disk size|3.1.0|
+|createDate|Timestamp|Creation time|3.1.0|
+|lastOpDate|Timestamp|Last modification time|3.1.0|
+|scsiLunHostRefs|List|For details, see [scsiLunHostRefs](#p_olc_14m_qfb)|3.1.0|
+|scsiLunVmInstanceRefs|List|For details, see [scsiLunVmInstanceRefs](#p_snh_14m_qfb)|3.1.0|
+
+### scsiLunHostRefs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|scsiLunUuid|String|SCSI Lun UUID|3.1.0|
+|hostUuid|String|Host UUID|3.1.0|
+|createDate|Timestamp|Creation time|3.1.0|
+|lastOpDate|Timestamp|Last modification time|3.1.0|
+
+### scsiLunVmInstanceRefs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|scsiLunUuid|String|SCSI Lun UUID|3.1.0|
+|vmInstanceUuid|String|Virtual Machine UUID|3.1.0|
+|createDate|Timestamp|Creation time|3.1.0|
+|lastOpDate|Timestamp|Last modification time|3.1.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, for example SYS.1000, HOST.1001|3.1.0|
+|description|String|Brief summary of the error|3.1.0|
+|details|String|Detailed error information|3.1.0|
+|elaboration|String|Reserved field, defaults to null|3.1.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|3.1.0|
+|cause|ErrorCode|Root cause: the source error that triggered the current error. If there is no original error, this field is null|3.1.0|
+
+## SDK Examples
+Java SDK
+
+```
+GetScsiLunCandidatesForAttachingVmAction action = new GetScsiLunCandidatesForAttachingVmAction();
+action.vmInstanceUuid = "ccd1f4cb76e83c3b997fc4ed16ed529f";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetScsiLunCandidatesForAttachingVmAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetScsiLunCandidatesForAttachingVmAction action = GetScsiLunCandidatesForAttachingVmAction()
+action.vmInstanceUuid = "ccd1f4cb76e83c3b997fc4ed16ed529f"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetScsiLunCandidatesForAttachingVmAction.Result res = action.call()
+```
+
+</APIPage>

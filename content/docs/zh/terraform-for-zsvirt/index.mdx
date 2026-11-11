@@ -1,0 +1,39 @@
+---
+title: "Terraform 管理 ZSvirt"
+description: "使用官方 Terraform Provider 以基础设施即代码方式管理 ZSvirt。"
+---
+
+ZSvirt Terraform Provider 允许你通过 [Terraform](https://www.terraform.io/) 在 ZSvirt 平台上定义和管理云基础设施，可用于自动化创建虚拟机、网络、存储及相关平台资源。
+
+<Callout type="info">
+**ZSvirt** 由 **ZStack ZSphere** 商业化项目开源并独立发展而来，部分代码、配置和文档仍保留 **ZStack**/**ZSphere** 的历史命名（如环境变量、配置项、依赖、路径、命令等）。这些命名仅用于兼容，不影响 **ZSvirt** 正常使用。
+</Callout>
+
+## 环境要求
+
+- [Terraform](https://www.terraform.io/downloads.html) >= 1.10.4
+- [Go](https://golang.org/doc/install) >= 1.25（仅本地编译 Provider 插件时需要）
+
+## 版本兼容
+
+| Terraform 版本 | Provider 最低版本 | Provider 最高版本 |
+| -------------- | ----------------- | ----------------- |
+| >= 1.10.4      | 1.0.0             | latest            |
+
+## 文档目录
+
+<Cards>
+  <Card title="快速入门" href="/docs/terraform-for-zsphere/getting-started" description="Provider 配置与环境变量。" />
+  <Card title="Provider 配置" href="/docs/terraform-for-zsphere/provider-configuration" description="认证方式与 Provider 参数说明。" />
+  <Card title="云主机管理" href="/docs/terraform-for-zsphere/instance-management" description="从镜像或模板创建云主机。" />
+  <Card title="资源" href="/docs/terraform-for-zsphere/resources" description="使用 Terraform 管理 ZSvirt 资源。" />
+  <Card title="数据源" href="/docs/terraform-for-zsphere/data-sources" description="查询已有 ZSvirt 资源。" />
+  <Card title="已知限制" href="/docs/terraform-for-zsphere/known-limitations" description="与 ZSvirt 控制台能力的差异。" />
+  <Card title="编译与测试" href="/docs/terraform-for-zsphere/building-and-testing" description="本地编译 Provider 并运行测试。" />
+</Cards>
+
+## 外部链接
+
+- [Terraform Registry 文档](https://registry.terraform.io/providers/terraform-zstack-modules/zsphere/latest/docs)
+- [Provider 源码仓库](https://github.com/ZStack-Robot/terraform-provider-zstack)
+- [在 GitHub 提交 Issue](https://github.com/ZStack-Robot/terraform-provider-zstack/issues/new)

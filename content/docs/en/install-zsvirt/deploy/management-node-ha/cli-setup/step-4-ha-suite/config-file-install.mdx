@@ -1,0 +1,112 @@
+---
+title: "Install Through Configuration File"
+---
+
+<HistoricalNamingNote locale="en" />
+
+In this scenario, you have installed both servers as the ZSvirt management nodes. To enable high availability for both nodes, you only need to install the **HA suite** on one of the nodes. If you install the HA suite on **MN 1**, MN 1 becomes the active management node and MN 2 becomes the standby management node.
+
+## Procedure
+
+1.  Import the HA suite.
+
+    Log in to the **MN 1** operating system. Copy the HA suite files from the local ISO repository.
+
+    ```
+    # Copy the HA suite files from the local ISO repository to MN 1
+    [root@localhost ~]# cp /opt/zstack-dvd/x86_64/h84r/zsha2_bins/* /root/
+
+    # The HA suite contains two executable files: zsha2 and zstack-hamon. Grant them executable permissions.
+    [root@localhost ~]# chmod +x zsha2 zstack-hamon
+    ```
+
+2.  Create the configuration fie.
+
+    Run the following commands to create the initialization configuration file for the HA suite:
+
+    ```
+    [root@localhost ~]# chmod +x zsha2 zstack-hamon
+    [root@localhost ~]# ./zsha2 sample-config > zs-install.config
+    [root@localhost ~]# cat zs-install.config
+    {
+      "gateway": "192.168.0.1", // Arbiter gateway for active and standby management nodes
+      "virtualIp": "192.168.199.151", // The VIP for Keepalived communication
+      "myIp": "192.168.195.200", // Specify the local IP
+      "peerIp": "192.168.196.125", // Specify the Peer management node IP
+      "peerSshUser": "root", // Specify the SSH username for the Peer management node
+      "peerSshPass": "password", // Specify the SSH password for the Peer management node
+      "peerSshPort": 22, // Specify the SSH port for the Peer management node
+      "dbRootPass": "zstack.mysql.password", // Specify the root password for the database on both management nodes (must be the same)
+      "interface": "br_bond0", //Name of the physical device for configuring the VIP. Typically a management network bridge in production environments
+      "timeServer": "192.168.196.125" //Specify the time synchronization server for unified time synchronization
+    }
+    ```
+
+3.  Initialize HA.
+
+    Run the following command to install the HA suite:
+
+    ```
+    [root@localhost ~]# ./zsha2 install-ha -config zs-install.config
+    ```
+
+    ### Note:
+
+    -   After executing the installation command, the system will automatically back up the databases of the active and standby management nodes before proceeding with the installation.
+    -   To install the high availability suite, ensure that **zsha2** and **zstack-hamon** are in the same directory. During the installation, **zsha2** will automatically deploy **zstack-hamon** and the related configuration files.
+
+4.  Check the management nodes status.
+
+    After initializing the HA suite, run the following command to check the status of the management nodes:
+
+    ```
+    # Check the status of Management Node 1
+    [root@localhost ~]# zsha2 status
+    Status report from 192.168.195.200
+    =================================
+    Owns virtual address:            yes  // MN 1 has acquired the VIP. Only one management node can acquire the VIP at any given time.
+    Self 192.168.195.200 reachable:   yes // MN1 is reachable.
+    Gateway 192.168.0.1 reachable:    yes // Current gateway is reachable.
+    VIP 192.168.199.151 reachable:    yes // VIP is reachable.
+    Peer 192.168.196.125 reachable:   yes // MN 2 is reachable.
+    Keepalived status:               active // Keepalived service is active.
+    ZStack HA Monitor:               active // HA monitoring service is active.
+    MySQL status:                    mysqld is alive // Database is functioning normally.
+    MN status: Running [PID:6500] // Management node is operating normally.
+    UI status: Running [PID:9785] https://192.168.195.200:443 // UI is functioning normally.
+    
+    Slave Status:
+    -------------
+                 Slave_IO_Running: Yes // Slave IO is running normally.
+                Slave_SQL_Running: Yes // Slave SQL is running normally.
+                       Last_Error:
+            Seconds_Behind_Master: 0
+                    Last_IO_Error:
+                   Last_SQL_Error:
+    
+    Warning: Permanently added '192.168.196.125' (ECDSA) to the list of known hosts.
+    Status report from 192.168.196.125 // Check the status of Management Node 2
+    ================================
+    Owns virtual address:            no
+    Self 192.168.196.125 reachable:    yes
+    Gateway 192.168.0.1 reachable:    yes
+    VIP 192.168.199.151 reachable:     yes
+    Peer 192.168.195.200 reachable:   yes
+    Keepalived status:               active
+    ZStack HA Monitor:               active
+    MySQL status:                    mysqld is alive
+    
+    Slave Status:
+    -------------
+                 Slave_IO_Running: Yes
+                Slave_SQL_Running: Yes
+                       Last_Error:
+            Seconds_Behind_Master: 0
+                    Last_IO_Error:
+                   Last_SQL_Error:
+    
+    Note: visit ZStack UI with https://192.168.199.151:443
+    ```
+
+    **Note:** During the installation of the HA suite, SSH password-free login has been automatically configured for both management nodes.
+

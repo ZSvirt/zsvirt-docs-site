@@ -1,0 +1,127 @@
+---
+title: "重连部署服务器返回"
+---
+
+<APIPage method="PUT" path="/v1/baremetal/pxeservers/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "reconnectBaremetalPxeServer": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"reconnectBaremetalPxeServer":{}}' \
+http://localhost:8080/zstack/v1/baremetal/pxeservers/65273a162ba83a4d99abc6ede60e6eeb/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |3.1.1|
+|systemTags \(可选\)|List|body|系统标签| |3.1.1|
+|userTags \(可选\)|List|body|用户标签| |3.1.1|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "95c83db8181c31ea84f2ed95b3800501",
+    "name": "test",
+    "hostname": "127.0.0.1",
+    "sshUsername": "root",
+    "sshPassword": "password",
+    "sshPort": 22,
+    "storagePath": "/zstack_bm_cache",
+    "dhcpInterface": "eth0",
+    "dhcpRangeBegin": "10.0.0.1",
+    "dhcpRangeEnd": "10.0.0.255",
+    "dhcpRangeNetmask": "255.255.255.0",
+    "state": "Enabled",
+    "status": "Connected"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_wk2_hyy_3gc)|3.1.1|
+|inventory|BaremetalPxeServerInventory|详情参考[inventory](#p_oxq_lp2_jgc)|3.1.1|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.1.1|
+|zoneUuid|String|数据中心UUID|3.1.1|
+|name|String|资源名称|3.1.1|
+|description|String|资源的详细描述|3.1.1|
+|hostname|String|部署服务器地址|3.1.1|
+|sshUsername|String|部署服务器SSH账户|3.1.1|
+|sshPassword|String|部署服务器SSH密码|3.1.1|
+|sshPort|Integer|部署服务器SSH端口|3.1.1|
+|storagePath|String|部署服务器存储路径|3.1.1|
+|dhcpInterface|String|DHCP请求监听网卡|3.1.1|
+|dhcpInterfaceAddress|String|DHCP请求监听网卡IP|3.1.1|
+|dhcpRangeBegin|String|DHCP地址范围起始|3.1.1|
+|dhcpRangeEnd|String|DHCP地址范围终止|3.1.1|
+|dhcpRangeNetmask|String|DHCP子网掩码|3.1.1|
+|state|String|部署服务器运行状态|3.1.1|
+|status|String|部署服务器连接状态|3.1.1|
+|createDate|Timestamp|创建时间|3.1.1|
+|lastOpDate|Timestamp|最后一次修改时间|3.1.1|
+|totalCapacity|Long|存储路径总容量|3.1.1|
+|availableCapacity|Long|存储路径可用容量|3.1.1|
+|attachedClusterUuids|List|部署服务器挂载集群UUID列表|3.1.1|
+
+## SDK示例
+Java SDK
+
+```
+ReconnectBaremetalPxeServerAction action = new ReconnectBaremetalPxeServerAction();
+action.uuid = "65273a162ba83a4d99abc6ede60e6eeb";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ReconnectBaremetalPxeServerAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = ReconnectBaremetalPxeServerAction()
+action.uuid = "65273a162ba83a4d99abc6ede60e6eeb"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

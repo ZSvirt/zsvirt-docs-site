@@ -1,0 +1,127 @@
+---
+title: "获取资源被引用的内存快照组"
+---
+
+<APIPage method="GET" path="/v1/memory-snapshots/group/reference">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/memory-snapshots/group/reference?resourceUuid=293e9dd057c831608cf59cd377ba0d03&resourceType=L3NetworkVO
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|resourceUuid|String|query|资源UUID| |4.4.24|
+|resourceType|String|query|资源类型| |4.4.24|
+|systemTags \(可选\)|List|query|系统标签| |4.4.24|
+|userTags \(可选\)|List|query|用户标签| |4.4.24|
+
+## API返回
+```
+{
+  "inventories": [
+    {
+      "uuid": "22f6a9534922339f95c15db177ac2c75",
+      "snapshotCount": 1.0,
+      "name": "group",
+      "vmInstanceUuid": "e5c0251850be3ffe85db33e7ecf12b75",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM",
+      "volumeSnapshotRefs": [
+        {
+          "volumeSnapshotUuid": "bfb9af2450753ac292c46c3afcadd7a6",
+          "volumeSnapshotGroupUuid": "22f6a9534922339f95c15db177ac2c75",
+          "deviceId": 0.0,
+          "snapshotDeleted": false,
+          "volumeUuid": "976ab88982753cc8951efd915b76573f",
+          "volumeName": "ROOT-volume",
+          "volumeType": "Root",
+          "volumeSnapshotInstallPath": "/zstack_ps/to/path/snap.qcow2",
+          "volumeSnapshotName": "group-ROOT-volume",
+          "createDate": "Nov 14, 2017 10:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+        }
+      ]
+    }
+  ],
+  "resourceUuid": "c8a0949c175c380db27cc5c78e8d01f7"
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|resourceUuid|String|资源UUID|4.4.24|
+|success|boolean| |4.4.24|
+|inventories|List|详情参考[inventories](/docs/api-reference/data-protection/snapshot-interfaces/query-volume-snapshot-group)|4.4.24|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](/docs/api-reference/data-protection/snapshot-interfaces/query-volume-snapshot-group)|4.4.24|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.4.24|
+|snapshotCount|Integer|组内快照数量|4.4.24|
+|name|String|资源名称|4.4.24|
+|description|String|资源的详细描述|4.4.24|
+|vmInstanceUuid|String|虚拟机UUID|4.4.24|
+|createDate|Timestamp|创建时间|4.4.24|
+|lastOpDate|Timestamp|最后一次修改时间|4.4.24|
+|volumeSnapshotRefs|List|详情参考[volumeSnapshotRefs](#p_hyf_x4g_x3b)|4.4.24|
+
+### volumeSnapshotRefs
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|volumeSnapshotUuid|String|硬盘快照UUID|4.4.24|
+|volumeSnapshotGroupUuid|String|快照组UUID|4.4.24|
+|deviceId|int|打快照时硬盘的加载序号|4.4.24|
+|snapshotDeleted|boolean|快照是否已经被删除|4.4.24|
+|volumeUuid|String|硬盘UUID|4.4.24|
+|volumeName|String|硬盘的名字|4.4.24|
+|volumeType|String|硬盘的类型|4.4.24|
+|volumeSnapshotInstallPath|String|快照的安装路径|4.4.24|
+|volumeSnapshotName|String|快照的名字|4.4.24|
+|createDate|Timestamp|创建时间|4.4.24|
+|lastOpDate|Timestamp|最后一次修改时间|4.4.24|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.4.24|
+|description|String|错误的概要描述|4.4.24|
+|details|String|错误的详细信息|4.4.24|
+|elaboration|String|保留字段，默认为null|4.4.24|
+|opaque|LinkedHashMap|保留字段，默认为null|4.4.24|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.4.24|
+
+## SDK示例
+Java SDK
+
+```
+GetMemorySnapshotGroupReferenceAction action = new GetMemorySnapshotGroupReferenceAction();
+action.resourceUuid = "293e9dd057c831608cf59cd377ba0d03";
+action.resourceType = "L3NetworkVO";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetMemorySnapshotGroupReferenceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetMemorySnapshotGroupReferenceAction action = GetMemorySnapshotGroupReferenceAction()
+action.resourceUuid = "293e9dd057c831608cf59cd377ba0d03"
+action.resourceType = "L3NetworkVO"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetMemorySnapshotGroupReferenceAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,11 @@
+{
+  "title": "Custom Attribute",
+  "pages": [
+    "index",
+    "create",
+    "add-edit",
+    "manage",
+    "search-resources"
+  ],
+  "pagesIndex": "index"
+}

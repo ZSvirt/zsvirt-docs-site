@@ -1,0 +1,99 @@
+---
+title: "Get Metric Label Values for Specified Labels"
+---
+
+<APIPage method="GET" path="/v1/zwatch/metrics/prometheus/label-values">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zwatch/metrics/prometheus/label-values?namespace=ZStack/VM&metricName=CPUIdleUtilization&startTime=1510669197141&endTime=1510669257141&labelNames=CPUNum&filterLabels=VMUuid=ff01ec80fd11327cba7519b66119d900
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|namespace|String|query|Namespace name| |4.10.20|
+|metricName|String|query|Metric name| |4.10.20|
+|startTime \(optional\)|Long|query|Start time| |4.10.20|
+|endTime \(optional\)|Long|query|End time| |4.10.20|
+|labelNames \(optional\)|List|query|Label name list for retrieving values| |4.10.20|
+|filterLabels \(optional\)|List|query|Label filter list. For example, you can specify the label HostUuid=e47f7145f4cd4fca8e2856038ecdf3e1 to select a specific physical host and retrieve the values of labels specified in labelNames.| |4.10.20|
+|systemTags \(optional\)|List|query|System tags| |4.10.20|
+|userTags \(optional\)|List|query|User tags| |4.10.20|
+
+## API Response
+Response Example
+
+```
+{
+  "labelValues": {
+    "hostUuid": [
+      "host_uuid_1",
+      "host_uuid_2"
+    ],
+    "cpuNum": [
+      "0",
+      "1",
+      "2",
+      "4"
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|labelValues|Map|Label values|4.10.20|
+|success|boolean|Whether the get operation succeeded|4.10.20|
+|error|ErrorCode|For details, see [error](#p_cm2_fw4_mhc)|4.10.20|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code. The globally unique error identifier, for example, SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field. Default is null|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null|0.6|
+|cause|ErrorCode|Root error. The source error that caused the current error. This field is null if no root error exists|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+GetPrometheusMetricLabelValueAction action = new GetPrometheusMetricLabelValueAction();
+action.namespace = "ZStack/VM";
+action.metricName = "CPUIdleUtilization";
+action.startTime = 1510669197141;
+action.endTime = 1510669257141;
+action.labelNames = asList("CPUNum");
+action.filterLabels = asList("VMUuid=ff01ec80fd11327cba7519b66119d900");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetPrometheusMetricLabelValueAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = GetPrometheusMetricLabelValueAction()
+action.namespace = "ZStack/VM"
+action.metricName = "CPUIdleUtilization"
+action.startTime = 1510669197141
+action.endTime = 1510669257141
+action.labelNames = [CPUNum]
+action.filterLabels = [VMUuid=ff01ec80fd11327cba7519b66119d900]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

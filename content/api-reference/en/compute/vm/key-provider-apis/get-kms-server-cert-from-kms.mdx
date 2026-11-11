@@ -1,0 +1,103 @@
+---
+title: "Get the Server Certificate from KMS"
+---
+
+<APIPage method="PUT" path="/v1/key-providers/kms/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "getKmsServerCertFromKms": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding example, the `systemTags` and `userTags` fields can be omitted. They are listed to indicate that the body can include these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"getKmsServerCertFromKms":{}}' \
+http://localhost:8080/zstack/v1/key-providers/kms/ff0a9250e11b3fe5a553d61be176d300/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Optional Value|Since|
+|----|----|--------|-----------|--------------|-----|
+|uuid|String|url|Resource UUID, which uniquely identifies the resource| |5.0.0|
+|systemTags \(optional\)|List|body|System tags| |5.0.0|
+|userTags \(optional\)|List|body|User tags| |5.0.0|
+
+## API Response
+Response Example
+
+```
+{
+  "serverCertPem": "-----BEGIN CERTIFICATE-----\n...\n-----END CERTIFICATE-----",
+  "selfSigned": true,
+  "serverCertInfo": {
+    "subject": "CN=kms.example.com,O=zstack",
+    "issuer": "CN=zstack-ca,O=zstack",
+    "commonName": "kms.example.com",
+    "subjectAltNamesDns": [
+      "kms.example.com"
+    ],
+    "subjectAltNamesIp": [
+      "127.0.0.1"
+    ],
+    "expiredDate": "Nov 14, 2017 2:20:57 PM"
+  }
+}
+```
+
+|Name|Type|Description|Since|
+|----|----|-----------|-----|
+|serverCertPem|String|Server certificate|5.0.0|
+|selfSigned|boolean|Whether the server certificate is self-signed|5.0.0|
+|serverCertInfo|CertificateInfo|Parsed server certificate information|5.0.0|
+|success|boolean| |5.0.0|
+|error|ErrorCode|For details, see [error](#p_t4f_pp2_2jc)|5.0.0|
+
+### error
+|Name|Type|Description|Since|
+|----|----|-----------|-----|
+|code|String|Error code, which is the globally unique identifier of the error, for example, SYS.1000 or HOST.1001|0.6|
+|description|String|Summary description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. The default value is null.|0.6|
+|opaque|LinkedHashMap|Reserved field. The default value is null.|0.6|
+|cause|ErrorCode|Root error that caused the current error. If no root error exists, this field is null.|0.6|
+
+## SDK Example
+Java SDK
+
+```
+GetKmsServerCertFromKmsAction action = new GetKmsServerCertFromKmsAction();
+action.uuid = "ff0a9250e11b3fe5a553d61be176d300";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetKmsServerCertFromKmsAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = GetKmsServerCertFromKmsAction()
+action.uuid = "ff0a9250e11b3fe5a553d61be176d300"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

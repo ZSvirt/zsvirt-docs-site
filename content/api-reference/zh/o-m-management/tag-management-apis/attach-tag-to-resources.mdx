@@ -1,0 +1,160 @@
+---
+title: "加载资源标签"
+---
+
+<APIPage method="POST" path="/v1/tags/{tagUuid}/resources">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "resourceUuids": [
+      "bcd0e0f674aa47298dcbdc0efeffb55d"
+    ]
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"resourceUuids":["80ed93103b624518ab0e642c6611bc0f"]}}' http://localhost:8080/zstack/v1/tags/05811acb63e34f4c9c62b19a8eb4090b/resources
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|tagUuid|String|url|标签UUID| |3.2.0|
+|resourceUuids|List|body\(包含在**params**结构中\)|资源UUID| |3.2.0|
+|tokens \(可选\)|Map|body\(包含在**params**结构中\)|通过标签存放的键和值| |3.2.0|
+|systemTags \(可选\)|List|body| | |3.2.0|
+|userTags \(可选\)|List|body| | |3.2.0|
+
+## API返回
+<Callout type="info">
+该API调用成功后，返回success为**true**。成功克隆的虚拟机数量由`numberOfClonedVm`返回。实际过程中，由于资源限制，可能存在部分成功、部分失败的情况。每台虚拟机的克隆失败原因存放在`inventories`里面的**error**字段。
+</Callout>
+
+返回示例
+
+```
+{
+  "results": [
+    {
+      "inventory": {
+        "tagPatternUuid": "f9060711c8453a2580f840d7aa1c5485",
+        "uuid": "b2f817b3400232018956a4d2d198edc4",
+        "resourceType": "DiskOfferingVO",
+        "tag": "for-large-DB",
+        "type": "User",
+        "createDate": "Nov 14, 2017 10:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+      },
+      "success": true
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |3.2.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_cm5_yyx_yfb)|3.2.0|
+|results|List|详情参考[results](#p_npk_1zx_yfb)|3.2.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.2.0|
+|description|String|错误的概要描述|3.2.0|
+|details|String|错误的详细信息|3.2.0|
+|elaboration|String|保留字段，默认为null|3.2.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.2.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.2.0|
+
+### results
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |3.2.0|
+|error|ErrorCode|详情参考[error](#p_hbk_bzx_yfb)|3.2.0|
+|inventory|UserTagInventory|详情参考[inventory](#p_w41_czx_yfb)|3.2.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.2.0|
+|description|String|错误的概要描述|3.2.0|
+|details|String|错误的详细信息|3.2.0|
+|elaboration|String|保留字段，默认为null|3.2.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.2.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.2.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|tagPatternUuid|String| |3.2.0|
+|uuid|String|资源的UUID，唯一标示该资源|3.2.0|
+|resourceUuid|String| |3.2.0|
+|resourceType|String| |3.2.0|
+|tag|String| |3.2.0|
+|type|String| |3.2.0|
+|createDate|Timestamp|创建时间|3.2.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.2.0|
+|tagPattern|TagPatternInventory|详情参考[tagPattern](#p_l1r_dzx_yfb)|3.2.0|
+
+### tagPattern
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.2.0|
+|name|String|资源名称|3.2.0|
+|value|String| |3.2.0|
+|description|String|资源的详细描述|3.2.0|
+|color|String| |3.2.0|
+|createDate|Timestamp|创建时间|3.2.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.2.0|
+|type|TagPatternType|详情参考[type](#p_okq_2zx_yfb)|3.2.0|
+
+### type
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|name|String|资源名称|3.2.0|
+|ordinal|int| |3.2.0|
+
+## SDK示例
+Java SDK
+
+```
+AttachTagToResourcesAction action = new AttachTagToResourcesAction();
+action.tagUuid = "6369948f4523457b87c311c550aa3e16";
+action.resourceUuids = asList("ae2fdc6bbd254fcba9c36ac174c87a31");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AttachTagToResourcesAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AttachTagToResourcesAction action = AttachTagToResourcesAction()
+action.tagUuid = "1e9bee8a666340fe86599fa03962af90"
+action.resourceUuids = [a4bb584d6c50401c98b7535dca839ba0]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AttachTagToResourcesAction.Result res = action.call()
+```
+
+</APIPage>

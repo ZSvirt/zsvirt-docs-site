@@ -1,0 +1,72 @@
+---
+title: "Check Ceph Health Status"
+---
+
+<APIPage method="POST" path="/v1/zops/check-ceph-health">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, the `systemTags` and `userTags` fields are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{}}' http://localhost:8080/zstack/v1/zops/check-ceph-health
+```
+
+Parameters
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|---|----|
+|systemTags \(optional\)|List|body|System tag| |4.10.10|
+|userTags \(optional\)|List|body|User tag| |4.10.10|
+
+## API Response
+This API returns an empty JSON structure `{}` on success, and returns a JSON structure containing an error field on failure. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+CheckCephHealthStatusAction action = new CheckCephHealthStatusAction();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CheckCephHealthStatusAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CheckCephHealthStatusAction action = CheckCephHealthStatusAction()
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CheckCephHealthStatusAction.Result res = action.call()
+```
+
+</APIPage>

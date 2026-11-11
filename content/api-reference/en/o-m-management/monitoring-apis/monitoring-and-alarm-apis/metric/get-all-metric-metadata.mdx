@@ -1,0 +1,92 @@
+---
+title: "Get All Metric Metadata"
+---
+
+<APIPage method="GET" path="/v1/zwatch/metrics/meta-data">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zwatch/metrics/meta-data?name=VMHAProcess
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|name \(optional\)|String|query|Metric name| |3.9.0|
+|namespace \(optional\)|String|query|Metric namespace| |3.9.0|
+|systemTags \(optional\)|List|query|System tags| |2.3|
+|userTags \(optional\)|List|query|User tags| |2.3|
+
+## API Response
+Response Example
+
+```
+{
+  "metrics": [
+    {
+      "namespace": "ZStack/VM",
+      "name": "org.zstack.zwatch.datatype.Metric@4efa6b58",
+      "description": "CPUIdleUtilization",
+      "labelNames": [
+        "VMUuid",
+        "CPUNum"
+      ],
+      "driver": "PrometheusDatabaseDriver"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_gt1_vxx_bdb)|2.3|
+|metrics|List|For details, see [metrics](#p_wrx_vxx_bdb)|2.3|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code. The globally unique error identifier, for example, SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field. Default is null|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null|0.6|
+|cause|ErrorCode|Root error. The source error that caused the current error. This field is null if no root error exists|0.6|
+
+### metrics
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|namespace|String|Namespace|2.3|
+|name|String|Resource name|2.3|
+|description|String|Description|3.9.0|
+|labelNames|List|Label names|2.3|
+
+## SDK Examples
+Java SDK
+
+```
+GetAllMetricMetadataAction action = new GetAllMetricMetadataAction();
+action.name = "VMHAProcess";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetAllMetricMetadataAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetAllMetricMetadataAction action = GetAllMetricMetadataAction()
+action.name = "VMHAProcess"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetAllMetricMetadataAction.Result res = action.call()
+```
+
+</APIPage>

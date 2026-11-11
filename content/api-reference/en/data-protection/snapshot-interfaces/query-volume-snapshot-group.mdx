@@ -1,0 +1,129 @@
+---
+title: "Query Snapshot Group"
+---
+
+<APIPage method="GET" path="/v1/volume-snapshots/group">
+
+```
+GET zstack/v1/volume-snapshots/group/{uuid}
+```
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/volume-snapshots/group?q=uuid=9480c1736b9c3798b3030cd990f0db8f
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/volume-snapshots/group/91c3de9ffbc73475a84b8038c8a2349c
+```
+
+Queryable Fields
+
+Run the CLI command-line tool, enter `QueryVolumeSnapshotGroup` and press the Tab key to view all queryable fields and the resource names available for cross-table queries.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "2c95e5285a733df6a2b70e198282f594",
+      "snapshotCount": 1.0,
+      "name": "group",
+      "vmInstanceUuid": "371076859fa9326fba89633429f0aa06",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM",
+      "volumeSnapshotRefs": [
+        {
+          "volumeSnapshotUuid": "bb6bc37f1c483ac1b7703b6ba58a2081",
+          "volumeSnapshotGroupUuid": "2c95e5285a733df6a2b70e198282f594",
+          "deviceId": 0.0,
+          "snapshotDeleted": false,
+          "volumeUuid": "6ff4fae70b79328bb0233313adb1226b",
+          "volumeName": "ROOT-volume",
+          "volumeType": "Root",
+          "volumeSnapshotInstallPath": "/Cloud_ps/to/path/snap.qcow2",
+          "volumeSnapshotName": "group-ROOT-volume",
+          "createDate": "Nov 14, 2017 10:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+        }
+      ]
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_dqw_y4g_x3b)|3.6.0|
+|inventories|List|For details, see [inventories](#p_sm1_y4g_x3b)|3.6.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|3.6.0|
+|description|String|A brief description of the error|3.6.0|
+|details|String|The detailed error information|3.6.0|
+|elaboration|String|A reserved field. The default value is null|3.6.0|
+|opaque|LinkedHashMap|A reserved field. The default value is null|3.6.0|
+|cause|ErrorCode|The root error. The source error that caused the current error. If no root error exists, this field is null|3.6.0|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource|3.6.0|
+|snapshotCount|Integer|The number of snapshots in the group|3.6.0|
+|name|String|Resource name|3.6.0|
+|description|String|Detailed description of the resource|3.6.0|
+|vmInstanceUuid|String|Virtual Machine UUID|3.6.0|
+|createDate|Timestamp|Creation time|3.6.0|
+|lastOpDate|Timestamp|Last modification time|3.6.0|
+|volumeSnapshotRefs|List|For details, see [volumeSnapshotRefs](#p_hyf_x4g_x3b)|3.6.0|
+
+### volumeSnapshotRefs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|volumeSnapshotUuid|String|Disk snapshot UUID|3.6.0|
+|volumeSnapshotGroupUuid|String|Snapshot group UUID|3.6.0|
+|deviceId|int|The device ID of the disk when the snapshot was taken|3.6.0|
+|snapshotDeleted|boolean|Whether the snapshot has been deleted|3.6.0|
+|volumeUuid|String|Disk UUID|3.6.0|
+|volumeName|String|Disk name|3.6.0|
+|volumeType|String|Disk type|3.6.0|
+|volumeSnapshotInstallPath|String|Snapshot install path|3.6.0|
+|volumeSnapshotName|String|Snapshot name|3.6.0|
+|createDate|Timestamp|Creation time|3.6.0|
+|lastOpDate|Timestamp|Last modification time|3.6.0|
+
+## SDK Examples
+Java SDK
+
+```
+QueryVolumeSnapshotGroupAction action = new QueryVolumeSnapshotGroupAction();
+action.conditions = asList("uuid=102cde8f217430aaaf5652460adb7d7e");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryVolumeSnapshotGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryVolumeSnapshotGroupAction action = QueryVolumeSnapshotGroupAction()
+action.conditions = ["uuid=3ad89f9fbe823083b1918f872381a1f5"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryVolumeSnapshotGroupAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,87 @@
+---
+title: "Query Quota"
+---
+
+<APIPage method="GET" path="/v1/accounts/quotas">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/accounts/quotas?q=name=test
+```
+
+Queryable Fields
+
+Run the CLI tool, type `QueryQuota`, and press Tab to view all queryable fields and cross-table queryable resource names.
+
+## API Response
+Response example
+
+```
+{
+  "inventories": [
+    {
+      "name": "quota",
+      "identityUuid": "b30cc832a5493fe2a6184a78fc20c410",
+      "value": 20
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null on success. For details, see [error](#p_ttg_hp5_m1b)|0.6|
+|inventories|List|For details, see [inventories](#p_b3s_hp5_m1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, e.g., SYS.1000, HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Default is null|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null|0.6|
+|cause|ErrorCode|The root error that caused the current error. This field is null if there is no root cause|0.6|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name|0.6|
+|identityUuid|String|Identity UUID \(account UUID or user UUID\)|0.6|
+|identityType|String|Identity type \(account or user\)|0.6|
+|value|Long|Default quota value|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+|createDate|Timestamp|Creation time|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+QueryQuotaAction action = new QueryQuotaAction();
+action.conditions = asList("name=test");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryQuotaAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+QueryQuotaAction action = QueryQuotaAction()
+action.conditions = ["name=test"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryQuotaAction.Result res = action.call()
+
+```
+
+</APIPage>

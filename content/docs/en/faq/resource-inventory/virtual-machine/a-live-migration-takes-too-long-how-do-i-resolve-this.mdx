@@ -1,0 +1,13 @@
+---
+title: "A live migration takes too long. How do I resolve this?"
+---
+
+## Cause
+The Virtual Machine may be writing memory data at a rate that exceeds the memory migration rate during migration, preventing the live migration from completing within a reasonable time.
+
+## Solution
+-   If the Virtual Machine workload is high, live migration takes longer. Wait for the migration task to complete.
+
+-   On the target Host details page, select **Auto-Convergence Mode** and retry the live migration.
+
+-   Based on your network conditions, plan a dedicated 10 GbE migration network to accelerate live migration.

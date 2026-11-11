@@ -1,0 +1,12 @@
+---
+title: "Running df -h on a host hangs. What should I do?"
+---
+
+## Symptom
+Running `df -h` on a host hangs indefinitely.
+
+## Cause
+The system has a stale mount entry.
+
+## Solution
+Use `mount -l` to list existing mounts and unmount the stale entry to restore normal operation.

@@ -1,0 +1,9 @@
+{
+  "title": "安装 ZSvirt",
+  "pages": [
+    "index",
+    "management-node",
+    "management-node-ha"
+  ],
+  "pagesIndex": "index"
+}

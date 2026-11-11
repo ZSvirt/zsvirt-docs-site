@@ -1,0 +1,129 @@
+---
+title: "Create Bare Metal NIC Bonding"
+---
+
+<APIPage method="POST" path="/v1/baremetal/network/bondings">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "chassisUuid": "8a3fddc82d1536ad8f695d25d84404f2",
+    "name": "bond0",
+    "mode": 1,
+    "slaves": "[\"d4:ae:52:6e:d1:0d\", \"d4:ae:52:6e:d1:0e\"]",
+    "opts": "miimon=100"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"chassisUuid":"8a3fddc82d1536ad8f695d25d84404f2","name":"bond0","mode":1,"slaves":"[\"d4:ae:52:6e:d1:0d\", \"d4:ae:52:6e:d1:0e\"]","opts":"miimon=100"}}' \
+http://localhost:8080/zstack/v1/baremetal/network/bondings
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|chassisUuid|String|body \(contained in `params` structure\)|Bare Metal Chassis UUID| |3.4.0|
+|name|String|body \(contained in `params` structure\)|NIC Bonding Name| |3.4.0|
+|mode|Integer|body \(contained in `params` structure\)|NIC Bonding Mode| |3.4.0|
+|slaves|String|body \(contained in `params` structure\)|NIC Bonding Slaves MAC Address| |3.4.0|
+|opts \(Optional\)|String|body \(contained in `params` structure\)|NIC Bonding Options| |3.4.0|
+|resourceUuid \(Optional\)|String|body \(contained in `params` structure\)|Resource UUID| |3.4.0|
+|systemTags \(Optional\)|List|body|System Tags| |3.4.0|
+|userTags \(Optional\)|List|body|User Tags| |3.4.0|
+|tagUuids \(Optional\)|List|body \(contained in `params` structure\)|Tag UUID List| |3.4.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "badccdb49c6e4ad599696948457f5277",
+    "chassisUuid": "6442d12334e44aee96fc74c2fc8ea8f9",
+    "name": "bond0",
+    "mode": 1,
+    "slaves": "[\"d4:ae:52:6e:d1:0d\", \"d4:ae:52:6e:d1:0e\"]",
+    "opts": "miimon=100",
+    "createDate": "Aug 15, 2025 5:32:54 AM",
+    "lastOpDate": "Aug 15, 2025 5:32:54 AM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation succeeds, this field is null. See [error](#p_lvx_yyy_3gc) for details.|3.4.0|
+|inventory|BaremetalBondingInventory|See [inventory](#p_fqk_yzy_3gc) for details.|3.4.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause, the source error that caused the current error. If there is no original error, this field is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|3.4.0|
+|chassisUuid|String|Bare Metal Chassis UUID|3.4.0|
+|name|String|NIC Bonding Name|3.4.0|
+|mode|Integer|NIC Bonding Mode|3.4.0|
+|slaves|String|Slave MAC Address, comma separated|3.4.0|
+|opts|String|NIC Bonding Options|3.4.0|
+|createDate|Timestamp|Create Time|3.4.0|
+|lastOpDate|Timestamp|Last Modification Time|3.4.0|
+
+## SDK Examples
+Java SDK
+
+```
+CreateBaremetalBondingAction action = new CreateBaremetalBondingAction();
+action.chassisUuid = "8a3fddc82d1536ad8f695d25d84404f2";
+action.name = "bond0";
+action.mode = 1;
+action.slaves = "["d4:ae:52:6e:d1:0d", "d4:ae:52:6e:d1:0e"]";
+action.opts = "miimon=100";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateBaremetalBondingAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = CreateBaremetalBondingAction()
+action.chassisUuid = "8a3fddc82d1536ad8f695d25d84404f2"
+action.name = "bond0"
+action.mode = 1
+action.slaves = "["d4:ae:52:6e:d1:0d", "d4:ae:52:6e:d1:0e"]"
+action.opts = "miimon=100"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

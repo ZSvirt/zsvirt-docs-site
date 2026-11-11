@@ -1,0 +1,95 @@
+---
+title: 'zsphere_port_group'
+description: 'Resource definition for ZSvirt Port Group.'
+---
+
+<HistoricalNamingNote locale="en" />
+
+# zsphere_port_group (Resource)
+
+Resource definition for ZSvirt Port Group.
+
+## Example Usage
+
+```terraform
+resource "zsphere_port_group" "example" {
+  name         = "example-port-group"
+  description  = "Example port group with full IPAM configuration"
+  vswitch_uuid = "85f9149abb6f42bc9b8b700abc93be67" # L2Network UUID
+  vlan         = 100
+  vlan_mode    = "PVLAN" # ACCESS, NONE, PVLAN, TRUNK
+  category     = "Private"
+  dns_domain   = "example.com"
+  ip_version   = 4 # 4 or 6
+  enable_ipam  = true
+  dhcp_service = true
+  dhcp_ip      = "192.168.100.50"
+
+  dns = ["8.8.8.8", "8.8.4.4"]
+
+  ip_range {
+    name                 = "primary-ip-range"
+    start_ip             = "192.168.100.100"
+    end_ip               = "192.168.100.200"
+    netmask              = "255.255.255.0"
+    gateway              = "192.168.100.1"
+    ip_allocate_strategy = "RandomIpAllocator"
+  }
+}
+
+output "port_group_example" {
+  value = zsphere_port_group.example
+}
+```
+
+## Schema
+
+### Required
+
+- `name` (String) Name of the port group.
+- `vlan` (Number) VLAN ID for the port group.
+- `vswitch_uuid` (String) UUID of the vSwitch that this port group is attached to.
+
+### Optional
+
+- `category` (String) Category of the port group.
+- `description` (String) Description of the port group.
+- `dhcp_ip` (String) DHCP service IP address.
+- `dhcp_service` (Boolean) Whether DHCP service is enabled for the port group.
+- `dns` (List of String) DNS servers for the port group.
+- `dns_domain` (String) DNS domain for the port group.
+- `enable_ipam` (Boolean) Whether IPAM is enabled for the port group.
+- `ip_range` (Block List) IP range configuration for the port group. (see [below for nested schema](#nestedblock--ip_range))
+- `ip_version` (Number) IP version (4 or 6).
+- `type` (String) Type of the port group.
+- `vlan_mode` (String) VLAN mode for the port group.
+
+### Read-Only
+
+- `datacenter_uuid` (String) UUID of the datacenter (zone) that this port group belongs to.
+- `state` (String) State of the port group.
+- `uuid` (String) UUID of the port group.
+
+<a id="nestedblock--ip_range"></a>
+### Nested Schema for `ip_range`
+
+Required:
+
+- `name` (String) Name of the IP range.
+
+Optional:
+
+- `address_mode` (String) IPv6 address mode: Stateful-DHCP, Stateless-DHCP, or SLAAC.
+- `end_ip` (String) End IP address of the range (IP range mode).
+- `gateway` (String) Gateway address.
+- `ip_allocate_strategy` (String) IP allocation strategy: RandomIpAllocator, FirstAvailableIpAllocator, AscDelayRecycleIpAllocator.
+- `ip_version` (Number) IP version (4 or 6).
+- `is_by_cidr` (Boolean) Whether to use CIDR notation instead of IP range.
+- `netmask` (String) Netmask (IP range mode).
+- `network_cidr` (String) Network CIDR (CIDR mode).
+- `prefix_len` (Number) Prefix length for IPv6 CIDR.
+- `start_ip` (String) Start IP address of the range (IP range mode).
+
+Read-Only:
+
+- `uuid` (String) UUID of the IP range.

@@ -1,0 +1,10 @@
+{
+  "title": "Add a SAN Storage",
+  "pages": [
+    "index",
+    "iscsi-storage",
+    "sync-fc-storage",
+    "nvme-storage"
+  ],
+  "pagesIndex": "index"
+}

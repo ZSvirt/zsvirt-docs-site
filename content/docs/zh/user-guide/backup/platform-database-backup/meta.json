@@ -1,0 +1,10 @@
+{
+  "title": "平台数据库备份",
+  "pages": [
+    "index",
+    "policy",
+    "create-plan",
+    "view-plans-and-data"
+  ],
+  "pagesIndex": "index"
+}

@@ -1,0 +1,92 @@
+---
+title: "QueryVmNicSecurityPolicy"
+---
+
+<APIPage method="GET" path="/v1/security-groups/nics/security-policy">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8"
+-H "Authorization: OAuth YOUR_SESSION_UUID"
+-X GET http://localhost:8080/zstack/v1/security-groups/nics/security-policy?q=ingressPolicy=DROP&q=egressPolicy=DROP
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8"
+-H "Authorization: OAuth YOUR_SESSION_UUID"
+-X GET http://localhost:8080/zstack/v1/security-groups/nics/a4ef9b72cb66352f9040ce0f8c180b80/security-policy
+```
+
+Queryable Fields
+
+Run the CLI tool, type `QueryVmNicSecurityPolicy` and press the Tab key to view all queryable fields and cross-table queryable resource names.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "vmNicUuid": "40d02946a770317aa1edac79ef350f3f",
+      "ingressPolicy": "DROP",
+      "egressPolicy": "ACCEPT",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.7.21|
+|inventories|List|See [inventory](#p_smj_rw5_m1b)|4.7.21|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See [error](#p_m3b_rw5_m1b)|4.7.21|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|4.7.21|
+|description|String|Brief description of the error|4.7.21|
+|details|String|Detailed error information|4.7.21|
+|elaboration|String|Reserved field, defaults to null|4.7.21|
+|opaque|LinkedHashMap|Reserved field, defaults to null|4.7.21|
+|cause|ErrorCode|Root error: the source error that caused the current error. If there is no original error, this field is null|4.7.21|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|vmNicUuid|String|The VM NIC UUID|4.7.21|
+|ingressPolicy|String|The ingress security policy of the NIC|4.7.21|
+|egressPolicy|String|The egress security policy of the NIC|4.7.21|
+|createDate|Timestamp|The creation time|4.7.21|
+|lastOpDate|Timestamp|The last modification time|4.7.21|
+
+## SDK Examples
+Java SDK
+
+```
+QueryVmNicSecurityPolicyAction action = new QueryVmNicSecurityPolicyAction();
+action.conditions = asList("ingressPolicy=DROP","egressPolicy=DROP");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryVmNicSecurityPolicyAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryVmNicSecurityPolicyAction action = QueryVmNicSecurityPolicyAction()
+action.conditions = ["ingressPolicy=DROP","egressPolicy=DROP"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryVmNicSecurityPolicyAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,220 @@
+---
+title: "Register a VM Instance from Metadata"
+---
+
+<APIPage method="POST" path="/v1/vm-instances/metadata/register">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "metadataPath": "/mnt/ps/vm-metadata/ff01ec80fd11327cba7519b66119d900.vmmeta",
+    "primaryStorageUuid": "ff0359abb8443d2f8077cc368afa7c00",
+    "zoneUuid": "ff0c268342c535aabf273d41a2be1d00",
+    "clusterUuid": "ff0bcb94de7a3567b641d3fde2329d00",
+    "hostUuid": "ff0192fa70113da886101145c084bd00",
+    "name": "my-restored-vm"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding example, the `systemTags` and `userTags` fields can be omitted. They are listed to indicate that the body can include these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"metadataPath":"/mnt/ps/vm-metadata/ff01ec80fd11327cba7519b66119d900.vmmeta","primaryStorageUuid":"ff0359abb8443d2f8077cc368afa7c00","zoneUuid":"ff0c268342c535aabf273d41a2be1d00","clusterUuid":"ff0bcb94de7a3567b641d3fde2329d00","hostUuid":"ff0192fa70113da886101145c084bd00","name":"my-restored-vm"}}' \
+http://localhost:8080/zstack/v1/vm-instances/metadata/register
+```
+
+Parameters
+
+|Name|Type|Location|Description|Optional Values|Since|
+|----|----|--------|-----------|---------------|-----|
+|metadataPath|String|body \(contained in the `params` structure\)|Path of the metadata file on primary storage| |5.0.0|
+|primaryStorageUuid|String|body \(contained in the `params` structure\)|Target primary storage UUID| |5.0.0|
+|zoneUuid|String|body \(contained in the `params` structure\)|Zone UUID| |5.0.0|
+|clusterUuid|String|body \(contained in the `params` structure\)|Cluster UUID| |5.0.0|
+|hostUuid \(Optional\)|String|body \(contained in the `params` structure\)|Host UUID| |5.0.0|
+|name \(Optional\)|String|body \(contained in the `params` structure\)|VM instance name| |5.0.0|
+|tagUuids \(Optional\)|List|body \(contained in the `params` structure\)|List of tag UUIDs| |5.0.0|
+|systemTags \(Optional\)|List|body|System tags| |5.0.0|
+|userTags \(Optional\)|List|body|User tags| |5.0.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "21d608564fe438fd8b6c29fde66a4881",
+    "name": "recovered-vm"
+  }
+}
+```
+
+|Name|Type|Description|Since|
+|----|----|-----------|-----|
+|success|boolean|Whether the operation succeeded|5.0.0|
+|inventory|VmInstanceInventory|For details, see [inventory](#p_ohh_ryf_2jc)|5.0.0|
+|error|ErrorCode|For details, see [error](#p_xj2_1fm_lhc)|5.0.0|
+
+### inventory
+|Name|Type|Description|Since|
+|----|----|-----------|-----|
+|uuid|String|Resource UUID, which uniquely identifies the resource|0.6|
+|name|String|Resource name|0.6|
+|description|String|Detailed description of the resource|0.6|
+|zoneUuid|String|Zone UUID|0.6|
+|clusterUuid|String|Cluster UUID|0.6|
+|imageUuid|String|Image UUID|0.6|
+|hostUuid|String|Host UUID|0.6|
+|lastHostUuid|String|Host UUID used for the last startup|0.6|
+|instanceOfferingUuid|String|Instance offering UUID. This field is deprecated.|0.6|
+|rootVolumeUuid|String|Root volume UUID|0.6|
+|platform|String|VM instance platform, such as Windows, Linux, or another platform|0.6|
+|architecture|String|VM instance architecture, such as x86\_64, aarch64, or another architecture|0.6|
+|defaultL3NetworkUuid|String|Default distributed port group UUID|0.6|
+|type|String|VM instance type, indicating whether the VM instance is used by a user or for special platform purposes|0.6|
+|hypervisorType|String|VM instance hypervisor type, usually KVM|0.6|
+|memorySize|Long|Memory size|0.6|
+|cpuNum|Integer|Number of CPUs|0.6|
+|cpuSpeed|Long|CPU speed|0.6|
+|allocatorStrategy|String|VM instance allocation strategy|0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+|state|String|Status indicating whether the VM instance is enabled|0.6|
+|guestOsType|String|Guest operating system type of the VM instance|3.11.2|
+|vmNics|List|For details, see [vmNics](#p_bnx_qyf_2jc)|0.6|
+|allVolumes|List|For details, see [allVolumes](#p_hzj_qyf_2jc)|0.6|
+|vmCdRoms|List|For details, see [vmCdRoms](#p_ajc_qyf_2jc)|0.6|
+
+### vmNics
+|Name|Type|Description|Since|
+|----|----|-----------|-----|
+|uuid|String|Resource UUID, which uniquely identifies the resource|3.17.13|
+|vmInstanceUuid|String|VM instance UUID|3.17.13|
+|l3NetworkUuid|String|Distributed port group UUID|3.17.13|
+|ip|String| |3.17.13|
+|mac|String| |3.17.13|
+|hypervisorType|String| |3.17.13|
+|netmask|String| |3.17.13|
+|gateway|String| |3.17.13|
+|metaData|String| |3.17.13|
+|ipVersion|Integer| |3.17.13|
+|driverType|String| |3.17.13|
+|internalName|String| |3.17.13|
+|deviceId|Integer| |3.17.13|
+|type|String| |3.17.13|
+|state|String|NIC state|3.17.13|
+|createDate|Timestamp|Creation time|3.17.13|
+|lastOpDate|Timestamp|Last modification time|3.17.13|
+|usedIps|List|For details, see [usedIps](#p_uqq_qyf_2jc)|3.17.13|
+
+### usedIps
+|Name|Type|Description|Since|
+|----|----|-----------|-----|
+|uuid|String|Resource UUID, which uniquely identifies the resource|4.10.0|
+|ipRangeUuid|String|IP range UUID|4.10.0|
+|l3NetworkUuid|String|Distributed port group UUID|4.10.0|
+|ipVersion|Integer|IP protocol number|4.10.0|
+|ip|String|IP address|4.10.0|
+|netmask|String|Subnet mask|4.10.0|
+|gateway|String|Gateway address|4.10.0|
+|usedFor|String|Allocation reason|4.10.0|
+|ipInLong|long|IP address stored as a Long value. This field is valid only for IPv4.|4.10.0|
+|vmNicUuid|String|VM NIC UUID|4.10.0|
+|createDate|Timestamp|Creation time|4.10.0|
+|lastOpDate|Timestamp|Last modification time|4.10.0|
+
+### allVolumes
+|Name|Type|Description|Since|
+|----|----|-----------|-----|
+|uuid|String|Resource UUID, which uniquely identifies the resource|3.17.13|
+|name|String|Resource name|3.17.13|
+|description|String|Detailed description of the resource|3.17.13|
+|primaryStorageUuid|String|Primary storage UUID|3.17.13|
+|vmInstanceUuid|String|VM instance UUID|3.17.13|
+|diskOfferingUuid|String|Disk offering UUID|3.17.13|
+|rootImageUuid|String| |3.17.13|
+|installPath|String| |3.17.13|
+|type|String| |3.17.13|
+|format|String| |3.17.13|
+|size|Long| |3.17.13|
+|actualSize|Long| |3.17.13|
+|deviceId|Integer| |3.17.13|
+|state|String| |3.17.13|
+|status|String| |3.17.13|
+|createDate|Timestamp|Creation time|3.17.13|
+|lastOpDate|Timestamp|Last modification time|3.17.13|
+|isShareable|Boolean| |3.17.13|
+|volumeQos|String| |3.17.13|
+|lastDetachDate|Timestamp| |3.17.13|
+|lastVmInstanceUuid|String| |3.17.13|
+
+### vmCdRoms
+|Name|Type|Description|Since|
+|----|----|-----------|-----|
+|uuid|String|Resource UUID, which uniquely identifies the resource|3.17.13|
+|vmInstanceUuid|String|VM instance UUID|3.17.13|
+|deviceId|Integer| |3.17.13|
+|isoUuid|String| |3.17.13|
+|isoInstallPath|String| |3.17.13|
+|name|String|Resource name|3.17.13|
+|description|String|Detailed description of the resource|3.17.13|
+|createDate|Timestamp|Creation time|3.17.13|
+|lastOpDate|Timestamp|Last modification time|3.17.13|
+
+### error
+|Name|Type|Description|Since|
+|----|----|-----------|-----|
+|code|String|Error code, which is the globally unique identifier of the error, such as SYS.1000 or HOST.1001|0.6|
+|description|String|Summary description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. The default value is null.|0.6|
+|opaque|LinkedHashMap|Reserved field. The default value is null.|0.6|
+|cause|ErrorCode|Root error that caused the current error. If there is no original error, this field is null.|0.6|
+
+## SDK Example
+Java SDK
+
+```
+RegisterVmInstanceFromMetadataAction action = new RegisterVmInstanceFromMetadataAction();
+action.metadataPath = "/mnt/ps/vm-metadata/ff01ec80fd11327cba7519b66119d900.vmmeta";
+action.primaryStorageUuid = "ff0359abb8443d2f8077cc368afa7c00";
+action.zoneUuid = "ff0c268342c535aabf273d41a2be1d00";
+action.clusterUuid = "ff0bcb94de7a3567b641d3fde2329d00";
+action.hostUuid = "ff0192fa70113da886101145c084bd00";
+action.name = "my-restored-vm";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RegisterVmInstanceFromMetadataAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = RegisterVmInstanceFromMetadataAction()
+action.metadataPath = "/mnt/ps/vm-metadata/ff01ec80fd11327cba7519b66119d900.vmmeta"
+action.primaryStorageUuid = "ff0359abb8443d2f8077cc368afa7c00"
+action.zoneUuid = "ff0c268342c535aabf273d41a2be1d00"
+action.clusterUuid = "ff0bcb94de7a3567b641d3fde2329d00"
+action.hostUuid = "ff0192fa70113da886101145c084bd00"
+action.name = "my-restored-vm"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

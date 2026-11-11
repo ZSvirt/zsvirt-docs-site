@@ -1,0 +1,455 @@
+---
+title: "ValidateSecurityGroupRule"
+---
+
+<APIPage method="GET" path="/v1/security-groups/{securityGroupUuid}/rules/validation">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8"
+-H "Authorization: OAuth YOUR_SESSION_UUID"
+-X GET http://localhost:8080/zstack/v1/security-groups/0351d8b796bd3165967f13d1da2f9576/rules/validation?type=Ingress&protocol=TCP&remoteSecurityGroupUuid=f938bc96baae3dc4b18be6bdbf34e783&ipVersion=4&srcIpRange=10.0.0.1,10.0.0.2-10.0.0.200,10.1.1.0/24&dstIpRange=10.0.0.1,10.0.0.2-10.0.0.200,10.1.1.0/24&dstPortRange=1000,1001,1002-1005,1008&action=ACCEPT
+```
+
+Parameter List
+
+<table id="table_izn_vw5_m1b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+securityGroupUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+The UUID of the security group, uniquely identifying the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+type
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+The direction of the security group rule
+
+</td><td>
+
+-   Ingress
+-   Egress
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+protocol
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+The protocol type of the security group rule
+
+</td><td>
+
+-   TCP
+-   UDP
+-   ICMP
+-   ALL
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+remoteSecurityGroupUuid \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+The UUID of the remote security group, uniquely identifying the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+ipVersion \(Optional\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+query
+
+</td><td>
+
+The IP version of the security group rule
+
+</td><td>
+
+-   4
+-   6
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+srcIpRange \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+The source IP range of the security group rule
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+dstIpRange \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+The destination IP range of the security group rule
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+dstPortRange \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+The destination port range of the security group rule
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+action \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+The action of the security group rule
+
+</td><td>
+
+-   ACCEPT
+-   DROP
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+startPort \(Optional\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+query
+
+</td><td>
+
+The start port of the security group rule
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+endPort \(Optional\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+query
+
+</td><td>
+
+The end port of the security group rule
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+allowedCidr \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+The IP range of the security group rule
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "available": true,
+  "code": "SG.2000"
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|available|boolean|Whether the rule is available|4.7.21|
+|code|String|The rule validation error code|4.7.21|
+|reason|String|The reason|4.7.21|
+|success|boolean| |4.7.21|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See [error](#p_a3v_dx5_m1b)|4.7.21|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|4.7.21|
+|description|String|Brief description of the error|4.7.21|
+|details|String|Detailed error information|4.7.21|
+|elaboration|String|Reserved field, defaults to null|4.7.21|
+|opaque|LinkedHashMap|Reserved field, defaults to null|4.7.21|
+|cause|ErrorCode|Root error: the source error that caused the current error. If there is no original error, this field is null|4.7.21|
+
+## SDK Examples
+Java SDK
+
+```
+ValidateSecurityGroupRuleAction action = new ValidateSecurityGroupRuleAction();
+action.securityGroupUuid = "0351d8b796bd3165967f13d1da2f9576";
+action.type = "Ingress";
+action.protocol = "TCP";
+action.remoteSecurityGroupUuid = "f938bc96baae3dc4b18be6bdbf34e783";
+action.ipVersion = 4;
+action.srcIpRange = "10.0.0.1,10.0.0.2-10.0.0.200,10.1.1.0/24";
+action.dstIpRange = "10.0.0.1,10.0.0.2-10.0.0.200,10.1.1.0/24";
+action.dstPortRange = "1000,1001,1002-1005,1008";
+action.action = "ACCEPT";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ValidateSecurityGroupRuleAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ValidateSecurityGroupRuleAction action = ValidateSecurityGroupRuleAction()
+action.securityGroupUuid = "0351d8b796bd3165967f13d1da2f9576"
+action.type = "Ingress"
+action.protocol = "TCP"
+action.remoteSecurityGroupUuid = "f938bc96baae3dc4b18be6bdbf34e783"
+action.ipVersion = 4
+action.srcIpRange = "10.0.0.1,10.0.0.2-10.0.0.200,10.1.1.0/24"
+action.dstIpRange = "10.0.0.1,10.0.0.2-10.0.0.200,10.1.1.0/24"
+action.dstPortRange = "1000,1001,1002-1005,1008"
+action.action = "ACCEPT"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ValidateSecurityGroupRuleAction.Result res = action.call()
+```
+
+</APIPage>

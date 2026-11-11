@@ -1,0 +1,109 @@
+---
+title: "Get All Members in Resource Ensemble"
+---
+
+<APIPage method="GET" path="/v1/iam1/resource-ensemble" altPaths={["/v1/iam1/resource-ensemble/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/iam1/resource-ensemble?uuid=14c61568f49a45759c9a75c8fea4f854
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/iam1/resource-ensemble/14c61568f49a45759c9a75c8fea4f854?uuid=14c61568f49a45759c9a75c8fea4f854
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|query|The UUID of the resource. Any member in the resource ensemble is acceptable| |4.10.0|
+|systemTags \(Optional\)|List|query|System tags| |4.10.0|
+|userTags \(Optional\)|List|query|User tags| |4.10.0|
+
+## API Response
+Response example
+
+```
+{
+  "inventory": {
+    "masterUuid": "14c61568f49a45759c9a75c8fea4f854",
+    "masterResourceName": "VM1",
+    "masterResourceType": "VmInstanceVO",
+    "members": [
+      {
+        "uuid": "c1abb7bd0de8489bb183d829c3ccde0e",
+        "resourceName": "vmcdrom-VM1",
+        "resourceType": "VmCdRomVO"
+      },
+      {},
+      {}
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean|Whether the request is successful|4.10.0|
+|inventory|ResourceEnsembleInventory|For details, see [inventory](#p_hbr_svy_2dc)|4.10.0|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null on success. For details, see [error](#p_nkw_y5y_2dc)|4.10.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|masterUuid|String|The UUID of the master resource in the resource ensemble|4.10.0|
+|masterResourceName|String|The name of the master resource in the resource ensemble|4.10.0|
+|masterResourceType|String|The type of the master resource in the resource ensemble|4.10.0|
+|members|List|For details, see [members](#p_vw5_svy_2dc)|4.10.0|
+
+### members
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource, uniquely identifying this resource|4.0.0|
+|resourceName|String|Resource name|4.0.0|
+|resourceType|String|Resource type|4.0.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, e.g., SYS.1000, HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Default is null|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null|0.6|
+|cause|ErrorCode|The root error that caused the current error. This field is null if there is no root cause|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+GetResourceEnsembleMembersAction action = new GetResourceEnsembleMembersAction();
+action.uuid = "14c61568f49a45759c9a75c8fea4f854";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetResourceEnsembleMembersAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+GetResourceEnsembleMembersAction action = GetResourceEnsembleMembersAction()
+action.uuid = "14c61568f49a45759c9a75c8fea4f854"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetResourceEnsembleMembersAction.Result res = action.call()
+
+```
+
+</APIPage>

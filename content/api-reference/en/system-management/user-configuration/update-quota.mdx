@@ -1,0 +1,114 @@
+---
+title: "Update Quota"
+---
+
+<APIPage method="PUT" path="/v1/accounts/quotas/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateQuota": {
+    "identityUuid": "4d45e6c7787733979415760d2077fca0",
+    "name": "quotaname",
+    "value": 20
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, the `systemTags` and `userTags` fields are optional. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateQuota":{"identityUuid":"4d45e6c7787733979415760d2077fca0","name":"quotaname","value":20}}' \
+http://localhost:8080/zstack/v1/accounts/quotas/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|identityUuid|String|body \(contained in the **updateQuota** structure\)|The UUID of the identity entity \(account\)| |0.6|
+|name|String|body \(contained in the **updateQuota** structure\)|Resource name| |0.6|
+|value|long|body \(contained in the **updateQuota** structure\)|Quota value| |0.6|
+|systemTags \(Optional\)|List|body|System tags| |0.6|
+|userTags \(Optional\)|List|body|User tags| |0.6|
+
+## API Response
+Response example
+
+```
+{
+  "inventory": {
+    "name": "quota",
+    "identityUuid": "733689237dd9309f81e6a2f76b7c78b1",
+    "value": 20
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null on success. For details, see [error](#p_uqm_n45_m1b)|0.6|
+|inventory|QuotaInventory|For details, see [inventory](#p_bvq_n45_m1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, e.g., SYS.1000, HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Default is null|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null|0.6|
+|cause|ErrorCode|The root error that caused the current error. This field is null if there is no root cause|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name|0.6|
+|identityUuid|String|Identity UUID \(account UUID or user UUID\)|0.6|
+|identityType|String|Identity type \(account or user\)|0.6|
+|value|Long|Default quota value|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+|createDate|Timestamp|Creation time|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateQuotaAction action = new UpdateQuotaAction();
+action.identityUuid = "4d45e6c7787733979415760d2077fca0";
+action.name = "quotaname";
+action.value = 20;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateQuotaAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+UpdateQuotaAction action = UpdateQuotaAction()
+action.identityUuid = "4d45e6c7787733979415760d2077fca0"
+action.name = "quotaname"
+action.value = 20
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateQuotaAction.Result res = action.call()
+
+```
+
+</APIPage>

@@ -1,0 +1,138 @@
+---
+title: "导出虚拟机的OVA包"
+---
+
+<APIPage method="POST" path="/v1/ovf/ova-packages">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "ova",
+    "description": "description",
+    "vmUuid": "af3c221d1dc4351999e0834c00b33118",
+    "backupStorageUuid": "4205d410ede03e759277c9987c660a16"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"ova","description":"description","vmUuid":"af3c221d1dc4351999e0834c00b33118","backupStorageUuid":"4205d410ede03e759277c9987c660a16"}}' http://localhost:8080/zstack/v1/ovf/ova-packages
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|name \(可选\)|String|body\(包含在**params**结构中\)|资源名称| |4.4.6|
+|description \(可选\)|String|body\(包含在**params**结构中\)|资源的详细描述| |4.4.6|
+|vmUuid|String|body\(包含在**params**结构中\)|源虚拟机UUID| |4.4.6|
+|backupStorageUuid|String|body\(包含在**params**结构中\)|导出目的镜像存储UUID| |4.4.6|
+|resourceUuid \(可选\)|String|body\(包含在**params**结构中\)|资源UUID| |4.4.6|
+|tagUuids \(可选\)|List|body\(包含在**params**结构中\)|标签UUID列表| |4.4.6|
+|systemTags \(可选\)|List|body|系统标签| |4.4.6|
+|userTags \(可选\)|List|body|用户标签| |4.4.6|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "9f77f8d79ee138bfac21290c02fc2cb6",
+    "name": "ova",
+    "description": "description",
+    "vmUuid": "43d306a42cdf38c48458d061e40b810a",
+    "backupStorageUuid": "22f7145dba4f3da6af7ff8f0e02af6e3",
+    "state": "Exported",
+    "exportUrl": "http://bs-host-name/path/to/ova.ova",
+    "md5Sum": "sampleMd5Sum",
+    "format": "OVA",
+    "size": 10737418240.0,
+    "createDate": "May 10, 2022 5:24:03 AM",
+    "lastOpDate": "May 10, 2022 5:24:03 AM"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.4.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_sry_hp2_wmb)|4.4.6|
+|inventory|VmInstanceInventory|详情参考[inventory](#p_ks2_kp2_wmb)|4.4.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.4.6|
+|description|String|错误的概要描述|4.4.6|
+|details|String|错误的详细信息|4.4.6|
+|elaboration|String|保留字段，默认为null|4.4.6|
+|opaque|LinkedHashMap|保留字段，默认为null|4.4.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.4.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.4.6|
+|name|String|资源名称|4.4.6|
+|description|String|资源的详细描述|4.4.6|
+|vmUuid|String|源虚拟机UUID|4.4.6|
+|backupStorageUuid|String|镜像包文件位于的镜像存储UUID|4.4.6|
+|exportUrl|String|下载地址|4.4.6|
+|md5Sum|String|镜像包文件MD5校验码|4.4.6|
+|format|String|镜像包文件格式|4.4.6|
+|size|Long|镜像包文件大小|4.4.6|
+|createDate|Timestamp|创建时间|4.4.6|
+|lastOpDate|Timestamp|最后一次修改时间|4.4.6|
+|state|ImagePackageState|详情参考[state](#p_lqz_lp2_wmb)|4.4.6|
+
+### state
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Exporting|ImagePackageState|导出中|4.4.6|
+|Exported|ImagePackageState|已导出|4.4.6|
+
+## SDK示例
+Java SDK
+
+```
+ExportVmOvaPackageAction action = new ExportVmOvaPackageAction();
+action.name = "ova";
+action.description = "description";
+action.vmUuid = "af3c221d1dc4351999e0834c00b33118";
+action.backupStorageUuid = "4205d410ede03e759277c9987c660a16";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ExportVmOvaPackageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ExportVmOvaPackageAction action = ExportVmOvaPackageAction()
+action.name = "ova"
+action.description = "description"
+action.vmUuid = "af3c221d1dc4351999e0834c00b33118"
+action.backupStorageUuid = "4205d410ede03e759277c9987c660a16"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ExportVmOvaPackageAction.Result res = action.call()
+```
+
+</APIPage>

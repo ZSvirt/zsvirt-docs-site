@@ -1,0 +1,107 @@
+---
+title: "The virtual machine has no network connectivity. What should I do?"
+---
+
+Virtual machine network connectivity issues can manifest in several ways. Identify the applicable symptom and cause, then follow the corresponding solution to resolve the issue.
+
+## Symptom
+Virtual machine network connectivity issues may present as the following symptoms:
+
+-   Symptom 1: The virtual machine cannot communicate with the external network.
+-   Symptom 2: The virtual machine network is unreachable.
+-   Symptom 3: `Ping` to the virtual machine is intermittent.
+-   Symptom 4: The virtual machine cannot `ping` the external network.
+-   Symptom 5: The Windows virtual machine experiences network packet loss.
+-   Symptom 6: The virtual machine cannot `ping` an IP address.
+-   Symptom 7: The virtual machine is unreachable by `ping`.
+-   Symptom 8: Two virtual machines running an HA service cannot connect to the HA service virtual IP via `telnet`.
+-   Symptom 9: The business system is inaccessible; business virtual machine connectivity is intermittent.
+-   Symptom 10: Some virtual machines fail to access the internet.
+-   Symptom 11: Some virtual machines fail to access the internet.
+-   Symptom 12: Some virtual machines fail to resolve domain names when accessing the internet, but IP access succeeds.
+
+## Cause 1
+Symptom 1 may occur because a Security Group rule on the virtualization platform is restricting the virtual machine IP address from communicating with the external network.
+
+## Solution
+-   Review the platform Security Group rules, add an allow rule, or disable the Security Group.
+
+## Cause 2
+Symptom 2 may occur because the virtual machine **NetworkManager** service conflicts with the network service.
+
+## Solution
+-   Run the following commands in the virtual machine to stop and disable the **NetworkManager** service:
+
+    ```
+    [root@localhost ~]# systemctl stop NetworkManager
+    [root@localhost ~]# systemctl disable NetworkManager
+    ```
+
+## Cause 3
+Symptom 3 may occur because of an IP address conflict between the local host and the virtual machine.
+
+## Solution
+-   Use the `arping` command to test and identify the MAC address that conflicts with the IP address. Locate the conflicting device in the switch MAC address table and change the IP address of one of the devices to eliminate the conflict.
+
+## Cause 4
+Symptom 4 may occur because the Distributed Port Group subnet mask configured on the platform does not match the switch. The platform is configured with a 16-bit subnet mask while the gateway switch uses a 24-bit subnet mask.
+
+## Solution
+-   Change the Distributed Port Group subnet mask on the virtualization platform to 24 bits.
+
+## Cause 5
+Symptom 5 may occur because VMTools is not installed on the Windows virtual machine, causing a network adapter driver issue.
+
+## Solution
+1.  Install VMTools.
+
+2.  Update the network adapter driver.
+
+3.  Set the network adapter model to virtio.
+
+## Cause 6
+Symptom 6 may occur because the target server has no return route.
+
+## Solution
+-   Add a return route on the target server.
+
+## Cause 7
+Symptom 7 may occur because the target virtual machine has the `ping` blocking feature enabled.
+
+## Solution
+-   Run the following commands in the target virtual machine to disable the `ping` blocking feature:
+
+    ```
+    [root@localhost ~]#  echo 1 >/proc/sys/net/ipv4/icmp_echo_ignore_all
+    [root@localhost ~]#  sysctl -p
+    ```
+
+## Cause 8
+Symptom 8 may occur because the virtual machine has the network adapter anti-spoofing mode enabled, which restricts communication to the IP/MAC address assigned by the platform.
+
+## Solution
+-   In the virtual machine advanced settings, set **NIC Anti-Spoofing Mode** to **false**.
+
+## Cause 9
+Symptom 9 may occur because the public network bandwidth is insufficient to support the traffic requirements of multiple high-throughput virtual machines.
+
+## Solution
+-   Expand the public network egress bandwidth.
+
+## Cause 10
+Symptom 10 may occur because the gateway switch routing configuration is incorrect and is missing a default route.
+
+## Solution
+-   Update the gateway switch routing configuration to add the missing route.
+
+## Cause 11
+Symptom 11 may occur because a physical firewall security policy is restricting access.
+
+## Solution
+-   Configure the physical firewall security policy to allow virtual machines to access the internet.
+
+## Cause 12
+Symptom 12 may occur because the DNS server IP address is misconfigured, preventing communication with DNS and blocking external domain name resolution.
+
+## Solution
+-   On the details page of the corresponding network, update the DNS server IP address to the correct value.

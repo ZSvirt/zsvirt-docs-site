@@ -1,0 +1,369 @@
+---
+title: "Add IP Address Range by Network CIDR"
+---
+
+<APIPage method="POST" path="/v1/l3-networks/{l3NetworkUuid}/ip-ranges/by-cidr">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "Test-IPRange",
+    "networkCidr": "192.168.10.0/24",
+    "ipRangeType": "Normal"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding sample, **systemTags** and **userTags** are optional. These two fields can be included in the body structure.
+</Callout>
+
+Curl Sample
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"Test-IPRange","networkCidr":"192.168.10.0/24","ipRangeType":"Normal"}}' http://localhost:8080/zstack/v1/l3-networks/c186887bc5e43da7ba42bd5d66eba0cd/ip-ranges/by-cidr
+```
+
+Request Parameters
+
+<table id="table_gls_qj3_m1b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+name
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in the **params** structure\)
+
+</td><td>
+
+The name of the Distributed Port Group.
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+description \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in the **params** structure\)
+
+</td><td>
+
+The detailed description of the Distributed Port Group.
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+l3NetworkUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+The Distributed Port Group UUID.
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+networkCidr
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in the **params** structure\)
+
+</td><td>
+
+The network CIDR.
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+gateway \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in the **params** structure\)
+
+</td><td>
+
+The gateway.
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.7.0
+
+</td></tr><tr><td>
+
+ipRangeType \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in the **params** structure\)
+
+</td><td>
+
+The address type.
+
+</td><td>
+
+-   Normal
+-   AddressPool
+
+</td><td>
+
+3.9.0
+
+</td></tr><tr><td>
+
+resourceUuid \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in the **params** structure\)
+
+</td><td>
+
+The resource UUID. If specified, the Distributed Port Group will use this field value as its UUID.
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+The system tags.
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+The user tags.
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr></tbody>
+</table>
+
+<Callout type="info">
+-   ZSvirt supports specifying a DHCP server address when adding an IP address range by network CIDR. Add the **DhcpServer** option to **SystemTags**.
+    -   Option format: `flatNetwork::DhcpServer::{%s}::ipUuid::{%s}`
+    -   Example: `flatNetwork::DhcpServer::192.168.1.100::ipUuid::null`
+</Callout>
+
+## API Response
+Sample Response
+
+```
+{
+  "inventory": {
+    "l3NetworkUuid": "4e0926c4fa27455f88c7d94420bf3422",
+    "name": "Test-IPRange",
+    "networkCidr": "192.168.10.0/24"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation fails, or vice versa. For more information, see [error](#p_wkz_dk3_m1b)|0.6|
+|inventory|IpRangeInventory|See [inventory](#p_ohy_2k3_m1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code, which is a numbered or alphanumeric code that specifies an error. For example, SYS.1000, HOST.1001|0.6|
+|description|String|The brief description of the error.|0.6|
+|details|String|The details about the error.|0.6|
+|elaboration|String|The reserved field. Default value: null|0.6|
+|opaque|LinkedHashMap|The reserved field. Default value: null|0.6|
+|cause|ErrorCode|The root error, which is the associated root cause of the current error. If no root error exists, this parameter is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The resource UUID, which uniquely identifies the resource.|0.6|
+|l3NetworkUuid|String|The Distributed Port Group UUID.|0.6|
+|name|String|The resource name.|0.6|
+|description|String|The detailed description of the resource.|0.6|
+|startIp|String| |0.6|
+|endIp|String| |0.6|
+|netmask|String| |0.6|
+|prefixLen|String|The prefix length.|3.1.0|
+|gateway|String| |0.6|
+|networkCidr|String| |0.6|
+|ipVersion|Integer|The IP protocol number.|3.1.0|
+|addressMode|String|The IPv6 address allocation mode.|3.1.0|
+|createDate|Timestamp|The creation date.|0.6|
+|lastOpDate|Timestamp|The last operation date.|0.6|
+|ipRangeType|IpRangeType|See [ipRangeType](#p_ylx_w3t_llb)|3.9.0|
+
+### ipRangeType
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|IpRangeType| |3.9.0|
+|AddressPool|IpRangeType| |3.9.0|
+
+## SDK Sample
+Java SDK
+
+```
+AddIpRangeByNetworkCidrAction action = new AddIpRangeByNetworkCidrAction();
+action.name = "Test-IPRange";
+action.l3NetworkUuid = "c186887bc5e43da7ba42bd5d66eba0cd";
+action.networkCidr = "192.168.10.0/24";
+action.ipRangeType = "Normal";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddIpRangeByNetworkCidrAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddIpRangeByNetworkCidrAction action = AddIpRangeByNetworkCidrAction()
+action.name = "Test-IPRange"
+action.l3NetworkUuid = "c186887bc5e43da7ba42bd5d66eba0cd"
+action.networkCidr = "192.168.10.0/24"
+action.ipRangeType = "Normal"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddIpRangeByNetworkCidrAction.Result res = action.call()
+```
+
+</APIPage>

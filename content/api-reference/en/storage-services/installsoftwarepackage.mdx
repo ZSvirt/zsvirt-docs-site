@@ -1,0 +1,87 @@
+---
+title: "InstallSoftwarePackage"
+---
+
+<APIPage method="PUT" path="/v1/software-package/install/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "installSoftwarePackage": {
+    "config": "{}"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding sample, both `systemTags` and `userTags` are optional. These two fields can be included in the body structure.
+</Callout>
+
+Curl Sample
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"installSoftwarePackage":{"config":"{}"}}' \
+http://localhost:8080/zstack/v1/software-package/install/ff04e1736ec6391f9a1f023b524d0a00/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|The software package UUID.| |4.10.20|
+|config \(Optional\)|String|body \(contained in the `installSoftwarePackage` structure\)|The software package installation configuration.| |4.10.20|
+|systemTags \(Optional\)|List|body|The system tags.| |4.10.20|
+|userTags \(Optional\)|List|body|The user tags.| |4.10.20|
+
+<Callout type="info">
+-   The parameters for installing the software package.
+</Callout>
+    -   SystemTag format: `installConfig::{%s}`
+    -   SystemTag example: `APIInstallSoftwarePackageMsg converted to json string`
+
+## API Response
+This API returns an empty JSON structure `{}` on success, and returns a JSON structure containing an error field on failure. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Sample
+Java SDK
+
+```
+InstallSoftwarePackageAction action = new InstallSoftwarePackageAction();
+action.uuid = "ff04e1736ec6391f9a1f023b524d0a00";
+action.config = "{}";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+InstallSoftwarePackageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = InstallSoftwarePackageAction()
+action.uuid = "ff04e1736ec6391f9a1f023b524d0a00"
+action.config = "{}"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,252 @@
+---
+title: "Shutdown Host"
+---
+
+<APIPage method="PUT" path="/v1/hosts/power/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "shutdownHost": {
+    "returnEarly": false,
+    "force": false,
+    "method": "AUTO"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"shutdownHost":{"returnEarly":false,"force":false,"method":"AUTO"}}' //localhost:8080/zstack/v1/hosts/power/700457ff11133edf93541013f6caf8e7/actions
+```
+
+Parameter List
+
+<table id="table_ijt_d1w_m1b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+Resource UUID, uniquely identifies the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+returnEarly \(optional\)
+
+</td><td>
+
+boolean
+
+</td><td>
+
+body \(contained in **shutdownHost** structure\)
+
+</td><td>
+
+Whether to return early
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+force \(optional\)
+
+</td><td>
+
+boolean
+
+</td><td>
+
+body \(contained in **shutdownHost** structure\)
+
+</td><td>
+
+Whether to force shutdown
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+method \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **shutdownHost** structure\)
+
+</td><td>
+
+Shutdown method
+
+</td><td>
+
+-   AUTO
+-   AGENT
+-   IPMI
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+systemTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tag
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+userTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tag
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+On success, this API returns an empty JSON structure **`{}`**. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+ShutdownHostAction action = new ShutdownHostAction();
+action.uuid = "700457ff11133edf93541013f6caf8e7";
+action.returnEarly = false;
+action.force = false;
+action.method = "AUTO";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ShutdownHostAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ShutdownHostAction action = ShutdownHostAction()
+action.uuid = "700457ff11133edf93541013f6caf8e7"
+action.returnEarly = false
+action.force = false
+action.method = "AUTO"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ShutdownHostAction.Result res = action.call()
+```
+
+</APIPage>

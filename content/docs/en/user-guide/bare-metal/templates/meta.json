@@ -1,0 +1,10 @@
+{
+  "title": "Bare Metal Template",
+  "pages": [
+    "index",
+    "syntax-rules",
+    "built-in-templates",
+    "add-custom-template"
+  ],
+  "pagesIndex": "index"
+}

@@ -1,0 +1,12 @@
+{
+  "title": "入门",
+  "pages": [
+    "index",
+    "product-features",
+    "interface",
+    "login",
+    "initialization",
+    "manual-initialization",
+    "restore-from-backup"
+  ]
+}

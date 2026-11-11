@@ -1,0 +1,11 @@
+{
+  "title": "Single Sign-On",
+  "pages": [
+    "index",
+    "add-oidc",
+    "add-ad",
+    "add-ldap",
+    "manage"
+  ],
+  "pagesIndex": "index"
+}

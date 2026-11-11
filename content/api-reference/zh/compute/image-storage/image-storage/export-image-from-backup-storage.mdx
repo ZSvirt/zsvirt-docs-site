@@ -1,0 +1,96 @@
+---
+title: "从镜像存储导出镜像"
+---
+
+<APIPage method="PUT" path="/v1/backup-storage/{backupStorageUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "exportImageFromBackupStorage": {
+    "imageUuid": "bd09de6529704e168923b77e5c1445c3"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"exportImageFromBackupStorage":{"imageUuid":"0538b97654be3249a962327ace7c5520"}}' \
+http://localhost:8080/zstack/v1/backup-storage/03c75cf832863825b43696ea22d5d1ad/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|backupStorageUuid|String|url|镜像存储UUID| |1.7|
+|imageUuid|String|body\(包含在**exportImageFromBackupStorage**结构中\)|镜像UUID| |1.7|
+|exportFormat \(可选\)|String|body\(包含在**exportImageFromBackupStorage**结构中\)|导出镜像的保存格式| |3.9.0|
+|systemTags \(可选\)|List|body|系统标签| |1.7|
+|userTags \(可选\)|List|body|用户标签| |1.7|
+
+## API返回
+返回示例
+
+```
+{
+  "imageUrl": "http://bs-host-name/path/to/image.qcow2",
+  "exportMd5Sum": "8a239d17b045dea51c4677fa90a42ed8"
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|imageUrl|String|被导出镜像的访问地址|1.7|
+|exportMd5Sum|String|被导出镜像的md5值|3.9.0|
+|success|boolean|导出成功失败标志|1.7|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_t5r_5n1_n1b)|1.7|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+ExportImageFromBackupStorageAction action = new ExportImageFromBackupStorageAction();
+action.backupStorageUuid = "b95c2eef6b8d44248305bc21b58324dd";
+action.imageUuid = "a8e908dd49a444d2ad37dd729a2d881f";
+action.sessionId = "f58bf3e6d8294d488573fc62511a2ad0";
+ExportImageFromBackupStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ExportImageFromBackupStorageAction action = ExportImageFromBackupStorageAction()
+action.backupStorageUuid = "dda8b4f308534e98a5fc2facdbc7936e"
+action.imageUuid = "7ed5c3c65ae941dabe9ecc00b7a1b015"
+action.sessionId = "f724920d165944218cd71b76e755757e"
+ExportImageFromBackupStorageAction.Result res = action.call()
+```
+
+</APIPage>

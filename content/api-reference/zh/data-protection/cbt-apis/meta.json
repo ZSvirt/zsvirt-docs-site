@@ -1,0 +1,13 @@
+{
+  "title": "CBT相关接口",
+  "pages": [
+    "create-cbt-task",
+    "delete-cbt-task",
+    "disable-cbt-task",
+    "enable-cbt-task",
+    "query-cbt-task",
+    "export-nbd-volumes",
+    "unexport-nbd-volumes"
+  ],
+  "pagesIndex": "index"
+}

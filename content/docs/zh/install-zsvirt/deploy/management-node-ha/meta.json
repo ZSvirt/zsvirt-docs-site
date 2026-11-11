@@ -1,0 +1,9 @@
+{
+  "title": "设置管理节点 HA",
+  "pages": [
+    "index",
+    "gui-setup",
+    "cli-setup"
+  ],
+  "pagesIndex": "index"
+}

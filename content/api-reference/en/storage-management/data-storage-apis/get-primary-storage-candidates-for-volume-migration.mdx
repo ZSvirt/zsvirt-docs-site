@@ -1,0 +1,100 @@
+---
+title: "Get Candidate List"
+---
+
+<APIPage method="GET" path="/v1/primary-storage/volumes/{volumeUuid}/migration-candidates">
+
+Get the candidate list of target Data Storage for volume migration.
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/primary-storage/volumes/073f14f2d6dc437b8114faa4223f0ce8/migration-candidates
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|volumeUuid|String|url|Volume UUID| |2.2|
+|systemTags \(Optional\)|List|query|System Tags| |2.2|
+|userTags \(Optional\)|List|query|User Tags| |2.2|
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "64776c6c7dfd46b091ec387d21b5adb0",
+      "name": "PS-1"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation succeeds, this field is null. See [error](#p_cgg_mtz_qbb)|2.2|
+|inventories|List|See [inventories](#p_ask_mtz_qbb)|2.2|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|2.2|
+|description|String|Brief description of the error|2.2|
+|details|String|Detailed error information|2.2|
+|elaboration|String|Reserved field, defaults to null|2.2|
+|opaque|LinkedHashMap|Reserved field, defaults to null|2.2|
+|cause|ErrorCode|Root cause, the source error that caused the current error. If there is no original error, this field is null|2.2|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|2.2|
+|zoneUuid|String|Data Center UUID|2.2|
+|name|String|Resource Name|2.2|
+|url|String| |2.2|
+|description|String|Resource Description|2.2|
+|totalCapacity|Long| |2.2|
+|availableCapacity|Long| |2.2|
+|totalPhysicalCapacity|Long| |2.2|
+|availablePhysicalCapacity|Long| |2.2|
+|systemUsedCapacity|Long| |2.2|
+|type|String| |2.2|
+|state|String| |2.2|
+|status|String| |2.2|
+|mountPath|String| |2.2|
+|createDate|Timestamp|Create Time|2.2|
+|lastOpDate|Timestamp|Last Modification Time|2.2|
+|attachedClusterUuids|List| |2.2|
+
+## SDK Examples
+Java SDK
+
+```
+GetPrimaryStorageCandidatesForVolumeMigrationAction action = new GetPrimaryStorageCandidatesForVolumeMigrationAction();
+action.volumeUuid = "06b0f7d7098349b5ba336013aea319f5";
+action.sessionId = "5869e8a6986b40c8be1ac3a520a6a9a1";
+GetPrimaryStorageCandidatesForVolumeMigrationAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetPrimaryStorageCandidatesForVolumeMigrationAction action = GetPrimaryStorageCandidatesForVolumeMigrationAction()
+action.volumeUuid = "8800d0ffad8f42d7911347ca0af8e224"
+action.sessionId = "a1b986a4bb5b409ba84951d3a3c1ed54"
+GetPrimaryStorageCandidatesForVolumeMigrationAction.Result res = action.call()
+```
+
+</APIPage>

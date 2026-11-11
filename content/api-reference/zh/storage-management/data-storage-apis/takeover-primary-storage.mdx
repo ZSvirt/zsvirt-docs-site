@@ -1,0 +1,123 @@
+---
+title: "接管数据存储"
+---
+
+<APIPage method="PUT" path="/v1/primary-storage/{uuid}/takeover">
+
+接管数据存储。将其他平台的共享块数据存储接管到当前平台。 dryRun=true时仅执行一致性预检：若一致（无需接管）则返回错误，若不一致（可接管）则返回成功。 接管操作不可逆（agent侧会执行VG rename、PV UUID reset、sanlock lockspace reset）。 接管完成后自动触发reconnect，通过返回的inventory.status获取重连状态。
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "takeoverPrimaryStorage": {
+    "dryRun": false
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"takeoverPrimaryStorage":{"dryRun":false}}' \
+http://localhost:8080/zstack/v1/primary-storage/ff0359abb8443d2f8077cc368afa7c00/takeover
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|存储的UUID| |5.0.0|
+|dryRun \(可选\)|boolean|body\(包含在`takeoverPrimaryStorage`结构中\)|预检模式：成功表示可以执行接管，失败表示无需或无法接管| |5.0.0|
+|systemTags \(可选\)|List|body|系统标签| |5.0.0|
+|userTags \(可选\)|List|body|用户标签| |5.0.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "name": "PS1",
+    "url": "/zstack_ps",
+    "type": "SharedBlock",
+    "attachedClusterUuids": [
+      "978bb0dffae23d5da5a9c1b3e0dc4174"
+    ]
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean|操作是否成功|5.0.0|
+|inventory|PrimaryStorageInventory|详情参考[inventory](#p_adm_54f_2jc)|5.0.0|
+|error|ErrorCode|详情参考[error](#p_qnb_1nf_2jc)|5.0.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|zoneUuid|String|数据中心UUID|0.6|
+|name|String|资源名称|0.6|
+|url|String| |0.6|
+|description|String|资源的详细描述|0.6|
+|totalCapacity|Long| |0.6|
+|availableCapacity|Long| |0.6|
+|totalPhysicalCapacity|Long| |0.6|
+|availablePhysicalCapacity|Long| |0.6|
+|systemUsedCapacity|Long| |0.6|
+|type|String| |0.6|
+|state|String| |0.6|
+|status|String| |0.6|
+|mountPath|String| |0.6|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+|attachedClusterUuids|List| |0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+TakeoverPrimaryStorageAction action = new TakeoverPrimaryStorageAction();
+action.uuid = "ff0359abb8443d2f8077cc368afa7c00";
+action.dryRun = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+TakeoverPrimaryStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = TakeoverPrimaryStorageAction()
+action.uuid = "ff0359abb8443d2f8077cc368afa7c00"
+action.dryRun = false
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

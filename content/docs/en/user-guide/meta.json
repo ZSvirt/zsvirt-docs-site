@@ -1,0 +1,16 @@
+{
+  "title": "User Guide",
+  "pages": [
+    "index",
+    "getting-started",
+    "resource-definitions",
+    "compute",
+    "storage",
+    "network",
+    "operations",
+    "system",
+    "backup",
+    "bare-metal"
+  ],
+  "pagesIndex": "index"
+}

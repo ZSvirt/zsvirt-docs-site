@@ -1,0 +1,284 @@
+---
+title: "ChangeL3NetworkState"
+---
+
+<APIPage method="PUT" path="/v1/l3-networks/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "changeL3NetworkState": {
+    "stateEvent": "enable"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding sample, both **systemTags** and **userTags** are optional. These two fields can be included in the body structure.
+</Callout>
+
+Curl Sample
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"changeL3NetworkState":{"stateEvent":"enable"}}' \
+http://localhost:8080/zstack/v1/l3-networks/a8744f1ba60c33f3a2c912c077f41fe5/actions
+```
+
+Request Parameters
+
+<table id="table_cyf_w5g_m1b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+The resource UUID.
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+stateEvent
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in the **changeL3NetworkState** structure\)
+
+</td><td>
+
+The state. The allowed values are **enable** and **disable**.
+
+</td><td>
+
+-   enable
+-   disable
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+systemTags
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+Optional. The system tags.
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+userTags
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+Optional. The user tags.
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Sample Response
+
+```
+{
+  "inventory": {
+    "name": "Test-L3Network",
+    "l2NetworkUuid": "dfae4bce43694f4d9fc0ba5cdf4e38bd"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation fails, or vice versa. For more information, see [error](#p_wmy_svg_m1b).|0.6|
+|inventory|L3NetworkInventory|See [inventory](#p_s5b_wvg_m1b).|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code, which is a numbered or alphanumeric code that specifies an error. For example, SYS.1000, HOST.1001.|0.6|
+|description|String|The brief description of the error.|0.6|
+|details|String|The details about the error.|0.6|
+|elaboration|String|The reserved field. Default value: null.|0.6|
+|opaque|LinkedHashMap|The reserved field. Default value: null.|0.6|
+|cause|ErrorCode|The root error, which is the associated root cause of the current error. If no root error exists, this parameter is null.|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The resource UUID.|0.6|
+|name|String|The resource name.|0.6|
+|description|String|The detailed description of the resource.|0.6|
+|type|String| |0.6|
+|zoneUuid|String|The Data Center UUID.|0.6|
+|l2NetworkUuid|String|The port group Distributed Switch UUID.|0.6|
+|state|String| |0.6|
+|dnsDomain|String| |0.6|
+|system|Boolean| |0.6|
+|category|String| |0.6|
+|ipVersion|Integer|The IP protocol number.|3.1.0|
+|enableIPAM|Boolean|Enable IP address management.|4.10.16|
+|createDate|Timestamp|The creation date.|0.6|
+|lastOpDate|Timestamp|The last operation date.|0.6|
+|dns|List| |0.6|
+|ipRanges|List|See [ipRanges](#p_tql_xvg_m1b).|0.6|
+|networkServices|List|See [networkServices](#p_gff_dwg_m1b).|0.6|
+|hostRoute|List|See [hostRoute](#p_dv3_rks_l2b).|2.3|
+|reservedIpRanges|List|See [reservedIpRanges](#p_lzv_5qy_3gc).|4.10.16|
+
+### ipRange
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The resource UUID.|0.6|
+|l3NetworkUuid|String|The Distributed Port Group UUID.|0.6|
+|name|String|The resource name.|0.6|
+|description|String|The detailed description of the resource.|0.6|
+|startIp|String| |0.6|
+|endIp|String| |0.6|
+|netmask|String| |0.6|
+|prefixLen|String|The prefix length.|3.1.0|
+|gateway|String| |0.6|
+|networkCidr|String| |0.6|
+|ipVersion|Integer|The IP protocol number.|3.1.0|
+|addressMode|String|The IPv6 address allocation mode.|3.1.0|
+|createDate|Timestamp|The creation date.|0.6|
+|lastOpDate|Timestamp|The last operation date.|0.6|
+
+### networkServices
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|l3NetworkUuid|String|The Distributed Port Group UUID.|0.6|
+|networkServiceProviderUuid|String|The network service provider UUID.|0.6|
+|networkServiceType|String| |0.6|
+
+### hostRoute
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|id|Long| |2.3|
+|l3NetworkUuid|String|The Distributed Port Group UUID.|2.3|
+|prefix|String| |2.3|
+|nexthop|String| |2.3|
+|createDate|Timestamp|The creation date.|2.3|
+|lastOpDate|Timestamp|The last operation date.|2.3|
+
+### reservedIpRanges
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The resource UUID.|4.10.16|
+|l3NetworkUuid|String|The Distributed Port Group UUID.|4.10.16|
+|name|String|The resource name.|4.10.16|
+|description|String|The detailed description of the resource.|4.10.16|
+|startIp|String|The start IP address \(included in the reserved address range\).|4.10.16|
+|endIp|String|The end IP address \(included in the reserved address range\).|4.10.16|
+|ipVersion|Integer|The IP protocol number.|4.10.16|
+|createDate|Timestamp|The creation date.|4.10.16|
+|lastOpDate|Timestamp|The last operation date.|4.10.16|
+
+## SDK Sample
+Java SDK
+
+```
+ChangeL3NetworkStateAction action = new ChangeL3NetworkStateAction();
+action.uuid = "eb0849bf0e57400da650a09f2e852260";
+action.stateEvent = "enable";
+action.sessionId = "be8ec965ebd94169ba713c42dc079af9";
+ChangeL3NetworkStateAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+action = ChangeL3NetworkStateAction()
+action.uuid = "a8744f1ba60c33f3a2c912c077f41fe5"
+action.stateEvent = "enable"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

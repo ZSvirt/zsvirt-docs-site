@@ -1,0 +1,102 @@
+---
+title: "Update Account Group"
+---
+
+<APIPage method="PUT" path="/v1/account-groups/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateAccountGroup": {
+    "name": "my-group"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, the **systemTags** and **userTags** fields are optional. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateAccountGroup":{"name":"my-group"}}' \
+http://localhost:8080/zstack/v1/account-groups/0e830b9be4e33dd7b772eb9316ee6fb1/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Account group UUID| |4.10.0|
+|name \(Optional\)|String|body \(contained in the `updateAccountGroup` structure\)|Account group name| |4.10.0|
+|description \(Optional\)|String|body \(contained in the `updateAccountGroup` structure\)|Detailed description of the account group| |4.10.0|
+|systemTags \(Optional\)|List|body|System tags| |4.10.0|
+|userTags \(Optional\)|List|body|User tags| |4.10.0|
+
+## API Response
+Response example
+
+```
+{
+  "inventory": {
+    "uuid": "14295ba5c00d4fc596541e3fb5652924",
+    "name": "my-group",
+    "description": "my-group-description",
+    "rootGroupUuid": "14295ba5c00d4fc596541e3fb5652924",
+    "createDate": "Nov 14, 2017 2:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean|Whether the request is successful|4.10.0|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null on success. For details, see [error](#p_nkw_y5y_2dc)|4.10.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, e.g., SYS.1000, HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Default is null|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null|0.6|
+|cause|ErrorCode|The root error that caused the current error. This field is null if there is no root cause|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateAccountGroupAction action = new UpdateAccountGroupAction();
+action.uuid = "0e830b9be4e33dd7b772eb9316ee6fb1";
+action.name = "my-group";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateAccountGroupAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+UpdateAccountGroupAction action = UpdateAccountGroupAction()
+action.uuid = "0e830b9be4e33dd7b772eb9316ee6fb1"
+action.name = "my-group"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateAccountGroupAction.Result res = action.call()
+
+```
+
+</APIPage>

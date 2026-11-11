@@ -1,0 +1,512 @@
+---
+title: "添加LDAP服务器"
+---
+
+<APIPage method="POST" path="/v1/ldap/servers">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "miao",
+    "description": "miao desc",
+    "url": "ldap://localhost:1888",
+    "base": "dc=example,dc=com",
+    "username": "",
+    "password": "",
+    "encryption": "None",
+    "serverType": "WindowsAD",
+    "usernameProperty": "cn",
+    "filter": "(cn=Micha Kops)",
+    "syncCreatedAccountStrategy": "CreateAccount",
+    "syncDeletedAccountStrategy": "StaleAccount"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X POST -d '{"params":{"name":"miao","description":"miao desc","url":"ldap://localhost:1888","base":"dc=example,dc=com","username":"","password":"","encryption":"None","serverType":"WindowsAD","usernameProperty":"cn","filter":"(cn=Micha Kops)","syncCreatedAccountStrategy":"CreateAccount","syncDeletedAccountStrategy":"StaleAccount"}}' \
+http://localhost:8080/zstack/v1/ldap/servers
+```
+
+参数列表
+
+<table id="table_ns2_yvf_fcc"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+name
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+资源名称
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+description \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+资源的详细描述
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+url
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+LDAP服务器访问地址
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+base
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+LDAP服务查询BaseDN
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+username
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+访问LDAP服务器使用的用户名
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+password
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+密码
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+encryption
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+加密方式
+
+</td><td>
+
+-   None
+-   TLS
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+serverType \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+LDAP服务器类型
+
+</td><td>
+
+-   OpenLdap
+-   WindowsAD
+-   Unknown
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+usernameProperty \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+用户登录该虚拟化平台时使用哪个字段用作用户名
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+filter \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+从LDAP服务器同步时，使用的过滤器，确定哪些用户是需要同步的
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+syncCreatedAccountStrategy \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+从LDAP服务器同步时，对于LDAP服务器中新创建的用户，该虚拟化平台的处理策略，是创建对应的account还是无动作
+
+</td><td>
+
+-   NoAction
+-   CreateDisabledAccount
+-   CreateAccount
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+syncDeletedAccountStrategy \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+从LDAP服务器同步时，对于LDAP服务器中已删除的用户，该虚拟化平台的处理策略，是删除对应的account、标记已删除还是无动作
+
+</td><td>
+
+-   NoAction
+-   StaleAccount
+-   DeleteAccount
+
+</td><td>
+
+4.3.0
+
+</td></tr></tbody>
+</table>
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "01b489793e3d31728ccbbc4fdfd99ed0",
+    "name": "miao",
+    "description": "miao desc",
+    "url": "ldap://localhost:1888",
+    "base": "dc=example,dc=com",
+    "username": "",
+    "password": "",
+    "encryption": "None"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.3.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_fdz_lxf_fcc)|4.3.0|
+|inventory|LdapServerInventory|详情参考[inventory](#p_esc_mxf_fcc)|4.3.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.3.0|
+|name|String|资源名称|4.3.0|
+|type|String|用户源类型，一般是ldap|4.3.0|
+|description|String|资源的详细描述|4.3.0|
+|url|String| |4.3.0|
+|base|String|LDAP服务器访问地址|4.3.0|
+|username|String|用于访问LDAP服务器的用户名|4.3.0|
+|password|String|密码|4.3.0|
+|encryption|String|加密方式|4.3.0|
+|serverType|String|服务器类型，可能是OpenLdap或WindowsAD，如果不确定会返回Unknown|4.3.0|
+|createDate|Timestamp|创建时间|4.3.0|
+|lastOpDate|Timestamp|最后一次修改时间|4.3.0|
+
+## SDK示例
+Java SDK
+
+```
+AddLdapServerAction action = new AddLdapServerAction();
+action.name = "miao";
+action.description = "miao desc";
+action.url = "ldap://localhost:1888";
+action.base = "dc=example,dc=com";
+action.username = "";
+action.password = "";
+action.encryption = "None";
+action.serverType = "WindowsAD";
+action.usernameProperty = "cn";
+action.filter = "(cn=Micha Kops)";
+action.syncCreatedAccountStrategy = "CreateAccount";
+action.syncDeletedAccountStrategy = "StaleAccount";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddLdapServerAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddLdapServerAction action = AddLdapServerAction()
+action.name = "miao"
+action.description = "miao desc"
+action.url = "ldap://localhost:1888"
+action.base = "dc=example,dc=com"
+action.username = ""
+action.password = ""
+action.encryption = "None"
+action.serverType = "WindowsAD"
+action.usernameProperty = "cn"
+action.filter = "(cn=Micha Kops)"
+action.syncCreatedAccountStrategy = "CreateAccount"
+action.syncDeletedAccountStrategy = "StaleAccount"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddLdapServerAction.Result res = action.call()
+```
+
+</APIPage>

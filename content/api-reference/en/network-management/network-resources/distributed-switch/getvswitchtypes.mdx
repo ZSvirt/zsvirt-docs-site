@@ -1,0 +1,76 @@
+---
+title: "GetVSwitchTypes"
+---
+
+## API Request
+URLs
+
+```
+GET zstack//v1/l2-networks/vSwitchTypes
+```
+
+Headers
+
+```
+OAuth: the-session-uuid
+```
+
+Curl Sample
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/l2-networks/vSwitchTypes
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|systemTags \(Optional\)|List|query|Optional. The system tags.| |4.8.0|
+|userTags \(Optional\)|List|query|Optional. The user tags.| |4.8.0|
+
+## API Response
+Sample Response
+
+```
+{
+  "vSwitchTypes": [
+    "LinuxBridge",
+    "OvsDpdk"
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|boolean| |4.8.0|
+|types|List| |4.8.0|
+|error|ErrorCode|The error code. If not null, the operation fails, or vice versa. For more information, see [error](#p_djx_crg_m1b).|4.8.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code, which is a numbered or alphanumeric code that specifies an error. For example, SYS.1000, HOST.1001.|4.8.0|
+|description|String|The brief description of the error.|4.8.0|
+|details|String|The details about the error.|4.8.0|
+|elaboration|String|The reserved field. Default value: null.|4.8.0|
+|opaque|LinkedHashMap|The reserved field. Default value: null.|4.8.0|
+|cause|ErrorCode|The root error, which is the associated root cause of the current error. If no root error exists, this parameter is null.|4.8.0|
+
+## SDK Sample
+Java SDK
+
+```
+GetVSwitchTypesAction action = new GetVSwitchTypesAction();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetVSwitchTypesAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetVSwitchTypesAction action = GetVSwitchTypesAction()
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetVSwitchTypesAction.Result res = action.call()
+```

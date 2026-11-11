@@ -1,0 +1,43 @@
+---
+title: "Prepare Installation Packages"
+---
+
+ZSvirt ISO is built on Helix, a self-made virtualization kernel software that operates between the infrastructure layer and the upper-layer operating systems. It integrates essential components like hardware drivers, macro kernels, and virtual agents, shielding the differences among heterogeneous hardware. This releases operating systems from hardware driver dependencies, ensuring proper access to the heterogeneous hardware on the under layer. By doing so, Helix enhances hardware compatibility, high reliability, high availability, scalability, and performance of your virtual environment.
+
+You can install ZSvirt without connecting to the public network or configuring a yum source, allowing for a completely offline installation.
+
+The following table shows the software packages used for installing ZSvirt.
+
+<table>
+  <thead>
+    <tr>
+      <th>Server Architecture</th>
+      <th>Package Name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowSpan={2}>x86</td>
+      <td>ZSvirt-x86_64-DVD-1.0.0-h84r.iso</td>
+    </tr>
+    <tr>
+      <td>ZSvirt-x86_64-DVD-1.0.0-KylinV10SP3.iso</td>
+    </tr>
+    <tr>
+      <td rowSpan={2}>ARM</td>
+      <td>ZSvirt-aarch64-DVD-1.0.0-h22e.iso</td>
+    </tr>
+    <tr>
+      <td>ZSvirt-aarch64-DVD-1.0.0-KylinV10SP3.iso</td>
+    </tr>
+  </tbody>
+</table>
+
+<Callout type="info">
+    After obtaining the software package, use an MD5 checksum tool to verify the checksum and ensure the software is complete and intact.
+</Callout>
+
+-   **[Burn ISO Image Using Rufus](/en/docs/install-zsphere/planning/software-packages/rufus)**
+    After you obtain the ISO package, you can use Rufus to burn the ISO image to a USB drive.
+-   **[Burn ISO Image Using Fedora Media Writer](/en/docs/install-zsphere/planning/software-packages/fedora-media-writer)**
+    After you obtain the ISO package, if you are using the Kylin operating system, we recommend using Fedora Media Writer to burn the ISO image.

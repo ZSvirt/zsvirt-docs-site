@@ -1,0 +1,97 @@
+---
+title: "Query Account Group"
+---
+
+<APIPage method="GET" path="/v1/account-groups" altPaths={["/v1/account-groups/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/account-groups?q=name=my-group
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/account-groups/64fb6148cb6438a088febdd75b819245
+```
+
+Queryable Fields
+
+Run the CLI tool, type `QueryAccountGroup`, and press Tab to view all queryable fields and cross-table queryable resource names.
+
+## API Response
+Response example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "c7e4d70aa27b49839516c7ed9d3651a8",
+      "name": "my-group",
+      "description": "my-group-description",
+      "rootGroupUuid": "c7e4d70aa27b49839516c7ed9d3651a8",
+      "createDate": "Nov 14, 2017 2:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean|Whether the request is successful|4.10.0|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null on success. For details, see [error](#p_v3q_sv5_m1b)|4.10.0|
+|inventories|List|For details, see [inventories](#p_ntg_tv5_m1b)|4.10.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, e.g., SYS.1000, HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Default is null|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null|0.6|
+|cause|ErrorCode|The root error that caused the current error. This field is null if there is no root cause|0.6|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the account group, uniquely identifying this resource|4.10.0|
+|name|String|Account group name|4.10.0|
+|description|String|Detailed description of the account group|4.10.0|
+|parentUuid|String|Parent account group UUID. null means no parent account group; it is the top-level group|4.10.0|
+|rootGroupUuid|String|The UUID of the top-level account group. If this is the top-level group, rootGroupUuid points to itself|4.10.0|
+|createDate|Timestamp|Creation time|4.10.0|
+|lastOpDate|Timestamp|Last modification time|4.10.0|
+
+## SDK Examples
+Java SDK
+
+```
+QueryAccountGroupAction action = new QueryAccountGroupAction();
+action.conditions = asList("name=my-group");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryAccountGroupAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+QueryAccountGroupAction action = QueryAccountGroupAction()
+action.conditions = ["name=my-group"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryAccountGroupAction.Result res = action.call()
+
+```
+
+</APIPage>

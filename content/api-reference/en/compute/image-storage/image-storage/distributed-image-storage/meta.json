@@ -1,0 +1,11 @@
+{
+  "title": "Distributed Image Storage Related Interfaces",
+  "pages": [
+    "add-ceph-backup-storage",
+    "query-ceph-backup-storage",
+    "update-ceph-backup-storage-mon",
+    "add-mon-to-ceph-backup-storage",
+    "remove-mon-from-ceph-backup-storage"
+  ],
+  "pagesIndex": "index"
+}

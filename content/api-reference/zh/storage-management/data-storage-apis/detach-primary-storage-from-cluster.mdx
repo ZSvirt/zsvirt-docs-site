@@ -1,0 +1,105 @@
+---
+title: "从集群卸载数据存储"
+---
+
+## API请求
+URLs
+
+```
+DELETE/v1/clusters/{clusterUuid}/primary-storage/{primaryStorageUuid}
+```
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/clusters/d4ff9ff0511b4848870aa648748f9890/primary-storage/b91bcd212e434b1d97d80df127460f84?
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|primaryStorageUuid|String|url|数据存储UUID| |0.6|
+|clusterUuid|String|url|集群UUID| |0.6|
+|systemTags \(可选\)|List|body|系统标签| |0.6|
+|userTags \(可选\)|List|body|用户标签| |0.6|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "name": "PS1",
+    "url": "/Cloud_ps",
+    "type": "LocalStorage",
+    "state": "Enabled",
+    "status": "Connected"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_wb2_5h1_n1b)|0.6|
+|inventory|PrimaryStorageInventory|详情参考[inventory](#p_dzn_th1_n1b)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|zoneUuid|String|数据中心UUID|0.6|
+|name|String|资源名称|0.6|
+|url|String| |0.6|
+|description|String|资源的详细描述|0.6|
+|totalCapacity|Long| |0.6|
+|availableCapacity|Long| |0.6|
+|totalPhysicalCapacity|Long| |0.6|
+|availablePhysicalCapacity|Long| |0.6|
+|systemUsedCapacity|Long| |0.6|
+|type|String| |0.6|
+|state|String| |0.6|
+|status|String| |0.6|
+|mountPath|String| |0.6|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+|attachedClusterUuids|List| |0.6|
+
+## SDK示例
+Java SDK
+
+```
+DetachPrimaryStorageFromClusterAction action = new DetachPrimaryStorageFromClusterAction();
+action.primaryStorageUuid = "c3444a3237a84d7e904b23d25106855a";
+action.clusterUuid = "7ff9675810c84884984ee771d5a5b05c";
+action.sessionId = "e678af3ed83b4ba893e0e514d2c07eb5";
+DetachPrimaryStorageFromClusterAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DetachPrimaryStorageFromClusterAction action = DetachPrimaryStorageFromClusterAction()
+action.primaryStorageUuid = "4dbcd51ef01c44728b19c4d5aa06ac59"
+action.clusterUuid = "554ac500d71b476e91ecf5440980aba9"
+action.sessionId = "21fdcfe391a14d46ad5a7dcccbc3ddfa"
+DetachPrimaryStorageFromClusterAction.Result res = action.call()
+```

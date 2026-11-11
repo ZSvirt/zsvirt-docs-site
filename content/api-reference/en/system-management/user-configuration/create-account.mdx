@@ -1,0 +1,353 @@
+---
+title: "Create Account"
+---
+
+<APIPage method="POST" path="/v1/accounts">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "test",
+    "password": "password",
+    "state": "Enabled"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the **systemTags** and **userTags** fields can be omitted. They are listed to show that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"test","password":"password","state":"Enabled"}}' \
+http://localhost:8080/zstack/v1/accounts
+```
+
+Parameter List
+
+<table id="table_cnt_tvk_l1b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+name
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the `params` structure\)
+
+</td><td>
+
+Resource name
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+password
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the `params` structure\)
+
+</td><td>
+
+Password
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+type \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the `params` structure\)
+
+</td><td>
+
+Account type
+
+</td><td>
+
+-   SystemAdmin
+-   Normal
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+description \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the `params` structure\)
+
+</td><td>
+
+Detailed description of the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+resourceUuid \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the `params` structure\)
+
+</td><td>
+
+Resource UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+systemTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+userTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+tagUuids \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body \(contained in the `params` structure\)
+
+</td><td>
+
+Tag UUID list
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+state \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the `params` structure\)
+
+</td><td>
+
+Account state
+
+</td><td>
+
+-   Enabled
+-   Disabled
+-   Staled
+
+</td><td>
+
+4.3.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response example
+
+```
+{
+  "inventory": {
+    "uuid": "77dc15220f71377ea48fa520d40d9169",
+    "name": "test",
+    "type": "Normal"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|sucess|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_hzs_swk_l1b)|0.6|
+|inventory|AccountInventory|For details, see [inventory](#p_rsb_twk_l1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number, a globally unique identifier for the error, e.g., SYS.1000, HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|The detailed error information|0.6|
+|elaboration|String|Reserved field. Defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field. Defaults to null|0.6|
+|cause|ErrorCode|The root error, the cause of the current error. This field is null if there is no root error|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The account UUID, uniquely identifying this resource|4.0.0|
+|name|String|Account name|4.0.0|
+|description|String|Detailed description of the account|4.0.0|
+|type|String|Account type|4.0.0|
+|state|String|Account state|4.0.0|
+|createDate|Timestamp|Creation time|4.0.0|
+|lastOpDate|Timestamp|Last modification time|4.0.0|
+
+## SDK Examples
+Java SDK
+
+```
+CreateAccountAction action = new CreateAccountAction();
+action.name = "test";
+action.password = "password";
+action.state = "Enabled";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateAccountAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+CreateAccountAction action = CreateAccountAction()
+action.name = "test"
+action.password = "password"
+action.state = "Enabled"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateAccountAction.Result res = action.call()
+
+```
+
+</APIPage>

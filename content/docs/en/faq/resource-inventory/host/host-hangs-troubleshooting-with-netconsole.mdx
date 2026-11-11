@@ -1,0 +1,63 @@
+---
+title: "Host hangs — troubleshooting with netconsole"
+---
+
+## Symptom
+The host hangs frequently. Because message and crash logs cannot be retrieved, configure netconsole to send kernel logs to the Management Node for analysis.
+
+## Cause
+When the host hangs, message and crash logs cannot be retrieved.
+
+## Solution
+1.  Configure netconsole to send kernel logs to the Management Node for hang analysis.
+
+2.  Configure the `/etc/sysconfig/netconsole` file
+
+    Add the following parameters to the `/etc/sysconfig/netconsole` file on the sender host:
+
+    ```
+    #Receiver IP
+    SYSLOGADDR=192.X.X.X
+    #Port
+    SYSLOGPORT=5888
+    #Receiver MAC address
+    SYSLOGMACADDR=b4:05:5d:aXXXX
+    ```
+
+3.  Restart the netconsole service on the sender host
+
+    ```
+    systemctl restart netconsole
+    ```
+
+4.  Enable the netconsole service to start on boot
+
+    ```
+    systemctl enable netconsole
+    ```
+
+5.  Configure port 514: enable the receiver to listen on the UDP port
+
+    On the receiver host, uncomment `$ModLoad imudp` and `$UDPServerRun 514` in `/etc/rsyslog.conf`, then change 514 to the listening UDP port by running:
+
+    ```
+    sed -i 's/^#$Mod.*udp$/$ModLoad imudp/g;s/^#$UDP.*/$UDPServerRun 5888/g'/etc/rsyslog.conf
+    ```
+
+6.  Restart the rsyslog service on the receiver host
+
+    ```
+    systemctl restart rsyslog
+    ```
+
+7.  Verify that the specified port is being listened on
+
+    ```
+    lsof -i:5888
+    ```
+
+8.  Check that the message log on the receiver host is showing system log output from the sender host
+
+    ```
+    tail -f /var/log/message
+    ```

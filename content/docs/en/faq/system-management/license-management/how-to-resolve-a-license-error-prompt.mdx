@@ -1,0 +1,26 @@
+---
+title: "How to resolve a license error prompt?"
+---
+
+<HistoricalNamingNote locale="en" />
+
+## Symptom
+When uploading a license to the virtualization platform, the system displays a message stating that the issue date of the new license is earlier than the current license.
+
+## Cause
+The server time is inaccurate, preventing the license from being uploaded through the UI.
+
+## Solution
+1.  Log in to the Management Node and run the following command to manually clear the license:
+
+    ```
+    [root@localhost ~]# zstack-ctl clear_license
+    ```
+
+2.  Run the following command to manually import the license:
+
+    ```
+    [root@localhost ~]# zstack-ctl install_license -f lincense-file  //license file name
+    ```
+
+3.  After the import succeeds, refresh the UI.

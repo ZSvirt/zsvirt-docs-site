@@ -1,0 +1,111 @@
+---
+title: "Test WeCom Connectivity"
+---
+
+<APIPage method="POST" path="/v1/sns/application-endpoints/we-com/test-connection">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "url": "https://example.invalid/webhook",
+    "atAll": false,
+    "atPersonUserIds": [
+      "zhangsan",
+      "lisi"
+    ],
+    "testMsg": "hello",
+    "endpointUuid": "1c201c27a81740ddadbc5d2f3f38a5e4"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, the **systemTags** and **userTags** fields are optional. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"url":"https://example.invalid/webhook","atAll":false,"atPersonUserIds":["zhangsan","lisi"],"testMsg":"hello","endpointUuid":"1c201c27a81740ddadbc5d2f3f38a5e4"}}' \
+http://localhost:8080/zstack/v1/sns/application-endpoints/we-com/test-connection
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|testMsg|String|body \(contained in the **params** structure\)|Test message| |4.2.0|
+|endpointUuid \(optional\)|String|body \(contained in the **params** structure\)|WeCom endpoint UUID| |4.2.0|
+|systemTags \(optional\)|List|body|System tags| |4.2.0|
+|userTags \(optional\)|List|body|User tags| |4.2.0|
+|url \(optional\)|String|body \(contained in the **params** structure\)|webhook url| |4.2.0|
+|atAll \(optional\)|Boolean|body \(contained in the **params** structure\)|Mention all members| |4.2.0|
+|atPersonUserIds \(optional\)|List|body \(contained in the **params** structure\)|Mentioned user ID list| |4.2.0|
+
+## API Response
+Response Example
+
+```
+{
+  "connected": true,
+  "webhookResp": {}
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.2.0|
+|connected|boolean|Whether the webhook URL is reachable|4.2.0|
+|webhookResp|boolean|Webhook response data|4.2.0|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_kzq_vpx_bdb)|4.2.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001.|5.0.0|
+|description|String|A brief description of the error|5.0.0|
+|details|String|Detailed information about the error|5.0.0|
+|elaboration|String|Reserved field. Default is null.|5.0.0|
+|opaque|LinkedHashMap|Reserved field. Default is null.|5.0.0|
+|cause|ErrorCode|The root error. The source error that caused the current error. If there is no root error, this field is null.|5.0.0|
+
+## SDK Examples
+Java SDK
+
+```
+SNSWeComTestConnectionAction action = new SNSWeComTestConnectionAction();
+action.url = "https://example.invalid/webhook";
+action.atAll = false;
+action.atPersonUserIds = asList("zhangsan","lisi");
+action.testMsg = "hello";
+action.endpointUuid = "1c201c27a81740ddadbc5d2f3f38a5e4";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+SNSWeComTestConnectionAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SNSWeComTestConnectionAction action = SNSWeComTestConnectionAction()
+action.url = "https://example.invalid/webhook"
+action.atAll = false
+action.atPersonUserIds = [zhangsan, lisi]
+action.testMsg = "hello"
+action.endpointUuid = "1c201c27a81740ddadbc5d2f3f38a5e4"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+SNSWeComTestConnectionAction.Result res = action.call()
+```
+
+</APIPage>

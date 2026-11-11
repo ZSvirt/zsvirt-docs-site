@@ -1,0 +1,181 @@
+---
+title: "删除镜像包"
+---
+
+<APIPage method="DELETE" path="/v1/image-packages/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/image-packages/e7660c815f483befb15905bf6c776781?
+```
+
+参数列表
+
+<table id="table_jd1_4md_l1b"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+资源的UUID，唯一标示该资源
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.4.6
+
+</td></tr><tr><td>
+
+deleteMode \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body
+
+</td><td>
+
+删除模式
+
+</td><td>
+
+-   Permissive
+-   Enforcing
+
+</td><td>
+
+4.4.6
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.4.6
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.4.6
+
+</td></tr></tbody>
+</table>
+
+## API返回
+该API成功时返回一个空的JSON结构**`{}`**，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+DeleteImagePackageAction action = new DeleteImagePackageAction();
+action.uuid = "e7660c815f483befb15905bf6c776781";
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteImagePackageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteImagePackageAction action = DeleteImagePackageAction()
+action.uuid = "e7660c815f483befb15905bf6c776781"
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DeleteImagePackageAction.Result res = action.call()
+```
+
+</APIPage>

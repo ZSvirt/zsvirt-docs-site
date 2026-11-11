@@ -1,0 +1,138 @@
+---
+title: "Remove Monitoring Node from Distributed Storage"
+---
+
+## API Request
+URLs
+
+```
+DELETE/v1/primary-storage/ceph/{uuid}/mons?monHostnames={monHostnames}
+```
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Examples
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/primary-storage/ceph/31db2011f3944c85ae24a7ca607302e5/mons?monHostnames=10.0.1.2
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|UUID of the distributed storage| |0.6|
+|monHostnames|List|body|List of mon node hostnames| |0.6|
+|systemTags \(optional\)|List|body|System tags| |0.6|
+|userTags \(optional\)|List|body|User tags| |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "mons": [
+      {
+        "monAddr": "10.0.1.2",
+        "monUuid": "c72a3fc6e06649de811bf90ba8c9c574"
+      }
+    ],
+    "name": "My Ceph Primary Storage",
+    "description": "Public Ceph Primary Storage",
+    "totalCapacity": 1073741824.0,
+    "availableCapacity": 968884224.0,
+    "type": "Ceph",
+    "state": "Enabled",
+    "status": "Connected",
+    "createDate": "Jun 7, 2017 9:21:07 PM",
+    "lastOpDate": "Jun 7, 2017 9:21:07 PM",
+    "attachedClusterUuids": [
+      "c0f667d99bfc41c1a133528a2089a9a7"
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, indicates the operation failed. This field is null when the operation succeeds. For details, see [error](#p_kgl_z1b_n1b)|0.6|
+|inventory|CephPrimaryStorageInventory|For details, see [inventory](#p_h3f_z1b_n1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier for the error, such as SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause. The source error that triggered the current error. If there is no original error, this field is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|fsid|String| |0.6|
+|rootVolumePoolName|String| |0.6|
+|dataVolumePoolName|String| |0.6|
+|imageCachePoolName|String| |0.6|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|zoneUuid|String|Data Center UUID|0.6|
+|name|String|Resource name|0.6|
+|url|String| |0.6|
+|description|String|Detailed description of the resource|0.6|
+|totalCapacity|Long| |0.6|
+|availableCapacity|Long| |0.6|
+|totalPhysicalCapacity|Long| |0.6|
+|availablePhysicalCapacity|Long| |0.6|
+|systemUsedCapacity|Long| |0.6|
+|type|String| |0.6|
+|state|String| |0.6|
+|status|String| |0.6|
+|mountPath|String| |0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+|attachedClusterUuids|List| |0.6|
+|mons|List|For details, see [mons](#p_i1v_y1b_n1b)|0.6|
+
+### mons
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|hostname|String| |0.6|
+|monPort|Integer| |0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+|primaryStorageUuid|String|Data Storage UUID|0.6|
+|monAddr|String| |0.6|
+|sshUsername|String| |0.6|
+|sshPassword|String| |0.6|
+|sshPort|Integer| |0.6|
+|status|String| |0.6|
+|monUuid|String| |0.6|
+
+## SDK Examples
+Java SDK
+
+```
+RemoveMonFromCephPrimaryStorageAction action = new RemoveMonFromCephPrimaryStorageAction();
+action.uuid = "05aa4826fdbd4021b72e4d9a5db67bbc";
+action.monHostnames = asList("10.0.1.2");
+action.sessionId = "2412a720a3bb4992887979298217b300";
+RemoveMonFromCephPrimaryStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+RemoveMonFromCephPrimaryStorageAction action = RemoveMonFromCephPrimaryStorageAction()
+action.uuid = "fb3dca5509154ca48698f374794f4d93"
+action.monHostnames = [10.0.1.2]
+action.sessionId = "9eb682deaa894cea80e1608056492948"
+RemoveMonFromCephPrimaryStorageAction.Result res = action.call()
+```

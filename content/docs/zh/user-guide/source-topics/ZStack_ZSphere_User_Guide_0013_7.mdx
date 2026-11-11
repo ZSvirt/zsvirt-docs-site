@@ -1,0 +1,151 @@
+---
+title: "AccessKey管理"
+---
+
+AccessKey即ZSvirt授权第三方用户调用ZSvirt API来访问虚拟化资源的安全凭证，包括访问密钥ID (AccessKey ID) 和秘密访问密钥 (AccessKey Secret)，需严格保密。
+
+-   [AccessKey管理员和用户权限关系](#accesskey管理员和用户权限关系)
+-   [生成AccessKey](#生成accesskey)
+-   [第三方平台使用AccessKey调用API](#第三方平台使用accesskey调用api)
+-   [管理AccessKey](#管理accesskey)
+
+## AccessKey管理员和用户权限关系
+
+-   管理员可创建多个AccessKey，普通用户最多支持创建两个AccessKey。
+-   管理员可删除普通用户创建的AccessKey。
+-   AccessKey具有创建者完全的权限。
+
+## 生成AccessKey
+
+您可以参考以下步骤生成一个AccessKey：
+
+1.  导航至**菜单** > **系统管理** > **AccessKey管理**。
+2.  点击**生成AccessKey**。
+
+## 第三方平台使用AccessKey调用API
+
+**SDK方式**
+
+以创建虚拟机为例，您在使用AccessKey调用API时，需输入`accessKeyId`和`accessKeySecret`。
+
+-   Java SDK
+
+    ```java
+    CreateVmInstanceAction action = new CreateVmInstanceAction();
+    action.name = "vm1";
+    action.instanceOfferingUuid = "ae97ced44efc3314b8f7798972b4ba1a";
+    action.imageUuid = "da119f7906513eccabf271991c35a65e";
+    action.l3NetworkUuids = asList("cc0e4c5e77df3af68e59668e7f9e06c5");
+    action.dataDiskOfferingUuids = asList("19d22d051b063d379a2816daaf431838","905d94a6abb5398fa1995f6398e3f6fc");
+    action.clusterUuid = "a0468dc645223f67bd0f2ab95276bbae";
+    action.description = "this is a vm";
+    action.strategy = "InstantStart";
+    action.accessKeyId = "Fnxc7KIQAdGTvXfx8OjC";
+    action.accessKeySecret = "YOUR_ACCESS_KEY_SECRET";
+    CreateVmInstanceAction.Result res = action.call();
+    ```
+
+-   Python SDK
+
+    ```python
+    CreateVmInstanceAction action = CreateVmInstanceAction()
+    action.name = "vm1"
+    action.instanceOfferingUuid = "ae97ced44efc3314b8f7798972b4ba1a"
+    action.imageUuid = "da119f7906513eccabf271991c35a65e"
+    action.l3NetworkUuids = [cc0e4c5e77df3af68e59668e7f9e06c5]
+    action.dataDiskOfferingUuids = [19d22d051b063d379a2816daaf431838, 905d94a6abb5398fa1995f6398e3f6fc]
+    action.clusterUuid = "a0468dc645223f67bd0f2ab95276bbae"
+    action.description = "this is a vm"
+    action.strategy = "InstantStart"
+    action.accessKeyId = "Fnxc7KIQAdGTvXfx8OjC"
+    action.accessKeySecret = "YOUR_ACCESS_KEY_SECRET"
+    CreateVmInstanceAction.Result res = action.call()
+    ```
+
+**调用RESTful API方式**
+
+1.  创建AccessKey
+
+    ```text
+    CreateAccessKey accountUuid=dff4fb9bbff14e97a67ab894c7b8c528 userUuid=dff4fb9bbff14e97a67ab894c7b8c528
+    {
+     "inventory": {
+     "AccessKeyID": "N3Tf05yXZUmSjCf6mYIB",
+     "AccessKeySecret": "YOUR_ACCESS_KEY_SECRET",
+     "accountUuid": "dff4fb9bbff14e97a67ab894c7b8c528",
+     "createDate": "Sep 7, 2023 1:50:06 PM",
+     "lastOpDate": "Sep 7, 2023 1:50:06 PM",
+     "userUuid": "dff4fb9bbff14e97a67ab894c7b8c528",
+     "uuid": "ae353717ca7b4182bb87fb5d010235e8"
+     },
+     "success": true
+    }
+    ```
+
+2.  生成`date`
+
+    ```text
+    python get_time.py
+    Thu, 07 Sep 2023 13:54:10 PRC
+    ```
+
+    ```python
+    import datetime
+    import time
+    date = time.time()
+    #EEE, dd MMM yyyy HH:mm:ss z
+    str = datetime.datetime.fromtimestamp(date).strftime('%a, %d %b %Y %H:%M:%S PRC')
+    print str
+    ```
+
+3.  生成`digest`
+
+    ```text
+    # python get_accesskey.py "vvSZpmj4cnB53qUDmm6E" "YOUR_ACCESS_KEY_SECRET" \
+    "GET" "Fri, 08 Sep 2023 17:58:34 PRC" "/v1/vm-instances"
+    args: Namespace(acesskey_id='vvSZpmj4cnB53qUDmm6E', acesskey_secret='YOUR_ACCESS_KEY_SECRET', \
+    date='Fri, 08 Sep 2023 17:58:34 PRC', method='GET', uri='/v1/vm-instances')
+    Signature: hPToRHeHdV49D4u20G8OlE0yJho=
+    Authoration ZStack vvSZpmj4cnB53qUDmm6E:hPToRHeHdV49D4u20G8OlE0yJho=
+    ```
+
+    ```python
+    #/usr/bin/python
+    import base64
+    import hmac
+    import sha
+    import argparse
+    from hashlib import sha1
+    parser = argparse.ArgumentParser(description='calculate zstack access key digit.')
+    parser.add_argument('acesskey_id')
+    parser.add_argument('acesskey_secret')
+    parser.add_argument('method')
+    parser.add_argument('date')
+    parser.add_argument('uri')
+    args = parser.parse_args()
+    print "args: %s" % args
+    h = hmac.new(args.acesskey_secret, args.method + "\n"
+     + args.date + "\n"
+     + args.uri, sha1)
+    Signature = base64.b64encode(h.digest())
+    print "Signature: %s" % Signature
+    print "Authoration %s" % ("ZStack " + args.acesskey_id + ":" + Signature)
+    ```
+
+4.  发送请求
+
+    ```text
+    curl -H "Authorization:ZStack N3Tf05yXZUmSjCf6mYIB:S3vm7u7/+n+sIQe72lgia08I30U=" \
+    -H "Content-Type:application/x-www-form-urlencoded" \
+    -H "Date:Fri, 08 Sep 2023 18:54:10 PRC" \
+    -X GET http://172.20.11.134:8080/zstack/v1/vm-instances
+    ```
+
+## 管理AccessKey
+
+您可以管理已生成的AccessKey，包括启用、停用、删除操作。
+
+1.  导航至**菜单** > **系统管理** > **AccessKey管理**。
+2.  选择AccessKey。
+    -   若需对AccessKey进行启停操作，点击**停用**或**启用**。
+    -   若您不再需要通过API访问虚拟化资源时，您可以选择删除AccessKey，点击**删除**。

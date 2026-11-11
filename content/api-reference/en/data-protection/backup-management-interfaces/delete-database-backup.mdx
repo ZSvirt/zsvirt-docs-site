@@ -1,0 +1,64 @@
+---
+title: "Delete Database Backup"
+---
+
+<APIPage method="DELETE" path="/v1/database-backups/{uuid}?backupStorageUuids={backupStorageUuids}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/database-backups/9caf0430ce473651ae7033e1a16a0097?backupStorageUuids=0c54ad64cd8d3ca1ba9d98864bb83571
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|The UUID of the resource. Uniquely identifies the resource| |3.0.0|
+|backupStorageUuids \(Optional\)|List|url|Image Storage UUID list| |3.0.0|
+|systemTags \(Optional\)|List|body| | |3.0.0|
+|userTags \(Optional\)|List|body| | |3.0.0|
+
+## API Response
+On success, this API returns an empty JSON structure **`{}`**. On failure, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DeleteDatabaseBackupAction action = new DeleteDatabaseBackupAction();
+action.uuid = "9caf0430ce473651ae7033e1a16a0097";
+action.backupStorageUuids = asList("0c54ad64cd8d3ca1ba9d98864bb83571");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteDatabaseBackupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteDatabaseBackupAction action = DeleteDatabaseBackupAction()
+action.uuid = "9caf0430ce473651ae7033e1a16a0097"
+action.backupStorageUuids = [0c54ad64cd8d3ca1ba9d98864bb83571]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DeleteDatabaseBackupAction.Result res = action.call()
+```
+
+</APIPage>

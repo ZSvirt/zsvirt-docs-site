@@ -1,0 +1,179 @@
+---
+title: "刷新共享块设备容量"
+---
+
+<APIPage method="POST" path="/v1/primary-storage/sharedblockgroup/{sharedBlockGroupUuid}/sharedblocks/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{}}' http://localhost:8080/zstack/v1/primary-storage/sharedblockgroup/2974c033608537e68a305b0f29412776/sharedblocks/9bd10e4bcc0939a2b041755a160d7b34
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid \(可选\)|String|url|共享块设备UUID，如为空则更新共享块存储下所有设备| |2.6.0|
+|sharedBlockGroupUuid|String|url|共享块存储UUID| |2.6.0|
+|systemTags \(可选\)|List|body| | |2.6.0|
+|userTags \(可选\)|List|body| | |2.6.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "sharedBlocks": [
+      {
+        "uuid": "fd474b5a711f3bcab14061e1507b0691",
+        "sharedBlockGroupUuid": "9f900d7cc336370da2dccdd832a1613d",
+        "type": "LvmLogicalVolumeBasic",
+        "diskUuid": "b9bec04964ab30a7bf80bdbf7ec997d9",
+        "name": "test shared block",
+        "description": "description",
+        "state": "Enabled",
+        "status": "Connected",
+        "createDate": "Nov 14, 2017 10:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+      }
+    ],
+    "sharedBlockGroupType": "LvmVolumeGroupBasic",
+    "uuid": "9f900d7cc336370da2dccdd832a1613d",
+    "name": "shared block group primary storage",
+    "description": "shared block group primary storage description",
+    "availableCapacity": 1073741824.0,
+    "availablePhysicalCapacity": 1073741824.0,
+    "type": "SharedBlock",
+    "state": "Enabled",
+    "status": "Connected",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_otm_rkk_n2b)|2.6.0|
+|inventory|SharedBlockGroupPrimaryStorageInventory|详情参考[inventory](#p_bvf_rkk_n2b)|2.6.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|2.6.0|
+|description|String|错误的概要描述|2.6.0|
+|details|String|错误的详细信息|2.6.0|
+|elaboration|String|保留字段，默认为null|2.6.0|
+|opaque|LinkedHashMap|保留字段，默认为null|2.6.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|2.6.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|2.6.0|
+|zoneUuid|String|数据中心UUID|2.6.0|
+|name|String|资源名称|2.6.0|
+|url|String|未使用|2.6.0|
+|description|String|资源的详细描述|2.6.0|
+|totalCapacity|Long|总空间|2.6.0|
+|availableCapacity|Long|可用空间|2.6.0|
+|totalPhysicalCapacity|Long|总物理空间|2.6.0|
+|availablePhysicalCapacity|Long|物理可用空间|2.6.0|
+|systemUsedCapacity|Long|系统使用空间|2.6.0|
+|type|String|数据存储类型|2.6.0|
+|state|String|启用状态|2.6.0|
+|status|String|连接状态|2.6.0|
+|mountPath|String|未使用|2.6.0|
+|createDate|Timestamp|创建时间|2.6.0|
+|lastOpDate|Timestamp|最后一次修改时间|2.6.0|
+|attachedClusterUuids|List|挂载的集群|2.6.0|
+|sharedBlocks|List|详情参考[sharedBlocks](#p_tc1_tkk_n2b)|2.6.0|
+|sharedBlockGroupType|SharedBlockGroupType|详情参考[sharedBlockGroupType](#p_ygw_zkk_n2b)|2.6.0|
+
+### sharedBlocks
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|2.6.0|
+|sharedBlockGroupUuid|String|共享块设备组UUID|2.6.0|
+|diskUuid|String|磁盘唯一标示（例如UUID, WWN, WWID）|2.6.0|
+|name|String|资源名称|2.6.0|
+|description|String|资源的详细描述|2.6.0|
+|createDate|Timestamp|创建时间|2.6.0|
+|lastOpDate|Timestamp|最后一次修改时间|2.6.0|
+|type|SharedBlockType|详情参考[type](#p_hl3_5kk_n2b)|2.6.0|
+|state|SharedBlockState|详情参考[state](#p_ayb_xkk_n2b)|2.6.0|
+|status|SharedBlockStatus|详情参考[status](#p_t2j_ykk_n2b)|2.6.0|
+
+### type
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|name|String|资源名称|2.6.0|
+|ordinal|int| |2.6.0|
+
+### state
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|name|String|资源名称|2.6.0|
+|ordinal|int| |2.6.0|
+
+### status
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|name|String|资源名称|2.6.0|
+|ordinal|int| |2.6.0|
+
+### sharedBlockGroupType
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|name|String|资源名称|2.6.0|
+|ordinal|int| |2.6.0|
+
+## SDK示例
+Java SDK
+
+```
+
+RefreshSharedblockDeviceCapacityAction action = new RefreshSharedblockDeviceCapacityAction();
+action.uuid = "9bd10e4bcc0939a2b041755a160d7b34";
+action.sharedBlockGroupUuid = "2974c033608537e68a305b0f29412776";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RefreshSharedblockDeviceCapacityAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+
+RefreshSharedblockDeviceCapacityAction action = RefreshSharedblockDeviceCapacityAction()
+action.uuid = "9bd10e4bcc0939a2b041755a160d7b34"
+action.sharedBlockGroupUuid = "2974c033608537e68a305b0f29412776"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+RefreshSharedblockDeviceCapacityAction.Result res = action.call()
+```
+
+</APIPage>

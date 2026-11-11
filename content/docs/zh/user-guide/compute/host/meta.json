@@ -1,0 +1,10 @@
+{
+  "title": "主机",
+  "pages": [
+    "index",
+    "basic-operations",
+    "state-transitions",
+    "hardware-devices"
+  ],
+  "pagesIndex": "index"
+}

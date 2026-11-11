@@ -1,0 +1,84 @@
+---
+title: "Get Data Storage Capacity"
+---
+
+<APIPage method="GET" path="/v1/primary-storage/capacities">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/primary-storage/capacities?primaryStorageUuids=c8fd0638491c4c4ea70762c51d8445b5&all=false
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|zoneUuids \(Optional\)|List|query|Data Center UUID List| |0.6|
+|clusterUuids \(Optional\)|List|query|Cluster UUID List| |0.6|
+|primaryStorageUuids \(Optional\)|List|query|Data Storage UUID List| |0.6|
+|all \(Optional\)|boolean|query|When the Data Storage UUID list is empty, setting this to true queries all data storage in the system.| |0.6|
+|systemTags \(Optional\)|List|query|System Tags| |0.6|
+|userTags \(Optional\)|List|query|User Tags| |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "totalCapacity": 1073741824.0,
+  "availableCapacity": 973078528.0,
+  "totalPhysicalCapacity": 1073741824.0,
+  "availablePhysicalCapacity": 973078528.0
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|totalCapacity|long| |0.6|
+|availableCapacity|long| |0.6|
+|totalPhysicalCapacity|long| |0.6|
+|availablePhysicalCapacity|long| |0.6|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation succeeds, this field is null. See [error](#p_wlq_ck1_n1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause, the source error that caused the current error. If there is no original error, this field is null|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+GetPrimaryStorageCapacityAction action = new GetPrimaryStorageCapacityAction();
+action.primaryStorageUuids = asList("9e151bee519044c0b19bdfc12d8d24ab");
+action.all = false;
+action.sessionId = "79627053d567472eaed5de6b16fcdb91";
+GetPrimaryStorageCapacityAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetPrimaryStorageCapacityAction action = GetPrimaryStorageCapacityAction()
+action.primaryStorageUuids = [f78f7e2087ff437da395fb308db84300]
+action.all = false
+action.sessionId = "112ffe3fbad14be49c896feb9076dc10"
+GetPrimaryStorageCapacityAction.Result res = action.call()
+```
+
+</APIPage>

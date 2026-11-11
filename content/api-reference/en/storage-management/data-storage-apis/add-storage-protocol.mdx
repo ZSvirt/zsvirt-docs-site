@@ -1,0 +1,82 @@
+---
+title: "Add Storage Protocol"
+---
+
+<APIPage method="POST" path="/v1/primary-storage/protocols">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "uuid": "68c75f0058b93c61b30188e37b8fc5e9",
+    "outputProtocol": "iSCSI"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Examples
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"uuid":"68c75f0058b93c61b30188e37b8fc5e9","outputProtocol":"iSCSI"}}' \
+http://localhost:8080/zstack/v1/primary-storage/protocols
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|body \(nested in `params` structure\)|Resource UUID, uniquely identifies the resource| |4.10.16|
+|outputProtocol|String|body \(nested in `params` structure\)|Output protocol| |4.10.16|
+|systemTags \(optional\)|List|body|System tags| |4.10.16|
+|userTags \(optional\)|List|body|User tags| |4.10.16|
+
+## API Response
+When the API succeeds, it returns an empty JSON structure `{}`. When an error occurs, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+AddStorageProtocolAction action = new AddStorageProtocolAction();
+action.uuid = "68c75f0058b93c61b30188e37b8fc5e9";
+action.outputProtocol = "iSCSI";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddStorageProtocolAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = AddStorageProtocolAction()
+action.uuid = "68c75f0058b93c61b30188e37b8fc5e9"
+action.outputProtocol = "iSCSI"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

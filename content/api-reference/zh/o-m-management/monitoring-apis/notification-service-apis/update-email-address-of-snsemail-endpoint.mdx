@@ -1,0 +1,112 @@
+---
+title: "更新接收端邮箱地址"
+---
+
+<APIPage method="PUT" path="/v1/sns/application-endpoints/emails/email-addresses">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateEmailAddressOfSNSEmailEndpoint": {
+    "emailAddressUuid": "cb2b3d85e0da3a299c52c23510ba15dd",
+    "endpointUuid": "f305528eb6773a73beac3f94f79d3017",
+    "emailAddress": "example@cloud.io"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateEmailAddressOfSNSEmailEndpoint":{"emailAddressUuid":"cb2b3d85e0da3a299c52c23510ba15dd","endpointUuid":"f305528eb6773a73beac3f94f79d3017","emailAddress":"example@cloud.io"}}' http://localhost:8080/zstack/v1/sns/application-endpoints/emails/email-addresses
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|emailAddressUuid|String|body\(包含在**updateEmailAddressOfSNSEmailEndpoint**结构中\)|邮箱地址uuid| |5.0.0|
+|endpointUuid|String|body\(包含在**updateEmailAddressOfSNSEmailEndpoint**结构中\)|接收端uuid| |5.0.0|
+|emailAddress|String|body\(包含在**updateEmailAddressOfSNSEmailEndpoint**结构中\)|新邮箱地址| |5.0.0|
+|systemTags \(可选\)|List|body| | |3.7.0|
+|userTags \(可选\)|List|body| | |3.7.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "fe09a0e973724cba8d7369806d93fc50",
+    "emailAddress": "example@zstack.io",
+    "endpointUuid": "2648d04a1e7443dc966c3265d9f691dc",
+    "createDate": "Mar 26, 2024 2:45:58 AM",
+    "lastOpDate": "Mar 26, 2024 2:45:58 AM"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |5.0.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_cdy_xxz_ljb)|3.7.0|
+|inventory|SNSEmailAddressInventory|详情参考[inventory](#p_crl_xxz_ljb)|3.7.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.7.0|
+|description|String|错误的概要描述|3.7.0|
+|details|String|错误的详细信息|3.7.0|
+|elaboration|String|保留字段，默认为null|3.7.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.7.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.7.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.7.0|
+|emailAddress|String| |3.7.0|
+|endpointUuid|String| |3.7.0|
+|createDate|Timestamp|创建时间|5.0.0|
+|lastOpDate|Timestamp|最后一次修改时间|5.0.0|
+
+## SDK示例
+Java SDK
+
+```
+UpdateEmailAddressOfSNSEmailEndpointAction action = new UpdateEmailAddressOfSNSEmailEndpointAction();
+action.emailAddressUuid = "cb2b3d85e0da3a299c52c23510ba15dd";
+action.endpointUuid = "f305528eb6773a73beac3f94f79d3017";
+action.emailAddress = "example@cloud.io";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateEmailAddressOfSNSEmailEndpointAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateEmailAddressOfSNSEmailEndpointAction action = UpdateEmailAddressOfSNSEmailEndpointAction()
+action.emailAddressUuid = "cb2b3d85e0da3a299c52c23510ba15dd"
+action.endpointUuid = "f305528eb6773a73beac3f94f79d3017"
+action.emailAddress = "example@cloud.io"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateEmailAddressOfSNSEmailEndpointAction.Result res = action.call()
+```
+
+</APIPage>

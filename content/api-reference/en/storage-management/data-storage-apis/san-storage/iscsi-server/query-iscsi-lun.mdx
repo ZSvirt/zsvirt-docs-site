@@ -1,0 +1,118 @@
+---
+title: "Query iSCSI Disk"
+---
+
+<APIPage method="GET" path="/v1/storage-devices/iscsi/luns" altPaths={["/v1/storage-devices/iscsi/luns/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/storage-devices/iscsi/luns
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/storage-devices/iscsi/luns/da96929549c63b66b8afc63be70a373f
+```
+
+Queryable Fields
+
+Run the CLI command-line tool, enter `QueryIscsiLun` and press Tab to see all queryable fields and resource names that can be queried across tables.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "d833304319da3b32bc92f21c763a8e5b",
+      "wwid": "36b083fe000daf018000015505abbe00a",
+      "vendor": "DELL",
+      "model": "MD32xx",
+      "wwn": "0x6b083fe000daf018",
+      "serial": "6b083fe000daf018000015505abbe00a",
+      "hctl": "6:0:1:1",
+      "type": "mpath",
+      "path": "ip-0.0.0.201:3260-iscsi-iqn.2018-01.io.cloud:tsn.00001-lun-0",
+      "size": 30003188203520.0,
+      "multipathDeviceUuid": "36b083fe000daf018000015505abbe00a"
+    },
+    {
+      "uuid": "a21ee1e2e3f63a61ac983c53c29552d2",
+      "wwid": "36b083fe000daf018000015505abbe00a",
+      "vendor": "DELL",
+      "model": "MD32xx",
+      "wwn": "0x6b083fe000daf018",
+      "serial": "6b083fe000daf018000015505abbe00a",
+      "hctl": "6:0:3:1",
+      "type": "mpath",
+      "path": "ip-0.0.0.201:3260-iscsi-iqn.2018-01.io.cloud:tsn.00002-lun-0",
+      "size": 30003188203520.0,
+      "multipathDeviceUuid": "36b083fe000daf018000015505abbe00a"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation is successful, this field is null. For details, see [error](#p_vxh_r5d_z2b)|3.0.0|
+|inventories|List|For details, see [inventories](#p_zfn_r5d_z2b)|3.0.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, e.g. SYS.1000, HOST.1001|3.0.0|
+|description|String|Brief description of the error|3.0.0|
+|details|String|Detailed error information|3.0.0|
+|elaboration|String|Reserved field, defaults to null|3.0.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|3.0.0|
+|cause|ErrorCode|Root cause: the error that triggered the current error. If there is no original error, this field is null|3.0.0|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|3.0.0|
+|iscsiTargetUuid|String|iSCSI Target UUID|3.0.0|
+|wwid|String|Unique Identifier ID|3.0.0|
+|vendor|String|Device Vendor|3.0.0|
+|model|String|Device Model|3.0.0|
+|wwn|String|Device WWN|3.0.0|
+|serial|String|Device Serial Number|3.0.0|
+|hctl|String|SCSI Device HCTL|3.0.0|
+|type|String|Device Type|3.0.0|
+|path|String|Device Path|3.0.0|
+|size|Long|Device Size|3.0.0|
+|createDate|Timestamp|Creation Time|3.0.0|
+|lastOpDate|Timestamp|Last Modification Time|3.0.0|
+
+## SDK Examples
+Java SDK
+
+```
+QueryIscsiLunAction action = new QueryIscsiLunAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryIscsiLunAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryIscsiLunAction action = QueryIscsiLunAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryIscsiLunAction.Result res = action.call()
+```
+
+</APIPage>

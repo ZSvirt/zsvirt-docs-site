@@ -1,0 +1,9 @@
+{
+  "title": "ZSvirt 升级",
+  "pages": [
+    "index",
+    "management-node-environment",
+    "management-node-ha-environment"
+  ],
+  "pagesIndex": "index"
+}

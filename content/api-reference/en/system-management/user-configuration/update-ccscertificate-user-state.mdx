@@ -1,0 +1,249 @@
+---
+title: "Update CCS Certificate State for Account"
+---
+
+<APIPage method="POST" path="/v1/crypto/ccs-certificate/update-state/{accountUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "state": "enable"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding example, the `systemTags` and `userTags` fields are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"state":"enable"}}' \
+http://localhost:8080/zstack/v1/crypto/ccs-certificate/update-state/c418d26244b43e31bfe400652695f62a
+```
+
+Parameter List
+
+<table id="table_t2k_jky_2dc"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+accountUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+Account UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+state
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(enclosed in the `params` structure\)
+
+</td><td>
+
+State. Specifies whether to enable certificate verification on the next login.
+
+</td><td>
+
+-   enable
+-   disable
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+system Tags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "4e1cab9a3a0f4a1eb6a919510814d8f8",
+    "algorithm": "SM2",
+    "format": "CER",
+    "issuerDN": "C=cn,O=infosec,OU=system,CN=ca62_sm2",
+    "subjectDN": "C=CN,O=ZStack,OU=ZStack,CN=ZStackTest2",
+    "serNumber": "13055887750776402041",
+    "effectiveTime": "Oct 15, 2021 10:50:09 AM",
+    "expirationTime": "Oct 15, 2024 10:50:09 AM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.10.0|
+|inventory|CCSCertificateInventory|For details, see [inventory](#p_jxr_pct_q2c)|4.10.0|
+|error|ErrorCode|Error code. If not null, the operation has failed. This field is null when the operation succeeds. For details, see [error](#p_skp_32r_ndb)|4.10.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID. Uniquely identifies the resource.|4.3.12|
+|algorithm|String|Certificate type|4.3.12|
+|format|String|Certificate format. CER for Chinese national cryptographic standards. Other formats include CRT, DER, JKS, etc.|4.3.12|
+|issuerDN|String|Issuer DN \(issuer-DN-distinguished name\), for example, CN=sm2,O=test,C=cn|4.3.12|
+|subjectDN|String|Subject DN|4.3.12|
+|serNumber|Long|Certificate serial number. Combined with subjectDN as a composite key, it is globally unique.|4.3.12|
+|effectiveTime|Timestamp|Effective date|4.3.12|
+|expirationTime|Timestamp|Expiration date|4.3.12|
+|createDate|Timestamp|Creation time|4.3.12|
+|lastOpDate|Timestamp|Last modification time|4.3.12|
+|userCertificateRefs|List|For details, see [userCertificateRefs](#p_j1m_pct_q2c)|4.3.12|
+
+### userCertificateRefs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|userUuid|String|User UUID|4.3.12|
+|certificateUuid|String|CCS certificate UUID|4.3.12|
+|createDate|Timestamp|Creation time|4.3.12|
+|lastOpDate|Timestamp|Last modification time|4.3.12|
+|state|CCSCertificateUserState|For details, see [state](#p_b3h_pct_q2c)|4.3.12|
+
+### state
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Enabled|CCSCertificateUserState|Verification required|4.3.12|
+|Disabled|CCSCertificateUserState|Verification not required|4.3.12|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. The globally unique identifier of the error, for example, SYS.1000 or HOST.1001.|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Default is null.|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null.|0.6|
+|cause|ErrorCode|Root error. The source error that caused the current error. This field is null if no root error exists.|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateCCSCertificateAccountStateAction action = new UpdateCCSCertificateAccountStateAction();
+action.accountUuid = "c418d26244b43e31bfe400652695f62a";
+action.state = "enable";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateCCSCertificateAccountStateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateCCSCertificateAccountStateAction action = UpdateCCSCertificateAccountStateAction()
+action.accountUuid = "c418d26244b43e31bfe400652695f62a"
+action.state = "enable"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateCCSCertificateAccountStateAction.Result res = action.call()
+```
+
+</APIPage>

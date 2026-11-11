@@ -1,0 +1,84 @@
+---
+title: "Stop Exporting Disks as NBD Devices"
+---
+
+<APIPage method="POST" path="/v1/cbt-task/unexportvolume">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "volumeUuids": [
+      "82eaf8972ece3e228b6f75f61f8749d9"
+    ],
+    "vmInstanceUuid": "6456713db34a3d7e96c7e132179c413d"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The `systemTags` and `userTags` fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"volumeUuids":["82eaf8972ece3e228b6f75f61f8749d9"],"vmInstanceUuid":"6456713db34a3d7e96c7e132179c413d"}}' \
+http://localhost:8080/zstack/v1/cbt-task/unexportvolume
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|volumeUuids|List|body \(included in the `params` structure\)| | |4.10.10|
+|vmInstanceUuid|String|body \(included in the `params` structure\)|Virtual Machine UUID| |4.10.10|
+|systemTags \(optional\)|List|body|System tags| |4.10.10|
+|userTags \(optional\)|List|body|User tags| |4.10.10|
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+UnexportNbdVolumesAction action = new UnexportNbdVolumesAction();
+action.volumeUuids = asList("82eaf8972ece3e228b6f75f61f8749d9");
+action.vmInstanceUuid = "6456713db34a3d7e96c7e132179c413d";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UnexportNbdVolumesAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UnexportNbdVolumesAction action = UnexportNbdVolumesAction()
+action.volumeUuids = [82eaf8972ece3e228b6f75f61f8749d9]
+action.vmInstanceUuid = "6456713db34a3d7e96c7e132179c413d"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UnexportNbdVolumesAction.Result res = action.call()
+```
+
+</APIPage>

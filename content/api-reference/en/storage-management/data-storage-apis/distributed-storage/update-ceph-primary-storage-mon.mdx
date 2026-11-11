@@ -1,0 +1,157 @@
+---
+title: "Update Distributed Storage Monitoring Node"
+---
+
+<APIPage method="PUT" path="/v1/primary-storage/ceph/mons/{monUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateCephPrimaryStorageMon": {
+    "hostname": "10.0.1.4"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Examples
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateCephPrimaryStorageMon":{"hostname":"10.0.1.4"}}' \
+http://localhost:8080/zstack/v1/primary-storage/ceph/mons/cda8b731b2e23b8eb1081dec0f7a0a60/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|monUuid|String|url|Monitoring node UUID| |0.6|
+|hostname \(optional\)|String|body \(nested in **updateCephPrimaryStorageMon** structure\)|New host IP address of the monitoring node| |0.6|
+|sshUsername \(optional\)|String|body \(nested in **updateCephPrimaryStorageMon** structure\)|SSH username of the monitoring node host| |0.6|
+|sshPassword \(optional\)|String|body \(nested in **updateCephPrimaryStorageMon** structure\)|SSH password of the monitoring node host| |0.6|
+|sshPort \(optional\)|Integer|body \(nested in **updateCephPrimaryStorageMon** structure\)|SSH port of the monitoring node host| |0.6|
+|monPort \(optional\)|Integer|body \(nested in **updateCephPrimaryStorageMon** structure\)|New port of the mon| |0.6|
+|systemTags \(optional\)|List|body|System tags| |0.6|
+|userTags \(optional\)|List|body|User tags| |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "mons": [
+      {
+        "monAddr": "10.0.1.4",
+        "monUuid": "d557e48870b04ef699509d2998084bdb"
+      }
+    ],
+    "name": "My Ceph Primary Storage",
+    "description": "Public Ceph Primary Storage",
+    "totalCapacity": 1073741824.0,
+    "availableCapacity": 968884224.0,
+    "type": "Ceph",
+    "state": "Enabled",
+    "status": "Connected",
+    "createDate": "Jun 7, 2017 9:21:22 PM",
+    "lastOpDate": "Jun 7, 2017 9:21:22 PM",
+    "attachedClusterUuids": [
+      "3fa1f7c2bbb544e1a04ba9f9da935abe"
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, indicates the operation failed. This field is null when the operation succeeds. For details, see [error](#p_flt_mbb_n1b)|0.6|
+|inventory|CephPrimaryStorageInventory|For details, see [inventory](#p_ctm_mbb_n1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier for the error, such as SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause. The source error that triggered the current error. If there is no original error, this field is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|fsid|String| |0.6|
+|rootVolumePoolName|String| |0.6|
+|dataVolumePoolName|String| |0.6|
+|imageCachePoolName|String| |0.6|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|zoneUuid|String|Data Center UUID|0.6|
+|name|String|Resource name|0.6|
+|url|String| |0.6|
+|description|String|Detailed description of the resource|0.6|
+|totalCapacity|Long| |0.6|
+|availableCapacity|Long| |0.6|
+|totalPhysicalCapacity|Long| |0.6|
+|availablePhysicalCapacity|Long| |0.6|
+|systemUsedCapacity|Long| |0.6|
+|type|String| |0.6|
+|state|String| |0.6|
+|status|String| |0.6|
+|mountPath|String| |0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+|attachedClusterUuids|List| |0.6|
+|mons|List|For details, see [mons](#p_g2g_mbb_n1b)|0.6|
+
+### mons
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|hostname|String| |0.6|
+|monPort|Integer| |0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+|primaryStorageUuid|String|Data Storage UUID|0.6|
+|monAddr|String| |0.6|
+|sshUsername|String| |0.6|
+|sshPassword|String| |0.6|
+|sshPort|Integer| |0.6|
+|status|String| |0.6|
+|monUuid|String| |0.6|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateCephPrimaryStorageMonAction action = new UpdateCephPrimaryStorageMonAction();
+action.monUuid = "3341eaef160045d6b6fd085a22a3c69f";
+action.hostname = "10.0.1.4";
+action.sessionId = "359aceecda5e478e81d4eaea9e86bca8";
+UpdateCephPrimaryStorageMonAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+UpdateCephPrimaryStorageMonAction action = UpdateCephPrimaryStorageMonAction()
+action.monUuid = "70bc5237403848f6b5b6a60079c3ab91"
+action.hostname = "10.0.1.4"
+action.sessionId = "b1737cdb77c4420ba72aab66c4438521"
+UpdateCephPrimaryStorageMonAction.Result res = action.call()
+```
+
+</APIPage>

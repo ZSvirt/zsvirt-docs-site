@@ -1,0 +1,96 @@
+---
+title: "Get Shared Block Device Candidate List"
+---
+
+<APIPage method="GET" path="/v1/primary-storage/sharedblockgroup/sharedblock-candidates">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/primary-storage/sharedblockgroup/sharedblock-candidates?clusterUuid=a8efc4d72a2334dcad7f71bcb4821d6f
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|clusterUuid|String|query|Cluster UUID| |2.6.0|
+|systemTags \(optional\)|List|query| | |2.6.0|
+|userTags \(optional\)|List|query| | |2.6.0|
+
+## API Response
+Response Example
+
+```
+{
+  "results": [
+    {
+      "wwid": "ata-Samsung_SSD_850_EVO_M.2_250GB_S33CNX0H600299D",
+      "vendor": "DELL",
+      "model": "MD32xx",
+      "wwn": "0x6b083fe000daf018",
+      "serial": "6b083fe000daf018000015505abbe00a",
+      "hctl": "",
+      "type": "mpath",
+      "size": 30003188203520.0
+    },
+    {}
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_h2w_4nk_n2b)|2.6.0|
+|results|List|For details, see [results](#p_m1q_pnk_n2b)|2.6.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, e.g. SYS.1000, HOST.1001|2.6.0|
+|description|String|Brief description of the error|2.6.0|
+|details|String|Detailed error information|2.6.0|
+|elaboration|String|Reserved field, defaults to null|2.6.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|2.6.0|
+|cause|ErrorCode|Root cause: the source error that caused the current error. If there is no original error, this field is null|2.6.0|
+
+### results
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|wwid|String|Device WWID|2.6.0|
+|vendor|String|Device vendor|2.6.0|
+|model|String|Device model|2.6.0|
+|wwn|String|Device WWN|2.6.0|
+|serial|String|Device serial number|2.6.0|
+|hctl|String|SCSI device HCTL|2.6.0|
+|type|String|Device type|2.6.0|
+|size|Long|Device size|2.6.0|
+
+## SDK Examples
+Java SDK
+
+```
+GetSharedBlockCandidateAction action = new GetSharedBlockCandidateAction();
+action.clusterUuid = "a8efc4d72a2334dcad7f71bcb4821d6f";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetSharedBlockCandidateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetSharedBlockCandidateAction action = GetSharedBlockCandidateAction()
+action.clusterUuid = "a8efc4d72a2334dcad7f71bcb4821d6f"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetSharedBlockCandidateAction.Result res = action.call()
+```
+
+</APIPage>

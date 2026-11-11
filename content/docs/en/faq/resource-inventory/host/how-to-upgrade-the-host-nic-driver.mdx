@@ -1,0 +1,49 @@
+---
+title: "How to upgrade the host NIC driver"
+---
+
+## Solution
+1.  The following procedure uses kernel version 3.10.0-957.27.2.el7.x86\_64 as an example:
+2.  Log in to the host and check the current NIC driver version.
+
+    ```
+    [root@localhost ~]# modinfo ixgbe |grep -v alias
+    ```
+
+3.  Download the updated NIC driver from the official source.
+
+4.  Back up the existing driver:
+
+    ```
+    [root@localhost ~]# cp /lib/modules/3.10.0-957.27.2.el7.x86_64/kernel/drivers/net/ethernet/intel/ixgbe/ixgbe.ko.xz /root/ixgbe.ko.xz_lod
+    ```
+
+5.  Replace the existing driver:
+
+    ```
+    [root@localhost ~]# cp /root/ixgbe.ko.xz /lib/modules/3.10.0-957.27.2.el7.x86_64/kernel/drivers/net/ethernet/intel/ixgbe/ixgbe.ko.xz
+    ```
+
+6.  Check dependencies:
+
+    ```
+    [root@localhost ~]# depmod -a
+    ```
+
+7.  Back up the initramfs file:
+
+    ```
+    [root@localhost ~]# mv /boot/initramfs-3.10.0-957.27.2.el7.x86_64.img /boot/initramfs-3.10.0-957.27.2.el7.x86_64.img_bak
+    ```
+
+8.  Rebuild the initramfs file:
+
+    ```
+    [root@localhost ~]# cp /root/ixgbe.ko.xz /lib/modules/3.10.0-957.27.2.el7.x86_64/kernel/drivers/net/ethernet/intel/ixgbe/ixgbe.ko.xz
+    ```
+
+9.  Restart the host:
+
+    ```
+    [root@localhost ~]# sync && sync && shutdown -r now
+    ```

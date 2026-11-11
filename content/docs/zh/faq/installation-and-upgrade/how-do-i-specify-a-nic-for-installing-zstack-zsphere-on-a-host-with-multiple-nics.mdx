@@ -1,0 +1,16 @@
+---
+title: "多网卡物理主机如何指定网卡安装ZSvirt？"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+## 解决方案
+-   多网卡物理主机安装管理节点服务时，系统默认随机选择一块网卡作为管理网IP。若需指定网卡作为管理IP，可进入物理主机系统执行以下任一命令：
+
+    ```sh
+        [root@localhost ~]# bash /opt/zstack-installer.bin -I $网卡名称
+    ```
+
+    ```sh
+        [root@localhost ~]# bash /opt/zstack-installer.bin -I $网卡IP
+    ```

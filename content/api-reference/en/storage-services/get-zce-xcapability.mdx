@@ -1,0 +1,110 @@
+---
+title: "Get ZCE-X Capability and Information Data"
+---
+
+<APIPage method="GET" path="/v1/zce-x-plugin/capability">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zce-x-plugin/capability?uuid=77e1393bf5aa4536a018b4c0c4e29c72
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|query|ZCE-X information UUID, uniquely identifies the resource| |4.10.6|
+|systemTags \(Optional\)|List|query|System Tag| |4.10.6|
+|userTags \(Optional\)|List|query|User Tag| |4.10.6|
+
+## API Response
+Response Example
+
+```
+{
+  "licenses": {
+    "platform": {
+      "issuedTime": "2024-12-21T02:00:00Z",
+      "expiredTime": "2024-12-21T02:00:00Z",
+      "expired": false
+    }
+  },
+  "cluster": {
+    "managementNetworkCidr": "172.26.0.0/16",
+    "gatewayNetworkCidr": "172.26.0.0/16",
+    "publicNetworkCidr": "172.26.0.0/16",
+    "clusterNetworkCidr": "192.168.15.0/24",
+    "hosts": {
+      "count": 3,
+      "adminIps": [
+        "192.168.0.1",
+        "192.168.0.2",
+        "192.168.0.3"
+      ]
+    },
+    "pools": {
+      "count": 3,
+      "totalCapacity": 2199023255552,
+      "inventories": [
+        {
+          "id": 3,
+          "poolName": "pool-7548ffce72794737b439a9f8e3b2da83"
+        },
+        {
+          "id": 2,
+          "poolName": "pool-3e9f6251332a433e8d48c2edc95eb142"
+        },
+        {
+          "id": 1,
+          "poolName": "pool-37194c3c7bd74bdb8594cf768c4e42bd"
+        }
+      ]
+    }
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean|Whether the get operation was successful|4.10.6|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. For details, see [error](#p_bcl_x1v_m1b)|4.10.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, for example SYS.1000, HOST.1001|4.10.0|
+|description|String|Brief summary of the error|4.10.0|
+|details|String|Detailed error information|4.10.0|
+|elaboration|String|Reserved field, defaults to null|4.10.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|4.10.0|
+|cause|ErrorCode|Root cause: the source error that triggered the current error. If there is no original error, this field is null|4.10.0|
+
+## SDK Examples
+Java SDK
+
+```
+GetZceXCapabilityAction action = new GetZceXCapabilityAction();
+action.uuid = "77e1393bf5aa4536a018b4c0c4e29c72";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetZceXCapabilityAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetZceXCapabilityAction action = GetZceXCapabilityAction()
+action.uuid = "77e1393bf5aa4536a018b4c0c4e29c72"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetZceXCapabilityAction.Result res = action.call()
+```
+
+</APIPage>

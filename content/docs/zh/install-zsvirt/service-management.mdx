@@ -1,0 +1,68 @@
+---
+title: "管理 ZSvirt 服务"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+## 查看管理节点服务状态
+您可以使用 `zstack-ctl status` 命令，查看 ZSvirt 管理节点相关服务的运行状态：
+
+```
+[root@localhost ~]# zstack-ctl status
+ZSTACK_HOME: /usr/local/zstack/apache-tomcat/webapps/zstack
+zstack.properties: /usr/local/zstack/apache-tomcat/webapps/zstack/WEB-INF/classes/zstack.properties
+log4j2.xml: /usr/local/zstack/apache-tomcat/webapps/zstack/WEB-INF/classes/log4j2.xml
+PID file: /usr/local/zstack/management-server.pid
+log file: /usr/local/zstack/apache-tomcat/logs/management-server.log
+version: 1.0.0 (ZSvirt 1.0.0)
+MN status: Running [PID:123135]
+UI status: Running [PID:795] https://10.0.0.254:443
+```
+
+您也可以使用 `zstack-ctl ui_status` 命令单独查看 Web UI 服务状态：
+
+```
+[root@localhost ~]# zstack-ctl ui_status
+UI status: Running [PID:8459] https://10.0.0.254:443
+```
+
+## 改变管理节点服务状态
+在使用过程中如需重启管理节点服务，不重启 Web UI 服务，可执行：
+
+```
+zstack-ctl restart_node
+```
+
+在使用过程中不建议全部停止及重启所有服务。如果确需重启所有服务，可执行以下命令进行重启：
+
+```
+zstack-ctl stop && zstack-ctl start
+```
+
+管理节点因维护或其他异常原因停止服务后，需手动启动服务。启动 ZSvirt 服务方法如下：
+
+```
+# 此命令将同时启动管理节点和 Web UI 服务
+[root@localhost ~]#zstack-ctl start
+```
+
+## 查看管理节点 HA 服务状态
+您可以执行 `zsha2 status` 命令查看 zsha2 服务是否正常运行。
+
+## 输出管理节点 HA 日志
+您可以执行以下命令收集 zsha2 服务相关日志：
+
+```
+[root@localhost ~]# zsha2 collect-log
+Collecting logs ...
+Collected log: zsha2-log-2018-09-17T154358+0800.tgz
+
+# 将日志压缩包解压
+[root@localhost ~]# tar zxvf zsha2-log-2021-01-17T154358+0800.tgz
+tmp/zsha2-log588815976/
+tmp/zsha2-log588815976/zsha2-status.log
+tmp/zsha2-log588815976/zstack-ha.log
+tmp/zsha2-log588815976/keepalived.data
+tmp/zsha2-log588815976/zs-vip-192.168.199.151.log
+tmp/zsha2-log588815976/keepalived_status.log
+```

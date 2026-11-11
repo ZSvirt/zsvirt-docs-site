@@ -1,0 +1,78 @@
+---
+title: "Completely Delete Virtual Machine"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/{uuid}/actions">
+
+Completely delete a Virtual Machine in Destroyed state. This operation removes the Virtual Machine from the database and deletes the root disk of the Virtual Machine on the data storage. This operation cannot be undone once executed.
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "expungeVmInstance": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The **systemTags** and **userTags** fields in the example above are optional. Listed to indicate these fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"expungeVmInstance":{}}' \
+http://localhost:8080/zstack/v1/vm-instances/e57788f713963e98a99a9f6b0bd8482c/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Virtual Machine UUID| |0.6|
+|systemTags \(optional\)|List|body|System Tags| |0.6|
+|userTags \(optional\)|List|body|User Tags| |0.6|
+
+## API Response
+On success, this API returns an empty JSON object **`{}`**. On error, the returned JSON contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+ExpungeVmInstanceAction action = new ExpungeVmInstanceAction();
+action.uuid = "f3b0b9538e6a49a88e189ba2c42b728e";
+action.sessionId = "332f2d77997446fbaef62df0411b2635";
+ExpungeVmInstanceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ExpungeVmInstanceAction action = ExpungeVmInstanceAction()
+action.uuid = "1cc86ac86211480485a251a48bc1928e"
+action.sessionId = "6af024d8e8bf44709b42ffa623e96073"
+ExpungeVmInstanceAction.Result res = action.call()
+```
+
+</APIPage>

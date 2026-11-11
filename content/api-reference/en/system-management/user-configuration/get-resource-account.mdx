@@ -1,0 +1,97 @@
+---
+title: "Get Resource Account"
+---
+
+<APIPage method="GET" path="/v1/resources/accounts">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/resources/accounts?resourceUuids=59fc59531b6639b3b0bd6263b021df4c&resourceUuids=77115316d36839e9b1a4f832f38de8ba
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|resourceUuids|List|query| | |0.6|
+|systemTags \(Optional\)|List|query| | |0.6|
+|userTags \(Optional\)|List|query| | |0.6|
+
+## API Response
+Response example
+
+```
+{
+  "inventories": {
+    "db4e395223813bafa838ce4285a78757": {
+      "uuid": "ef68adaf368335ab8d15a4c2195749a7",
+      "name": "test",
+      "type": "Normal"
+    },
+    "736ee9f80a2230658e999c17e5be1835": {
+      "uuid": "ef68adaf368335ab8d15a4c2195749a7",
+      "name": "test",
+      "type": "Normal"
+    }
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null on success. For details, see [error](#p_j4n_3jt_42b)|0.6|
+|inventories|Map|For details, see [inventories](#p_x5q_kjt_42b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, e.g., SYS.1000, HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Default is null|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null|0.6|
+|cause|ErrorCode|The root error that caused the current error. This field is null if there is no root cause|0.6|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the account, uniquely identifying this resource|4.0.0|
+|name|String|Account name|4.0.0|
+|description|String|Detailed description of the account|4.0.0|
+|type|String|Account type|4.0.0|
+|state|String|Account state|4.0.0|
+|createDate|Timestamp|Creation time|4.0.0|
+|lastOpDate|Timestamp|Last modification time|4.0.0|
+
+## SDK Examples
+Java SDK
+
+```
+GetResourceAccountAction action = new GetResourceAccountAction();
+action.resourceUuids = asList("59fc59531b6639b3b0bd6263b021df4c","77115316d36839e9b1a4f832f38de8ba");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetResourceAccountAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+GetResourceAccountAction action = GetResourceAccountAction()
+action.resourceUuids = [59fc59531b6639b3b0bd6263b021df4c, 77115316d36839e9b1a4f832f38de8ba]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetResourceAccountAction.Result res = action.call()
+
+```
+
+</APIPage>

@@ -1,0 +1,119 @@
+---
+title: "更新资源高级设置"
+---
+
+<APIPage method="PUT" path="/v1/resource-configurations/{category}/{name}/{resourceUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateResourceConfig": {
+    "value": "10"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X PUT -d '{"updateResourceConfig":{"value":"10"}}' http://localhost:8080/zstack/v1/resource-configurations/host/cpu.overProvisioning.ratio/afd5f67a253b4990b9e8160672357eed/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|category|String|url|设置类型| |3.4.0|
+|name|String|url|设置名称| |3.4.0|
+|resourceUuid|String|url|设置的资源UUID| |3.4.0|
+|value|String|body\(包含在**updateResourceConfig**结构中\)|设置的值| |3.4.0|
+|systemTags \(可选\)|List|body| | |3.4.0|
+|userTags \(可选\)|List|body| | |3.4.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "ce61962673574ff689e2e6cb6f8cf558",
+    "resourceUuid": "435a7c71c82b4b0b971f4674ab346822",
+    "resourceType": "ClusterVO",
+    "name": "cpu.overProvisioning.ratio",
+    "category": "host",
+    "value": "10",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_ij2_mml_zgb)|3.4.0|
+|inventory|ResourceConfigInventory|详情参考[inventory](#p_knm_mml_zgb)|3.4.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.4.0|
+|description|String|错误的概要描述|3.4.0|
+|details|String|错误的详细信息|3.4.0|
+|elaboration|String|保留字段，默认为null|3.4.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.4.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.4.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.4.0|
+|resourceUuid|String|配置对应的资源UUID|3.4.0|
+|resourceType|String|配置对应的资源类型|3.4.0|
+|name|String|配置名称|3.4.0|
+|description|String|配置的详细描述|3.4.0|
+|category|String|配置类别|3.4.0|
+|value|String|配置的值|3.4.0|
+|createDate|Timestamp|创建时间|3.4.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.4.0|
+
+## SDK示例
+Java SDK
+
+```
+UpdateResourceConfigAction action = new UpdateResourceConfigAction();
+action.category = "host";
+action.name = "cpu.overProvisioning.ratio";
+action.resourceUuid = "5fa296dff4f04c96b29f38bef93e9e15";
+action.value = "10";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateResourceConfigAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateResourceConfigAction action = UpdateResourceConfigAction()
+action.category = "host"
+action.name = "cpu.overProvisioning.ratio"
+action.resourceUuid = "1e0f389aca364a1f94929bb4f39597b3"
+action.value = "10"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateResourceConfigAction.Result res = action.call()
+```
+
+</APIPage>

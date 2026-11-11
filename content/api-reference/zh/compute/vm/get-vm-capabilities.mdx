@@ -1,0 +1,84 @@
+---
+title: "获取虚拟机能力"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/{uuid}/capabilities">
+
+获取一个虚拟机的能力，用于判断虚拟机是否能做某些特定操作。目前已定义能力包括：
+
+|名称|描述|类型|
+|---|---|---|
+|LiveMigration|是否支持热迁移|Boolean|
+|VolumeMigration|是否支持根硬盘迁移|Boolean|
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/7a6c30c6de654cdf9d29b18a78c83a64/capabilities
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|虚拟机UUID| |0.6|
+|systemTags \(可选\)|List|query|系统标签| |0.6|
+|userTags \(可选\)|List|query|用户标签| |0.6|
+
+## API返回
+返回示例
+
+```
+{
+  "capabilities": {
+    "LiveMigration": false,
+    "Reimage": false,
+    "VolumeMigration": true
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|capabilities|Map|虚拟机能力结果|0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_gfg_pls_zz)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+GetVmCapabilitiesAction action = new GetVmCapabilitiesAction();
+action.uuid = "2323ae79b3894f0a85018a2a458247aa";
+action.sessionId = "05233d04bc144482a5b4a74fdea06408";
+GetVmCapabilitiesAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetVmCapabilitiesAction action = GetVmCapabilitiesAction()
+action.uuid = "0fb5a5b4a3e54314ba1c5fa2e07384d2"
+action.sessionId = "71df5d9cf30845dba8d1ef804bdf2108"
+GetVmCapabilitiesAction.Result res = action.call()
+```
+
+</APIPage>

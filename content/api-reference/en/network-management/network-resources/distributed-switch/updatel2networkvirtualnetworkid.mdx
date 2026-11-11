@@ -1,0 +1,124 @@
+---
+title: "UpdateL2NetworkVirtualNetworkId"
+---
+
+<APIPage method="PUT" path="/v1/l2-networks/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateL2NetworkVirtualNetworkId": {
+    "virtualNetworkId": 1
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding sample, both `systemTags` and `userTags` are optional. These two fields can be included in the body structure.
+</Callout>
+
+Curl Sample
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateL2NetworkVirtualNetworkId":{"virtualNetworkId":1}}' \
+http://localhost:8080/zstack/v1/l2-networks/aaed66240c433b289841fe7dc5cba765/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|The resource UUID.| |4.10.0|
+|virtualNetworkId|Integer|body\(contained in `updateL2NetworkVirtualNetworkId` structure\)|The virtual network ID, vlanId, or vni.| |4.10.0|
+|systemTags \(Optional\)|List|body|Optional. The system tags.| |4.10.0|
+|userTags \(Optional\)|List|body|Optional. The user tags.| |4.10.0|
+
+## API Response
+Sample Response
+
+```
+{
+  "inventory": {
+    "vlan": 10,
+    "name": "Test-Net",
+    "description": "Test",
+    "zoneUuid": "883ddcdf78cb3ad7a7112c5d6e0832d0",
+    "physicalInterface": "eth0",
+    "type": "L2VlanNetwork"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.10.0|
+|inventory|L2NetworkInventory|See [inventory](#p_c3c_yj2_s2c).|4.10.0|
+|error|ErrorCode|The error code. If not null, the operation fails, or vice versa. For more information, see [error](#p_wfd_jmw_51c).|4.10.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The resource UUID.|0.6|
+|name|String|The resource name.|0.6|
+|description|String|The detailed description of the resource.|0.6|
+|zoneUuid|String|The Data Center UUID.|0.6|
+|physicalInterface|String|The physical NIC.|0.6|
+|type|String|The Switch type.|0.6|
+|createDate|Timestamp|The creation date.|0.6|
+|lastOpDate|Timestamp|The last operation date.|0.6|
+|attachedClusterUuids|List|The list of attached Cluster UUIDs.|0.6|
+|attachedHostRefs|List|See [attachedHostRefs](#p_xml_zj2_s2c).|4.1.0|
+
+### attachedHostRefs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|hostUuid|String|The host UUID.|4.1.0|
+|l2NetworkUuid|String|The Switch UUID.|4.1.0|
+|l2ProviderType|String|The Switch implementation type.|4.1.0|
+|bridgeName|String|The bridge name.|4.3.0|
+|createDate|Timestamp|The creation date.|4.1.0|
+|lastOpDate|Timestamp|The last operation date.|4.1.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code, which is a numbered or alphanumeric code that specifies an error. For example, SYS.1000, HOST.1001.|0.6|
+|description|String|The brief description of the error.|0.6|
+|details|String|The details about the error.|0.6|
+|elaboration|String|The reserved field. Default value: null.|0.6|
+|opaque|LinkedHashMap|The reserved field. Default value: null.|0.6|
+|cause|ErrorCode|The root error, which is the associated root cause of the current error. If no root error exists, this parameter is null.|0.6|
+
+## SDK Sample
+Java SDK
+
+```
+UpdateL2NetworkVirtualNetworkIdAction action = new UpdateL2NetworkVirtualNetworkIdAction();
+action.uuid = "aaed66240c433b289841fe7dc5cba765";
+action.virtualNetworkId = 1;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateL2NetworkVirtualNetworkIdAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateL2NetworkVirtualNetworkIdAction action = UpdateL2NetworkVirtualNetworkIdAction()
+action.uuid = "aaed66240c433b289841fe7dc5cba765"
+action.virtualNetworkId = 1
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateL2NetworkVirtualNetworkIdAction.Result res = action.call()
+```
+
+</APIPage>

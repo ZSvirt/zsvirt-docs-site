@@ -1,0 +1,116 @@
+---
+title: "Parse Native Key Provider Import Content"
+---
+
+<APIPage method="PUT" path="/v1/key-providers/nkp/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "parseNkpRestore": {
+    "contentBase64": "BASE64_ENCODED_NKP_BACKUP",
+    "password": "password"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding example, the `systemTags` and `userTags` fields can be omitted. They are listed to indicate that the body can include these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"parseNkpRestore":{"contentBase64":"BASE64_ENCODED_NKP_BACKUP","password":"password"}}' \
+http://localhost:8080/zstack/v1/key-providers/nkp/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Optional Value|Since|
+|----|----|--------|-----------|--------------|-----|
+|contentBase64|String|body \(contained in `parseNkpRestore` structure\)|Import content \(Base64-encoded\)| |5.0.0|
+|password \(optional\)|String|body \(contained in `parseNkpRestore` structure\)|Import protection password| |5.0.0|
+|systemTags \(optional\)|List|body|System tags| |5.0.0|
+|userTags \(optional\)|List|body|User tags| |5.0.0|
+
+## API Response
+Response Example
+
+```
+{
+  "restoreInfo": {
+    "uuid": "ff0415ff372f33b5b6b757d3b99ad900",
+    "name": "nkp-1",
+    "description": "example",
+    "kdf": "HKDF-SHA256",
+    "saltPolicy": "providerName",
+    "currentVersion": 1,
+    "backupTime": 1700000000000
+  },
+  "code": "KP.1000"
+}
+```
+
+|Name|Type|Description|Since|
+|----|----|-----------|-----|
+|code|String|Parse result code|5.0.0|
+|reason|String|Reason for parse failure|5.0.0|
+|success|boolean| |5.0.0|
+|restoreInfo|NkpRestoreInfo|For details, see [restoreInfo](#p_shs_fw2_2jc)|5.0.0|
+|error|ErrorCode|For details, see [error](#p_t4f_pp2_2jc)|5.0.0|
+
+### restoreInfo
+|Name|Type|Description|Since|
+|----|----|-----------|-----|
+|uuid|String|Resource UUID, which uniquely identifies the resource|5.0.0|
+|name|String|Resource name|5.0.0|
+|description|String|Detailed description of the resource|5.0.0|
+|kdf|String|Key derivation function|5.0.0|
+|saltPolicy|String|Salt policy|5.0.0|
+|currentVersion|Integer|Current version|5.0.0|
+|backupTime|Long|Backup time \(millisecond timestamp\)|5.0.0|
+
+### error
+|Name|Type|Description|Since|
+|----|----|-----------|-----|
+|code|String|Error code, which is the globally unique identifier of the error, for example, SYS.1000 or HOST.1001|0.6|
+|description|String|Summary description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. The default value is null.|0.6|
+|opaque|LinkedHashMap|Reserved field. The default value is null.|0.6|
+|cause|ErrorCode|Root error that caused the current error. If no root error exists, this field is null.|0.6|
+
+## SDK Example
+Java SDK
+
+```
+ParseNkpRestoreAction action = new ParseNkpRestoreAction();
+action.contentBase64 = "BASE64_ENCODED_NKP_BACKUP";
+action.password = "password";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ParseNkpRestoreAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = ParseNkpRestoreAction()
+action.contentBase64 = "BASE64_ENCODED_NKP_BACKUP"
+action.password = "password"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

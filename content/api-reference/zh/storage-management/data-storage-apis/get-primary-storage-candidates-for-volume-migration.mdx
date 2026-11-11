@@ -1,0 +1,100 @@
+---
+title: "获取候选列表"
+---
+
+<APIPage method="GET" path="/v1/primary-storage/volumes/{volumeUuid}/migration-candidates">
+
+获取硬盘迁移的目标数据存储候选列表。
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/primary-storage/volumes/073f14f2d6dc437b8114faa4223f0ce8/migration-candidates
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|volumeUuid|String|url|硬盘UUID| |2.2|
+|systemTags \(可选\)|List|query|系统标签| |2.2|
+|userTags \(可选\)|List|query|用户标签| |2.2|
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "64776c6c7dfd46b091ec387d21b5adb0",
+      "name": "PS-1"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。详情参考[error](#p_cgg_mtz_qbb)|2.2|
+|inventories|List|详情参考[inventories](#p_ask_mtz_qbb)|2.2|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|2.2|
+|description|String|错误的概要描述|2.2|
+|details|String|错误的详细信息|2.2|
+|elaboration|String|保留字段，默认为null|2.2|
+|opaque|LinkedHashMap|保留字段，默认为null|2.2|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|2.2|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|2.2|
+|zoneUuid|String|数据中心UUID|2.2|
+|name|String|资源名称|2.2|
+|url|String| |2.2|
+|description|String|资源的详细描述|2.2|
+|totalCapacity|Long| |2.2|
+|availableCapacity|Long| |2.2|
+|totalPhysicalCapacity|Long| |2.2|
+|availablePhysicalCapacity|Long| |2.2|
+|systemUsedCapacity|Long| |2.2|
+|type|String| |2.2|
+|state|String| |2.2|
+|status|String| |2.2|
+|mountPath|String| |2.2|
+|createDate|Timestamp|创建时间|2.2|
+|lastOpDate|Timestamp|最后一次修改时间|2.2|
+|attachedClusterUuids|List| |2.2|
+
+## SDK示例
+Java SDK
+
+```
+GetPrimaryStorageCandidatesForVolumeMigrationAction action = new GetPrimaryStorageCandidatesForVolumeMigrationAction();
+action.volumeUuid = "06b0f7d7098349b5ba336013aea319f5";
+action.sessionId = "5869e8a6986b40c8be1ac3a520a6a9a1";
+GetPrimaryStorageCandidatesForVolumeMigrationAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetPrimaryStorageCandidatesForVolumeMigrationAction action = GetPrimaryStorageCandidatesForVolumeMigrationAction()
+action.volumeUuid = "8800d0ffad8f42d7911347ca0af8e224"
+action.sessionId = "a1b986a4bb5b409ba84951d3a3c1ed54"
+GetPrimaryStorageCandidatesForVolumeMigrationAction.Result res = action.call()
+```
+
+</APIPage>

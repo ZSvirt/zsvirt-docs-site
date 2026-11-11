@@ -1,0 +1,64 @@
+---
+title: "删除虚拟机网卡"
+---
+
+<APIPage method="DELETE" path="/v1/nics/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/nics/e99db1aebeb43c3d82ae1ba427308200
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |4.0.0|
+|deleteMode \(可选\)|String|body| | |4.0.0|
+|systemTags \(可选\)|List|body|系统标签| |4.0.0|
+|userTags \(可选\)|List|body|用户标签| |4.0.0|
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+DeleteVmNicAction action = new DeleteVmNicAction();
+action.uuid = "e99db1aebeb43c3d82ae1ba427308200";
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteVmNicAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteVmNicAction action = DeleteVmNicAction()
+action.uuid = "e99db1aebeb43c3d82ae1ba427308200"
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DeleteVmNicAction.Result res = action.call()
+```
+
+</APIPage>

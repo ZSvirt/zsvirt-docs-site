@@ -1,0 +1,120 @@
+---
+title: "Configure ZStone Host"
+---
+
+<APIPage method="PUT" path="/v1/zstone-plugin/config/host">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateZStoneHostConfig": {
+    "uuid": "53c0433a817349f89f66532addeb8b6c",
+    "hostPort": 22,
+    "hosts": [
+      {
+        "uuid": "11045d20c4ae4d079b68d9aa9bd93e45",
+        "managementIp": "172.30.3.21",
+        "publicIp": "192.168.4.21"
+      },
+      {
+        "uuid": "f76c6667db6a4c0bb220b895478effcc",
+        "managementIp": "172.30.3.22",
+        "publicIp": "192.168.4.22"
+      },
+      {
+        "uuid": "0f7f889aebf0575bb223fc4f547854ef",
+        "managementIp": "172.30.3.23",
+        "publicIp": "192.168.4.23"
+      }
+    ],
+    "deployChrony": false,
+    "copySshKey": true,
+    "installWatch": true,
+    "updateHostname": true
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateZStoneHostConfig":{"uuid":"53c0433a817349f89f66532addeb8b6c","hostPort":22,"hosts":[{"uuid":"11045d20c4ae4d079b68d9aa9bd93e45","managementIp":"172.30.3.21","publicIp":"192.168.4.21"},{"uuid":"f76c6667db6a4c0bb220b895478effcc","managementIp":"172.30.3.22","publicIp":"192.168.4.22"},{"uuid":"0f7f889aebf0575bb223fc4f547854ef","managementIp":"172.30.3.23","publicIp":"192.168.4.23"}],"deployChrony":false,"copySshKey":true,"installWatch":true,"updateHostname":true}}' \
+http://localhost:8080/zstack/v1/zstone-plugin/config/host
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|body \(included in `updateZStoneHostConfig` structure\)|ZStone UUID, uniquely identifies the resource| |4.10.6|
+|hostUsername|String|body \(included in `updateZStoneHostConfig` structure\)|Username for host login| |4.10.6|
+|hostPassword|String|body \(included in `updateZStoneHostConfig` structure\)|Password for host login| |4.10.6|
+|hostPort \(Optional\)|int|body \(included in `updateZStoneHostConfig` structure\)|ZStone host SSH port| |4.10.6|
+|hosts|List|body \(included in `updateZStoneHostConfig` structure\)|ZStone host configuration list| |4.10.6|
+|deployChrony \(Optional\)|boolean|body \(included in `updateZStoneHostConfig` structure\)|Whether to configure time synchronization service| |4.10.6|
+|copySshKey \(Optional\)|boolean|body \(included in `updateZStoneHostConfig` structure\)|Whether to copy SSH KEY| |4.10.6|
+|installWatch \(Optional\)|boolean|body \(included in `updateZStoneHostConfig` structure\)|Whether to install Watch| |4.10.6|
+|updateHostname \(Optional\)|boolean|body \(included in `updateZStoneHostConfig` structure\)|Whether to update hostname| |4.10.6|
+|systemTags \(Optional\)|List|body|System Tag| |4.10.6|
+|userTags \(Optional\)|List|body|User Tag| |4.10.6|
+
+## API Response
+This API returns an empty JSON structure `{}` on success, and a JSON structure containing an error field on failure, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+UpdateZStoneHostConfigAction action = new UpdateZStoneHostConfigAction();
+action.uuid = "53c0433a817349f89f66532addeb8b6c";
+action.hostPort = 22;
+action.hosts = asList([uuid:11045d20c4ae4d079b68d9aa9bd93e45, managementIp:172.30.3.21, publicIp:192.168.4.21],[uuid:f76c6667db6a4c0bb220b895478effcc, managementIp:172.30.3.22, publicIp:192.168.4.22],[uuid:0f7f889aebf0575bb223fc4f547854ef, managementIp:172.30.3.23, publicIp:192.168.4.23]);
+action.deployChrony = false;
+action.copySshKey = true;
+action.installWatch = true;
+action.updateHostname = true;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateZStoneHostConfigAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateZStoneHostConfigAction action = UpdateZStoneHostConfigAction()
+action.uuid = "53c0433a817349f89f66532addeb8b6c"
+action.hostPort = 22
+action.hosts = [[uuid:11045d20c4ae4d079b68d9aa9bd93e45, managementIp:172.30.3.21, publicIp:192.168.4.21], [uuid:f76c6667db6a4c0bb220b895478effcc, managementIp:172.30.3.22, publicIp:192.168.4.22], [uuid:0f7f889aebf0575bb223fc4f547854ef, managementIp:172.30.3.23, publicIp:192.168.4.23]]
+action.deployChrony = false
+action.copySshKey = true
+action.installWatch = true
+action.updateHostname = true
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateZStoneHostConfigAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,76 @@
+---
+title: "Expunge Bare Metal Instance"
+---
+
+<APIPage method="PUT" path="/v1/baremetal/instances/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "expungeBaremetalInstance": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that these fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"expungeBaremetalInstance":{}}' \
+http://localhost:8080/zstack/v1/baremetal/instances/1016135ece1d3b189112cea52ae84d8d/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|UUID of the resource, uniquely identifying the resource| |2.6.0|
+|systemTags \(Optional\)|List|body|System Tag| |2.6.0|
+|userTags \(Optional\)|List|body|User Tag| |2.6.0|
+
+## API Response
+This API returns an empty JSON structure `{}` on success. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+ExpungeBaremetalInstanceAction action = new ExpungeBaremetalInstanceAction();
+action.uuid = "1016135ece1d3b189112cea52ae84d8d";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ExpungeBaremetalInstanceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = ExpungeBaremetalInstanceAction()
+action.uuid = "1016135ece1d3b189112cea52ae84d8d"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,61 @@
+---
+title: "Delete Host Scheduling Group"
+---
+
+<APIPage method="DELETE" path="/v1/hostSchedulingRuleGroup/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/hostSchedulingRuleGroup/8e02276953ab35e2b591505b0f3167c9
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|UUID of the resource. Uniquely identifies the resource| |4.6.0|
+|systemTags \(optional\)|List|body|System tags| |4.6.0|
+|userTags \(optional\)|List|body|User tags| |4.6.0|
+
+## API Response
+This API returns an empty JSON structure **`{}`** on success. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DeleteHostSchedulingRuleGroupAction action = new DeleteHostSchedulingRuleGroupAction();
+action.uuid = "8e02276953ab35e2b591505b0f3167c9";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteHostSchedulingRuleGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteHostSchedulingRuleGroupAction action = DeleteHostSchedulingRuleGroupAction()
+action.uuid = "8e02276953ab35e2b591505b0f3167c9"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DeleteHostSchedulingRuleGroupAction.Result res = action.call()
+```
+
+</APIPage>

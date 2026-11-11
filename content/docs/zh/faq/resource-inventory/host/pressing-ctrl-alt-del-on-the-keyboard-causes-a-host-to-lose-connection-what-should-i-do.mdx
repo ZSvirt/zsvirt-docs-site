@@ -1,0 +1,46 @@
+---
+title: "人为操作Ctrl+Alt+Del组合键导致主机失联，怎么办？"
+---
+
+## 现象
+主机失联，message日志显示接入虚拟USB设备，收到Received SIGINT。
+
+## 原因
+人为使用Ctrl+Alt+Del组合键。
+
+## 解决方案
+-   修改系统配置文件，禁止Ctrl+Alt+Del组合键使用。
+
+    1.  以root身份登录主机控制台。
+
+    2.  执行`vi /etc/systemd/system/ctrl-alt-del.target`命令进入编辑模式，修改ctrl-alt-del.target文件。
+
+    3.  在ctrl-alt-del.target文件中添加以下内容：
+
+        ```
+        [Unit]
+        Description=Disable Ctrl-Alt-Del
+        
+        [Service]
+        ExecStart=/bin/true
+        Type=oneshot
+        
+        [Install]
+        WantedBy=multi-user.target
+        ```
+
+    4.  保存修改内容并退出文件编辑模式。
+
+    5.  执行`systemctl daemon-reload`命令以重新加载systemd配置。
+
+    6.  执行`systemctl mask ctrl-alt-del.target`命令禁用ctrl-alt-del.target。
+
+    7.  重启系统使更改生效。
+
+        <Callout type="warning">
+        重启虚拟机需注意是否影响业务。
+        </Callout>
+
+-   安全培训：对运维人员进行相关培训，禁止随意使用Ctrl+Alt+Del组合键，避免误操作导致主机失联。
+
+-   物理保护：对主机进行保护。通过安装机柜门锁、监控摄像头等设备，防止未经授权的人员随意操作主机。

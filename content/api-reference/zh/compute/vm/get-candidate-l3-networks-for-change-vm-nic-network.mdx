@@ -1,0 +1,192 @@
+---
+title: "获取虚拟机网卡可挂载的分布式端口组"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/nics/{vmNicUuid}/l3-networks-candidates">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/nics/3382601183c9319384d5aa17ec956a3f/l3-networks-candidates
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|vmNicUuid|String|url|虚拟机网卡UUID| |4.1.0|
+|systemTags \(可选\)|List|query|系统标签| |4.1.0|
+|userTags \(可选\)|List|query|用户标签| |4.1.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "f8fc36eaff6f3253a134bab93823baf1",
+      "name": "private L3",
+      "type": "L3BasicNetwork",
+      "zoneUuid": "9ef7d386414c3101adeecd45ec9a2d51",
+      "l2NetworkUuid": "ad3adf2da22f36c2946d90fae7f99b19",
+      "state": "Enabled",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM",
+      "ipRanges": [
+        {
+          "uuid": "16f163ee55f93d4f8dca9fefcac41ecc",
+          "l3NetworkUuid": "f8fc36eaff6f3253a134bab93823baf1",
+          "name": "ip range",
+          "startIp": "192.168.0.10",
+          "endIp": "192.168.0.100",
+          "netmask": "255.255.255.0",
+          "gateway": "192.168.0.1",
+          "createDate": "Nov 14, 2017 10:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+        }
+      ],
+      "networkServices": [
+        {
+          "l3NetworkUuid": "f8fc36eaff6f3253a134bab93823baf1",
+          "networkServiceProviderUuid": "f714dba2f49a3d6788aafbe8b5ab3dc2",
+          "networkServiceType": "DHCP"
+        },
+        {
+          "l3NetworkUuid": "f8fc36eaff6f3253a134bab93823baf1",
+          "networkServiceProviderUuid": "f714dba2f49a3d6788aafbe8b5ab3dc2",
+          "networkServiceType": "DNS"
+        },
+        {
+          "l3NetworkUuid": "f8fc36eaff6f3253a134bab93823baf1",
+          "networkServiceProviderUuid": "f714dba2f49a3d6788aafbe8b5ab3dc2",
+          "networkServiceType": "SNAT"
+        }
+      ]
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_pvc_gz1_mjb)|4.1.0|
+|inventory|List|详情参考[inventory](#p_adf_qwd_3jb)|4.1.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.1.0|
+|description|String|错误的概要描述|4.1.0|
+|details|String|错误的详细信息|4.1.0|
+|elaboration|String|保留字段，默认为null|4.1.0|
+|opaque|LinkedHashMap|保留字段，默认为null|4.1.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.1.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.1.0|
+|name|String|资源名称|4.1.0|
+|description|String|资源的详细描述|4.1.0|
+|type|String| |4.1.0|
+|zoneUuid|String|数据中心UUID|4.1.0|
+|l2NetworkUuid|String|端口组分布式交换机UUID|4.1.0|
+|state|String| |4.1.0|
+|dnsDomain|String| |4.1.0|
+|system|Boolean| |4.1.0|
+|category|String| |4.1.0|
+|ipVersion|Integer|IP协议号|4.1.0|
+|enableIPAM|Boolean|打开IP地址管理功能|4.10.16|
+|createDate|Timestamp|创建时间|4.1.0|
+|lastOpDate|Timestamp|最后一次修改时间|4.1.0|
+|dns|List| |4.1.0|
+|ipRanges|List|详情参考[ipRanges](#p_hjs_mjd_fpb)|4.1.0|
+|networkServices|List|详情参考[networkServices](#p_hvz_242_fpb)|4.1.0|
+|hostRoute|List|详情参考[ipRangesx](#p_hjs_mjd_fpb)|4.1.0|
+|reservedIpRanges|List|详情参考[reservedIpRanges](#p_lzv_5qy_3gc)|4.10.16|
+
+### ipRanges
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.1.0|
+|l3NetworkUuid|String|分布式端口组UUID|4.1.0|
+|name|String|资源名称|4.1.0|
+|description|String|资源的详细描述|4.1.0|
+|startIp|String|起始地址|4.1.0|
+|endIp|String|结束地址|4.1.0|
+|netmask|String|掩码|4.1.0|
+|prefixLen|String|掩码长度|4.1.0|
+|gateway|String|网关|4.1.0|
+|networkCidr|String|网络CIDR|4.1.0|
+|ipVersion|Integer|ip协议号|4.1.0|
+|addressMode|String|IPv6地址分配模式|4.1.0|
+|createDate|Timestamp|创建时间|4.1.0|
+|lastOpDate|Timestamp|最后一次修改时间|4.1.0|
+|ipRangeType|IpRangeType|详情参考[ipRangeType](#p_d3k_f4r_hpb)|4.1.0|
+
+### ipRangeType
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|IpRangeType|普通地址段|4.1.0|
+|AddressPool|IpRangeType|地址池段|4.1.0|
+
+### networkServices
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|l3NetworkUuid|String|分布式端口组UUID|4.1.0|
+|networkServiceProviderUuid|String|网络服务提供模块UUID|4.1.0|
+|networkServiceType|String| |4.1.0|
+
+### hostRoute
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|id|Long| |4.1.0|
+|l3NetworkUuid|String|分布式端口组UUID|4.1.0|
+|prefix|String| |4.1.0|
+|nexthop|String| |4.1.0|
+|createDate|Timestamp|创建时间|4.1.0|
+|lastOpDate|Timestamp|最后一次修改时间|4.1.0|
+
+### reservedIpRanges
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.10.16|
+|l3NetworkUuid|String|分布式端口组UUID|4.10.16|
+|name|String|资源名称|4.10.16|
+|description|String|资源的详细描述|4.10.16|
+|startIp|String|起始IP\(包含在保留地址段内\)|4.10.16|
+|endIp|String|结束IP\(包含在保留地址段内\)|4.10.16|
+|ipVersion|Integer|ip协议号|4.10.16|
+|createDate|Timestamp|创建时间|4.10.16|
+|lastOpDate|Timestamp|最后一次修改时间|4.10.16|
+
+## SDK示例
+Java SDK
+
+```
+GetCandidateL3NetworksForChangeVmNicNetworkAction action = new GetCandidateL3NetworksForChangeVmNicNetworkAction();
+action.vmNicUuid = "3382601183c9319384d5aa17ec956a3f";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetCandidateL3NetworksForChangeVmNicNetworkAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = GetCandidateL3NetworksForChangeVmNicNetworkAction()
+action.vmNicUuid = "3382601183c9319384d5aa17ec956a3f"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

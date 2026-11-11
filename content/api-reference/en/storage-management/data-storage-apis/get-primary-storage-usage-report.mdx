@@ -1,0 +1,94 @@
+---
+title: "Get Data Storage Usage Forecast Report"
+---
+
+<APIPage method="GET" path="/v1/primary-storage/{primaryStorageUuid}/usage/report">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/primary-storage/902707d77b6e36179ee0117e6614e52f/usage/report
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|primaryStorageUuid|String|url|Data Storage UUID| |4.7.21|
+|uris \(Optional\)|List|query|Storage Protocol| |4.7.21|
+|systemTags \(Optional\)|List|query|System Tags| |4.7.21|
+|userTags \(Optional\)|List|query|User Tags| |4.7.21|
+
+## API Response
+Response Example
+
+```
+{
+  "uriUsageForecast": {},
+  "usageReport": {}
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.7.21|
+|uriUsageForecast|Map|See [uriUsageForecast](#p_sdn_131_wyb)|4.7.21|
+|usageReport|UsageReport|See [usagereport](#p_y11_b31_wyb)|4.7.21|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation succeeds, this field is null. See [error](#p_gxy_yw4_v3b)|4.7.21|
+
+### uriUsageForecast
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|usedPhysicalCapacitiesForecast|List| |4.7.21|
+|UsedPhysicalCapacitiesHistory|List| |4.7.21|
+|TotalPhysicalCapacitiesHistory|List| |4.7.21|
+|startTime|Long| |4.7.21|
+|interval|Long| |4.7.21|
+
+### usageReport
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|usedPhysicalCapacitiesForecast|List| |4.7.21|
+|UsedPhysicalCapacitiesHistory|List| |4.7.21|
+|TotalPhysicalCapacitiesHistory|List| |4.7.21|
+|startTime|Long| |4.7.21|
+|interval|Long| |4.7.21|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|4.7.21|
+|description|String|Brief description of the error|4.7.21|
+|details|String|Detailed error information|4.7.21|
+|elaboration|String|Reserved field, defaults to null|4.7.21|
+|opaque|LinkedHashMap|Reserved field, defaults to null|4.7.21|
+|cause|ErrorCode|Root cause, the source error that caused the current error. If there is no original error, this field is null|4.7.21|
+
+## SDK Examples
+Java SDK
+
+```
+GetPrimaryStorageLicenseInfoAction action = new GetPrimaryStorageLicenseInfoAction();
+action.uuid = "9b624d6e4ca53a4aa10bfc341281d0ef";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetPrimaryStorageLicenseInfoAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetPrimaryStorageLicenseInfoAction action = GetPrimaryStorageLicenseInfoAction()
+action.uuid = "9b624d6e4ca53a4aa10bfc341281d0ef"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetPrimaryStorageLicenseInfoAction.Result res = action.call()
+```
+
+</APIPage>

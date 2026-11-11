@@ -1,0 +1,23 @@
+---
+title: "如何修改控制台代理地址？"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+## 解决方案
+-   **UI方式**：
+
+    登录虚拟化平台，点击**系统管理** &gt; **平台设置** &gt; **控制台代理**，进入控制台代理界面。点击**修改代理地址**。
+
+    <Callout type="info">
+    无需重启管理节点，直接生效。
+    </Callout>
+
+-   **命令行方式**：
+
+    打开虚拟机控制台，依次执行以下命令：
+
+    ```
+    [root@localhost ~]# zstack-ctl configure consoleProxyOverriddenIp=MANAGEMENT_NODE_PUBLIC_IP_ADDRESS  //控制台代理IP地址
+    [root@localhost ~]# zstack-ctl restart_node
+    ```

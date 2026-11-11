@@ -1,0 +1,93 @@
+---
+title: "Query Console Proxy Agent"
+---
+
+<APIPage method="GET" path="/v1/consoles/agents" altPaths={["/v1/consoles/agents/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/consoles/agents?q=uuid=745b7c17cd224025b3adfef4ae61b3d2
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/consoles/agents/8a3cc2be7e20420db29925e381c598bc
+```
+
+Queryable Fields
+
+Run the CLI command line tool, enter `QueryConsoleProxyAgent` and press the Tab key to view all queryable fields and cross-table queryable resource names.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "c77bbc7d3364449e9543d0776a6087de",
+      "managementIp": "127.0.0.1",
+      "type": "ManagementServerConsoleProxy",
+      "state": "Connected"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation has failed. This field is null when the operation succeeds. For details, see [error](#p_apm_tsk_l1b)|0.6|
+|inventories|List|For details, see [inventories](#p_w25_tsk_l1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. The globally unique identifier of the error, for example, SYS.1000 or HOST.1001.|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Default is null.|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null.|0.6|
+|cause|ErrorCode|Root error. The source error that caused the current error. This field is null if no root error exists.|0.6|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID. Uniquely identifies the resource.|0.6|
+|description|String|Detailed description of the resource|0.6|
+|managementIp|String|Management node IP|0.6|
+|type|String|Type|0.6|
+|status|String|Status \(Connected, Disconnected\)|0.6|
+|state|String|State \(Enabled, Disabled\)|0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+QueryConsoleProxyAgentAction action = new QueryConsoleProxyAgentAction();
+action.conditions = asList("uuid=dfbe49d87cb94d93b69354fa1270012b");
+action.sessionId = "e2300cd4f74a457e87f13842aeb8fdef";
+QueryConsoleProxyAgentAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryConsoleProxyAgentAction action = QueryConsoleProxyAgentAction()
+action.conditions = ["uuid=1e47046946f849ee871de20a2b045750"]
+action.sessionId = "1655d7f2e56d4710824cd1082bd5cc94"
+QueryConsoleProxyAgentAction.Result res = action.call()
+```
+
+</APIPage>

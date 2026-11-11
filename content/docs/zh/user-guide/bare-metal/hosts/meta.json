@@ -1,0 +1,10 @@
+{
+  "title": "裸金属主机",
+  "pages": [
+    "index",
+    "create-host",
+    "state-management",
+    "delete-host"
+  ],
+  "pagesIndex": "index"
+}

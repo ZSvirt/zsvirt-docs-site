@@ -1,0 +1,83 @@
+---
+title: "Add Monitoring Node to Distributed Storage"
+---
+
+<APIPage method="POST" path="/v1/primary-storage/ceph/{uuid}/mons">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "monUrls": [
+      "10.0.1.3"
+    ]
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Examples
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"monUrls":["10.0.1.3"]}}' \
+http://localhost:8080/zstack/v1/primary-storage/ceph/6496e4b29793368dbacf388d83446acc/mons
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|UUID of the distributed storage| |0.6|
+|monUrls|List|body \(nested in **params** structure\)|List of mon node addresses| |0.6|
+|systemTags \(optional\)|List|body|System tags| |0.6|
+|userTags \(optional\)|List|body|User tags| |0.6|
+
+## API Response
+When the API succeeds, it returns an empty JSON structure **`{}`**. When an error occurs, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+AddMonToCephPrimaryStorageAction action = new AddMonToCephPrimaryStorageAction();
+action.uuid = "d0e3946e312a40c6af85da9163ac2519";
+action.monUrls = asList("10.0.1.3");
+action.sessionId = "6033eea9a2514c078c7af2a709ead405";
+AddMonToCephPrimaryStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddMonToCephPrimaryStorageAction action = AddMonToCephPrimaryStorageAction()
+action.uuid = "6b631b40a3fa434785a8b0bd49a3f199"
+action.monUrls = [10.0.1.3]
+action.sessionId = "c455c88362f84aa7acd07bd5f6d3a4d3"
+AddMonToCephPrimaryStorageAction.Result res = action.call()
+```
+
+</APIPage>

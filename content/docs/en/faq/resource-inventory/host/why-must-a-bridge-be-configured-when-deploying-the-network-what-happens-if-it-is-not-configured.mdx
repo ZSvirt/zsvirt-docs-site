@@ -1,0 +1,10 @@
+---
+title: "Why must a bridge be configured when deploying the network? What happens if it is not configured?"
+---
+
+## Explanation
+-   Configure the Management Network IP address on the br\_bond0 bridge. Assigning the IP address to the bridge simplifies future network expansion. If the IP address is not assigned to the bridge, creating a network on bond0 will automatically create a bridge, which may cause the IP address on bond0 to be lost and interrupt the Management Network.
+
+-   For the service bond1, you do not need to configure an IP address directly on br\_bond1. The platform automatically creates a bridge based on bond1 when provisioning network resources. For VXLAN network scenarios, configure the VTEP IP address on a VLAN sub-interface rather than on the bridge for better performance.
+
+-   After the bridge is configured, all packets are forwarded through it. The bridge acts as a virtual switch that dynamically learns MAC addresses and forwards packets based on its MAC address table.

@@ -1,0 +1,10 @@
+{
+  "title": "AccessKey管理相关接口",
+  "pages": [
+    "delete-access-key",
+    "update-console-proxy-agent",
+    "query-access-key",
+    "change-access-key-state"
+  ],
+  "pagesIndex": "index"
+}

@@ -1,0 +1,13 @@
+---
+title: "A host cannot recognize FC-SAN storage block devices. How do I resolve this?"
+---
+
+## Solution
+1.  Try the following approaches:
+2.  Verify that all hosts in the cluster can recognize the same LUN device information.
+
+    Run `multipath -ll` to check whether the multipath output is consistent across all hosts.
+
+3.  If the output is inconsistent, run `rescan-scsi-bus.sh -a` on the affected host to rescan the SAN storage.
+
+4.  Verify that the host can now recognize the FC-SAN storage block devices.

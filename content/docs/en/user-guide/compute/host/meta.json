@@ -1,0 +1,9 @@
+{
+  "title": "Host",
+  "pages": [
+    "index",
+    "basic-operations",
+    "hardware-devices"
+  ],
+  "pagesIndex": "index"
+}

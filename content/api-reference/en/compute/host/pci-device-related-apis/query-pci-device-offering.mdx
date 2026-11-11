@@ -1,0 +1,135 @@
+---
+title: "Query PCI Device Offering Info"
+---
+
+<APIPage method="GET" path="/v1/pci-device/pci-device-offerings" altPaths={["/v1/pci-device/pci-device-offerings/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/pci-device/pci-device-offerings
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/pci-device/pci-device-offerings/f0d1dc75b5323546aa5c6bda3733019c
+```
+
+Queryable Fields
+
+Run the CLI command tool, enter `QueryPciDeviceOffering` and press Tab to view all queryable fields and cross-resource names.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {}
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_opl_51q_s1b)|2.1|
+|inventories|List|See [inventories](#p_jcf_51q_s1b)|2.1|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code, a globally unique identifier of the error, e.g. SYS.1000, HOST.1001|2.1|
+|description|String|Brief description of the error|2.1|
+|details|String|Detailed error information|2.1|
+|elaboration|String|Reserved field, defaults to null|2.1|
+|opaque|LinkedHashMap|Reserved field, defaults to null|2.1|
+|cause|ErrorCode|Root cause, the source error that caused the current error, null if no original error|2.1|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifies the resource|2.1|
+|name|String|Resource name|2.1|
+|description|String|Resource description|2.1|
+|vendorId|String|Vendor ID|2.1|
+|deviceId|String|Device ID|2.1|
+|subvendorId|String|Sub-vendor ID|2.1|
+|subdeviceId|String|Sub-device ID|2.1|
+|ramSize|String|GPU memory capacity|3.5.0|
+|createDate|Timestamp|Create date|2.1|
+|lastOpDate|Timestamp|Last update date|2.1|
+|type|PciDeviceOfferingType|See [type](#p_e1z_51q_s1b)|2.1|
+|attachedInstanceOfferings|List|See [attachedInstanceOfferings](#p_zdq_v1q_s1b)|2.1|
+|matchedPciDevices|List|See [matchedPciDevices](#p_zqd_z1q_s1b)|2.1|
+
+### type
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|GPU\_Video|PciDeviceOfferingType|GPU video|2.1|
+|GPU\_Audio|PciDeviceOfferingType|GPU audio|2.1|
+|Generic|PciDeviceOfferingType|Generic device|2.1|
+
+### attachedInstanceOfferings
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|id|long| |2.1|
+|instanceOfferingUuid|String|Compute offering UUID|2.1|
+|pciDeviceOfferingUuid|String| |2.1|
+|pciDeviceCount|Integer| |2.1|
+|metadata|PciDeviceMetaData|See [metadata](#p_uwq_w1q_s1b)|2.1|
+
+### metadata
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|metaData|String| |2.1|
+|metaDataEntries|List|See [metaDataEntries](#p_zdm_x1q_s1b)|2.1|
+
+### metaDataEntries
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|key|String| |2.1|
+|value|String| |2.1|
+|op|PciDeviceMetaDataOperator|See [op](#p_e4n_y1q_s1b)|2.1|
+
+### op
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Equal|PciDeviceMetaDataOperator|Equal|2.1|
+|Unequal|PciDeviceMetaDataOperator|Unequal|2.1|
+
+### matchedPciDevices
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|pciDeviceUuid|String| |2.1|
+|pciDeviceOfferingUuid|String| |2.1|
+
+## SDK Examples
+Java SDK
+
+```
+QueryPciDeviceOfferingAction action = new QueryPciDeviceOfferingAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryPciDeviceOfferingAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryPciDeviceOfferingAction action = QueryPciDeviceOfferingAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryPciDeviceOfferingAction.Result res = action.call()
+```
+
+</APIPage>

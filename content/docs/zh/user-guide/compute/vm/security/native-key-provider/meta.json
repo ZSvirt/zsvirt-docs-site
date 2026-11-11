@@ -1,0 +1,11 @@
+{
+  "title": "配置和管理内置密钥提供程序",
+  "pages": [
+    "index",
+    "add",
+    "backup",
+    "restore",
+    "delete"
+  ],
+  "pagesIndex": "index"
+}

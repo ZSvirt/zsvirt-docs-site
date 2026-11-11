@@ -1,0 +1,235 @@
+---
+title: "Change Bare Metal Chassis State"
+---
+
+<APIPage method="PUT" path="/v1/baremetal/chassis/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "changeBaremetalChassisState": {
+    "stateEvent": "enable"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that these fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"changeBaremetalChassisState":{"stateEvent":"enable"}}' \
+http://localhost:8080/zstack/v1/baremetal/chassis/1a600f11b61e3585bbd26d06166ff640/actions
+```
+
+Parameter List
+
+<table id="table_qqh_kxy_3gc"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+UUID of the resource, uniquely identifying the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.6.0
+
+</td></tr><tr><td>
+
+stateEvent
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(included in the `changeBaremetalChassisState` structure\)
+
+</td><td>
+
+State event
+
+</td><td>
+
+-   enable
+-   disable
+
+</td><td>
+
+2.6.0
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System Tag
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.6.0
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User Tag
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.6.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "506008545fa7391cb2586ae7d6180696",
+    "ipmiAddress": "1.1.1.1",
+    "ipmiPort": 623,
+    "ipmiUsername": "root",
+    "ipmiPassword": "password",
+    "state": "Enabled",
+    "status": "Available"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation is successful, this field is null. For details, see [error](#p_lvx_yyy_3gc)|2.6.0|
+|inventory|BaremetalChassisInventory|For details, see [inventory](#p_vmr_yyy_3gc)|2.6.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, default is null|0.6|
+|opaque|LinkedHashMap|Reserved field, default is null|0.6|
+|cause|ErrorCode|Root cause: the source error that triggered the current error. If there is no original error, this field is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifying the resource|2.6.0|
+|name|String|Resource name|2.6.0|
+|description|String|Detailed description of the resource|2.6.0|
+|zoneUuid|String|Data Center UUID|2.6.0|
+|clusterUuid|String|Cluster UUID|2.6.0|
+|pxeServerUuid|String| |3.1.1|
+|ipmiAddress|String|IPMI address|2.6.0|
+|ipmiPort|Integer|IPMI port|2.6.0|
+|ipmiUsername|String|IPMI username|2.6.0|
+|state|String| |2.6.0|
+|status|String| |2.6.0|
+|createDate|Timestamp|Create time|2.6.0|
+|lastOpDate|Timestamp|Last modification time|2.6.0|
+
+## SDK Examples
+Java SDK
+
+```
+ChangeBaremetalChassisStateAction action = new ChangeBaremetalChassisStateAction();
+action.uuid = "1a600f11b61e3585bbd26d06166ff640";
+action.stateEvent = "enable";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ChangeBaremetalChassisStateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = ChangeBaremetalChassisStateAction()
+action.uuid = "1a600f11b61e3585bbd26d06166ff640"
+action.stateEvent = "enable"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

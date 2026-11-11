@@ -1,0 +1,19 @@
+---
+title: 'Delete a Migration Task'
+---
+
+-   When you delete multiple migration tasks, you can directly delete migration tasks whose status is "Synchronizing", "Synchronization Stopped", "Synchronization Failed", or "Ready for Cutover".
+-   When you delete multiple migration tasks, for migration tasks whose status is "Cutover in Progress", "Cutover Successful", or "Cutover Failed", you can select a deletion policy as needed.
+
+1.  In the navigation pane, select **O&M Management** &gt; **Migration Task** &gt; **All Tasks**.
+
+2.  On the All Tasks page, select the target migration task, and then click **Actions** &gt; **Delete**.
+
+3.  In the Deletion Policy dialog, select a deletion policy.
+
+    -   **Retain target Instance and Delete Migration Task**: Only deletes the migration task record. The target instance is retained. You can reconfigure the source virtual machine and perform a new migration task later. This operation does not cause data or state loss, but you must manage the target instance yourself.
+    -   **Delete target Instance and Delete Migration Task**: Deletes the migration task record and its associated target instance. You can reconfigure the source virtual machine and perform a new migration task later.
+    -   **Delete Cutover Program Only**: Removes only the cutover program. This policy is available only when "Create Rollback Snapshot" is enabled. The system automatically rolls back the target instance to the state before cutover, and all changes made after cutover are lost. This operation is irreversible. Use with caution.
+4.  Click **OK**.
+
+5.  After you read and confirm the risk warning, click **OK**.

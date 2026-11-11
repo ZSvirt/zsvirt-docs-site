@@ -1,0 +1,91 @@
+---
+title: "Export Database Backup"
+---
+
+<APIPage method="PUT" path="/v1/database-backups/{databaseBackupUuid}/backup-storage/{backupStorageUuid}/actions">
+
+Export database backup from backup storage.
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "exportDatabaseBackupFromBackupStorage": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The **systemTags** and **userTags** fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"exportDatabaseBackupFromBackupStorage":{}}' http://localhost:8080/zstack/v1/database-backups/6dae84793fc53f5b82034dd9a44c554b/backup-storage/cc9127f6af0e32c888044f49048788a1/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|backupStorageUuid|String|url|Image Storage UUID| |3.0.0|
+|databaseBackupUuid|String|url|Database backup UUID| |3.0.0|
+|systemTags \(Optional\)|List|body| | |3.0.0|
+|userTags \(Optional\)|List|body| | |3.0.0|
+
+## API Response
+Response Example
+
+```
+{
+  "databaseBackupUrl": "http://127.0.0.1:8001/path/cloud-db-backup.gz"
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|databaseBackupUrl|String|Access URL of the exported backup|3.0.0|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null on success. For details, see [error](#p_jyz_l3m_2fb)|3.0.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|3.0.0|
+|description|String|A brief description of the error|3.0.0|
+|details|String|The detailed error information|3.0.0|
+|elaboration|String|Reserved field. Default is null|3.0.0|
+|opaque|LinkedHashMap|Reserved field. Default is null|3.0.0|
+|cause|ErrorCode|The root error. The source error that caused the current error. This field is null if there is no root error|3.0.0|
+
+## SDK Examples
+Java SDK
+
+```
+ExportDatabaseBackupFromBackupStorageAction action = new ExportDatabaseBackupFromBackupStorageAction();
+action.backupStorageUuid = "cc9127f6af0e32c888044f49048788a1";
+action.databaseBackupUuid = "6dae84793fc53f5b82034dd9a44c554b";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ExportDatabaseBackupFromBackupStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ExportDatabaseBackupFromBackupStorageAction action = ExportDatabaseBackupFromBackupStorageAction()
+action.backupStorageUuid = "cc9127f6af0e32c888044f49048788a1"
+action.databaseBackupUuid = "6dae84793fc53f5b82034dd9a44c554b"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ExportDatabaseBackupFromBackupStorageAction.Result res = action.call()
+```
+
+</APIPage>

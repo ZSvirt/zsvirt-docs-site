@@ -1,0 +1,47 @@
+---
+title: 'Overview'
+---
+
+ZSvirt Bare Metal Management Service provides dedicated physical servers for your critical applications, delivering high performance and stability.
+
+After completing server installation and basic setup, you can rapidly deploy bare metal chassis and create bare metal instances on the UI. The service supports unattended OS installation through bare metal templates, significantly improving operational efficiency. You can flexibly configure business networks for bare metal instances to meet different application requirements.
+
+## Concepts
+-   Bare metal template: With bare metal templates, preconfigured files can be quickly generated to achieve unattended bulk OS installation for bare metal instances.
+-   Bare metal cluster: A bare metal cluster consists of bare metal chassis.
+-   Deployment server: An independent server used for providing PXE services and console proxies for bare metal chassis.
+-   Bare metal chassis: Bare metal chassis is used to create bare metal instances and can be universally identified by the BMC interface and IPMI configuration.
+-   Bare metal instance: A virtualized instance of bare metal chassis.
+
+## Advantages
+The bare metal management service offers the following advantages:
+
+-   **Dedicated physical resources**
+
+    Provides dedicated physical servers for your critical applications, ensuring high performance and stability.
+
+-   **Efficient batch deployment**
+    -   You can add bare metal chassis in batches on the UI through manual addition or template import. You can batch configure IPMI addresses for multiple chassis at once, quickly building bare metal clusters.
+    -   You can use bare metal templates for unattended OS installation, significantly improving operational efficiency.
+-   **Flexible OS support**
+
+    Compatible with mainstream Linux distributions (RHEL/CentOS series, Debian/Ubuntu series, and SUSE/openSUSE series) and custom platform OS versions, meeting you customized installation requirements.
+
+-   **High-availability deployment architecture**
+
+    Supports dual management node HA scenarios. It is recommended to attach separate deployment server for each bare metal cluster to avoid single points of failure and DHCP conflicts.
+
+## Scenarios
+The bare metal management service is suitable for the following scenarios:
+
+-   **High-security regulated environments**
+
+    The financial and insurance industries that have high requirements over business deployment compliance and data security. In these scenarios, you can use Bare Metal Management to secure dedicated resources, data isolation, easy management, and operation-tracking. This way, you can ensure the reliability and security compliance of your key business system and data.
+
+-   **High-performance computing**
+
+    In supercomputing, genome sequencing, and other high-performance computing scenarios, the requirements over the computing performance, stability, and timeliness of the server are very high. The Bare Metal Management feature is fitting for these scenarios. In addition, the feature can be used for scenarios that require high throughput or high computing performance that can accommodate changing access requests and scenarios. Virtualization and hyperthreading may compromise some performance. Deploying a reasonable number of bare metal clusters can meet the high-performance computing requirements.
+
+-   **Mission-critical databases**
+
+    To meet business requirements, you may not want to deploy some key databases on virtual machines while want to deploy the databases on physical servers that feature dedicated resources, network isolation, and guaranteed performance. In these scenarios, you can use Bare Metal Management to provide dedicated high-performance physical servers for your applications.

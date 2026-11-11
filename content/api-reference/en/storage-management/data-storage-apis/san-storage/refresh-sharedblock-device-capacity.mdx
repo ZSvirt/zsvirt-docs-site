@@ -1,0 +1,179 @@
+---
+title: "Refresh Shared Block Device Capacity"
+---
+
+<APIPage method="POST" path="/v1/primary-storage/sharedblockgroup/{sharedBlockGroupUuid}/sharedblocks/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{}}' http://localhost:8080/zstack/v1/primary-storage/sharedblockgroup/2974c033608537e68a305b0f29412776/sharedblocks/9bd10e4bcc0939a2b041755a160d7b34
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid \(optional\)|String|url|Shared block device UUID. If empty, updates all devices under the shared block storage| |2.6.0|
+|sharedBlockGroupUuid|String|url|Shared block storage UUID| |2.6.0|
+|systemTags \(optional\)|List|body| | |2.6.0|
+|userTags \(optional\)|List|body| | |2.6.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "sharedBlocks": [
+      {
+        "uuid": "fd474b5a711f3bcab14061e1507b0691",
+        "sharedBlockGroupUuid": "9f900d7cc336370da2dccdd832a1613d",
+        "type": "LvmLogicalVolumeBasic",
+        "diskUuid": "b9bec04964ab30a7bf80bdbf7ec997d9",
+        "name": "test shared block",
+        "description": "description",
+        "state": "Enabled",
+        "status": "Connected",
+        "createDate": "Nov 14, 2017 10:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+      }
+    ],
+    "sharedBlockGroupType": "LvmVolumeGroupBasic",
+    "uuid": "9f900d7cc336370da2dccdd832a1613d",
+    "name": "shared block group primary storage",
+    "description": "shared block group primary storage description",
+    "availableCapacity": 1073741824.0,
+    "availablePhysicalCapacity": 1073741824.0,
+    "type": "SharedBlock",
+    "state": "Enabled",
+    "status": "Connected",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_otm_rkk_n2b)|2.6.0|
+|inventory|SharedBlockGroupPrimaryStorageInventory|For details, see [inventory](#p_bvf_rkk_n2b)|2.6.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, e.g. SYS.1000, HOST.1001|2.6.0|
+|description|String|Brief description of the error|2.6.0|
+|details|String|Detailed error information|2.6.0|
+|elaboration|String|Reserved field, defaults to null|2.6.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|2.6.0|
+|cause|ErrorCode|Root cause: the source error that caused the current error. If there is no original error, this field is null|2.6.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|2.6.0|
+|zoneUuid|String|Data Center UUID|2.6.0|
+|name|String|Resource name|2.6.0|
+|url|String|Unused|2.6.0|
+|description|String|Detailed description of the resource|2.6.0|
+|totalCapacity|Long|Total capacity|2.6.0|
+|availableCapacity|Long|Available capacity|2.6.0|
+|totalPhysicalCapacity|Long|Total physical capacity|2.6.0|
+|availablePhysicalCapacity|Long|Available physical capacity|2.6.0|
+|systemUsedCapacity|Long|System used capacity|2.6.0|
+|type|String|Data storage type|2.6.0|
+|state|String|Enabled state|2.6.0|
+|status|String|Connection status|2.6.0|
+|mountPath|String|Unused|2.6.0|
+|createDate|Timestamp|Create date|2.6.0|
+|lastOpDate|Timestamp|Last update date|2.6.0|
+|attachedClusterUuids|List|Attached clusters|2.6.0|
+|sharedBlocks|List|For details, see [sharedBlocks](#p_tc1_tkk_n2b)|2.6.0|
+|sharedBlockGroupType|SharedBlockGroupType|For details, see [sharedBlockGroupType](#p_ygw_zkk_n2b)|2.6.0|
+
+### sharedBlocks
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|2.6.0|
+|sharedBlockGroupUuid|String|Shared block device group UUID|2.6.0|
+|diskUuid|String|Disk unique identifier \(e.g. UUID, WWN, WWID\)|2.6.0|
+|name|String|Resource name|2.6.0|
+|description|String|Detailed description of the resource|2.6.0|
+|createDate|Timestamp|Create date|2.6.0|
+|lastOpDate|Timestamp|Last update date|2.6.0|
+|type|SharedBlockType|For details, see [type](#p_hl3_5kk_n2b)|2.6.0|
+|state|SharedBlockState|For details, see [state](#p_ayb_xkk_n2b)|2.6.0|
+|status|SharedBlockStatus|For details, see [status](#p_t2j_ykk_n2b)|2.6.0|
+
+### type
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name|2.6.0|
+|ordinal|int| |2.6.0|
+
+### state
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name|2.6.0|
+|ordinal|int| |2.6.0|
+
+### status
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name|2.6.0|
+|ordinal|int| |2.6.0|
+
+### sharedBlockGroupType
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name|2.6.0|
+|ordinal|int| |2.6.0|
+
+## SDK Examples
+Java SDK
+
+```
+
+RefreshSharedblockDeviceCapacityAction action = new RefreshSharedblockDeviceCapacityAction();
+action.uuid = "9bd10e4bcc0939a2b041755a160d7b34";
+action.sharedBlockGroupUuid = "2974c033608537e68a305b0f29412776";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RefreshSharedblockDeviceCapacityAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+
+RefreshSharedblockDeviceCapacityAction action = RefreshSharedblockDeviceCapacityAction()
+action.uuid = "9bd10e4bcc0939a2b041755a160d7b34"
+action.sharedBlockGroupUuid = "2974c033608537e68a305b0f29412776"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+RefreshSharedblockDeviceCapacityAction.Result res = action.call()
+```
+
+</APIPage>

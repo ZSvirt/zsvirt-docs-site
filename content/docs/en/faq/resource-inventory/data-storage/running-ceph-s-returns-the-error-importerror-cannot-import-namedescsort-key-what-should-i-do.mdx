@@ -1,0 +1,16 @@
+---
+title: "Running ceph -s returns the error \"ImportError: cannot import namedescsort key\". What should I do?"
+---
+
+## Symptom
+In the enterprise distributed storage environment, running `ceph -s` returns the error "`ImportError: cannot import namedescsort key`".
+
+## Cause
+The `/usr/lib/python2.7/site-packages/ceph argparse,py md5` file on the affected node is misconfigured.
+
+## Solution
+Check whether the `/usr/lib/python2.7/site-packages/ceph argparse,py md5` file on a healthy node matches the file on the affected node. If they differ, overwrite the file on the affected node with the version from the healthy node.
+
+<Callout type="warning">
+Back up the original file before overwriting it.
+</Callout>

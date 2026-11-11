@@ -1,0 +1,9 @@
+{
+  "title": "时间管理",
+  "pages": [
+    "overview",
+    "modify-time-source",
+    "sync-time"
+  ],
+  "pagesIndex": "overview"
+}

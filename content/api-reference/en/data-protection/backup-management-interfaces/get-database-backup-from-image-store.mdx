@@ -1,0 +1,101 @@
+---
+title: "Get Database Backup"
+---
+
+<APIPage method="GET" path="/v1/database-backups/image-store">
+
+Get exported database backup from backup storage.
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/database-backups/image-store?url=ssh://root:password@localhost:22/Cloud_bs&registryPort=8000.0
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|url|String|query|Image Storage URL| |3.0.0|
+|registryPort \(Optional\)|int|query|Image repository access port| |3.0.0|
+|systemTags \(Optional\)|List|query| | |3.0.0|
+|userTags \(Optional\)|List|query| | |3.0.0|
+
+## API Response
+Response Example
+
+```
+{
+  "infos": [
+    {
+      "id": "270c67e3699f72ba",
+      "created": "Nov 14, 2017 10:20:57 PM",
+      "author": "cloud",
+      "arch": "amd64",
+      "size": 7995392.0,
+      "virtualsize": 12682240.0,
+      "name": "78b6afbc9da73932a000fb9a75947962"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null on success. For details, see [error](#p_q4m_1lm_2fb)|3.0.0|
+|infos|List|For details, see [infos](#p_v1r_1lm_2fb)|3.0.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|3.0.0|
+|description|String|A brief description of the error|3.0.0|
+|details|String|The detailed error information|3.0.0|
+|elaboration|String|Reserved field. Default is null|3.0.0|
+|opaque|LinkedHashMap|Reserved field. Default is null|3.0.0|
+|cause|ErrorCode|The root error. The source error that caused the current error. This field is null if there is no root error|3.0.0|
+
+### infos
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|id|String|ID in the image repository|3.0.0|
+|parent|String|Parent image name|3.0.0|
+|blobsum|String|Image hash|3.0.0|
+|created|Timestamp|Image commit time|3.0.0|
+|author|String|Image author|3.0.0|
+|arch|String|OS architecture of the image|3.0.0|
+|desc|String|Image description|3.0.0|
+|size|Long|Actual size of the image|3.0.0|
+|virtualsize|Long|Virtual size of the image|3.0.0|
+|name|String|Image name in the image repository|3.0.0|
+
+## SDK Examples
+Java SDK
+
+```
+GetDatabaseBackupFromImageStoreAction action = new GetDatabaseBackupFromImageStoreAction();
+action.url = "ssh://root:password@localhost:22/Cloud_bs";
+action.registryPort = 8000.0;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetDatabaseBackupFromImageStoreAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetDatabaseBackupFromImageStoreAction action = GetDatabaseBackupFromImageStoreAction()
+action.url = "ssh://root:password@localhost:22/Cloud_bs"
+action.registryPort = 8000.0
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetDatabaseBackupFromImageStoreAction.Result res = action.call()
+```
+
+</APIPage>

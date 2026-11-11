@@ -1,0 +1,346 @@
+---
+title: "Update Preconfiguration Template"
+---
+
+<APIPage method="PUT" path="/v1/baremetal/preconfigurations/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updatePreconfigurationTemplate": {
+    "name": "centos-7.2-minimal",
+    "description": "centos-7.2-minimal kickstart file",
+    "distribution": "centos7.2-x86_64",
+    "type": "kickstart",
+    "content": "..."
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X PUT -d '{"updatePreconfigurationTemplate":{"name":"centos-7.2-minimal","description":"centos-7.2-minimal kickstart file","distribution":"centos7.2-x86_64","type":"kickstart","content":"..."}}' \
+http://localhost:8080/zstack/v1/baremetal/preconfigurations/f04791eda033444aad3a49a081a00129/actions
+```
+
+Parameter List
+
+<table id="table_yxh_3n2_jgc"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+UUID of the resource, uniquely identifying the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.4.0
+
+</td></tr><tr><td>
+
+name \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(included in the `updatePreconfigurationTemplate` structure\)
+
+</td><td>
+
+Resource name
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.4.0
+
+</td></tr><tr><td>
+
+description \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(included in the `updatePreconfigurationTemplate` structure\)
+
+</td><td>
+
+Detailed description of the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.4.0
+
+</td></tr><tr><td>
+
+distribution \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(included in the `updatePreconfigurationTemplate` structure\)
+
+</td><td>
+
+Applicable operating system distribution
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.4.0
+
+</td></tr><tr><td>
+
+type \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(included in the `updatePreconfigurationTemplate` structure\)
+
+</td><td>
+
+Template type
+
+</td><td>
+
+-   kickstart
+-   preseed
+-   autoyast
+
+</td><td>
+
+3.4.0
+
+</td></tr><tr><td>
+
+content \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(included in the `updatePreconfigurationTemplate` structure\)
+
+</td><td>
+
+Template content
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.4.0
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System Tag
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.4.0
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User Tag
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.4.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "c583420a47754a768162d7001f32153f",
+    "name": "centos_7_x86_64_mini_v1.cfg",
+    "description": "centos-7-minimal kickstart file",
+    "distribution": "centos-7-x86_64",
+    "type": "kickstart",
+    "content": "...",
+    "md5sum": "abeabe93030f4ec399ae74c72cff8425",
+    "isPredefined": false,
+    "state": "Enabled",
+    "createDate": "Aug 15, 2025 5:37:41 AM",
+    "lastOpDate": "Aug 15, 2025 5:37:41 AM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation is successful, this field is null. For details, see [error](#p_wk2_hyy_3gc)|3.4.0|
+|inventory|PreconfigurationTemplateInventory|For details, see [inventory](#p_y4y_gyy_3gc)|3.4.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, default is null|0.6|
+|opaque|LinkedHashMap|Reserved field, default is null|0.6|
+|cause|ErrorCode|Root cause: the source error that triggered the current error. If there is no original error, this field is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifying the resource|3.4.0|
+|name|String|Resource name|3.4.0|
+|description|String|Detailed description of the resource|3.4.0|
+|distribution|String|Applicable operating system distribution|3.4.0|
+|type|String|Template type|3.4.0|
+|content|String|Template content|3.4.0|
+|md5sum|String|Template MD5|3.4.0|
+|isPredefined|Boolean|Whether it is system predefined|3.4.0|
+|state|String|State|3.4.0|
+|createDate|Timestamp|Create time|3.4.0|
+|lastOpDate|Timestamp|Last modification time|3.4.0|
+
+## SDK Examples
+Java SDK
+
+```
+UpdatePreconfigurationTemplateAction action = new UpdatePreconfigurationTemplateAction();
+action.uuid = "f3805241353a47a89096cbc8e7a94bd7";
+action.name = "centos-7.2-minimal";
+action.description = "centos-7.2-minimal kickstart file";
+action.distribution = "centos7.2-x86_64";
+action.type = "kickstart";
+action.content = "...";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdatePreconfigurationTemplateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = UpdatePreconfigurationTemplateAction()
+action.uuid = "1a74223f271d4ff0af9bb7e7de79ce91"
+action.name = "centos-7.2-minimal"
+action.description = "centos-7.2-minimal kickstart file"
+action.distribution = "centos7.2-x86_64"
+action.type = "kickstart"
+action.content = "..."
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

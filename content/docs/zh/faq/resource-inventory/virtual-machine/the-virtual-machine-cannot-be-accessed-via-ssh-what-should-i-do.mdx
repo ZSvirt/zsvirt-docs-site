@@ -1,0 +1,20 @@
+---
+title: "虚拟机无法正常SSH登录，怎么办？"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+## 现象
+虚拟机可以`Ping`通但无法通过SSH连接。
+
+## 原因
+存储断开导致虚拟机I/O错误，造成虚拟机只读。
+
+## 解决方案
+1.  登录虚拟机控制台，执行以下命令创建文件检查虚拟机是否只读：
+
+    ```
+    [root@localhost ~]# touch  /root/zstack.txt
+    ```
+
+2.  若无法创建文件，则重启虚拟机。

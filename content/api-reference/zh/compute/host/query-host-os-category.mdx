@@ -1,0 +1,106 @@
+---
+title: "查询主机系统类型"
+---
+
+<APIPage method="GET" path="/v1/hosts/os/category">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/hosts/os/category?q=architecture=x86_64&q=osReleaseVersion="helix core 7.6"
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryHost`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "architecture": "x86_64",
+      "osReleaseVersion": "helix Core 7.6.1810",
+      "metadataList": [
+        {
+          "managementNodeUuid": "fe5459189a8733ef9b6b8141b84f7071",
+          "hypervisor": "qemu-kvm",
+          "version": "4.2.0-632.g6a6222b.el7",
+          "createDate": "Nov 14, 2017 2:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+        }
+      ],
+      "createDate": "Nov 14, 2017 2:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean|查询是否成功|4.6.21|
+|inventories|List|详情参考[inventories](#p_pdk_mv5_m1b)|4.6.21|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_blf_4hw_rcb)|4.6.21|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该条目|4.6.21|
+|architecture|String|主机架构，比如**x86\_64**|4.6.21|
+|osReleaseVersion|String|主机操作系统版本|4.6.21|
+|createDate|Timestamp|创建时间|4.6.21|
+|lastOpDate|Timestamp|最后一次修改时间|4.6.21|
+|metadataList|List|详情参考[metadataList](#p_n4p_ybg_bxb)|4.6.21|
+
+### metadataList
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该条目|4.6.21|
+|categoryUuid|String|支持的主机类型条目 UUID|4.6.21|
+|managementNodeUuid|String|管理节点 UUID|4.6.21|
+|hypervisor|String|管理程序名称，比如 **qemu-kvm**|4.6.21|
+|version|String|版本号，比如**4.2.0-632.g6a6222b.el7**|4.6.21|
+|createDate|Timestamp|创建时间|4.6.21|
+|lastOpDate|Timestamp|最后一次修改时间|4.6.21|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.6.21|
+|description|String|错误的概要描述|4.6.21|
+|details|String|错误的详细信息|4.6.21|
+|elaboration|String|保留字段，默认为null|4.6.21|
+|opaque|LinkedHashMap|保留字段，默认为null|4.6.21|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.6.21|
+
+## SDK示例
+Java SDK
+
+```
+QueryHostOsCategoryAction action = new QueryHostOsCategoryAction();
+action.conditions = asList("architecture=x86_64","osReleaseVersion=\"helix Core 7.6\"");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryHostOsCategoryAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryHostOsCategoryAction action = QueryHostOsCategoryAction()
+action.conditions = ["architecture=x86_64","osReleaseVersion=\"helix Core 7.6""]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryHostOsCategoryAction.Result res = action.call()
+```
+
+</APIPage>

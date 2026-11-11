@@ -1,0 +1,119 @@
+---
+title: "Update IP Access Control Rule"
+---
+
+<APIPage method="PUT" path="/v1/login-control/access-control/rules/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateAccessControlRule": {
+    "name": "rule1",
+    "description": "this is a rule"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The **systemTags** and **userTags** fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateAccessControlRule":{"name":"rule1","description":"this is a rule"}}' http://localhost:8080/zstack/v1/login-control/access-control/rules/6bc3181222854438ac8af53f2b57ecf7/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|The UUID of the resource. Uniquely identifies the resource| |3.5.1|
+|name \(optional\)|String|body \(contained in the **updateAccessControlRule** structure\)|Resource name| |3.5.1|
+|description \(optional\)|String|body \(contained in the **updateAccessControlRule** structure\)|Detailed description of the resource| |3.5.1|
+|systemTags \(optional\)|List|body| | |3.5.1|
+|userTags \(optional\)|List|body| | |3.5.1|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "name": "rule",
+    "description": "this is rule description",
+    "rule": "172.20.1.1",
+    "strategy": "ACCEPT",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_oft_1sv_j3b)|3.5.1|
+|inventory|AccessControlRuleInventory|See [inventory](#p_pml_1sv_j3b)|3.5.1|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. A globally unique identifier for the error, e.g., SYS.1000, HOST.1001|3.5.1|
+|description|String|Brief description of the error|3.5.1|
+|details|String|Detailed error information|3.5.1|
+|elaboration|String|Reserved field. Defaults to null|3.5.1|
+|opaque|LinkedHashMap|Reserved field. Defaults to null|3.5.1|
+|cause|ErrorCode|Root error. The source error that caused this error. Null if no root cause exists|3.5.1|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource|3.5.1|
+|name|String|Resource name|3.5.1|
+|description|String|Detailed description of the resource|3.5.1|
+|rule|String| |3.5.1|
+|createDate|Timestamp|Creation time|3.5.1|
+|lastOpDate|Timestamp|Last modification time|3.5.1|
+|strategy|ControlStrategy|See [strategy](#p_wdf_1sv_j3b)|3.5.1|
+
+### strategy
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|ACCEPT|ControlStrategy| |3.5.1|
+|REJECT|ControlStrategy| |3.5.1|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateAccessControlRuleAction action = new UpdateAccessControlRuleAction();
+action.uuid = "c3fb6843d7b84791bbffb762e35b3065";
+action.name = "rule1";
+action.description = "this is a rule";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateAccessControlRuleAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateAccessControlRuleAction action = UpdateAccessControlRuleAction()
+action.uuid = "4c30b1ea5adf450ebca75f8b8606b964"
+action.name = "rule1"
+action.description = "this is a rule"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateAccessControlRuleAction.Result res = action.call()
+```
+
+</APIPage>

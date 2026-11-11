@@ -1,0 +1,113 @@
+---
+title: "Log In"
+---
+
+<APIPage method="PUT" path="/v1/login">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "logIn": {
+    "username": "admin",
+    "password": "password",
+    "loginType": "iam1"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, the `systemTags` and `userTags` fields are optional. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-X PUT -d '{"logIn":{"username":"admin","password":"password","loginType":"iam1"}}' \
+http://localhost:8080/zstack/v1/login
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|username|String|body \(contained in the `logIn` structure\)|Username| |4.6.0|
+|password|String|body \(contained in the `logIn` structure\)|User password| |4.6.0|
+|loginType|String|body \(contained in the `logIn` structure\)|User type| |4.6.0|
+|captchaUuid \(Optional\)|String|body \(contained in the `logIn` structure\)|CAPTCHA UUID| |4.6.0|
+|verifyCode \(Optional\)|String|body \(contained in the `logIn` structure\)|Verification code| |4.6.0|
+|clientInfo \(Optional\)|Map|body \(contained in the `logIn` structure\)|Client information| |4.6.0|
+|properties \(Optional\)|Map|body \(contained in the `logIn` structure\)|Login properties| |4.6.0|
+|systemTags \(Optional\)|List|body|System tags| |4.6.0|
+|userTags \(Optional\)|List|body|User tags| |4.6.0|
+
+## API Response
+Response example
+
+```
+{
+  "inventory": {
+    "uuid": "5d77893e242d39ec8b9856a7b8762eab",
+    "accountUuid": "7ab57f322e4a396b8124ed4fda810966",
+    "expiredDate": "Nov 14, 2017 2:20:57 PM",
+    "noSessionEvaluation": false
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null on success. For details, see [error](#p_ymh_rwb_w2c)|0.6|
+|inventory|SessionInventory|For details, see [inventory](#p_ptg_swb_w2c)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, e.g., SYS.1000, HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Default is null|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null|0.6|
+|cause|ErrorCode|The root error that caused the current error. This field is null if there is no root cause|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource, uniquely identifying this resource|0.6|
+|accountUuid|String|Account UUID|0.6|
+|userUuid|String|User UUID|0.6|
+|expiredDate|Timestamp| |0.6|
+|createDate|Timestamp|Creation time|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+LogInAction action = new LogInAction();
+action.username = "admin";
+action.password = "password";
+action.loginType = "iam1";
+LogInAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+LogInAction action = LogInAction()
+action.username = "admin"
+action.password = "password"
+action.loginType = "iam1"
+LogInAction.Result res = action.call()
+```
+
+</APIPage>

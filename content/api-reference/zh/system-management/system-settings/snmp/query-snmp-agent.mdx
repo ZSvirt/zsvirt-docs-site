@@ -1,0 +1,105 @@
+---
+title: "查询SNMP代理"
+---
+
+<APIPage method="GET" path="/v1/snmp/agent" altPaths={["/v1/snmp/agent/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X GET http://localhost:8080/zstack/v1/snmp/agent
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X GET http://localhost:8080/zstack/v1/snmp/agent/18c89b48e653385f83db6ecffb48763f
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryLdapServer`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "f0ef8d847b573c6b86565e1d9111723b",
+      "version": "v3",
+      "userName": "zstack",
+      "authAlgorithm": "SHA512",
+      "authPassword": "auth_password",
+      "privacyAlgorithm": "DES",
+      "privacyPassword": "priv_password",
+      "port": 161,
+      "status": "Enable",
+      "securityLevel": "authPriv"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.10.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_bcl_x1v_m1b)|4.10.0|
+|inventories|List|详情参考[inventories](#p_nqg_y1v_m1b)|4.10.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.10.0|
+|description|String|错误的概要描述|4.10.0|
+|details|String|错误的详细信息|4.10.0|
+|elaboration|String|保留字段，默认为null|4.10.0|
+|opaque|LinkedHashMap|保留字段，默认为null|4.10.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.10.0|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.10.0|
+|version|String|SNMP代理使用协议版本|4.10.0|
+|readCommunity|String|读团体字\(version为v2c时使用\)|4.10.0|
+|userName|String|用户名\(version为v3时使用\)|4.10.0|
+|authAlgorithm|String|认证算法|4.10.0|
+|authPassword|String|认证密码|4.10.0|
+|privacyAlgorithm|String|隐私算法|4.10.0|
+|privacyPassword|String|隐私密码|4.10.0|
+|port|int|端口|4.10.0|
+|status|String|SNMP代理是否启用|4.10.0|
+|securityLevel|String|安全等级|4.10.0|
+|createDate|Timestamp|创建时间|4.10.0|
+|lastOpDate|Timestamp|最后一次修改时间|4.10.0|
+
+## SDK示例
+Java SDK
+
+```
+QuerySnmpAgentAction action = new QuerySnmpAgentAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QuerySnmpAgentAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QuerySnmpAgentAction action = QuerySnmpAgentAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QuerySnmpAgentAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,64 @@
+---
+title: "删除iSCSI服务器"
+---
+
+<APIPage method="DELETE" path="/v1/storage-devices/iscsi/servers/{uuid}?deleteMode={deleteMode}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/storage-devices/iscsi/servers/7a3f7749fd393899b4b74d2b470e15eb?deleteMode=Permissive
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|iSCSI服务器的UUID| |3.0.0|
+|deleteMode \(可选\)|String|url| | |3.0.0|
+|systemTags \(可选\)|List|body| | |3.0.0|
+|userTags \(可选\)|List|body| | |3.0.0|
+
+## API返回
+该API成功时返回一个空的JSON结构**`{}`**，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+DeleteIscsiServerAction action = new DeleteIscsiServerAction();
+action.uuid = "7a3f7749fd393899b4b74d2b470e15eb";
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteIscsiServerAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteIscsiServerAction action = DeleteIscsiServerAction()
+action.uuid = "7a3f7749fd393899b4b74d2b470e15eb"
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DeleteIscsiServerAction.Result res = action.call()
+```
+
+</APIPage>

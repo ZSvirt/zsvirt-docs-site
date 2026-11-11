@@ -1,0 +1,123 @@
+---
+title: "为虚拟机创建CDROM"
+---
+
+<APIPage method="POST" path="/v1/vm-instances/cdroms">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "cd-1",
+    "vmInstanceUuid": "c613ed3c46d036cdb5f7af15a15788dc",
+    "isoUuid": "157321b6fb043d8a923aca66e6388086",
+    "description": "this is a cd-rom"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"cd-1","vmInstanceUuid":"c613ed3c46d036cdb5f7af15a15788dc","isoUuid":"157321b6fb043d8a923aca66e6388086","description":"this is a cd-rom"}}' http://localhost:8080/zstack/v1/vm-instances/cdroms
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|name|String|body\(包含在**params**结构中\)|资源名称| |3.3.0|
+|vmInstanceUuid|String|body\(包含在**params**结构中\)|虚拟机UUID| |3.3.0|
+|isoUuid \(可选\)|String|body\(包含在**params**结构中\)|ISO镜像UUID| |3.3.0|
+|description \(可选\)|String|body\(包含在**params**结构中\)|资源的详细描述| |3.3.0|
+|resourceUuid \(可选\)|String|body\(包含在**params**结构中\)|资源UUID| |3.3.0|
+|tagUuids \(可选\)|List|body\(包含在**params**结构中\)|标签UUID列表| |3.4.0|
+|systemTags \(可选\)|List|body|系统标签| |3.3.0|
+|userTags \(可选\)|List|body|用户标签| |3.3.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "vmInstanceUuid": "47286977f0c530168fdbb1dfbfc167e8",
+    "deviceId": 0,
+    "isoUuid": "1712d13459ec3637be1020936e76e5a3",
+    "name": "cd-1",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_j5f_4mt_lgb)|3.3.0|
+|inventory|VmCdRomInventory|详情参考[inventory](#p_mqm_4mt_lgb)|3.3.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.3.0|
+|description|String|错误的概要描述|3.3.0|
+|details|String|错误的详细信息|3.3.0|
+|elaboration|String|保留字段，默认为null|3.3.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.3.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.3.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.3.0|
+|vmInstanceUuid|String|虚拟机UUID|3.3.0|
+|deviceId|Integer|光驱顺序号|3.3.0|
+|isoUuid|String|ISO镜像UUID|3.3.0|
+|isoInstallPath|String|ISO镜像挂载路径|3.3.0|
+|name|String|资源名称|3.3.0|
+|description|String|资源的详细描述|3.3.0|
+|createDate|Timestamp|创建时间|3.3.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.3.0|
+
+## SDK示例
+Java SDK
+
+```
+CreateVmCdRomAction action = new CreateVmCdRomAction();
+action.name = "cd-1";
+action.vmInstanceUuid = "c613ed3c46d036cdb5f7af15a15788dc";
+action.isoUuid = "157321b6fb043d8a923aca66e6388086";
+action.description = "this is a cd-rom";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateVmCdRomAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateVmCdRomAction action = CreateVmCdRomAction()
+action.name = "cd-1"
+action.vmInstanceUuid = "c613ed3c46d036cdb5f7af15a15788dc"
+action.isoUuid = "157321b6fb043d8a923aca66e6388086"
+action.description = "this is a cd-rom"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateVmCdRomAction.Result res = action.call()
+```
+
+</APIPage>

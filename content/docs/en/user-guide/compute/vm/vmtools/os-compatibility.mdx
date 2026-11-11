@@ -1,0 +1,369 @@
+---
+title: 'VMTools Compatibility with OS'
+---
+
+Different operating systems have varying levels of compatibility with VMTools. The following tables show the compatibility status between each operating system and VMTools.
+
+<Callout type="info">
+In the table, **Yes** indicates that the component can be installed on the VM through VMTools, and its related functions can be used normally. **No** only means that the component cannot be installed on the VM through VMTools, or that dependent features may not work after installation. It does not imply that the component is unsupported—you can still install it through other methods.
+</Callout>
+
+## Linux OS
+
+<table className="doc-feature-table">
+  <thead>
+    <tr>
+      <th>OS</th>
+      <th>OS Release</th>
+      <th>Advanced Monitoring Agent</th>
+      <th>QGA</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowSpan="11">CentOS</td>
+      <td>CentOS 6.5 64-bit</td>
+      <td>No</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>CentOS 6.8 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>CentOS 6.9 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>CentOS 6.10 64-bit</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>CentOS 7.2 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>CentOS 7.3 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>CentOS 7.4 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>CentOS 7.5 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>CentOS 7.6 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>CentOS 7.9 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>CentOS 8.0 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td rowSpan="8">RHEL</td>
+      <td>Redhat Enterprise Linux Server 6.9 64-bit</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Redhat Enterprise Linux Server 7.0 64-bit</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Redhat Enterprise Linux Server 7.1 64-bit</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Redhat Enterprise Linux Server 7.2 64-bit</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Redhat Enterprise Linux Server 7.3 64-bit</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Redhat Enterprise Linux Server 7.4 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Redhat Enterprise Linux Server 7.5 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Redhat Enterprise Linux Server 7.6 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td rowSpan="2">Fedora</td>
+      <td>Fedora 30 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Fedora 31 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td rowSpan="4">Debian</td>
+      <td>Debian 9.9 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Debian 10.13 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Debian 11.9 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Debian 12.5 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td rowSpan="7">Ubuntu</td>
+      <td>Ubuntu 14.04 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Ubuntu 16.04 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Ubuntu 16.10 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Ubuntu 18.04 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Ubuntu 20.04 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Ubuntu 22.04 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Ubuntu 24.04 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td rowSpan="4">Kylin</td>
+      <td>Kylin V4.0.2 64-bit</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Kylin V10 SP1(0518) 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Kylin V10 SP2 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Kylin V10 SP3 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td rowSpan="2">NeoKylin</td>
+      <td>NeoKylin V7.0 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>NeoKylin V7update6 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>OpenSUSE</td>
+      <td>OpenSUSE Leap 15.0 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td rowSpan="5">SLES</td>
+      <td>SUSE Linux Enterprise Server 11 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>SUSE Linux Enterprise Server 12 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>SUSE Linux Enterprise Server 15 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>SUSE Linux Enterprise Desktop 12 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>SUSE Linux Enterprise Desktop 15 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>UOS</td>
+      <td>UOS V20 1050e</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Oracle Linux</td>
+      <td>Oracle Linux 7.9</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td rowSpan="2">OpenEuler</td>
+      <td>OpenEuler 20 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>OpenEuler 22 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Alma Linux</td>
+      <td>Alma Linux 9.3 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+  </tbody>
+</table>
+
+## Windows OS
+
+<table className="doc-feature-table">
+  <thead>
+    <tr>
+      <th>OS</th>
+      <th>OS Release</th>
+      <th>Advanced Monitoring Agent</th>
+      <th>QGA</th>
+      <th>Virtio Driver</th>
+      <th>Cloudbase-init</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowSpan="6">Windows</td>
+      <td>Windows Server 2008 R2 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>No</td>
+    </tr>
+    <tr>
+      <td>Windows Server 2012 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Windows Server 2016 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Windows Server 2019 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Windows Server 2022 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>Windows Server 2025 64-bit</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+      <td>Yes</td>
+    </tr>
+  </tbody>
+</table>
+
+## FreeBSD OS
+
+<table className="doc-feature-table">
+  <thead>
+    <tr>
+      <th>OS</th>
+      <th>OS Release</th>
+      <th>Advanced Monitoring Agent</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowSpan="3">FreeBSD</td>
+      <td>FreeBSD 11 64-bit</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>FreeBSD 12 64-bit</td>
+      <td>Yes</td>
+    </tr>
+    <tr>
+      <td>FreeBSD 13 64-bit</td>
+      <td>Yes</td>
+    </tr>
+  </tbody>
+</table>

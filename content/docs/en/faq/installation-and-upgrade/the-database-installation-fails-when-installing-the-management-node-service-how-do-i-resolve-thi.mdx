@@ -1,0 +1,18 @@
+---
+title: "The database installation fails when installing the Management Node service. How do I resolve this?"
+---
+
+## Symptom
+When installing the Management Node service, the database reports an error and fails to install.
+
+## Cause
+The database installation fails because the ISO was mounted via IPMI and the configuration was not fully adjusted.
+
+## Solution
+1.  Log in to the Management Node console, run `vim /root/.bashrc`, and add the following content to the .bashrc file:
+
+    ```
+    YUM0=h84r
+    ```
+
+2.  Reinstall the Management Node service. The database installs successfully.

@@ -1,0 +1,149 @@
+---
+title: "创建企业微信服务器"
+---
+
+<APIPage method="POST" path="/v1/sns/application-endpoints/we-com">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "url": "https://example.invalid/webhook",
+    "atAll": false,
+    "atPersonUserIds": [
+      "18900002222",
+      "13377778888"
+    ],
+    "atPersonList": {
+      "13377778888": "jack"
+    },
+    "name": "wecom"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"url":"https://example.invalid/webhook","atAll":false,"atPersonUserIds":["18900002222","13377778888"],"atPersonList":{"13377778888":"jack"},"name":"wecom"}}' \
+http://localhost:8080/zstack/v1/sns/application-endpoints/we-com
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|url|String|body\(包含在**params**结构中\)|企业微信聊天机器人webhook url| |4.2.0|
+|atALL \(可选\)|Boolean|body\(包含在**params**结构中\)|是否@所有人| |4.2.0|
+|atPersonUserIds|List|body\(包含在**params**结构中\)|@用户 \(user\_id\)| |4.2.0|
+|name|String|body\(包含在**params**结构中\)|资源名称| |4.2.0|
+|description \(可选\)|String|body\(包含在**params**结构中\)|资源的详细描述| |4.2.0|
+|resourceUuid \(可选\)|String|body\(包含在**params**结构中\)|资源UUID| |4.2.0|
+|tagUuids \(可选\)|List|body\(包含在**params**结构中\)|标签UUID列表| |4.2.0|
+|systemTags \(可选\)|List|body|系统标签| |4.2.0|
+|userTags \(可选\)|List|body|用户标签| |4.2.0|
+|atPersonList|Map|body\(包含在**params**结构中\)|@用户信息 \(推荐使用\)| |4.2.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "url": "https://example.invalid/webhook",
+    "atAll": false,
+    "name": "example",
+    "uuid": "917fe66f76b241f0843dfbd6be685fc1",
+    "description": "description example",
+    "type": "Email",
+    "state": "Enabled",
+    "platformUuid": "4eb0ceebf95b452585ebeacd647d9f35",
+    "createDate": "Mar 26, 2024 2:44:19 AM",
+    "lastOpDate": "Mar 26, 2024 2:44:19 AM"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.2.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_bdm_ctx_bdb)|4.2.0|
+|inventory|SNSWeComEndpointInventory|详情参考[inventory](#p_vnq_ctx_bdb)|4.2.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|5.0.0|
+|description|String|错误的概要描述|5.0.0|
+|details|String|错误的详细信息|5.0.0|
+|elaboration|String|保留字段，默认为null|5.0.0|
+|opaque|LinkedHashMap|保留字段，默认为null|5.0.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|5.0.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|url|String|企业微信机器人 webhook url|4.2.0|
+|atAll|boolean|是否@所有人|4.2.0|
+|atPersonUserIds|List|@用户id|4.2.0|
+|name|String|资源名称|4.2.0|
+|uuid|String|资源的UUID，唯一标示该资源|4.2.0|
+|description|String|资源的详细描述|4.2.0|
+|type|String|终端类型|4.2.0|
+|state|String|状态|4.2.0|
+|platformUuid|String|应用平台UUID|4.2.0|
+|createDate|Timestamp|创建时间|4.2.0|
+|lastOpDate|Timestamp|最后一次修改时间|4.2.0|
+|platform|SNSApplicationPlatformInventory|详情参考[platform](#table_pzj_k5k_21c)|4.2.0|
+
+### platform
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|5.0.0|
+|name|String|资源名称|5.0.0|
+|description|String|资源的详细描述|5.0.0|
+|type|String|类型|5.0.0|
+|createDate|Timestamp|创建时间|5.0.0|
+|lastOpDate|Timestamp|最后一次修改时间|5.0.0|
+
+## SDK示例
+Java SDK
+
+```
+CreateSNSWeComEndpoint action = new CreateSNSWeComEndpoint();
+action.url = "https://example.invalid/webhook";
+action.atAll = false;
+action.atPersonUserIds = asList("18900002222","13377778888");
+action.name = "wecom";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateSNSWeComEndpoint.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateSNSWeComEndpoint action = new CreateSNSWeComEndpoint()
+action.url = "https://example.invalid/webhook"
+action.atAll = false
+action.atPersonUserIds = asList("18900002222","13377778888")
+action.name = "wecom"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateSNSWeComEndpoint.Result res = action.call()
+```
+
+</APIPage>

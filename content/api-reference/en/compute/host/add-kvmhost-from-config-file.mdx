@@ -1,0 +1,112 @@
+---
+title: "Add KVM Host from Config File"
+---
+
+<APIPage method="POST" path="/v1/hosts/kvm/from-file">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "hostInfo": "FILE CONTENT ENCODE BY BASE64"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"hostInfo":"FILE CONTENT ENCODE BY BASE64"}}' http://localhost:8080/zstack/v1/hosts/kvm/from-file
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|hostInfo|String|body \(contained in **params** structure\)|Host information encoded in base64| |3.1.0|
+|resourceUuid \(optional\)|String|body \(contained in **params** structure\)| | |3.1.0|
+|systemTags \(optional\)|List|body| | |3.1.0|
+|userTags \(optional\)|List|body| | |3.1.0|
+
+## API Response
+Response Example
+
+```
+{
+  "results": [
+    {
+      "ip": "127.0.0.1",
+      "success": true
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |3.1.0|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See details [error](#p_a4q_cpz_nfb)|3.1.0|
+|results|List|See details [results](#p_ghh_dpz_nfb)|3.1.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, e.g. SYS.1000, HOST.1001|3.1.0|
+|description|String|Brief description of the error|3.1.0|
+|details|String|Detailed error information|3.1.0|
+|elaboration|String|Reserved field, default is null|3.1.0|
+|opaque|LinkedHashMap|Reserved field, default is null|3.1.0|
+|cause|ErrorCode|Root cause, the error that caused the current error. If there is no original error, this field is null|3.1.0|
+
+### results
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|ip|String|Host IP|3.1.0|
+|success|boolean| |3.1.0|
+|error|ErrorCode|See details [error](#p_w4c_fpz_nfb)|3.1.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, e.g. SYS.1000, HOST.1001|3.1.0|
+|description|String|Brief description of the error|3.1.0|
+|details|String|Detailed error information|3.1.0|
+|elaboration|String|Reserved field, default is null|3.1.0|
+|opaque|LinkedHashMap|Reserved field, default is null|3.1.0|
+|cause|ErrorCode|Root cause, the error that caused the current error. If there is no original error, this field is null|3.1.0|
+
+## SDK Examples
+Java SDK
+
+```
+AddKVMHostFromConfigFileAction action = new AddKVMHostFromConfigFileAction();
+action.hostInfo = "FILE CONTENT ENCODE BY BASE64";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddKVMHostFromConfigFileAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddKVMHostFromConfigFileAction action = AddKVMHostFromConfigFileAction()
+action.hostInfo = "FILE CONTENT ENCODE BY BASE64"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddKVMHostFromConfigFileAction.Result res = action.call()
+```
+
+</APIPage>

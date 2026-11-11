@@ -1,0 +1,8 @@
+{
+  "title": "日志服务器",
+  "pages": [
+    "index",
+    "add"
+  ],
+  "pagesIndex": "index"
+}

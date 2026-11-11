@@ -1,0 +1,12 @@
+{
+  "title": "VM Template",
+  "pages": [
+    "index",
+    "clone-to-template",
+    "convert-to-template",
+    "template-to-vm",
+    "create-from-template",
+    "manage-templates"
+  ],
+  "pagesIndex": "index"
+}

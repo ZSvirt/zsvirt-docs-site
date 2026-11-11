@@ -1,0 +1,109 @@
+---
+title: "Renew Session"
+---
+
+<APIPage method="PUT" path="/v1/accounts/sessions/{sessionUuid}/renew">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "renewSession": {
+    "duration": 100
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, the **systemTags** and **userTags** fields are optional. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"renewSession":{"duration":100}}' \
+http://localhost:8080/zstack/v1/accounts/sessions/7b93b7648aea3c8d9109498a32288470/renew
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|sessionUuid|String|url|Session UUID| |2.3|
+|duration \(Optional\)|Long|body \(contained in the **renewSession** structure\)| | |2.3|
+|systemTags \(Optional\)|List|body|System tags| |2.3|
+|userTags \(Optional\)|List|body|User tags| |2.3|
+
+## API Response
+Response example
+
+```
+{
+  "inventory": {
+    "uuid": "dce673d8c6d53988b188b4ac34e7304d",
+    "accountUuid": "fa58814a623d3778a8c91d11b74c6d38",
+    "expiredDate": "Nov 14, 2017 2:20:57 PM",
+    "noSessionEvaluation": false
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null on success. For details, see [error](#p_skp_32r_ndb)|2.3|
+|inventory|SessionInventory|For details, see [inventory](#p_jnt_32r_ndb)|2.3|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, e.g., SYS.1000, HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Default is null|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null|0.6|
+|cause|ErrorCode|The root error that caused the current error. This field is null if there is no root cause|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource, uniquely identifying this resource|0.6|
+|accountUuid|String|Account UUID|0.6|
+|userUuid|String|User UUID|0.6|
+|expiredDate|Timestamp|Session expiration date|0.6|
+|createDate|Timestamp|Creation time|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+RenewSessionAction action = new RenewSessionAction();
+action.sessionUuid = "7b93b7648aea3c8d9109498a32288470";
+action.duration = 100;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RenewSessionAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+RenewSessionAction action = RenewSessionAction()
+action.sessionUuid = "7b93b7648aea3c8d9109498a32288470"
+action.duration = 100
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+RenewSessionAction.Result res = action.call()
+
+```
+
+</APIPage>

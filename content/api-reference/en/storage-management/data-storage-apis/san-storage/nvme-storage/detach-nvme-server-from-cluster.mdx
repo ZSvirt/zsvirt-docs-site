@@ -1,0 +1,184 @@
+---
+title: "Detach NVMe Server From Cluster"
+---
+
+<APIPage method="DELETE" path="/v1/clusters/{clusterUuid}/storage-devices/nvme/servers/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/clusters/5c5365dc4af83cae8976e50f1b44b5b0/storage-devices/nvme/servers/c44c41bd90a2380a936d0267565c60ff
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Resource UUID, uniquely identifies the resource| |4.7.21|
+|clusterUuid|String|url|Cluster UUID| |4.7.21|
+|systemTags \(Optional\)|List|body|System Tag| |4.7.21|
+|userTags \(Optional\)|List|body|User Tag| |4.7.21|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "ee50b8cccd27308588a83408c91eebe5",
+    "name": "nvme-server-10.0.0.201",
+    "ip": "10.0.0.201",
+    "port": 4420,
+    "state": "Enabled",
+    "nvmeTargets": [
+      {
+        "uuid": "6460b827029f3c0c81e90769f7d560ce",
+        "nqn": "nqn.2014-08.org.nvmexpress.example1",
+        "state": "Enabled",
+        "nvmeLuns": [
+          {
+            "nvmeTargetUuid": "6460b827029f3c0c81e90769f7d560ce",
+            "nvmeLunHostRefs": [],
+            "uuid": "960298ac721f380db77e602349a42f71",
+            "wwid": "36b083fe000daf018000015505abbe00a",
+            "vendor": "DELL",
+            "model": "MD32xx",
+            "wwn": "0x6b083fe000daf018",
+            "serial": "6b083fe000daf018000015505abbe00a",
+            "type": "disk",
+            "hctl": "6:0:1:1",
+            "path": "uuid.a5ab00e7-3bfe-4d3d-bc57-bb4032e04951",
+            "size": 30003188203520
+          }
+        ],
+        "createDate": "Nov 14, 2017 2:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+      }
+    ],
+    "nvmeClusterRefs": [
+      {
+        "id": 1,
+        "nvmeServerUuid": "ee50b8cccd27308588a83408c91eebe5",
+        "clusterUuid": "999ecf4771eb3f2b80ca97d88145e4e4",
+        "createDate": "Nov 14, 2017 2:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+      }
+    ],
+    "createDate": "Nov 14, 2017 2:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.7.21|
+|inventory|NvmeServerInventory|For details, see [inventory](#p_ajf_kd1_t2c)|4.7.21|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. For details, see [error](#p_y5j_wd1_t2c)|4.7.21|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|4.7.21|
+|name|String|Resource name|4.7.21|
+|ip|String| |4.7.21|
+|port|Integer| |4.7.21|
+|state|String| |4.7.21|
+|transport|String| |4.7.21|
+|createDate|Timestamp|Creation time|4.7.21|
+|lastOpDate|Timestamp|Last modification time|4.7.21|
+|nvmeTargets|List|For details, see [nvmeTargets](#p_dtm_md1_t2c)|4.7.21|
+|nvmeClusterRefs|List|For details, see [nvmeClusterRefs](#p_mdm_5d1_t2c)|4.7.21|
+
+### nvmeTargets
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|4.6.21|
+|name|String|Resource name|4.6.21|
+|nqn|String|NVMe Qualified Name|4.6.21|
+|nvmeServerUuid|String|NVMe server UUID|4.7.21|
+|state|String|State|4.6.21|
+|createDate|Timestamp|Creation time|4.6.21|
+|lastOpDate|Timestamp|Last modification time|4.6.21|
+|nvmeLuns|List|For details, see [nvmeLuns](#p_ivv_4d1_t2c)|4.6.21|
+
+### nvmeLuns
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|nvmeTargetUuid|String|NVMe device UUID|4.6.21|
+|name|String|Resource name|4.6.21|
+|uuid|String|Resource UUID, uniquely identifies the resource|4.6.21|
+|wwid|String|Global unique identifier|4.6.21|
+|vendor|String|Vendor|4.6.21|
+|model|String|Model|4.6.21|
+|wwn|String| |4.6.21|
+|serial|String|Serial number|4.6.21|
+|type|String|Type|4.6.21|
+|hctl|String| |4.6.21|
+|path|String|Path|4.6.21|
+|state|String|State|4.6.21|
+|size|Long|Size|4.6.21|
+|multipathDeviceUuid|String|Multipath device UUID|4.6.21|
+|source|String|Disk source, NVMe|4.6.21|
+|createDate|Timestamp|Creation time|4.6.21|
+|lastOpDate|Timestamp|Last modification time|4.6.21|
+|nvmeLunHostRefs|List|For details, see [nvmeLunHostRefs](#p_w2p_sd1_t2c)|4.6.21|
+
+### nvmeLunHostRefs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|nvmeLunUuid|String|NVMe disk UUID|4.6.21|
+|hostUuid|String|Host UUID|4.6.21|
+|path|String|Disk path|4.6.21|
+|hctl|String|Disk HCTL|4.6.21|
+|createDate|Timestamp|Creation time|4.6.21|
+|lastOpDate|Timestamp|Last modification time|4.6.21|
+
+### nvmeClusterRefs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|nvmeServerUuid|String| |4.7.21|
+|clusterUuid|String|Cluster UUID|4.7.21|
+|createDate|Timestamp|Creation time|4.7.21|
+|lastOpDate|Timestamp|Last modification time|4.7.21|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief summary of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause: the source error that triggered the current error. If there is no original error, this field is null|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+DetachNvmeServerFromClusterAction action = new DetachNvmeServerFromClusterAction();
+action.uuid = "c44c41bd90a2380a936d0267565c60ff";
+action.clusterUuid = "5c5365dc4af83cae8976e50f1b44b5b0";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DetachNvmeServerFromClusterAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DetachNvmeServerFromClusterAction action = DetachNvmeServerFromClusterAction()
+action.uuid = "c44c41bd90a2380a936d0267565c60ff"
+action.clusterUuid = "5c5365dc4af83cae8976e50f1b44b5b0"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DetachNvmeServerFromClusterAction.Result res = action.call()
+```
+
+</APIPage>

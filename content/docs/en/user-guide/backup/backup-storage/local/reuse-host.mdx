@@ -1,0 +1,35 @@
+---
+title: 'Ruse Host'
+---
+
+Reuse an existing host and utilize free capacity on the host to store backup data.
+
+-   The platform must have existing host resources, and these hosts should be connected and enabled.
+-   The backup network has been planned in advance.
+
+1.  In the navigation pane, choose **Data Protection** &gt; **Backup Storage**.
+
+2.  On the Backup Storage page, click **Add Backup Storage**.
+
+3.  In the Select Backup Storage Addition Type dialog, select **Reuse Host**, and then click **Next**.
+
+4.  In the Add Local Backup Storage dialog, set the following parameters:
+
+    **Basic Information**
+
+    -   **Name**: Name of the local backup storage.
+    -   **Description**: Description of the local backup storage.
+    -   **Data Center**: Display the data center where the backup storage resides.
+    -   **Addition Method**: Display **Reuse Host**.
+    **Configuration Information**
+
+    -   **Host**: Select an existing host to be used as local backup storage.
+    -   **Backup Storage Path**: Enter the mount path on the local backup storage.
+
+        <Callout type="info">
+        Avoid using system directories such as `/`, `/dev/`, `/proc/`, `/sys/`, `/usr/bin`, and `/bin`. Using system directories might cause hosts unable to work properly.
+        </Callout>
+
+    -   **Backup Network**: The network dedicated for backups. Enter a backup network CIDR.
+    -   **Backup Data**: Choose whether to scan for existing backup data.
+5.  Review the configuration and click **OK**.

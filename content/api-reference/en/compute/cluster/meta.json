@@ -1,0 +1,13 @@
+{
+  "title": "Cluster Related Interfaces",
+  "pages": [
+    "create-cluster",
+    "delete-cluster",
+    "query-cluster",
+    "update-cluster",
+    "change-cluster-state",
+    "update-cluster-os",
+    "get-cluster-host-network-facts"
+  ],
+  "pagesIndex": "index"
+}

@@ -1,0 +1,87 @@
+---
+title: 'zsphere_distributed_switch'
+description: 'Manages a distributed switch (L2VirtualSwitch) in ZSvirt.'
+---
+
+<HistoricalNamingNote locale="en" />
+
+# zsphere_distributed_switch (Resource)
+
+Manages a distributed switch (L2VirtualSwitch) in ZSvirt.
+
+## Example Usage
+
+```terraform
+resource "zsphere_distributed_switch" "distributed_switch" {
+  name            = "distributed_switch_example"
+  description     = "Distributed switch created from terraform"
+  datacenter_uuid = "1d7fff50bd624a2f97ac1f8c834c6acc"
+  vswitch_type    = "LinuxBridge"
+
+  # use LACP (802.3ad) with hash policy
+  bonding_name     = "Uplink1"
+  bonding_mode     = "802.3ad"
+  xmit_hash_policy = "layer2"
+
+  # Option 3: Attach to clusters
+  cluster_uuids = ["c54f0cef45854149970374da8b2d0750"]
+  cluster_attachments = [
+    {
+      cluster_uuid = "c54f0cef45854149970374da8b2d0750"
+      host_params = [
+        {
+          host_uuid          = "550a685224d349d0a9c29924aed0422d"
+          physical_interface = "ens12"
+        }
+      ]
+    }
+  ]
+}
+
+output "zsphere_distributed_switch" {
+  value = zsphere_distributed_switch.distributed_switch
+}
+```
+
+## Schema
+
+### Required
+
+- `datacenter_uuid` (String) The UUID of the datacenter (zone) to which the distributed switch belongs.
+- `name` (String) Name of the distributed switch.
+
+### Optional
+
+- `bonding_mode` (String) The bonding mode. Valid values: 802.3ad, active-backup.
+- `bonding_name` (String) The name of the bonding aggregate port (e.g., Uplink1).
+- `cluster_attachments` (Attributes List) Cluster attachments with host parameters. Used to specify which host uses which physical interface for each cluster. (see [below for nested schema](#nestedatt--cluster_attachments))
+- `cluster_uuids` (List of String) List of cluster UUIDs to attach the distributed switch to.
+- `description` (String) Description of the distributed switch.
+- `physical_interface` (String) The physical interface used by the distributed switch (used when not using bonding).
+- `vswitch_type` (String) The type of virtual switch. Default is LinuxBridge.
+- `xmit_hash_policy` (String) The transmit hash policy for bonding mode 802.3ad. Valid values: layer2, layer2+3, layer3+4.
+
+### Read-Only
+
+- `attached_cluster_uuids` (List of String) List of cluster UUIDs attached to this distributed switch.
+- `type` (String) The type of the L2 network.
+- `uuid` (String) The UUID of the distributed switch.
+
+<a id="nestedatt--cluster_attachments"></a>
+### Nested Schema for `cluster_attachments`
+
+Required:
+
+- `cluster_uuid` (String) The UUID of the cluster to attach.
+
+Optional:
+
+- `host_params` (Attributes List) Host parameters for the attachment. (see [below for nested schema](#nestedatt--cluster_attachments--host_params))
+
+<a id="nestedatt--cluster_attachments--host_params"></a>
+### Nested Schema for `cluster_attachments.host_params`
+
+Required:
+
+- `host_uuid` (String) The UUID of the host.
+- `physical_interface` (String) The physical interface name on the host.

@@ -1,0 +1,81 @@
+---
+title: "Set Image Qga"
+---
+
+<APIPage method="PUT" path="/v1/images/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "setImageQga": {
+    "enable": true
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"setImageQga":{"enable":true}}' \
+http://localhost:8080/zstack/v1/images/f85a077c64883070ac3ba72079edc804/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Resource UUID, uniquely identifies the resource| |0.6|
+|enable|boolean|body \(contained in **setImageQga** structure\)| | |0.6|
+|systemTags \(Optional\)|List|body| | |0.6|
+|userTags \(Optional\)|List|body| | |0.6|
+
+## API Response
+This API returns an empty JSON object **`{}`** on success. On error, the returned JSON contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+SetImageQgaAction action = new SetImageQgaAction();
+action.uuid = "0eca41aa133a43d2b8d14958cd3b3f26";
+action.enable = true;
+action.sessionId = "a05d7d13fb514bb5bd16060c7584d6e6";
+SetImageQgaAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SetImageQgaAction action = SetImageQgaAction()
+action.uuid = "f397649bf07049efb0be7836962d03fe"
+action.enable = true
+action.sessionId = "0bfcd0ef201142bcb00ab5903b178da5"
+SetImageQgaAction.Result res = action.call()
+```
+
+</APIPage>

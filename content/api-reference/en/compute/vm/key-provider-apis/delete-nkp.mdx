@@ -1,0 +1,64 @@
+---
+title: "Delete a Native Key Provider"
+---
+
+<APIPage method="DELETE" path="/v1/key-providers/nkp/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/key-providers/nkp/ff0415ff372f33b5b6b757d3b99ad900?deleteMode=Permissive
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Optional Value|Since|
+|----|----|--------|-----------|--------------|-----|
+|uuid|String|url|Resource UUID, which uniquely identifies the resource| |5.0.0|
+|deleteMode \(optional\)|String|query|Deletion mode \(Permissive / Enforcing, Permissive\)| |5.0.0|
+|systemTags \(optional\)|List|query|System tags| |5.0.0|
+|userTags \(optional\)|List|query|User tags| |5.0.0|
+
+## API Response
+When this API succeeds, it returns an empty JSON structure `{}`. When an error occurs, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Example
+Java SDK
+
+```
+DeleteNkpAction action = new DeleteNkpAction();
+action.uuid = "ff0415ff372f33b5b6b757d3b99ad900";
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteNkpAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = DeleteNkpAction()
+action.uuid = "ff0415ff372f33b5b6b757d3b99ad900"
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

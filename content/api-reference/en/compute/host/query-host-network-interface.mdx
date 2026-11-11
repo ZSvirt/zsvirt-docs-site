@@ -1,0 +1,149 @@
+---
+title: "Query Host NIC Information"
+---
+
+<APIPage method="GET" path="/v1/hosts/nics">
+
+```
+GET zstack/v1/hosts/nics/{uuid}
+```
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/hosts/nics
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/hosts/nics/df5b59fdb3c9388297fd89c5fa6dea65
+```
+
+Queryable Fields
+
+Run the CLI command tool, enter `QueryHostNetworkInterface` and press Tab to view all queryable fields and resources that can be queried across tables.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "310ca8ce7010363ca7ac83d37373238f",
+      "hostUuid": "7f8d05522f01397e97f60d84f5ffa2b9",
+      "bondingUuid": "6fbe88605eed35ba95399687585be3d1",
+      "interfaceName": "eno1",
+      "interfaceType": "bondingSlave",
+      "speed": 1000.0,
+      "slaveActive": true,
+      "carrierActive": true,
+      "mac": "98:03:9b:00:ea:f1",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    },
+    {
+      "uuid": "3213802883d13c72b54c084233c4de2a",
+      "hostUuid": "7f8d05522f01397e97f60d84f5ffa2b9",
+      "bondingUuid": "6fbe88605eed35ba95399687585be3d1",
+      "interfaceName": "eno2",
+      "interfaceType": "bondingSlave",
+      "speed": 1000.0,
+      "slaveActive": false,
+      "carrierActive": false,
+      "mac": "98:03:9b:00:ea:f1",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    },
+    {
+      "uuid": "3015b6b0c74d316699ebe09dc60e1001",
+      "hostUuid": "7f8d05522f01397e97f60d84f5ffa2b9",
+      "interfaceName": "ens2f0",
+      "interfaceType": "noMaster",
+      "speed": 1000.0,
+      "slaveActive": true,
+      "carrierActive": true,
+      "ipAddresses": [
+        "169.254.0.115/24"
+      ],
+      "mac": "98:03:9b:00:ea:f2",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    },
+    {
+      "uuid": "e3b513e177a1313a93b32b290643f849",
+      "hostUuid": "7f8d05522f01397e97f60d84f5ffa2b9",
+      "interfaceName": "ens2f1",
+      "interfaceType": "bridgeSlave",
+      "speed": 1000.0,
+      "slaveActive": false,
+      "carrierActive": false,
+      "mac": "98:03:9b:00:ea:f3",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See details [error](#p_z5m_lnk_mlb)|3.9.0|
+|inventories|List|See details [inventories](#p_n1w_knk_mlb)|3.9.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, e.g. SYS.1000, HOST.1001|3.9.0|
+|description|String|Brief description of the error|3.9.0|
+|details|String|Detailed error information|3.9.0|
+|elaboration|String|Reserved field, default is null|3.9.0|
+|opaque|LinkedHashMap|Reserved field, default is null|3.9.0|
+|cause|ErrorCode|Root cause, the error that caused the current error. If there is no original error, this field is null|3.9.0|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|3.9.0|
+|hostUuid|String|Host UUID|3.9.0|
+|bondingUuid|String|Bond UUID|3.9.0|
+|interfaceName|String|NIC name|3.9.0|
+|interfaceType|String|NIC usage state, can be nomaster, bridgeSlave, bondSlave|3.9.0|
+|speed|Long|NIC speed|3.9.0|
+|slaveActive|Boolean|Bond link status|3.9.0|
+|carrierActive|Boolean|Physical link status|3.9.0|
+|ipAddresses|List|IP addresses|3.9.0|
+|mac|String|MAC address|3.9.0|
+|pciDeviceAddress|String|NIC PCI address|3.9.0|
+|createDate|Timestamp|Creation time|3.9.0|
+|lastOpDate|Timestamp|Last modification time|3.9.0|
+
+## SDK Examples
+Java SDK
+
+```
+QueryHostNetworkInterfaceAction action = new QueryHostNetworkInterfaceAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryHostNetworkInterfaceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryHostNetworkInterfaceAction action = QueryHostNetworkInterfaceAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryHostNetworkInterfaceAction.Result res = action.call()
+```
+
+</APIPage>

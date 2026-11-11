@@ -1,0 +1,272 @@
+---
+title: "从OVF模板导入虚拟机"
+---
+
+<APIPage method="POST" path="/v1/ovf/create-vm-instance">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "xmlBase64": "PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4KPEVudmVsb3BlIHhtbG5zPSJodHRwOi8vc2NoZW1hcy5kbXR",
+    "jsonImageInfos": "[{\"ovfId\":\"vm-1-system.vmdk\",\"type\":\"Download\",\"installPath\":\"http://xxx/vm-1-system.vmdk\"}]",
+    "backupStorageUuid": "3302f082e39d3ba8a246de74179e5512",
+    "jsonCreateVmParam": "{\"name\":\"a\",\"clusterUuid\":\"e79b1a7be3183216a99874e942a7dd4a\",\"l3NetworkUuids\":[\"4f4b50d7cb6d3a9a944172b73653a593\"]}",
+    "deleteImageAfterSuccess": true,
+    "deleteImageOnFail": false
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"xmlBase64":"PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4KPEVudmVsb3BlIHhtbG5zPSJodHRwOi8vc2NoZW1hcy5kbXR","jsonImageInfos":"[{\"ovfId\":\"vm-1-system.vmdk\",\"type\":\"Download\",\"installPath\":\"http://xxx/vm-1-system.vmdk\"}]","backupStorageUuid":"3302f082e39d3ba8a246de74179e5512","jsonCreateVmParam":"{\"name\":\"a\",\"clusterUuid\":\"e79b1a7be3183216a99874e942a7dd4a\",\"l3NetworkUuids\":[\"4f4b50d7cb6d3a9a944172b73653a593\"]}","deleteImageAfterSuccess":true,"deleteImageOnFail":false}}' \
+http://localhost:8080/zstack/v1/ovf/create-vm-instance
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|xmlBase64|String|body\(包含在**params**结构中\)|资源名称| |4.4.6|
+|jsonImageInfos|String|body\(包含在**params**结构中\)|描述OVF中disk ID与镜像文件对应关系的JSON字符串| |4.4.6|
+|backupStorageUuid|String|body\(包含在**params**结构中\)|用于存储上传镜像文件的镜像存储UUID| |4.4.6|
+|jsonCreateVmParam|String|body\(包含在**params**结构中\)|包含虚拟机创建参数的消息的JSON字符串| |4.4.6|
+|deleteImageAfterSuccess \(可选\)|boolean|body\(包含在**params**结构中\)|部署完成后删除镜像文件| |4.4.6|
+|deleteImageOnFail \(可选\)|boolean|body\(包含在**params**结构中\)|部署失败后删除镜像文件| |4.4.6|
+|resourceUuid \(可选\)|String|body\(包含在**params**结构中\)|资源UUID| |4.4.6|
+|tagUuids \(可选\)|List|body\(包含在**params**结构中\)|标签UUID列表| |4.4.6|
+|systemTags \(可选\)|List|body|系统标签| |4.4.6|
+|userTags \(可选\)|List|body|用户标签| |4.4.6|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "ef8b74d3a7f931c3aacf258c20d25411",
+    "name": "test-ovf",
+    "description": "web server VM",
+    "zoneUuid": "5f3cdedd4a823bfcadd45385f034b763",
+    "clusterUuid": "2bb23d2c0a013338add7cedf2615ac39",
+    "imageUuid": "f47e5dbf886e3d16b8097294efd63b37",
+    "hostUuid": "82bad7cada82377684459e59292937b4",
+    "lastHostUuid": "00e742c03afe3cd68234aa9c9352d5a7",
+    "instanceOfferingUuid": "a9a166f625e23886a7227bdb472da645",
+    "rootVolumeUuid": "3e92e577418835a3bfeb0d770e898052",
+    "platform": "Linux",
+    "defaultL3NetworkUuid": "e4f37ede6e563fe5943ae8b8c7c008d6",
+    "type": "UserVm",
+    "hypervisorType": "KVM",
+    "memorySize": 4294967296.0,
+    "cpuNum": 4.0,
+    "allocatorStrategy": "LastHostPreferredAllocatorStrategy",
+    "createDate": "Nov 14, 2017 2:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 2:20:57 PM",
+    "state": "Running",
+    "vmNics": [
+      {
+        "uuid": "d5a26fdfdcff30748b22b85f4d7fadbe",
+        "vmInstanceUuid": "ef8b74d3a7f931c3aacf258c20d25411",
+        "usedIpUuid": "4423412a12653cb3af73231e16e526cf",
+        "l3NetworkUuid": "e4f37ede6e563fe5943ae8b8c7c008d6",
+        "ip": "192.168.1.10",
+        "mac": "00:0c:29:bd:99:fc",
+        "hypervisorType": "KVM",
+        "netmask": "255.255.255.0",
+        "gateway": "192.168.1.1",
+        "deviceId": 0.0,
+        "createDate": "Nov 14, 2017 2:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+      }
+    ],
+    "allVolumes": [
+      {
+        "uuid": "3e92e577418835a3bfeb0d770e898052",
+        "name": "Root-Volume-For-VM-ef8b74d3a7f931c3aacf258c20d25411",
+        "primaryStorageUuid": "353a440b83283acca73e3d3fd2cca0c5",
+        "vmInstanceUuid": "ef8b74d3a7f931c3aacf258c20d25411",
+        "diskOfferingUuid": "323969fdd2273f1a8e42aef10a9e8c6b",
+        "rootImageUuid": "f47e5dbf886e3d16b8097294efd63b37",
+        "installPath": "/zstack_ps/rootVolumes/acct-36c27e8ff05c4780bf6d2fa65700f22e/vol-3e92e577418835a3bfeb0d770e898052/3e92e577418835a3bfeb0d770e898052.qcow2",
+        "type": "Root",
+        "format": "qcow2",
+        "size": 107374182400.0,
+        "actualSize": 21474836480.0,
+        "deviceId": 0.0,
+        "state": "Enabled",
+        "status": "Ready",
+        "createDate": "Nov 14, 2017 2:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+      }
+    ]
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.4.6|
+|inventory|VmInstanceInventory|详情参考[inventory](#p_ks2_kp2_wmb)|4.4.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_sry_hp2_wmb)|4.4.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.4.6|
+|name|String|资源名称|4.4.6|
+|description|String|资源的详细描述|4.4.6|
+|zoneUuid|String|数据中心UUID|4.4.6|
+|clusterUuid|String|集群UUID|4.4.6|
+|imageUuid|String|镜像UUID|4.4.6|
+|hostUuid|String|主机UUID|4.4.6|
+|lastHostUuid|String| |4.4.6|
+|instanceOfferingUuid|String|计算规格UUID|4.4.6|
+|rootVolumeUuid|String|根硬盘UUID|4.4.6|
+|platform|String| |4.4.6|
+|architecture|String| |4.4.6|
+|defaultL3NetworkUuid|String| |4.4.6|
+|type|String| |4.4.6|
+|hypervisorType|String| |4.4.6|
+|memorySize|Long| |4.4.6|
+|cpuNum|Integer| |4.4.6|
+|cpuSpeed|Long| |4.4.6|
+|allocatorStrategy|String| |4.4.6|
+|createDate|Timestamp|创建时间|4.4.6|
+|lastOpDate|Timestamp|最后一次修改时间|4.4.6|
+|state|String| |4.4.6|
+|guestOsType|String| |4.4.6|
+|vmNics|List|详情参考[vmNics](#p_lqz_lp2_wmb)|4.4.6|
+|allVolumes|List|详情参考[allVolumes](#p_oqj_pp2_wmb)|4.4.6|
+|vmCdRoms|List|详情参考[vmCdRoms](#p_yfj_xmj_5fc)|4.4.6|
+
+### vmNics
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.4.6|
+|vmInstanceUuid|String|虚拟机UUID|4.4.6|
+|l3NetworkUuid|String|分布式端口组UUID|4.4.6|
+|ip|String|IP地址|4.4.6|
+|mac|String|MAC地址|4.4.6|
+|hypervisorType|String|虚拟化类型|4.4.6|
+|netmask|String|子网掩码|4.4.6|
+|gateway|String|网关|4.4.6|
+|metaData|String| |4.4.6|
+|ipVersion|Integer|IP地址版本|4.4.6|
+|driverType|String| |4.4.6|
+|internalName|String| |4.4.6|
+|deviceId|Integer|设备ID|4.4.6|
+|type|String|网卡类型|4.4.6|
+|createDate|Timestamp|创建时间|4.4.6|
+|lastOpDate|Timestamp|最后一次修改时间|4.4.6|
+|usedIps|List|详情参考[usedIps](#p_fcv_mp2_wmb)|4.4.6|
+
+### usedIps
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.4.6|
+|ipRangeUuid|String|IP段UUID|4.4.6|
+|l3NetworkUuid|String|分布式端口组UUID|4.4.6|
+|ipVersion|Integer|IP协议号|4.4.6|
+|ip|String|IP地址|4.4.6|
+|netmask|String|网络掩码|4.4.6|
+|gateway|String|网关地址|4.4.6|
+|usedFor|String| |4.4.6|
+|ipInLong|long| |4.4.6|
+|vmNicUuid|String|虚拟机网卡UUID|4.4.6|
+|createDate|Timestamp|创建时间|4.4.6|
+|lastOpDate|Timestamp|最后一次修改时间|4.4.6|
+
+### allVolumes
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.4.6|
+|name|String|资源名称|4.4.6|
+|description|String|资源的详细描述|4.4.6|
+|primaryStorageUuid|String|数据存储UUID|4.4.6|
+|vmInstanceUuid|String|虚拟机UUID|4.4.6|
+|diskOfferingUuid|String|硬盘规格UUID|4.4.6|
+|rootImageUuid|String|硬盘根镜像UUID|4.4.6|
+|installPath|String|硬盘在数据存储上的路径|4.4.6|
+|type|String|硬盘类型，数据硬盘/根硬盘|4.4.6|
+|format|String|硬盘格式|4.4.6|
+|size|Long|硬盘大小|4.4.6|
+|actualSize|Long|硬盘真实大小|4.4.6|
+|deviceId|Integer| |4.4.6|
+|state|String|硬盘是否开启|4.4.6|
+|status|String|硬盘状态|4.4.6|
+|createDate|Timestamp|创建时间|4.4.6|
+|lastOpDate|Timestamp|最后一次修改时间|4.4.6|
+|isShareable|Boolean|是否共享硬盘|4.4.6|
+|volumeQos|String|硬盘Qos，格式如total=1048576|4.4.6|
+
+### vmCdRoms
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.4.6|
+|vmInstanceUuid|String|虚拟机UUID|4.4.6|
+|deviceId|Integer| |4.4.6|
+|isoUuid|String| |4.4.6|
+|isoInstallPath|String| |4.4.6|
+|name|String|资源名称|4.4.6|
+|description|String|资源的详细描述|4.4.6|
+|createDate|Timestamp|创建时间|4.4.6|
+|lastOpDate|Timestamp|最后一次修改时间|4.4.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.4.6|
+|description|String|错误的概要描述|4.4.6|
+|details|String|错误的详细信息|4.4.6|
+|elaboration|String|保留字段，默认为null|4.4.6|
+|opaque|LinkedHashMap|保留字段，默认为null|4.4.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.4.6|
+
+## SDK示例
+Java SDK
+
+```
+CreateVmInstanceFromOvfAction action = new CreateVmInstanceFromOvfAction();
+action.xmlBase64 = "PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4KPEVudmVsb3BlIHhtbG5zPSJodHRwOi8vc2NoZW1hcy5kbXR";
+action.jsonImageInfos = "[{"ovfId":"vm-1-system.vmdk","type":"Download","installPath":"http://xxx/vm-1-system.vmdk"}]";
+action.backupStorageUuid = "3302f082e39d3ba8a246de74179e5512";
+action.jsonCreateVmParam = "{"name":"a","clusterUuid":"e79b1a7be3183216a99874e942a7dd4a","l3NetworkUuids":["4f4b50d7cb6d3a9a944172b73653a593"]}";
+action.deleteImageAfterSuccess = true;
+action.deleteImageOnFail = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateVmInstanceFromOvfAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = CreateVmInstanceFromOvfAction()
+action.xmlBase64 = "PD94bWwgdmVyc2lvbj0nMS4wJyBlbmNvZGluZz0nVVRGLTgnPz4KPEVudmVsb3BlIHhtbG5zPSJodHRwOi8vc2NoZW1hcy5kbXR"
+action.jsonImageInfos = "[{"ovfId":"vm-1-system.vmdk","type":"Download","installPath":"http://xxx/vm-1-system.vmdk"}]"
+action.backupStorageUuid = "3302f082e39d3ba8a246de74179e5512"
+action.jsonCreateVmParam = "{"name":"a","clusterUuid":"e79b1a7be3183216a99874e942a7dd4a","l3NetworkUuids":["4f4b50d7cb6d3a9a944172b73653a593"]}"
+action.deleteImageAfterSuccess = true
+action.deleteImageOnFail = false
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

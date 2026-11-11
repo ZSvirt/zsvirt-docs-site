@@ -1,0 +1,20 @@
+{
+  "title": "MN Monitoring APIs",
+  "pages": [
+    "query-management-node",
+    "get-version",
+    "get-current-time",
+    "get-platform-time-zone",
+    "is-ready-to-go",
+    "get-management-node-os",
+    "get-management-node-arch",
+    "get-support-apis",
+    "get-factory-mode-state",
+    "update-factory-mode-state",
+    "get-node-roles",
+    "get-management-nodes-status",
+    "get-zsha2-status",
+    "zsha2-demote"
+  ],
+  "pagesIndex": "index"
+}

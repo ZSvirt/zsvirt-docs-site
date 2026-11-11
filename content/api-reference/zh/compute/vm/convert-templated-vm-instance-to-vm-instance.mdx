@@ -1,0 +1,257 @@
+---
+title: "虚拟机模板转换为虚拟机"
+---
+
+<APIPage method="POST" path="/v1/vm-instances/{templatedVmInstanceUuid}/convert-to-vmInstance?TemplatedVmInstanceUuid={TemplatedVmInstanceUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "test-vm"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"test-vm"}}' \
+http://localhost:8080/zstack/v1/vm-instances/60ac0f41f16031b19ab7666ab610466a/convert-to-vmInstance
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|TemplatedVmInstanceUuid|String|url|虚拟机模板UUID| |4.2.6|
+|name|String|body\(包含在`params`结构中\)|虚拟机名称| |4.2.6|
+|systemTags \(可选\)|List|body|系统标签| |4.2.6|
+|userTags \(可选\)|List|body|用户标签| |4.2.6|
+|resetTpm \(可选\)|Boolean|body\(包含在`params`结构中\)|转换成虚拟机后是否重置 TPM 状态| |5.0.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "1efafa869fe83e699f5e68aab469cf53",
+    "name": "Test-VM",
+    "description": "web server VM",
+    "zoneUuid": "25c22371cb553fbc978379e9a0df84ae",
+    "clusterUuid": "89d57f230d4437e8a564ae236f0f45a6",
+    "imageUuid": "3267c96a9fb63563bea868ee61dc237d",
+    "hostUuid": "7f5d0f0112153a8b8c6f2a1dc95bf212",
+    "lastHostUuid": "17f608602299324fb176ada70c4b0cc5",
+    "instanceOfferingUuid": "79ea3c9067e03255939c1c7e7bffbaa0",
+    "rootVolumeUuid": "02c4758f912e374c813c619b31d04ea5",
+    "platform": "Linux",
+    "defaultL3NetworkUuid": "78afd51237083c7a87466075ee7b9060",
+    "type": "UserVm",
+    "hypervisorType": "KVM",
+    "memorySize": 8589934592,
+    "cpuNum": 1,
+    "allocatorStrategy": "LastHostPreferredAllocatorStrategy",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM",
+    "state": "Running",
+    "vmNics": [
+      {
+        "uuid": "e51d7f8f82f63c7c8dbeaa3e8d99442e",
+        "vmInstanceUuid": "1efafa869fe83e699f5e68aab469cf53",
+        "usedIpUuid": "dd544b31c2cf3c7aa160e45c2102a056",
+        "l3NetworkUuid": "78afd51237083c7a87466075ee7b9060",
+        "ip": "192.168.1.10",
+        "mac": "00:0c:29:bd:99:fc",
+        "hypervisorType": "KVM",
+        "netmask": "255.255.255.0",
+        "gateway": "192.168.1.1",
+        "deviceId": 0,
+        "state": "enable",
+        "createDate": "Nov 14, 2017 10:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+      }
+    ],
+    "allVolumes": [
+      {
+        "uuid": "02c4758f912e374c813c619b31d04ea5",
+        "name": "Root-Volume-For-VM-1efafa869fe83e699f5e68aab469cf53",
+        "primaryStorageUuid": "c8f712907fff3ed8a39df1d727d0106c",
+        "vmInstanceUuid": "1efafa869fe83e699f5e68aab469cf53",
+        "rootImageUuid": "3267c96a9fb63563bea868ee61dc237d",
+        "installPath": "/zstack_ps/rootVolumes/acct-36c27e8ff05c4780bf6d2fa65700f22e/vol-02c4758f912e374c813c619b31d04ea5/02c4758f912e374c813c619b31d04ea5.qcow2",
+        "type": "Root",
+        "format": "qcow2",
+        "size": 107374182400,
+        "actualSize": 21474836480,
+        "deviceId": 0,
+        "state": "Enabled",
+        "status": "Ready",
+        "createDate": "Nov 14, 2017 10:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+      }
+    ]
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.2.6|
+|inventory|VmInstanceInventory|详情参考[inventory](#p_uvp_vrg_fcc)|4.2.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_jws_nyf_y1c)|4.2.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|name|String|资源名称|0.6|
+|description|String|资源的详细描述|0.6|
+|zoneUuid|String|数据中心UUID|0.6|
+|clusterUuid|String|集群UUID|0.6|
+|imageUuid|String|镜像UUID|0.6|
+|hostUuid|String|主机UUID|0.6|
+|lastHostUuid|String| |0.6|
+|instanceOfferingUuid|String|计算规格UUID|0.6|
+|rootVolumeUuid|String|根硬盘UUID|0.6|
+|platform|String| |0.6|
+|architecture|String| |0.6|
+|defaultL3NetworkUuid|String| |0.6|
+|type|String| |0.6|
+|hypervisorType|String| |0.6|
+|memorySize|Long| |0.6|
+|cpuNum|Integer| |0.6|
+|cpuSpeed|Long| |0.6|
+|allocatorStrategy|String| |0.6|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+|state|String| |0.6|
+|guestOsType|String| |4.1.2|
+|vmNics|List|详情参考[vmNics](#p_ftm_3sg_fcc)|0.6|
+|allVolumes|List|详情参考[allVolumes](#p_jrq_3sg_fcc)|0.6|
+|vmCdRoms|List|详情参考[vmCdRoms](#p_nyt_3sg_fcc)|0.6|
+
+### vmNics
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.7.13|
+|vmInstanceUuid|String|虚拟机UUID|4.7.13|
+|l3NetworkUuid|String|分布式端口组UUID|4.7.13|
+|ip|String| |4.7.13|
+|mac|String| |4.7.13|
+|hypervisorType|String| |4.7.13|
+|netmask|String| |4.7.13|
+|gateway|String| |4.7.13|
+|metaData|String| |4.7.13|
+|ipVersion|Integer| |4.7.13|
+|driverType|String| |4.7.13|
+|internalName|String| |4.7.13|
+|deviceId|Integer| |4.7.13|
+|type|String| |4.7.13|
+|state|String|网卡状态|4.7.13|
+|createDate|Timestamp|创建时间|4.7.13|
+|lastOpDate|Timestamp|最后一次修改时间|4.7.13|
+|usedIps|List|详情参考[usedIps](#p_ill_nsg_fcc)|4.7.13|
+
+### usedIps
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.7.13|
+|ipRangeUuid|String|IP段UUID|4.7.13|
+|l3NetworkUuid|String|分布式端口组UUID|4.7.13|
+|ipVersion|Integer| |4.7.13|
+|ip|String| |4.7.13|
+|netmask|String| |4.7.13|
+|gateway|String| |4.7.13|
+|usedFor|String| |4.7.13|
+|ipInLong|long| |4.7.13|
+|vmNicUuid|String|虚拟机网卡UUID|4.7.13|
+|createDate|Timestamp|创建时间|4.7.13|
+|lastOpDate|Timestamp|最后一次修改时间|4.7.13|
+
+### allVolumes
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.7.13|
+|name|String|资源名称|4.7.13|
+|description|String|资源的详细描述|4.7.13|
+|primaryStorageUuid|String|数据存储UUID|4.7.13|
+|vmInstanceUuid|String|虚拟机UUID|4.7.13|
+|diskOfferingUuid|String|硬盘规格UUID|4.7.13|
+|rootImageUuid|String| |4.7.13|
+|installPath|String| |4.7.13|
+|type|String| |4.7.13|
+|format|String| |4.7.13|
+|size|Long| |4.7.13|
+|actualSize|Long| |4.7.13|
+|deviceId|Integer| |4.7.13|
+|state|String| |4.7.13|
+|status|String| |4.7.13|
+|createDate|Timestamp|创建时间|4.7.13|
+|lastOpDate|Timestamp|最后一次修改时间|4.7.13|
+|isShareable|Boolean| |4.7.13|
+|volumeQos|String| |4.7.13|
+|lastDetachDate|Timestamp| |4.7.13|
+|lastVmInstanceUuid|String| |4.7.13|
+
+### vmCdRoms
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.7.13|
+|vmInstanceUuid|String|虚拟机UUID|4.7.13|
+|deviceId|Integer| |4.7.13|
+|isoUuid|String| |4.7.13|
+|isoInstallPath|String| |4.7.13|
+|name|String|资源名称|4.7.13|
+|description|String|资源的详细描述|4.7.13|
+|createDate|Timestamp|创建时间|4.7.13|
+|lastOpDate|Timestamp|最后一次修改时间|4.7.13|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+ConvertTemplatedVmInstanceToVmInstanceAction action = new ConvertTemplatedVmInstanceToVmInstanceAction();
+action.templatedVmInstanceUuid = "60ac0f41f16031b19ab7666ab610466a";
+action.name = "test-vm";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ConvertTemplatedVmInstanceToVmInstanceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = ConvertTemplatedVmInstanceToVmInstanceAction()
+action.templatedVmInstanceUuid = "60ac0f41f16031b19ab7666ab610466a"
+action.name = "test-vm"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

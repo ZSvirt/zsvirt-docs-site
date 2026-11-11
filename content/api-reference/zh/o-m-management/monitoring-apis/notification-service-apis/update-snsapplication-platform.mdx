@@ -1,0 +1,112 @@
+---
+title: "更新SNS应用平台"
+---
+
+<APIPage method="PUT" path="/v1/sns/application-platforms/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateSNSApplicationPlatform": {
+    "name": "new name"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateSNSApplicationPlatform":{"name":"new name"}}' \
+http://localhost:8080/zstack/v1/sns/application-platforms/577aff1dcbe932798fd615e88813c7ce/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |2.3|
+|name \(可选\)|String|body\(包含在**updateSNSApplicationPlatform**结构中\)|资源名称| |2.3|
+|description \(可选\)|String|body\(包含在**updateSNSApplicationPlatform**结构中\)|资源的详细描述| |2.3|
+|systemTags \(可选\)|List|body|系统标签| |2.3|
+|userTags \(可选\)|List|body|应用标签| |2.3|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "7692dd68c0534f4bba9f4cbe88a2a0fd",
+    "name": "email platform",
+    "description": "example description",
+    "state": "Enabled",
+    "type": "Email",
+    "createDate": "Mar 26, 2024 2:44:23 AM",
+    "lastOpDate": "Mar 26, 2024 2:44:23 AM"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |5.0.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_ayb_znx_bdb)|2.3|
+|inventory|SNSApplicationPlatformInventory|详情参考[inventory](#p_y1m_znx_bdb)|2.3|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|2.3|
+|name|String|资源名称|2.3|
+|description|String|资源的详细描述|2.3|
+|type|String|类型|2.3|
+|createDate|Timestamp|创建时间|2.3|
+|lastOpDate|Timestamp|最后一次修改时间|2.3|
+
+## SDK示例
+Java SDK
+
+```
+UpdateSNSApplicationPlatformAction action = new UpdateSNSApplicationPlatformAction();
+action.uuid = "577aff1dcbe932798fd615e88813c7ce";
+action.name = "new name";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateSNSApplicationPlatformAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateSNSApplicationPlatformAction action = UpdateSNSApplicationPlatformAction()
+action.uuid = "577aff1dcbe932798fd615e88813c7ce"
+action.name = "new name"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateSNSApplicationPlatformAction.Result res = action.call()
+```
+
+</APIPage>

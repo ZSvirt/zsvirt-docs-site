@@ -1,0 +1,86 @@
+---
+title: "Get VM Guest Tools Info"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/{uuid}/guest-tools-infos">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8"\
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/5ecc83bf3f5033b9b78b4f9406c01f8f/guest-tools-infos
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Resource UUID, uniquely identifies the resource| |3.7.0|
+|systemTags \(Optional\)|List|query|System Tag| |3.7.0|
+|userTags \(Optional\)|List|query|User Tag| |3.7.0|
+
+<Callout type="info">
+-   ZSvirt supports recording the GuestTools version installed inside the Virtual Machine, comparing with the Host GuestTools ISO version to determine if an upgrade is needed, **SystemTags** adds **GuestTools** option.
+</Callout>
+    -   Option format: `GuestTools::TOOLS_VERSION`. The initial value of TOOLS\_VERSION is 1.0.0, and this value will change as the tool version advances.
+    -   For example: `GuestTools::1.0.0`
+    -   Additional information: This API is used to get the GuestTools version information and current running status inside the Virtual Machine. If there is a return value and the Virtual Machine currently does not have a GuestTools tag, the tag will be created; if there is a return value and it is different from the current GuestTools tag value of the Virtual Machine, the tag will be updated.
+
+## API Response
+Response Example
+
+```
+{
+  "version": "1.0.0",
+  "status": "Running",
+  "features": {
+    "pvpanic": "enable"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|version|String|Guest Tools version|3.7.0|
+|status|String|Guest Tools running status|3.7.0|
+|features|Map|Features supported by Guest Tools and the status of feature modules|4.2.0|
+|success|boolean|Success|3.7.0|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation succeeds, this field is null. For details, see [error](#p_kkf_ncb_mjb)|3.7.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier of the error, for example SYS.1000, HOST.1001|3.7.0|
+|description|String|Brief description of the error|3.7.0|
+|details|String|Detailed error information|3.7.0|
+|elaboration|String|Reserved field, defaults to null|3.7.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|3.7.0|
+|cause|ErrorCode|Root cause. The error that triggered the current error. If there is no original error, this field is null|3.7.0|
+
+## SDK Examples
+Java SDK
+
+```
+GetVmGuestToolsInfoAction action = new GetVmGuestToolsInfoAction();
+action.uuid = "5ecc83bf3f5033b9b78b4f9406c01f8f";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetVmGuestToolsInfoAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetVmGuestToolsInfoAction action = GetVmGuestToolsInfoAction()
+action.uuid = "5ecc83bf3f5033b9b78b4f9406c01f8f"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetVmGuestToolsInfoAction.Result res = action.call()
+```
+
+</APIPage>

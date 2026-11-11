@@ -1,0 +1,155 @@
+---
+title: 'AccessKey Management'
+---
+
+<HistoricalNamingNote locale="en" />
+
+AccessKey is the security credential for authorizing third-party users to call the ZSvirt API to access virtualization resources. It includes the AccessKey ID and the AccessKey Secret, which must be kept strictly confidential.
+
+-   [Relationship Between AccessKey Administrator and User Permissions](#section_uw4_1bn_1zb)
+-   [Generating an AccessKey](#section_txr_bbn_1zb)
+-   [Using AccessKey with Third-Party Platform SDK to Call APIs](#section_iym_hbn_1zb)
+-   [Manage AccessKey](#section_lzb_jbn_1zb)
+
+## Relationship Between AccessKey Administrator and User Permissions
+-   Administrators can create multiple AccessKeys, while regular users can create up to two AccessKeys.
+-   Administrators can delete AccessKeys created by regular users.
+-   An AccessKey has full permissions of its creator.
+
+## Generating an AccessKey
+You can follow these steps to generate an AccessKey:
+
+1.  Navigate to **Menu** &gt; **System Management** &gt; **AccessKey Management**.
+2.  Click **Create AccessKey**.
+
+## Using AccessKey with Third-Party Platform SDK to Call APIs
+**SDK Method**
+
+To create a virtual machine using an AccessKey, you need to provide the `accessKeyId` and `accessKeySecret` when making the API call.
+
+-   Java SDK
+
+    ```
+    CreateVmInstanceAction action = new CreateVmInstanceAction();
+    action.name = "vm1";
+    action.instanceOfferingUuid = "ae97ced44efc3314b8f7798972b4ba1a";
+    action.imageUuid = "da119f7906513eccabf271991c35a65e";
+    action.l3NetworkUuids = asList("cc0e4c5e77df3af68e59668e7f9e06c5");
+    action.dataDiskOfferingUuids = asList("19d22d051b063d379a2816daaf431838
+    ","905d94a6abb5398fa1995f6398e3f6fc");
+    action.clusterUuid = "a0468dc645223f67bd0f2ab95276bbae";
+    action.description = "this is a vm";
+    action.strategy = "InstantStart";
+    action.accessKeyId = "Fnxc7KIQAdGTvXfx8OjC";
+    action.accessKeySecret = "YOUR_ACCESS_KEY_SECRET";
+    CreateVmInstanceAction.Result res = action.call();
+    ```
+
+-   Python SDK
+
+    ```
+    CreateVmInstanceAction action = CreateVmInstanceAction()
+    action.name = "vm1"
+    action.instanceOfferingUuid = "ae97ced44efc3314b8f7798972b4ba1a"
+    action.imageUuid = "da119f7906513eccabf271991c35a65e"
+    action.l3NetworkUuids = [cc0e4c5e77df3af68e59668e7f9e06c5]
+    action.dataDiskOfferingUuids = [19d22d051b063d379a2816daaf431838, 905d94a
+    6abb5398fa1995f6398e3f6fc]
+    action.clusterUuid = "a0468dc645223f67bd0f2ab95276bbae"
+    action.description = "this is a vm"
+    action.strategy = "InstantStart"
+    action.accessKeyId = "Fnxc7KIQAdGTvXfx8OjC"
+    action.accessKeySecret = "YOUR_ACCESS_KEY_SECRET"
+    CreateVmInstanceAction.Result res = action.call()
+    ```
+
+**Calling RESTful APIs**
+
+1.  Create an AccessKey
+
+    ```
+    CreateAccessKey accountUuid=dff4fb9bbff14e97a67ab894c7b8c528 userUuid=dff4fb9
+    bbff14e97a67ab894c7b8c528
+    {
+     "inventory": {
+     "AccessKeyID": "N3Tf05yXZUmSjCf6mYIB",
+     "AccessKeySecret": "YOUR_ACCESS_KEY_SECRET",
+     "accountUuid": "dff4fb9bbff14e97a67ab894c7b8c528",
+     "createDate": "Sep 7, 2023 1:50:06 PM",
+     "lastOpDate": "Sep 7, 2023 1:50:06 PM",
+     "userUuid": "dff4fb9bbff14e97a67ab894c7b8c528",
+     "uuid": "ae353717ca7b4182bb87fb5d010235e8"
+     },
+     "success": true
+    }
+    ```
+
+2.  Generate `date`
+
+    ```
+    python get_time.py
+    Thu, 07 Sep 2023 13:54:10 PRC
+    ```
+
+    ```
+    import datetime
+    import time
+    date = time.time()
+    #EEE, dd MMM yyyy HH:mm:ss z
+    str = datetime.datetime.fromtimestamp(date).strftime('%a, %d %b %Y %H:%M:%S PRC')
+    print str
+    ```
+
+3.  Generate `digest`
+
+    ```
+    # python get_accesskey.py "vvSZpmj4cnB53qUDmm6E" "8heumeFTvIeZxkTGfEYvV
+    i9qVVPd9ffQNDALSPPb" \
+    "GET" "Fri, 08 Sep 2023 17:58:34 PRC" "/v1/vm-instances"
+    args: Namespace(acesskey_id='vvSZpmj4cnB53qUDmm6E', acesskey_secret
+    ='8heumeFTvIeZxkTGfEYvVi9qVVPd9ffQNDALSPPb', \
+    date='Fri, 08 Sep 2023 17:58:34 PRC', method='GET', uri='/v1/vm-instances')
+    Signature: hPToRHeHdV49D4u20G8OlE0yJho=
+    Authoration ZStack vvSZpmj4cnB53qUDmm6E:hPToRHeHdV49D4u20G8OlE0yJho=
+    ```
+
+    ```
+    #/usr/bin/python
+    import base64
+    import hmac
+    import sha
+    import argparse
+    from hashlib import sha1
+    parser = argparse.ArgumentParser(description='calculate zstack access key digit.')
+    parser.add_argument('acesskey_id')
+    parser.add_argument('acesskey_secret')
+    parser.add_argument('method')
+    parser.add_argument('date')
+    parser.add_argument('uri')
+    args = parser.parse_args()
+    print "args: %s" % args
+    h = hmac.new(args.acesskey_secret, args.method + "\n"
+     + args.date + "\n"
+     + args.uri, sha1)
+    Signature = base64.b64encode(h.digest())
+    print "Signature: %s" % Signature
+    print "Authoration %s" % ("ZStack " + args.acesskey_id + ":" + Signature)
+    ```
+
+4.  Send a request
+
+    ```
+    curl -H "Authorization:ZStack N3Tf05yXZUmSjCf6mYIB:S3vm7u7/+n
+    +sIQe72lgia08I30U=" \
+    -H "Content-Type:application/x-www-form-urlencoded" \
+    -H "Date:Fri, 08 Sep 2023 18:54:10 PRC" \
+    -X GET http://172.20.11.134:8080/zstack/v1/vm-instances
+    ```
+
+## Manage AccessKey
+You can manage generated AccessKeys, including enabling, disabling, and deleting them.
+
+1.  Navigate to **Menu** &gt; **System Management** &gt; **AccessKey Management**.
+2.  Select the AccessKey.
+    -   To enable or disable an AccessKey, click **Disable** or **Enable**.
+    -   If you no longer need to access virtual resources via API, you can delete the AccessKey by clicking **Delete**.

@@ -1,0 +1,192 @@
+---
+title: "Get Virtual Machine NIC Attachable Distributed Port Groups"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/nics/{vmNicUuid}/l3-networks-candidates">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/nics/3382601183c9319384d5aa17ec956a3f/l3-networks-candidates
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|vmNicUuid|String|url|Virtual Machine NIC UUID| |4.1.0|
+|systemTags \(Optional\)|List|query|System Tag| |4.1.0|
+|userTags \(Optional\)|List|query|User Tag| |4.1.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "f8fc36eaff6f3253a134bab93823baf1",
+      "name": "private L3",
+      "type": "L3BasicNetwork",
+      "zoneUuid": "9ef7d386414c3101adeecd45ec9a2d51",
+      "l2NetworkUuid": "ad3adf2da22f36c2946d90fae7f99b19",
+      "state": "Enabled",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM",
+      "ipRanges": [
+        {
+          "uuid": "16f163ee55f93d4f8dca9fefcac41ecc",
+          "l3NetworkUuid": "f8fc36eaff6f3253a134bab93823baf1",
+          "name": "ip range",
+          "startIp": "192.168.0.10",
+          "endIp": "192.168.0.100",
+          "netmask": "255.255.255.0",
+          "gateway": "192.168.0.1",
+          "createDate": "Nov 14, 2017 10:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+        }
+      ],
+      "networkServices": [
+        {
+          "l3NetworkUuid": "f8fc36eaff6f3253a134bab93823baf1",
+          "networkServiceProviderUuid": "f714dba2f49a3d6788aafbe8b5ab3dc2",
+          "networkServiceType": "DHCP"
+        },
+        {
+          "l3NetworkUuid": "f8fc36eaff6f3253a134bab93823baf1",
+          "networkServiceProviderUuid": "f714dba2f49a3d6788aafbe8b5ab3dc2",
+          "networkServiceType": "DNS"
+        },
+        {
+          "l3NetworkUuid": "f8fc36eaff6f3253a134bab93823baf1",
+          "networkServiceProviderUuid": "f714dba2f49a3d6788aafbe8b5ab3dc2",
+          "networkServiceType": "SNAT"
+        }
+      ]
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation is successful. For details, see [error](#p_pvc_gz1_mjb)|4.1.0|
+|inventory|List|For details, see [inventory](#p_adf_qwd_3jb)|4.1.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|4.1.0|
+|description|String|Brief description of the error|4.1.0|
+|details|String|Detailed error information|4.1.0|
+|elaboration|String|Reserved field, defaults to null|4.1.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|4.1.0|
+|cause|ErrorCode|Root cause. The source error that caused the current error. If there is no original error, this field is null|4.1.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifies the resource|4.1.0|
+|name|String|Resource name|4.1.0|
+|description|String|Detailed description of the resource|4.1.0|
+|type|String| |4.1.0|
+|zoneUuid|String|Data Center UUID|4.1.0|
+|l2NetworkUuid|String|Port Group Distributed Switch UUID|4.1.0|
+|state|String| |4.1.0|
+|dnsDomain|String| |4.1.0|
+|system|Boolean| |4.1.0|
+|category|String| |4.1.0|
+|ipVersion|Integer|IP protocol number|4.1.0|
+|enableIPAM|Boolean|Enable IP address management feature|4.10.16|
+|createDate|Timestamp|Create time|4.1.0|
+|lastOpDate|Timestamp|Last modification time|4.1.0|
+|dns|List| |4.1.0|
+|ipRanges|List|For details, see [ipRanges](#p_hjs_mjd_fpb)|4.1.0|
+|networkServices|List|For details, see [networkServices](#p_hvz_242_fpb)|4.1.0|
+|hostRoute|List|For details, see [ipRangesx](#p_hjs_mjd_fpb)|4.1.0|
+|reservedIpRanges|List|For details, see [reservedIpRanges](#p_lzv_5qy_3gc)|4.10.16|
+
+### ipRanges
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifies the resource|4.1.0|
+|l3NetworkUuid|String|Distributed Port Group UUID|4.1.0|
+|name|String|Resource name|4.1.0|
+|description|String|Detailed description of the resource|4.1.0|
+|startIp|String|Start address|4.1.0|
+|endIp|String|End address|4.1.0|
+|netmask|String|Netmask|4.1.0|
+|prefixLen|String|Prefix length|4.1.0|
+|gateway|String|Gateway|4.1.0|
+|networkCidr|String|Network CIDR|4.1.0|
+|ipVersion|Integer|IP protocol number|4.1.0|
+|addressMode|String|IPv6 address allocation mode|4.1.0|
+|createDate|Timestamp|Create time|4.1.0|
+|lastOpDate|Timestamp|Last modification time|4.1.0|
+|ipRangeType|IpRangeType|For details, see [ipRangeType](#p_d3k_f4r_hpb)|4.1.0|
+
+### ipRangeType
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|IpRangeType|Normal address range|4.1.0|
+|AddressPool|IpRangeType|Address pool range|4.1.0|
+
+### networkServices
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|l3NetworkUuid|String|Distributed Port Group UUID|4.1.0|
+|networkServiceProviderUuid|String|Network Service Provider Module UUID|4.1.0|
+|networkServiceType|String| |4.1.0|
+
+### hostRoute
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|id|Long| |4.1.0|
+|l3NetworkUuid|String|Distributed Port Group UUID|4.1.0|
+|prefix|String| |4.1.0|
+|nexthop|String| |4.1.0|
+|createDate|Timestamp|Create time|4.1.0|
+|lastOpDate|Timestamp|Last modification time|4.1.0|
+
+### reservedIpRanges
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifies the resource|4.10.16|
+|l3NetworkUuid|String|Distributed Port Group UUID|4.10.16|
+|name|String|Resource name|4.10.16|
+|description|String|Detailed description of the resource|4.10.16|
+|startIp|String|Start IP \(included in the reserved address range\)|4.10.16|
+|endIp|String|End IP \(included in the reserved address range\)|4.10.16|
+|ipVersion|Integer|IP protocol number|4.10.16|
+|createDate|Timestamp|Create time|4.10.16|
+|lastOpDate|Timestamp|Last modification time|4.10.16|
+
+## SDK Examples
+Java SDK
+
+```
+GetCandidateL3NetworksForChangeVmNicNetworkAction action = new GetCandidateL3NetworksForChangeVmNicNetworkAction();
+action.vmNicUuid = "3382601183c9319384d5aa17ec956a3f";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetCandidateL3NetworksForChangeVmNicNetworkAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = GetCandidateL3NetworksForChangeVmNicNetworkAction()
+action.vmNicUuid = "3382601183c9319384d5aa17ec956a3f"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

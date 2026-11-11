@@ -1,0 +1,282 @@
+---
+title: "获取定时任务执行报告"
+---
+
+<APIPage method="GET" path="/v1/scheduler/report">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/scheduler/report?startTime=1.5856704E12&intervalTimeUnit=Month&range=4.0&schedulerJobTypes=vmBackup
+```
+
+参数列表
+
+<table id="table_b4p_3x3_mlb"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+startTime
+
+</td><td>
+
+long
+
+</td><td>
+
+query
+
+</td><td>
+
+报告开始时间
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.9.0
+
+</td></tr><tr><td>
+
+intervalTimeUnit
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+间隔时间单位
+
+</td><td>
+
+-   Hour
+-   Month
+
+</td><td>
+
+3.9.0
+
+</td></tr><tr><td>
+
+range
+
+</td><td>
+
+int
+
+</td><td>
+
+query
+
+</td><td>
+
+报告时间范围
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.9.0
+
+</td></tr><tr><td>
+
+schedulerJobTypes
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+定时任务类型
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.9.0
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.9.0
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.9.0
+
+</td></tr></tbody>
+</table>
+
+## API返回
+返回示例
+
+```
+{
+  "successRecords": [
+    100.0,
+    99.0,
+    50.0,
+    0.0
+  ],
+  "failureRecords": [
+    0.0,
+    1.0,
+    34.0,
+    0.0
+  ],
+  "partialSuccessRecords": [
+    0.0,
+    0.0,
+    16.0,
+    0.0
+  ],
+  "waitingRecords": [
+    0.0,
+    0.0,
+    0.0,
+    100.0
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|successRecords|List|成功记录|3.9.0|
+|failureRecords|List|失败记录|3.9.0|
+|partialSuccessRecords|List|部分成功记录|3.9.0|
+|waitingRecords|List|等待执行完成记录|3.9.0|
+|success|boolean| |3.9.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_uph_qx3_mlb)|3.9.0|
+|error|ErrorCode|详情参考[error](#p_gdm_qx3_mlb)|3.9.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.9.0|
+|description|String|错误的概要描述|3.9.0|
+|details|String|错误的详细信息|3.9.0|
+|elaboration|String|保留字段，默认为null|3.9.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.9.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.9.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.9.0|
+|description|String|错误的概要描述|3.9.0|
+|details|String|错误的详细信息|3.9.0|
+|elaboration|String|保留字段，默认为null|3.9.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.9.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.9.0|
+
+## SDK示例
+Java SDK
+
+```
+GetSchedulerExecutionReportAction action = new GetSchedulerExecutionReportAction();
+action.startTime = 1.5856704E12;
+action.intervalTimeUnit = "Month";
+action.range = 4.0;
+action.schedulerJobTypes = asList("vmBackup");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetSchedulerExecutionReportAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetSchedulerExecutionReportAction action = GetSchedulerExecutionReportAction()
+action.startTime = 1.5856704E12
+action.intervalTimeUnit = "Month"
+action.range = 4.0
+action.schedulerJobTypes = [vmBackup]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetSchedulerExecutionReportAction.Result res = action.call()
+```
+
+</APIPage>

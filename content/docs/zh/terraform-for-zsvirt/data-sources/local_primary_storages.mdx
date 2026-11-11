@@ -1,0 +1,85 @@
+---
+title: 'zsphere_local_primary_storages'
+description: '查询 ZSvirt 本地主存储列表及其属性。'
+---
+
+<HistoricalNamingNote locale="zh" />
+
+
+# zsphere_local_primary_storages（数据源）
+
+查询 ZSvirt 本地主存储列表及其属性。
+
+## 示例用法
+```terraform
+data "zsphere_local_primary_storages" "test" {
+}
+
+output "zsphere_local_storages" {
+  value = data.zsphere_local_primary_storages.test
+}
+
+# 示例输出：
+# zsphere_local_storages = {
+#   "filter" = tolist([])
+#   "local_storages" = tolist([
+#     {
+#       "available_capacity" = 50000000000
+#       "available_physical_capacity" = 50000000000
+#       "mount_path" = "/vms_ds"
+#       "name" = "LocalStorage-1"
+#       "state" = "Enabled"
+#       "status" = "Connected"
+#       "system_used_capacity" = 0
+#       "total_capacity" = 100000000000
+#       "total_physical_capacity" = 100000000000
+#       "type" = "LocalStorage"
+#       "url" = "/vms_ds"
+#       "uuid" = "d1058cff5c864a84848e0ab896736578"
+#       "zone_uuid" = "86643f5442164890b8b71de5b582dc9f"
+#     },
+#   ])
+#   "name" = tostring(null)
+#   "name_pattern" = tostring(null)
+# }
+```
+
+## 参数说明
+
+### 可选参数
+
+- `filter`（块列表）（参见下方嵌套结构）
+- `name`（字符串）按精确名称查询
+- `name_pattern`（字符串）按名称模糊查询，类似 MySQL LIKE。`%` 匹配多个字符，`_` 匹配单个字符
+
+### 只读属性
+
+- `local_storages`（属性列表）（参见下方嵌套结构）
+
+<a id="nestedblock--filter"></a>
+### `filter` 嵌套结构
+
+必填参数：
+
+- `name`（字符串）用于过滤的字段名。
+- `values`（字符串集合）过滤值，多个值之间为 OR 关系。
+
+
+<a id="nestedatt--local_storages"></a>
+### `local_storages` 嵌套结构
+
+只读属性：
+
+- `available_capacity`（数字）Available capacity of the local primary storage in bytes
+- `available_physical_capacity`（数字）Available physical capacity of the local primary storage in bytes
+- `datacenter_uuid`（字符串）local所属数据中心 UUID primary storage
+- `mount_path`（字符串）local挂载路径 primary storage
+- `name`（字符串）local名称 primary storage
+- `state`（字符串）State of the local primary storage (Enabled or Disabled)
+- `status`（字符串）local就绪状态 primary storage
+- `system_used_capacity`（数字）System used capacity of the local primary storage in bytes
+- `total_capacity`（数字）Total capacity of the local primary storage in bytes
+- `total_physical_capacity`（数字）Total physical capacity of the local primary storage in bytes
+- `type`（字符串）local类型 primary storage
+- `url`（字符串）local URL primary storage
+- `uuid`（字符串）local UUID primary storage

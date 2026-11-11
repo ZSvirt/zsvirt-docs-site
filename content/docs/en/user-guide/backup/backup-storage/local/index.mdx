@@ -1,0 +1,24 @@
+---
+title: 'Add a Local Backup Storage'
+---
+
+Add a local backup storage to store scheduled backup data for local virtual machines or the platform database. Local backup storage supports seamless failover to effectively ensure business continuity.
+
+In case of accidental deletion or data corruption locally, you can restore backup data from local backup storage back to your local environment.
+
+In the event of a disaster at the local data center, you can completely rely on the local backup storage to rebuild the data center and recover businesses.
+
+You can choose any of the following methods to add local backup storage:
+
+-   Reuse an existing image storage to store backup data. For more information, see [Ruse Image Storage](/en/docs/user-guide/backup/backup-storage/local/reuse-image-storage).
+-   Reuse an existing host and utilize free capacity on the host to store backup data. For more information, see [Ruse Host](/en/docs/user-guide/backup/backup-storage/local/reuse-host).
+-   Add a dedicated backup storage and use free disks or local directories on the storage to store backup data. For more information, see [Dedicated Backup Storage](/en/docs/user-guide/backup/backup-storage/local/dedicated-backup-storage).
+
+You can flexibly configure the number of local backup storage according to your actual business needs.
+
+-   **[Ruse Image Storage](/en/docs/user-guide/backup/backup-storage/local/reuse-image-storage)**  
+Reuse an existing image storage to store backup data.
+-   **[Ruse Host](/en/docs/user-guide/backup/backup-storage/local/reuse-host)**  
+Reuse an existing host and utilize free capacity on the host to store backup data.
+-   **[Dedicated Backup Storage](/en/docs/user-guide/backup/backup-storage/local/dedicated-backup-storage)**  
+Add a dedicated backup storage and use free disks or local directories on the storage to store backup data.

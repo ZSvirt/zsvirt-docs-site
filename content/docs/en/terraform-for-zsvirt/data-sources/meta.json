@@ -1,0 +1,20 @@
+{
+  "title": "Data Sources",
+  "pages": [
+    "index",
+    "datacenters",
+    "clusters",
+    "hosts",
+    "distributed_switches",
+    "port_groups",
+    "local_primary_storages",
+    "nfs_primary_storages",
+    "image_storages",
+    "images",
+    "vm_templates",
+    "instances",
+    "security_groups",
+    "tags"
+  ],
+  "pagesIndex": "index"
+}

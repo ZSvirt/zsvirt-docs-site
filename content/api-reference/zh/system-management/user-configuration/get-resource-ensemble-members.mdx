@@ -1,0 +1,86 @@
+---
+title: "撤销资源分享账户组"
+---
+
+<APIPage method="PUT" path="/v1/account-groups/resources/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "revokeResourceSharingToGroup": {
+    "resourceUuids": [
+      "3d502ce7557c3aa29f40ab4cfde80bbd"
+    ],
+    "groupUuid": "c84e3415faca3a94971b14ba5b4dceb2"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X PUT -d '{"revokeResourceSharingToGroup":{"resourceUuids":["3d502ce7557c3aa29f40ab4cfde80bbd"],"groupUuid":"c84e3415faca3a94971b14ba5b4dceb2"}}' \
+http://localhost:8080/zstack/v1/account-groups/resources/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|resourceUuids|List|body\(包含在`revokeResourceSharingToGroup`结构中\)|待撤销分享的资源 UUID 列表, 必须是资源组中的资源| |4.10.0|
+|groupUuid|String|body\(包含在`revokeResourceSharingToGroup`结构中\)|账户组 UUID| |4.10.0|
+|systemTags \(可选\)|List|body|系统标签| |4.10.0|
+|userTags \(可选\)|List|body|用户标签| |4.10.0|
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+RevokeResourceSharingToGroupAction action = new RevokeResourceSharingToGroupAction();
+action.resourceUuids = asList("3d502ce7557c3aa29f40ab4cfde80bbd");
+action.groupUuid = "c84e3415faca3a94971b14ba5b4dceb2";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RevokeResourceSharingToGroupAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+RevokeResourceSharingToGroupAction action = RevokeResourceSharingToGroupAction()
+action.resourceUuids = [3d502ce7557c3aa29f40ab4cfde80bbd]
+action.groupUuid = "c84e3415faca3a94971b14ba5b4dceb2"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+RevokeResourceSharingToGroupAction.Result res = action.call()
+
+```
+
+</APIPage>

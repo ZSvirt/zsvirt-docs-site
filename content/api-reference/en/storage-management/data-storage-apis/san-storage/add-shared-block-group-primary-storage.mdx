@@ -1,0 +1,141 @@
+---
+title: "Add SAN Storage"
+---
+
+<APIPage method="POST" path="/v1/primary-storage/sharedblockgroup">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "diskUuids": [
+      "1b5682b663b937a59adb9e318cab6b05"
+    ],
+    "name": "shared-block-group-1",
+    "type": "SharedBlock",
+    "zoneUuid": "eee8b39ad50b300c8935e554a967691b"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"diskUuids":["1b5682b663b937a59adb9e318cab6b05"],"name":"shared-block-group-1","type":"SharedBlock","zoneUuid":"eee8b39ad50b300c8935e554a967691b"}}' http://localhost:8080/zstack/v1/primary-storage/sharedblockgroup
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|diskUuids|List|body \(included in the **params** structure\)|Disk unique identifier \(e.g. UUID, WWN, WWID\)| |2.3.2|
+|name|String|body \(included in the **params** structure\)|Resource name| |2.3.2|
+|description \(Optional\)|String|body \(included in the **params** structure\)|Detailed description of the resource| |2.3.2|
+|type \(Optional\)|String|body \(included in the **params** structure\)|Data storage type, which is SharedBlock| |2.3.2|
+|url|String|body \(included in the **params** structure\)|Unused| |2.3.2|
+|zoneUuid|String|body \(included in the **params** structure\)|Data Center UUID| |2.3.2|
+|resourceUuid \(Optional\)|String|body \(included in the **params** structure\)| | |2.3.2|
+|systemTags \(Optional\)|List|body| | |2.3.2|
+|userTags \(Optional\)|List|body| | |2.3.2|
+
+<Callout type="info">
+-   ZSvirt When adding SAN storage, you can specify the default disk provisioning method by adding **primaryStorageVolumeProvisioningStrategy** option to **SystemTags**.
+</Callout>
+    -   Option format: `primaryStorageVolumeProvisioningStrategy::ThinProvisioning, primaryStorageVolumeProvisioningStrategy::ThickProvisioning`
+    -   Example: `primaryStorageVolumeProvisioningStrategy::ThinProvisioning, primaryStorageVolumeProvisioningStrategy::ThickProvisioning`
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "name": "PS1",
+    "url": "/Cloud_ps",
+    "type": "LocalStorage",
+    "state": "Enabled",
+    "status": "Connected",
+    "attachedClusterUuids": [
+      "c6e9684e8bb93a9192c946dcd0564b39"
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_qty_rsk_n2b)|2.3.2|
+|inventory|PrimaryStorageInventory|For details, see [inventory](#p_hg3_tsk_n2b)|2.3.2|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, e.g. SYS.1000, HOST.1001|2.3.2|
+|description|String|Brief description of the error|2.3.2|
+|details|String|Detailed error information|2.3.2|
+|elaboration|String|Reserved field, defaults to null|2.3.2|
+|opaque|LinkedHashMap|Reserved field, defaults to null|2.3.2|
+|cause|ErrorCode|Root cause: the source error that caused the current error. If there is no original error, this field is null|2.3.2|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|2.3.2|
+|zoneUuid|String|Data Center UUID|2.3.2|
+|name|String|Resource name|2.3.2|
+|url|String| |2.3.2|
+|description|String|Detailed description of the resource|2.3.2|
+|totalCapacity|Long| |2.3.2|
+|availableCapacity|Long| |2.3.2|
+|totalPhysicalCapacity|Long| |2.3.2|
+|availablePhysicalCapacity|Long| |2.3.2|
+|systemUsedCapacity|Long| |2.3.2|
+|type|String| |2.3.2|
+|state|String| |2.3.2|
+|status|String| |2.3.2|
+|mountPath|String| |2.3.2|
+|createDate|Timestamp|Create date|2.3.2|
+|lastOpDate|Timestamp|Last update date|2.3.2|
+|attachedClusterUuids|List| |2.3.2|
+
+## SDK Examples
+Java SDK
+
+```
+AddSharedBlockGroupPrimaryStorageAction action = new AddSharedBlockGroupPrimaryStorageAction();
+action.diskUuids = asList("1b5682b663b937a59adb9e318cab6b05");
+action.name = "shared-block-group-1";
+action.type = "SharedBlock";
+action.zoneUuid = "eee8b39ad50b300c8935e554a967691b";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddSharedBlockGroupPrimaryStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddSharedBlockGroupPrimaryStorageAction action = AddSharedBlockGroupPrimaryStorageAction()
+action.diskUuids = [1b5682b663b937a59adb9e318cab6b05]
+action.name = "shared-block-group-1"
+action.type = "SharedBlock"
+action.zoneUuid = "eee8b39ad50b300c8935e554a967691b"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddSharedBlockGroupPrimaryStorageAction.Result res = action.call()
+```
+
+</APIPage>

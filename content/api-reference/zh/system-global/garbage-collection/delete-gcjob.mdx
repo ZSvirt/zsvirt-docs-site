@@ -1,0 +1,61 @@
+---
+title: "删除垃圾回收任务"
+---
+
+<APIPage method="DELETE" path="/v1/gc-jobs/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/gc-jobs/3a5d968dd8d743c280888a4973ea71d5
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |0.6|
+|systemTags \(可选\)|List|body| | |0.6|
+|userTags \(可选\)|List|body| | |0.6|
+
+## API返回
+该API成功时返回一个空的JSON结构**`{}`**，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+DeleteGCJobAction action = new DeleteGCJobAction();
+action.uuid = "6bac0ebceac44a198609b0019c40a8eb";
+action.sessionId = "78e46c7bfe0249fe9613223642222085";
+DeleteGCJobAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteGCJobAction action = DeleteGCJobAction()
+action.uuid = "42db77385ebf4768bf105011ec8e6aaf"
+action.sessionId = "331167c4de264088862128e5043c5a93"
+DeleteGCJobAction.Result res = action.call()
+```
+
+</APIPage>

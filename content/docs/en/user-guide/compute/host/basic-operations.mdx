@@ -1,0 +1,73 @@
+---
+title: 'Host Basic Operations'
+---
+
+You can understand the basic operations supported by hosts from the perspective of adding, deleting, modifying, and querying.
+
+-   [Add a Host](#section_zsp_f2n_vyb)
+-   [Modify a Host](#section_xbg_g2n_vyb)
+-   [Access a Host](#section_jyg_mxd_xyb)
+-   [View a Host](#section_yyb_h2n_vyb)
+-   [Delete a Host](#section_ohf_xmn_vyb)
+
+## Add a Host
+The platform provides multiple entry points to add hosts. You can add one or multiple hosts from the following two main entry points:
+
+-   In the navigation bar on the left side of the platform page, right-click the target cluster and click **Add Host**.
+-   In the navigation bar on the left side of the platform page, select the target cluster. Then, on the right side of the platform page, click **Actions** &gt; **Add Host**, or in the **Hosts** sub-page, click **Add Host**.
+
+ZSvirt supports configuration of the following three major categories of information:
+
+**Basic Information**: includes name description, associated cluster, and labels
+
+-   **Name**: host name
+-   **Description**: host description
+-   **Cluster**: cluster where the host resides
+-   **Tag**: supports binding one or more labels to identify different hosts. For more details, see Tag Management
+
+**Host Information**: includes addition method, IP address range, and SSH configuration:
+
+-   **Addition Method**: add a single host or multiple hosts. When adding multiple hosts, ensure all hosts have the same SSH configuration.
+-   **IP Address**: enter the IP address or IP address range of the host based on the addition method.
+-   **SSH Port**: SSH port of the host, default is 22.
+-   **SSH Username**: username for the host. Default is root.
+-   **SSH Password**: password for the SSH username.
+
+**Other Information Configuration**: includes IOMMU enablement status and Intel EPT hardware assistance
+
+-   **Scan Host IOMMU Setting**: whether the IOMMU (Input/Output Memory Management Unit) function is enabled, used for passthrough of external devices and virtualization scenarios. By default, it is disabled on x86 architecture and enabled on ARM architecture where the BIOS IOMMU is called SMMU.
+
+    <Callout type="info">
+    Before enabling, make sure the IOMMU option is enabled in the host's BIOS.
+    </Callout>
+
+-   **Intel EPT Hardware Assist**: whether Intel EPT hardware assistance is enabled on Intel CPUs to improve CPU performance. Default is enabled.
+
+After clicking **OK**, the creation process is complete.
+
+After the first host is added to the cluster, ZSvirt automatically creates a default distributed switch, default distributed port group, and default Kernel adapter based on the related configurations of this host for centralized management of the host's management network. For more information, see Network Resource.
+
+## Modify a Host
+If you need to modify the name or description of an existing host, on the target host page, click **Actions****Edit Name and Description**, and modify the corresponding information in the pop-up window.
+
+If you need to modify the IOMMU enablement status and Intel EPT hardware assistance settings of an existing host, on the target host page, click **Actions****Modify Configuration**, and modify the corresponding information in the pop-up window.
+
+## Access a Host
+You can access the host system through the following three methods:
+
+-   Webshell Terminal Access: you can directly access the host system by clicking on the small terminal window of the target host, or by clicking **Actions** &gt; **Enter Web Terminal**.
+-   SSH Access: you can log in using remote login software by entering the SSH information entered when adding the host. To modify SSH information, click **Actions** &gt; **Update SSH Information**.
+-   IPMI Access: if you have managed the host through IPMI, you can access the host using IPMI management software. To modify IPMI information, click **Actions** &gt; **Update IPMI Information**.
+
+## View a Host
+If you need to check the usage and allocation of CPU and memory resources for the host, as well as the usage and allocation of all virtual machines under the host, go to the host's Overview details page. For more information, see Capacity Monitoring.
+
+If you need to check the usage trends of CPU, memory, disk, and NIC resources for the host and its virtual machines over time, go to the host's Monitoring tab. For more information, see Resource Performance Monitoring.
+
+## Delete a Host
+If you need to delete an existing host, on the target host page, click **Actions****Delete**, and the host will be deleted. You can also delete hosts in batches on the data center resources **Cluster and Host** page or the cluster resources **Host** page.
+
+<Callout type="info">
+-   If the cluster to which the host belongs has loaded shared storage, this operation will stop all VMs on the host. VMs with high availability enabled will automatically migrate to other hosts within the cluster with sufficient resources and restart.
+-   If the cluster to which the host belongs has loaded local storage, this operation will delete all VMs and disks on the host. Proceed with caution.
+</Callout>

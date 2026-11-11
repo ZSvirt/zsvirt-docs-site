@@ -1,0 +1,278 @@
+---
+title: "AttachL2NetworkToHost"
+---
+
+<APIPage method="POST" path="/v1/l2-networks/{l2NetworkUuid}/hosts/{hostUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "l2ProviderType": "LinuxBridge"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding sample, both **systemTags** and **userTags** are optional. These two fields can be included in the body structure.
+</Callout>
+
+Curl Sample
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"l2ProviderType":"LinuxBridge"}}' http://localhost:8080/zstack/v1/l2-networks/eabc734e7538311a9afd99276867fb88/hosts/b20782106d1537e6bd8ee81f94d2c870
+```
+
+Parameter List
+
+<table id="table_qsj_1bk_51c"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+l2NetworkUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+The port group Distributed Switch UUID.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+hostUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+The host UUID.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+l2ProviderType \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in **params** structure\)
+
+</td><td>
+
+Optional. The Switch implementation type.
+
+</td><td>
+
+-   LinuxBridge
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+Optional. The system tags.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+Optional. The user tags.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+hostParam \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in `params` structure\)
+
+</td><td>
+
+Optional. The host parameter.
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Sample Response
+
+```
+{
+  "inventory": {
+    "vlan": 10,
+    "name": "Test-Net",
+    "description": "Test",
+    "zoneUuid": "6b737f0ab0a839b58e9d7a208ce7bb0b",
+    "physicalInterface": "eth0",
+    "type": "L2VlanNetwork"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.1.0|
+|inventory|L2NetworkInventory|See [inventory](#p_lpn_vlw_51c).|4.1.0|
+|error|ErrorCode|The error code. If not null, the operation fails, or vice versa. For more information, see [error](#p_wfd_jmw_51c).|4.1.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The resource UUID.|4.1.0|
+|name|String|The resource name.|4.1.0|
+|description|String|The detailed description of the resource.|4.1.0|
+|zoneUuid|String|The Data Center UUID.|4.1.0|
+|physicalInterface|String|The physical NIC.|4.1.0|
+|type|String|The Distributed Switch type.|4.1.0|
+|createDate|Timestamp|The creation date.|4.1.0|
+|lastOpDate|Timestamp|The last operation date.|4.1.0|
+|attachedClusterUuids|List|The list of attached Cluster UUIDs.|4.1.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code, which is a numbered or alphanumeric code that specifies an error. For example, SYS.1000, HOST.1001.|4.1.0|
+|description|String|The brief description of the error.|4.1.0|
+|details|String|The details about the error.|4.1.0|
+|elaboration|String|The reserved field. Default value: null.|4.1.0|
+|opaque|LinkedHashMap|The reserved field. Default value: null.|4.1.0|
+|cause|ErrorCode|The root error, which is the associated root cause of the current error. If no root error exists, this parameter is null.|4.1.0|
+
+## SDK Sample
+Java SDK
+
+```
+AttachL2NetworkToHostAction action = new AttachL2NetworkToHostAction();
+action.l2NetworkUuid = "eabc734e7538311a9afd99276867fb88";
+action.hostUuid = "b20782106d1537e6bd8ee81f94d2c870";
+action.l2ProviderType = "LinuxBridge";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AttachL2NetworkToHostAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AttachL2NetworkToHostAction action = AttachL2NetworkToHostAction()
+action.l2NetworkUuid = "eabc734e7538311a9afd99276867fb88"
+action.hostUuid = "b20782106d1537e6bd8ee81f94d2c870"
+action.l2ProviderType = "LinuxBridge"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AttachL2NetworkToHostAction.Result res = action.call()
+```
+
+</APIPage>

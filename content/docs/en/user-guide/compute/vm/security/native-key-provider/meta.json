@@ -1,0 +1,11 @@
+{
+  "title": "Configure and Manage a Native Key Provider",
+  "pages": [
+    "index",
+    "add",
+    "backup",
+    "restore",
+    "delete"
+  ],
+  "pagesIndex": "index"
+}

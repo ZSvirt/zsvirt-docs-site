@@ -1,0 +1,73 @@
+---
+title: "Get VM USB Redirect Status"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/{uuid}/usbredirect">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/4b9d28c1d35f4f14b8ba1bb982500c50/usbredirect
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|UUID of the resource, uniquely identifies the resource| |2.1|
+|systemTags \(Optional\)|List|query| | |2.1|
+|userTags \(Optional\)|List|query| | |2.1|
+
+## API Response
+Response Example
+
+```
+{
+  "enable": true
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|enable|boolean|Whether USB redirect is enabled|0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_qxp_kdq_s1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code, a globally unique identifier of the error, e.g. SYS.1000, HOST.1001|2.1|
+|description|String|Brief description of the error|2.1|
+|details|String|Detailed error information|2.1|
+|elaboration|String|Reserved field, defaults to null|2.1|
+|opaque|LinkedHashMap|Reserved field, defaults to null|2.1|
+|cause|ErrorCode|Root cause, the source error that caused the current error, null if no original error|2.1|
+
+## SDK Examples
+Java SDK
+
+```
+GetVmUsbRedirectAction action = new GetVmUsbRedirectAction();
+action.uuid = "c58671c58dd147e29d4bc263feafa04d";
+action.sessionId = "e173648fdca94fd3ae720473a305ce4c";
+GetVmUsbRedirectAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetVmUsbRedirectAction action = GetVmUsbRedirectAction()
+action.uuid = "08efac4de45a4f6789d1009afa9e295e"
+action.sessionId = "3f5a7473758d4c8ab3cc4664461500a4"
+GetVmUsbRedirectAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,101 @@
+---
+title: "Get Resource Sharing"
+---
+
+<APIPage method="GET" path="/v1/iam1/resource-ensemble/view-sharing">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/iam1/resource-ensemble/view-sharing
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|resourceUuid|String|query|Resource UUID| |4.10.0|
+|systemTags \(Optional\)|List|query|System tags| |4.10.0|
+|userTags \(Optional\)|List|query|User tags| |4.10.0|
+
+## API Response
+Response example
+
+```
+{
+  "uuid": "a2a658dba2fa385382bc9f29a0788815",
+  "toPublic": false,
+  "accounts": [
+    {
+      "uuid": "7ded05202370411d85e6bf20168fa08f"
+    }
+  ],
+  "accountGroups": [
+    {
+      "uuid": "2347044abdbb41d6b2bfb3cd196bfe79"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|resourceUuid|String|Resource UUID|4.10.0|
+|masterResourceUuid|String|If the resource belongs to a resource ensemble, this value is the UUID of the master resource in the ensemble. If not, this value is null|4.10.0|
+|masterResourceType|String|If the resource belongs to a resource ensemble, this value is the type of the master resource in the ensemble. If not, this value is null|4.10.0|
+|toPublic|boolean|Whether the resource is shared globally|4.10.0|
+|success|boolean|Whether the request is successful|4.10.0|
+|accounts|List|For details, see [accounts](#p_jxw_gxy_2dc)|4.10.0|
+|accountGroups|List|For details, see [accountGroups](#p_jrz_gxy_2dc)|4.10.0|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null on success. For details, see [error](#p_v3q_sv5_m1b)|4.10.0|
+
+### accounts
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Account UUID|4.10.0|
+
+### accountGroups
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Account group UUID|4.10.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, e.g., SYS.1000, HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Default is null|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null|0.6|
+|cause|ErrorCode|The root error that caused the current error. This field is null if there is no root cause|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+GetResourceSharingAction action = new GetResourceSharingAction();
+action.uuid = "8fa73dc3301333e0aa39de406406831f";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetResourceSharingAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+GetResourceSharingAction action = GetResourceSharingAction()
+action.uuid = "8fa73dc3301333e0aa39de406406831f"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetResourceSharingAction.Result res = action.call()
+
+```
+
+</APIPage>

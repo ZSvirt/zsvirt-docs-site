@@ -1,0 +1,162 @@
+---
+title: "创建虚拟机备份"
+---
+
+<APIPage method="POST" path="/v1/volumes/{rootVolumeUuid}/vm-backups">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "backupStorageUuid": "fc50c1ece4753c1981e3e3f65a151e0e",
+    "name": "backup-1",
+    "description": "a critical volume backup"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"backupStorageUuid":"fc50c1ece4753c1981e3e3f65a151e0e","name":"backup-1","description":"a critical volume backup"}}' http://localhost:8080/zstack/v1/volumes/aa6fad9b71af3785a9fdec200bab3ee8/vm-backups
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|rootVolumeUuid|String|url|根硬盘UUID| |3.0.0|
+|backupStorageUuid|String|body\(包含在**params**结构中\)|镜像存储UUID| |3.0.0|
+|name|String|body\(包含在**params**结构中\)|资源名称| |3.0.0|
+|description \(可选\)|String|body\(包含在**params**结构中\)|资源的详细描述| |3.0.0|
+|resourceUuid \(可选\)|String|body\(包含在**params**结构中\)| | |3.0.0|
+|volumeReadBandwidth \(可选\)|Long|body\(包含在**params**结构中\)|硬盘读取带宽| |3.1.0|
+|volumeWriteBandwidth \(可选\)|Long|body\(包含在**params**结构中\)|硬盘写入带宽| |3.1.0|
+|networkReadBandwidth \(可选\)|Long|body\(包含在**params**结构中\)|网络下行带宽| |3.1.0|
+|networkWriteBandwidth \(可选\)|Long|body\(包含在**params**结构中\)|网络上行带宽| |3.1.0|
+|systemTags \(可选\)|List|body| | |3.0.0|
+|userTags \(可选\)|List|body| | |3.0.0|
+
+<Callout type="info">
+-   ZSvirt创建虚拟机备份时主机到镜像仓库走备份网络，**SystemTags**增加**backupnetwork**选项。
+</Callout>
+    -   选项格式为：`backup::network::cidr::CIDR`
+    -   例如：`backup::network::cidr::10.0.0.0/8`
+-   ZSvirt创建虚拟机备份时设置设置备份数据到镜像存储的传输方式，**SystemTags**增加**fsInfo**选项。
+    -   选项格式为：`fsInfo::type::$TYPE::url::$URL::options::$OPTIONS`
+    -   例如：`fsInfo::type::nfs::url::172.32.1.119:/nas/nfs2::options::nolock,vers=3,rsize=32768,wsize=32768`
+-   ZSvirt创建虚拟机备份时设置备份并发度，**SystemTags**增加**volumeLiveBackup**选项。
+    -   选项格式为：`volumeLiveBackup::parallelismDegree::$NUMBER`
+    -   例如：`volumeLiveBackup::parallelismDegree::1`
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "785edb93bb1b3a31857dac1e69cc8392",
+      "volumeUuid": "2ae6b881bb1239cd907d48993e86a2e8",
+      "name": "Root-Volume-Backup-1",
+      "description": "volume backup",
+      "size": 1073741824.0,
+      "groupUuid": "2f7c0a5bb86430e8a5ac48312172d70d",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    },
+    {
+      "uuid": "3084eea905f4311b9d484bfe97142bdf",
+      "volumeUuid": "f6c7d5276c873eba8accddd4a09a1ee6",
+      "name": "Data-Volume-Backup-1",
+      "description": "volume backup",
+      "size": 2147483648.0,
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_u3s_bpx_y2b)|3.0.0|
+|inventories|List|详情参考[inventories](#p_dwz_bpx_y2b)|3.0.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.0.0|
+|description|String|错误的概要描述|3.0.0|
+|details|String|错误的详细信息|3.0.0|
+|elaboration|String|保留字段，默认为null|3.0.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.0.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.0.0|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|硬盘备份的UUID，唯一标示该资源|3.0.0|
+|volumeUuid|String|硬盘UUID|3.0.0|
+|name|String|备份名称|3.0.0|
+|description|String|备份的详细描述|3.0.0|
+|type|String|硬盘的类型|3.0.0|
+|state|String|硬盘备份的启用状态|3.0.0|
+|status|String|硬盘备份的状态|3.0.0|
+|size|Long|当前硬盘备份的大小|3.0.0|
+|metadata|String|硬盘备份相关元数据|3.0.0|
+|createDate|Timestamp|创建时间|3.0.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.0.0|
+|backupStorageRefs|List|详情参考[backupStorageRefs](#p_uq5_fpx_y2b)|3.0.0|
+
+### backupStorageRefs
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|volumeBackupUuid|String|硬盘备份的uuid|3.0.0|
+|backupStorageUuid|String|镜像存储UUID|3.0.0|
+|installPath|String|硬盘备份的数据路径|3.0.0|
+|status|String|硬盘备份在镜像存储的状态|3.0.0|
+|createDate|Timestamp|创建时间|3.0.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.0.0|
+
+## SDK示例
+Java SDK
+
+```
+CreateVmBackupAction action = new CreateVmBackupAction();
+action.rootVolumeUuid = "aa6fad9b71af3785a9fdec200bab3ee8";
+action.backupStorageUuid = "fc50c1ece4753c1981e3e3f65a151e0e";
+action.name = "backup-1";
+action.description = "a critical volume backup";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateVmBackupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateVmBackupAction action = CreateVmBackupAction()
+action.rootVolumeUuid = "aa6fad9b71af3785a9fdec200bab3ee8"
+action.backupStorageUuid = "fc50c1ece4753c1981e3e3f65a151e0e"
+action.name = "backup-1"
+action.description = "a critical volume backup"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateVmBackupAction.Result res = action.call()
+```
+
+</APIPage>

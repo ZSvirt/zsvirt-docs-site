@@ -1,0 +1,122 @@
+---
+title: "Update Guest Tools State"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/{vmInstanceUuid}/guesttools-state">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateGuestToolsState": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateGuestToolsState":{}}' \
+http://localhost:8080/zstack/v1/vm-instances/5222bedcc3333b848b4cfb67e14bcc2d/guesttools-state
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|vmInstanceUuid|String|url|Virtual Machine UUID| |4.6.21|
+|systemTags \(Optional\)|List|body|System Tags| |4.6.21|
+|userTags \(Optional\)|List|body|User Tags| |4.6.21|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "vmInstanceUuid": "321e85ca08b335e09f172041f7e710b5",
+    "qgaState": "Running",
+    "zwatchState": "Running",
+    "version": "4.6.11",
+    "platform": "Kylin",
+    "osType": "Kylin"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.6.21|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation succeeds, this field is null. For details, see [error](#p_rx5_n2s_zz)|4.6.21|
+|inventory|GuestToolsStateInventory|For details, see [inventory](#p_e23_42s_zz)|4.6.21|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier of the error, for example SYS.1000, HOST.1001|4.6.21|
+|description|String|Brief description of the error|4.6.21|
+|details|String|Detailed error information|4.6.21|
+|elaboration|String|Reserved field, defaults to null|4.6.21|
+|opaque|LinkedHashMap|Reserved field, defaults to null|4.6.21|
+|cause|ErrorCode|Root cause. The error that triggered the current error. If there is no original error, this field is null|4.6.21|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|vmInstanceUuid|String|Virtual Machine UUID|4.6.21|
+|version|String|Virtual Machine VMTools version|4.6.21|
+|platform|String|Virtual Machine OS platform type|4.6.21|
+|osType|String|Virtual Machine OS type|4.6.21|
+|createDate|Timestamp|Creation time|4.6.21|
+|lastOpDate|Timestamp|Last modification time|4.6.21|
+|qgaState|GuestToolsQgaState|For details, see [qgaState](#p_wv1_b3m_cxb)|4.6.21|
+|zwatchState|GuestToolsZWatchState|For details, see [zwatchState](#p_als_b3m_cxb)|4.6.21|
+
+### qgaState
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|NotInstalled|GuestToolsQgaState|Not installed|4.6.21|
+|Running|GuestToolsQgaState|Running|4.6.21|
+|NotRunning|GuestToolsQgaState|Stopped|4.6.21|
+|NotUpgraded|GuestToolsQgaState|Pending upgrade|4.6.21|
+
+### zwatchState
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|NotInstalled|GuestToolsZWatchState|Not installed|4.6.21|
+|Running|GuestToolsZWatchState|Running|4.6.21|
+|NotRunning|GuestToolsZWatchState|Not running|4.6.21|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateGuestToolsStateAction action = new UpdateGuestToolsStateAction();
+action.vmInstanceUuid = "5222bedcc3333b848b4cfb67e14bcc2d";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateGuestToolsStateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateGuestToolsStateAction action = UpdateGuestToolsStateAction()
+action.vmInstanceUuid = "5222bedcc3333b848b4cfb67e14bcc2d"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateGuestToolsStateAction.Result res = action.call()
+```
+
+</APIPage>

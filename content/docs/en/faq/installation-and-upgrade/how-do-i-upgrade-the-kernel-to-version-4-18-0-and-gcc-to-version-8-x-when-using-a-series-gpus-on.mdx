@@ -1,0 +1,62 @@
+---
+title: "How do I upgrade the kernel to version 4.18.0 and GCC to version 8.x when using A-series GPUs on the platform?"
+---
+
+<HistoricalNamingNote locale="en" />
+
+## Solution
+1.  Log in to the platform, go to **Reliable Services** &gt; **Business Reliability** &gt; **HA Policy**, and disable the HA Policy on the HA Policy details page. Log in to the console of each Management Node and run the following commands to back up the database and upgrade scripts:
+
+    ```
+    #Back up primary MN database
+    zstack-ctl dump_mysql --file-namezstack-db-backup-master-20230309
+    #Back up standby MN database
+    zstack-ctl dump_mysql --file-namezstack-db-backup-slave-20230309
+    cp /usr/local/bin/zstack-upgrade/root/zstack-upgrade-bk
+    
+    ```
+
+2.  Run the following command to upgrade the kernel. In this scenario, the UUID is the Cluster UUID:
+
+    ```
+    [root@localhost~] zstack-cli
+    - >> LogInByAccount accountName=admin password=password
+    - >> UpdateGlobalConfig name="zstack.experimental.repo" value=true category=cluster
+    - >> UpdateClusterOS excludePackages=python2-crypto updatePackages=kernel uuid=28b4539b024341ac91af401e0aec46c5
+    ```
+
+3.  Verify whether the kernel upgrade succeeded using one of the following methods:
+
+    -   Run `cat /boot/grub2/grubenv` and check whether the grubenv file contains the following parameter. If it does, the upgrade succeeded:
+
+        ```
+        saved_entry=Helix Linux(4.18.0-240.22.1.1.gd6dbaa7.el7.x86_64) 7 (Core)
+        ```
+
+    -   Run `cat /boot/grub2/grub.cfg` and check whether the grub.cfg file contains the following parameter. If it does, the upgrade succeeded:
+
+        ```
+        menuentry 'Helix Linux(4.18.0-240.22.1.1.gd6dbaa7.el7.x86_64) 7 (Core)'
+        ```
+
+4.  Run `vim /boot/grub2/grubenv`, add the following content to the grubenv file, and restart the host:
+
+    ```
+    saved_entry=Helix Linux(4.18.0-240.22.1.1.gd6dbaa7.el7.x86_64) 7 (Core)
+    ```
+
+5.  Run `gcc -v cat /proc/version` to check the GCC version.
+
+6.  Run the following commands to install centos-release-scl:
+
+    ```
+    wget -O /etc/yum.repos.d/CentOS-Base.repo [https://mirrors.aliyun.com/repo/Centos-7.repo](https://mirrors.aliyun.com/repo/Centos-7.repo)
+    yum makecache fast
+    yum -y install centos-release-scl
+    ```
+
+7.  Run `sudo yum install devtoolset-8-gcc*` to install devtoolset.
+
+8.  Run `scl enable devtoolset-8 bash` to switch the GCC version.
+
+9.  Log in to the platform, go to **Reliable Services** &gt; **Business Reliability** &gt; **HA Policy**, and enable the HA Policy on the HA Policy details page.

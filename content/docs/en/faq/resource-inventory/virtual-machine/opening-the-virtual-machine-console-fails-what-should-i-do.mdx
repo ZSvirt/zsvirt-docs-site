@@ -1,0 +1,66 @@
+---
+title: "Opening the virtual machine console fails. What should I do?"
+---
+
+<HistoricalNamingNote locale="en" />
+
+Console access failures generally fall into three categories. Identify the applicable cause and follow the corresponding solution to resolve the issue.
+
+## Cause 1
+The console port is unreachable. The default port is 4900.
+
+## Solution
+1.  Connect to the Management Node via SSH.
+
+2.  Run the following command to check the console port configured in the `zstack.properties` file:
+
+    ```
+    [root@localhost ~]# zstack-ctl show_configuration | grep consoleProxyPort
+    ```
+
+    <Callout type="info">
+    In a dual-Management-Node setup, check the console port on both management nodes separately. If multiple ports are configured, ensure all ports are open.
+    </Callout>
+
+3.  Open a Windows cmd window and run the following command to check port connectivity:
+
+    ```
+    C:\Users\Administrator>curl -v ManagementIP:consoleProxyPort
+    ```
+
+4.  On the Management Node, run the following command to check the local firewall configuration and verify that the **consoleProxyPort** port is allowed:
+
+    ```
+    [root@localhost ~]# iptables -nL 
+    ```
+
+5.  Check whether other security devices are enforcing access control restrictions.
+
+## Cause 2
+The virtualization platform is not accessed using the virtual IP of the dual Management Node, and the Management Node configuration file does not set the platform UI address to the virtual IP address.
+
+## Solution
+1.  On the Management Node, run the following command to set the platform UI address to the virtual IP address:
+
+    ```
+    [root@localhost ~]# zstack-ctl config_ui --ui-address $VIP_address
+    ```
+
+2.  Access the virtualization platform using the virtual IP address.
+
+## Cause 3
+When opening the virtual machine console returns a `code:1006` error, the following causes are possible:
+
+-   Browser restriction.
+-   Network issue.
+-   Firewall issue.
+-   The dual Management Node is configured with an HTTPS self-signed certificate, and an insecure login warning appears after logging in using the IP address.
+
+## Solution
+-   Verify that the virtualization platform Console Proxy configuration is correct. Use Google Chrome to access the platform, enable `debug` mode in the platform, continuously refresh the browser, and investigate based on the error messages.
+
+-   Check network health and whether network latency is present.
+
+-   Check whether firewall rules are blocking the console port. If so, add the appropriate rules.
+
+-   After configuring HTTPS self-signed certificates on a dual Management Node, first log in to the platform using the real IP address of each management node, then log in using the virtual IP address.

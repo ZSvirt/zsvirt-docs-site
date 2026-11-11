@@ -1,0 +1,111 @@
+---
+title: "添加本地镜像仓库"
+---
+
+<APIPage method="POST" path="/v1/backup-storage/image-store">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "hostname": "192.168.1.8",
+    "username": "admin",
+    "password": "admin%pass",
+    "sshPort": 22.0,
+    "url": "/data/imagestore",
+    "name": "ImageStore",
+    "importImages": false
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"hostname":"192.168.1.8","username":"admin","password":"admin%pass","sshPort":22.0,"url":"/data/imagestore","name":"ImageStore","importImages":false}}' \
+http://localhost:8080/zstack/v1/backup-storage/image-store
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|hostname|String|body\(包含在**params**结构中\)|服务器主机地址| |1.6|
+|username|String|body\(包含在**params**结构中\)|服务器 SSH 用户名 \(用于 Ansible 部署\)| |1.6|
+|password|String|body\(包含在**params**结构中\)|服务器 SSH 用户密码| |1.6|
+|sshPort \(可选\)|int|body\(包含在**params**结构中\)|服务器 SSH 端口| |1.6|
+|url|String|body\(包含在**params**结构中\)|镜像仓库本地数据存放路径| |1.6|
+|name|String|body\(包含在**params**结构中\)|本地镜像仓库名称| |1.6|
+|description \(可选\)|String|body\(包含在**params**结构中\)|镜像仓库的详细描述| |1.6|
+|type \(可选\)|String|body\(包含在**params**结构中\)|这里是 ImageStoreBackupStorage| |1.6|
+|importImages \(可选\)|boolean|body\(包含在**params**结构中\)|是否导入镜像| |1.9|
+|resourceUuid \(可选\)|String|body\(包含在**params**结构中\)|资源UUID。若指定，镜像仓库会使用该字段值作为UUID| |1.6|
+|systemTags \(可选\)|List|body\(包含在**params**结构中\)|系统标签| |1.6|
+|userTags \(可选\)|List|body\(包含在**params**结构中\)|用户标签| |1.6|
+
+<Callout type="info">
+-   ZSvirt添加镜仓库服务器时，支持指定镜像仓库存放路径的挂载方式。**SystemTags**增加**fsInfo**选项。
+</Callout>
+    -   选项格式为：`fsInfo::type::$TYPE::url::$URL::options::$OPTIONS`
+    -   例如：`fsInfo::type::nfs::url::172.32.1.119:/nas/nfs2::options::nolock,vers=3,rsize=32768,wsize=32768`
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+AddImageStoreBackupStorageAction action = new AddImageStoreBackupStorageAction();
+action.hostname = "192.168.1.8";
+action.username = "admin";
+action.password = "admin%pass";
+action.sshPort = 22.0;
+action.url = "/data/imagestore";
+action.name = "ImageStore";
+action.importImages = false;
+action.sessionId = "5171f258102a43368597dedd6317622b";
+AddImageStoreBackupStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddImageStoreBackupStorageAction action = AddImageStoreBackupStorageAction()
+action.hostname = "192.168.1.8"
+action.username = "admin"
+action.password = "admin%pass"
+action.sshPort = 22.0
+action.url = "/data/imagestore"
+action.name = "ImageStore"
+action.importImages = false
+action.sessionId = "7b360d3775524a9780474b07ff68ed15"
+AddImageStoreBackupStorageAction.Result res = action.call()
+```
+
+</APIPage>

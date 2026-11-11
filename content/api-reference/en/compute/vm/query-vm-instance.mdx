@@ -1,0 +1,663 @@
+---
+title: "Query Virtual Machine"
+---
+
+<APIPage method="GET" path="/v1/vm-instances" altPaths={["/v1/vm-instances/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances?q=name=vm1&q=vmNics.ip=192.168.20.100
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/72573bf842273c02a09f33dc061bb6f8
+```
+
+Queryable Fields
+
+Run the CLI command, enter `QueryVmInstance` and press Tab to view all queryable fields and resource names.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "a43716db0d713c319be06811ebcc00a1",
+      "name": "Test-VM",
+      "description": "web server VM",
+      "zoneUuid": "dfa731eef1f13f1da298855d6ce282bd",
+      "clusterUuid": "743b07830cb6324192a2e0cc34186814",
+      "imageUuid": "ea51c3f89cb53b0db4abdd648c476f80",
+      "hostUuid": "d808c413110a32cab4d9c4d034818eb0",
+      "lastHostUuid": "3da349b211ba3cebb5629c0f90aadf63",
+      "instanceOfferingUuid": "1a3f2ce111cf318688f7bb0cc217d5ff",
+      "rootVolumeUuid": "b677bd698e1d3e4b9787fa81827d13d4",
+      "platform": "Linux",
+      "defaultL3NetworkUuid": "3bcc70b465c4371b8a7f9bd975fdec76",
+      "type": "UserVm",
+      "hypervisorType": "KVM",
+      "memorySize": 8589934592,
+      "cpuNum": 1,
+      "allocatorStrategy": "LastHostPreferredAllocatorStrategy",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM",
+      "state": "Running",
+      "vmNics": [
+        {
+          "uuid": "39da5aec41f336929db3458395614151",
+          "vmInstanceUuid": "a43716db0d713c319be06811ebcc00a1",
+          "usedIpUuid": "69008cc8dbd03aeba1787ec024a0b326",
+          "l3NetworkUuid": "3bcc70b465c4371b8a7f9bd975fdec76",
+          "ip": "192.168.1.10",
+          "mac": "00:0c:29:bd:99:fc",
+          "hypervisorType": "KVM",
+          "netmask": "255.255.255.0",
+          "gateway": "192.168.1.1",
+          "deviceId": 0,
+          "state": "enable",
+          "createDate": "Nov 14, 2017 10:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+        }
+      ],
+      "allVolumes": [
+        {
+          "uuid": "b677bd698e1d3e4b9787fa81827d13d4",
+          "name": "Root-Volume-For-VM-a43716db0d713c319be06811ebcc00a1",
+          "primaryStorageUuid": "413b0d61df4e3b088f5ee045ff84b65b",
+          "vmInstanceUuid": "a43716db0d713c319be06811ebcc00a1",
+          "diskOfferingUuid": "37c73ea89a2b3a7bb7126f5fe7a32dc6",
+          "rootImageUuid": "ea51c3f89cb53b0db4abdd648c476f80",
+          "installPath": "/zstack_ps/rootVolumes/acct-36c27e8ff05c4780bf6d2fa65700f22e/vol-b677bd698e1d3e4b9787fa81827d13d4/b677bd698e1d3e4b9787fa81827d13d4.qcow2",
+          "type": "Root",
+          "format": "qcow2",
+          "size": 107374182400,
+          "actualSize": 21474836480,
+          "deviceId": 0,
+          "state": "Enabled",
+          "status": "Ready",
+          "createDate": "Nov 14, 2017 10:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+        }
+      ]
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed; if null, the operation succeeded. See [error](#p_whg_vwb_k1b)|0.6|
+|inventories|List|See [inventories](#p_dnm_vwb_k1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code, a globally unique identifier for the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief error description|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause: the source error that triggered the current error; if there is no source error, this field is null|0.6|
+
+### inventories
+<table id="table_vy1_fwb_k1b"><thead><tr><th align="left">
+
+Name
+
+</th><th align="left">
+
+Type
+
+</th><th align="left">
+
+Description
+
+</th><th align="left">
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td align="left">
+
+uuid
+
+</td><td align="left">
+
+String
+
+</td><td align="left">
+
+UUID of the resource, uniquely identifying the resource
+
+</td><td align="left">
+
+0.6
+
+</td></tr><tr><td align="left">
+
+name
+
+</td><td align="left">
+
+String
+
+</td><td align="left">
+
+Resource name
+
+</td><td align="left">
+
+0.6
+
+</td></tr><tr><td align="left">
+
+description
+
+</td><td align="left">
+
+String
+
+</td><td align="left">
+
+Detailed description of the resource
+
+</td><td align="left">
+
+0.6
+
+</td></tr><tr><td align="left">
+
+zoneUuid
+
+</td><td align="left">
+
+String
+
+</td><td align="left">
+
+Data Center UUID
+
+</td><td align="left">
+
+0.6
+
+</td></tr><tr><td align="left">
+
+clusterUuid
+
+</td><td align="left">
+
+String
+
+</td><td align="left">
+
+Cluster UUID
+
+</td><td align="left">
+
+0.6
+
+</td></tr><tr><td align="left">
+
+imageUuid
+
+</td><td align="left">
+
+String
+
+</td><td align="left">
+
+Image UUID
+
+</td><td align="left">
+
+0.6
+
+</td></tr><tr><td align="left">
+
+hostUuid
+
+</td><td align="left">
+
+String
+
+</td><td align="left">
+
+Host UUID
+
+</td><td align="left">
+
+0.6
+
+</td></tr><tr><td align="left">
+
+lastHostUuid
+
+</td><td align="left">
+
+String
+
+</td><td align="left">
+
+ 
+
+</td><td align="left">
+
+0.6
+
+</td></tr><tr><td align="left">
+
+instanceOfferingUuid
+
+</td><td align="left">
+
+String
+
+</td><td align="left">
+
+Instance Offering UUID
+
+</td><td align="left">
+
+0.6
+
+</td></tr><tr><td align="left">
+
+rootVolumeUuid
+
+</td><td align="left">
+
+String
+
+</td><td align="left">
+
+Root Volume UUID
+
+</td><td align="left">
+
+0.6
+
+</td></tr><tr><td align="left">
+
+platform
+
+</td><td align="left">
+
+String
+
+</td><td align="left">
+
+ 
+
+</td><td align="left">
+
+0.6
+
+</td></tr><tr><td align="left">
+
+architecture
+
+</td><td align="left">
+
+String
+
+</td><td align="left">
+
+Architecture Type
+
+</td><td align="left">
+
+4.5.0
+
+</td></tr><tr><td align="left">
+
+defaultL3NetworkUuid
+
+</td><td align="left">
+
+String
+
+</td><td align="left">
+
+ 
+
+</td><td align="left">
+
+0.6
+
+</td></tr><tr><td align="left">
+
+type
+
+</td><td align="left">
+
+String
+
+</td><td align="left">
+
+Virtual Machine type, including: -   UserVm
+-   ApplianceVm
+
+</td><td align="left">
+
+0.6
+
+</td></tr><tr><td align="left">
+
+hypervisorType
+
+</td><td align="left">
+
+String
+
+</td><td align="left">
+
+ 
+
+</td><td align="left">
+
+0.6
+
+</td></tr><tr><td align="left">
+
+memorySize
+
+</td><td align="left">
+
+Long
+
+</td><td align="left">
+
+ 
+
+</td><td align="left">
+
+0.6
+
+</td></tr><tr><td align="left">
+
+cpuNum
+
+</td><td align="left">
+
+Integer
+
+</td><td align="left">
+
+ 
+
+</td><td align="left">
+
+0.6
+
+</td></tr><tr><td align="left">
+
+cpuSpeed
+
+</td><td align="left">
+
+Long
+
+</td><td align="left">
+
+ 
+
+</td><td align="left">
+
+0.6
+
+</td></tr><tr><td align="left">
+
+allocatorStrategy
+
+</td><td align="left">
+
+String
+
+</td><td align="left">
+
+ 
+
+</td><td align="left">
+
+0.6
+
+</td></tr><tr><td align="left">
+
+createDate
+
+</td><td align="left">
+
+Timestamp
+
+</td><td align="left">
+
+Creation Time
+
+</td><td align="left">
+
+0.6
+
+</td></tr><tr><td align="left">
+
+lastOpDate
+
+</td><td align="left">
+
+Timestamp
+
+</td><td align="left">
+
+Last Operation Date
+
+</td><td align="left">
+
+0.6
+
+</td></tr><tr><td align="left">
+
+state
+
+</td><td align="left">
+
+String
+
+</td><td align="left">
+
+Virtual Machine state, including: -   Created
+-   Starting
+-   Running
+-   Stopping
+-   Stopped
+-   Rebooting
+-   Destroying
+-   Destroyed
+-   Migrating
+-   Expunging
+-   Pausing
+-   Paused
+-   Resuming
+-   VolumeMigrating
+-   Unknown
+
+</td><td align="left">
+
+0.6
+
+</td></tr><tr><td align="left">
+
+guestOsType
+
+</td><td align="left">
+
+String
+
+</td><td align="left">
+
+Guest OS Type
+
+</td><td align="left">
+
+4.5.0
+
+</td></tr><tr><td align="left">
+
+vmNics
+
+</td><td align="left">
+
+List
+
+</td><td align="left">
+
+See [vmNics](#p_w1t_vwb_k1b)
+
+</td><td align="left">
+
+0.6
+
+</td></tr><tr><td align="left">
+
+allVolumes
+
+</td><td align="left">
+
+List
+
+</td><td align="left">
+
+See [allVolumes](#p_vbf_4vh_2vb)
+
+</td><td align="left">
+
+0.6
+
+</td></tr><tr><td align="left">
+
+vmCdRoms
+
+</td><td align="left">
+
+List
+
+</td><td align="left">
+
+See [vmCdRoms](#p_fm2_tj4_w5b)
+
+</td><td align="left">
+
+4.5.0
+
+</td></tr></tbody>
+</table>
+
+### vmNics
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifying the resource|0.6|
+|vmInstanceUuid|String|Virtual Machine UUID|0.6|
+|l3NetworkUuid|String|Distributed Port Group UUID|0.6|
+|ip|String|IP Address|0.6|
+|mac|String|MAC Address|0.6|
+|hypervisorType|String|Virtualization Type|0.6|
+|netmask|String|Subnet Mask|0.6|
+|gateway|String|Gateway|0.6|
+|metaData|String| |0.6|
+|ipVersion|Integer|IP Address Version|0.6|
+|driverType|String| |4.7.13|
+|internalName|String| |4.7.13|
+|deviceId|Integer|Device ID|0.6|
+|type|String|NIC Type|0.6|
+|state|String|NIC Status|4.7.13|
+|createDate|Timestamp|Creation Time|0.6|
+|lastOpDate|Timestamp|Last Operation Date|0.6|
+|usedIps|List|See [usedIps](#p_vmy_vwb_k1b)|0.6|
+
+### usedIps
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifying the resource|0.6|
+|ipRangeUuid|String|IP Range UUID|0.6|
+|l3NetworkUuid|String|Distributed Port Group UUID|0.6|
+|ipVersion|Integer|IP Protocol Number|3.1|
+|ip|String|IP Address|0.6|
+|netmask|String|Netmask|0.6|
+|gateway|String|Gateway Address|0.6|
+|usedFor|String| |0.6|
+|ipInLong|long| |0.6|
+|vmNicUuid|String|Virtual Machine NIC UUID|3.1|
+|createDate|Timestamp|Creation Time|0.6|
+|lastOpDate|Timestamp|Last Operation Date|0.6|
+
+### allVolumes
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifying the resource|0.6|
+|name|String|Resource name|0.6|
+|description|String|Detailed description of the resource|0.6|
+|primaryStorageUuid|String|Data Storage UUID|0.6|
+|vmInstanceUuid|String|Virtual Machine UUID|0.6|
+|diskOfferingUuid|String|Disk Offering UUID|0.6|
+|rootImageUuid|String|Root Image UUID|0.6|
+|installPath|String|Disk path on the data storage|0.6|
+|type|String|Disk type, data disk/root disk|0.6|
+|format|String|Disk Format|0.6|
+|size|Long|Disk Size|0.6|
+|actualSize|Long|Actual Disk Size|0.6|
+|deviceId|Integer| |0.6|
+|state|String|Whether the disk is enabled|0.6|
+|status|String|Disk Status|0.6|
+|createDate|Timestamp|Creation Time|0.6|
+|lastOpDate|Timestamp|Last Operation Date|0.6|
+|isShareable|Boolean|Whether the disk is shared|0.6|
+|volumeQos|String|Disk QoS, format such as total=1048576|3.2.0|
+|lastDetachDate|Timestamp| |4.7.13|
+|lastVmInstanceUuid|String| |4.7.13|
+
+### vmCdRoms
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifying the resource|4.5.0|
+|vmInstanceUuid|String|Virtual Machine UUID|4.5.0|
+|deviceId|Integer|CD-ROM Device Order|4.5.0|
+|isoUuid|String|ISO Image UUID|4.5.0|
+|isoInstallPath|String|ISO Image Mount Path|4.5.0|
+|name|String|Resource name|4.5.0|
+|description|String|Detailed description of the resource|4.5.0|
+|createDate|Timestamp|Creation Time|4.5.0|
+|lastOpDate|Timestamp|Last Operation Date|4.5.0|
+
+## SDK Examples
+Java SDK
+
+```
+QueryVmInstanceAction action = new QueryVmInstanceAction();
+action.conditions = asList("name=vm1","vmNics.ip=192.168.20.100");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryVmInstanceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = QueryVmInstanceAction()
+action.conditions = ["name=vm1","vmNics.ip=192.168.20.100"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,115 @@
+---
+title: "Update Physical Interface Information"
+---
+
+<APIPage method="POST" path="/v1/hosts/nics/{interfaceUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "description": "description"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"description":"description"}}' http://localhost:8080/zstack/v1/hosts/nics/b6731de9831a3db0921965c0fd0705a4/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|interfaceUuid|String|url|Physical NIC UUID| |4.7.0|
+|description|String|body \(contained in **params** structure\)|Resource description| |4.7.0|
+|systemTags \(optional\)|List|body|System tag| |4.7.0|
+|userTags \(optional\)|List|body|User tag| |4.7.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "description": "network"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.7.0|
+|inventory|HostNetworkInterfaceInventory|See details [inventroy](#p_ks2_kp2_wmb)|4.7.0|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See details [error](#p_sry_hp2_wmb)|4.7.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|4.7.0|
+|hostUuid|String|Host UUID|4.7.0|
+|bondingUuid|String|Bond UUID|4.7.0|
+|interfaceName|String|NIC name|4.7.0|
+|interfaceType|String|NIC usage state, can be nomaster, bridgeSlave, bondSlave|4.7.0|
+|speed|Long|NIC speed|4.7.0|
+|slaveActive|Boolean|Bond link status|4.7.0|
+|carrierActive|Boolean|Physical link status|4.7.0|
+|ipAddresses|List|IP addresses|4.7.0|
+|gateway|String|Gateway address|4.7.0|
+|mac|String|MAC address|4.7.0|
+|callBackIp|String|Callback address|4.7.0|
+|pciDeviceAddress|String|NIC PCI address|4.7.0|
+|offloadStatus|String| |4.7.0|
+|description|String|Resource description|4.7.0|
+|createDate|Timestamp|Creation time|4.7.0|
+|lastOpDate|Timestamp|Last modification time|4.7.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, e.g. SYS.1000, HOST.1001|4.7.0|
+|description|String|Brief description of the error|4.7.0|
+|details|String|Detailed error information|4.7.0|
+|elaboration|String|Reserved field, default is null|4.7.0|
+|opaque|LinkedHashMap|Reserved field, default is null|4.7.0|
+|cause|ErrorCode|Root cause, the error that caused the current error. If there is no original error, this field is null|4.7.0|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateHostNetworkInterfaceAction action = new UpdateHostNetworkInterfaceAction();
+action.interfaceUuid = "b6731de9831a3db0921965c0fd0705a4";
+action.description = "description";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateHostNetworkInterfaceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateHostNetworkInterfaceAction action = UpdateHostNetworkInterfaceAction()
+action.interfaceUuid = "b6731de9831a3db0921965c0fd0705a4"
+action.description = "description"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateHostNetworkInterfaceAction.Result res = action.call()
+```
+
+</APIPage>

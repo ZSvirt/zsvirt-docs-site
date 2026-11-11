@@ -1,0 +1,11 @@
+{
+  "title": "事件",
+  "pages": [
+    "get-all-event-metadata",
+    "get-event-data",
+    "update-event-data",
+    "query-event-record",
+    "query-event-log"
+  ],
+  "pagesIndex": "index"
+}

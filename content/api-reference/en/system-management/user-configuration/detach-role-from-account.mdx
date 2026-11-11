@@ -1,0 +1,69 @@
+---
+title: "Detach Role from Account"
+---
+
+<APIPage method="DELETE" path="/v1/identities/accounts/{accountUuid}/roles/{roleUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/identities/accounts/ac3ea9154a603cbcabbb1664dbcf66ef/roles/ca3f332b7ffd347fa30ba01be1176b96
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|roleUuid|String|url|Role UUID| |4.10.0|
+|accountUuid|String|url|Account UUID| |4.10.0|
+|deleteMode \(Optional\)|String|body|Deletion mode. This field is not effective for the current API.| |4.10.0|
+|system Tags \(Optional\)|List|body|System tags| |4.10.0|
+|userTags \(Optional\)|List|body|User tags| |4.10.0|
+
+## API Response
+This API returns an empty JSON structure `{}` on success. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DetachRoleFromAccountAction action = new DetachRoleFromAccountAction();
+action.roleUuid = "ca3f332b7ffd347fa30ba01be1176b96";
+action.accountUuid = "ac3ea9154a603cbcabbb1664dbcf66ef";
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DetachRoleFromAccountAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+DetachRoleFromAccountAction action = DetachRoleFromAccountAction()
+action.roleUuid = "ca3f332b7ffd347fa30ba01be1176b96"
+action.accountUuid = "ac3ea9154a603cbcabbb1664dbcf66ef"
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DetachRoleFromAccountAction.Result res = action.call()
+
+```
+
+</APIPage>

@@ -1,0 +1,543 @@
+---
+title: "创建虚拟机自定义操作系统规范"
+---
+
+<APIPage method="POST" path="/v1/vm-custom-specifications">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "custom-specification-for-vm-1",
+    "description": "Test",
+    "platform": "Windows",
+    "hostname": "vm-1",
+    "rootPassword": "password",
+    "generateSID": true,
+    "domainMode": "Domain",
+    "domainName": "zsv.test",
+    "domainUsername": "administrator",
+    "domainPassword": "password",
+    "organization": "OU=zsv,DC=zsv,DC=test"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"custom-specification-for-vm-1","description":"Test","platform":"Windows","hostname":"vm-1","rootPassword":"password","generateSID":true,"domainMode":"Domain","domainName":"zsv.test","domainUsername":"administrator","domainPassword":"password","organization":"OU=zsv,DC=zsv,DC=test"}}' \
+http://localhost:8080/zstack/v1/vm-custom-specifications
+```
+
+参数列表
+
+<table id="table_sgc_fcm_lhc"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+name
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+资源名称
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.18
+
+</td></tr><tr><td>
+
+description \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+资源的详细描述
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.18
+
+</td></tr><tr><td>
+
+platform
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+虚拟机操作系统平台类型
+
+</td><td>
+
+-   Linux
+-   Windows
+-   WindowsVirtio
+-   Other
+-   Paravirtualization
+
+</td><td>
+
+4.10.18
+
+</td></tr><tr><td>
+
+hostname \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+主机名称
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.18
+
+</td></tr><tr><td>
+
+rootPassword \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+管理员密码
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.18
+
+</td></tr><tr><td>
+
+generateSID \(可选\)
+
+</td><td>
+
+Boolean
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+是否生成SID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.18
+
+</td></tr><tr><td>
+
+domainMode \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+加域模式
+
+</td><td>
+
+-   WorkGroup
+-   Domain
+
+</td><td>
+
+4.10.18
+
+</td></tr><tr><td>
+
+domainName \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+域名称或工作组名称
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.18
+
+</td></tr><tr><td>
+
+domainUsername \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+域用户名
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.18
+
+</td></tr><tr><td>
+
+domainPassword \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+域用户密码
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.18
+
+</td></tr><tr><td>
+
+organization \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+组织单位
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.18
+
+</td></tr><tr><td>
+
+resourceUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+资源UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.18
+
+</td></tr><tr><td>
+
+tagUuids \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(包含在`params`结构中\)
+
+</td><td>
+
+标签UUID列表
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.18
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.18
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.18
+
+</td></tr></tbody>
+</table>
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "ff0a9e874342368bb28daaf2c9b3cc00",
+    "vmInstanceUuid": "ff01ec80fd11327cba7519b66119d900",
+    "name": "custom-specification-for-vm-1",
+    "description": "Test",
+    "platform": "Windows",
+    "hostname": "vm-1",
+    "rootPassword": "password",
+    "generateSID": true,
+    "domainMode": "Domain",
+    "domainName": "zsv.test",
+    "domainUsername": "test",
+    "domainPassword": "password",
+    "organization": "OU=zsv,DC=zsv,DC=test"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean|请求是否成功|4.10.18|
+|inventory|VmCustomSpecificationInventory|详情参考[inventory](#p_zlw_tcm_lhc)|4.10.18|
+|error|ErrorCode|详情参考[error](#p_ir4_1xv_dfc)|4.10.18|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.10.18|
+|vmInstanceUuid|String|虚拟机UUID|4.10.18|
+|name|String|资源名称|4.10.18|
+|description|String|资源的详细描述|4.10.18|
+|platform|String|虚拟机操作系统平台类型|4.10.18|
+|hostname|String|主机名称|4.10.18|
+|generateSID|Boolean|是否生成SID|4.10.18|
+|domainName|String|域名称或工作组名称|4.10.18|
+|domainUsername|String|域用户名|4.10.18|
+|organization|String|组织单位|4.10.18|
+|createDate|Timestamp|创建时间|4.10.18|
+|lastOpDate|Timestamp|最后一次修改时间|4.10.18|
+|domainMode|VmCustomSpecificationDomainMode|详情参考[domainMode](#p_jjk_tcm_lhc)|4.10.18|
+
+### domainMode
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|WorkGroup|VmCustomSpecificationDomainMode|工作组|4.10.18|
+|Domain|VmCustomSpecificationDomainMode|域|4.10.18|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+CreateVmCustomSpecificationAction action = new CreateVmCustomSpecificationAction();
+action.name = "custom-specification-for-vm-1";
+action.description = "Test";
+action.platform = "Windows";
+action.hostname = "vm-1";
+action.rootPassword = "password";
+action.generateSID = true;
+action.domainMode = "Domain";
+action.domainName = "zsv.test";
+action.domainUsername = "administrator";
+action.domainPassword = "password";
+action.organization = "OU=zsv,DC=zsv,DC=test";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateVmCustomSpecificationAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = CreateVmCustomSpecificationAction()
+action.name = "custom-specification-for-vm-1"
+action.description = "Test"
+action.platform = "Windows"
+action.hostname = "vm-1"
+action.rootPassword = "password"
+action.generateSID = true
+action.domainMode = "Domain"
+action.domainName = "zsv.test"
+action.domainUsername = "administrator"
+action.domainPassword = "password"
+action.organization = "OU=zsv,DC=zsv,DC=test"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

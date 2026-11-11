@@ -1,0 +1,12 @@
+{
+  "title": "Manage Migration Tasks",
+  "pages": [
+    "index",
+    "create-task",
+    "sync-task",
+    "create-test-vm",
+    "cutover",
+    "delete-task"
+  ],
+  "pagesIndex": "index"
+}

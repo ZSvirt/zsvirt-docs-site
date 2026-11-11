@@ -1,0 +1,84 @@
+---
+title: "Get VM Capabilities"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/{uuid}/capabilities">
+
+Get the capabilities of a Virtual Machine to determine whether the Virtual Machine can perform specific operations. Currently defined capabilities include:
+
+|Name|Description|Type|
+|----|-----------|----|
+|LiveMigration|Whether live migration is supported|Boolean|
+|VolumeMigration|Whether root disk migration is supported|Boolean|
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/7a6c30c6de654cdf9d29b18a78c83a64/capabilities
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Virtual Machine UUID| |0.6|
+|systemTags \(Optional\)|List|query|System Tags| |0.6|
+|userTags \(Optional\)|List|query|User Tags| |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "capabilities": {
+    "LiveMigration": false,
+    "Reimage": false,
+    "VolumeMigration": true
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|capabilities|Map|Virtual Machine capabilities result|0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation succeeds, this field is null. For details, see [error](#p_gfg_pls_zz)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier of the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause. The error that triggered the current error. If there is no original error, this field is null|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+GetVmCapabilitiesAction action = new GetVmCapabilitiesAction();
+action.uuid = "2323ae79b3894f0a85018a2a458247aa";
+action.sessionId = "05233d04bc144482a5b4a74fdea06408";
+GetVmCapabilitiesAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetVmCapabilitiesAction action = GetVmCapabilitiesAction()
+action.uuid = "0fb5a5b4a3e54314ba1c5fa2e07384d2"
+action.sessionId = "71df5d9cf30845dba8d1ef804bdf2108"
+GetVmCapabilitiesAction.Result res = action.call()
+```
+
+</APIPage>

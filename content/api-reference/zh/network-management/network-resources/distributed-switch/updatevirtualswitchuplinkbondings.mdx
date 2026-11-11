@@ -1,0 +1,333 @@
+---
+title: "更新交换机上行链路绑定配置"
+---
+
+<APIPage method="PUT" path="/v1/l2-networks/virtual-switch/{uuid}/uplink-bondings">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateVirtualSwitchUplinkBondings": {
+    "mode": "active-backup 1",
+    "xmitHashPolicy": "layer2 0"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateVirtualSwitchUplinkBondings":{"mode":"active-backup 1","xmitHashPolicy":"layer2 0"}}' http://localhost:8080/zstack/v1/l2-networks/virtual-switch/d558d0c667c735cbb2c9a34ef7e7c5c3/uplink-bondings
+```
+
+参数列表
+
+<table id="table_qsj_1bk_51c"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+资源的UUID，唯一标示该资源
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+mode
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`updateVirtualSwitchUplinkBondings`结构中\)
+
+</td><td>
+
+绑定模式
+
+</td><td>
+
+-   802.3ad
+-   active-backup
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+xmitHashPolicy \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`updateVirtualSwitchUplinkBondings`结构中\)
+
+</td><td>
+
+哈希策略
+
+</td><td>
+
+-   layer2
+-   layer2+3
+-   layer3+4
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr></tbody>
+</table>
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "f05eb769fbba34388625771c17666383",
+      "hostUuid": "7b9b76f4f9663d27a72fb81f4b4ad5b0",
+      "bondingName": "bond0",
+      "mode": "active-backup 1",
+      "xmitHashPolicy": "layer2 0",
+      "miiStatus": "up",
+      "mac": "ac:1f:6b:93:6c:8c",
+      "ipAddresses": [
+        "172.20.0.116/16"
+      ],
+      "miimon": 100,
+      "type": "LinuxBonding",
+      "allSlavesActive": true,
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM",
+      "slaves": [
+        {
+          "uuid": "96b9aafc2c9c3b9c862771543dc9bdc8",
+          "hostUuid": "7b9b76f4f9663d27a72fb81f4b4ad5b0",
+          "bondingUuid": "f05eb769fbba34388625771c17666383",
+          "interfaceName": "eno1",
+          "interfaceType": "bondingSlave",
+          "speed": 1000,
+          "slaveActive": true,
+          "carrierActive": true,
+          "mac": "ac:1f:6b:93:6c:8c",
+          "createDate": "Nov 14, 2017 10:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+        },
+        {
+          "uuid": "8bf85f6d802438588dc292908bb4e928",
+          "hostUuid": "7b9b76f4f9663d27a72fb81f4b4ad5b0",
+          "bondingUuid": "f05eb769fbba34388625771c17666383",
+          "interfaceName": "eno2",
+          "interfaceType": "bondingSlave",
+          "speed": 1000,
+          "slaveActive": false,
+          "carrierActive": false,
+          "mac": "ac:1f:6b:93:6c:8c",
+          "createDate": "Nov 14, 2017 10:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+        }
+      ]
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.1.0|
+|inventories|List|详情参考[inventories](#p_lpn_vlw_51c)|4.1.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_wfd_jmw_51c)|4.1.0|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.1.0|
+|hostUuid|String|主机UUID|4.1.0|
+|bondingName|String|Bond名称|4.1.0|
+|bondingType|String|Bond应用状态，有noBridge、bridgeSlave|4.1.0|
+|speed|Long|Bond速率|4.1.0|
+|mode|String|Bond模式|4.1.0|
+|xmitHashPolicy|String|哈希策略|4.1.0|
+|miiStatus|String|mii状态|4.1.0|
+|mac|String|MAC地址|4.1.0|
+|ipAddresses|List|IP地址|4.1.0|
+|gateway|String|网关地址|4.1.0|
+|callBackIp|String|回调地址|4.1.0|
+|miimon|Long|mii监控间隔|4.1.0|
+|type|String|Bond类型|4.1.0|
+|allSlavesActive|Boolean| |4.1.0|
+|description|String|资源的详细描述|4.1.0|
+|createDate|Timestamp|创建时间|4.1.0|
+|lastOpDate|Timestamp|最后一次修改时间|4.1.0|
+|slaves|List|详情参考[slaves](#p_vpd_gmw_51c)|4.1.0|
+
+### slaves
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.1.0|
+|hostUuid|String|主机UUID|4.1.0|
+|bondingUuid|String|Bond UUID|4.1.0|
+|interfaceModel|String|网卡型号| |
+|vendorId|String|产商ID| |
+|deviceId|String|设备ID| |
+|subvendorId|String|子产商IDD| |
+|subdeviceId|String|子设备ID| |
+|interfaceName|String|网卡名称|4.1.0|
+|interfaceType|String|网卡应用状态，有nomaster、bridgeSlave、bondSlave|4.1.0|
+|speed|Long|网卡速率|4.1.0|
+|slaveActive|Boolean|Bond链路状态|4.1.0|
+|carrierActive|Boolean|物理链路状态|4.1.0|
+|ipAddresses|List|IP地址|4.1.0|
+|gateway|String|网关地址|4.1.0|
+|mac|String|MAC地址|4.1.0|
+|callBackIp|String|回调地址|4.1.0|
+|pciDeviceAddress|String|网卡PCI地址|4.1.0|
+|offloadStatus|String| |4.1.0|
+|description|String|资源的详细描述|4.1.0|
+|createDate|Timestamp|创建时间|4.1.0|
+|lastOpDate|Timestamp|最后一次修改时间|4.1.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.1.0|
+|description|String|错误的概要描述|4.1.0|
+|details|String|错误的详细信息|4.1.0|
+|elaboration|String|保留字段，默认为null|4.1.0|
+|opaque|LinkedHashMap|保留字段，默认为null|4.1.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.1.0|
+
+## SDK示例
+Java SDK
+
+```
+UpdateVirtualSwitchUplinkBondingsAction action = new UpdateVirtualSwitchUplinkBondingsAction();
+action.uuid = "d558d0c667c735cbb2c9a34ef7e7c5c3";
+action.mode = "active-backup 1";
+action.xmitHashPolicy = "layer2 0";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateVirtualSwitchUplinkBondingsAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateVirtualSwitchUplinkBondingsAction action = UpdateVirtualSwitchUplinkBondingsAction()
+action.uuid = "d558d0c667c735cbb2c9a34ef7e7c5c3"
+action.mode = "active-backup 1"
+action.xmitHashPolicy = "layer2 0"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateVirtualSwitchUplinkBondingsAction.Result res = action.call()
+```
+
+</APIPage>

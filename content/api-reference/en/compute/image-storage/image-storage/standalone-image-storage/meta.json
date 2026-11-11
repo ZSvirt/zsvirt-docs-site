@@ -1,0 +1,12 @@
+{
+  "title": "Standalone Image Storage Related Interfaces",
+  "pages": [
+    "add-image-store-backup-storage",
+    "query-image-store-backup-storage",
+    "reconnect-image-store-backup-storage",
+    "update-image-store-backup-storage",
+    "reclaim-space-from-image-store",
+    "set-image-store-backup-storage-quota"
+  ],
+  "pagesIndex": "index"
+}

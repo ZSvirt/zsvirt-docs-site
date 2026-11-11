@@ -1,0 +1,11 @@
+{
+  "title": "裸金属管理",
+  "pages": [
+    "bare-metal-template",
+    "bare-metal-cluster",
+    "bare-metal-instance",
+    "index-4",
+    "bare-metal-network-apis"
+  ],
+  "pagesIndex": "index"
+}

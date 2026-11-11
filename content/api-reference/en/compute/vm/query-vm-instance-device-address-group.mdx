@@ -1,0 +1,118 @@
+---
+title: "Query Virtual Machine Device Address Group"
+---
+
+<APIPage method="GET" path="/v1/vmInstance/device/address/group" altPaths={["/v1/vmInstance/device/address/group/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vmInstance/device/address/group?q=uuid=15faf301daf53b75a5292b501110397e
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vmInstance/device/address/group/ce8802c036843741bfd429cddb5c0f26
+```
+
+Queryable Fields
+
+Run the CLI command tool, enter `QueryVmInstanceDeviceAddressGroup` and press Tab to view all queryable fields and resource names that can be queried across tables.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "77cc648bcbda321f9b5982627618b57f",
+      "resourceUuid": "b28bd07303de3b8bb88ecc45778ebc10",
+      "createDate": "Nov 14, 2017 2:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 2:20:57 PM",
+      "addressList": [
+        {
+          "id": 1,
+          "resourceUuid": "664783c1fb2432b6944602836377d61f",
+          "vmInstanceUuid": "7f29c11b15b3348a95bc368b4ab60efb",
+          "deviceAddress": "{\"bus\":\"00\",\"domain\":\"0000\",\"slot\":\"0d\",\"function\":\"0\"}",
+          "addressGroupUuid": "77cc648bcbda321f9b5982627618b57f",
+          "metadata": "{\"uuid\":\"726104d38c423fecac45c39a258b1338\",\"name\":\"Root-Volume-For-VM-70f0a99c825d3bed98c95932e5cd6d0b\",\"primaryStorageUuid\":\"0a2c36ffd5ff39d6a4ffd3d6a2a60ea8\",\"vmInstanceUuid\":\"70f0a99c825d3bed98c95932e5cd6d0b\",\"diskOfferingUuid\":\"a0c51ff80bba366d8350d63d02d56346\",\"rootImageUuid\":\"8473469c3e833afbb02db9ed227787bd\",\"installPath\":\"/zstack_ps/rootVolumes/acct-36c27e8ff05c4780bf6d2fa65700f22e/vol-726104d38c423fecac45c39a258b1338/726104d38c423fecac45c39a258b1338.qcow2\",\"type\":\"Root\",\"format\":\"qcow2\",\"size\":107374182400,\"actualSize\":21474836480,\"deviceId\":0,\"state\":\"Enabled\",\"status\":\"Ready\",\"createDate\":\"Nov 14, 2017 2:20:57 PM\",\"lastOpDate\":\"Nov 14, 2017 2:20:57 PM\"}",
+          "metadataClass": "org.zstack.header.vm.devices.VmInstanceDeviceAddressGroupInventory",
+          "createDate": "Nov 14, 2017 2:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+        }
+      ]
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.4.24|
+|inventories|List|For details, see [inventories](#p_sz4_zml_s2c)|4.4.24|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation is successful, this field is null. For details, see [error](#p_t2p_bnl_s2c)|4.4.24|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifying the resource|4.4.24|
+|resourceUuid|String|Resource UUID|4.4.24|
+|vmInstanceUuid|String|Virtual Machine UUID|4.4.24|
+|createDate|Timestamp|Create time|4.4.24|
+|lastOpDate|Timestamp|Last modification time|4.4.24|
+|addressList|List|For details, see [addressList](#p_p2m_rnl_s2c)|4.4.24|
+
+### addressList
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|id|long| |4.4.24|
+|resourceUuid|String|Resource UUID|4.4.24|
+|vmInstanceUuid|String|Virtual Machine UUID|4.4.24|
+|deviceAddress|String| |4.4.24|
+|addressGroupUuid|String| |4.4.24|
+|metadata|String| |4.4.24|
+|metadataClass|String| |4.4.24|
+|createDate|Timestamp|Create time|4.4.24|
+|lastOpDate|Timestamp|Last modification time|4.4.24|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, default is null|0.6|
+|opaque|LinkedHashMap|Reserved field, default is null|0.6|
+|cause|ErrorCode|Root cause: the source error that triggered the current error. If there is no original error, this field is null|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+QueryVmInstanceDeviceAddressGroupAction action = new QueryVmInstanceDeviceAddressGroupAction();
+action.conditions = asList("uuid=c6ac07294e923ed09d8ac26fb0bcd2de");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryVmInstanceDeviceAddressGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryVmInstanceDeviceAddressGroupAction action = QueryVmInstanceDeviceAddressGroupAction()
+action.conditions = ["uuid=089878d0a83330a8a0a07c878266fc52"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryVmInstanceDeviceAddressGroupAction.Result res = action.call()
+```
+
+</APIPage>

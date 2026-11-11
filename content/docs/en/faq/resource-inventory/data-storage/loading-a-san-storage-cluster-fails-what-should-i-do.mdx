@@ -1,0 +1,17 @@
+---
+title: "Loading a SAN storage cluster fails. What should I do?"
+---
+
+## Cause
+The LUN mapped by the SAN storage cannot be recognized by all hosts in the cluster.
+
+## Solution
+-   Run the following command to verify that all hosts in the cluster can recognize the mapped LUN:
+
+    ```
+    [root@localhost ~]# multipath -ll 
+    ```
+
+    See [Figure 1](#fig_ork_scs_45b):
+
+    ![Recognizing the mapped LUN](/docs/en/faq/images/ZStack_FAQ_Summary_0013_3_1.png)

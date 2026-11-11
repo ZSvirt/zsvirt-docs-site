@@ -1,0 +1,16 @@
+---
+title: "How do I manually switch the active and standby NICs in a bond?"
+---
+
+## Solution
+1.  Run the following command to identify the current active NIC and verify that both the active and standby NICs are in the up state:
+
+    ```
+    [root@localhost ~]# cat /proc/net/bonding/bond0  //bond0 is the bond name in your environment
+    ```
+
+2.  Run the following command to switch the active and standby NICs:
+
+    ```
+    [root@localhost ~]# ifenslave -c bond0 eth0  //bond0 is the bond name; eth0 is the standby NIC in the bond
+    ```

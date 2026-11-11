@@ -1,0 +1,13 @@
+---
+title: "邮件无法接收告警消息，如何解决？"
+---
+
+## 原因
+双管理节点环境未配置DNS服务器，无法解析邮箱服务器域名。
+
+## 解决方案
+-   分别在两个管理节点主机`/etc/resolv.conf`文件下添加**nameserver 114.114.114.114**配置即可。
+
+    如[Figure 1](#fig_lm2_2q5_p5b)所示：
+
+    ![修改配置](/docs/faq/images/ZStack_FAQ_Summary_0040_1_1.png)

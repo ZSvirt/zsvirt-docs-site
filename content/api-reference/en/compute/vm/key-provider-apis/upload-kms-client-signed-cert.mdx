@@ -1,0 +1,118 @@
+---
+title: "Upload a Signed KMS Client Certificate"
+---
+
+<APIPage method="PUT" path="/v1/key-providers/kms/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "uploadKmsClientSignedCert": {
+    "signedClientCertPem": "-----BEGIN CERTIFICATE-----\n...\n-----END CERTIFICATE-----"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding example, the `systemTags` and `userTags` fields can be omitted. They are listed to indicate that the body can include these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"uploadKmsClientSignedCert":{"signedClientCertPem":"-----BEGIN CERTIFICATE-----\n...\n-----END CERTIFICATE-----"}}' \
+http://localhost:8080/zstack/v1/key-providers/kms/ff0a9250e11b3fe5a553d61be176d300/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Optional Value|Since|
+|----|----|--------|-----------|--------------|-----|
+|signedClientCertPem|String|body \(contained in `uploadKmsClientSignedCert` structure\)|Signed client certificate| |5.0.0|
+|uuid|String|url|Resource UUID, which uniquely identifies the resource| |5.0.0|
+|systemTags \(optional\)|List|body|System tags| |5.0.0|
+|userTags \(optional\)|List|body|User tags| |5.0.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "ff0fe4c52fce34ff9ffca4d3a0fd4d00",
+    "kmsUuid": "ff0a9250e11b3fe5a553d61be176d300",
+    "identityType": "CSR",
+    "clientCertPem": "-----BEGIN CERTIFICATE-----\\n...\\n-----END CERTIFICATE-----",
+    "csrPem": "-----BEGIN CERTIFICATE REQUEST-----\\n...\\n-----END CERTIFICATE REQUEST-----",
+    "certExpiredDate": "Nov 14, 2017 2:20:57 PM",
+    "createDate": "Nov 14, 2017 2:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+  }
+}
+```
+
+|Name|Type|Description|Since|
+|----|----|-----------|-----|
+|success|boolean| |5.0.0|
+|inventory|KmsIdentityInventory|For details, see [inventory](#p_zxh_ws2_2jc)|5.0.0|
+|error|ErrorCode|For details, see [error](#p_t4f_pp2_2jc)|5.0.0|
+
+### inventory
+|Name|Type|Description|Since|
+|----|----|-----------|-----|
+|uuid|String|Resource UUID, which uniquely identifies the resource|5.0.0|
+|kmsUuid|String|KmsUUID|5.0.0|
+|identityType|String|Identity type|5.0.0|
+|clientCertPem|String|KMSClient certificate|5.0.0|
+|csrPem|String|CSR content|5.0.0|
+|certExpiredDate|Timestamp|Client certificate expiration time|5.0.0|
+|createDate|Timestamp|Creation time|5.0.0|
+|lastOpDate|Timestamp|Last modification time|5.0.0|
+
+### error
+|Name|Type|Description|Since|
+|----|----|-----------|-----|
+|code|String|Error code, which is the globally unique identifier of the error, for example, SYS.1000 or HOST.1001|0.6|
+|description|String|Summary description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. The default value is null.|0.6|
+|opaque|LinkedHashMap|Reserved field. The default value is null.|0.6|
+|cause|ErrorCode|Root error that caused the current error. If no root error exists, this field is null.|0.6|
+
+## SDK Example
+Java SDK
+
+```
+UploadKmsClientSignedCertAction action = new UploadKmsClientSignedCertAction();
+action.uuid = "ff0a9250e11b3fe5a553d61be176d300";
+action.signedClientCertPem = "-----BEGIN CERTIFICATE-----
+...
+-----END CERTIFICATE-----";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UploadKmsClientSignedCertAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = UploadKmsClientSignedCertAction()
+action.uuid = "ff0a9250e11b3fe5a553d61be176d300"
+action.signedClientCertPem = "-----BEGIN CERTIFICATE-----
+...
+-----END CERTIFICATE-----"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

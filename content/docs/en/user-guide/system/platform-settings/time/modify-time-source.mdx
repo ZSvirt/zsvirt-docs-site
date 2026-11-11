@@ -1,0 +1,23 @@
+---
+title: 'Modify Time Server Configuration'
+---
+
+The following NTP modes are supported:
+
+-   Internal: Uses a management node or host as the time server for the platform system time to synchronize time with other nodes on the platform. You can add a maximum of two internal time servers.
+-   External: Uses an external node as the external time server to synchronize time with all nodes on the platform. You can add a maximum of two external time servers.
+-   Internal and external: Uses an external node as the external time server and a management node or host as the internal time sever. After the external time server synchronizes with the internal time server, the internal time server then synchronizes time with other nodes on the platform. You can add a maximum of two internal time servers and two external time servers.
+
+1.  In the navigation pane, choose **System Management** &gt; **Time Configuration**.
+
+2.  On the Time Configuration page, click **Modify Configuration**.
+
+3.  On the Time Configuration dialog, set the following parameters:
+
+    -   **NTP Mode**: Modify the NTP mode. Options include internal, external, and internal and external.
+    -   **Time Server**: add time servers based on the selected NTP mode. You can add a maximum of two internal time servers and two external time servers. External time servers can be added via IP or domain name.
+    <Callout type="info">
+    -   To modify a time server, make sure the management node is in connected status.
+    -   Modifying the time server may cause platform node time inconsistencies, monitoring data deviations or errors, and impact running tasks. Carefully evaluate before making changes.
+    </Callout>
+4.  Confirm the configuration and click **OK**.

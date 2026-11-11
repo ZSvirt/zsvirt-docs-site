@@ -1,0 +1,63 @@
+---
+title: "Query HTTP Endpoints"
+---
+
+<APIPage method="GET" path="/v1/sns/application-endpoints/http" altPaths={["/v1/sns/application-endpoints/http/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/sns/application-endpoints/http?q=url=http://url
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/sns/application-endpoints/http/cbd9163bb4683e10b8a5025621e36862
+```
+
+Queryable Fields
+
+Run the zstack-cli command line tool, type `QuerySNSHttpEndpoint` and press the Tab key to view all queryable fields and cross-table queryable resource names.
+
+## API Response
+This API returns an empty JSON structure **`{}`** on success. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+QuerySNSHttpEndpointAction action = new QuerySNSHttpEndpointAction();
+action.conditions = asList("url=http://url");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QuerySNSHttpEndpointAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QuerySNSHttpEndpointAction action = QuerySNSHttpEndpointAction()
+action.conditions = ["url=http://url"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QuerySNSHttpEndpointAction.Result res = action.call()
+```
+
+</APIPage>

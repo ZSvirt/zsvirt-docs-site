@@ -1,0 +1,97 @@
+---
+title: "查询分布式存储OSD组"
+---
+
+<APIPage method="GET" path="/v1/primary-storage/ceph/osdgroups" altPaths={["/v1/primary-storage/ceph/osdgroups/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/primary-storage/ceph/osdgroups\
+q=uuid=b2c53eee77bc3bfea5374d417babff07
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/primary-storage/ceph/osdgroups/9ee0973b0e79393e9f7d03a6e3a6f645
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryCephOsdGroup`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "osds": "osd.1",
+      "availableCapacity": 0.0,
+      "availablePhysicalCapacity": 1024.0,
+      "totalPhysicalCapacity": 1024.0,
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.5.0|
+|inventories|List|详情参考[inventories](#p_rxy_gts_qcb)|4.5.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_jrc_hts_qcb)|4.5.0|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|primaryStorageUuid|String|数据存储UUID|4.5.0|
+|osds|String| |4.5.0|
+|availableCapacity|long| |4.5.0|
+|availablePhysicalCapacity|long| |4.5.0|
+|totalPhysicalCapacity|long| |4.5.0|
+|createDate|Timestamp|创建时间|4.5.0|
+|lastOpDate|Timestamp|最后一次修改时间|4.5.0|
+|uuid|String|资源的UUID，唯一标示该资源|4.5.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.5.0|
+|description|String|错误的概要描述|4.5.0|
+|details|String|错误的详细信息|4.5|
+|elaboration|String|保留字段，默认为null|4.5.0|
+|opaque|LinkedHashMap|保留字段，默认为null|4.5.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.5.0|
+
+## SDK示例
+Java SDK
+
+```
+QueryCephOsdGroupAction action = new QueryCephOsdGroupAction();
+action.conditions = asList("uuid=3e479fc0962c3561a854d868fce5ab3e");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryCephOsdGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryCephOsdGroupAction action = QueryCephOsdGroupAction()
+action.conditions = ["uuid=45906504e89335809e54a79897eb1357"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryCephOsdGroupAction.Result res = action.call()
+```
+
+</APIPage>

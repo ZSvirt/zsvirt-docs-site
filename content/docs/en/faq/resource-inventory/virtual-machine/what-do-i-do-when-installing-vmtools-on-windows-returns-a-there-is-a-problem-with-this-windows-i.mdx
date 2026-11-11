@@ -1,0 +1,30 @@
+---
+title: "What do I do when installing VMTools on Windows returns a \"There is a problem with this Windows Installer package. A program run as part of the setup did not finish as expected Contact your support personnel or package vendor\" prompt?"
+---
+
+## Cause
+Residual files from a previously installed older version of VMTools remain on the virtual machine. Clean up the installation files before reinstalling.
+
+## Solution
+1.  Try the following steps to resolve the issue:
+2.  Delete the registry keys and rebuild the MSDTC service \(Distributed Transaction Coordinator\). Open a command prompt as Administrator and run the following commands:
+
+    ```
+    reg delete HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\MSDTC /f
+    reg delete HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\MSDTC /f
+    reg delete HKEY_CLASSES_ROOT\CID /f
+    net stop msdtc
+    msdtc -uninstall
+    msdtc -install
+    ```
+
+3.  Restart the virtual machine.
+
+4.  Run the following commands in the command prompt to uninstall the older version of QGA:
+
+    ```
+    msiexec /a "c:\Program Files\GuestTools\qemu-ga.msi" targetdir="c:\Program Files"
+    "c:\Program Files\QEMU Guest Agent\Qemu-ga\qemu-ga.exe" -s vss-uninstall
+    ```
+
+5.  Reinstall VMTools.

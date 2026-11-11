@@ -1,0 +1,61 @@
+---
+title: "Query Microsoft Teams Endpoints"
+---
+
+<APIPage method="GET" path="/v1/sns/application-endpoints/microsoft-teams">
+
+```
+GET zstack/v1/sns/application-endpoints/microsoft-teams/{uuid}
+```
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/sns/application-endpoints/microsoft-teams?q=url=http://teams-url
+```
+
+Queryable Fields
+
+Run the CLI command line tool, type `QuerySNSMicrosoftTeamsEndpoint` and press the Tab key to view all queryable fields and cross-table queryable resource names.
+
+## API Response
+Response Example
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+QuerySNSMicrosoftTeamsEndpointAction action = new QuerySNSMicrosoftTeamsEndpointAction();
+action.conditions = asList("url=http://teams-url");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QuerySNSMicrosoftTeamsEndpointAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QuerySNSMicrosoftTeamsEndpointAction action = QuerySNSMicrosoftTeamsEndpointAction()
+action.conditions = ["url=http://teams-url"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QuerySNSMicrosoftTeamsEndpointAction.Result res = action.call()
+```
+
+</APIPage>

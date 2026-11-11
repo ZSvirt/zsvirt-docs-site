@@ -1,0 +1,25 @@
+---
+title: 'Upgrade the Migration Service'
+---
+
+-   Ensure that no migration tasks are in progress. Otherwise, you cannot upgrade the migration service.
+-   Ensure that the image storage has sufficient storage space before you upload the migration service upgrade package.
+
+1.  In the navigation pane, select **O&M Management** &gt; **Migration Service** &gt; **Migration Overview**.
+
+2.  On the Migration Overview page, click **Upgrade**.
+
+3.  In the Upgrade Migration Service dialog, set the following parameters:
+
+    -   **Migration Service Version**: Displays the currently deployed service version.
+    -   **Upload Method**: Select the method for uploading the installation package, including URL and local upload.
+    -   **URL/Installation Package**: Enter a URL or upload the installation package file.
+    -   **Storage Path**: Specify a directory path to store the uploaded upgrade package and its decompressed files.
+
+        <Callout type="info">
+        -   Ensure that the directory has sufficient available space. Otherwise, the installation fails.
+        -   Do not use system directories such as `/`, `/dev`, `/proc`, `/sys`, `/usr/bin`, `/bin`, or `/opt`. Using these directories might cause server issues.
+        </Callout>
+4.  Click **OK**.
+
+If the upgrade fails, you can upgrade again. You can use the existing upgrade package or upload a new one.

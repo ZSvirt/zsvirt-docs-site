@@ -1,0 +1,102 @@
+---
+title: "Query IP Address"
+---
+
+<APIPage method="GET" path="/v1/l3-networks/ip-address" altPaths={["/v1/l3-networks/ip-address{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Sample
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/l3-networks/ip-address
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/l3-networks/ip-address/87b2ab50f6c13ebb9dd73ca46bb22bc7
+```
+
+Query Fields
+
+Run the CLI command tool, enter `QueryIpAddress`, and press the Tab key to view all queryable fields and resource names that can be queried across tables.
+
+## API Response
+Sample Response
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "3ccfbfd6bd483a5eaeabed00b284f4fc",
+      "ipRangeUuid": "1b3a29978ea73f0db4ce8d8c2d0bd479",
+      "l3NetworkUuid": "c11b366475f836078e5aa86469de2eef",
+      "ipVersion": 4.0,
+      "ip": "192.168.1.100",
+      "netmask": "255.255.255.0",
+      "gateway": "192.168.1.1",
+      "ipInLong": 0.0,
+      "vmNicUuid": "28e22f67b2893b208547333dfef7cfa8"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation fails, or vice versa. For more information, see [errot](#p_yvv_stw_pfb)|3.1.0|
+|inventories|List|For more information, see [inventories](#p_rjb_ttw_pfb)|3.1.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code, which is a numbered or alphanumeric code that specifies an error. For example, SYS.1000, HOST.1001|3.1.0|
+|description|String|The brief description of the error.|3.1.0|
+|details|String|The details about the error.|3.1.0|
+|elaboration|String|The reserved field. Default value: null|3.1.0|
+|opaque|LinkedHashMap|The reserved field. Default value: null|3.1.0|
+|cause|ErrorCode|The root error, which is the associated root cause of the current error. If no root error exists, this parameter is null|3.1.0|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The resource UUID, which uniquely identifies the resource.|3.1.0|
+|ipRangeUuid|String|The IP range UUID.|3.1.0|
+|l3NetworkUuid|String|The L3 Network UUID.|3.1.0|
+|ipVersion|Integer|The IP protocol number.|3.1.0|
+|ip|String|The IP address.|3.1.0|
+|netmask|String|The network mask.|3.1.0|
+|gateway|String|The gateway address.|3.1.0|
+|usedFor|String| |3.1.0|
+|ipInLong|long| |3.1.0|
+|vmNicUuid|String|The VM NIC UUID.|3.1.0|
+|createDate|Timestamp|The creation date.|3.1.0|
+|lastOpDate|Timestamp|The last operation date.|3.1.0|
+
+## SDK Sample
+Java SDK
+
+```
+QueryIpAddressAction action = new QueryIpAddressAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryIpAddressAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryIpAddressAction action = QueryIpAddressAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryIpAddressAction.Result res = action.call()
+```
+
+</APIPage>

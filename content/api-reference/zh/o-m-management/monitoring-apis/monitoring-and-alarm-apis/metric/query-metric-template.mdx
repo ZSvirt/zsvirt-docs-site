@@ -1,0 +1,101 @@
+---
+title: "查询metric数据模板"
+---
+
+<APIPage method="GET" path="/v1/zwatch/metrics/httpreceivers/templates" altPaths={["/v1/zwatch/metrics/httpreceivers/templates/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zwatch/metrics/httpreceivers/templates?q=receiverUuid=13213154f64e33bb8ad461956981a6e2
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zwatch/metrics/httpreceivers/templates/98a42f1af96e3c89b59e87bb20cc6421
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryMetricTemplate`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "77fa620b8d36311ca413c1bfc661c207",
+      "name": "CloudMonitor",
+      "url": "http://127.0.0.1/xxx",
+      "createDate": "Nov 14, 2017 2:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 2:20:57 PM",
+      "state": "Enabled"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|inventories|List|详情参考[inventories](#p_hvb_lq1_w2c)|0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_pjs_kq1_w2c)|0.6|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|name|String|资源名称|0.6|
+|url|String| |0.6|
+|description|String|资源的详细描述|0.6|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+|state|ReceiverState|详情参考[state](#p_dzw_kq1_w2c)|0.6|
+
+### state
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Enabled|ReceiverState| |0.6|
+|Disabled|ReceiverState| |0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+QueryMetricTemplateAction action = new QueryMetricTemplateAction();
+action.conditions = asList("receiverUuid=21eee98608ce3cc580d7572e6ee47fea");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryMetricTemplateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryMetricTemplateAction action = QueryMetricTemplateAction()
+action.conditions = ["receiverUuid=aca6437c53a4348eb6d8c20fe0cf054e"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryMetricTemplateAction.Result res = action.call()
+```
+
+</APIPage>

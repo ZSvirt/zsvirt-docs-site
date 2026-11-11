@@ -1,0 +1,10 @@
+{
+  "title": "事件订阅",
+  "pages": [
+    "subscribe-event",
+    "unsubscribe-event",
+    "query-event-subscription",
+    "update-event-subscription-label"
+  ],
+  "pagesIndex": "index"
+}

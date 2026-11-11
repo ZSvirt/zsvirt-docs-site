@@ -1,0 +1,8 @@
+{
+  "title": "裸金属管理",
+  "pages": [
+    "a-bare-metal-chassis-cannot-retrieve-hardware-information-what-should-i-do",
+    "creating-a-bare-metal-instance-on-distributed-storage-failed-how-do-i-resolve-this"
+  ],
+  "pagesIndex": "index"
+}

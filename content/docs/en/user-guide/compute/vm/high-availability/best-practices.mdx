@@ -1,0 +1,18 @@
+---
+title: 'Implement HA Policy in Business Practices'
+---
+
+Assume you have deployed four business virtual machines on Host A to support MySQL database services. To ensure high availability, if Host A's service network adapter fails, all four virtual machines should be migrated to another host. In this scenario, set the high availability mode for these virtual machines to **NeverStop**, configure the policy to trigger a **migration** when a service network adapter failure occurs, and ensure there are sufficient resources available on other hosts within the platform.
+
+To configure the high availability policy for this scenario, follow these steps:
+
+1.  Enable the high availability policy: In the ZSvirt platform, click **Menu** &gt; **Business Reliability** &gt; **HA Policy**. Turn on the switch at the top of the **HA Policy** page.
+2.  Turn on the high availability switch for virtual machines:
+
+    You can set this up in two ways, with precedence order being: virtual machine level &gt; cluster level.
+
+    -   When creating a new virtual machine, turn on the **HA** switch to enable it.
+    -   Go to the cluster page where the virtual machine resides, then click **Modify Configuration** &gt; **Advanced Settings** &gt; **VM Settings**. Turn on the **VM HA** switch. This ensures that any new virtual machines created in this cluster will have the high availability switch turned on by default.
+3.  Configure the VM fault migration policy: Navigate to the **HA Policy** &gt; **Migrate Strategy** page and turn on the switch corresponding to **Fail Over** under **Scenario A**. When this switch is enabled, the **Fail Over** switch under **Scenario C** will automatically turn on as well.
+
+After configuring the high availability policy for virtual machines, if Host A's service network adapter fails, the four virtual machines on that host will immediately migrate and start on Host B. You can search for related migration logs in **O&M Management** &gt; **Tasks** &gt; **HA Task**.

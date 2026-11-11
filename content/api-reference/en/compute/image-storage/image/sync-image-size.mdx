@@ -1,0 +1,139 @@
+---
+title: "Sync Image Size"
+---
+
+<APIPage method="PUT" path="/v1/images/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "syncImageSize": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"syncImageSize":{}}' \
+http://localhost:8080/zstack/v1/images/7d0fb69a716330bba16a3ee557ee0ab2/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Image UUID, uniquely identifies the Image| |0.6|
+|systemTags \(Optional\)|List|body|System Tags| |0.6|
+|userTags \(Optional\)|List|body|User Tags| |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "a5288a2598074daabb0450db1eaf0e69",
+    "name": "TinyLinux",
+    "size": 209715200.0,
+    "actualSize": 2329057.0,
+    "url": "http://192.168.1.20/share/images/tinylinux.qcow2",
+    "mediaType": "RootVolumeTemplate",
+    "platform": "Linux",
+    "format": "qcow2",
+    "backupStorageRefs": [
+      {
+        "id": 0.0,
+        "imageUuid": "a5288a2598074daabb0450db1eaf0e69",
+        "backupStorageUuid": "1a917c0b47c6475a996ed678f230419d",
+        "installPath": "ceph://zs-images/f0b149e053b34c7eb7fe694b182ebffd",
+        "status": "Ready"
+      }
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_enb_vd2_l1b)|0.6|
+|inventory|ImageInventory|See [inventory](#p_s5c_zd2_l1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause. The source error that triggered the current error. This field is null if there is no original error|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|name|String|Resource name|0.6|
+|description|String|Detailed description of the resource|0.6|
+|state|String| |0.6|
+|status|String| |0.6|
+|size|Long| |0.6|
+|actualSize|Long| |0.6|
+|md5Sum|String| |0.6|
+|url|String| |0.6|
+|mediaType|String| |0.6|
+|guestOsType|String| |0.6|
+|type|String| |0.6|
+|platform|String| |0.6|
+|format|String| |0.6|
+|system|Boolean| |0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+|backupStorageRefs|List|See [backupStorageRefs](#p_xbn_vd2_l1b)|0.6|
+
+### backupStorageRefs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|imageUuid|String|Image UUID|0.6|
+|backupStorageUuid|String|Image Storage UUID|0.6|
+|installPath|String| |0.6|
+|exportUrl|String| |0.6|
+|exportMd5Sum|String| |0.6|
+|status|String| |0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+SyncImageSizeAction action = new SyncImageSizeAction();
+action.uuid = "46638764dfcb47b2bf916bce60d50f9f";
+action.sessionId = "557e2989aa7d4178861c4fcacb85e40c";
+SyncImageSizeAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SyncImageSizeAction action = SyncImageSizeAction()
+action.uuid = "0073e30d1fd84cd0b47896e5bb22b205"
+action.sessionId = "e6896c8311824d718e330908ec04d9a6"
+SyncImageSizeAction.Result res = action.call()
+```
+
+</APIPage>

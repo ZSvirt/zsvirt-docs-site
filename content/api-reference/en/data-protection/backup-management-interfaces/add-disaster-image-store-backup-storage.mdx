@@ -1,0 +1,114 @@
+---
+title: "Reuse Image Storage as Backup Storage"
+---
+
+<APIPage method="POST" path="/v1/backup-storage/image-store/disaster">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "attachPoint": "/test-bs",
+    "endPoint": "test12345-snp99.cn-shanghai.nas.aliyuncs.com",
+    "hostname": "192.168.1.8",
+    "username": "admin",
+    "password": "admin%pass",
+    "sshPort": 22,
+    "url": "/data/imagestore",
+    "name": "ImageStore",
+    "importImages": false
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The `systemTags` and `userTags` fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"attachPoint":"/test-bs","endPoint":"test12345-snp99.cn-shanghai.nas.aliyuncs.com","hostname":"192.168.1.8","username":"admin","password":"admin%pass","sshPort":22,"url":"/data/imagestore","name":"ImageStore","importImages":false}}' \
+http://localhost:8080/zstack/v1/backup-storage/image-store/disaster
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|attachPoint \(optional\)|String|body \(included in the `params` structure\)| | |0.6|
+|endPoint \(optional\)|String|body \(included in the `params` structure\)| | |0.6|
+|hostname|String|body \(included in the `params` structure\)| | |0.6|
+|username|String|body \(included in the `params` structure\)| | |0.6|
+|password \(optional\)|String|body \(included in the `params` structure\)| | |0.6|
+|sshPort \(optional\)|int|body \(included in the `params` structure\)| | |0.6|
+|url|String|body \(included in the `params` structure\)| | |0.6|
+|name|String|body \(included in the `params` structure\)|Resource name| |0.6|
+|description \(optional\)|String|body \(included in the `params` structure\)|Detailed description of the resource| |0.6|
+|type \(optional\)|String|body \(included in the `params` structure\)| | |0.6|
+|importImages \(optional\)|boolean|body \(included in the `params` structure\)| | |0.6|
+|resourceUuid \(optional\)|String|body \(included in the `params` structure\)|Resource UUID| |0.6|
+|tagUuids \(optional\)|List|body \(included in the `params` structure\)|Tag UUID list| |3.4.0|
+|systemTags \(optional\)|List|body|System tags| |0.6|
+|userTags \(optional\)|List|body|User tags| |0.6|
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+AddDisasterImageStoreBackupStorageAction action = new AddDisasterImageStoreBackupStorageAction();
+action.attachPoint = "/test-bs";
+action.endPoint = "test12345-snp99.cn-shanghai.nas.aliyuncs.com";
+action.hostname = "192.168.1.8";
+action.username = "admin";
+action.password = "admin%pass";
+action.sshPort = 22;
+action.url = "/data/imagestore";
+action.name = "ImageStore";
+action.importImages = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddDisasterImageStoreBackupStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddDisasterImageStoreBackupStorageAction action = AddDisasterImageStoreBackupStorageAction()
+action.attachPoint = "/test-bs"
+action.endPoint = "test12345-snp99.cn-shanghai.nas.aliyuncs.com"
+action.hostname = "192.168.1.8"
+action.username = "admin"
+action.password = "admin%pass"
+action.sshPort = 22
+action.url = "/data/imagestore"
+action.name = "ImageStore"
+action.importImages = false
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddDisasterImageStoreBackupStorageAction.Result res = action.call()
+```
+
+</APIPage>

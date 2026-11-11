@@ -1,0 +1,228 @@
+---
+title: "解析OVF模板信息"
+---
+
+<APIPage method="POST" path="/v1/ovf/parse">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "xmlBase64": "Base64 encoded ovf file content."
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+--X POST -d '{"params":{"xmlBase64":"Base64 encoded ovf file content."}}' http://localhost:8080/zstack/v1/ovf/parse
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|xmlBase64|String|body\(包含在`params`结构中\)|Base64编码的OVF文件内容| |4.4.6|
+|systemTags \(可选\)|List|body|系统标签| |4.4.6|
+|userTags \(可选\)|List|body|用户标签| |4.4.6|
+
+## API返回
+返回示例
+
+```
+{
+  "ovfInfo": {
+    "disks": [
+      {
+        "index": 0.0,
+        "diskId": "system",
+        "fileRef": "file1",
+        "fileName": "system.vmdk",
+        "format": "vmdk",
+        "populatedSize": 1688600576.0,
+        "capacity": 64424509440.0
+      }
+    ],
+    "networks": [
+      {
+        "name": "red-net"
+      }
+    ],
+    "cpu": {
+      "instanceId": "2",
+      "quantity": 4.0,
+      "coresPerSocket": 4.0
+    },
+    "memory": {
+      "instanceId": "3",
+      "quantity": 4294967296.0
+    },
+    "vmName": "VM-1",
+    "os": {
+      "id": 107.0,
+      "version": "7",
+      "osType": "centos",
+      "description": "CentOS 7"
+    },
+    "systemInfo": {
+      "virtualSystemType": "vmx-18"
+    },
+    "nics": [
+      {
+        "networkName": "red-net",
+        "nicModel": "E1000",
+        "nicName": "nic-1",
+        "autoAllocation": true
+      }
+    ],
+    "cdDrivers": [
+      {
+        "autoAllocation": true,
+        "driverType": "SATA",
+        "subType": "vmware.cdrom.remotepassthrough",
+        "name": "CD"
+      }
+    ],
+    "volumes": [
+      {
+        "name": "System Volume",
+        "diskId": "system",
+        "driverType": "IDE"
+      }
+    ]
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.4.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_sry_hp2_wmb)|4.4.6|
+|ovfInfo|OvfInfo|详情参考[ovfInfo](#p_ks2_kp2_wmb)|4.4.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.4.6|
+|description|String|错误的概要描述|4.4.6|
+|details|String|错误的详细信息|4.4.6|
+|elaboration|String|保留字段，默认为null|4.4.6|
+|opaque|LinkedHashMap|保留字段，默认为null|4.4.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.4.6|
+
+### ovfInfo
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|vmName|String|虚拟机名称|4.4.6|
+|disks|List|详情参考[disks](#p_lqz_lp2_wmb)|4.4.6|
+|networks|List|详情参考[networks](#p_vyv_1nj_5fc)|4.4.6|
+|cpu|OvfCpuInfo|详情参考[cpu](#p_s2b_bnj_5fc)|4.4.6|
+|memory|OvfMemoryInfo|详情参考[memory](#p_psf_bnj_5fc)|4.4.6|
+|os|OvfOSInfo|详情参考[os](#p_l5k_bnj_5fc)|4.4.6|
+|systemInfo|OvfSystemInfo|详情参考[systemInfo](#p_igp_bnj_5fc)|4.4.6|
+|nics|List|详情参考[nics](#p_ogt_bnj_5fc)|4.4.6|
+|cdDrivers|List|详情参考[cdDrivers](#p_lsx_bnj_5fc)|4.4.6|
+|volumes|List|详情参考[volumes](#p_vvb_cnj_5fc)|4.4.6|
+
+### disks
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|index|int|磁盘序号|4.4.6|
+|diskId|String|磁盘ID|4.4.6|
+|fileRef|String|文件引用名称|4.4.6|
+|fileName|String|镜像文件名|4.4.6|
+|format|String|镜像文件格式|4.4.6|
+|populatedSize|Long|镜像文件大小|4.4.6|
+|capacity|Long|磁盘容量，单位Byte|4.4.6|
+
+### networks
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|name|String|网络名称|4.4.6|
+
+### cpu
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|instanceId|String|硬件ID|4.4.6|
+|quantity|Integer|CPU内核数量|4.4.6|
+|coresPerSocket|Integer|每CPU内核数|4.4.6|
+
+### memory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|instanceId|String|硬件ID|4.4.6|
+|quantity|Long|内存容量，单位Byte|4.4.6|
+
+### os
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|id|Integer|操作系统ID|4.4.6|
+|version|String|操作系统版本|4.4.6|
+|osType|String|操作系统类型|4.4.6|
+|description|String|操作系统描述|4.4.6|
+
+### systemInfo
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|virtualSystemType|String|硬件系统类型|4.4.6|
+|firmwareType|String|固件类型|4.4.6|
+
+### nics
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|networkName|String|网络名称|4.4.6|
+|nicModel|String|网卡型号|4.4.6|
+|nicName|String|网卡名称|4.4.6|
+|autoAllocation|Boolean|是否自动分配|4.4.6|
+
+### cdDrivers
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|autoAllocation|Boolean|是否自动分配|4.4.6|
+|driverType|String|光驱控制器类型|4.4.6|
+|subType|String|子类型|4.4.6|
+|name|String|光驱名称|4.4.6|
+
+### volumes
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|name|String|磁盘名称|4.4.6|
+|diskId|String|磁盘ID|4.4.6|
+|driverType|String|磁盘驱动器类型|4.4.6|
+
+## SDK示例
+Java SDK
+
+```
+ParseOvfAction action = new ParseOvfAction();
+action.xmlBase64 = "Base64 encoded ovf file content.";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ParseOvfAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ParseOvfAction action = ParseOvfAction()
+action.xmlBase64 = "Base64 encoded ovf file content."
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ParseOvfAction.Result res = action.call()
+```
+
+</APIPage>

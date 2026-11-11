@@ -1,0 +1,9 @@
+{
+  "title": "Prepare Installation Packages",
+  "pages": [
+    "index",
+    "rufus",
+    "fedora-media-writer"
+  ],
+  "pagesIndex": "index"
+}

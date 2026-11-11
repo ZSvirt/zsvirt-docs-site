@@ -1,0 +1,110 @@
+---
+title: "Query Address Pool"
+---
+
+<APIPage method="GET" path="/v1/l3-networks/address-pools">
+
+```
+GET zstack/v1/l3-networks/address-pools/{uuid}
+```
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Sample
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/l3-networks/address-pools?q=uuid=a73cf6bc10a0390bb5e461d9f5e3fd6d
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/l3-networks/address-pools/f45cb0f9098336a39662b7553f42deb5
+```
+
+Query Fields
+
+Run the CLI command tool, enter `QueryAddressPool`, and press the Tab key to view all queryable fields and resource names that can be queried across tables.
+
+## API Response
+Sample Response
+
+```
+{
+  "inventories": [
+    {
+      "l3NetworkUuid": "81ce7828f3f63c0ea8a69dd9139bdaa0",
+      "name": "Test-IPRange",
+      "networkCidr": "192.168.10.0/24",
+      "ipRangeType": "AddressPool"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation fails, or vice versa. For more information, see [error](#p_zkk_gx4_llb)|3.9.0|
+|inventories|List|For more information, see [inventories](#p_mcz_fx4_llb)|3.9.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code, which is a numbered or alphanumeric code that specifies an error. For example, SYS.1000, HOST.1001|3.9.0|
+|description|String|The brief description of the error.|3.9.0|
+|details|String|The details about the error.|3.9.0|
+|elaboration|String|The reserved field. Default value: null|3.9.0|
+|opaque|LinkedHashMap|The reserved field. Default value: null|3.9.0|
+|cause|ErrorCode|The root error, which is the associated root cause of the current error. If no root error exists, this parameter is null|3.9.0|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The resource UUID, which uniquely identifies the resource.|3.9.0|
+|l3NetworkUuid|String|The L3 Network UUID.|3.9.0|
+|name|String|The resource name.|3.9.0|
+|description|String|The detailed description of the resource.|3.9.0|
+|startIp|String|The start IP.|3.9.0|
+|endIp|String|The end IP.|3.9.0|
+|netmask|String|The netmask.|3.9.0|
+|gateway|String|The gateway.|3.9.0|
+|networkCidr|String|The network CIDR.|3.9.0|
+|ipVersion|Integer|The IP protocol number.|3.9.0|
+|addressMode|String|The IPv6 address allocation mode.|3.9.0|
+|prefixLen|Integer|The prefix length.|3.9.0|
+|createDate|Timestamp|The creation date.|3.9.0|
+|lastOpDate|Timestamp|The last operation date.|3.9.0|
+|ipRangeType|IpRangeType|For more information, see [ipRangeType](#p_ifn_fx4_llb)|3.9.0|
+
+### ipRangeType
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|IpRangeType|Normal address range.|3.9.0|
+|AddressPool|IpRangeType|Address pool range.|3.9.0|
+
+## SDK Sample
+Java SDK
+
+```
+QueryAddressPoolAction action = new QueryAddressPoolAction();
+action.conditions = asList("uuid=4cbab87c862032f1a161bebe7e1f55a1");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryAddressPoolAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryAddressPoolAction action = QueryAddressPoolAction()
+action.conditions = ["uuid=455d45fad9893eba9565de38588c7416"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryAddressPoolAction.Result res = action.call()
+```
+
+</APIPage>

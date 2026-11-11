@@ -1,0 +1,61 @@
+---
+title: "Delete LDAP Binding"
+---
+
+<APIPage method="DELETE" path="/v1/ldap/bindings/{accountUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/ldap/bindings/f1fb55eee96c3437991a0055d5d0abaa
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|accountUuid|String|url|Account UUID| |4.3.0|
+|systemTags \(Optional\)|List|body|System tags| |4.3.0|
+|userTags \(Optional\)|List|body|User tags| |4.3.0|
+
+## API Response
+This API returns an empty JSON structure `{}` on success. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DeleteLdapBindingAction action = new DeleteLdapBindingAction();
+action.accountUuid = "f1fb55eee96c3437991a0055d5d0abaa";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteLdapBindingAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteLdapBindingAction action = DeleteLdapBindingAction()
+action.accountUuid = "f1fb55eee96c3437991a0055d5d0abaa"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DeleteLdapBindingAction.Result res = action.call()
+```
+
+</APIPage>

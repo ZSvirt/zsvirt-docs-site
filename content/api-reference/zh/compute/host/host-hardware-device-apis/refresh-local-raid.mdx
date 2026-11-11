@@ -1,0 +1,144 @@
+---
+title: "刷新主机Raid信息"
+---
+
+<APIPage method="PUT" path="/v1/storage-devices/local-raid/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "refreshLocalRaid": {
+    "hostUuid": "36e5bbc506d632a5ac8e474e6d3b0caf"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"refreshLocalRaid":{"hostUuid":"36e5bbc506d632a5ac8e474e6d3b0caf"}}' \
+http://localhost:8080/zstack/v1/storage-devices/local-raid/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|hostUuid|String|body\(包含在`refreshLocalRaid`结构中\)|主机UUID| |3.6|
+|systemTags \(可选\)|List|body| | |3.6|
+|userTags \(可选\)|List|body| | |3.6|
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "name": "LSI 2208 Raid Controller",
+      "uuid": "821bab441f4530b5a741bbed9ca76eb8",
+      "description": "this is a description",
+      "productName": "LSI 2208 MegaRAID",
+      "sasAddress": "500304801f948100",
+      "createDate": "Nov 14, 2017 2:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_hs2_4ct_s2c)|3.6|
+|inventories|List|详情参考[inventories](#p_fv1_rct_s2c)|3.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|name|String|资源名称|3.6|
+|uuid|String|资源的UUID，唯一标示该资源|3.6|
+|description|String|资源的详细描述|3.6|
+|productName|String|产品名|3.6|
+|sasAddress|String|SAS地址|3.6|
+|hostUuid|String|主机UUID|3.6|
+|createDate|Timestamp|创建时间|3.6|
+|lastOpDate|Timestamp|最后一次修改时间|3.6|
+|adapterNumber|Integer|Raid卡编好|3.6|
+|raidPhysicalDrives|List|详情参考[raidPhysicalDrives](#p_hnq_sct_s2c)|3.6|
+
+### raidPhysicalDrives
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.6|
+|name|String|资源名称|3.6|
+|raidLevel|String|Raid级别|3.6|
+|raidControllerUuid|String|Raid控制器Uuid|3.6|
+|description|String|资源的详细描述|3.6|
+|enclosureDeviceId|Integer|Enclosure Id|3.6|
+|slotNumber|Integer|槽位号|3.6|
+|deviceId|Integer|Device Id|3.6|
+|diskGroup|Integer|磁盘组 Id|3.6|
+|wwn|String|WWN|3.6|
+|serialNumber|String|序列号|3.6|
+|deviceModel|String|磁盘规格|3.6|
+|size|Long|磁盘大小|3.6|
+|driveState|String|磁盘状态|3.6|
+|driveType|String|接口类型|3.6|
+|mediaType|String|介质类型|3.6|
+|rotationRate|Integer|转速|3.6|
+|createDate|Timestamp|创建时间|3.6|
+|lastOpDate|Timestamp|最后一次修改时间|3.6|
+|locateStatus|LocateStatus|详情参考[locateStatus](#p_zfj_y4t_s2c)|3.6|
+
+### locateStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Enabled|LocateStatus|定位灯闪烁|3.6|
+|Disabled|LocateStatus|定位灯关闭|3.6|
+
+## SDK示例
+Java SDK
+
+```
+RefreshLocalRaidAction action = new RefreshLocalRaidAction();
+action.hostUuid = "36e5bbc506d632a5ac8e474e6d3b0caf";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RefreshLocalRaidAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+RefreshLocalRaidAction action = RefreshLocalRaidAction()
+action.hostUuid = "36e5bbc506d632a5ac8e474e6d3b0caf"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+RefreshLocalRaidAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,150 @@
+---
+title: "计算镜像的MD5值"
+---
+
+<APIPage method="PUT" path="/v1/images/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "calculateImageHash": {
+    "backupStorageUuid": "0eeaa5988c743c638485304f3d1f867e",
+    "algorithm": "MD5"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"calculateImageHash":{"backupStorageUuid":"0eeaa5988c743c638485304f3d1f867e","algorithm":"MD5"}}' \
+http://localhost:8080/zstack/v1/images/383bcf0b1515369a8169b66a91de1e00/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |4.1.0|
+|backupStorageUuid|String|body\(包含在**calculateImageHash**结构中\)|镜像存储UUID| |4.1.0|
+|algorithm \(可选\)|String|body\(包含在**calculateImageHash**结构中\)| | |4.1.0|
+|systemTags \(可选\)|List|body|系统标签| |4.1.0|
+|userTags \(可选\)|List|body|用户标签| |4.1.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "368da584193638818c480bef63732659",
+    "name": "TinyLinux",
+    "md5Sum": "6fc2357e711877c14c09eec960e51aed",
+    "url": "http://192.168.1.20/share/images/tinylinux.qcow2",
+    "mediaType": "RootVolumeTemplate",
+    "platform": "Linux",
+    "format": "qcow2",
+    "backupStorageRefs": [
+      {
+        "id": 0,
+        "imageUuid": "368da584193638818c480bef63732659",
+        "backupStorageUuid": "17f9f8d310763247b5dc31779d880a41",
+        "installPath": "ceph://zs-images/f0b149e053b34c7eb7fe694b182ebffd",
+        "status": "Ready"
+      }
+    ]
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.1.0|
+|inventory|ImageInventory|详情参考[inventory](#p_wyn_yqd_l1b)|4.1.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_ldh_yqd_l1b)|4.1.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|5.0.0|
+|description|String|错误的概要描述|5.0.0|
+|details|String|错误的详细信息|5.0.0|
+|elaboration|String|保留字段，默认为null|5.0.0|
+|opaque|LinkedHashMap|保留字段，默认为null|5.0.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|5.0.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.1.0|
+|name|String|资源名称|4.1.0|
+|description|String|资源的详细描述|4.1.0|
+|state|String|镜像的启动状态|4.1.0|
+|status|String|镜像的就绪状态|4.1.0|
+|size|Long|镜像大小|4.1.0|
+|actualSize|Long|镜像真实容量|4.1.0|
+|md5Sum|String|镜像的md5值|4.1.0|
+|url|String|镜像的URL地址|4.1.0|
+|mediaType|String|镜像的类型|4.1.0|
+|guestOsType|String|镜像对应的客户机操作系统类型|4.1.0|
+|type|String|内部使用字段|4.1.0|
+|platform|String|镜像的系统平台|4.1.0|
+|architecture|String| |4.1.0|
+|format|String|镜像的格式，比如：raw|4.1.0|
+|system|Boolean|标识是否为系统镜像|4.1.0|
+|virtio|Boolean| |4.1.0|
+|createDate|Timestamp|创建时间|4.1.0|
+|lastOpDate|Timestamp|最后一次修改时间|4.1.0|
+|backupStorageRefs|List|详情参考[backupStorageRefs](#table_px1_btm_c1c)|4.1.0|
+
+### backupStorageRefs
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|imageUuid|String|镜像UUID|4.1.0|
+|backupStorageUuid|String|镜像存储UUID|4.1.0|
+|installPath|String|在镜像仓库上的安装路径|4.1.0|
+|exportUrl|String|导出镜像的url|4.1.0|
+|exportMd5Sum|String|导出镜像的md5值|4.1.0|
+|status|String|镜像就绪状态|4.1.0|
+|createDate|Timestamp|创建时间|4.1.0|
+|lastOpDate|Timestamp|最后一次修改时间|4.1.0|
+
+## SDK示例
+Java SDK
+
+```
+CalculateImageHashAction action = new CalculateImageHashAction();
+action.uuid = "383bcf0b1515369a8169b66a91de1e00";
+action.backupStorageUuid = "0eeaa5988c743c638485304f3d1f867e";
+action.algorithm = "MD5";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CalculateImageHashAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CalculateImageHashAction action = CalculateImageHashAction()
+action.uuid = "383bcf0b1515369a8169b66a91de1e00"
+action.backupStorageUuid = "0eeaa5988c743c638485304f3d1f867e"
+action.algorithm = "MD5"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CalculateImageHashAction.Result res = action.call()
+```
+
+</APIPage>

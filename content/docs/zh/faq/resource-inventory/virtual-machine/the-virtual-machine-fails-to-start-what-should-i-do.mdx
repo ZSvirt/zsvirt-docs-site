@@ -1,0 +1,47 @@
+---
+title: "虚拟机启动失败，怎么办？"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+虚拟机启动失败一般存在多种现象和原因，可根据以下现象和原因分类，尝试参考解决方案进行排查解决：
+
+## 现象
+虚拟机启动失败一般可能出现以下四种现象：
+
+-   现象一：进入Linux虚拟机后出现`welcome to emergency mode! After logging in, type "journalctl -x b" to view system logs, "systemctl reboot”to reboot, "systemctl default"to try again to boot into default mode. Give root password for maintenance`报错。
+-   现象二：虚拟机启动失败，出现`stderr:exec of\"/usr/local/zstack/dnsmasq\"failed:No such file or directory\n","location":"`报错。
+-   现象三：虚拟机控制台出现黑屏。
+
+## 原因一
+出现现象一，可能是由于以下两种原因导致：
+
+-   虚拟机开机自动挂载数据盘失败。
+-   主机意外断电，导致文件系统损坏。
+
+## 解决方案
+-   针对虚拟机开机自动挂载数据盘失败，可尝试参考以下步骤解决：
+
+    1.  登录虚拟机，在`/etc/fstab`配置文件中，删除或注释挂载数据盘命令。
+
+    2.  编辑`/etc/rc.d/rc.local`配置文件，使用磁盘UUID设置开机自动挂载数据盘。
+
+-   针对主机断电造成文件系统损坏，可尝试参考以下步骤解决：
+
+    使用文件系统修复工具或第三方livecd工具引导修复。
+
+## 原因二
+出现现象二，可能是由于主机断电导致`dnsmasq`文件丢失。
+
+## 解决方案
+1.  使用`scp`命令从正常节点主机拷贝`/usr/local/zstack/dnsmasq`文件至该主机。
+
+2.  重连主机。
+
+3.  重启虚拟机。
+
+## 原因三
+出现现象三，可能是由于`SElinux`配置文件加载错误，导致系统无法正常启动。
+
+## 解决方案
+-   进入系统单用户模式，检查`SElinux`配置文件是否存在参数书写错误。若存在错误，需修改为正确参数后，重启虚拟机。

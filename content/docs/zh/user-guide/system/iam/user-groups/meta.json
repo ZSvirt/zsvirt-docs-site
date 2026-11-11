@@ -1,0 +1,10 @@
+{
+  "title": "用户组管理",
+  "pages": [
+    "index",
+    "create-group",
+    "modify-group",
+    "delete-group"
+  ],
+  "pagesIndex": "index"
+}

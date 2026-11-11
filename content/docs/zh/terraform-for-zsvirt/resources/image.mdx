@@ -1,0 +1,78 @@
+---
+title: 'zsphere_image'
+description: '管理 ZSvirt 镜像。镜像可为 qcow2、raw、vmdk 等格式或 ISO 文件，用于创建或启动云主机。'
+---
+
+<HistoricalNamingNote locale="zh" />
+
+
+# zsphere_image（资源）
+
+管理 ZSvirt 镜像。镜像可为 qcow2、raw、vmdk 等格式或 ISO 文件，用于创建或启动云主机。
+
+## 示例用法
+```terraform
+data "zsphere_image_storages" "test" {
+  name = "image_storage_from_terraform"
+}
+
+resource "zsphere_image" "image" {
+  name                = "image_from_terraform"
+  description         = "Add An example image from terraform"
+  url                 = "http://minio.zstack.io:9001/packer/logserver-by-packer-image-compressed.qcow2"
+  guest_os_type       = "Linux"
+  platform            = "Linux"
+  format              = "qcow2"
+  architecture        = "x86_64"
+  virtio              = true
+  image_storage_uuids = [data.zsphere_image_storages.test.image_storages.0.uuid]
+  boot_mode           = "Legacy"
+  expunge             = true
+
+}
+
+output "zsphere_image" {
+  value = zsphere_image.image
+}
+```
+
+## 参数说明
+
+### 必填参数
+
+- `image_storage_uuids`（字符串列表）镜像所在镜像存储的 UUID 列表。
+- `name`（字符串）镜像名称。 必填项。
+- `url`（字符串）镜像所在 URL，可为文件路径或 HTTP 链接。 修改此参数将强制重建资源。
+
+### 可选参数
+
+- `architecture`（字符串）镜像架构，如 x86_64、aarch64。
+- `boot_mode`（字符串）镜像支持的启动模式，如 Legacy、UEFI、UEFI_WITH_CSM。
+- `description`（字符串）镜像描述信息。
+- `enable`（布尔值）启用或禁用镜像。设为 true 时启用。
+- `expunge`（布尔值）删除后是否彻底销毁（expunge）镜像。设为 true 时彻底删除，而非仅标记删除。
+- `format`（字符串）镜像文件格式，如 qcow2、raw、vmdk。
+- `guest_os_type`（字符串）镜像优化的来宾操作系统类型。
+- `media_type`（字符串）镜像介质类型。 例如 'ISO' or 'RootVolumeTemplate' or DataVolumeTemplate.
+- `platform`（字符串）镜像目标平台，如 Linux、Windows 等。
+- `virtio`（布尔值）镜像是否需要 VirtIO 驱动。
+
+### 只读属性
+
+- `actual_size`（数字）压缩后镜像实际大小（字节）。
+- `backup_storage_refs`（属性列表）（参见下方嵌套结构）
+- `md5_sum`（字符串）镜像 MD5 校验和。
+- `size`（数字）镜像大小（字节）。
+- `state`（字符串）镜像状态，如 Enabled、Disabled。
+- `status`（字符串）镜像就绪状态，如 Ready、NotReady。
+- `system`（字符串）是否为系统镜像。 由 ZStack 自动设置。
+- `type`（字符串）镜像类型，如 zstack、iso。
+- `uuid`（字符串）唯一标识符，由 ZSvirt 管理。 image. 由 ZSvirt 自动生成。
+
+<a id="nestedatt--backup_storage_refs"></a>
+### `backup_storage_refs` 嵌套结构
+
+只读属性：
+
+- `backup_storage_uuid`（字符串）备份存储 UUID。
+- `install_path`（字符串）镜像在备份存储上的安装路径。

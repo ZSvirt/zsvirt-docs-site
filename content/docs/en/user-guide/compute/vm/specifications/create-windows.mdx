@@ -1,0 +1,60 @@
+---
+title: 'Create a Windows VM Specification'
+---
+
+Save specific Windows VM operating system settings in a customization specification, such as how the virtual machine participate in the network and hostname configuration.
+
+The following operating system versions support customization specification for virtual machines:
+
+-   Windows Server 2012
+-   Windows Server 2016
+-   Windows Server 2019
+-   Windows Server 2022
+-   Windows Server 2025
+-   Windows 10 Pro
+
+1.  In the navigation pane, choose **Inventory** &gt; **VM and Host**.
+
+2.  Select the root node.
+
+3.  On the details page of the root node, click **VM Specification**.
+
+4.  On the VM Specification tab, click **New VM Specification**.
+
+5.  In the New VM Specification dialog, set the following parameters:
+
+    -   **Name**: Enter a name for the VM specification.
+    -   **Description**: Enter a brief description for the VM specification.
+    -   **Target VM OS**: Select **Windows**.
+    -   **Workgroup or Domain**: Select how the virtual machine participates in the network. Options include workgroup and Windows domain server.
+        -   For workgroup, you need to specify the workgroup name and choose whether to generate a new SID.
+
+            <Callout type="info">
+            The workgroup name must 1 to 15 characters in length and can contain letters, numbers, underscores (\_), dots (.), and hyphens (-). The workgroup name cannot be all numbers.
+            </Callout>
+
+        -   For Windows domain server, you need to configure the domain name, domain username, domain password, OU, and choose whether to generate a new SID.
+
+            <Callout type="info">
+            -   The domain name must be 1 to 26 characters in length and can contain letters, numbers, underscores (\_), dots (.), and hyphens (-).
+            -   The domain username must 1 to 15 characters in length and can contain letters, numbers, underscores (\_), dots (.), and hyphens (-). The domain username cannot be all numbers.
+            -   OU example: OU=MyOU,DC=MyDom,DC=MyCompany,DC=com
+            </Callout>
+    -   **Hostname Configuration**: Select how to configure a VM hostname. Options include using the VM name and entering a name.
+
+        <Callout type="info">
+        -   When you use the virtual machine name as the hostname, the Windows VM name will be truncated if it exceeds 15 characters.
+        -   The following rules apply for specifying a Windows hostname:
+            -   Length: 2 to 15 characters.
+            -   Allowed characters: Uppercase and lowercase letters, numbers, and hyphens (-).
+            -   No consecutive hyphens. You cannot start or end with a hyphen. The hostname cannot be all numbers.
+        -   When creating multiple VMs at once, a suffix (-1, -2, -3, etc.) is automatically appended to ensure uniqueness.
+        </Callout>
+    -   **Administrator Password**: Set a administrator password.
+
+        <Callout type="info">
+        The password must be 8 to 16 characters in length and contain at least two of the following: lowercase letters, uppercase letters, numbers, or special characters.
+        </Callout>
+
+    -   **Confirm Password**: Confirm the password by typing it again.
+6.  Review the configuration and click **OK**.

@@ -1,0 +1,181 @@
+---
+title: "Delete Data Center"
+---
+
+<APIPage method="DELETE" path="/v1/zones/{uuid}?deleteMode={deleteMode}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/zones/d3483ca440334af3acc09d8631e814c6?deleteMode=Permissive
+```
+
+Parameter List
+
+<table id="table_cf3_jrs_l1b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+Resource UUID, uniquely identifies the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+deleteMode \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body
+
+</td><td>
+
+-   Permissive: If an error occurs during deletion or deletion is not allowed, the virtualization platform will stop the deletion operation; in this case, the error code containing the failure reason will be returned.
+-   Enforcing: The virtualization platform will ignore all errors and permissions and directly delete the resource; in this case, the deletion operation will always succeed.
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+systemTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tag
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+userTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tag
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr></tbody>
+</table>
+
+## API Response
+On success, this API returns an empty JSON structure **`{}`**. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DeleteZoneAction action = new DeleteZoneAction();
+action.uuid = "8987020fccd14191a5a89dda6f3db81e";
+action.deleteMode = "Permissive";
+action.sessionId = "835b1b72c4554a7e92c425ad9eaebc6d";
+DeleteZoneAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteZoneAction action = DeleteZoneAction()
+action.uuid = "a4bcb439c99a42e197cac90be83e706e"
+action.deleteMode = "Permissive"
+action.sessionId = "6eaf02e52c884e378a3730ce4267d83a"
+DeleteZoneAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,110 @@
+---
+title: "配置ZStone集群"
+---
+
+<APIPage method="PUT" path="/v1/zstone-plugin/config/cluster">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateZStoneClusterConfig": {
+    "uuid": "53c0433a817349f89f66532addeb8b6c",
+    "clusterName": "zstone-test",
+    "chronyIp": "172.26.30.113",
+    "publicNetworkCidr": "172.26.0.1/16",
+    "clusterNetworkCidr": "172.26.0.1/16",
+    "managementNetworkCidr": "172.26.0.1/16",
+    "force": false
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateZStoneClusterConfig":{"uuid":"53c0433a817349f89f66532addeb8b6c","clusterName":"zstone-test","chronyIp":"172.26.30.113","publicNetworkCidr":"172.26.0.1/16","clusterNetworkCidr":"172.26.0.1/16","managementNetworkCidr":"172.26.0.1/16","force":false}}' \
+http://localhost:8080/zstack/v1/zstone-plugin/config/cluster
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|body\(包含在`updateZStoneClusterConfig`结构中\)|ZStone 的 UUID，唯一标示该资源| |4.10.6|
+|clusterName|String|body\(包含在`updateZStoneClusterConfig`结构中\)|ZStone 的集群名称| |4.10.6|
+|managementIp \(可选\)|String|body\(包含在`updateZStoneClusterConfig`结构中\)|ZStone 的管理节点 IP| |4.10.6|
+|chronyIp|String|body\(包含在`updateZStoneClusterConfig`结构中\)|ZStone 的时间同步服务器 IP| |4.10.6|
+|publicNetworkCidr|String|body\(包含在`updateZStoneClusterConfig`结构中\)|ZStone 的公有网络 IP CIDR| |4.10.6|
+|clusterNetworkCidr|String|body\(包含在`updateZStoneClusterConfig`结构中\)|ZStone 的集群使用网络 IP CIDR| |4.10.6|
+|managementNetworkCidrv|String|body\(包含在`updateZStoneClusterConfig`结构中\)|ZStone 的管理网络 IP CIDR| |4.10.6|
+|systemTags \(可选\)|List|body|系统标签| |4.10.6|
+|userTags \(可选\)|List|body|用户标签| |4.10.6|
+|force \(可选\)|boolean|body\(包含在`updateZStoneClusterConfig`结构中\)|是否强制添加 ZStone 集群. 一般情况下, ZStone 已有集群后再添加集群会出现意想不到的问题, 因此这里做了防呆| |4.10.7|
+|softwarePackageUuid|String|body\(包含在`updateZStoneClusterConfig`结构中\)|分布式软件包UUID| |4.10.20|
+
+<Callout type="info">
+-   初始化软件包的参数。
+</Callout>
+    -   SystemTag格式：`initConfig::{%s}`
+    -   SystemTag示例：`APIUpdateZStoneClusterConfigMsg转为json字符串`
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+UpdateZStoneClusterConfigAction action = new UpdateZStoneClusterConfigAction();
+action.uuid = "53c0433a817349f89f66532addeb8b6c";
+action.clusterName = "zstone-test";
+action.chronyIp = "172.26.30.113";
+action.publicNetworkCidr = "172.26.0.1/16";
+action.clusterNetworkCidr = "172.26.0.1/16";
+action.managementNetworkCidr = "172.26.0.1/16";
+action.force = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateZStoneClusterConfigAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = UpdateZStoneClusterConfigAction()
+action.uuid = "53c0433a817349f89f66532addeb8b6c"
+action.clusterName = "zstone-test"
+action.chronyIp = "172.26.30.113"
+action.publicNetworkCidr = "172.26.0.1/16"
+action.clusterNetworkCidr = "172.26.0.1/16"
+action.managementNetworkCidr = "172.26.0.1/16"
+action.force = false
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

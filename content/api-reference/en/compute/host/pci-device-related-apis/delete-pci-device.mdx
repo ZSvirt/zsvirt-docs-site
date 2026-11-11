@@ -1,0 +1,66 @@
+---
+title: "Delete PCI Device"
+---
+
+<APIPage method="DELETE" path="/v1/pci-device/pci-devices/{uuid}">
+
+Delete an invalid PCI device. Only PCI devices in Inactive state can be deleted.
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/pci-device/pci-devices/07e2500b59c03a5b8ea3382e083efbd6
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|UUID of the resource, uniquely identifies the resource| |2.1|
+|deleteMode \(Optional\)|String|url| | |2.1|
+|systemTags \(Optional\)|List|body| | |2.1|
+|userTags \(Optional\)|List|body| | |2.1|
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On error, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DeletePciDeviceAction action = new DeletePciDeviceAction();
+action.uuid = "07e2500b59c03a5b8ea3382e083efbd6";
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeletePciDeviceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeletePciDeviceAction action = DeletePciDeviceAction()
+action.uuid = "07e2500b59c03a5b8ea3382e083efbd6"
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DeletePciDeviceAction.Result res = action.call()
+```
+
+</APIPage>

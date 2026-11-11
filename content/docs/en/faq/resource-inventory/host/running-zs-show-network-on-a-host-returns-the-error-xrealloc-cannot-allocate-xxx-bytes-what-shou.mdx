@@ -1,0 +1,12 @@
+---
+title: "Running zs-show-network on a host returns the error \"xrealloc: cannot allocate xxx bytes\". What should I do?"
+---
+
+## Symptom
+Running `zs-show-network` on a host returns the error "`xrealloc: cannot allocate xxx bytes`".
+
+## Cause
+The bond name is too long. Bond names must not exceed 12 characters.
+
+## Solution
+Delete the bond with the overly long name and recreate it. Before recreating the bond, migrate all virtual machines off the host.

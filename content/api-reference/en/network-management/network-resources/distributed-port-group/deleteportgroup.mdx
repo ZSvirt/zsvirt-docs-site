@@ -1,0 +1,64 @@
+---
+title: "DeletePortGroup"
+---
+
+<APIPage method="DELETE" path="/v1/l3-networks/port-group/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Sample
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/l3-networks/port-group/04e1623d8c9531c7b42d6257c7ef774f
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|The resource UUID.| |4.2.0|
+|deleteMode \(Optional\)|String|body|Optional. The delete mode \(Permissive or Enforcing, default is Permissive\).| |4.2.0|
+|systemTags \(Optional\)|List|body|Optional. The system tags.| |4.2.0|
+|userTags \(Optional\)|List|body|Optional. The user tags.| |4.2.0|
+
+## API Response
+This API returns an empty JSON structure `{}` on success, and returns a JSON structure containing an error field on failure. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Sample
+Java SDK
+
+```
+DeletePortGroupAction action = new DeletePortGroupAction();
+action.uuid = "04e1623d8c9531c7b42d6257c7ef774f";
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeletePortGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeletePortGroupAction action = DeletePortGroupAction()
+action.uuid = "04e1623d8c9531c7b42d6257c7ef774f"
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DeletePortGroupAction.Result res = action.call()
+```
+
+</APIPage>

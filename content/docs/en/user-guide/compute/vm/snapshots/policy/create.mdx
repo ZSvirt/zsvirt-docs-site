@@ -1,0 +1,24 @@
+---
+title: 'New Snapshot Policy'
+---
+
+Associate a snapshot policy to a specified virtual machine to achieve periodic automatic snapshots.
+
+-   A virtual machine can have only one snapshot policy associated. A virtual machine that already has an associated snapshot policy cannot be associated again.
+-   If a virtual machine has shared disks or RDM disks attached, it cannot be associated with a snapshot policy.
+-   Make sure the virtual machine uses ZCE distributed storage.
+
+1.  In the navigation pane, choose **Data Protection** &gt; **Snapshot Policy**.
+
+2.  On the Snapshot page, click **New Snapshot Policy**.
+
+3.  In the New Snapshot Policy dialog, set the following parameters:
+
+    -   **Name**: Name of the snapshot policy.
+    -   **Description**: Optional.
+    -   **Scheduled Snapshot Cycle**: Set the frequency of snapshot generation. Snapshots will be created according to the specified execution time, including by week and by month. It supports setting more granular snapshot creation times, precise to the minute level.
+    -   **Start Time**: Set the time to start executing the snapshot policy
+    -   **End Time**: Set the time to stop snapshot policy, including Never and Custom.
+    -   **Retained Snapshots**: Set the upper limit for the number of snapshots to be retained, and any excess will be automatically deleted.
+    -   **Associated VM**: After associating virtual machines, when the snapshot policy takes effect, the system will automatically create snapshots of the associated virtual machines at the specified time.
+4.  Review the configuration and click **OK**.

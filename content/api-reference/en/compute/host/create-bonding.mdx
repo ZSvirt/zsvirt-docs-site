@@ -1,0 +1,486 @@
+---
+title: "Create Bond Interface"
+---
+
+<APIPage method="POST" path="/v1/hosts/bondings">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "hostUuids": [
+      "83e1a4a2ca0d3b0e836b032118196455"
+    ],
+    "type": "LinuxBonding",
+    "mode": "802.3ad",
+    "xmitHashPolicy": "layer2+3"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X POST -d '{"params":{"hostUuids":["83e1a4a2ca0d3b0e836b032118196455"],"type":"LinuxBonding","mode":"802.3ad","xmitHashPolicy":"layer2+3"}}' http://localhost:8080/zstack/v1/hosts/bondings
+```
+
+Parameter List
+
+<table id="table_zbn_lsb_3cb"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+hostUuids
+
+</td><td>
+
+List
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Host UUID list
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+bondingName
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Bond name
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+slaveUuids \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Slave NIC UUID list
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+slaveNames \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Slave NIC name list
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+type
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Bond type
+
+</td><td>
+
+-   LinuxBonding
+-   OvsBonding
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+mode
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Bond mode
+
+</td><td>
+
+-   802.3ad
+-   active-backup
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+xmitHashPolicy \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Hash policy
+
+</td><td>
+
+-   layer2
+-   layer2+3
+-   layer3+4
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+description \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Resource description
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+resourceUuid \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Resource UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+tagUuids \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Tag UUID list
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+systemTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tag
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+userTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tag
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": [
+    {
+      "hostUuid": "ad58bd08605338648dce127f256f332e",
+      "bondingName": "test",
+      "mode": "802.3ad",
+      "xmitHashPolicy": "layer2+3",
+      "ipAddresses": [
+        "192.168.1.1"
+      ],
+      "type": "LinuxBonding",
+      "slaves": [
+        {
+          "uuid": "97e1e9fb0cd73af8bd3e84376e59fa26",
+          "hostUuid": "ad58bd08605338648dce127f256f332e",
+          "interfaceName": "eno1",
+          "interfaceType": "bondingSlave",
+          "speed": 1000,
+          "slaveActive": true,
+          "carrierActive": true,
+          "createDate": "Nov 14, 2017 10:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+        }
+      ]
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.7.0|
+|inventory|List|See details [inventory](#p_ks2_kp2_wmb)|4.7.0|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See details [error](#p_sry_hp2_wmb)|4.7.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|4.7.0|
+|hostUuid|String|Host UUID|4.7.0|
+|bondingName|String|Bond name|4.7.0|
+|bondingType|String|Bond usage state, can be noBridge, bridgeSlave|4.7.0|
+|speed|Long|Bond speed|4.7.0|
+|mode|String|Bond mode|4.7.0|
+|xmitHashPolicy|String|Hash policy|4.7.0|
+|miiStatus|String|MII status|4.7.0|
+|mac|String|MAC address|4.7.0|
+|ipAddresses|List|IP addresses|4.7.0|
+|gateway|String|Gateway address|4.7.0|
+|callBackIp|String|Callback address|4.7.0|
+|miimon|Long|MII monitor interval|4.7.0|
+|type|String|Bond type|4.7.0|
+|allSlavesActive|Boolean| |4.7.0|
+|description|String|Resource description|4.7.0|
+|createDate|Timestamp|Creation time|4.7.0|
+|lastOpDate|Timestamp|Last modification time|4.7.0|
+|slaves|List|See details [slaves](#p_lqq_db3_sxb)|4.7.0|
+
+### slaves
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|4.7.0|
+|hostUuid|String|Host UUID|4.7.0|
+|bondingUuid|String|Bond UUID|4.7.0|
+|interfaceModel|String|NIC model|5.0.0|
+|vendorId|String|Vendor ID|5.0.0|
+|deviceId|String|Device ID|5.0.0|
+|subvendorId|String|Sub-vendor ID|5.0.0|
+|subdeviceId|String|Sub-device ID|5.0.0|
+|interfaceName|String|NIC name|4.7.0|
+|interfaceType|String|NIC usage state, can be nomaster, bridgeSlave, bondSlave|4.7.0|
+|speed|Long|NIC speed|4.7.0|
+|slaveActive|Boolean|Bond link status|4.7.0|
+|carrierActive|Boolean|Physical link status|4.7.0|
+|ipAddresses|List|IP addresses|4.7.0|
+|gateway|String|Gateway address|4.7.0|
+|mac|String|MAC address|4.7.0|
+|callBackIp|String|Callback address|4.7.0|
+|pciDeviceAddress|String|NIC PCI address|4.7.0|
+|offloadStatus|String| |4.7.0|
+|description|String|Resource description|4.7.0|
+|createDate|Timestamp|Creation time|4.7.0|
+|lastOpDate|Timestamp|Last modification time|4.7.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, e.g. SYS.1000, HOST.1001|4.7.0|
+|description|String|Brief description of the error|4.7.0|
+|details|String|Detailed error information|4.7.0|
+|elaboration|String|Reserved field, default is null|4.7.0|
+|opaque|LinkedHashMap|Reserved field, default is null|4.7.0|
+|cause|ErrorCode|Root cause, the error that caused the current error. If there is no original error, this field is null|4.7.0|
+
+## SDK Examples
+Java SDK
+
+```
+CreateBondingAction action = new CreateBondingAction();
+action.hostUuids = asList("83e1a4a2ca0d3b0e836b032118196455");
+action.type = "LinuxBonding";
+action.mode = "802.3ad";
+action.xmitHashPolicy = "layer2+3";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateBondingAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateBondingAction action = CreateBondingAction()
+action.hostUuids = [83e1a4a2ca0d3b0e836b032118196455]
+action.type = "LinuxBonding"
+action.mode = "802.3ad"
+action.xmitHashPolicy = "layer2+3"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateBondingAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,13 @@
+---
+title: "使用UEFI模式引导的虚拟机，操作系统安装完成后进行重启，自动进入UEFI shell界面，如何解决？"
+---
+
+## 解决方案
+-   执行`vim /boot/efi/startup.nsh`命令写入以下内容并保存，然后重启虚拟机，即可正常启动。
+
+    ```
+    FS0:
+    CD EFI
+    CD centos
+    shimx64-centos.efi
+    ```

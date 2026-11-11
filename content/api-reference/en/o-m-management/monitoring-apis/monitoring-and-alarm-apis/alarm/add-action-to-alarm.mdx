@@ -1,0 +1,169 @@
+---
+title: "Add Action to Alarm"
+---
+
+<APIPage method="POST" path="/v1/zwatch/alarms/{alarmUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "actionUuid": "a48c9fa0454238a4b731279b92d8bad1",
+    "actionType": "sns"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the **systemTags** and **userTags** fields can be omitted. They are listed here to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"actionUuid":"a48c9fa0454238a4b731279b92d8bad1","actionType":"sns"}}' http://localhost:8080/zstack/v1/zwatch/alarms/3edde2bd29493568a2640f75d218ed05/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|alarmUuid|String|url|Alarm UUID.| |2.3|
+|actionUuid|String|body \(contained in the **params** structure\)|Alarm action UUID.| |2.3|
+|actionType|String|body \(contained in the **params** structure\)|Alarm action type.| |2.3|
+|systemTags \(Optional\)|List|body|System tags.| |2.3|
+|userTags \(Optional\)|List|body|User tags.| |2.3|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "6b9ce7e8a6c04476aa22ce6c851a7f80",
+    "name": "VM CPU Alarm",
+    "comparisonOperator": "LessThanOrEqualTo",
+    "period": 60.0,
+    "namespace": "ZStack/VM",
+    "metricName": "org.zstack.zwatch.datatype.Metric@565e1ebe",
+    "threshold": 30.0,
+    "repeatInterval": 1800.0,
+    "status": "Alarm",
+    "state": "Enabled",
+    "createDate": "Jul 6, 2018 1:50:39 PM",
+    "lastOpDate": "Jul 6, 2018 1:50:39 PM",
+    "labels": [
+      {
+        "uuid": "f183fec66c3d40938621568943f4c0bf",
+        "key": "VMUuid",
+        "operator": "=",
+        "value": "7d46ab7f0f104ad0908f23d648bcaa9e"
+      }
+    ],
+    "actions": [
+      {
+        "alarmUuid": "7379b3951c9f4c82a0571cc55ebc98b3",
+        "actionType": "sns",
+        "actionUuid": "27e18067eb614fd4bcb047c008e3a4c0"
+      }
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null on success. See [error](#p_pht_55j_p2b) for details.|2.3|
+|inventory|AlarmInventory|See [inventory](#p_ebd_w5j_p2b) for details.|2.3|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001.|2.3|
+|description|String|A brief description of the error.|2.3|
+|details|String|Detailed information about the error.|2.3|
+|elaboration|String|A reserved field. Default is null.|2.3|
+|opaque|LinkedHashMap|A reserved field. Default is null.|2.3|
+|cause|ErrorCode|The root error. The source error that caused the current error. This field is null if there is no root error.|2.3|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource.|2.3|
+|name|String|Resource name.|2.3|
+|description|String|Detailed description of the resource.|2.3|
+|period|Integer|Threshold duration.|2.3|
+|namespace|String|Namespace.|2.3|
+|metricName|String|Metric name.|2.3|
+|threshold|Double|Threshold.|2.3|
+|repeatInterval|Integer|Alarm repeat interval.|2.3|
+|createDate|Timestamp|Creation time.|2.3|
+|lastOpDate|Timestamp|Last modification time.|2.3|
+|comparisonOperator|ComparisonOperator|See [comparisonOperator](#p_wsk_x5j_p2b) for details.|2.3|
+|status|AlarmStatus|See [status](#p_mnq_y5j_p2b) for details.|2.3|
+|labels|List|See [labels](#p_fws_z5j_p2b) for details.|2.3|
+|actions|List|See [actions](#p_ebr_1vj_p2b) for details.|2.3|
+
+### comparisonOperator
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name.|2.3|
+|ordinal|int| |2.3|
+
+### status
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|OK|AlarmStatus|Monitoring.|2.3|
+|Alarm|AlarmStatus|Triggered.|2.3|
+|InsufficientData|AlarmStatus|Insufficient data.|2.3|
+
+### labels
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource.|2.3|
+|key|String|Label key.|2.3|
+|operator|String|Comparison operator.|2.3|
+|value|String|Label value.|2.3|
+
+### actions
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|alarmUuid|String|Alarm UUID.|2.3|
+|actionType|String|Alarm action type.|2.3|
+|actionUuid|String|Alarm action UUID.|2.3|
+
+## SDK Examples
+Java SDK
+
+```
+AddActionToAlarmAction action = new AddActionToAlarmAction();
+action.alarmUuid = "3edde2bd29493568a2640f75d218ed05";
+action.actionUuid = "a48c9fa0454238a4b731279b92d8bad1";
+action.actionType = "sns";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddActionToAlarmAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddActionToAlarmAction action = AddActionToAlarmAction()
+action.alarmUuid = "3edde2bd29493568a2640f75d218ed05"
+action.actionUuid = "a48c9fa0454238a4b731279b92d8bad1"
+action.actionType = "sns"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddActionToAlarmAction.Result res = action.call()
+```
+
+</APIPage>

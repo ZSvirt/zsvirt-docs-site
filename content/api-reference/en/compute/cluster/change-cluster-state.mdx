@@ -1,0 +1,232 @@
+---
+title: "Change Cluster Availability State"
+---
+
+<APIPage method="PUT" path="/v1/clusters/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "changeClusterState": {
+    "stateEvent": "disable"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"changeClusterState":{"stateEvent":"disable"}}' \
+http://localhost:8080/zstack/v1/clusters/652ee5e996203bfbb5eb75e750720093/actions
+```
+
+Parameter List
+
+<table id="table_df2_vxs_l1b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+Resource UUID, uniquely identifies the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+stateEvent
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **changeClusterState** structure\)
+
+</td><td>
+
+Availability state trigger event
+
+</td><td>
+
+-   enable
+-   disable
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+systemTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tag
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+userTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tag
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "name": "cluster1",
+    "uuid": "2cebd4274c7c4550add1ee3620b52a81",
+    "description": "test",
+    "state": "Enabled",
+    "hypervisorType": "KVM",
+    "createDate": "Jun 7, 2017 9:20:25 PM",
+    "lastOpDate": "Jun 7, 2017 9:20:25 PM",
+    "zoneUuid": "90eb72b73e144650990db2aa1ddee7c1",
+    "type": "zstack"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See details [error](#p_zzs_1ct_l1b)|0.6|
+|inventory|ClusterInventory|See details [inventory](#p_izl_1ct_l1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, e.g. SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, default is null|0.6|
+|opaque|LinkedHashMap|Reserved field, default is null|0.6|
+|cause|ErrorCode|Root cause, the error that caused the current error. If there is no original error, this field is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name|0.6|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|description|String|Resource description|0.6|
+|state|String|Cluster state|0.6|
+|hypervisorType|String|Hypervisor type|0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+|zoneUuid|String|Data Center UUID|0.6|
+|type|String|Reserved field|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+ChangeClusterStateAction action = new ChangeClusterStateAction();
+action.uuid = "b97eb5ab5e264edbad128090b0ac28c2";
+action.stateEvent = "disable";
+action.sessionId = "79368b716c6a4d5db37fc7c601bf14cc";
+ChangeClusterStateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ChangeClusterStateAction action = ChangeClusterStateAction()
+action.uuid = "24f520e8991d464eaf2ed9b1e55996a3"
+action.stateEvent = "disable"
+action.sessionId = "11db5049d24342e7af8b1a3992484184"
+ChangeClusterStateAction.Result res = action.call()
+```
+
+</APIPage>

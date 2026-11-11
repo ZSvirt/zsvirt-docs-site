@@ -1,0 +1,109 @@
+---
+title: "Create Templated Virtual Machine From Virtual Machine"
+---
+
+<APIPage method="POST" path="/v1/vm-instances/{vmInstanceUuid}/create-templated-vmInstance">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "vm1"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"vm1"}}' \
+http://localhost:8080/zstack/v1/vm-instances/326c05ee121432628ddabd7036ea94ff/create-templated-vmInstance
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|name|String|body \(contained in `params` structure\)|Virtual Machine template name| |4.2.6|
+|vmInstanceUuid|String|url|Virtual Machine UUID| |4.2.6|
+|clusterUuid \(Optional\)|String|body \(contained in `params` structure\)|Cluster UUID| |4.2.6|
+|hostUuid \(Optional\)|String|body \(contained in `params` structure\)|Host UUID| |4.2.6|
+|systemTags \(Optional\)|List|body|System Tag| |4.2.6|
+|userTags \(Optional\)|List|body|User Tag| |4.2.6|
+
+## API Response
+Response Example
+
+```
+{
+  "templatedVmInstanceInventory": {
+    "uuid": "0878457833cd33fda63afc7423f2ce58",
+    "name": "templated vmInstance"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.2.6|
+|templatedVmInstanceInventory|TemplatedVmInstanceInventory|For details, see [templatedVmInstanceInventory](#p_u4v_txf_y1c)|4.2.6|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation succeeds, this field is null. For details, see [error](#p_jws_nyf_y1c)|4.2.6|
+
+### templatedVmInstanceInventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|4.2.6|
+|name|String|Resource name|4.2.6|
+|zoneUuid|String|Data Center UUID|4.2.6|
+|createDate|Timestamp|Create time|4.2.6|
+|lastOpDate|Timestamp|Last modification time|4.2.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier of the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause. The error that triggered the current error. If there is no original error, this field is null|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+CreateTemplatedVmInstanceFromVmInstanceAction action = new CreateTemplatedVmInstanceFromVmInstanceAction();
+action.name = "vm1";
+action.vmInstanceUuid = "326c05ee121432628ddabd7036ea94ff";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateTemplatedVmInstanceFromVmInstanceAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+CreateTemplatedVmInstanceFromVmInstanceAction action = CreateTemplatedVmInstanceFromVmInstanceAction()
+action.name = "vm1"
+action.vmInstanceUuid = "326c05ee121432628ddabd7036ea94ff"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateTemplatedVmInstanceFromVmInstanceAction.Result res = action.call()
+
+```
+
+</APIPage>

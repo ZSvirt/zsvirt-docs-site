@@ -1,0 +1,282 @@
+---
+title: "Update Event Subscription Label"
+---
+
+<APIPage method="PUT" path="/v1/zwatch/events/subscriptions/labels/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateEventSubscriptionLabel": {
+    "key": "VMUuid",
+    "value": "42c233c17c6e4907b7be1f11a41f3a17",
+    "operator": "Equal"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the **systemTags** and **userTags** fields are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateEventSubscriptionLabel":{"key":"VMUuid","value":"228fc2c5041248df9b0d317f6f7a8585","operator":"Equal"}}' http://localhost:8080/zstack/v1/zwatch/events/subscriptions/labels/cfb859d412933a1da57ae99e2aa442ce/actions
+```
+
+Parameter List
+
+<table id="table_gll_3y3_mlb"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+The UUID of the original event subscription label. Uniquely identifies the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.9.0
+
+</td></tr><tr><td>
+
+key
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **updateEventSubscriptionLabel** structure\)
+
+</td><td>
+
+The new name of the label
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.9.0
+
+</td></tr><tr><td>
+
+value
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **updateEventSubscriptionLabel** structure\)
+
+</td><td>
+
+The new value of the label
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.9.0
+
+</td></tr><tr><td>
+
+operator
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **updateEventSubscriptionLabel** structure\)
+
+</td><td>
+
+The new operator of the label
+
+</td><td>
+
+-   Regex
+-   Equal
+
+</td><td>
+
+3.9.0
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.9.0
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.9.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "d937a1c6d9de3f2285b0cb23316624a8",
+    "key": "VMUuid",
+    "operator": "Equal",
+    "value": "19cf33283b484ff6b73a6d98e1d762f5"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null on success. See [error](#p_c2n_vy3_mlb)|3.9.0|
+|inventory|EventSubscriptionLabelInventory|See [inventory](#p_tvg_vy3_mlb)|3.9.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, such as SYS.1000, HOST.1001|3.9.0|
+|description|String|A brief description of the error|3.9.0|
+|details|String|The detailed error information|3.9.0|
+|elaboration|String|Reserved field. Default is null|3.9.0|
+|opaque|LinkedHashMap|Reserved field. Default is null|3.9.0|
+|cause|ErrorCode|The root error. The source error that caused the current error. This field is null if there is no root error|3.9.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource|3.9.0|
+|key|String|The label name|3.9.0|
+|value|String|The label value|3.9.0|
+|operator|Operator|See [operator](#p_vqy_5y3_mlb)|3.9.0|
+
+### operator
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|op|String| |3.9.0|
+|name|String|The resource name|3.9.0|
+|ordinal|int| |3.9.0|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateEventSubscriptionLabelAction action = new UpdateEventSubscriptionLabelAction();
+action.uuid = "cfb859d412933a1da57ae99e2aa442ce";
+action.key = "VMUuid";
+action.value = "9d7099dd361049aaaf801ca6b17b2858";
+action.operator = "Equal";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateEventSubscriptionLabelAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateEventSubscriptionLabelAction action = UpdateEventSubscriptionLabelAction()
+action.uuid = "cfb859d412933a1da57ae99e2aa442ce"
+action.key = "VMUuid"
+action.value = "27e59f9fe7ed46118a2f6b8a383ce494"
+action.operator = "Equal"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateEventSubscriptionLabelAction.Result res = action.call()
+```
+
+</APIPage>

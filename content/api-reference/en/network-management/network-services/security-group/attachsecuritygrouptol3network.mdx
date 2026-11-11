@@ -1,0 +1,327 @@
+---
+title: "AttachSecurityGroupToL3Network"
+---
+
+<APIPage method="POST" path="/v1/security-groups/{securityGroupUuid}/l3-networks/{l3NetworkUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding sample, both **systemTags** and **userTags** are optional. These two fields can be included in the body structure.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{}}' http://localhost:8080/zstack/v1/security-groups/0551a95211783295879d083216cb493b/l3-networks/35aa9f6e9a2b3f849d1631ba89d0b27d
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|securityGroupUuid|String|url|The security group UUID| |0.6|
+|l3NetworkUuid|String|url|The Distributed Port Group UUID| |0.6|
+|systemTags \(Optional\)|List|body|System tags| |0.6|
+|userTags \(Optional\)|List|body|User tags| |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "5870eab620d2487d8d0320eabe185718",
+    "name": "web",
+    "description": "for test",
+    "state": "Enabled",
+    "createDate": "Jun 7, 2017 9:20:28 PM",
+    "lastOpDate": "Jun 7, 2017 9:20:28 PM",
+    "internalId": 0
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.7.0|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See [error](#p_uly_1s5_m1b)|0.6|
+|inventory|SecurityGroupInventory|See [inventory](#p_mrc_bs5_m1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root error: the source error that caused the current error. If there is no original error, this field is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource, uniquely identifying the resource|0.6|
+|name|String|The resource name|0.6|
+|description|String|The detailed description of the resource|0.6|
+|state|String| |0.6|
+|ipVersion|Integer|The IP version number|3.1.0|
+|createDate|Timestamp|The creation time|0.6|
+|lastOpDate|Timestamp|The last modification time|0.6|
+|attachedL3NetworkUuids|Set| |0.6|
+|rules|List|See [rules](#p_xj3_bs5_m1b)|0.6|
+
+### rules
+<table id="table_iv3_sv5_m1b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Description
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+The UUID of the resource, uniquely identifying the resource
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+securityGroupUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+The security group UUID
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+type
+
+</td><td>
+
+String
+
+</td><td>
+
+The traffic type
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+ipVersion
+
+</td><td>
+
+Integer
+
+</td><td>
+
+The IP version number
+
+</td><td>
+
+3.1.0
+
+</td></tr><tr><td>
+
+startPort
+
+</td><td>
+
+Integer
+
+</td><td>
+
+-   For TCP/UDP, it is the start port number of the port range
+-   For ICMP, it is the ICMP type
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+endPort
+
+</td><td>
+
+Integer
+
+</td><td>
+
+-   For TCP/UDP, it is the end port number of the port range
+-   For ICMP, it is the ICMP code
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+protocol
+
+</td><td>
+
+String
+
+</td><td>
+
+The traffic protocol type
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+state
+
+</td><td>
+
+String
+
+</td><td>
+
+The availability state of the rule, not implemented in the current version
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+allowedCidr
+
+</td><td>
+
+String
+
+</td><td>
+
+-   The allowed CIDR. It has different meanings depending on the traffic type.
+-   For Ingress, it is the source CIDR allowed to access the VM NIC
+-   For Egress, it is the destination CIDR that traffic is allowed to reach from the VM NIC
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+remoteSecurityGroupUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+createDate
+
+</td><td>
+
+Timestamp
+
+</td><td>
+
+The creation time
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+lastOpDate
+
+</td><td>
+
+Timestamp
+
+</td><td>
+
+The last modification time
+
+</td><td>
+
+0.6
+
+</td></tr></tbody>
+</table>
+
+## SDK Examples
+Java SDK
+
+```
+AttachSecurityGroupToL3NetworkAction action = new AttachSecurityGroupToL3NetworkAction();
+action.securityGroupUuid = "eef2d772f4e94997816fdf8512a8233a";
+action.l3NetworkUuid = "6761570f790c400596839da61767f890";
+action.sessionId = "efb745c9a7204e9a941608059f3c3a10";
+AttachSecurityGroupToL3NetworkAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AttachSecurityGroupToL3NetworkAction action = AttachSecurityGroupToL3NetworkAction()
+action.securityGroupUuid = "ae9aebcc28d1490293382c661d123c16"
+action.l3NetworkUuid = "cd2fdc4303e34ead806a492d18d4b5fa"
+action.sessionId = "9938bf24e1b24c39ab4dc3edc0aeb38d"
+AttachSecurityGroupToL3NetworkAction.Result res = action.call()
+```
+
+</APIPage>

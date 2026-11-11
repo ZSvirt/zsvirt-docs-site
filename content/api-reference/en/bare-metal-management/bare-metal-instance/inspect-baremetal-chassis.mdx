@@ -1,0 +1,113 @@
+---
+title: "Inspect Bare Metal Chassis"
+---
+
+<APIPage method="PUT" path="/v1/baremetal/chassis/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "inspectBaremetalChassis": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that these fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"inspectBaremetalChassis":{}}' \
+http://localhost:8080/zstack/v1/baremetal/chassis/514c293bdd6c3bc38f0dd5050f85642d/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Bare metal chassis UUID| |2.6.0|
+|systemTags \(Optional\)|List|body|System Tag| |2.6.0|
+|userTags \(Optional\)|List|body|User Tag| |2.6.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "a4871bb97ab03c818419484564fadbfb",
+    "ipmiAddress": "1.1.1.1",
+    "ipmiPort": 623,
+    "ipmiUsername": "root",
+    "ipmiPassword": "password",
+    "state": "Enabled",
+    "status": "PxeBooting"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation is successful, this field is null. For details, see [error](#p_lvx_yyy_3gc)|2.6.0|
+|inventory|BaremetalChassisInventory|For details, see [inventory](#p_fpw_nbz_3gc)|2.6.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, default is null|0.6|
+|opaque|LinkedHashMap|Reserved field, default is null|0.6|
+|cause|ErrorCode|Root cause: the source error that triggered the current error. If there is no original error, this field is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifying the resource|2.6.0|
+|name|String|Resource name|2.6.0|
+|description|String|Detailed description of the resource|2.6.0|
+|zoneUuid|String|Data Center UUID|2.6.0|
+|clusterUuid|String|Cluster UUID|2.6.0|
+|pxeServerUuid|String| |3.1.1|
+|ipmiAddress|String|IPMI address|2.6.0|
+|ipmiPort|Integer|IPMI port|2.6.0|
+|ipmiUsername|String|IPMI username|2.6.0|
+|state|String| |2.6.0|
+|status|String| |2.6.0|
+|createDate|Timestamp|Create time|2.6.0|
+|lastOpDate|Timestamp|Last modification time|2.6.0|
+
+## SDK Examples
+Java SDK
+
+```
+InspectBaremetalChassisAction action = new InspectBaremetalChassisAction();
+action.uuid = "514c293bdd6c3bc38f0dd5050f85642d";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+InspectBaremetalChassisAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = InspectBaremetalChassisAction()
+action.uuid = "514c293bdd6c3bc38f0dd5050f85642d"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,13 @@
+{
+  "title": "Distributed Port Group",
+  "pages": [
+    "creating-a-distributed-port-group-failed-how-do-i-troubleshoot",
+    "what-is-the-impact-of-disabling-dhcp-service-when-creating-a-distributed-port-group",
+    "dhcp-is-enabled-on-the-distributed-port-group-but-a-virtual-machine-cannot-obtain-an-ip-address",
+    "a-virtual-machine-cannot-retrieve-nic-information-after-being-attached-to-a-distributed-port-gro",
+    "why-does-a-distributed-port-group-not-display-a-dhcp-ip",
+    "how-do-i-modify-the-network-segment-of-an-existing-distributed-port-group",
+    "creating-a-distributed-port-group-failed-with-a-cidr-conflict-error-how-do-i-resolve-this"
+  ],
+  "pagesIndex": "index"
+}

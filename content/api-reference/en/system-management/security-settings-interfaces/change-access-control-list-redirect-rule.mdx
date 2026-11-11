@@ -1,0 +1,107 @@
+---
+title: "Change Access Control List Redirect Rule Name"
+---
+
+<APIPage method="PUT" path="/v1/access-control-lists/redirectRules/{uuid}/actions">
+
+Body
+
+```
+{
+  "changeAccessControlListRedirectRule": {
+    "name": "test-access-control"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The `systemTags` and `userTags` fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"changeAccessControlListRedirectRule":{"name":"test-access-control"}}' \
+http://localhost:8080/zstack/v1/access-control-lists/redirectRules/ff0b6fb727353d33817b3714cee15d00/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|The UUID of the resource. Uniquely identifies the resource| |4.1.3|
+|name \(optional\)|String|body \(contained in the `changeAccessControlListRedirectRule` structure\)|Redirect rule name| |4.1.3|
+|systemTags \(optional\)|List|body|System tags| |4.1.3|
+|userTags \(optional\)|List|body|User tags| |4.1.3|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "aclUuid": "bc9854edd56938f59a7ad06d2ffddb77",
+    "type": "RedirectRule",
+    "name": "acl-group",
+    "domain": "zstack.io",
+    "url": "/test"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_hs4_hz1_r2c)|0.6|
+|inventory|AccessControlListEntryInventory|See [inventory](#p_st1_hv1_w2c)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. A globally unique identifier for the error, e.g., SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field. Defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field. Defaults to null|0.6|
+|cause|ErrorCode|Root error. The source error that caused this error. Null if no root cause exists|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource|0.6|
+|aclUuid|String| |0.6|
+|type|String| |0.6|
+|name|String|Resource name|0.6|
+|domain|String| |0.6|
+|url|String| |0.6|
+|ipEntries|String| |0.6|
+|description|String|Detailed description of the resource|0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+ChangeAccessControlListRedirectRuleAction action = new ChangeAccessControlListRedirectRuleAction();
+action.uuid = "ff0b6fb727353d33817b3714cee15d00";
+action.name = "test-access-control";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ChangeAccessControlListRedirectRuleAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ChangeAccessControlListRedirectRuleAction action = ChangeAccessControlListRedirectRuleAction()
+action.uuid = "ff0b6fb727353d33817b3714cee15d00"
+action.name = "test-access-control"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ChangeAccessControlListRedirectRuleAction.Result res = action.call()
+```
+
+</APIPage>

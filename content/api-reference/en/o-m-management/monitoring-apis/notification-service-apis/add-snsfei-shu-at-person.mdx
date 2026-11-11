@@ -1,0 +1,114 @@
+---
+title: "Add Feishu @ User"
+---
+
+<APIPage method="POST" path="/v1/sns/application-endpoints/feishu/at-persons">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "userId": "18099997777",
+    "endpointUuid": "9214e9f129783370bea45388a1734073",
+    "remark": "jack"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding example, the **systemTags** and **userTags** fields are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"userId":"18099997777","endpointUuid":"9214e9f129783370bea45388a1734073","remark":"jack"}}' \
+http://localhost:8080/zstack/v1/sns/application-endpoints/feishu/at-persons
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|userId|String|body \(Contained in the **params** structure\)|Feishu user ID| |4.2.0|
+|endpointUuid|String|body \(Contained in the **params** structure\)|Feishu endpoint UUID| |4.2.0|
+|resourceUuid \(Optional\)|String|body \(Contained in the **params** structure\)|Resource UUID| |4.2.0|
+|systemTags \(Optional\)|List|body|System tags| |4.2.0|
+|userTags \(Optional\)|List|body|User tags| |4.2.0|
+|tagUuid \(Optional\)|List|body \(Contained in the **params** structure\)|Tag UUID list| |4.2.0|
+|remark \(Optional\)|String|body \(Contained in the **params** structure\)|Remark| |4.2.0|
+
+## API Response
+Response example
+
+```
+{
+  "inventory": {
+    "uuid": "554e2a66f6124d4c89e5c27179364681",
+    "userId": "18988887777",
+    "endpointUuid": "76b5f7a29a3a403fa8e3701902135bcf",
+    "createDate": "Mar 26, 2024 2:47:17 AM",
+    "lastOpDate": "Mar 26, 2024 2:47:17 AM",
+    "remark": "jack"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.2.0|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_kzq_vpx_bdb)|4.2.0|
+|inventory|SNSFeiShuAtPersonInventory|For details, see [inventory](#p_nmx_vpx_bdb)|4.2.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number, a globally unique identifier for the error, for example, SYS.1000 or HOST.1001|5.0.0|
+|description|String|A brief description of the error|5.0.0|
+|details|String|Detailed information about the error|5.0.0|
+|elaboration|String|Reserved field. Defaults to null|5.0.0|
+|opaque|LinkedHashMap|Reserved field. Defaults to null|5.0.0|
+|cause|ErrorCode|The root error that caused the current error. This field is null if there is no root cause|5.0.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource, uniquely identifying this resource|4.2.0|
+|userId|String|Feishu user ID|4.2.0|
+|endpointUuid|String|Feishu Endpoint UUID|4.2.0|
+
+## SDK Examples
+Java SDK
+
+```
+AddSNSFeiShuAtPersonAction action = new AddSNSFeiShuAtPersonAction();
+action.userId = "18099997777";
+action.endpointUuid = "9214e9f129783370bea45388a1734073";
+action.remark = "jack";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddSNSFeiShuAtPersonAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddSNSFeiShuAtPersonAction action = AddSNSFeiShuAtPersonAction()
+action.userId = "18099997777"
+action.endpointUuid = "9214e9f129783370bea45388a1734073"
+action.remark = "jack"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddSNSFeiShuAtPersonAction.Result res = action.call()
+```
+
+</APIPage>

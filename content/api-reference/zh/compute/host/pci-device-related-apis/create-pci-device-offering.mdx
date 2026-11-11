@@ -1,0 +1,167 @@
+---
+title: "创建PCI设备规格"
+---
+
+<APIPage method="POST" path="/v1/pci-device/pci-device-offerings">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "test",
+    "vendorId": "10de",
+    "deviceId": "0e0f"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+## Curl示例
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"test","vendorId":"10de","deviceId":"0e0f"}}' \
+http://localhost:8080/zstack/v1/pci-device/pci-device-offerings
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|name\(可选\)|String|body\(包含在**params**结构中\)|资源名称| |2.1|
+|description \(可选\)|String|body\(包含在**params**结构中\)|资源的详细描述| |2.1|
+|vendorId|String|body\(包含在**params**结构中\)|供应商ID| |2.1|
+|deviceId|String|body\(包含在**params**结构中\)|设备ID| |2.1|
+|subvendorId \(可选\)|String|body\(包含在**params**结构中\)|子供应商ID| |2.1|
+|subdeviceId \(可选\)|String|body\(包含在**params**结构中\)|子设备ID| |2.1|
+|ramSize \(可选\)|String|body\(包含在**params**结构中\)|RAM容量| |3.5.0|
+|resourceUuid \(可选\)|String|body\(包含在**params**结构中\)| | |2.1|
+|systemTags \(可选\)|List|body| | |2.1|
+|userTags \(可选\)|List|body| | |2.1|
+|tagUuids \(可选\)|List|body\(包含在**params**结构中\)|标签UUID列表| |3.4.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "type": "GPU_Video",
+    "vendorId": "10de",
+    "deviceId": "0e0f",
+    "subvendorId": "10de",
+    "subdeviceId": "118b"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_o2d_wfq_s1b)|2.1|
+|inventory|PciDeviceOfferingInventory|详情参考[inventory](#p_yhz_tfq_s1b)|2.1|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|2.1|
+|description|String|错误的概要描述|2.1|
+|details|String|错误的详细信息|2.1|
+|elaboration|String|保留字段，默认为null|2.1|
+|opaque|LinkedHashMap|保留字段，默认为null|2.1|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|2.1|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|2.1|
+|name|String|资源名称|2.1|
+|description|String|资源的详细描述|2.1|
+|vendorId|String|供应商ID|2.1|
+|deviceId|String|设备ID|2.1|
+|subvendorId|String|子供应商ID|2.1|
+|subdeviceId|String|子设备ID|2.1|
+|ramSize|String|显存容量|3.5.0|
+|createDate|Timestamp|创建时间|2.1|
+|lastOpDate|Timestamp|最后一次修改时间|2.1|
+|type|PciDeviceOfferingType|详情参考[type](#p_t2q_sfq_s1b)|2.1|
+|attachedInstanceOfferings|List|详情参考[attachedInstanceOfferings](#p_tzl_tfq_s1b)|2.1|
+|matchedPciDevices|List|详情参考[matchedPciDevices](#p_srm_mfq_s1b)|2.1|
+
+### type
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|GPU\_Video|PciDeviceOfferingType|GPU显卡|2.1|
+|GPU\_Audio|PciDeviceOfferingType|GPU声卡|2.1|
+|Generic|PciDeviceOfferingType|一般设备|2.1|
+
+### attachedInstanceOfferings
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|id|long| |2.1|
+|instanceOfferingUuid|String|计算规格UUID|2.1|
+|pciDeviceOfferingUuid|String| |2.1|
+|pciDeviceCount|Integer| |2.1|
+|metadata|PciDeviceMetaData|详情参考[metadata](#p_jh5_rfq_s1b)|2.1|
+
+### metadata
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|metaData|String| |2.1|
+|metaDataEntries|List|详情参考[metaDataEntries](#p_jvg_qfq_s1b)|2.1|
+
+### metaDataEntries
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|key|String|键|2.1|
+|value|String|值|2.1|
+|op|PciDeviceMetaDataOperator|详情参考[op](#p_nts_mfq_s1b)|2.1|
+
+### op
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Equal|PciDeviceMetaDataOperator|相等|2.1|
+|Unequal|PciDeviceMetaDataOperator|不等|2.1|
+
+### matchedPciDevices
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|pciDeviceUuid|String| |2.1|
+|pciDeviceOfferingUuid|String| |2.1|
+
+## SDK示例
+Java SDK
+
+```
+CreatePciDeviceOfferingAction action = new CreatePciDeviceOfferingAction();
+action.name = "test";
+action.vendorId = "10de";
+action.deviceId = "0e0f";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreatePciDeviceOfferingAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreatePciDeviceOfferingAction action = CreatePciDeviceOfferingAction()
+action.name = "test"
+action.vendorId = "10de"
+action.deviceId = "0e0f"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreatePciDeviceOfferingAction.Result res = action.call()
+```
+
+</APIPage>

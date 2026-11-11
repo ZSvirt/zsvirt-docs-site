@@ -1,0 +1,78 @@
+---
+title: "更新工厂模式启用状态"
+---
+
+<APIPage method="PUT" path="/v1/management-nodes/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateFactoryModeState": {
+    "factoryModeState": true
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateFactoryModeState":{"factoryModeState":true}}' \
+http://localhost:8080/zstack/v1/management-nodes/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|factoryModeState|Boolean|body\(包含在`updateFactoryModeState`结构中\)|工厂模式启用状态| |3.8|
+|systemTags \(可选\)|List|body| | |3.8|
+|userTags \(可选\)|List|body| | |3.8|
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+UpdateFactoryModeStateAction action = new UpdateFactoryModeStateAction();
+action.factoryModeState = true;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateFactoryModeStateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateFactoryModeStateAction action = UpdateFactoryModeStateAction()
+action.factoryModeState = true
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateFactoryModeStateAction.Result res = action.call()
+```
+
+</APIPage>

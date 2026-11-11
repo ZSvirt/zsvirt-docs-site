@@ -1,0 +1,83 @@
+---
+title: "Set VM RDP Status"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/{uuid}/actions">
+
+Set whether VM RDP function is enabled. If enabled, the desktop cloud will use RDP to connect to the Virtual Machine.
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "setVmRDP": {
+    "enable": true
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"setVmRDP":{"enable":true}}' \
+http://localhost:8080/zstack/v1/vm-instances/f523cb5736b630acb643dda6d31be5a0/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Resource UUID, uniquely identifies the resource| |2.2|
+|enable|boolean|body \(contained in **setVmRDP** structure\)|Whether the Virtual Machine is marked as RDP accessible| |2.2|
+|systemTags \(Optional\)|List|body| | |2.2|
+|userTags \(Optional\)|List|body| | |2.2|
+
+## API Response
+On success, this API returns an empty JSON structure **`{}`**. On error, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+SetVmRDPAction action = new SetVmRDPAction();
+action.uuid = "e2889e09bb0a4f1b9f2757d8bd0c1fc6";
+action.enable = true;
+action.sessionId = "595b40e65a1f4755a68573ab9ef6802c";
+SetVmRDPAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SetVmRDPAction action = SetVmRDPAction()
+action.uuid = "dc71514a6e1a490b9985b1dcb4faff11"
+action.enable = true
+action.sessionId = "aee17676e2604d9ab50a4b8907c31568"
+SetVmRDPAction.Result res = action.call()
+```
+
+</APIPage>

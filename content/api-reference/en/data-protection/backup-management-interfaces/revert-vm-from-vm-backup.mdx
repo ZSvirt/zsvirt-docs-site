@@ -1,0 +1,226 @@
+---
+title: "Revert VM from VM Backup"
+---
+
+<APIPage method="PUT" path="/v1/vm-backups/{groupUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "revertVmFromVmBackup": {
+    "backupStorageUuid": "99afb6149155396c8ac1b6ab62badb9d",
+    "strategy": "CreateStopped"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The **systemTags** and **userTags** fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"revertVmFromVmBackup":{"backupStorageUuid":"99afb6149155396c8ac1b6ab62badb9d","strategy":"CreateStopped"}}' \
+http://localhost:8080/zstack/v1/vm-backups/39f4e3c4b7553dbc98b8c0ce0e8f82a1/actions
+```
+
+Parameter List
+
+<table id="table_yj1_vvx_y2b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+groupUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+Backup group UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+backupStorageUuid \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(Contained in the **revertVmFromVmBackup** structure\)
+
+</td><td>
+
+Image Storage UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+strategy \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(Contained in the **revertVmFromVmBackup** structure\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+-   InstantStart
+-   JustCreate
+-   CreateStopped
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+On success, this API returns an empty JSON structure **`{}`**. On failure, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+RevertVmFromVmBackupAction action = new RevertVmFromVmBackupAction();
+action.groupUuid = "39f4e3c4b7553dbc98b8c0ce0e8f82a1";
+action.backupStorageUuid = "99afb6149155396c8ac1b6ab62badb9d";
+action.strategy = "CreateStopped";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RevertVmFromVmBackupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+RevertVmFromVmBackupAction action = RevertVmFromVmBackupAction()
+action.groupUuid = "39f4e3c4b7553dbc98b8c0ce0e8f82a1"
+action.backupStorageUuid = "99afb6149155396c8ac1b6ab62badb9d"
+action.strategy = "CreateStopped"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+RevertVmFromVmBackupAction.Result res = action.call()
+```
+
+</APIPage>

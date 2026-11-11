@@ -1,0 +1,63 @@
+---
+title: "Query Cluster DRS"
+---
+
+<APIPage method="GET" path="/v1/clusters/drs" altPaths={["/v1/clusters/drs/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/clusters/drs
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/clusters/drs/aaa6a44233d23decb16c085599167233
+```
+
+Queryable Fields
+
+Run the CLI command-line tool, type `QueryClusterDRS` and press the Tab key to view all queryable fields and cross-table queryable resource names.
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+QueryClusterDRSAction action = new QueryClusterDRSAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryClusterDRSAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryClusterDRSAction action = QueryClusterDRSAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryClusterDRSAction.Result res = action.call()
+```
+
+</APIPage>

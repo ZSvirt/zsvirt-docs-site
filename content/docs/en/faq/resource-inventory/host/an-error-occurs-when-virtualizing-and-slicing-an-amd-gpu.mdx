@@ -1,0 +1,31 @@
+---
+title: "An error occurs when virtualizing and slicing an AMD GPU"
+---
+
+## Cause
+When the gim GPU driver is missing from the host operating system, attempting to virtualize and slice an AMD GPU results in the error: `failed to remove gim.ko , modprobe: FATAL: Module gim not found`.
+
+## Solution
+1.  Run the following commands to download and compile the driver:
+
+    ```
+    [root@localhost ~]# wget https://github.com/GPUOpen-LibrariesAndSDKs/MxGPU-Virtualization/archive/master.zip
+    [root@localhost ~]# unzip master.zip
+    [root@localhost ~]# cd MxGPU-Virtualization-master
+    [root@localhost ~]# make
+    ```
+
+2.  Run the following command to copy the `gim.ko` file:
+
+    ```
+    [root@localhost ~]# cp gim.ko /lib/modules/3.10.0-693.11.1.el7.x86_64/
+    ```
+
+3.  Run the following commands to load the driver:
+
+    ```
+    [root@localhost ~]# demod
+    [root@localhost ~]# modeprobe gim
+    ```
+
+4.  Retry the GPU virtualization slice operation.

@@ -1,0 +1,92 @@
+---
+title: "获取metric的标签值"
+---
+
+<APIPage method="GET" path="/v1/zwatch/metrics/label-values">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zwatch/metrics/label-values?namespace=ZStack/VM&metricName=CPUIdleUtilization&startTime=1.58806818E9&endTime=1.58806824E9&labelNames=CPUNum&filterLabels=VMUuid=e47f7145f4cd4fca8e2856038ecdf3e1
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|namespace|String|query|名字空间名称| |2.3|
+|metricName|String|query|监控指标名称| |2.3|
+|labelNames|List|query|要获取值得标签名列表| |2.3|
+|filterLabels \(可选\)|List|query|标签过滤器列表，例如可以指定标签HostUuid=e47f7145f4cd4fca8e2856038ecdf3e1来选择特定主机的，labelNames中指定标签的值| |2.3|
+|startTime \(可选\)|Long|query|起始时间| |3.9.0|
+|endTime \(可选\)|Long|query|结束时间| |3.9.0|
+|systemTags \(可选\)|List|query|系统标签| |2.3|
+|userTags \(可选\)|List|query|用户标签| |2.3|
+
+## API返回
+返回示例
+
+```
+{
+  "labels": [
+    {
+      "VMUuid": "e47f7145f4cd4fca8e2856038ecdf3e1",
+      "CPUNum": "1"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|labels|List|标签值|0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_kd3_m1y_bdb)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+GetMetricLabelValueAction action = new GetMetricLabelValueAction();
+action.namespace = "ZStack/VM";
+action.metricName = "CPUIdleUtilization";
+action.startTime = 1.58806818E9;
+action.endTime = 1.58806824E9;
+action.labelNames = asList("CPUNum");
+action.filterLabels = asList("VMUuid=e47f7145f4cd4fca8e2856038ecdf3e1");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetMetricLabelValueAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetMetricLabelValueAction action = GetMetricLabelValueAction()
+action.namespace = "ZStack/VM"
+action.metricName = "CPUIdleUtilization"
+action.startTime = 1.58806818E9
+action.endTime = 1.58806824E9
+action.labelNames = [CPUNum]
+action.filterLabels = [VMUuid=e47f7145f4cd4fca8e2856038ecdf3e1]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetMetricLabelValueAction.Result res = action.call()
+```
+
+</APIPage>

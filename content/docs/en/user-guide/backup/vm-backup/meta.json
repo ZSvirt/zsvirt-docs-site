@@ -1,0 +1,11 @@
+{
+  "title": "Virtual Machine Backup",
+  "pages": [
+    "index",
+    "policy",
+    "create-plan",
+    "view-plans-and-data",
+    "manual-backup"
+  ],
+  "pagesIndex": "index"
+}

@@ -1,0 +1,181 @@
+---
+title: "Delete Log Server Configuration"
+---
+
+<APIPage method="DELETE" path="/v1/log/configurations/log4j2">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/log/configurations/log4j2?deleteMode=Permissive
+```
+
+Parameter List
+
+<table id="table_crr_mwx_g2b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+configId
+
+</td><td>
+
+Long
+
+</td><td>
+
+body
+
+</td><td>
+
+Configuration ID
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.10.0
+
+</td></tr><tr><td>
+
+deleteMode \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body
+
+</td><td>
+
+Deletion mode. Defaults to Permissive
+
+</td><td>
+
+-   Enforcing
+-   Permissive
+
+</td><td>
+
+3.10.0
+
+</td></tr><tr><td>
+
+systemTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.10.0
+
+</td></tr><tr><td>
+
+userTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.10.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DeleteLogConfigurationAction action = new DeleteLogConfigurationAction();
+action.configId = 0.0;
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteLogConfigurationAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteLogConfigurationAction action = DeleteLogConfigurationAction()
+action.configId = 0.0
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DeleteLogConfigurationAction.Result res = action.call()
+```
+
+</APIPage>

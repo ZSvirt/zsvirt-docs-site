@@ -1,0 +1,117 @@
+---
+title: "Reconnect Data Storage"
+---
+
+<APIPage method="PUT" path="/v1/primary-storage/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "reconnectPrimaryStorage": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"reconnectPrimaryStorage":{}}' \
+http://localhost:8080/zstack/v1/primary-storage/699940f430123e588f4669ad7c17cf65/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Data Storage UUID, uniquely identifies the resource| |0.6|
+|systemTags \(Optional\)|List|body|System Tags| |0.6|
+|userTags \(Optional\)|List|body|User Tags| |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "name": "PS1",
+    "url": "/Cloud_ps",
+    "type": "LocalStorage",
+    "state": "Enabled",
+    "status": "Connected",
+    "attachedClusterUuids": [
+      "830a084ef24849cb8e65ffccb1e20e03"
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation succeeds, this field is null. See [error](#p_o1j_tj1_n1b)|0.6|
+|inventory|PrimaryStorageInventory|See [inventory](#p_mvn_tj1_n1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause, the source error that caused the current error. If there is no original error, this field is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|zoneUuid|String|Data Center UUID|0.6|
+|name|String|Resource Name|0.6|
+|url|String| |0.6|
+|description|String|Resource Description|0.6|
+|totalCapacity|Long| |0.6|
+|availableCapacity|Long| |0.6|
+|totalPhysicalCapacity|Long| |0.6|
+|availablePhysicalCapacity|Long| |0.6|
+|systemUsedCapacity|Long| |0.6|
+|type|String| |0.6|
+|state|String| |0.6|
+|status|String| |0.6|
+|mountPath|String| |0.6|
+|createDate|Timestamp|Create Time|0.6|
+|lastOpDate|Timestamp|Last Modification Time|0.6|
+|attachedClusterUuids|List| |0.6|
+
+## SDK Examples
+Java SDK
+
+```
+ReconnectPrimaryStorageAction action = new ReconnectPrimaryStorageAction();
+action.uuid = "b346884f494b41d382e6fc3c1c6d406d";
+action.sessionId = "634bb3b8568a4ee1b6f2abd3fc6edf65";
+ReconnectPrimaryStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ReconnectPrimaryStorageAction action = ReconnectPrimaryStorageAction()
+action.uuid = "78b0b8b7ac4f4c3887ee71f0bd159012"
+action.sessionId = "97ce6c4f337d458ba25b9c4b1308fc1f"
+ReconnectPrimaryStorageAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,36 @@
+---
+title: 'Overview'
+---
+
+Security Group: A security group provides security control services for VM NICs. It filters the ingress or egress TCP, UDP, and ICMP packets of VM NICs based on the specified security rules.
+
+## Functional Framework
+Security groups control traffic to and from network interfaces through security rules within the group. A network interface can be part of multiple security groups, and by setting the priority of security groups, traffic is first matched against rules in the higher-priority groups.
+
+A security group can contain multiple security rules. Based on their creation mechanism, these can be divided into system rules and custom rules:
+
+-   System Rules: After creating a new security group, the system provides two default rules:
+    -   Intra-Group Communication Rule: Network interfaces within the same security group are allowed to communicate with each other by default. This rule has a higher priority than all custom rules and cannot be modified or deleted, only disabled.
+    -   Intra-/Inter-Group Communication Rule: Network interfaces within the security group are allowed to access interfaces outside the security group by default, but interfaces outside the group are not allowed to access those inside by default. This rule has a lower priority than all custom rules and supports modifying the default intra-group and inter-group access behavior for individual virtual machine network interfaces.
+-   Custom Rules: Rules added to the security group by users.
+
+The security group rules consist of direction, target, action, protocol &amp; port, and priority:
+
+-   **Rule Direction:** Security group rules primarily control the source or destination of traffic. Based on the direction of traffic flow, they can be categorized as inbound rules and outbound rules:
+    -   Inbound Rule: For traffic entering the network interface from the outside, primarily controlling the source of traffic.
+    -   Outbound Rule: For traffic sent out from the network interface, primarily controlling the destination of traffic.
+-   **Rule Target:** The target of the security group rule (inbound/outbound rule), including source and destination:
+    -   Source: Corresponds to the inbound rule, supporting the use of IP addresses/ranges or security groups as sources. Inbound rules allow/reject traffic from the specified IP addresses/ranges or security groups.
+    -   Destination: Corresponds to the outbound rule, supporting the use of IP addresses/ranges or security groups as destinations. Outbound rules allow/reject traffic from the current group's network interfaces to the target IP addresses/ranges or security groups.
+-   **Action:** The specific action taken for traffic matching the rule conditions, including Allow and Deny:
+
+    -   Allow: Allows network request traffic to flow into or out of the network interface.
+    -   Deny: Does not allow network request traffic to flow into or out of the network interface.
+    By default, if traffic entering or leaving the network interface does not match any custom rules, inbound traffic is denied and outbound traffic is allowed.
+
+-   **Protocol and Port:** The packet protocol and corresponding port targeted by the rule. Protocols include ALL, TCP, UDP, and ICMP:
+    -   ALL: Indicates coverage of all protocol types, and ports cannot be specified.
+    -   TCP: Supports ports 1-65535.
+    -   UDP: Supports ports 1-65535.
+    -   ICMP: Does not support specifying a port.
+-   **Priority:** The relative precedence of one security group rule over others, with supported values ranging from 1 to 100. Higher numbers indicate lower priority.

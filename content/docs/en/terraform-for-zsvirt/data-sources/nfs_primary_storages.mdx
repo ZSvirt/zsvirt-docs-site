@@ -1,0 +1,85 @@
+---
+title: 'zsphere_nfs_primary_storages'
+description: 'List all NFS primary storages, or query NFS primary storages by exact name match, or query NFS primary storages by name pattern fuzzy match.'
+---
+
+<HistoricalNamingNote locale="en" />
+
+# zsphere_nfs_primary_storages (Data Source)
+
+List all NFS primary storages, or query NFS primary storages by exact name match, or query NFS primary storages by name pattern fuzzy match.
+
+## Example Usage
+
+```terraform
+data "zsphere_nfs_primary_storages" "test" {
+}
+
+output "zsphere_nfs_storages" {
+  value = data.zsphere_nfs_primary_storages.test
+}
+
+# Example output:
+# zsphere_nfs_storages = {
+#   "filter" = tolist([])
+#   "nfs_storages" = tolist([
+#     {
+#       "available_capacity" = 50000000000
+#       "available_physical_capacity" = 50000000000
+#       "mount_path" = "/share/nfs"
+#       "name" = "NFS-1"
+#       "state" = "Enabled"
+#       "status" = "Connected"
+#       "system_used_capacity" = 0
+#       "total_capacity" = 100000000000
+#       "total_physical_capacity" = 100000000000
+#       "type" = "NFS"
+#       "url" = "192.168.1.100:/share/nfs"
+#       "uuid" = "d1058cff5c864a84848e0ab896736578"
+#       "datacenter_uuid" = "86643f5442164890b8b71de5b582dc9f"
+#     },
+#   ])
+#   "name" = tostring(null)
+#   "name_pattern" = tostring(null)
+# }
+```
+
+## Schema
+
+### Optional
+
+- `filter` (Block List) Filter resources based on any field in the schema. For example, to filter by status, use `name = "status"` and `values = ["Ready"]`. (see [below for nested schema](#nestedblock--filter))
+- `name` (String) Exact name for searching NFS primary storage.
+- `name_pattern` (String) Pattern for fuzzy name search, similar to MySQL LIKE. Use % for multiple characters and _ for exactly one character.
+
+### Read-Only
+
+- `nfs_storages` (Attributes List) List of NFS primary storage entries (see [below for nested schema](#nestedatt--nfs_storages))
+
+<a id="nestedblock--filter"></a>
+### Nested Schema for `filter`
+
+Required:
+
+- `name` (String) Name of the field to filter by (e.g., status, state).
+- `values` (Set of String) Values to filter by. Multiple values will be treated as an OR condition.
+
+
+<a id="nestedatt--nfs_storages"></a>
+### Nested Schema for `nfs_storages`
+
+Read-Only:
+
+- `available_capacity` (Number) Available capacity of the NFS primary storage in bytes
+- `available_physical_capacity` (Number) Available physical capacity of the NFS primary storage in bytes
+- `datacenter_uuid` (String) Datacenter UUID of the NFS primary storage
+- `mount_path` (String) Mount path of the NFS primary storage
+- `name` (String) Name of the NFS primary storage
+- `state` (String) State of the NFS primary storage (Enabled or Disabled)
+- `status` (String) Readiness status of the NFS primary storage
+- `system_used_capacity` (Number) System used capacity of the NFS primary storage in bytes
+- `total_capacity` (Number) Total capacity of the NFS primary storage in bytes
+- `total_physical_capacity` (Number) Total physical capacity of the NFS primary storage in bytes
+- `type` (String) Type of the NFS primary storage
+- `url` (String) URL of the NFS primary storage
+- `uuid` (String) UUID identifier of the NFS primary storage

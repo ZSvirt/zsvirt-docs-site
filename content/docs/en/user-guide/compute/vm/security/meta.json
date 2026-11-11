@@ -1,0 +1,10 @@
+{
+  "title": "VM Security",
+  "pages": [
+    "index",
+    "native-key-provider",
+    "update-keys",
+    "vtpm"
+  ],
+  "pagesIndex": "index"
+}

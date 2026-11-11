@@ -1,0 +1,64 @@
+---
+title: "添加虚拟机到虚拟机调度组"
+---
+
+<APIPage method="POST" path="/v1/vmSchedulingRuleGroup/{vmGroupUuid}/vmInstance/{vmUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST http://localhost:8080/zstack/v1/vmSchedulingRuleGroup/663fb7c5b74f3bc9bf629ca3523fb8cc/vmInstance/64d7de2d3eb431c99998292d1ed5411e
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|vmGroupUuid|String|url|VM调度组UUID| |4.6.0|
+|vmUuid|String|url|VM UUID| |4.6.0|
+|systemTags \(可选\)|List|body|系统标签| |4.6.0|
+|userTags \(可选\)|List|body|用户标签| |4.6.0|
+
+## API返回
+该API成功时返回一个空的JSON结构**`{}`**，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+AddVmToVmSchedulingRuleGroupAction action = new AddVmToVmSchedulingRuleGroupAction();
+action.vmGroupUuid = "663fb7c5b74f3bc9bf629ca3523fb8cc";
+action.vmUuid = "64d7de2d3eb431c99998292d1ed5411e";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddVmToVmSchedulingRuleGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddVmToVmSchedulingRuleGroupAction action = AddVmToVmSchedulingRuleGroupAction()
+action.vmGroupUuid = "663fb7c5b74f3bc9bf629ca3523fb8cc"
+action.vmUuid = "64d7de2d3eb431c99998292d1ed5411e"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddVmToVmSchedulingRuleGroupAction.Result res = action.call()
+```
+
+</APIPage>

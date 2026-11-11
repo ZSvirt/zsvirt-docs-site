@@ -1,0 +1,455 @@
+---
+title: "检查安全组规则是否可用"
+---
+
+<APIPage method="GET" path="/v1/security-groups/{securityGroupUuid}/rules/validation">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" 
+-H "Authorization: OAuth YOUR_SESSION_UUID" 
+-X GET http://localhost:8080/zstack/v1/security-groups/0351d8b796bd3165967f13d1da2f9576/rules/validation?type=Ingress&protocol=TCP&remoteSecurityGroupUuid=f938bc96baae3dc4b18be6bdbf34e783&ipVersion=4&srcIpRange=10.0.0.1,10.0.0.2-10.0.0.200,10.1.1.0/24&dstIpRange=10.0.0.1,10.0.0.2-10.0.0.200,10.1.1.0/24&dstPortRange=1000,1001,1002-1005,1008&action=ACCEPT
+```
+
+参数列表
+
+<table id="table_izn_vw5_m1b"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+securityGroupUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+安全组的UUID，唯一标示该资源
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+type
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+安全组规则的方向
+
+</td><td>
+
+-   Ingress
+-   Egress
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+protocol
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+安全组规则的协议类型
+
+</td><td>
+
+-   TCP
+-   UDP
+-   ICMP
+-   ALL
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+remoteSecurityGroupUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+远端安全组的UUID，唯一标示该资源
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+ipVersion \(可选\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+query
+
+</td><td>
+
+安全组规则的IP版本
+
+</td><td>
+
+-   4
+-   6
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+srcIpRange \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+安全组规则的源ip范围
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+dstIpRange \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+安全组规则的目的ip范围
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+dstPortRange \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+安全组规则的目的端口范围
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+action \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+安全组规则的动作
+
+</td><td>
+
+-   ACCEPT
+-   DROP
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+startPort \(可选\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+query
+
+</td><td>
+
+安全组规则的起始端口
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+endPort \(可选\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+query
+
+</td><td>
+
+安全组规则的结束端口
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+allowedCidr \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+安全组规则的ip范围
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr></tbody>
+</table>
+
+## API返回
+返回示例
+
+```
+{
+  "available": true,
+  "code": "SG.2000"
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|available|boolean|规则是否可用|4.7.21|
+|code|String|规则检验错误码|4.7.21|
+|reason|String|原因|4.7.21|
+|success|boolean| |4.7.21|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_a3v_dx5_m1b)|4.7.21|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.7.21|
+|description|String|错误的概要描述|4.7.21|
+|details|String|错误的详细信息|4.7.21|
+|elaboration|String|保留字段，默认为null|4.7.21|
+|opaque|LinkedHashMap|保留字段，默认为null|4.7.21|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.7.21|
+
+## SDK示例
+Java SDK
+
+```
+ValidateSecurityGroupRuleAction action = new ValidateSecurityGroupRuleAction();
+action.securityGroupUuid = "0351d8b796bd3165967f13d1da2f9576";
+action.type = "Ingress";
+action.protocol = "TCP";
+action.remoteSecurityGroupUuid = "f938bc96baae3dc4b18be6bdbf34e783";
+action.ipVersion = 4;
+action.srcIpRange = "10.0.0.1,10.0.0.2-10.0.0.200,10.1.1.0/24";
+action.dstIpRange = "10.0.0.1,10.0.0.2-10.0.0.200,10.1.1.0/24";
+action.dstPortRange = "1000,1001,1002-1005,1008";
+action.action = "ACCEPT";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ValidateSecurityGroupRuleAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ValidateSecurityGroupRuleAction action = ValidateSecurityGroupRuleAction()
+action.securityGroupUuid = "0351d8b796bd3165967f13d1da2f9576"
+action.type = "Ingress"
+action.protocol = "TCP"
+action.remoteSecurityGroupUuid = "f938bc96baae3dc4b18be6bdbf34e783"
+action.ipVersion = 4
+action.srcIpRange = "10.0.0.1,10.0.0.2-10.0.0.200,10.1.1.0/24"
+action.dstIpRange = "10.0.0.1,10.0.0.2-10.0.0.200,10.1.1.0/24"
+action.dstPortRange = "1000,1001,1002-1005,1008"
+action.action = "ACCEPT"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ValidateSecurityGroupRuleAction.Result res = action.call()
+```
+
+</APIPage>

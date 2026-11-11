@@ -1,0 +1,22 @@
+---
+title: "Deleting a virtual machine snapshot times out. How do I resolve this?"
+---
+
+<HistoricalNamingNote locale="en" />
+
+## Cause
+The default timeout for deleting a Snapshot is three hours. A large snapshot size causes the operation to time out.
+
+## Solution
+1.  Connect to the Management Node via SSH.
+
+2.  Run the following commands to extend the timeout to 24 hours:
+
+    ```
+    [root@localhost ~]# zstack-cli
+    admin >>> LogInByAccount accountName=admin password=$password  //platform admin user password
+    admin >>> UpdateGlobalConfig name=org.zstack.header.storage.snapshot.APIBatchDeleteVolumeSnapshotMsg category=apiTimeout value=24h
+    admin >>> UpdateGlobalConfig name=org.zstack.header.storage.snapshot.APIDeleteVolumeSnapshotMsg category=apiTimeout value=24h
+    ```
+
+3.  Retry the snapshot deletion.

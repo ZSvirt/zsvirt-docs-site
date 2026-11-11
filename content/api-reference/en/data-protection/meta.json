@@ -1,0 +1,9 @@
+{
+  "title": "Data Protection",
+  "pages": [
+    "snapshot-interfaces",
+    "backup-management-interfaces",
+    "cbt-apis"
+  ],
+  "pagesIndex": "index"
+}

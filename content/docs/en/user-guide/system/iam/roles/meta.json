@@ -1,0 +1,12 @@
+{
+  "title": "Role Management",
+  "pages": [
+    "index",
+    "built-in-roles",
+    "create-custom-role",
+    "clone-role",
+    "modify-permissions",
+    "delete-role"
+  ],
+  "pagesIndex": "index"
+}

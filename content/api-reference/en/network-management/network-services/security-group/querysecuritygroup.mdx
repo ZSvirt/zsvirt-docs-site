@@ -1,0 +1,113 @@
+---
+title: "QuerySecurityGroup"
+---
+
+<APIPage method="GET" path="/v1/security-groups" altPaths={["/v1/security-groups/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/security-groups?q=name=web&q=state=Enabled
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/security-groups/af0d90237c084afaa16f997847579152
+```
+
+Queryable Fields
+
+Run the CLI tool, type `QuerySecurityGroup` and press the Tab key to view all queryable fields and cross-table queryable resource names.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "6f757e65fed243babeac0be896e77caf",
+      "name": "web",
+      "description": "for test",
+      "state": "Enabled",
+      "createDate": "Jun 7, 2017 9:20:34 PM",
+      "lastOpDate": "Jun 7, 2017 9:20:34 PM",
+      "internalId": 0.0
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See [error](#p_tpr_x45_m1b)|0.6|
+|inventories|List|See [inventories](#p_wtm_x45_m1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root error: the source error that caused the current error. If there is no original error, this field is null|0.6|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource, uniquely identifying the resource|0.6|
+|name|String|The resource name|0.6|
+|description|String|The detailed description of the resource|0.6|
+|state|String| |0.6|
+|ipVersion|Integer|The IP version number|3.1.0|
+|createDate|Timestamp|The creation time|0.6|
+|lastOpDate|Timestamp|The last modification time|0.6|
+|attachedL3NetworkUuids|Set| |0.6|
+|rules|List|See [rules](#p_a5g_x45_m1b)|0.6|
+
+### rules
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource, uniquely identifying the resource|0.6|
+|securityGroupUuid|String|The security group UUID|0.6|
+|type|String|The traffic type|0.6|
+|ipVersion|Integer|The IP version number|3.1.0|
+|startPort|Integer|For TCP/UDP, it is the start port number of the port range; for ICMP, it is the ICMP type|0.6|
+|endPort|Integer|For TCP/UDP, it is the end port number of the port range; for ICMP, it is the ICMP code|0.6|
+|protocol|String|The traffic protocol type|0.6|
+|state|String|The availability state of the rule, not implemented in the current version|0.6|
+|allowedCidr|String|The allowed CIDR. It has different meanings depending on the traffic type. For Ingress, it is the source CIDR allowed to access the VM NIC. For Egress, it is the destination CIDR that traffic is allowed to reach from the VM NIC|0.6|
+|remoteSecurityGroupUuid|String| |0.6|
+|createDate|Timestamp|The creation time|0.6|
+|lastOpDate|Timestamp|The last modification time|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+QuerySecurityGroupAction action = new QuerySecurityGroupAction();
+action.conditions = asList("name=web","state=Enabled");
+action.sessionId = "604cf540e620468fa3fad7098196bb96";
+QuerySecurityGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QuerySecurityGroupAction action = QuerySecurityGroupAction()
+action.conditions = ["name=web","state=Enabled"]
+action.sessionId = "55a3657d35f14ee4b41401bd7ada15a7"
+QuerySecurityGroupAction.Result res = action.call()
+```
+
+</APIPage>

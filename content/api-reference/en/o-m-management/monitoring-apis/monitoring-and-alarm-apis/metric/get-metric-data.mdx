@@ -1,0 +1,103 @@
+---
+title: "Get Metric Data"
+---
+
+<APIPage method="GET" path="/v1/zwatch/metrics">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zwatch/metrics?namespace=ZStack/VM&metricName=CPUIdleUtilization&startTime=
+1.588831825415E12&period=30.0&labels=VMUuid=b89391d8b93b470a99055001a4383cc7&labels=CPUNum=4
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|namespace|String|query|Namespace| |2.3|
+|metricName|String|query|Metric| |2.3|
+|startTime \(optional\)|Long|query|Start time| |2.3|
+|endTime \(optional\)|Long|query|End time| |2.3|
+|period \(optional\)|Integer|query|Data granularity| |2.3|
+|labels \(optional\)|List|query|Filter labels| |2.3|
+|systemTags \(optional\)|List|query|System tags| |2.3|
+|userTags \(optional\)|List|query|User tags| |2.3|
+|functions \(optional\)|List|query|Function list| |2.3|
+|offsetAheadOfCurrentTime \(optional\)|Long|query| | |2.3|
+
+## API Response
+Response Example
+
+```
+{
+  "data": [
+    {
+      "value": 101.02,
+      "time": 1519829245957.0,
+      "labels": {
+        "VMUuid": "9304ab73d9b84852ad1d5061fd4760a5"
+      }
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_yrg_zzx_bdb)|2.3|
+|data|List|For details, see [data](#p_yfx_yzx_bdb)|2.3|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code. The globally unique error identifier, for example, SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field. Default is null|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null|0.6|
+|cause|ErrorCode|Root error. The source error that caused the current error. This field is null if no root error exists|0.6|
+
+### data
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|value|double|Metric value|0.6|
+|time|long|Record generation time|0.6|
+|labels|Map|Labels|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+GetMetricDataAction action = new GetMetricDataAction();
+action.namespace = "ZStack/VM";
+action.metricName = "CPUIdleUtilization";
+action.startTime = 1.519829246005E12;
+action.period = 30.0;
+action.labels = asList("VMUuid=3bb5b754320a4331bd907f10d8683568","CPUNum=4");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetMetricDataAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetMetricDataAction action = GetMetricDataAction()
+action.namespace = "ZStack/VM"
+action.metricName = "CPUIdleUtilization"
+action.startTime = 1.519829246005E12
+action.period = 30.0
+action.labels = [VMUuid=b577cfe6aad447c1b2e793fdc6d7975b, CPUNum=4]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetMetricDataAction.Result res = action.call()
+```
+
+</APIPage>

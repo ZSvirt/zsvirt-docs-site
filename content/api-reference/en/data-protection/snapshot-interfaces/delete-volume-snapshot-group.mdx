@@ -1,0 +1,101 @@
+---
+title: "Delete Snapshot Group"
+---
+
+<APIPage method="DELETE" path="/v1/volume-snapshots/group/{uuid}?deleteMode={deleteMode}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/volume-snapshots/group/f7b2175eebba3161b029689cb32f9b14?deleteMode=Permissive
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|UUID of the resource. Uniquely identifies the resource| |3.6.0|
+|deleteMode \(optional\)|String|body| | |3.6.0|
+|systemTags \(optional\)|List|body| | |3.6.0|
+|userTags \(optional\)|List|body| | |3.6.0|
+
+## API Response
+Response Example
+
+```
+{
+  "results": [
+    {
+      "success": false,
+      "error": {
+        "code": "SYS.1001",
+        "description": "internal error"
+      }
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_qt5_h4g_x3b)|3.6.0|
+|results|List|For details, see [results](#p_ajg_34g_x3b)|3.6.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|3.6.0|
+|description|String|Brief description of the error|3.6.0|
+|details|String|Detailed information about the error|3.6.0|
+|elaboration|String|Reserved field. Default is null|3.6.0|
+|opaque|LinkedHashMap|Reserved field. Default is null|3.6.0|
+|cause|ErrorCode|Root error. The source error that caused the current error. This field is null if no root error exists|3.6.0|
+
+### results
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|snapshotUuid|String|Snapshot UUID|3.6.0|
+|volumeUuid|String|Disk UUID|3.6.0|
+|success|boolean| |3.6.0|
+|error|ErrorCode|For details, see [error](#p_tyw_34g_x3b)|3.6.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|3.6.0|
+|description|String|Brief description of the error|3.6.0|
+|details|String|Detailed information about the error|3.6.0|
+|elaboration|String|Reserved field. Default is null|3.6.0|
+|opaque|LinkedHashMap|Reserved field. Default is null|3.6.0|
+|cause|ErrorCode|Root error. The source error that caused the current error. This field is null if no root error exists|3.6.0|
+
+## SDK Examples
+Java SDK
+
+```
+DeleteVolumeSnapshotGroupAction action = new DeleteVolumeSnapshotGroupAction();
+action.uuid = "f7b2175eebba3161b029689cb32f9b14";
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteVolumeSnapshotGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteVolumeSnapshotGroupAction action = DeleteVolumeSnapshotGroupAction()
+action.uuid = "f7b2175eebba3161b029689cb32f9b14"
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DeleteVolumeSnapshotGroupAction.Result res = action.call()
+```
+
+</APIPage>

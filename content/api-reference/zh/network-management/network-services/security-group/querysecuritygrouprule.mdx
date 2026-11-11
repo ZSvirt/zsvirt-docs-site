@@ -1,0 +1,103 @@
+---
+title: "查询安全组规则"
+---
+
+<APIPage method="GET" path="/v1/security-groups/rules" altPaths={["/v1/security-groups/rules/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/security-groups/rules?q=endPort=22&q=state=Enabled
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/security-groups/rules/ae59353d95f744b5b4396e1783ddb918
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QuerySecurityGroupRule`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "b3a99fc1548b41778258153cfd70f4b7",
+      "securityGroupUuid": "629d55f78c9f4b0e8e3504b9834ca1bb",
+      "type": "Ingress",
+      "startPort": 22.0,
+      "endPort": 22.0,
+      "protocol": "TCP",
+      "state": "Enabled",
+      "allowedCidr": "0.0.0.0/0",
+      "createDate": "Jun 7, 2017 9:20:25 PM",
+      "lastOpDate": "Jun 7, 2017 9:20:25 PM"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_m3b_rw5_m1b)|0.6|
+|inventories|List|详情参考[inventories](#p_smj_rw5_m1b)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|securityGroupUuid|String|安全组UUID|0.6|
+|type|String|流量类型|0.6|
+|ipVersion|Integer|ip协议号|3.1.0|
+|startPort|Integer|如果协议是TCP/UDP, 它是端口范围（port range）的起始端口号; 如果协议是ICMP, 它是ICMP类型（type）|0.6|
+|endPort|Integer|如果协议是TCP/UDP, 它是端口范围（port range）的结束端口号; 如果协议是ICMP, 它是ICMP类型（type）|0.6|
+|protocol|String|流量协议类型|0.6|
+|state|String|规则的可用状态, 当前版本未实现|0.6|
+|allowedCidr|String|允许的CIDR,根据流量类型的不同, 允许的CIDR有不同的含义,如果流量类型是Ingress, 允许的CIDR是允许访问虚拟机网卡的源CIDR,如果流量类型是Egress, 允许的CIDR是允许从虚拟机网卡离开并到达的目的地CIDR|0.6|
+|remoteSecurityGroupUuid|String| |0.6|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+
+## SDK示例
+Java SDK
+
+```
+QuerySecurityGroupRuleAction action = new QuerySecurityGroupRuleAction();
+action.conditions = asList("endPort=22","state=Enabled");
+action.sessionId = "362452e4e8a746ce981a5a54c7390445";
+QuerySecurityGroupRuleAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QuerySecurityGroupRuleAction action = QuerySecurityGroupRuleAction()
+action.conditions = ["endPort=22","state=Enabled"]
+action.sessionId = "37e099aa344c40ca947d11dff7ec2b91"
+QuerySecurityGroupRuleAction.Result res = action.call()
+```
+
+</APIPage>

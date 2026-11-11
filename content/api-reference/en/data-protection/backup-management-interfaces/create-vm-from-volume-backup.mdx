@@ -1,0 +1,726 @@
+---
+title: "Create VM from Backup"
+---
+
+<APIPage method="POST" path="/v1/vm-instances/from/vm-backup/{backupUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "vm1",
+    "instanceOfferingUuid": "31d2057b670d3c32a6970e519b514f12",
+    "l3NetworkUuids": [
+      "87b522f02ef83627bcab5e427ba2d5e6"
+    ],
+    "clusterUuid": "255b14070a533fb5ad9a845d4c50508a",
+    "description": "this is a vm",
+    "strategy": "InstantStart"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The `systemTags` and `userTags` fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"vm1","instanceOfferingUuid":"31d2057b670d3c32a6970e519b514f12","l3NetworkUuids":["87b522f02ef83627bcab5e427ba2d5e6"],"clusterUuid":"255b14070a533fb5ad9a845d4c50508a","description":"this is a vm","strategy":"InstantStart"}}' \
+http://localhost:8080/zstack/v1/vm-instances/from/vm-backup/b3ecd20a4b523ff0b5a954a8579a1aeb
+```
+
+Parameter List
+
+<table id="table_ndj_x5l_s2c"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+name
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(Contained in the `params` structure\)
+
+</td><td>
+
+VM name
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.18.0
+
+</td></tr><tr><td>
+
+backupUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+Backup UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.18.0
+
+</td></tr><tr><td>
+
+backupStorageUuid \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(Contained in the `params` structure\)
+
+</td><td>
+
+Image Storage UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.18.0
+
+</td></tr><tr><td>
+
+instanceOfferingUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(Contained in the `params` structure\)
+
+</td><td>
+
+Instance offering UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.18.0
+
+</td></tr><tr><td>
+
+defaultL3NetworkUuid \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(Contained in the `params` structure\)
+
+</td><td>
+
+Default L3 network UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.18.0
+
+</td></tr><tr><td>
+
+l3NetworkUuids
+
+</td><td>
+
+List
+
+</td><td>
+
+body \(Contained in the `params` structure\)
+
+</td><td>
+
+A list of Distributed Port Group UUIDs
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.18.0
+
+</td></tr><tr><td>
+
+type \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(Contained in the `params` structure\)
+
+</td><td>
+
+Virtual Machine type
+
+</td><td>
+
+-   UserVm
+-   ApplianceVm
+
+</td><td>
+
+3.18.0
+
+</td></tr><tr><td>
+
+zoneUuid \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(Contained in the `params` structure\)
+
+</td><td>
+
+Data Center UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.18.0
+
+</td></tr><tr><td>
+
+clusterUuid \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(Contained in the `params` structure\)
+
+</td><td>
+
+Cluster UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.18.0
+
+</td></tr><tr><td>
+
+hostUuid \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(Contained in the `params` structure\)
+
+</td><td>
+
+Host UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.18.0
+
+</td></tr><tr><td>
+
+primaryStorageUuidForRootVolume \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(Contained in the `params` structure\)
+
+</td><td>
+
+Data Storage UUID for root disk
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.18.0
+
+</td></tr><tr><td>
+
+description \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(Contained in the `params` structure\)
+
+</td><td>
+
+Detailed description of the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.18.0
+
+</td></tr><tr><td>
+
+rootVolumeSystemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body \(Contained in the `params` structure\)
+
+</td><td>
+
+System tags for root disk
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.18.0
+
+</td></tr><tr><td>
+
+resourceUuid \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(Contained in the `params` structure\)
+
+</td><td>
+
+Resource UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.18.0
+
+</td></tr><tr><td>
+
+tagUuids \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body \(Contained in the `params` structure\)
+
+</td><td>
+
+Tag UUID list
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.18.0
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.18.0
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.18.0
+
+</td></tr><tr><td>
+
+strategy \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(Contained in the `params` structure\)
+
+</td><td>
+
+VM creation strategy
+
+</td><td>
+
+-   InstantStart
+-   JustCreate
+-   CreateStopped
+
+</td><td>
+
+4.10.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "0a2cbf2edacc399cb9a7e6b2fa14602d",
+    "name": "Test-VM",
+    "description": "web server VM",
+    "zoneUuid": "1086a7491b8c3fb9ab12192dc0fab906",
+    "clusterUuid": "3e368e7f98913ec6bb20d6cc969cf50a",
+    "imageUuid": "2ceb7086482d3b42ab56b9daa6fb4d44",
+    "hostUuid": "d81f8599fd033183ab2d4bcafce233cc",
+    "lastHostUuid": "2d9fd9b480be3fdd9df46548d9d178d5",
+    "instanceOfferingUuid": "feba03817e0e326d827ebdb436786bad",
+    "rootVolumeUuid": "2f368d0d8b4734b7b58e1c5cb2ec27c6",
+    "platform": "Linux",
+    "defaultL3NetworkUuid": "ecebe1b81b18351dbdf304622e9ada80",
+    "type": "UserVm",
+    "hypervisorType": "KVM",
+    "memorySize": 8589934592,
+    "cpuNum": 1,
+    "allocatorStrategy": "LastHostPreferredAllocatorStrategy",
+    "createDate": "Nov 14, 2017 2:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 2:20:57 PM",
+    "state": "Running",
+    "vmNics": [
+      {
+        "uuid": "da1e1002fa2b387bbe389ce3bf10ba92",
+        "vmInstanceUuid": "0a2cbf2edacc399cb9a7e6b2fa14602d",
+        "usedIpUuid": "e8c56c6711e83896acb7413183726c1c",
+        "l3NetworkUuid": "ecebe1b81b18351dbdf304622e9ada80",
+        "ip": "192.168.1.10",
+        "mac": "00:0c:29:bd:99:fc",
+        "netmask": "255.255.255.0",
+        "gateway": "192.168.1.1",
+        "deviceId": 0,
+        "createDate": "Nov 14, 2017 2:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+      }
+    ],
+    "allVolumes": [
+      {
+        "uuid": "2f368d0d8b4734b7b58e1c5cb2ec27c6",
+        "name": "Root-Volume-For-VM-0a2cbf2edacc399cb9a7e6b2fa14602d",
+        "primaryStorageUuid": "890196bf1b5a308da1c75eb61ff441a3",
+        "vmInstanceUuid": "0a2cbf2edacc399cb9a7e6b2fa14602d",
+        "rootImageUuid": "2ceb7086482d3b42ab56b9daa6fb4d44",
+        "installPath": "/zstack_ps/rootVolumes/acct-36c27e8ff05c4780bf6d2fa65700f22e/vol-2f368d0d8b4734b7b58e1c5cb2ec27c6/2f368d0d8b4734b7b58e1c5cb2ec27c6.qcow2",
+        "type": "Root",
+        "format": "qcow2",
+        "size": 107374182400,
+        "actualSize": 21474836480,
+        "deviceId": 0,
+        "state": "Enabled",
+        "status": "Ready",
+        "createDate": "Nov 14, 2017 2:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+      }
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean|Whether the request succeeded|3.18.0|
+|inventory|VmInstanceInventory|For details, see[inventory](#p_omk_s4y_3gc)|3.18.0|
+|error|ErrorCode|For details, see[error](#p_fkp_l4y_3gc)|3.18.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource|0.6|
+|name|String|Resource name|0.6|
+|description|String|Detailed description of the resource|0.6|
+|zoneUuid|String|Data Center UUID|0.6|
+|clusterUuid|String|Cluster UUID|0.6|
+|imageUuid|String|Image UUID|0.6|
+|hostUuid|String|Host UUID|0.6|
+|lastHostUuid|String|UUID of the last Host where the VM was started|0.6|
+|instanceOfferingUuid|String|Instance offering UUID \(deprecated\)|0.6|
+|rootVolumeUuid|String|Root disk UUID|0.6|
+|platform|String|VM platform: Windows, Linux, or other|0.6|
+|architecture|String|VM architecture: x86\_64, aarch64, or other|0.6|
+|defaultL3NetworkUuid|String|Default Distributed Port Group UUID|0.6|
+|type|String|VM type: user VM or platform-specific VM|0.6|
+|hypervisorType|String|VM hypervisor type, typically KVM|0.6|
+|memorySize|Long|Memory size|0.6|
+|cpuNum|Integer|CPU count|0.6|
+|cpuSpeed|Long|CPU speed|0.6|
+|allocatorStrategy|String|VM allocation strategy|0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+|state|String|The enabled/disabled state of the VM|0.6|
+|guestOsType|String|Guest OS type of the VM|3.11.2|
+|vmNics|List|For details, see[vmNics](#p_qhj_r4y_3gc)|0.6|
+|allVolumes|List|For details, see[allVolumes](#p_p4h_m4y_3gc)|0.6|
+|vmCdRoms|List|For details, see[vmCdRoms](#p_cyx_l4y_3gc)|0.6|
+
+### vmNics
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource|3.17.13|
+|vmInstanceUuid|String|Virtual Machine UUID|3.17.13|
+|l3NetworkUuid|String|Distributed Port Group UUID|3.17.13|
+|ip|String| |3.17.13|
+|mac|String| |3.17.13|
+|hypervisorType|String| |3.17.13|
+|netmask|String| |3.17.13|
+|gateway|String| |3.17.13|
+|metaData|String| |3.17.13|
+|ipVersion|Integer| |3.17.13|
+|driverType|String| |3.17.13|
+|internalName|String| |3.17.13|
+|deviceId|Integer| |3.17.13|
+|type|String| |3.17.13|
+|state|String|NIC state|3.17.13|
+|createDate|Timestamp|Creation time|3.17.13|
+|lastOpDate|Timestamp|Last modification time|3.17.13|
+|usedIps|List|For details, see[usedIps](#p_l1d_q4y_3gc)|3.17.13|
+
+### usedIps
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource|4.10.0|
+|ipRangeUuid|String|IP range UUID|4.10.0|
+|l3NetworkUuid|String|Distributed Port Group UUID|4.10.0|
+|ipVersion|Integer|IP version|4.10.0|
+|ip|String|IP address|4.10.0|
+|netmask|String|Subnet mask|4.10.0|
+|gateway|String|Gateway address|4.10.0|
+|usedFor|String|Allocation purpose|4.10.0|
+|ipInLong|long|IP address stored as Long, valid for IPv4 only|4.10.0|
+|vmNicUuid|String|VM NIC UUID|4.10.0|
+|createDate|Timestamp|Creation time|4.10.0|
+|lastOpDate|Timestamp|Last modification time|4.10.0|
+
+### allVolumes
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource|3.17.13|
+|name|String|Resource name|3.17.13|
+|description|String|Detailed description of the resource|3.17.13|
+|primaryStorageUuid|String|Data Storage UUID|3.17.13|
+|vmInstanceUuid|String|Virtual Machine UUID|3.17.13|
+|diskOfferingUuid|String|Disk offering UUID|3.17.13|
+|rootImageUuid|String| |3.17.13|
+|installPath|String| |3.17.13|
+|type|String| |3.17.13|
+|format|String| |3.17.13|
+|size|Long| |3.17.13|
+|actualSize|Long| |3.17.13|
+|deviceId|Integer| |3.17.13|
+|state|String| |3.17.13|
+|status|String| |3.17.13|
+|createDate|Timestamp|Creation time|3.17.13|
+|lastOpDate|Timestamp|Last modification time|3.17.13|
+|isShareable|Boolean| |3.17.13|
+|volumeQos|String| |3.17.13|
+|lastDetachDate|Timestamp| |3.17.13|
+|lastVmInstanceUuid|String| |3.17.13|
+
+### vmCdRoms
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource|3.17.13|
+|vmInstanceUuid|String|Virtual Machine UUID|3.17.13|
+|deviceId|Integer| |3.17.13|
+|isoUuid|String| |3.17.13|
+|isoInstallPath|String| |3.17.13|
+|name|String|Resource name|3.17.13|
+|description|String|Detailed description of the resource|3.17.13|
+|createDate|Timestamp|Creation time|3.17.13|
+|lastOpDate|Timestamp|Last modification time|3.17.13|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|The detailed error information|0.6|
+|elaboration|String|A reserved field. The default value is null|0.6|
+|opaque|LinkedHashMap|A reserved field. The default value is null|0.6|
+|cause|ErrorCode|The root error. The source error that caused the current error. If no root error exists, this field is null|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+CreateVmFromVolumeBackupAction action = new CreateVmFromVolumeBackupAction();
+action.name = "vm1";
+action.backupUuid = "b3ecd20a4b523ff0b5a954a8579a1aeb";
+action.instanceOfferingUuid = "31d2057b670d3c32a6970e519b514f12";
+action.l3NetworkUuids = asList("87b522f02ef83627bcab5e427ba2d5e6");
+action.clusterUuid = "255b14070a533fb5ad9a845d4c50508a";
+action.description = "this is a vm";
+action.strategy = "InstantStart";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateVmFromVolumeBackupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = CreateVmFromVolumeBackupAction()
+action.name = "vm1"
+action.backupUuid = "b3ecd20a4b523ff0b5a954a8579a1aeb"
+action.instanceOfferingUuid = "31d2057b670d3c32a6970e519b514f12"
+action.l3NetworkUuids = [87b522f02ef83627bcab5e427ba2d5e6]
+action.clusterUuid = "255b14070a533fb5ad9a845d4c50508a"
+action.description = "this is a vm"
+action.strategy = "InstantStart"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

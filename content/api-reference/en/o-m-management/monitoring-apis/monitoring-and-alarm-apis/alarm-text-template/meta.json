@@ -1,0 +1,11 @@
+{
+  "title": "Alarm Text Template",
+  "pages": [
+    "create-snstext-template",
+    "delete-snstext-template",
+    "query-snstext-template",
+    "get-text-template-arg",
+    "update-snstext-template"
+  ],
+  "pagesIndex": "index"
+}

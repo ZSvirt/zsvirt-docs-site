@@ -1,0 +1,11 @@
+{
+  "title": "自定义属性",
+  "pages": [
+    "index",
+    "create",
+    "add-edit",
+    "manage",
+    "search-resources"
+  ],
+  "pagesIndex": "index"
+}

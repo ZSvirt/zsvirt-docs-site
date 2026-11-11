@@ -1,0 +1,25 @@
+---
+title: "A Bare Metal Chassis cannot retrieve hardware information. What should I do?"
+---
+
+Failure to retrieve hardware information from a Bare Metal Chassis is typically caused by one of two reasons. Identify the cause and follow the corresponding solution to troubleshoot.
+
+## Cause 1
+The server has multiple IPMI addresses, including both a shared network configuration address and a dedicated network address.
+
+## Solution
+-   Log in to the server out-of-band management page, disable the BMC shared network configuration address, keep only the dedicated network address, and then retrieve the Bare Metal Chassis hardware information again.
+
+## Cause 2
+The Bare Metal Instance BIOS mode must be set to Legacy.
+
+## Solution
+-   Change the Bare Metal Instance BIOS mode to Legacy, and then retrieve the hardware information again.
+
+## Solution
+-   If neither of the above causes applies, check the following configuration items:
+-   Verify that no DHCP service other than the Deployment Server exists on the deployment network.
+
+-   Verify that PXE is enabled in the BIOS for the NIC on the Bare Metal Chassis that is connected to the deployment network.
+
+    Ensure that this PXE NIC is the first boot NIC, or that PXE is disabled on all NICs that have a higher boot priority than the PXE NIC.

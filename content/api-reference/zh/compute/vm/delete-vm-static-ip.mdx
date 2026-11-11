@@ -1,0 +1,139 @@
+---
+title: "删除虚拟机指定IP"
+---
+
+<APIPage method="DELETE" path="/v1/vm-instances/{vmInstanceUuid}/static-ips">
+
+删除虚拟机分布式端口组上指定的IP。
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/vm-instances/fa0f86bf44593287af480c9151d41d1b/static-ips
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|vmInstanceUuid|String|url|虚拟机UUID| |0.6|
+|l3NetworkUuid|String|body|分布式端口组UUID| |0.6|
+|deleteMode\(可选\)|String|body| | |0.6|
+|staticIp \(可选\)|String|body| | |3.10.0|
+|systemTags \(可选\)|List|body|系统标签| |0.6|
+|userTags \(可选\)|List|body|用户标签| |0.6|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "8c15f251eba539e49df197a308aee38b",
+    "name": "Test-VM",
+    "description": "web server VM",
+    "zoneUuid": "f173cc88f1393a4398b3bd3e4c21bab6",
+    "clusterUuid": "59c11909378b3fc69e31f7da6b648b35",
+    "imageUuid": "fd8879c7c2e93d6b88ab56fe3140d1f6",
+    "hostUuid": "bd5799aad0023bcb8f61e7a5904ce7ce",
+    "lastHostUuid": "e7b0354e168a37ae85d934c63d6dc945",
+    "instanceOfferingUuid": "6fb498f77efa359e8868f66a6939d6ab",
+    "rootVolumeUuid": "217a529d3ae938fe8df35e737bf1c2a2",
+    "platform": "Linux",
+    "defaultL3NetworkUuid": "1a29368565c43b1c81aec96aeb5c4d3e",
+    "type": "UserVm",
+    "hypervisorType": "KVM",
+    "memorySize": 8589934592,
+    "cpuNum": 1,
+    "allocatorStrategy": "LastHostPreferredAllocatorStrategy",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM",
+    "state": "Running",
+    "vmNics": [
+      {
+        "uuid": "0e9c7c5c5c343d3baed27c8b7ab4012c",
+        "vmInstanceUuid": "8c15f251eba539e49df197a308aee38b",
+        "usedIpUuid": "55b0a960ae9d3b94b787ee6b94f6ab6e",
+        "l3NetworkUuid": "1a29368565c43b1c81aec96aeb5c4d3e",
+        "ip": "192.168.1.10",
+        "mac": "00:0c:29:bd:99:fc",
+        "hypervisorType": "KVM",
+        "netmask": "255.255.255.0",
+        "gateway": "192.168.1.1",
+        "deviceId": 0,
+        "state": "enable",
+        "createDate": "Nov 14, 2017 10:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+      }
+    ],
+    "allVolumes": [
+      {
+        "uuid": "217a529d3ae938fe8df35e737bf1c2a2",
+        "name": "Root-Volume-For-VM-8c15f251eba539e49df197a308aee38b",
+        "primaryStorageUuid": "d4ee62f589a8397491a5a3921b6c8a4b",
+        "vmInstanceUuid": "8c15f251eba539e49df197a308aee38b",
+        "diskOfferingUuid": "d25861266fdb39099ea4f8bffb6df873",
+        "rootImageUuid": "fd8879c7c2e93d6b88ab56fe3140d1f6",
+        "installPath": "/zstack_ps/rootVolumes/acct-36c27e8ff05c4780bf6d2fa65700f22e/vol-217a529d3ae938fe8df35e737bf1c2a2/217a529d3ae938fe8df35e737bf1c2a2.qcow2",
+        "type": "Root",
+        "format": "qcow2",
+        "size": 107374182400,
+        "actualSize": 21474836480,
+        "deviceId": 0,
+        "state": "Enabled",
+        "status": "Ready",
+        "createDate": "Nov 14, 2017 10:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+      }
+    ]
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_cvg_t1y_zz)|0.6|
+|success|boolean| |0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+DeleteVmStaticIpAction action = new DeleteVmStaticIpAction();
+action.vmInstanceUuid = "fa0f86bf44593287af480c9151d41d1b";
+action.l3NetworkUuid = "4ef401fb452e3b48af5914bcd336d670";
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteVmStaticIpAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteVmStaticIpAction action = DeleteVmStaticIpAction()
+action.vmInstanceUuid = "fa0f86bf44593287af480c9151d41d1b"
+action.l3NetworkUuid = "4ef401fb452e3b48af5914bcd336d670"
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DeleteVmStaticIpAction.Result res = action.call()
+```
+
+</APIPage>

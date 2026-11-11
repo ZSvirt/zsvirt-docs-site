@@ -1,0 +1,280 @@
+---
+title: "从虚拟机调度组校验调度策略"
+---
+
+<APIPage method="PUT" path="/v1/validate/vmSchedulingRule">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "validateVmSchedulingRule": {
+    "vmGroupUuid": "2bce1a0af86a3ceebd70ef1aaa3633d1",
+    "hostGroupUuid": "15b9f0a9a3c43708890eef7552959746",
+    "rule": "AFFINITY",
+    "mode": "HARD",
+    "zoneUuid": "538bdbde4d9d3b919e2cc9ae44542f09"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"validateVmSchedulingRule":{"vmGroupUuid":"2bce1a0af86a3ceebd70ef1aaa3633d1","hostGroupUuid":"15b9f0a9a3c43708890eef7552959746","rule":"AFFINITY","mode":"HARD","zoneUuid":"538bdbde4d9d3b919e2cc9ae44542f09"}}' http://localhost:8080/zstack/v1/validate/vmSchedulingRule
+```
+
+参数列表
+
+<table id="table_i3d_2bb_3cb"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+vmGroupUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**validateVmSchedulingRule**结构中\)
+
+</td><td>
+
+VM调度组UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.6.0
+
+</td></tr><tr><td>
+
+hostGroupUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**validateVmSchedulingRule**结构中\)
+
+</td><td>
+
+主机调度组UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.6.0
+
+</td></tr><tr><td>
+
+rule
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**validateVmSchedulingRule**结构中\)
+
+</td><td>
+
+调度规则
+
+</td><td>
+
+-   AFFINITY
+-   ANTIAFFINITY
+
+</td><td>
+
+4.6.0
+
+</td></tr><tr><td>
+
+mode
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**validateVmSchedulingRule**结构中\)
+
+</td><td>
+
+执行模式
+
+</td><td>
+
+-   SOFT
+-   HARD
+
+</td><td>
+
+4.6.0
+
+</td></tr><tr><td>
+
+zoneUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**validateVmSchedulingRule**结构中\)
+
+</td><td>
+
+数据中心UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.6.0
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.6.0
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.6.0
+
+</td></tr></tbody>
+</table>
+
+## API返回
+该API成功时返回一个空的JSON结构**`{}`**，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+ValidateVmSchedulingRuleAction action = new ValidateVmSchedulingRuleAction();
+action.vmGroupUuid = "2bce1a0af86a3ceebd70ef1aaa3633d1";
+action.hostGroupUuid = "15b9f0a9a3c43708890eef7552959746";
+action.rule = "AFFINITY";
+action.mode = "HARD";
+action.zoneUuid = "538bdbde4d9d3b919e2cc9ae44542f09";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ValidateVmSchedulingRuleAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ValidateVmSchedulingRuleAction action = ValidateVmSchedulingRuleAction()
+action.vmGroupUuid = "2bce1a0af86a3ceebd70ef1aaa3633d1"
+action.hostGroupUuid = "15b9f0a9a3c43708890eef7552959746"
+action.rule = "AFFINITY"
+action.mode = "HARD"
+action.zoneUuid = "538bdbde4d9d3b919e2cc9ae44542f09"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ValidateVmSchedulingRuleAction.Result res = action.call()
+```
+
+</APIPage>

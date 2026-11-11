@@ -1,0 +1,86 @@
+---
+title: "更新xsky类型的块存储卷"
+---
+
+<APIPage method="PUT" path="/v1/xsky/block-volumes/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateXskyBlockVolume": {
+    "name": "example"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateXskyBlockVolume":{"name":"example"}}' \
+http://localhost:8080/zstack/v1/xsky/block-volumes/eeb07fe1a24833959f75c38b9c7e4132/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |4.7.11|
+|name \(可选\)|String|body\(包含在`updateXskyBlockVolume`结构中\)|资源名称| |4.7.11|
+|description \(可选\)|String|body\(包含在`updateXskyBlockVolume`结构中\)|资源的详细描述| |4.7.11|
+|burstTotalBw \(可选\)|Long|body\(包含在`updateXskyBlockVolume`结构中\)| | |4.7.11|
+|burstTotalIops \(可选\)|Long|body\(包含在`updateXskyBlockVolume`结构中\)| | |4.7.11|
+|maxTotalBw \(可选\)|Long|body\(包含在`updateXskyBlockVolume`结构中\)| | |4.7.11|
+|maxTotalIops \(可选\)|Long|body\(包含在`updateXskyBlockVolume`结构中\)| | |4.7.11|
+|systemTags \(可选\)|List|body|系统标签| |4.7.11|
+|userTags \(可选\)|List|body|用户标签| |4.7.11|
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+UpdateXskyBlockVolumeAction action = new UpdateXskyBlockVolumeAction();
+action.uuid = "eeb07fe1a24833959f75c38b9c7e4132";
+action.name = "example";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateXskyBlockVolumeAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateXskyBlockVolumeAction action = UpdateXskyBlockVolumeAction()
+action.uuid = "eeb07fe1a24833959f75c38b9c7e4132"
+action.name = "example"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateXskyBlockVolumeAction.Result res = action.call()
+```
+
+</APIPage>

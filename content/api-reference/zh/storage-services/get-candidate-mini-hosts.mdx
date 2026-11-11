@@ -1,0 +1,109 @@
+---
+title: "获取未添加的Mini主机"
+---
+
+<APIPage method="GET" path="/v1/mini-clusters/candidate-hosts">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/mini-clusters/candidate-hosts?local=false&configure=false
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|local \(可选\)|boolean|query| | |3.6.0|
+|systemTags \(可选\)|List|query| | |3.6.0|
+|userTags \(可选\)|List|query| | |3.6.0|
+|configure \(可选\)|boolean|query| | |0.6|
+
+## API返回
+返回示例
+
+```
+{
+  "hosts": [
+    {
+      "hostName": "zstack-mini-07311a",
+      "ipv4Address": "172.20.26.21",
+      "ipv6Address": "fe80::ae1f:6bff:fe93:9a72",
+      "ipv4Interface": "br_bond0_26",
+      "ipv6Interface": "br_bond0_26",
+      "manufacturer": "ZStack",
+      "product": "ZOHCN05",
+      "sn": "RD-BJD-001-07311A"
+    },
+    {
+      "hostName": "zstack-mini-07311b",
+      "ipv4Address": "172.20.26.22",
+      "ipv6Address": "fe80::ae1f:6bff:fe92:8a7a",
+      "ipv4Interface": "br_bond0_26",
+      "ipv6Interface": "br_bond0_26",
+      "manufacturer": "ZStack",
+      "product": "ZOHCN05",
+      "sn": "RD-BJD-001-07311B"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_zgv_23x_r2c)|3.6.0|
+|hosts|List|详情参考[hosts](#p_tvy_f3x_r2c)|3.6.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### hosts
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|hostName|String|Hostname|3.6.0|
+|ipv4Address|String|IPv4地址|3.6.0|
+|ipv6Address|String|IPv6地址|3.6.0|
+|ipv4Interface|String|IPv4接口|3.6.0|
+|ipv6Interface|String|IPv6接口|3.6.0|
+|manufacturer|String|厂商|3.6.0|
+|product|String|型号|3.6.0|
+|sn|String|SN码|3.6.0|
+
+## SDK示例
+Java SDK
+
+```
+GetCandidateMiniHostsAction action = new GetCandidateMiniHostsAction();
+action.local = false;
+action.configure = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetCandidateMiniHostsAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetCandidateMiniHostsAction action = GetCandidateMiniHostsAction()
+action.local = false
+action.configure = false
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetCandidateMiniHostsAction.Result res = action.call()
+```
+
+</APIPage>

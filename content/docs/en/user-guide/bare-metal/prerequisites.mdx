@@ -1,0 +1,41 @@
+---
+title: 'Preparation'
+---
+
+## License
+To use the ZSvirt Bare Metal Management service, you need to purchase an individual plus license.
+
+## Network Planning
+[Refer to Figure 1](#fig_h4d_1sb_5fc) to plan your physical network environment in advance, including the deployment network, IPMI network, management network, and business network.
+
+1.  Plan the deployment network.
+
+    Make sure the PXE NIC of bare metal chassis connects to the deployment server's (PXE server) DHCP listening NIC through the deployment network.
+
+    -   Access the bare metal chassis BIOS to confirm the NIC connecting to the deployment network has PXE enabled.
+
+        For some models, make sure the PXE NIC is the first boot NIC or disable PXE on all NICs with higher boot priority.
+
+    -   No manual BIOS boot order adjustment is needed (typically HDD boot first). The system will automatically trigger a one-time PXE boot.
+    -   For high availability, we recommend using independent deployment servers.
+    -   The deployment server's DHCP listening NIC must be a dedicated NIC with IP address to provide stable DHCP service.
+    -   Ensure no other DHCP services exist in the deployment network.
+    -   Plan IP address allocation for each bare metal instance according to your production environment.
+2.  Configure bare metal chassis IPMI and plan IPMI network.
+
+    Two configuration scenarios exist:
+
+    -   For out-of-band control, ensure each bare metal chassis has BMC interface with pre-configured IPMI address, port, username and password. Plan IPMI network to connect management nodes to BMC interfaces.
+    -   If devices support BMC ShareLink Management Port, disable it in BIOS to ensure only one IPMI address exists.
+
+        <img src="/docs/en/user-guide/images/ZStack_ZSphere_User_Guide_0019_2_2.png" alt="Disable BMC ShareLink Management Port" />
+
+3.  Plan management and business networks.
+    -   Plan management network to connect image storage and deployment servers to management nodes.
+    -   For bare metal instance business networks, attach distributed switches to the corresponding bare metal cluster in advance.
+
+## Software Preparation
+Prepare ISO images in the image storage for installing operating systems on bare metal instances.
+
+-   The bare metal instance supports both custom platform OS and mainstream Linux distributions, including RHEL/CentOS series, Debian/Ubuntu series, and SUSE/openSUSE series.
+-   Only ISO format images are supported.

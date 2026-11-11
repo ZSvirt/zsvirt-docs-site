@@ -1,0 +1,96 @@
+---
+title: "Reconnect Console Proxy Agent"
+---
+
+<APIPage method="PUT" path="/v1/consoles/agents">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "reconnectConsoleProxyAgent": {
+    "agentUuids": [
+      "ce9f63639c6947fc9de43014a9c42af6",
+      "5cf200f8fa6640278ab3751a9e40a122",
+      "896f44bd3a2544e3b49a30dbe41303da"
+    ]
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding example, the **systemTags** and **userTags** fields are optional. They are listed here to show that the body can contain these two fields.
+</Callout>
+
+**Curl Example**
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"reconnectConsoleProxyAgent":{"agentUuids":["9a00b78598253e68914541e6760ddeaa","c18fbd323fbd3902961e4105ec9364d0","96efd32908dd3f71bef8c0f414dbf828"]}}' \
+http://localhost:8080/zstack/v1/consoles/agents
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|agentUuids \(Optional\)|List|body \(enclosed in the **params** structure\)|UUIDs of the console proxy agents| |0.6|
+|systemTags \(Optional\)|List|body|System tags| |0.6|
+|userTags \(Optional\)|List|body|User tags| |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "976e8d54d42841da85eb697f3e8534b6": true,
+    "ac4b5e3b69e5499eba381082199b5d42": true
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|inventory|Map|Console proxy agent inventory|0.6|
+|error|ErrorCode|Error code. If not null, the operation has failed. This field is null when the operation succeeds. For details, see [error](#p_jt2_35k_l1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. The globally unique identifier of the error, for example, SYS.1000 or HOST.1001.|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Default is null.|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null.|0.6|
+|cause|ErrorCode|Root error. The source error that caused the current error. This field is null if no root error exists.|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+ReconnectConsoleProxyAgentAction action = new ReconnectConsoleProxyAgentAction();
+action.agentUuids = asList("9b1d2cae4e75418ba8ca00a7f8d61eee","b3c9068b99664b65851bc29e39c3e336","89ea316d7f114203bb352d22b1f878e2");
+action.sessionId = "607aa9478e0f452ab3fe43f0bb44771f";
+ReconnectConsoleProxyAgentAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ReconnectConsoleProxyAgentAction action = ReconnectConsoleProxyAgentAction()
+action.agentUuids = [6b5d95576b444661a23454913abce886, 64326c502c4042b196d9602737733d64, 1cc5a9dbb4284fbe850e387788b365ec]
+action.sessionId = "dc7db7612de24cb7a3d91d1d08b03162"
+ReconnectConsoleProxyAgentAction.Result res = action.call()
+```
+
+</APIPage>

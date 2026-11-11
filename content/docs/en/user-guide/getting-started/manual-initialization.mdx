@@ -1,0 +1,123 @@
+---
+title: 'Initialize Manually'
+---
+
+You can follow the wizard to initiate a new environment by creating necessary resources, including data center, cluster, host, data storage, image storage, image and distributed port group.
+
+## Steps
+
+<Steps>
+
+<Step>
+
+<p className="procedure-step-title">Start manual initialization</p>
+
+In the **Welcome to Initialization Wizard** dialog, select **Initialize Manually**, then click **Next**.
+
+</Step>
+
+<Step>
+
+<p className="procedure-step-title">Create a data center</p>
+
+On the Initialize Manually page, enter a name and description for the data center, then click **OK**.
+
+</Step>
+
+<Step>
+
+<p className="procedure-step-title">Create a cluster</p>
+
+Enter a cluster name, select the CPU architecture (`x86_64` or `aarch64`), then click **OK**.
+
+</Step>
+
+<Step>
+
+<p className="procedure-step-title">Add a host</p>
+
+1. Enter a host name.
+2. Enter the host IP address, SSH port, SSH username, and password.
+3. Click **OK**. The addition process may take several minutes.
+
+<Callout type="info">
+The host architecture must match the cluster CPU architecture. Otherwise, adding the host to the cluster will fail.
+</Callout>
+
+</Step>
+
+<Step>
+
+<p className="procedure-step-title">Add data storage</p>
+
+Enter a data storage name, then select a storage type:
+
+- **Local storage**: Configure the mount path and host disks.
+
+<Callout type="info">
+
+- Do not use system directories such as `/`, `/dev`, `/proc`, `/sys`, `/usr/bin`, or `/bin` as the mount path. Doing so may cause host errors.
+- Configuring an unused host disk formats the selected disk and permanently removes all partitions, file systems, and data.
+- For ZCE distributed storage, ensure that key authentication matches the platform configuration. Otherwise, virtual machine creation may fail.
+
+</Callout>
+
+Click **OK** after completing the configuration.
+
+</Step>
+
+<Step>
+
+<p className="procedure-step-title">Add image storage</p>
+
+Enter an image storage name, then select an image storage type:
+
+- **Standalone image storage**: Enter the image storage IP address, SSH port, username, and password. Configure the addition method, mount path, whether to retrieve existing images, image synchronization network, and data network.
+- **Distributed image storage**: Configure the monitoring node management IP, SSH port, username, and password. Optionally specify an image storage pool UUID; if left empty, the platform creates one automatically.
+
+<Callout type="info">
+
+- Selecting an unused disk as the addition method formats the selected disk and permanently removes all partitions, file systems, and data.
+- Do not use system directories such as `/`, `/dev`, `/proc`, `/sys`, `/usr/bin`, or `/bin` as the mount path. Doing so may cause image storage errors.
+
+</Callout>
+
+Click **OK** after completing the configuration.
+
+</Step>
+
+<Step>
+
+<p className="procedure-step-title">Add an image</p>
+
+1. Select the image source: URL or local upload.
+2. Enter an image name.
+3. Select the image type: system image or disk image.
+4. Select the image format: `qcow2`, `iso`, `vmdk`, or `raw`.
+5. Click **OK**.
+
+</Step>
+
+<Step>
+
+<p className="procedure-step-title">Create a distributed port group</p>
+
+1. Enter a distributed port group name.
+2. Select a distributed switch:
+   - **Default switch**: Reuse the management network switch that the platform creates after the first host is added to the cluster.
+   - **New switch**: Separate the management and service networks according to your network plan. This option is recommended for production environments. Configure the bond method, uplink name, bond mode, hash policy, and host NICs.
+3. Select a VLAN type. Specify a VLAN ID when using standard VLAN.
+4. Choose whether to enable DHCP. If enabled, configure the network range method (IP range or CIDR), gateway, IP allocation policy, and DHCP service IP.
+5. Enter the DNS server, then click **OK**.
+
+</Step>
+
+<Step>
+
+<p className="procedure-step-title">Complete initialization</p>
+
+In the **Manual Initialization Complete** dialog, click **OK**. The required infrastructure resources are now ready, and you can start using the platform.
+
+</Step>
+
+</Steps>

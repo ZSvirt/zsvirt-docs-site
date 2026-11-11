@@ -1,0 +1,61 @@
+---
+title: "Delete Long Job"
+---
+
+<APIPage method="DELETE" path="/v1/longjobs/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/longjobs/a87ae356c6583cc7b312412337f96609?
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|The UUID of the resource. Uniquely identifies the resource.| |2.3|
+|systemTags \(Optional\)|List|body|System tags| |2.3|
+|userTags \(Optional\)|List|body|User tags| |2.3|
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On failure, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DeleteLongJobAction action = new DeleteLongJobAction();
+action.uuid = "a87ae356c6583cc7b312412337f96609";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteLongJobAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteLongJobAction action = DeleteLongJobAction()
+action.uuid = "a87ae356c6583cc7b312412337f96609"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DeleteLongJobAction.Result res = action.call()
+```
+
+</APIPage>

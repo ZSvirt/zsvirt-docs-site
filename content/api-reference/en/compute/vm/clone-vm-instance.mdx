@@ -1,0 +1,725 @@
+---
+title: "Clone VM Instance"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/{vmInstanceUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "cloneVmInstance": {
+    "strategy": "InstantStart",
+    "names": [
+      "vm1",
+      "vm2"
+    ],
+    "full": false
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, the **systemTags** and **userTags** fields are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"cloneVmInstance":{"strategy":"InstantStart","names":["vm1","vm2"],"full":false}}' \
+http://localhost:8080/zstack/v1/vm-instances/c4d628c203433f64b062ad07c8edf10d/actions
+```
+
+Parameter List
+
+<table id="table_xw3_vyy_g2b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+vmInstanceUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+VM instance UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+strategy \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in the**cloneVmInstance**structure\)
+
+</td><td>
+
+Strategy
+
+</td><td>
+
+-   CreateStopped
+
+ -   InstantStart
+-   JustCreate
+
+ **Note:** JustCreate will only create a VM record without performing any initialization, and the VM will not be displayed in the UI.
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+names
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(contained in the**cloneVmInstance**structure\)
+
+</td><td>
+
+List of VM instance names
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+full \(Optional\)
+
+</td><td>
+
+Boolean
+
+</td><td>
+
+body\(contained in the**cloneVmInstance**structure
+
+</td><td>
+
+Whether to clone mounted data volumes
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.5.0
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+primaryStorageUuidForRootVolume \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in the**cloneVmInstance**structure\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.6.21
+
+</td></tr><tr><td>
+
+primaryStorageUuidForDataVolume \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in the**cloneVmInstance**structure\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.6.21
+
+</td></tr><tr><td>
+
+rootVolumeSystemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(contained in the**cloneVmInstance**structure\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.6.21
+
+</td></tr><tr><td>
+
+dataVolumeSystemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(contained in the**cloneVmInstance**structure\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.6.21
+
+</td></tr><tr><td>
+
+clusterUuid \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in the**cloneVmInstance**structure\)
+
+</td><td>
+
+Cluster UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.6.21
+
+</td></tr><tr><td>
+
+hostUuid \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in the**cloneVmInstance**structure\)
+
+</td><td>
+
+Host UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.6.21
+
+</td></tr><tr><td>
+
+diskAOs \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(contained in the`cloneVmInstance`structure\)
+
+</td><td>
+
+Disk parameters
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.10
+
+</td></tr><tr><td>
+
+description \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in the`cloneVmInstance`structure\)
+
+</td><td>
+
+Detailed description of the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.10
+
+</td></tr><tr><td>
+
+vmNicParams \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in the`cloneVmInstance`structure\)
+
+</td><td>
+
+NIC parameters
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.16
+
+</td></tr><tr><td>
+
+vmCustomSpecification \(Optional\)
+
+</td><td>
+
+VmCustomSpecificationStruct
+
+</td><td>
+
+body\(contained in the`cloneVmInstance`structure\)
+
+</td><td>
+
+VM customization operating system
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.18
+
+</td></tr><tr><td>
+
+resetTpm \(Optional\)
+
+</td><td>
+
+Boolean
+
+</td><td>
+
+body\(contained in the`cloneVmInstance`structure\)
+
+</td><td>
+
+Whether to reset the TPM state of the created VM
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr></tbody>
+</table>
+
+<Callout type="info">
+-   ZSvirt Cloning VMs supports affinity group functionality. **SystemTags**adds**affinityGroup**option.
+    -   Option format: `affinityGroupUuid::UUID`
+    -   Example: `affinityGroupUuid::5fd71606d5af451d981413f35367a8d6`
+-   ZSvirt Cloning VMs supports specifying disk provisioning methods. **SystemTags**adds**volumeProvisioningStrategy**option, using **rootVolumeSystemTags**parameter to pass the SystemTag.
+    -   Option format: `volumeProvisioningStrategy::ThinProvisioning, volumeProvisioningStrategy::ThickProvisioning`
+    -   Example: `volumeProvisioningStrategy::ThinProvisioning, volumeProvisioningStrategy::ThickProvisioning`
+</Callout>
+
+## API Response
+<Callout type="info">
+When this API call succeeds, it returns success as**true**. The number of successfully cloned VMs is returned by`numberOfClonedVm`. In actual practice, due to resource constraints, some may succeed and others may fail. The clone failure reason for each VM is stored in the**error**field inside`inventories`.
+</Callout>
+
+Response Example
+
+```
+{
+  "result": {
+    "numberOfClonedVm": 1,
+    "inventories": [
+      {
+        "inventory": {
+          "uuid": "327b60d6b8cd31489ade6f4830bcec16",
+          "name": "new vm name",
+          "description": "web server VM",
+          "zoneUuid": "d886a09330e13282b7a320a98d0a53ec",
+          "clusterUuid": "f6f07dff7ede3b8cac7c8595a1698832",
+          "imageUuid": "3b7ff22eb60d38318835817ba6a2b6a2",
+          "hostUuid": "70c0f5223d083dfea2f1a02f69906306",
+          "lastHostUuid": "123f7f85f82f3e99940836d97ae18e04",
+          "instanceOfferingUuid": "001537d10c433857a7a98ae0a362c910",
+          "rootVolumeUuid": "c8be7ec6a8573d98a580b457a7245141",
+          "platform": "Linux",
+          "defaultL3NetworkUuid": "2ac50b85591b3e87b2686c529cf062f9",
+          "type": "UserVm",
+          "hypervisorType": "KVM",
+          "memorySize": 8589934592,
+          "cpuNum": 1,
+          "allocatorStrategy": "LastHostPreferredAllocatorStrategy",
+          "createDate": "Nov 14, 2017 2:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 2:20:57 PM",
+          "state": "Running",
+          "allVolumes": [
+            {
+              "uuid": "c8be7ec6a8573d98a580b457a7245141",
+              "name": "Root-Volume-For-VM-327b60d6b8cd31489ade6f4830bcec16",
+              "primaryStorageUuid": "c2a27c5268493a5cba84b94e37b86b4d",
+              "vmInstanceUuid": "327b60d6b8cd31489ade6f4830bcec16",
+              "diskOfferingUuid": "358e00e7245a39b9aa1c1849d6ba9701",
+              "rootImageUuid": "3b7ff22eb60d38318835817ba6a2b6a2",
+              "installPath": "/zstack_ps/rootVolumes/acct-36c27e8ff05c4780bf6d2fa65700f22e/vol-c8be7ec6a8573d98a580b457a7245141/c8be7ec6a8573d98a580b457a7245141.qcow2",
+              "type": "Root",
+              "format": "qcow2",
+              "size": 107374182400,
+              "actualSize": 21474836480,
+              "deviceId": 0,
+              "state": "Enabled",
+              "status": "Ready",
+              "createDate": "Nov 14, 2017 2:20:57 PM",
+              "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+            }
+          ]
+        }
+      }
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see[error](#p_fdn_qzy_g2b)|0.6|
+|result|CloneVmInstanceResults|For details, see[result](#p_nth_qzy_g2b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. A globally unique identifier for the error, e.g., SYS.1000, HOST.1001.|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field. Defaults to null.|0.6|
+|opaque|LinkedHashMap|Reserved field. Defaults to null.|0.6|
+|cause|ErrorCode|Root error. The source error that caused the current error. This field is null if there is no root cause.|0.6|
+
+### result
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|numberOfClonedVm|int| |0.6|
+|inventories|List|For details, see[inventories](#p_gfc_qzy_g2b)|0.6|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|For details, see[error](#p_cpw_pzy_g2b)|0.6|
+|inventory|VmInstanceInventory|For details, see[inventory](#p_cl4_pzy_g2b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. A globally unique identifier for the error, e.g., SYS.1000, HOST.1001.|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field. Defaults to null.|0.6|
+|opaque|LinkedHashMap|Reserved field. Defaults to null.|0.6|
+|cause|ErrorCode|Root error. The source error that caused the current error. This field is null if there is no root cause.|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource. Uniquely identifies the resource.|0.6|
+|name|String|Resource name|0.6|
+|description|String|Detailed description of the resource|0.6|
+|zoneUuid|String|Data Center UUID|0.6|
+|clusterUuid|String|Cluster UUID|0.6|
+|imageUuid|String|Image UUID|0.6|
+|hostUuid|String|Host UUID|0.6|
+|lastHostUuid|String| |0.6|
+|instanceOfferingUuid|String|Instance offering UUID|0.6|
+|rootVolumeUuid|String|Root disk UUID|0.6|
+|platform|String| |0.6|
+|architecture|String| |4.6.21|
+|defaultL3NetworkUuid|String| |0.6|
+|type|String| |0.6|
+|hypervisorType|String| |0.6|
+|memorySize|Long| |0.6|
+|cpuNum|Integer| |0.6|
+|cpuSpeed|Long| |0.6|
+|allocatorStrategy|String| |0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+|state|String| |0.6|
+|guestOsType|String| |4.6.21|
+|vmNics|List|For details, see[vmNics](#p_hyg_pzy_g2b)|0.6|
+|allVolumes|List|For details, see[allVolumes](#p_tsz_4zy_g2b)|0.6|
+|vmCdRoms|List|For details, see[vmCdRoms](#p_eyk_rg2_1xb)|4.6.21|
+
+### vmNics
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource. Uniquely identifies the resource.|0.6|
+|vmInstanceUuid|String|VM instance UUID|0.6|
+|l3NetworkUuid|String|Distributed Port Group UUID|0.6|
+|ip|String| |0.6|
+|mac|String| |0.6|
+|hypervisorType|String| |4.6.21|
+|netmask|String| |0.6|
+|gateway|String| |0.6|
+|metaData|String| |0.6|
+|ipVersion|Integer| |4.6.21|
+|driverType|String| |4.6.21|
+|internalName|String| |4.6.21|
+|deviceId|Integer| |0.6|
+|type|String| |4.6.21|
+|state|String|NIC Status|4.6.21|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+|usedIps|List|For details, see[usedIps](#p_bnc_rg2_1xb)|4.6.21|
+
+### usedIps
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource. Uniquely identifies the resource.|4.10.0|
+|ipRangeUuid|String|IP Range UUID|4.10.0|
+|l3NetworkUuid|String|Distributed Port Group UUID|4.10.0|
+|ipVersion|Integer|IP version|4.10.0|
+|ip|String|IP address|4.10.0|
+|netmask|String|Netmask|4.10.0|
+|gateway|String|Gateway|4.10.0|
+|usedFor|String|Allocation reason|4.10.0|
+|ipInLong|long|IP address stored in Long format, valid only for IPv4|4.10.0|
+|ipInBinary|byte\[\]|IP address stored in binary format \(byte array, IPv4 length 4, IPv6 length 16, network byte order\)|4.10.16|
+|vmNicUuid|String|Virtual Machine NIC UUID|4.10.0|
+|createDate|Timestamp|Creation time|4.10.0|
+|lastOpDate|Timestamp|Last modification time|4.10.0|
+
+### allVolumes
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource. Uniquely identifies the resource.|0.6|
+|name|String|Resource name|0.6|
+|description|String|Detailed description of the resource|0.6|
+|primaryStorageUuid|String|Data Storage UUID|0.6|
+|vmInstanceUuid|String|VM instance UUID|0.6|
+|diskOfferingUuid|String|Disk offering UUID|0.6|
+|rootImageUuid|String| |0.6|
+|installPath|String| |0.6|
+|type|String| |0.6|
+|format|String| |0.6|
+|size|Long| |0.6|
+|actualSize|Long| |0.6|
+|deviceId|Integer| |0.6|
+|state|String| |0.6|
+|status|String| |0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+|isShareable|Boolean| |0.6|
+|volumeQos|String| |4.6.21|
+|lastDetachDate|Timestamp| |4.6.21|
+|lastVmInstanceUuid|String| |4.6.21|
+
+### vmCdRoms
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource. Uniquely identifies the resource.|4.6.21|
+|vmInstanceUuid|String|VM instance UUID|4.6.21|
+|deviceId|Integer| |4.6.21|
+|isoUuid|String| |4.6.21|
+|isoInstallPath|String| |4.6.21|
+|name|String|Resource name|4.6.21|
+|description|String|Detailed description of the resource|4.6.21|
+|createDate|Timestamp|Creation time|4.6.21|
+|lastOpDate|Timestamp|Last modification time|4.6.21|
+
+## SDK Examples
+Java SDK
+
+```
+CloneVmInstanceAction action = new CloneVmInstanceAction();
+action.vmInstanceUuid = "c4d628c203433f64b062ad07c8edf10d";
+action.strategy = "InstantStart";
+action.names = asList("vm1","vm2");
+action.full = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CloneVmInstanceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = CloneVmInstanceAction()
+action.vmInstanceUuid = "c4d628c203433f64b062ad07c8edf10d"
+action.strategy = "InstantStart"
+action.names = [vm1, vm2]
+action.full = false
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

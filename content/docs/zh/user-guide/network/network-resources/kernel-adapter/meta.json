@@ -1,0 +1,10 @@
+{
+  "title": "Kernel 适配器",
+  "pages": [
+    "index",
+    "create",
+    "modify",
+    "delete"
+  ],
+  "pagesIndex": "index"
+}

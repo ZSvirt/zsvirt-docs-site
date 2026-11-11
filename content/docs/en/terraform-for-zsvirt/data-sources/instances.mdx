@@ -1,0 +1,182 @@
+---
+title: 'zsphere_instances'
+description: 'Fetches a list of VM instances and their associated attributes from the ZSvirt environment.'
+---
+
+<HistoricalNamingNote locale="en" />
+
+# zsphere_instances (Data Source)
+
+Fetches a list of VM instances and their associated attributes from the ZSvirt environment.
+
+## Example Usage
+
+```terraform
+data "zsphere_instances" "test" {
+}
+
+output "zstack_secs" {
+  value = data.zsphere_instances.test
+}
+
+# example output
+# zstack_secs = {
+#   "filter" = tolist([])
+#   "name" = tostring(null)
+#   "name_pattern" = tostring(null)
+#   "vminstances" = tolist([
+#     {
+#       "all_volumes" = tolist([
+#         {
+#           "volume_actual_size" = 0
+#           "volume_description" = "Root volume for VM[uuid:0579c098c3294b3c8e587ceabb3c5870]"
+#           "volume_format" = "qcow2"
+#           "volume_size" = 40
+#           "volume_state" = "Enabled"
+#           "volume_status" = "Ready"
+#           "volume_type" = "Root"
+#           "volume_uuid" = "af6b08beb73f49489565d20ad00c4585"
+#         },
+#       ])
+#       "architecture" = "x86_64"
+#       "cluster_uuid" = "5568b28dbaed465daf768b533b1fe72d"
+#       "cpu_num" = 2
+#       "datacenter_uuid" = "86643f5442164890b8b71de5b582dc9f"
+#       "host_uuid" = ""
+#       "hypervisor_type" = "KVM"
+#       "image_uuid" = "8c00337d47e94acab448e88afdc5c872"
+#       "memory_size" = 2048
+#       "name" = "VM-Instance-1"
+#       "platform" = "Linux"
+#       "state" = "Stopped"
+#       "type" = "UserVm"
+#       "uuid" = "0579c098c3294b3c8e587ceabb3c5870"
+#       "vm_nics" = tolist(null) /* of object */
+#     },
+#     {
+#       "all_volumes" = tolist([
+#         {
+#           "volume_actual_size" = 0
+#           "volume_description" = "Root volume for VM[uuid:0c55e5b3f8204133afeaa98519a5e147]"
+#           "volume_format" = "qcow2"
+#           "volume_size" = 40
+#           "volume_state" = "Enabled"
+#           "volume_status" = "Deleted"
+#           "volume_type" = "Root"
+#           "volume_uuid" = "7b600b459fec44acbec2d6e913383583"
+#         },
+#       ])
+#       "architecture" = "x86_64"
+#       "cluster_uuid" = "5568b28dbaed465daf768b533b1fe72d"
+#       "cpu_num" = 2
+#       "datacenter_uuid" = "86643f5442164890b8b71de5b582dc9f"
+#       "host_uuid" = ""
+#       "hypervisor_type" = "KVM"
+#       "image_uuid" = "8c00337d47e94acab448e88afdc5c872"
+#       "memory_size" = 2048
+#       "name" = "test-vm-instance"
+#       "platform" = "Linux"
+#       "state" = "Destroyed"
+#       "type" = "UserVm"
+#       "uuid" = "0c55e5b3f8204133afeaa98519a5e147"
+#       "vm_nics" = tolist(null) /* of object */
+#     },
+#     {
+#       "all_volumes" = tolist([
+#         {
+#           "volume_actual_size" = 0
+#           "volume_description" = "Root volume for VM[uuid:6ada685eeb4c48ffa617b9e79bec5935]"
+#           "volume_format" = "qcow2"
+#           "volume_size" = 40
+#           "volume_state" = "Enabled"
+#           "volume_status" = "Deleted"
+#           "volume_type" = "Root"
+#           "volume_uuid" = "47e9f37bcc19402e9269b3c0b14d0826"
+#         },
+#       ])
+#       "architecture" = "x86_64"
+#       "cluster_uuid" = "5568b28dbaed465daf768b533b1fe72d"
+#       "cpu_num" = 2
+#       "datacenter_uuid" = "86643f5442164890b8b71de5b582dc9f"
+#       "host_uuid" = ""
+#       "hypervisor_type" = "KVM"
+#       "image_uuid" = "8c00337d47e94acab448e88afdc5c872"
+#       "memory_size" = 2048
+#       "name" = "test-vm-instance"
+#       "platform" = "Linux"
+#       "state" = "Destroyed"
+#       "type" = "UserVm"
+#       "uuid" = "6ada685eeb4c48ffa617b9e79bec5935"
+#       "vm_nics" = tolist(null) /* of object */
+#     },
+#   ])
+# }
+```
+
+## Schema
+
+### Optional
+
+- `filter` (Block List) Filter resources based on any field in the schema. For example, to filter by status, use `name = "status"` and `values = ["Ready"]`. (see [below for nested schema](#nestedblock--filter))
+- `name` (String) Exact name for searching VM instance
+- `name_pattern` (String) Pattern for fuzzy name search, similar to MySQL LIKE. Use % for multiple characters and _ for exactly one character.
+
+### Read-Only
+
+- `vminstances` (Attributes List) (see [below for nested schema](#nestedatt--vminstances))
+
+<a id="nestedblock--filter"></a>
+### Nested Schema for `filter`
+
+Required:
+
+- `name` (String) Name of the field to filter by (e.g., status, state).
+- `values` (Set of String) Values to filter by. Multiple values will be treated as an OR condition.
+
+
+<a id="nestedatt--vminstances"></a>
+### Nested Schema for `vminstances`
+
+Read-Only:
+
+- `all_volumes` (Attributes List) (see [below for nested schema](#nestedatt--vminstances--all_volumes))
+- `architecture` (String) The CPU architecture (e.g., x86_64, ARM) of the VM.
+- `cluster_uuid` (String) The UUID of the cluster in which the VM is located.
+- `cpu_num` (Number) The number of CPUs allocated to the VM.
+- `datacenter_uuid` (String) The UUID of the zone in which the VM is located.
+- `host_uuid` (String) The UUID of the host on which the VM is running.
+- `hypervisor_type` (String) The type of hypervisor on which the VM is running (e.g., KVM, VMware).
+- `image_uuid` (String) The UUID of the image used to create the VM.
+- `memory_size` (Number) The amount of memory allocated to the VM, in megabytes (MB).
+- `name` (String) The name of the VM instance.
+- `platform` (String) The platform (e.g., Linux, Windows) on which the VM is running.
+- `state` (String) The current state of the VM (e.g., Running, Stopped).
+- `type` (String) The type of the VM (e.g., UserVm or SystemVm).
+- `uuid` (String) The unique identifier (UUID) of the VM instance.
+- `vm_nics` (Attributes List) (see [below for nested schema](#nestedatt--vminstances--vm_nics))
+
+<a id="nestedatt--vminstances--all_volumes"></a>
+### Nested Schema for `vminstances.all_volumes`
+
+Read-Only:
+
+- `volume_actual_size` (Number) The actual size of the volume, which might differ from the requested size, in gigabytes (GB).
+- `volume_description` (String) The description of the volume attached to the VM.
+- `volume_format` (String) The format of the volume (e.g., RAW, QCOW2).
+- `volume_size` (Number) The size of the volume, in gigabytes (GB).
+- `volume_state` (String) The state of the volume (e.g., Enabled, Disabled).
+- `volume_status` (String) The status of the volume (e.g., Ready, NoReady).
+- `volume_type` (String) The type of the volume (e.g., root, data).
+- `volume_uuid` (String) The UUID of the volume attached to the VM.
+
+
+<a id="nestedatt--vminstances--vm_nics"></a>
+### Nested Schema for `vminstances.vm_nics`
+
+Read-Only:
+
+- `gateway` (String) The gateway IP address for the VM NIC.
+- `ip` (String) The IP address assigned to the VM NIC.
+- `mac` (String) The MAC address of the VM NIC.
+- `netmask` (String) The network mask of the VM NIC.
+- `uuid` (String) The uuid for the VM NIC.

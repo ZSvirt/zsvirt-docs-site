@@ -1,0 +1,22 @@
+---
+title: 'Register a Virtual Machine'
+---
+
+You can register a virtual machine configuration file and data file to create a corresponding virtual machine record on the platform. After registration, the virtual machine is managed uniformly by the platform.
+
+-   Make sure the platform is installed with a valid Advanced Edition license.
+-   Only SAN storage, local storage, and NFS storage support virtual machine registration. Before registration, the data storage must be attached to the cluster, and the cluster must contain a host.
+-   The same VM configuration file cannot be registered multiple times on the same host.
+-   For VMs with TPM, ensure the corresponding key provider is configured on the platform before registration
+
+1.  In the navigation pane, click **Inventory** &gt; **Data Storage**.
+
+2.  Select the target data storage, and then click **Actions** &gt; **Register VM**.
+
+3.  In the Register VM dialog, set the following parameters:
+
+    -   **Configuration File**: Select the configuration file for the virtual machine you want to register.
+    -   **VM Name**: Set a name for the virtual machine.
+    -   **Group**: Select the group for the virtual machine.
+    -   **Location**: Specify where the virtual machine runs.
+4.  Click **OK**.

@@ -1,0 +1,35 @@
+---
+title: "Changes to chrony.conf on a host are reset after reconnection. What should I do?"
+---
+
+<HistoricalNamingNote locale="en" />
+
+## Cause
+When the host reconnects to the Management Node, the `chrony.conf` configuration file is overwritten.
+
+## Solution
+1.  Log in to the host and run the following commands to stop the Management Node service:
+
+    ```
+    # Check whether dual Management Node mode is active
+    [root@localhost ~]# zsha2 status
+    # Stop the management service
+    [root@localhost ~]# zsha2 stop-node
+    ```
+
+2.  Run the following commands to edit the dual Management Node configuration file and update **chrony.serverIp.0 = IP**:
+
+    ```
+    # Back up the configuration file
+    [root@localhost ~]# cp -a /usr/local/zstack/apache-tomcat/webapps/zstack/WEB-INF/classes/zstack.properties /root/zstack.properties.bak
+    # Edit the configuration file
+    [root@localhost ~]# vim /usr/local/zstack/apache-tomcat/webapps/zstack/WEB-INF/classes/zstack.properties
+    ```
+
+3.  Run the following command to start the dual Management Node service:
+
+    ```
+    [root@localhost ~]# zsha2 start-node
+    ```
+
+4.  Go to **Resource Center** &gt; **Hosts and VMs** to open the Hosts interface. Select the host and click **Actions** &gt; **Reconnect** to reconnect the host.

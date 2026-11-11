@@ -1,0 +1,22 @@
+---
+title: "Windows虚拟机在控制台中无法调整分辨率，怎么办？"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+## 原因
+Windows虚拟机使用Spice远程桌面协议并使用QXL类型显卡时，需安装QXL驱动。若未安装QXL驱动，可能无法调整分辨率。
+
+## 解决方案
+1.  可尝试参考以下步骤解决：
+2.  下载安装VirtIO驱动。
+
+    -   若虚拟机系统为Windows 10，可使用虚拟化平台自带的zstack-windows-virtio-driver-2.1.iso进行安装。
+    -   若虚拟机系统为WindowsServer 2016、WindowsServer 2019，需下载安装最新版本VirtIO驱动。
+3.  为虚拟机挂载VirtIO驱动，同时安装QXL驱动。此处以WindowsServer 2016为例安装QXL驱动：
+
+    1.  进入光驱目录`\qxldod\2k16\amd64`。
+
+    2.  右击该目录下`qxldod.inf`文件，选择**安装**，开始安装QXL驱动。
+
+4.  QXL驱动安装完毕后，重启虚拟机。

@@ -1,0 +1,84 @@
+---
+title: "停止暴露硬盘为NBD设备"
+---
+
+<APIPage method="POST" path="/v1/cbt-task/unexportvolume">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "volumeUuids": [
+      "82eaf8972ece3e228b6f75f61f8749d9"
+    ],
+    "vmInstanceUuid": "6456713db34a3d7e96c7e132179c413d"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"volumeUuids":["82eaf8972ece3e228b6f75f61f8749d9"],"vmInstanceUuid":"6456713db34a3d7e96c7e132179c413d"}}' \
+http://localhost:8080/zstack/v1/cbt-task/unexportvolume
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|volumeUuids|List|body\(包含在`params`结构中\)| | |4.10.10|
+|vmInstanceUuid|String|body\(包含在`params`结构中\)|虚拟机UUID| |4.10.10|
+|systemTags \(可选\)|List|body|系统标签| |4.10.10|
+|userTags \(可选\)|List|body|用户标签| |4.10.10|
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+UnexportNbdVolumesAction action = new UnexportNbdVolumesAction();
+action.volumeUuids = asList("82eaf8972ece3e228b6f75f61f8749d9");
+action.vmInstanceUuid = "6456713db34a3d7e96c7e132179c413d";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UnexportNbdVolumesAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UnexportNbdVolumesAction action = UnexportNbdVolumesAction()
+action.volumeUuids = [82eaf8972ece3e228b6f75f61f8749d9]
+action.vmInstanceUuid = "6456713db34a3d7e96c7e132179c413d"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UnexportNbdVolumesAction.Result res = action.call()
+```
+
+</APIPage>

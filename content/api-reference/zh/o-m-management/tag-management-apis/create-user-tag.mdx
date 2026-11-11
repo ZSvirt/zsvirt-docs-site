@@ -1,0 +1,115 @@
+---
+title: "创建用户标签"
+---
+
+<APIPage method="POST" path="/v1/user-tags">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "resourceType": "DiskOfferingVO",
+    "resourceUuid": "beff527f6ccb45c8b215c59434b2fa5c",
+    "tag": "for-large-DB"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"resourceType":"DiskOfferingVO","resourceUuid":"0a93a8d099a9339bb21b6e14a4ca3eea","tag":"for-large-DB"}}' \
+http://localhost:8080/zstack/v1/user-tags
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|resourceType|String|body\(包含在**params**结构中\)|当创建一个标签时, 用户必须制定标签所关联的资源类型| |0.6|
+|resourceUuid|String|body\(包含在**params**结构中\)|用户指定的资源UUID，若指定，系统不会为该资源随机分配UUID| |0.6|
+|tag|String|body\(包含在**params**结构中\)|标签字符串| |0.6|
+|systemTags \(可选\)|List|body|系统标签| |0.6|
+|userTags \(可选\)|List|body|用户标签| |0.6|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "b97c64cbf0524f809c05bf9eaf262b79",
+    "resourceType": "DiskOfferingVO",
+    "tag": "for-large-DB",
+    "type": "User",
+    "createDate": "May 11, 2017 1:22:33 PM",
+    "lastOpDate": "May 11, 2017 1:22:33 PM"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_xxr_hsk_l1b)|0.6|
+|inventory|UserTagInventory|详情参考[inventory](#p_wby_hsk_l1b)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|resourceUuid|String|用户指定的资源UUID，若指定，系统不会为该资源随机分配UUID|0.6|
+|resourceType|String|当创建一个标签时, 用户必须制定标签所关联的资源类型\(resource type\)|0.6|
+|tag|String|标签字符串|0.6|
+|type|String|保留域, 请不要使用它|0.6|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+
+## SDK示例
+Java SDK
+
+```
+CreateUserTagAction action = new CreateUserTagAction();
+action.resourceType = "DiskOfferingVO";
+action.resourceUuid = "824246fa21d8405fbd48ea1cc7dbf049";
+action.tag = "for-large-DB";
+action.sessionId = "5d9cde1f7e6a43f586ec78dedf743201";
+CreateUserTagAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateUserTagAction action = CreateUserTagAction()
+action.resourceType = "DiskOfferingVO"
+action.resourceUuid = "11f5e230f43d49e69815c35fbd39bad5"
+action.tag = "for-large-DB"
+action.sessionId = "6301b756253c4103adbf8c891d858e5f"
+CreateUserTagAction.Result res = action.call()
+```
+
+</APIPage>

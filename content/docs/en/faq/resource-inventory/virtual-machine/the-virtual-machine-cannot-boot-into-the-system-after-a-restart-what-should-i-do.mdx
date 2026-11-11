@@ -1,0 +1,23 @@
+---
+title: "The virtual machine cannot boot into the system after a restart. What should I do?"
+---
+
+<HistoricalNamingNote locale="en" />
+
+## Symptom
+The virtual machine cannot boot normally and displays a `Give root password for maintenance` prompt.
+
+## Cause
+The virtual machine `fstab` is configured for automatic disk mounting, but the disk device name has changed, preventing the virtual machine from mounting automatically.
+
+## Solution
+-   Run the following commands in the virtual machine to mount the disk:
+
+    ```
+    # Get disk UUID
+    [root@localhost ~]# ll /dev/disk/by-uuid/
+    # Mount the directory
+    [root@localhost ~]# mount /dev/disk/by-uuid/$disk_UUID /zstack_ps
+    # Configure automatic mounting using disk UUID
+    [root@localhost ~]# vi /etc/fstab
+    ```

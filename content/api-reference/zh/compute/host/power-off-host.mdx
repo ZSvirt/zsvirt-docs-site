@@ -1,0 +1,108 @@
+---
+title: "主机关机"
+---
+
+<APIPage method="PUT" path="/v1/hosts/power-off/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "powerOffHost": {
+    "adminPassword": "password",
+    "hostUuids": [
+      "ff0192fa70113da886101145c084bd00"
+    ],
+    "waitTaskCompleted": false
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"powerOffHost":{"adminPassword":"password","hostUuids":["ff0192fa70113da886101145c084bd00"],"waitTaskCompleted":false}}' \
+http://localhost:8080/zstack/v1/hosts/power-off/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|adminPassword|String|body\(包含在`powerOffHost`结构中\)| | |0.6|
+|hostUuids|List|body\(包含在`powerOffHost`结构中\)| | |0.6|
+|waitTaskCompleted \(可选\)|boolean|body\(包含在`powerOffHost`结构中\)| | |0.6|
+|maxWaitTime \(可选\)|Long|body\(包含在`powerOffHost`结构中\)| | |0.6|
+|systemTags \(可选\)|List|body|系统标签| |0.6|
+|userTags \(可选\)|List|body|用户标签| |0.6|
+
+## API返回
+返回示例
+
+```
+{
+  "results": []
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|results|List|详情参考[results](#p_cds_cnb_w2c)|0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_ncg_cnb_w2c)|0.6|
+
+### results
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_ncg_cnb_w2c)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+PowerOffHostAction action = new PowerOffHostAction();
+action.adminPassword = "password";
+action.hostUuids = asList("ff0192fa70113da886101145c084bd00");
+action.waitTaskCompleted = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+PowerOffHostAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+PowerOffHostAction action = PowerOffHostAction()
+action.adminPassword = "password"
+action.hostUuids = [ff0192fa70113da886101145c084bd00]
+action.waitTaskCompleted = false
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+PowerOffHostAction.Result res = action.call()
+```
+
+</APIPage>

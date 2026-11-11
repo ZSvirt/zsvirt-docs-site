@@ -1,0 +1,113 @@
+---
+title: "重新加载许可证"
+---
+
+<APIPage method="PUT" path="/v1/licenses/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "reloadLicense": {
+    "managementNodeUuids": [
+      "839034e1da8e37a08b67e3a8279a1650",
+      "7869acf9b8bd34079f14a93751e60810"
+    ]
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"reloadLicense":{"managementNodeUuids":["839034e1da8e37a08b67e3a8279a1650","7869acf9b8bd34079f14a93751e60810"]}}' \
+http://localhost:8080/zstack/v1/licenses/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|managementNodeUuids \(可选\)|List|body\(包含在**reloadLicense**结构中\)|管理节点UUID| |0.6|
+|systemTags \(可选\)|List|body|系统标签| |0.6|
+|userTags \(可选\)|List|body|用户标签| |0.6|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "licenseRequest": "eyJwcml2YXRlS2V5IjoiLS0tLS1CRUdJTiBSU0EgUFJJVkFURSBLRVktLS0tLVxuTUlJRWhnSUJBQUtCL0RjMGtxWGl2UmRPTGRWeC8xK1MzMUtaejNQd1dkek9ob3NvY29rU2wwdnBxYzc2cHF1V1xubDNwQ0FWZ01UaG1OUlo1Z05xaVM2MWdvcmY4WkY3eHBGUWd1cms0WjZxVEl3aDc3emo2NEhPMHBmYnpndzFmL1xuMm9Ga3l1N25GQU5wamxMUEpxalYva0xwL3RVeGpqY0w0ZG9TcDY1TGM3a2lrOXY1aTBpeXlYZEs5dWJsTnFNNVxuV2VNNWdFLzdzeG5IZS9TbFY1Nk1UeWtDeUdpbGVMMmwvUFlmQ2JuYUN4ZG9oOERzKzJ2RnpJaFZ3RWwyYkppZ1xuQkptMlU3VzNKZzltWGZEb2dDTHMyMTE4TXdDUGFQVWVMRTArWlBBNUduL2ZxZUZad2hDMElMcnM3ZTZyZThxK1xuVWpBN2RXeVoxVm50Y0xiWGUxbW94Vm1DSWx4VWd3SURBUUFCQW9IOE1JMXRXTFkxQmhVOUhGZVplVTRzV1hKclxuVVJXWGd5cWtqQ2t6cXJpT0ZqYllvUEF6dS8vREU4U1BlQWZDZkppU0hUdVRkdWxZVVAzZUlkakkxbTA1RVN3MVxuSXYyS01BbGRLWERmTUt3dXpLck1LbDBua1BLMkUwMDVhYW9VSVBncU0weDdQTXlRUmZ1VW81NWs3S2JucVNyMVxuRE1iUmJZY3FzYklrdlBoNGhOK3V0bHNvb3dFM0FZQ1FxNjkrL3NkVzhRd0V6dTRiOG9oYzFCWlJXUC9MdHhrUVxuemdxSVo4Qkw1R1BoLy9RN2xEeGZEa1d4Nkpia0o5blEyWVJKbnBSZGhYTk1mZndValpRRG9wcmhKbi9IektSdFxueWZDc1d5UUttSjBvMlJYVzBEczdycS9SeXJVelc5UElseHlqSnBBSEhMeUI0UndRUUhqbGVZczVBbjV6a0xSU1xuNGlhZFRGZFVZdi9UV0xvcVRtQ25ZNURmUWlnUTBqajNNRE0xRERmWUtKa2szazBHSkh6cjQ2WlZiaWRqMEdhU1xuaXNqc3l3RERtN2wxM1BSL1ZFRVo0bDk5L2F2OFY0bGs5ZkZVYmp5MG5sWEZZcjAzZ2NLZDBCYnlPbk84dU5MM1xuOUpWeG9GVUNqaG1HSm1WQk1tTXFXMjN1L013Y1l5b2pnbjhDZm5wS2RTWHd2ZCtrSzUycEwyWC9kQlBYcnhFU1xuT2hyYXpVN1lPamdKM2VuWVpVRG5oOEhFOGtzRTVVSk9RZDZ4enU4N2xmU1FkTEZnT29DdzFlSVVZNTl3TFdxTVxuRE9qaXdXdDlQdjBGSnFtOVBKaHpkTmZ3dVJhSU9QbDI3WTZ5ejVRQkRrcnIvOTdtODB6d21KYWxhNjkwV2VPbFxuSU9jcE85ekVqUk1qL1FKK09DUGF4Y3poRDFjUHNZbnFWMlJxQTdWUmxOOTBlRkN1SUFYUDhKMDBzeGQ5WlgvTFxuYmJLa1hsQ0pjeHFES2tzNXpXNW05ZGQvNWpCejdaS1AxT2NDeTN4RnArcGxrMUlSSTZQdXRlSVlXM2kxK3RSVVxuUEhCTUZWUHZGRFVMZ0o3T3JLWm9ybFhkNTNZSTloWEw1blJ1aWU2TlovMUVlVzNMUmhzU1ZHL0hBbjVrV2NOR1xuRGdhUmhiTnczZ3VTSkkwSlYxMUdvZkZpWmhoQjBmZjhVa1J6QjJzWFZxYzFYN3IveXBXaTBuc0ZGbDNjUE1ZeFxuK1hSNHRhRnNSekJNSkRVWCtjS2JBeS80ejFLdk5RakNNajdtM08zam9DTEtyTFFGaEdWVWVMNDU4Z3VheFQ4SVxuUmg4aXQ5d0JVQkcyMVNuSHdhK2R1YnlGVkhYV0ZNZzdZN1VDZm1TQWlyd0V0UFVkVUJId1dwY2Q4aFlqdHU1QlxuZWkzajQ5R1lmV1JYand0N3lLNnJheVpldE9KekJLNGZ5Ynp1a0ZjbkF4TzRtTmxGZnI5cWprc0tmTXBWMGVyU1xuTHYwVjhnSDRRYVZpQ0hqcDYxR1ZaeHcyaUp1OUxsZmNsK2x0Wjh0dURaNzA5MjRFWkpUY1FNN0RjQVcwY3ZKZlxudXFCNFRGYWNzbFNBTFFcdTAwM2RcdTAwM2Rcbi0tLS0tRU5EIFJTQSBQUklWQVRFIEtFWS0tLS0tXG4iLCJsaWNlbnNlUmVxdWVzdCI6ImV5SjBhSFZ0WW5CeWFXNTBJam9pWlhsS2FtTklWblJpTWxKc1lrTkpOa2xyYkhWa1IxWnpTMFpKY0VsRlRuWmpiVlZ2VmtVd2NFbEhhek5NVkZFelQxUkJaMUV4UWxaSlJVRm5UWGswTWsxRlpFbGxhVWx6U1cxT2QyUllUV2xQYVVsNVNXbDNhVnB0UlRaWmFrazJXbTFKTmxsNlZUWk9la0UyVFVSQmFVOXBTbXhrUjJoc1kybEpjMGx0YUhaak0xSjFXVmN4YkVscWIybE5WRUYwVFVNd2VFNTZWWFJOYWxFMVNXbDNhV0pYVm5SaFZ6VnlXV2xKTmtscVRUUlBSRVUxVFhwWmFVeERTbnBsV0U0eFpGZHNhMGxxYjJsTlZWbDZUV3BHUjFKVVRYUk5ha0Y0VVhrd01GRjZRa05NVlVWNVVrVlZkRkZxWjNsTmFsRjVUa1ZaTVZKRVkzcEphWGRwWkcxV2VXTXliSFppYVVrMlNXcEJkVTFUU2praUxDSndkV0pyWlhraU9pSXRMUzB0TFVKRlIwbE9JRkJWUWt4SlF5QkxSVmt0TFMwdExWeHVUVWxKUWtoRVFVNUNaMnR4YUd0cFJ6bDNNRUpCVVVWR1FVRlBRMEZSYTBGTlNVbENRa0ZMUWk5RVl6QnJjVmhwZGxKa1QweGtWbmd2TVN0VE16RkxXbHh1ZWpOUWQxZGtlazlvYjNOdlkyOXJVMnd3ZG5CeFl6YzJjSEYxVjJ3emNFTkJWbWROVkdodFRsSmFOV2RPY1dsVE5qRm5iM0ptT0ZwR04zaHdSbEZuZFZ4dWNtczBXalp4VkVsM2FEYzNlbW8yTkVoUE1IQm1ZbnBuZHpGbUx6SnZSbXQ1ZFRkdVJrRk9jR3BzVEZCS2NXcFdMMnRNY0M5MFZYaHFhbU5NTkdSdlUxeHVjRFkxVEdNM2EybHJPWFkxYVRCcGVYbFlaRXM1ZFdKc1RuRk5OVmRsVFRWblJTODNjM2h1U0dVdlUyeFdOVFpOVkhsclEzbEhhV3hsVERKc0wxQlpabHh1UTJKdVlVTjRaRzlvT0VSekt6SjJSbnBKYUZaM1JXd3lZa3BwWjBKS2JUSlZOMWN6U21jNWJWaG1SRzluUTB4ek1qRXhPRTEzUTFCaFVGVmxURVV3SzF4dVdsQkJOVWR1TDJXA12SAWlRoeEsxVnFRVGRrVjNsYU1WWnVkR05NWWxobE1XMXZlRlp0UTBsc2VGVm5kMGxFUVZGQlFseHVMUzB0TFMxRlRrUWdVRlZDVEVsRElFdEZXUzB0TFMwdFhHNGlmUVx1MDAzZFx1MDAzZCJ9",
+    "expiredDate": "2017-02-05 19:44:21",
+    "issuedDate": " 2017-01-06 19:44:21",
+    "user": " example@mevoco.com",
+    "hostNum": 10.0,
+    "expired": true
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_x51_gjr_zdb)|0.6|
+|inventory|LicenseInventory|详情参考[inventory](#p_glg_gjr_zdb)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|licenseType|String| |0.6|
+|licenseRequest|String| |0.6|
+|expiredDate|String| |0.6|
+|issuedDate|String| |0.6|
+|user|String| |0.6|
+|hostNum|Integer| |0.6|
+|cpuNum|Integer| |0.6|
+|availableHostNum|Integer| |0.6|
+|availableCpuNum|Integer| |0.6|
+|expired|boolean| |0.6|
+
+## SDK示例
+Java SDK
+
+```
+ReloadLicenseAction action = new ReloadLicenseAction();
+action.managementNodeUuids = asList("839034e1da8e37a08b67e3a8279a1650","7869acf9b8bd34079f14a93751e60810");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ReloadLicenseAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ReloadLicenseAction action = ReloadLicenseAction()
+action.managementNodeUuids = [839034e1da8e37a08b67e3a8279a1650, 7869acf9b8bd34079f14a93751e60810]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ReloadLicenseAction.Result res = action.call()
+```
+
+</APIPage>

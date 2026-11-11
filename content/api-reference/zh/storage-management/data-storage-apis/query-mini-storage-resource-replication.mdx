@@ -1,0 +1,161 @@
+---
+title: "查询Mini存储副本信息"
+---
+
+<APIPage method="GET" path="/v1/primary-storage/mini/replications" altPaths={["/v1/primary-storage/mini/replications/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/primary-storage/mini/replications
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/primary-storage/mini/replications/981f98a16e173fd2a7b2fed99c8b3262
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryMiniStorageResourceReplication`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "0b2b57b92d5036a9a5ee3a3194eaa980",
+      "resourceUuid": "89aa094f24f8389faf2032d6d1869566",
+      "hostUuid": "c61a2e0586cb398b85b47392a7561ed0",
+      "primaryStorageUuid": "c7da0ad70680308d98e5940f0f32b6d2",
+      "state": "Enabled",
+      "type": "Basic",
+      "role": "Primary",
+      "networkStatus": "Connected",
+      "diskStatus": "UpToDate",
+      "size": 0,
+      "createDate": "Nov 14, 2017 2:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+    },
+    {
+      "size": 0
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_gxy_yw4_v3b)|0.6|
+|inventories|List|详情参考[inventories](#p_crl_jfr_s2c)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|资源UUID|String| |0.6|
+|hostUuid|String|主机UUID|0.6|
+|primaryStorageUuid|String|数据存储UUID|0.6|
+|type|String|类型|0.6|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+|state|ReplicationState|详情参考[state](#p_ey3_ngr_s2c)|0.6|
+|role|ReplicationRole|详情参考[role](#p_e22_qgr_s2c)|0.6|
+|networkStatus|ReplicationNetworkStatus|详情参考[networkStatus](#p_tct_sgr_s2c)|0.6|
+|diskStatus|ReplicationDiskStatus|详情参考[diskStatus](#p_msd_vgr_s2c)|0.6|
+
+### state
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Enabled|ReplicationState| |0.6|
+|Disabled|ReplicationState| |0.6|
+
+### role
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Primary|ReplicationRole|主副本|0.6|
+|Secondary|ReplicationRole|备副本|0.6|
+|Unkown|ReplicationRole|未知|0.6|
+
+### networkStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Disconnecting|ReplicationNetworkStatus| |0.6|
+|Unconnected|ReplicationNetworkStatus| |0.6|
+|Timeout|ReplicationNetworkStatus| |0.6|
+|BrokenPipe|ReplicationNetworkStatus| |0.6|
+|NetworkFailure|ReplicationNetworkStatus| |0.6|
+|ProtocolError|ReplicationNetworkStatus| |0.6|
+|TearDown|ReplicationNetworkStatus| |0.6|
+|WFConnection|ReplicationNetworkStatus| |0.6|
+|WFReportParams|ReplicationNetworkStatus| |0.6|
+|Connected|ReplicationNetworkStatus| |0.6|
+|StartingSyncS|ReplicationNetworkStatus| |0.6|
+|StartingSyncT|ReplicationNetworkStatus| |0.6|
+|WFBitMapS|ReplicationNetworkStatus| |0.6|
+|WFBitMapT|ReplicationNetworkStatus| |0.6|
+|WFSyncUUID|ReplicationNetworkStatus| |0.6|
+|SyncSource|ReplicationNetworkStatus| |0.6|
+|SyncTarget|ReplicationNetworkStatus| |0.6|
+|PausedSyncS|ReplicationNetworkStatus| |0.6|
+|PausedSyncT|ReplicationNetworkStatus| |0.6|
+|VerifyS|ReplicationNetworkStatus| |0.6|
+|VerifyT|ReplicationNetworkStatus| |0.6|
+|Unknown|ReplicationNetworkStatus| |0.6|
+
+### diskStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Diskless|ReplicationDiskStatus| |0.6|
+|Attaching|ReplicationDiskStatus| |0.6|
+|Failed|ReplicationDiskStatus| |0.6|
+|Negotiating|ReplicationDiskStatus| |0.6|
+|Inconsistent|ReplicationDiskStatus| |0.6|
+|Outdated|ReplicationDiskStatus| |0.6|
+|DUnknown|ReplicationDiskStatus| |0.6|
+|Consistent|ReplicationDiskStatus| |0.6|
+|UpToDate|ReplicationDiskStatus| |0.6|
+|Unknown|ReplicationDiskStatus| |0.6|
+
+## SDK示例
+Java SDK
+
+```
+QueryMiniStorageResourceReplicationAction action = new QueryMiniStorageResourceReplicationAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryMiniStorageResourceReplicationAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryMiniStorageResourceReplicationAction action = QueryMiniStorageResourceReplicationAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryMiniStorageResourceReplicationAction.Result res = action.call()
+```
+
+</APIPage>

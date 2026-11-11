@@ -1,0 +1,75 @@
+---
+title: "Get Virtual Machine Hostname"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/{uuid}/hostnames">
+
+Get the specified hostname of a Virtual Machine. This hostname is the one set by the user through SetVmHostname.
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth: 0e3cbe22c03a43bc9b7b3ae76c57a0e7" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/c5c6665ccbe2444e9cfa393366cdb5d4/hostnames
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Virtual Machine UUID| |0.6|
+|systemTags \(Optional\)|List|query|System Tag| |0.6|
+|userTags \(Optional\)|List|query|User Tag| |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "hostname": "vm1.zstack.orgl"
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|hostname|String|Virtual Machine hostname|0.6|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation is successful. For details, see [error](#p_nnf_25v_k1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause. The source error that caused the current error. If there is no original error, this field is null|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+GetVmHostnameAction action = new GetVmHostnameAction();
+action.uuid = "82c0f5918de14f65abe7ba5d37c28502";
+action.sessionId = "24f9301f25784707a477483c5702c034";
+GetVmHostnameAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetVmHostnameAction action = GetVmHostnameAction()
+action.uuid = "5070e337b731448ca0698f83c7fc4c26"
+action.sessionId = "f13e0ed993134a8ea35a3d382a971b14"
+GetVmHostnameAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,100 @@
+---
+title: "Get VM Scheduling Group Execution Status"
+---
+
+<APIPage method="POST" path="/v1/get/vmSchedulingRules/conflict/state">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "uuids": [
+      "c6bb1e89239235f8b49bb10bc5d484cc"
+    ]
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The **systemTags** and **userTags** fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"uuids":["c6bb1e89239235f8b49bb10bc5d484cc"]}}' http://localhost:8080/zstack/v1/get/vmSchedulingRules/conflict/state
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuids|List|body \(contained in the **params** structure\)|VM scheduling group UUID| |4.6.0|
+|systemTags \(optional\)|List|body|System tags| |4.6.0|
+|userTags \(optional\)|List|body|User tags| |4.6.0|
+
+## API Response
+Response Example
+
+```
+{
+  "ruleMapState": {
+    "2951e237b86630ac84d8eeb382513260": "Normal"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.6.0|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_w13_jcb_3cb)|4.6.0|
+|ruleMapState|Map|For details, see [ruleMapState](#p_fbm_jcb_3cb)|4.6.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|4.6.0|
+|description|String|Brief description of the error|4.6.0|
+|details|String|Detailed information about the error|4.6.0|
+|elaboration|String|Reserved field. Default is null|4.6.0|
+|opaque|LinkedHashMap|Reserved field. Default is null|4.6.0|
+|cause|ErrorCode|Root error. The source error that caused the current error. This field is null if no root error exists|4.6.0|
+
+### ruleMapState
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Conflict|VmSchedulingRuleExecuteState|Conflict|4.6.0|
+|Normal|VmSchedulingRuleExecuteState|Normal|4.6.0|
+|Invalid|VmSchedulingRuleExecuteState|Invalid|4.6.0|
+
+## SDK Examples
+Java SDK
+
+```
+GetVmSchedulingRulesExecuteStateAction action = new GetVmSchedulingRulesExecuteStateAction();
+action.uuids = asList("c6bb1e89239235f8b49bb10bc5d484cc");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetVmSchedulingRulesExecuteStateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetVmSchedulingRulesExecuteStateAction action = GetVmSchedulingRulesExecuteStateAction()
+action.uuids = [c6bb1e89239235f8b49bb10bc5d484cc]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetVmSchedulingRulesExecuteStateAction.Result res = action.call()
+```
+
+</APIPage>

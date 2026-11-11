@@ -1,0 +1,114 @@
+---
+title: "Add DingTalk @ User"
+---
+
+<APIPage method="POST" path="/v1/sns/application-endpoints/ding-talk/at-persons">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "phoneNumber": "18099997777",
+    "endpointUuid": "5b9b95ca0cda3ab4bb51b5a4e1965305",
+    "remark": "jack"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding example, the **systemTags** and **userTags** fields are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"phoneNumber":"18099997777","endpointUuid":"5b9b95ca0cda3ab4bb51b5a4e1965305","remark":"jack"}}' \
+http://localhost:8080/zstack/v1/sns/application-endpoints/ding-talk/at-persons
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|phoneNumber|String|body \(Contained in the **params** structure\)|User phone number \(DingTalk users register with phone numbers\)| |2.3|
+|endpointUuid|String|body \(Contained in the **params** structure\)|DingTalk endpoint UUID| |2.3|
+|resourceUuid \(Optional\)|String|body \(Contained in the **params** structure\)| | |2.3|
+|systemTags \(Optional\)|List|body|System tags| |2.3|
+|userTags \(Optional\)|List|body|User tags| |2.3|
+|tagUuid \(Optional\)|List|body \(Contained in the **params** structure\)|Tag UUID list| |5.0.0|
+|remark \(Optional\)|String|body \(Contained in the **params** structure\)|Remark| |5.0.0|
+
+## API Response
+Response example
+
+```
+{
+  "inventory": {
+    "uuid": "6a02f7a85da9448abb88979c3de29b28",
+    "phoneNumber": "18988887777",
+    "endpointUuid": "6cb3a5c6c36042008ad2c66a5479fd49",
+    "createDate": "Mar 26, 2024 2:45:58 AM",
+    "lastOpDate": "Mar 26, 2024 2:45:58 AM",
+    "remark": "jack"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |5.0.0|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_kzq_vpx_bdb)|2.3|
+|inventory|SNSDingTalkAtPersonInventory|For details, see [inventory](#p_nmx_vpx_bdb)|2.3|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number, a globally unique identifier for the error, for example, SYS.1000 or HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field. Defaults to null|0.6|
+|cause|ErrorCode|The root error that caused the current error. This field is null if there is no root cause|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource, uniquely identifying this resource|5.0.0|
+|phoneNumber|String|Mobile phone number|5.0.0|
+|endpointUuid|String|DingTalk endpoint UUID|5.0.0|
+
+## SDK Examples
+Java SDK
+
+```
+AddSNSDingTalkAtPersonAction action = new AddSNSDingTalkAtPersonAction();
+action.phoneNumber = "18099997777";
+action.endpointUuid = "5b9b95ca0cda3ab4bb51b5a4e1965305";
+action.remark = "jack";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddSNSDingTalkAtPersonAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddSNSDingTalkAtPersonAction action = AddSNSDingTalkAtPersonAction()
+action.phoneNumber = "18099997777"
+action.endpointUuid = "5b9b95ca0cda3ab4bb51b5a4e1965305"
+action.remark = "jack"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddSNSDingTalkAtPersonAction.Result res = action.call()
+```
+
+</APIPage>

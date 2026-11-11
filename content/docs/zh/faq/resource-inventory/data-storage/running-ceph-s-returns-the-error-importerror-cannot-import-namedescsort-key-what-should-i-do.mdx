@@ -1,0 +1,16 @@
+---
+title: "执行ceph -s报错“ImportError: cannot import namedescsort key”，怎么办？"
+---
+
+## 现象
+企业版分布式存储中，执行`ceph -s`，提示"`ImportError: cannot import namedescsort key`"。
+
+## 原因
+异常节点`/usr/lib/python2.7/site-packages/ceph argparse,py md5`文件配置错误。
+
+## 解决方案
+检查正常节点`/usr/lib/python2.7/site-packages/ceph argparse,py md5`文件是否和异常节点保持一致，如未保持一致，需覆盖异常节点。
+
+<Callout type="warning">
+覆盖文件前请先备份原文件。
+</Callout>

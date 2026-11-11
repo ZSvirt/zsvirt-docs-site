@@ -1,0 +1,69 @@
+---
+title: "Import a Native Key Provider"
+---
+
+<APIPage method="PUT" path="/v1/key-providers/nkp/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "restoreNkp": {
+    "contentBase64": "BASE64_ENCODED_NKP_BACKUP",
+    "password": "password"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding example, the `systemTags` and `userTags` fields can be omitted. They are listed to indicate that the body can include these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"restoreNkp":{"contentBase64":"BASE64_ENCODED_NKP_BACKUP","password":"password"}}' \
+http://localhost:8080/zstack/v1/key-providers/nkp/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Optional Value|Since|
+|----|----|--------|-----------|--------------|-----|
+|contentBase64|String|body \(contained in `restoreNkp` structure\)|Backup content \(Base64-encoded\)| |5.0.0|
+|password \(optional\)|String|body \(contained in `restoreNkp` structure\)|Backup protection password| |5.0.0|
+|systemTags \(optional\)|List|body|System tags| |5.0.0|
+|userTags \(optional\)|List|body|User tags| |5.0.0|
+
+## SDK Example
+Java SDK
+
+```
+RestoreNkpAction action = new RestoreNkpAction();
+action.contentBase64 = "BASE64_ENCODED_NKP_BACKUP";
+action.password = "password";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RestoreNkpAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = RestoreNkpAction()
+action.contentBase64 = "BASE64_ENCODED_NKP_BACKUP"
+action.password = "password"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

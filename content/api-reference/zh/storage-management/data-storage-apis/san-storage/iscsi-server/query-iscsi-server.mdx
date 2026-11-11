@@ -1,0 +1,177 @@
+---
+title: "查询iSCSI服务器"
+---
+
+<APIPage method="GET" path="/v1/storage-devices/iscsi/servers" altPaths={["/v1/storage-devices/iscsi", "/v1/storage-devices/iscsi/servers/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/storage-devices/iscsi/servers
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/storage-devices/iscsi
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/storage-devices/iscsi/servers/cf91d809261735be9f20429880c1d19c
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryIscsiServer`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "fd97e8b6d61c399abed358ea6b2fc206",
+      "name": "iscsi-server-10.0.0.201",
+      "ip": "10.0.0.201",
+      "port": 3260.0,
+      "chapUserName": "username",
+      "chapUserPassword": "password",
+      "state": "Enabled",
+      "iscsiTargets": [
+        {
+          "iscsiServerUuid": "fd97e8b6d61c399abed358ea6b2fc206",
+          "uuid": "d156429110f13c2ca07bbc04e4031231",
+          "iqn": "iqn.2018-01.io.cloud:tsn.00001",
+          "state": "Enabled",
+          "iscsiLuns": [
+            {
+              "uuid": "500f63c8f44939bbab102222927f9290",
+              "iscsiTargetUuid": "d156429110f13c2ca07bbc04e4031231",
+              "wwid": "36b083fe000daf018000015505abbe00a",
+              "vendor": "DELL",
+              "model": "MD32xx",
+              "wwn": "0x6b083fe000daf018",
+              "serial": "6b083fe000daf018000015505abbe00a",
+              "hctl": "6:0:1:1",
+              "type": "mpath",
+              "path": "ip-0.0.0.201:3260-iscsi-iqn.2018-01.io.cloud:tsn.00001-lun-0",
+              "size": 30003188203520.0,
+              "multipathDeviceUuid": "36b083fe000daf018000015505abbe00a"
+            }
+          ],
+          "createDate": "Nov 14, 2017 10:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+        }
+      ],
+      "iscsiClusterRefs": [
+        {
+          "id": 1.0,
+          "iscsiServerUuid": "fd97e8b6d61c399abed358ea6b2fc206",
+          "clusterUuid": "02db8eb4e3043f55b7f1cf02df735611",
+          "createDate": "Nov 14, 2017 10:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+        }
+      ],
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_u11_svd_z2b)|3.0.0|
+|inventories|List|详情参考[inventories](#p_iyf_svd_z2b)|3.0.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.0.0|
+|description|String|错误的概要描述|3.0.0|
+|details|String|错误的详细信息|3.0.0|
+|elaboration|String|保留字段，默认为null|3.0.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.0.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.0.0|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.0.0|
+|name|String|资源名称|3.0.0|
+|ip|String|IP地址|3.0.0|
+|port|Integer|端口|3.0.0|
+|chapUserName|String|CHAP用户名|3.0.0|
+|chapUserPassword|String|CHAP密码|3.0.0|
+|state|String|启用状态|3.0.0|
+|createDate|Timestamp|创建时间|3.0.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.0.0|
+|iscsiTargets|List|详情参考[iscsiTargets](#p_d2k_svd_z2b)|3.0.0|
+|iscsiClusterRefs|List|详情参考[iscsiClusterRefs](#p_pqv_svd_z2b)|3.0.0|
+
+### iscsiTargets
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|iscsiServerUuid|String|iSCSI服务器UUID|3.0.0|
+|uuid|String|资源的UUID，唯一标示该资源|3.0.0|
+|iqn|String|iSCSI IQN|3.0.0|
+|createDate|Timestamp|创建时间|3.0.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.0.0|
+|iscsiLuns|List|详情参考[iscsiLuns](#p_dnp_svd_z2b)|3.0.0|
+
+### iscsiLuns
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.0.0|
+|iscsiTargetUuid|String|iSCSI目标UUID|3.0.0|
+|wwid|String|唯一识别ID|3.0.0|
+|vendor|String|设备供应商|3.0.0|
+|model|String|设备型号|3.0.0|
+|wwn|String|设备WWN|3.0.0|
+|serial|String|设备序列号|3.0.0|
+|hctl|String|SCSI设备HCTL|3.0.0|
+|type|String|设备类型|3.0.0|
+|path|String|设备路径|3.0.0|
+|size|Long|设备大小|3.0.0|
+|createDate|Timestamp|创建时间|3.0.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.0.0|
+
+### iscsiClusterRefs
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|iscsiServerUuid|String| |3.0.0|
+|clusterUuid|String|集群UUID|3.0.0|
+|createDate|Timestamp|创建时间|3.0.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.0.0|
+
+## SDK示例
+Java SDK
+
+```
+QueryIscsiServerAction action = new QueryIscsiServerAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryIscsiServerAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryIscsiServerAction action = QueryIscsiServerAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryIscsiServerAction.Result res = action.call()
+```
+
+</APIPage>

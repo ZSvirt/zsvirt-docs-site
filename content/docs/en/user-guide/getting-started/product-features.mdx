@@ -1,0 +1,1179 @@
+---
+title: 'Product Features'
+---
+<table className="doc-feature-table">
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Features</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowSpan="3">Dashboard</td>
+      <td rowSpan="2">Dashboard</td>
+      <td>Provides multi-dimensional data statistics cards.</td>
+    </tr>
+    <tr>
+      <td>Provides a default homepage customized for each user's perspective.</td>
+    </tr>
+    <tr>
+      <td>Resource Overview</td>
+      <td>Supports viewing basic information, capacity information, configuration details, hardware details, and related objects in card format.</td>
+    </tr>
+    <tr>
+      <td>Root Node</td>
+      <td>Root Node</td>
+      <td>Allows you to manage data center resources under the root node.</td>
+    </tr>
+    <tr>
+      <td rowSpan="6">Data Center</td>
+      <td rowSpan="2">Lifecycle Management</td>
+      <td>Supports creating data centers on demand and allows setting up independent clusters, storage, and network resources within each data center.</td>
+    </tr>
+    <tr>
+      <td>Allows you to manage the lifecycle of data centers, such as creating and deleting data centers.</td>
+    </tr>
+    <tr>
+      <td>Associated Resources</td>
+      <td>Allows you to manage the associated clusters, hosts, virtual machines, data storage, image storage, storage target, and network resources in a data center.</td>
+    </tr>
+    <tr>
+      <td>Recycle Bin</td>
+      <td>Allows you to manage the recycling of virtual machines, images, and disks.</td>
+    </tr>
+    <tr>
+      <td>Export List</td>
+      <td>Allows you to manage the exported virtual machines and images, including direct download and copying download links.</td>
+    </tr>
+    <tr>
+      <td>Resource Topology</td>
+      <td>Displays data center resource scales using topology graphics.</td>
+    </tr>
+    <tr>
+      <td rowSpan="9">Cluster</td>
+      <td>Lifecycle Management</td>
+      <td>Allows you to manage the lifecycle of clusters, such as creating, modifying, deleting clusters.</td>
+    </tr>
+    <tr>
+      <td>Monitoring</td>
+      <td>Allows you to view visualized monitoring data of all hosts and VMs in the cluster, including CPU, memory, disk, and NIC.</td>
+    </tr>
+    <tr>
+      <td>Associated Resources</td>
+      <td>Allows you to manage the associated hosts, virtual machines, data storage, and network resources in a cluster.</td>
+    </tr>
+    <tr>
+      <td rowSpan="2">Dynamic Resource Scheduling</td>
+      <td>Allows you to monitors the CPU and memory load of host on a cluster basis and dynamically adjust the virtual machine workloads based on scheduling policies.</td>
+    </tr>
+    <tr>
+      <td>Supports manual DRS (provides scheduling suggestions based on which you can schedule resources for load balancing) and auto DRS (schedules resources based on the system scheduling algorithm without arousing your awareness).</td>
+    </tr>
+    <tr>
+      <td>Network Settings</td>
+      <td>Allows you to specify a VDI network and migration network for a cluster.</td>
+    </tr>
+    <tr>
+      <td>Overcommitment</td>
+      <td>Allows you to set CPU and memory overcommit ratios for clusters to increase compute resource utilization.</td>
+    </tr>
+    <tr>
+      <td>Host Settings in Cluster</td>
+      <td>Allows you to set default parameters for hosts on a cluster basis, including Host CPU Model Check, ignore_msrs Option, Host Zero Copy, Huge Pages, and Host Reserved Memory.</td>
+    </tr>
+    <tr>
+      <td>VM Settings in Cluster</td>
+      <td>Allows you to set default parameters for virtual machines on a cluster basis, including VM HA, VM Cross-Cluster HA, VM CPU Model, Hyper-V Virtualization, Video Card Type on Boot, and vNIC Multi-queue Upgrading.</td>
+    </tr>
+    <tr>
+      <td rowSpan="18">Host</td>
+      <td>Lifecycle Management</td>
+      <td>Allows you to manage the lifecycle of hosts, including adding, enabling, disabling, reconnecting, powering on, powering off, entering into maintenance mode, modifying, and deleting hosts.</td>
+    </tr>
+    <tr>
+      <td>Monitoring</td>
+      <td>Allows you to view visualized monitoring data of hosts, including CPU, memory, disk, and NIC.</td>
+    </tr>
+    <tr>
+      <td rowSpan="7">Associated Resources</td>
+      <td>Allows you to manage associated virtual machines and Kernel adapters on a host.</td>
+    </tr>
+    <tr>
+      <td>After you deploy SAN storage on a host, you can manage LUNs on the host and pass through them to virtual machines.</td>
+    </tr>
+    <tr>
+      <td>Allows you to manage physical NICs and aggregated ports on hosts. Supports viewing LLDP information. Supports monitoring aggregated ports status to help users quickly identify faulty NICs.</td>
+    </tr>
+    <tr>
+      <td>Allows you to manage the physical GPU devices detected on a host and pass through them with other peripheral devices (such as GPU graphics cards and GPU sound cards) to virtual machines.</td>
+    </tr>
+    <tr>
+      <td>Allows you to generate virtual GPU devices from physical GPU devices and attach these virtual GPU devices to virtual machines.</td>
+    </tr>
+    <tr>
+      <td>Allows you to manage the USB devices detected on a host and pass through them to virtual machines.</td>
+    </tr>
+    <tr>
+      <td>Allows you to manage PCI devices detected on a host, edit the PCI allowlist, and pass through these PCI devices to virtual machines.</td>
+    </tr>
+    <tr>
+      <td>IPMI Management</td>
+      <td>Supports remote access to hosts via IPMI after users provide correct IPMIM information.</td>
+    </tr>
+    <tr>
+      <td>Power Control</td>
+      <td>Allows you to power on or off a host after the host is managed by IPMI.</td>
+    </tr>
+    <tr>
+      <td>Web Terminal</td>
+      <td>Allows you to enter the web terminal of a host and perform operations on the host.</td>
+    </tr>
+    <tr>
+      <td>SSH Password Modification</td>
+      <td>Allows you to change the SSH password of a host. The new password takes effect after the host automatically reconnects.</td>
+    </tr>
+    <tr>
+      <td>Encrypted Storage of Password</td>
+      <td>Supports storing host password in an encrypted form to protect user data privacy.</td>
+    </tr>
+    <tr>
+      <td>Intel EPT Hardware Assist</td>
+      <td>Allows you to enable Intel EPT hardware assist for Intel CPUs to improve CPU performance.</td>
+    </tr>
+    <tr>
+      <td>Custom Tag</td>
+      <td>Allows you to customize tags for hosts so that you can locate them quickly.</td>
+    </tr>
+    <tr>
+      <td>Custom List</td>
+      <td>Supports customized display of specific columns to achieve personalized and efficient information presentation.</td>
+    </tr>
+    <tr>
+      <td>CSV File Export</td>
+      <td>Allows you to export host information as a CSV table, which helps in statistical analysis and problem diagnosis.</td>
+    </tr>
+    <tr>
+      <td rowSpan="88">Virtual Machine</td>
+      <td>Lifecycle Management</td>
+      <td>Allows you to manage the lifecycle of virtual machines, including creating, powering on/off, rebooting, resuming, pausing, force stopping, shut down, modifying, exporting virtual machines.</td>
+    </tr>
+    <tr>
+      <td>Monitoring</td>
+      <td>Allows you to view visualized monitoring data of virtual machines, including CPU, memory, disk, and NIC.</td>
+    </tr>
+    <tr>
+      <td rowSpan="2">Custom Display</td>
+      <td>Supports a host view for easy checking of physical associations of virtual machines.</td>
+    </tr>
+    <tr>
+      <td>Supports a group view for easy management of virtual machines with same attributes or used in the same scenarios.</td>
+    </tr>
+    <tr>
+      <td rowSpan="6">VM Console</td>
+      <td>Allows you to access virtual machines through terminals without using remote tools.</td>
+    </tr>
+    <tr>
+      <td>Supports three types of console mode: SPICE, VNC, and SPICE+VNC.</td>
+    </tr>
+    <tr>
+      <td>Allows you to paste command tests into VNC console, manage VM power in VNC console. The VNC console supports automatically adapting to browser resolution.</td>
+    </tr>
+    <tr>
+      <td>Allows you to set the number of screens for SPICE console.</td>
+    </tr>
+    <tr>
+      <td>Allows you to set the console password. You can customize the password strength in the system parameters.</td>
+    </tr>
+    <tr>
+      <td>Supports real-time preview of the virtual machine console display, with a default refresh rate of every 5 seconds.</td>
+    </tr>
+    <tr>
+      <td rowSpan="5">VM CPU</td>
+      <td>Allows you to specify the total CPU cores and cores per socket.</td>
+    </tr>
+    <tr>
+      <td>Allows you to specify whether to select the same CPU model as the host for a virtual machine. This configuration makes the virtual machine inherit some or all host CPU features that suit your business needs.</td>
+    </tr>
+    <tr>
+      <td>Allows you to set CPU resource priority to enhance the ability of certain virtual machines to compete for resources when host loads are high.</td>
+    </tr>
+    <tr>
+      <td>Allows you to assign the virtual CPUs of a virtual machine to specific host physical CPUs, which improves VM performance.</td>
+    </tr>
+    <tr>
+      <td>Allows you to configure EmulatorPin for a virtual machine so that all other threads than virtual CPU threads and I/O threads of a virtual machine are assigned to physical CPUs of the host.</td>
+    </tr>
+    <tr>
+      <td>VM Memory</td>
+      <td>Allows you to set memory resource priority to enhance the ability of certain virtual machines to compete for resources when host loads are high.</td>
+    </tr>
+    <tr>
+      <td rowSpan="5">VM Disk</td>
+      <td>Allows you to specify disk storage locations to meet different performance requirements for virtual machines.</td>
+    </tr>
+    <tr>
+      <td>Supports RDM disks for direct LUN device access by virtual machines.</td>
+    </tr>
+    <tr>
+      <td>Supports simulating different disk bus types.</td>
+    </tr>
+    <tr>
+      <td>Allows you to set disk cache mode to control whether the host page cache is used when writing data to disks from virtual machines.</td>
+    </tr>
+    <tr>
+      <td>Supports multiple virtual machines sharing the same disk under distributed storage or SAN storage.</td>
+    </tr>
+    <tr>
+      <td rowSpan="8">VM NIC</td>
+      <td>Allows you to enable/disable NICs while virtual machines are powered on/off.</td>
+    </tr>
+    <tr>
+      <td>Allows you to attach/detach NICs while virtual machines are powered on/off.</td>
+    </tr>
+    <tr>
+      <td>Allows you to set the NIC model to meet different business needs.</td>
+    </tr>
+    <tr>
+      <td>Allows you to set the number of NIC queues to choose whether to use multiple queues for sending and receiving network packets, enhancing network bandwidth performance.</td>
+    </tr>
+    <tr>
+      <td>Allows you to set a QoS limit on the NIC while virtual machines are powered on/off.</td>
+    </tr>
+    <tr>
+      <td>Allows you to specify the IP address and MAC address for virtual machines.</td>
+    </tr>
+    <tr>
+      <td>Supports automatically sending and reading network configurations, such as IP address, through VMTools.</td>
+    </tr>
+    <tr>
+      <td>Allows you to enable the NIC anti-spoofing mode to provide protection against IP/MAC spoofing and ARP spoofing.</td>
+    </tr>
+    <tr>
+      <td>VM CD/DVD Drive</td>
+      <td>Supports loading ISO image files to boot virtual machines through ISO drive. Supports loading multiple drives for a single virtual machine to improve deployment efficiency.</td>
+    </tr>
+    <tr>
+      <td rowSpan="5">VM Peripheral Device</td>
+      <td>Allows you to attach/detach physical GPU devices and virtual GPU devices while virtual machines are powered on/off.</td>
+    </tr>
+    <tr>
+      <td>Allows you to attach/detach USB devices while virtual machines are powered on/off.</td>
+    </tr>
+    <tr>
+      <td>Supports four types of graphics card: vga, virtio, qxl, and cirrus.</td>
+    </tr>
+    <tr>
+      <td>Supports three types of audio card: HDA(ICH6), HDA(ICH9), and AC97.</td>
+    </tr>
+    <tr>
+      <td>Allows you to specify whether to enable hot plugging of PCI devices for a virtual machine.</td>
+    </tr>
+    <tr>
+      <td rowSpan="3">VM Snapshot</td>
+      <td>Allows you to take a snapshot at specified time points to record the state of the virtual machine, which allows rollback in case of breakdowns.</td>
+    </tr>
+    <tr>
+      <td>Supports full revert (revert the VM data and disk order) and custom revert (revert only specified disks).</td>
+    </tr>
+    <tr>
+      <td>Supports VM auto boot after restoring from snapshots.</td>
+    </tr>
+    <tr>
+      <td rowSpan="2">VM Clone</td>
+      <td>Clones entire virtual machine data. Supports various cloning methods: Full Clone and Instant Full Clone.</td>
+    </tr>
+    <tr>
+      <td>Allows you to specify storage allocation policy, including system allocation and manual allocation.</td>
+    </tr>
+    <tr>
+      <td>VM Image</td>
+      <td>Allows you to create virtual machine images to facilitate customized batch creation of virtual machines.</td>
+    </tr>
+    <tr>
+      <td rowSpan="3">VM Template</td>
+      <td>Supports cloning a virtual machine into a template and converting a virtual machine to a template.</td>
+    </tr>
+    <tr>
+      <td>Supports converting a template to a virtual machine and creating new virtual machines from a template.</td>
+    </tr>
+    <tr>
+      <td>Supports modifying template configurations.</td>
+    </tr>
+    <tr>
+      <td>VM Specification</td>
+      <td>Allows you to create VM customization specifications to avoid hostname or SID conflicts in VM batch deployment.</td>
+    </tr>
+    <tr>
+      <td rowSpan="4">VM Migration-Change Host</td>
+      <td>Allows you to migrate virtual machines to other hosts. Supports hot migration and cold migration.</td>
+    </tr>
+    <tr>
+      <td>Hot migration: Copies CPU-related register states and memory. Supports local storage, NFS storage, distributed storage, and SAN storage.</td>
+    </tr>
+    <tr>
+      <td>Cold migration: Supports local storage.</td>
+    </tr>
+    <tr>
+      <td>Allows you to enable auto-converge to improve the success rate of the migration, if the migration is blocked because the virtual machine has been high-loaded for a long time.</td>
+    </tr>
+    <tr>
+      <td rowSpan="4">VM Migration-Change Data Storage</td>
+      <td>Allows you to migrate virtual machines to other data storage.</td>
+    </tr>
+    <tr>
+      <td>Supports hot and cold migration across SAN storage and hot migration between SAN storage and distributed storage.</td>
+    </tr>
+    <tr>
+      <td>Allows you to migrate the entire virtual machines (virtual machine and its data disks, except for shared disks).</td>
+    </tr>
+    <tr>
+      <td>Allows you to specify storage pools for disks when hot migrating from SAN storage to distributed storage.</td>
+    </tr>
+    <tr>
+      <td rowSpan="6">VM Migration-Change Host and Data Storage</td>
+      <td>Allows you to migrate virtual machines to other hosts and data storage. Supports hot migration and cold migration.</td>
+    </tr>
+    <tr>
+      <td>Supports VM hot migration across the same type of data storage, including distributed storage - distributed storage, NFS storage - NFS storage, and SAN storage - SAN storage.</td>
+    </tr>
+    <tr>
+      <td>Supports VM hot migration across different types of data storage, including distributed storage - SAN storage, local storage - SAN storage, local storage - distributed storage, local storage - NFS storage, SAN storage - NFS storage, and distributed storage - NFS storage.</td>
+    </tr>
+    <tr>
+      <td>Supports VM cold migration across the same type of data storage, including distributed storage - distributed storage, and NFS storage - NFS storage.</td>
+    </tr>
+    <tr>
+      <td>Allows you to enable auto-converge to improve the success rate of the migration, if the migration is blocked because the virtual machine has been high-loaded for a long time.</td>
+    </tr>
+    <tr>
+      <td>Allows you to clean up the original data to release storage space, if data integrity is confirmed after storage migration.</td>
+    </tr>
+    <tr>
+      <td>VMTools</td>
+      <td>Supports installing VMTools for virtual machines, including QEMU Guest Agent (QGA), Cloudbase-Init, advanced monitoring agent, and Virtio.</td>
+    </tr>
+    <tr>
+      <td rowSpan="3">VM HA</td>
+      <td>Supports automatic reboot of virtual machines when hosts fail. You can view the reboot progress on the UI.</td>
+    </tr>
+    <tr>
+      <td>Allows you to globally control HA functionality through HA policies.</td>
+    </tr>
+    <tr>
+      <td>Allows you to set a VM cross-cluster HA policy.</td>
+    </tr>
+    <tr>
+      <td rowSpan="4">VM Security</td>
+      <td>Allows you to configure and manage standard key providers and native key providers.</td>
+    </tr>
+    <tr>
+      <td>Supports key rotation for business or compliance requirements.</td>
+    </tr>
+    <tr>
+      <td>Allows you to add a virtual Trusted Platform Module (vTPM) to provide enhanced security for the virtual machine operating system.</td>
+    </tr>
+    <tr>
+      <td>Supports Secure Boot to enhance virtual machine security and infrastructure trust.</td>
+    </tr>
+    <tr>
+      <td>Register VM</td>
+      <td>Allows you to register a virtual machine configuration file and data file to create a corresponding virtual machine record on the platform. After registration, the virtual machine is managed uniformly by the platform.</td>
+    </tr>
+    <tr>
+      <td>Rest System</td>
+      <td>Allows you to reset a virtual machine to the initial state of the VM image. All data in the system disk will be overwritten.</td>
+    </tr>
+    <tr>
+      <td>Change Owner</td>
+      <td>Allows you to change the owner of a virtual machine. After the modification, the new owner has full permissions over the virtual machine.</td>
+    </tr>
+    <tr>
+      <td>Change VM Group</td>
+      <td>Allows you to change the group that virtual machines belong to for easier classification and management.</td>
+    </tr>
+    <tr>
+      <td>Custom Tag</td>
+      <td>Allows you to customize tags for virtual machines so that you can locate them quickly.</td>
+    </tr>
+    <tr>
+      <td>Set Hostname</td>
+      <td>Allows you to set the hostname when you create a virtual machine.</td>
+    </tr>
+    <tr>
+      <td>VM Scheduling Group</td>
+      <td>Allows you to join in or exit from a VM scheduling group so as to associate with or disassociate from related VM scheduling policies. This way, you can manage the distribution of virtual machines on hosts.</td>
+    </tr>
+    <tr>
+      <td>SSH Key Injection</td>
+      <td>Supports password-free login for Linux virtual machines by injecting an SSH public key.</td>
+    </tr>
+    <tr>
+      <td>Import User Data</td>
+      <td>Allows you to import user data. You can upload user-defined parameters or scripts to customize configurations for virtual machines or to accomplish specific tasks.</td>
+    </tr>
+    <tr>
+      <td>Change VM Password</td>
+      <td>Allows you to change the password of a Linux or Windows running virtual machine.</td>
+    </tr>
+    <tr>
+      <td rowSpan="3">VM Boot Options</td>
+      <td>Allows you to set the boot order for virtual machines, supporting booting from disk, CD/DVD drive, or network.</td>
+    </tr>
+    <tr>
+      <td>Supports two BIOS modes, including Legacy and UEFI.</td>
+    </tr>
+    <tr>
+      <td>Allows you to set the BIOS post delay.</td>
+    </tr>
+    <tr>
+      <td>Hide KVM Virtualization Flag</td>
+      <td>Allows you to disable the hypervisor for a virtual machine to make certain applications to skip their virtualization detection on this virtual machine.</td>
+    </tr>
+    <tr>
+      <td>VMware I/O Port Simulation</td>
+      <td>Allows you to set whether to allow KVM virtual machines to emulate I/O ports in VMware environment, enabling KVM virtual machines to use the VMware I/O port standard for compatibility with VMware environments.</td>
+    </tr>
+    <tr>
+      <td>Hyper-V</td>
+      <td>Allows you to enable Hyper-V for a Windows virtual machine.</td>
+    </tr>
+    <tr>
+      <td>Export OVA Template</td>
+      <td>Supports exporting virtual machines as OVA templates.</td>
+    </tr>
+    <tr>
+      <td>Custom List</td>
+      <td>Supports customized display of specific columns to achieve personalized and efficient information presentation.</td>
+    </tr>
+    <tr>
+      <td>Export CSV File</td>
+      <td>Allows you to export virtual machine information as a CSV table, which helps in statistical analysis and problem diagnosis.</td>
+    </tr>
+    <tr>
+      <td rowSpan="2">Resource Deletion Protection</td>
+      <td>Displays warnings of the consequences on the UI and asks for confirmation before the deletion is completed.</td>
+    </tr>
+    <tr>
+      <td>Provides three deletion policies to lower risks caused by misoperations. The policies include Direct, Delay (default), and Never.</td>
+    </tr>
+    <tr>
+      <td rowSpan="21">Bare Metal Management</td>
+      <td rowSpan="3">Bare Metal Template</td>
+      <td>Supports system template and custom template based on how the bare metal template is added.</td>
+    </tr>
+    <tr>
+      <td>Supports the following operating systems: custom platform OS and mainstream Linux distributions (RHEL/CentOS series, Debian/Ubuntu series, and SUSE/openSUSE series).</td>
+    </tr>
+    <tr>
+      <td>Allows you to view the template content and download a bare metal template.</td>
+    </tr>
+    <tr>
+      <td rowSpan="3">Bare Metal Cluster</td>
+      <td>Allows you to manage the lifecycle of bare metal clusters, such as creating and deleting bare metal clusters.</td>
+    </tr>
+    <tr>
+      <td>Allows you to attach/detach a deployment server to/from a bare metal cluster.</td>
+    </tr>
+    <tr>
+      <td>Allows you to attach/detach distributed switches to/from a bare metal cluster.</td>
+    </tr>
+    <tr>
+      <td>Deployment Server</td>
+      <td>Allows you to specify an independent server as the deployment server to provide PXE services and console proxies for bare metal chassis.</td>
+    </tr>
+    <tr>
+      <td rowSpan="5">Bare Metal Chassis</td>
+      <td>Supports two types of addition: manual addition and template import. You can add up to 500 bare metal chassis at a time.</td>
+    </tr>
+    <tr>
+      <td>Allows you to manage the lifecycle of bare metal chassis, such as adding, enabling, disabling, powering on, powering off, rebooting, and deleting bare metal chassis.</td>
+    </tr>
+    <tr>
+      <td>Allows you to automatically or manually obtain the hardware information of a bare metal chassis.</td>
+    </tr>
+    <tr>
+      <td>Allows you to launch the console of a bare metal chassis and jump to its IPMI management page.</td>
+    </tr>
+    <tr>
+      <td>Allows you to view the hardware configuration of a bare metal chassis.</td>
+    </tr>
+    <tr>
+      <td rowSpan="9">Bare Metal Instance</td>
+      <td>You can add up to 50 bare metal instances at a time.</td>
+    </tr>
+    <tr>
+      <td>Allows you to select images (in ISO format and are not live CDs) to deploy operating systems for bare metal instances.</td>
+    </tr>
+    <tr>
+      <td>Allows you to achieve unattended batch installation of bare metal instance operating systems with preconfigured files generated from the bare metal template.</td>
+    </tr>
+    <tr>
+      <td>Allows you to configure business networks for a bare metal instance.</td>
+    </tr>
+    <tr>
+      <td>Allows you to manage the lifecycle of bare metal instances, such as creating, starting, stopping, rebooting, deleting, recovering, and expunging bare metal instances.</td>
+    </tr>
+    <tr>
+      <td>Allows you to launch the console of a bare metal instance.</td>
+    </tr>
+    <tr>
+      <td>Allows you to customize tags for bare metal instances so that you can locate them quickly.</td>
+    </tr>
+    <tr>
+      <td>Supports visualized monitoring: displays the bare metal instance data such as CPU, memory, disk I/O, disk size, and NIC I/O.</td>
+    </tr>
+    <tr>
+      <td>Allows you to centrally view the resources associated with a bare metal instance, such as NICs and disks.</td>
+    </tr>
+    <tr>
+      <td rowSpan="26">Image Storage</td>
+      <td rowSpan="9">Standalone Image Storage</td>
+      <td>Store image files through image slices and support incremental storage.</td>
+    </tr>
+    <tr>
+      <td>Allows you to manage the lifecycle of standalone image storage, including adding, enabling, disabling, reconnecting, modifying, and deleting standalone image storage.</td>
+    </tr>
+    <tr>
+      <td>Allows you to obtain the existing image files under the mount path of the standalone image storage.</td>
+    </tr>
+    <tr>
+      <td>Allows you to specify a data network for a standalone image storage for data communication with hosts.</td>
+    </tr>
+    <tr>
+      <td>Supports image synchronization between different standalone image storage on the same management node, and allows you to specify an image synchronization network for standalone image storage.</td>
+    </tr>
+    <tr>
+      <td>Allows you to clean up invalid data stored in standalone image storage to release spaces.</td>
+    </tr>
+    <tr>
+      <td>Allows you to change the password for a standalone image storage.</td>
+    </tr>
+    <tr>
+      <td>Allows you to centrally manage images in a standalone image storage.</td>
+    </tr>
+    <tr>
+      <td>Monitors and displays the percentage of used capacity of a standalone image storage.</td>
+    </tr>
+    <tr>
+      <td rowSpan="8">Distributed Image Storage</td>
+      <td>Store image files through distributed block storage.</td>
+    </tr>
+    <tr>
+      <td>Allows you to manage the lifecycle of distributed image storage, including adding, enabling, disabling, reconnecting, modifying, and deleting distributed image storage.</td>
+    </tr>
+    <tr>
+      <td>Allows you to add multiple monitoring nodes and manage all the monitoring nodes centrally.</td>
+    </tr>
+    <tr>
+      <td>Supports specifying image cache pools.</td>
+    </tr>
+    <tr>
+      <td>Allows you to specify a data network for a distributed image storage for data communication with hosts.</td>
+    </tr>
+    <tr>
+      <td>Allows you to centrally manage images in a distributed image storage.</td>
+    </tr>
+    <tr>
+      <td>Allows you to clean up the original data preserved after migration across distributed image storage.</td>
+    </tr>
+    <tr>
+      <td>Monitors and displays the percentage of used capacity of a distributed image storage.</td>
+    </tr>
+    <tr>
+      <td rowSpan="9">Image Management</td>
+      <td>Allows you to manage the lifecycle of images, including adding, modifying, deleting images.</td>
+    </tr>
+    <tr>
+      <td>Supports two types of image: system image and disk image.</td>
+    </tr>
+    <tr>
+      <td>Supports four types of image format: qcow2, iso, vmdk, and raw.</td>
+    </tr>
+    <tr>
+      <td>Supports two types of image upload method: an URL or local browser.</td>
+    </tr>
+    <tr>
+      <td>Supports MD5 verification to ensure that uploaded images are intact and undamaged.</td>
+    </tr>
+    <tr>
+      <td>Supports exporting images.</td>
+    </tr>
+    <tr>
+      <td>Allows you to migrate an image to another distributed image storage.</td>
+    </tr>
+    <tr>
+      <td>Allows you to set the sharing mode of an image, including share globally, share to users/user group, and not share.</td>
+    </tr>
+    <tr>
+      <td>Supports resource deletion protection and provides deletion policies.</td>
+    </tr>
+    <tr>
+      <td rowSpan="26">Data Storage</td>
+      <td rowSpan="4">Local Storage</td>
+      <td>Allows you to add local storage by using free disks or local directory.</td>
+    </tr>
+    <tr>
+      <td>Allows you to manage the lifecycle of local storage, including adding, enabling, disabling, reconnecting, entering maintenance mode, and deleting local storage.</td>
+    </tr>
+    <tr>
+      <td>Allows you to manage associated virtual machines, disks, hosts, and clusters.</td>
+    </tr>
+    <tr>
+      <td>Monitors and displays the storage utilization, storage distribution, and storage allocation ratio of local storage.</td>
+    </tr>
+    <tr>
+      <td rowSpan="9">SAN Storage</td>
+      <td>Uses shared block devices and supports setting up SAN storage through iSCSI storage, FC storage, or NVMe storage.</td>
+    </tr>
+    <tr>
+      <td>Allows you to manage the lifecycle of SAN storage, including adding, enabling, disabling, reconnecting, entering maintenance mode, and deleting SAN storage.</td>
+    </tr>
+    <tr>
+      <td>Allows you to manage the associated virtual machines, disks, clusters, shared LUNs.</td>
+    </tr>
+    <tr>
+      <td>Supports two provisioning methods: thick provisioning and thin provisioning.</td>
+    </tr>
+    <tr>
+      <td>Allows you to specify a storage network to check the virtual machine health status.</td>
+    </tr>
+    <tr>
+      <td>Allows you to add multiple LUNs and refresh the storage capacity to view its changes when expanding or replacing a LUN device.</td>
+    </tr>
+    <tr>
+      <td>Allows you to forcibly clean up the data in a block device, such as the signature in the file system, RAID, and partition table.</td>
+    </tr>
+    <tr>
+      <td>Allows you to clean up the original data preserved after migration across SAN storage.</td>
+    </tr>
+    <tr>
+      <td>Monitors and displays the storage utilization, storage distribution, and storage allocation ratio of SAN storage.</td>
+    </tr>
+    <tr>
+      <td rowSpan="7">Distributed Storage</td>
+      <td>Uses distributed block storage and supports authentication with keys.</td>
+    </tr>
+    <tr>
+      <td>Allows you to manage the lifecycle of distributed storage, including adding, enabling, disabling, reconnecting, entering maintenance mode, and deleting distributed storage.</td>
+    </tr>
+    <tr>
+      <td>Allows you to manage the associated virtual machines, disks, clusters, storage pools, and monitoring nodes.</td>
+    </tr>
+    <tr>
+      <td>Allows you to specify storage pools when adding a distributed storage.</td>
+    </tr>
+    <tr>
+      <td>Allows you to specify a storage network to check the virtual machine health status.</td>
+    </tr>
+    <tr>
+      <td>Allows you to clean up the original data preserved after migration across distributed storage.</td>
+    </tr>
+    <tr>
+      <td>Monitors and displays the storage utilization, storage distribution, and storage allocation ratio of distributed storage.</td>
+    </tr>
+    <tr>
+      <td rowSpan="6">NFS Storage</td>
+      <td>Uses network file system and supports customize mount parameters.</td>
+    </tr>
+    <tr>
+      <td>Allows you to manage the lifecycle of NFS storage, including adding, enabling, disabling, reconnecting, entering maintenance mode, and deleting NFS storage.</td>
+    </tr>
+    <tr>
+      <td>Allows you to manage the associated virtual machines, disks, and clusters.</td>
+    </tr>
+    <tr>
+      <td>Allows you to specify a storage network to check the virtual machine health status.</td>
+    </tr>
+    <tr>
+      <td>Allows you to clean up the original data preserved after migration across NFS storage.</td>
+    </tr>
+    <tr>
+      <td>Monitors and displays the storage utilization, storage distribution, and storage allocation ratio of NFS storage.</td>
+    </tr>
+    <tr>
+      <td rowSpan="2">Storage Service</td>
+      <td rowSpan="2">/</td>
+      <td>Allows you to deploy distributed storage through GUI.</td>
+    </tr>
+    <tr>
+      <td>Allows you to seamlessly take over existing distributed storage.</td>
+    </tr>
+    <tr>
+      <td rowSpan="17">Network Resource</td>
+      <td rowSpan="7">Distributed Switch</td>
+      <td>Provides a virtual switch device for unified network management and monitoring of virtual machines within a cluster.</td>
+    </tr>
+    <tr>
+      <td>Automatically generates default distributed switch for managing management network traffic on hosts.</td>
+    </tr>
+    <tr>
+      <td>Allows you to create distributed port groups based on the default distributed switch to achieve reuse of management network and business network.</td>
+    </tr>
+    <tr>
+      <td>Allows you to manage the lifecycle of distributed switch, including creating and deleting distributed switch.</td>
+    </tr>
+    <tr>
+      <td>Supports VLAN (802.1Q) layer 2 isolation.</td>
+    </tr>
+    <tr>
+      <td>Allows you to manage the uplinks associated with hosts on a distributed switch.</td>
+    </tr>
+    <tr>
+      <td>Allows you to manage the associated distributed port groups and clusters.</td>
+    </tr>
+    <tr>
+      <td rowSpan="8">Distributed Port Group</td>
+      <td>Distributed port group is the logical grouping of distributed switch ports for port configuration.</td>
+    </tr>
+    <tr>
+      <td>Allows you to manage the lifecycle of distributed port groups, including creating, modifying, and deleting distributed port groups.</td>
+    </tr>
+    <tr>
+      <td>Supports adding IPv4 or IPv6 networks.</td>
+    </tr>
+    <tr>
+      <td>Supports enabling or disabling IP address management.</td>
+    </tr>
+    <tr>
+      <td>Supports enabling or disabling DHCP service.</td>
+    </tr>
+    <tr>
+      <td>Allows you to customize the MTU to limit the size of network transmission packets.</td>
+    </tr>
+    <tr>
+      <td>Allows you to manage network segments, DNS, and other resources of distributed port groups.</td>
+    </tr>
+    <tr>
+      <td>Supports visual monitoring and list statistics of IP usage for distributed port groups, helping to improve IP planning efficiency.</td>
+    </tr>
+    <tr>
+      <td rowSpan="2">Kernel Adapter</td>
+      <td>Automatically generates a default Kernel adapter for managing and configuring the physical network.</td>
+    </tr>
+    <tr>
+      <td>Supported service type: Management and Storage.</td>
+    </tr>
+    <tr>
+      <td>Network Service</td>
+      <td>Security Group</td>
+      <td>Provides network security controls for virtual machine NICs.</td>
+    </tr>
+    <tr>
+      <td rowSpan="7">Network Topology</td>
+      <td rowSpan="7">/</td>
+      <td>Displays complete link relationships and other information centered around the distributed switch.</td>
+    </tr>
+    <tr>
+      <td>Supports refreshing to display the latest network topology.</td>
+    </tr>
+    <tr>
+      <td>Supports exporting the network topology as a PNG image.</td>
+    </tr>
+    <tr>
+      <td>Supports hiding or displaying virtual machines in the network topology.</td>
+    </tr>
+    <tr>
+      <td>Supports highlighting selected resources and displaying resource information in tooltips.</td>
+    </tr>
+    <tr>
+      <td>Supports canvas operations such as fitting to canvas, zooming in, zooming out, and full-screen mode.</td>
+    </tr>
+    <tr>
+      <td>Supports searching for resources by name or UUID within the current topology view.</td>
+    </tr>
+    <tr>
+      <td rowSpan="11">Reliability</td>
+      <td rowSpan="2">MN Monitoring</td>
+      <td>Allows you to set up a dual management node environment through GUI. If either node fails, service will automatically switch over within seconds to ensure continuous availability.</td>
+    </tr>
+    <tr>
+      <td>Allows you to view the management service status, including whether the monitor IP is reachable, whether the peer management node is reachable, whether the virtual IP is reachable, and the database status.</td>
+    </tr>
+    <tr>
+      <td>Dynamic Resource Scheduling</td>
+      <td>Displays the DRS list for the cluster to easily view the platform's DRS policies.</td>
+    </tr>
+    <tr>
+      <td rowSpan="4">VM Scheduling Policy</td>
+      <td>Supports four types of scheduling policies: VM Exclusive from Each Other, VM Affinitive to Each Other, VMs Affinitive to Hosts, and VMs Exclusive from Hosts.</td>
+    </tr>
+    <tr>
+      <td>Allows you to manage the lifecycle of VM scheduling policies, including creating, enabling, disabling, modifying, and deleting VM scheduling policies.</td>
+    </tr>
+    <tr>
+      <td>Allows you to group a set of virtual machines for unified scheduling based on business requirements and manage the lifecycle of VM scheduling groups.</td>
+    </tr>
+    <tr>
+      <td>Allows you to group a set of hosts for unified scheduling based on business requirements and manage the lifecycle of host scheduling groups.</td>
+    </tr>
+    <tr>
+      <td rowSpan="4">HA Policy</td>
+      <td>Supports controlling virtual machine high availability globally through HA policies.</td>
+    </tr>
+    <tr>
+      <td>Allows you to configure VM failover strategies based on the combination of management network connectivity, storage network connectivity, and business NIC status.</td>
+    </tr>
+    <tr>
+      <td>Allows you to modify host error detection policies and HA advanced settings.</td>
+    </tr>
+    <tr>
+      <td>Supports viewing and filtering HA migration logs.</td>
+    </tr>
+    <tr>
+      <td rowSpan="11">Data Protection</td>
+      <td rowSpan="4">Snapshot Management</td>
+      <td>Supports centralized management of virtual machine and disk snapshots.</td>
+    </tr>
+    <tr>
+      <td>The snapshot management interface is divided into two parts, allowing for linked display of virtual machines and their corresponding snapshots.</td>
+    </tr>
+    <tr>
+      <td>Supports sorting the virtual machine list by snapshot count and snapshot capacity.</td>
+    </tr>
+    <tr>
+      <td>Allows you to manage the lifecycle of snapshots, including creating, reverting, deleting snapshots.</td>
+    </tr>
+    <tr>
+      <td rowSpan="7">Backup Management</td>
+      <td>Supports viewing protected resource backup data in a tree-like folder structure.</td>
+    </tr>
+    <tr>
+      <td>Supports two data recovery methods: overwrite recovery and new virtual machine from backup.</td>
+    </tr>
+    <tr>
+      <td>Allows you to manage the lifecycle of backup plans, including creating, enabling, disabling, and deleting backup plans.</td>
+    </tr>
+    <tr>
+      <td>Supports creating backup plans for new virtual machines and platform databases.</td>
+    </tr>
+    <tr>
+      <td>Supports two types of backup storage: local backup storage and remote backup storage.</td>
+    </tr>
+    <tr>
+      <td>Supports three ways of backup storage addition: reuse image storage, reuse host, and dedicated backup storage.</td>
+    </tr>
+    <tr>
+      <td>Allows you to manage the lifecycle of backup storage, including adding, enabling, disabling, reconnecting, and deleting backup storage.</td>
+    </tr>
+    <tr>
+      <td rowSpan="24">Monitoring and Alarm</td>
+      <td>Resource Monitoring</td>
+      <td>Supports visual display of performance monitoring charts for resources, including clusters, hosts, virtual machines, image storage, data storage, and distributed port groups.</td>
+    </tr>
+    <tr>
+      <td rowSpan="7">Alarm</td>
+      <td>Provides a variety of alarm metrics to meet monitoring and alerting needs for multiple resource types and application scenarios.</td>
+    </tr>
+    <tr>
+      <td>Supports two types of alarm: resource alarms and event alarms.</td>
+    </tr>
+    <tr>
+      <td>Provides default alarms and allows you to customize alarms.</td>
+    </tr>
+    <tr>
+      <td>Allows you to manage the lifecycle of alarms, including creating, enabling, disabling, and deleting alarms.</td>
+    </tr>
+    <tr>
+      <td>Supports three levels of alarm: emergent, major, and info.</td>
+    </tr>
+    <tr>
+      <td>Allows you to enable alarm recovery notification for resource alarms as needed. If enabled, when a resource monitored by a resource alarm recovers from the alarmed status, the system receives a notification.</td>
+    </tr>
+    <tr>
+      <td>Allows you to centrally manage the endpoints and alarm records of an alarm.</td>
+    </tr>
+    <tr>
+      <td rowSpan="2">Message Template</td>
+      <td>Sends messages to endpoints by using a text template. Supports customizing alarm message templates.</td>
+    </tr>
+    <tr>
+      <td>Allows you to manage the lifecycle of message templates, including creating, modifying, and deleting message templates.</td>
+    </tr>
+    <tr>
+      <td rowSpan="5">Endpoints</td>
+      <td>Provides a system default endpoint and allows you to manage the lifecycle of the system endpoint, including enabling and disabling system endpoints.</td>
+    </tr>
+    <tr>
+      <td>Supports custom endpoints, including email, DingTalk, Lark, WeCom, HTTP application, and Microsoft Teams.</td>
+    </tr>
+    <tr>
+      <td>Allows you to manage the lifecycle of custom endpoints, including creating, enabling, disabling, and deleting endpoints.</td>
+    </tr>
+    <tr>
+      <td>Allows you to add/remove alarms to/from an endpoint and centrally manage these alarms.</td>
+    </tr>
+    <tr>
+      <td>Allows you to centrally manage messages received by an endpoint.</td>
+    </tr>
+    <tr>
+      <td rowSpan="9">Alarm Message</td>
+      <td>Supports intuitive viewing and unified management of platform alarm messages to improve operational efficiency.</td>
+    </tr>
+    <tr>
+      <td>Displays alarm messages of different emergency levels in the last seven days on a bar chart.</td>
+    </tr>
+    <tr>
+      <td>Displays alarm messages of different resources in the last seven days on a pie chart.</td>
+    </tr>
+    <tr>
+      <td>Allows you to view up to 1,000 alarm messages in the message list.</td>
+    </tr>
+    <tr>
+      <td>Supports multiple filter rules, including resource type, time period, alarm level, message type, and read/unread status.</td>
+    </tr>
+    <tr>
+      <td>Allows you to set a silence period for alarm messages. During the silence period, no alarm messages will be generated. You can process the alarm information when you are convenient.</td>
+    </tr>
+    <tr>
+      <td>Allows you to cancel the silence period for alarm messages.</td>
+    </tr>
+    <tr>
+      <td>Allows you to view the details about an alarm.</td>
+    </tr>
+    <tr>
+      <td>Allows you to export the alarm messages as a CSV table, which helps in statistical analysis and problem diagnosis, and allows you to export the filtered alarm messages.</td>
+    </tr>
+    <tr>
+      <td rowSpan="14">Task and Event</td>
+      <td rowSpan="4">Operation Task</td>
+      <td>Displays the historic operations performed on the platform.</td>
+    </tr>
+    <tr>
+      <td>Supports multiple filter rules, including time period, task result, and operator.</td>
+    </tr>
+    <tr>
+      <td>Allows you to view the details about an operation task.</td>
+    </tr>
+    <tr>
+      <td>Allows you to export operation task logs in CSV format.</td>
+    </tr>
+    <tr>
+      <td rowSpan="4">HA Task</td>
+      <td>Allows you to view and manage triggered HA migration tasks.</td>
+    </tr>
+    <tr>
+      <td>Supports multiple filter rules, including time period and task result.</td>
+    </tr>
+    <tr>
+      <td>Allows you to view the details about an HA task.</td>
+    </tr>
+    <tr>
+      <td>Allows you to export HA task logs in CSV format.</td>
+    </tr>
+    <tr>
+      <td rowSpan="3">Scheduling Task</td>
+      <td>Allows you to view and manage scheduling execution history, results, and times.</td>
+    </tr>
+    <tr>
+      <td>Allows you to view the details about a scheduling task.</td>
+    </tr>
+    <tr>
+      <td>Allows you to export scheduling task logs in CSV format.</td>
+    </tr>
+    <tr>
+      <td rowSpan="3">Event</td>
+      <td>Monitors and records all activities in the platform, which effectively ensures the security of the cloud environment.</td>
+    </tr>
+    <tr>
+      <td>Supports multiple filter rules, including time period and task result.</td>
+    </tr>
+    <tr>
+      <td>Allows you to view the details about an event.</td>
+    </tr>
+    <tr>
+      <td rowSpan="2">Log Collection</td>
+      <td>Collect Log</td>
+      <td>Allows you to collect platform logs and logs of various nodes on the platform that are generated in the specified time range.</td>
+    </tr>
+    <tr>
+      <td>Manage Log</td>
+      <td>Allows you to collect, cancel collection, download, and delete logs.</td>
+    </tr>
+    <tr>
+      <td rowSpan="5">Tag Management</td>
+      <td rowSpan="5">/</td>
+      <td>Allows you to customize tags for resources and quickly locate resources by tag type and tag name.</td>
+    </tr>
+    <tr>
+      <td>Supports admin tags and user tags.</td>
+    </tr>
+    <tr>
+      <td>Allows you to manage the lifecycle of tags, such as creating and deleting tags.</td>
+    </tr>
+    <tr>
+      <td>Allows admins to attach/detach tags to/from all resources in the platform and users to attach/detach tags to/from resources of users.</td>
+    </tr>
+    <tr>
+      <td>Allows you to centrally manage resources with a tag attached.</td>
+    </tr>
+    <tr>
+      <td rowSpan="4">Custom Attribute</td>
+      <td rowSpan="4">/</td>
+      <td>Allows you to create custom attributes and quickly filter target resources through attribute key and attribute value.</td>
+    </tr>
+    <tr>
+      <td>Supports adding custom attributes to the following resources: Global, Virtual Machine, Host, Data Storage, Distributed Switch, Distributed Port Group, and Bare Metal Instance.</td>
+    </tr>
+    <tr>
+      <td>Allows you to manage the lifecycle of custom attributes, such as creating and deleting custom attributes.</td>
+    </tr>
+    <tr>
+      <td>Allows you to centrally view the associated resources of custom values.</td>
+    </tr>
+    <tr>
+      <td rowSpan="4">Migration Service</td>
+      <td>Migration Service</td>
+      <td>Supports complete migration of virtual machine systems and data from other virtualization platforms to the current platform. Supported source platforms include VMware vSphere and other KVM-based cloud platforms. A step-by-step wizard guides you through the end-to-end migration process.</td>
+    </tr>
+    <tr>
+      <td rowSpan="2">Migration Resource</td>
+      <td>Allows you to manage the lifecycle of source platforms, such as adding and deleting source platforms.</td>
+    </tr>
+    <tr>
+      <td>Allows you to manage the lifecycle of data gateways, such as adding and deleting data gateways.</td>
+    </tr>
+    <tr>
+      <td>Migration Task</td>
+      <td>Allows you to manage the lifecycle of migration tasks, such as creating, editing configurations, synchronizing, testing, and deleting migration tasks.</td>
+    </tr>
+    <tr>
+      <td rowSpan="28">System Management</td>
+      <td rowSpan="9">User Management</td>
+      <td>A user is created by the admin or synchronized from an SSO authentication system and is managed by the admin. Resources created under a user are managed by the user.</td>
+    </tr>
+    <tr>
+      <td>Allows you to manage the lifecycle of local users, including creating and deleting users. Allows you to manage the lifecycle of SSO users, including synchronizing and deleting users.</td>
+    </tr>
+    <tr>
+      <td>Allows you to add an SSO server to the platform so as to integrate the SSO system and enable password-free login of related accounts in the system.</td>
+    </tr>
+    <tr>
+      <td>Supports three types of SSO server: OIDC, AD, and LDAP.</td>
+    </tr>
+    <tr>
+      <td>Allows you to manage the lifecycle of the SSO server, such as adding and deleting the SSO server.</td>
+    </tr>
+    <tr>
+      <td>Allows you to set two-factor authentication for user login, view the two-factor QR codes of the user, and download the two-factor QR codes.</td>
+    </tr>
+    <tr>
+      <td>Allows you to set and manage resource quota for users, including compute resources, storage resources, and network resources.</td>
+    </tr>
+    <tr>
+      <td>Allows you to centrally manage the associated or shared resources of a user.</td>
+    </tr>
+    <tr>
+      <td>Allows you to change a regular user to an admin user.</td>
+    </tr>
+    <tr>
+      <td rowSpan="2">Console Proxy</td>
+      <td>Allows you to set a console proxy to log in to a virtual machine.</td>
+    </tr>
+    <tr>
+      <td>Allows you to reconnect a console proxy.</td>
+    </tr>
+    <tr>
+      <td rowSpan="2">AccessKey Management</td>
+      <td>An AccessKey pair is a security credential that one party authorizes another party to call API operations and access its resources in the platform.</td>
+    </tr>
+    <tr>
+      <td>Allows you to manage the lifecycle of local AccessKeys, such as generating, enabling, disabling, and deleting AccessKeys.</td>
+    </tr>
+    <tr>
+      <td>Security Settings</td>
+      <td>Allows you to manage platform login policies, virtual machine security policies, and host security policies to ensure security.</td>
+    </tr>
+    <tr>
+      <td>Certificate Management</td>
+      <td>Allows you to configure and manage a SSL certificate, including third-party certificate and system self-signed certificate.</td>
+    </tr>
+    <tr>
+      <td>Log Server</td>
+      <td>A log server is used to collect logs of the management node. You can add a log server to the platform and use the collected logs to locate errors and exceptions. This improves your O&M efficiency.</td>
+    </tr>
+    <tr>
+      <td>Email Server</td>
+      <td>If you select Email as the endpoint of an alarm, you need to set an email server. Then alarm messages are sent to the email server.</td>
+    </tr>
+    <tr>
+      <td rowSpan="3">System Parameter</td>
+      <td>Allows you to configure settings that take effect on the whole platform.</td>
+    </tr>
+    <tr>
+      <td>Allows you to reset to default settings with one click.</td>
+    </tr>
+    <tr>
+      <td>Supports quick search and directory navigation to help you quickly locate target items.</td>
+    </tr>
+    <tr>
+      <td rowSpan="3">Theme and Appearance</td>
+      <td>Allows you to customize the theme and appearance of the platform.</td>
+    </tr>
+    <tr>
+      <td>Allows you to set the global appearance (theme), titles (browser/login interface/platform interface), and monitor (title and appearance/data monitoring method).</td>
+    </tr>
+    <tr>
+      <td>Allows you to reset to default settings with one click.</td>
+    </tr>
+    <tr>
+      <td rowSpan="5">License Management</td>
+      <td>Provides multiple licensing options and you can purchase according to your needs.</td>
+    </tr>
+    <tr>
+      <td>Provides three licensing agreements: Basic Trial, Basic Paid, and Advanced Paid.</td>
+    </tr>
+    <tr>
+      <td>Supports two licensing methods: USB key and request key.</td>
+    </tr>
+    <tr>
+      <td>Allows you to view the current license status and licensing records.</td>
+    </tr>
+    <tr>
+      <td>Provides license expiration reminders when your license is about to expire, expired, or license quota exceeds.</td>
+    </tr>
+    <tr>
+      <td rowSpan="5">UI Highlights</td>
+      <td>Quick Navigation</td>
+      <td>Provides a quick navigation entry, which is convenient for users to quickly locate and enter the required features and services.</td>
+    </tr>
+    <tr>
+      <td>Global Search</td>
+      <td>Provides one-stop global search, allowing you to search for features and resources.</td>
+    </tr>
+    <tr>
+      <td>Right-click Operation</td>
+      <td>Supports right-click to call out operation panel when the resource tree is expanded.</td>
+    </tr>
+    <tr>
+      <td>Keyboard Shortcuts</td>
+      <td>Provides global shortcuts and page shortcuts, support keyboard combination keys for quick access to menus, enhancing user experience and operational efficiency.</td>
+    </tr>
+    <tr>
+      <td>Internalization</td>
+      <td>Supports changing the UI language, including Simplified Chinese and English.</td>
+    </tr>
+    <tr>
+      <td rowSpan="2">Installation</td>
+      <td rowSpan="2">One-click Installation</td>
+      <td>Allows you to complete installing and deploying the platform from scratch with one simple command.</td>
+    </tr>
+    <tr>
+      <td>Supports multiple installation modes: Management Node, Compute Node, Expert Node.</td>
+    </tr>
+    <tr>
+      <td rowSpan="3">Upgrade</td>
+      <td>Seamless Upgrade</td>
+      <td>Support seamless upgrades from lower versions to higher versions.</td>
+    </tr>
+    <tr>
+      <td>Incremental Upgrade</td>
+      <td>Support incremental upgrades to significantly increase the speed of updates.</td>
+    </tr>
+    <tr>
+      <td>Deployment Environment Upgrade</td>
+      <td>Support upgrading the deployment environment via expert mode.</td>
+    </tr>
+  </tbody>
+</table>

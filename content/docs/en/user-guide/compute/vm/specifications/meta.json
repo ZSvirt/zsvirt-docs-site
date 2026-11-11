@@ -1,0 +1,10 @@
+{
+  "title": "VM Specification",
+  "pages": [
+    "index",
+    "create-windows",
+    "create-linux",
+    "manage"
+  ],
+  "pagesIndex": "index"
+}

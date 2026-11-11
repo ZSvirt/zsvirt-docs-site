@@ -1,0 +1,107 @@
+---
+title: "虚拟机"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+<Cards>
+  <Card title={"虚拟机网络不通，如何排查？"} href={"/docs/faq/resource-inventory/virtual-machine/a-virtual-machine-has-no-network-connectivity-how-do-i-troubleshoot-this"} />
+  <Card title={"虚拟机创建失败，如何排查？"} href={"/docs/faq/resource-inventory/virtual-machine/a-virtual-machine-creation-fails-how-do-i-troubleshoot-this"} />
+  <Card title={"虚拟机热迁移时间过长，如何解决？"} href={"/docs/faq/resource-inventory/virtual-machine/a-live-migration-takes-too-long-how-do-i-resolve-this"} />
+  <Card title={"虚拟机热迁移后会出现暂停或重启的现象，如何解决？"} href={"/docs/faq/resource-inventory/virtual-machine/a-virtual-machine-pauses-or-restarts-after-a-live-migration-how-do-i-resolve-this"} />
+  <Card title={"虚拟机状态频繁变为暂停，如何解决？"} href={"/docs/faq/resource-inventory/virtual-machine/a-virtual-machine-frequently-enters-a-paused-state-how-do-i-resolve-this"} />
+  <Card title={"虚拟机无法ssh，如何解决？"} href={"/docs/faq/resource-inventory/virtual-machine/a-virtual-machine-cannot-be-accessed-via-ssh-how-do-i-resolve-this"} />
+  <Card title={"如何在单用户模式下修改虚拟机root密码？"} href={"/docs/faq/resource-inventory/virtual-machine/how-do-i-change-the-virtual-machine-root-password-in-single-user-mode"} />
+  <Card title={"SSH登录失败出现“This private key will be ignored.”报错，如何解决？"} href={"/docs/faq/resource-inventory/virtual-machine/ssh-login-fails-with-the-error-this-private-key-will-be-ignored-how-do-i-resolve-this"} />
+  <Card title={"虚拟机控制台内显示“Guest has not initialized the display (yet)”报错，如何解决？"} href={"/docs/faq/resource-inventory/virtual-machine/the-virtual-machine-console-displays-the-error-guest-has-not-initialized-the-display-yet-how-do"} />
+</Cards>
+
+虚拟机控制台出现`Guest has not initialized the display (yet)`报错一般有以下两种原因，可根据原因分类，尝试参考解决方案进行排查解决。
+
+<Cards>
+  <Card title={"Linux VNC控制台大小写显示与键盘输入相反，如何解决？"} href={"/docs/faq/resource-inventory/virtual-machine/the-linux-vnc-console-displays-uppercase-lowercase-characters-that-are-reversed-from-keyboard-in"} />
+  <Card title={"虚拟机系统时间和主机系统时间有什么关系？"} href={"/docs/faq/resource-inventory/virtual-machine/what-is-the-relationship-between-virtual-machine-system-time-and-host-system-time"} />
+  <Card title={"如何检查一台虚拟机是否支持硬件虚拟化？"} href={"/docs/faq/resource-inventory/virtual-machine/how-do-i-check-whether-a-virtual-machine-supports-hardware-virtualization"} />
+  <Card title={"虚拟化平台DHCP服务和目前机房的DHCP是否会出现冲突？"} href={"/docs/faq/resource-inventory/virtual-machine/will-the-dhcp-service-on-the-virtualization-platform-conflict-with-the-existing-dhcp-service-in"} />
+  <Card title={"如果分布式端口组创建虚拟机时不设置虚拟机hostname，默认hostname是什么？"} href={"/docs/faq/resource-inventory/virtual-machine/what-is-the-default-hostname-when-creating-a-virtual-machine-with-a-distributed-port-group-and-n"} />
+  <Card title={"为什么使用zstack-cli命令设置分布式端口组的hostname不生效？"} href={"/docs/faq/resource-inventory/virtual-machine/why-does-setting-the-distributed-port-group-hostname-using-the-zstack-cli-command-have-no-effect"} />
+  <Card title={"如何修改控制台代理地址？"} href={"/docs/faq/resource-inventory/virtual-machine/how-do-i-change-the-console-proxy-address"} />
+  <Card title={"如何通过管理节点的公网IP连接内网IP上虚拟机的控制台？"} href={"/docs/faq/resource-inventory/virtual-machine/how-do-i-access-a-virtual-machine-console-on-a-private-ip-address-using-the-public-ip-address-of"} />
+  <Card title={"如何解决qemu版本不匹配的问题？"} href={"/docs/faq/resource-inventory/virtual-machine/how-do-i-resolve-a-qemu-version-mismatch"} />
+  <Card title={"虚拟化平台给虚拟机分配的MAC地址，能否手动修改？"} href={"/docs/faq/resource-inventory/virtual-machine/can-the-mac-address-assigned-to-a-virtual-machine-by-the-virtualization-platform-be-changed-manu"} />
+  <Card title={"虚拟机卸载并重新加载分布式端口组后，虚拟机的IP地址会发生变化吗？"} href={"/docs/faq/resource-inventory/virtual-machine/does-the-ip-address-of-a-virtual-machine-change-after-detaching-and-reattaching-a-distributed-po"} />
+  <Card title={"如何在一个虚拟机上添加多块网卡？"} href={"/docs/faq/resource-inventory/virtual-machine/how-do-i-add-multiple-network-adapters-to-a-virtual-machine"} />
+  <Card title={"如何设置虚拟机启动顺序？"} href={"/docs/faq/resource-inventory/virtual-machine/how-do-i-set-the-boot-order-of-a-virtual-machine"} />
+  <Card title={"如何在新建虚拟机时指定IP？"} href={"/docs/faq/resource-inventory/virtual-machine/how-do-i-assign-a-specific-ip-address-when-creating-a-virtual-machine"} />
+  <Card title={"修改Windows虚拟机密码报错怎么办？"} href={"/docs/faq/resource-inventory/virtual-machine/what-do-i-do-if-changing-the-password-of-a-windows-virtual-machine-returns-an-error"} />
+  <Card title={"误删除SSH Key或修改虚拟机密钥，怎么办？"} href={"/docs/faq/resource-inventory/virtual-machine/what-do-i-do-if-an-ssh-key-is-accidentally-deleted-or-the-virtual-machine-key-is-changed"} />
+  <Card title={"为什么有的虚拟机关机时间比较久？"} href={"/docs/faq/resource-inventory/virtual-machine/why-does-shutting-down-a-virtual-machine-take-a-long-time"} />
+  <Card title={"对于Ubuntu系统的虚拟机，qemu-guest-agent版本过低导致无法在线修改密码，怎么办？"} href={"/docs/faq/resource-inventory/virtual-machine/how-do-i-resolve-an-issue-where-an-outdated-qemu-guest-agent-version-on-an-ubuntu-virtual-machin"} />
+  <Card title={"在Ceph企业版数据存储上创建虚拟机失败，该怎么处理？"} href={"/docs/faq/resource-inventory/virtual-machine/how-do-i-handle-a-failure-to-create-a-virtual-machine-on-ceph-enterprise-edition-data-storage"} />
+  <Card title={"为什么使用分布式端口组创建Windows和Linux虚拟机，Windows虚拟机网络不可用，而Linux虚拟机可正常通信？"} href={"/docs/faq/resource-inventory/virtual-machine/why-is-the-network-unavailable-on-a-windows-virtual-machine-but-working-normally-on-a-linux-virt"} />
+  <Card title={"使用共享存储且CPU模式为host-passthrough的虚拟机，在相同集群内热迁移失败，如何解决？"} href={"/docs/faq/resource-inventory/virtual-machine/how-do-i-resolve-a-live-migration-failure-for-a-virtual-machine-using-shared-storage-with-cpu-mo"} />
+  <Card title={"使用UEFI模式引导的虚拟机，操作系统安装完成后进行重启，自动进入UEFI shell界面，如何解决？"} href={"/docs/faq/resource-inventory/virtual-machine/after-installing-an-operating-system-on-a-uefi-booted-virtual-machine-and-restarting-the-system"} />
+  <Card title={"使用UEFI引导的Windows Server 2016虚拟机无法调整分辨率，如何解决？"} href={"/docs/faq/resource-inventory/virtual-machine/how-do-i-resolve-a-resolution-adjustment-issue-on-a-uefi-booted-windows-server-2016-virtual-mach"} />
+  <Card title={"如何取消虚拟机热迁移任务？"} href={"/docs/faq/resource-inventory/virtual-machine/how-do-i-cancel-a-live-migration-task-for-a-virtual-machine"} />
+  <Card title={"虚拟机无法打开控制台，出现“Too many open files”报错，如何解决？"} href={"/docs/faq/resource-inventory/virtual-machine/how-do-i-resolve-a-too-many-open-files-error-that-prevents-opening-the-virtual-machine-console"} />
+  <Card title={"本地存储下虚拟机一直重启却无法启动，如何排查？"} href={"/docs/faq/resource-inventory/virtual-machine/how-do-i-troubleshoot-a-virtual-machine-on-local-storage-that-keeps-restarting-but-fails-to-star"} />
+  <Card title={"虚拟化平台监控数据不显示，如何排查？"} href={"/docs/faq/resource-inventory/virtual-machine/how-do-i-troubleshoot-missing-monitoring-data-on-the-virtualization-platform"} />
+  <Card title={"RedHat 5.7虚拟机网络不通，如何解决？"} href={"/docs/faq/resource-inventory/virtual-machine/how-do-i-resolve-a-network-connectivity-issue-on-a-red-hat-5-7-virtual-machine"} />
+  <Card title={"Windows虚拟机在控制台中无法调整分辨率，怎么办？"} href={"/docs/faq/resource-inventory/virtual-machine/what-do-i-do-if-a-windows-virtual-machine-cannot-adjust-the-screen-resolution"} />
+  <Card title={"Windows安装VMTools出现“There is a problem with this Windows Installer package. A program run as part of the setup did not finish as expected Contact your support personnel or package vendor”提示，怎么办？"} href={"/docs/faq/resource-inventory/virtual-machine/what-do-i-do-when-installing-vmtools-on-windows-returns-a-there-is-a-problem-with-this-windows-i"} />
+  <Card title={"Windows虚拟机互相Ping不通，如何解决？"} href={"/docs/faq/resource-inventory/virtual-machine/how-do-i-resolve-a-ping-failure-between-windows-virtual-machines"} />
+  <Card title={"虚拟机异常锁屏，如何解决？"} href={"/docs/faq/resource-inventory/virtual-machine/how-do-i-resolve-an-abnormal-screen-lock-on-a-virtual-machine"} />
+  <Card title={"Windows虚拟机获取不到IP地址，如何解决？"} href={"/docs/faq/resource-inventory/virtual-machine/how-do-i-resolve-an-issue-where-a-windows-virtual-machine-cannot-obtain-an-ip-address"} />
+  <Card title={"Windows虚拟机如何使用声卡？"} href={"/docs/faq/resource-inventory/virtual-machine/how-do-i-use-a-sound-card-in-a-windows-virtual-machine"} />
+  <Card title={"虚拟机状态未知，无法操作，如何解决？"} href={"/docs/faq/resource-inventory/virtual-machine/the-virtual-machine-status-is-unknown-and-cannot-be-operated-how-do-i-resolve-this"} />
+  <Card title={"虚拟机更改主机失败，如何解决？"} href={"/docs/faq/resource-inventory/virtual-machine/the-virtual-machine-fails-to-change-its-host-how-do-i-resolve-this"} />
+  <Card title={"虚拟机删除快照超时，如何解决？"} href={"/docs/faq/resource-inventory/virtual-machine/deleting-a-virtual-machine-snapshot-times-out-how-do-i-resolve-this"} />
+  <Card title={"虚拟机加载USB设备失败，如何解决？"} href={"/docs/faq/resource-inventory/virtual-machine/the-virtual-machine-fails-to-load-a-usb-device-how-do-i-resolve-this"} />
+  <Card title={"如何卸载Linux VMTools？"} href={"/docs/faq/resource-inventory/virtual-machine/how-do-i-uninstall-linux-vmtools"} />
+  <Card title={"创建分布式存储类型虚拟机失败，如何解决？"} href={"/docs/faq/resource-inventory/virtual-machine/creating-a-virtual-machine-that-uses-distributed-storage-fails-how-do-i-resolve-this"} />
+  <Card title={"虚拟机无法SSH登录，如何解决？"} href={"/docs/faq/resource-inventory/virtual-machine/the-virtual-machine-cannot-be-accessed-via-ssh-how-do-i-resolve-this"} />
+  <Card title={"虚拟机无法远程连接，如何解决？"} href={"/docs/faq/resource-inventory/virtual-machine/the-virtual-machine-cannot-be-accessed-remotely-how-do-i-resolve-this"} />
+  <Card title={"虚拟机克隆时间过长，怎么办？"} href={"/docs/faq/resource-inventory/virtual-machine/virtual-machine-cloning-takes-too-long-what-should-i-do"} />
+  <Card title={"虚拟机无法正常SSH登录，怎么办？"} href={"/docs/faq/resource-inventory/virtual-machine/the-virtual-machine-cannot-be-accessed-via-ssh-what-should-i-do"} />
+  <Card title={"虚拟机打开控制台失败，怎么办？"} href={"/docs/faq/resource-inventory/virtual-machine/opening-the-virtual-machine-console-fails-what-should-i-do"} />
+</Cards>
+
+虚拟机打开控制台失败一般有以下三种原因，可根据原因分类，尝试参考解决方案进行排查解决：
+
+<Cards>
+  <Card title={"Windows虚拟机鼠标不可用，怎么办？"} href={"/docs/faq/resource-inventory/virtual-machine/the-mouse-is-not-working-in-a-windows-virtual-machine-what-should-i-do"} />
+  <Card title={"Linux虚拟机内部监控与业务端口冲突，怎么办？"} href={"/docs/faq/resource-inventory/virtual-machine/the-linux-virtual-machine-internal-monitoring-port-conflicts-with-a-business-port-what-should-i"} />
+  <Card title={"虚拟机创建镜像慢，怎么办？"} href={"/docs/faq/resource-inventory/virtual-machine/creating-a-virtual-machine-image-is-slow-what-should-i-do"} />
+  <Card title={"主机重启后虚拟机无法正常启动，怎么办？"} href={"/docs/faq/resource-inventory/virtual-machine/the-virtual-machine-fails-to-start-after-the-host-restarts-what-should-i-do"} />
+  <Card title={"虚拟机重启后无法进入系统，怎么办？"} href={"/docs/faq/resource-inventory/virtual-machine/the-virtual-machine-cannot-boot-into-the-system-after-a-restart-what-should-i-do"} />
+  <Card title={"虚拟化平台无法识别USB设备，怎么办？"} href={"/docs/faq/resource-inventory/virtual-machine/the-virtualization-platform-cannot-recognize-a-usb-device-what-should-i-do"} />
+  <Card title={"虚拟机启动失败，怎么办？"} href={"/docs/faq/resource-inventory/virtual-machine/the-virtual-machine-fails-to-start-what-should-i-do"} />
+</Cards>
+
+虚拟机启动失败一般存在多种现象和原因，可根据以下现象和原因分类，尝试参考解决方案进行排查解决：
+
+<Cards>
+  <Card title={"创建虚拟机失败，怎么办？"} href={"/docs/faq/resource-inventory/virtual-machine/creating-a-virtual-machine-fails-what-should-i-do"} />
+  <Card title={"虚拟机网络不通，怎么办？"} href={"/docs/faq/resource-inventory/virtual-machine/the-virtual-machine-has-no-network-connectivity-what-should-i-do"} />
+</Cards>
+
+虚拟机网络不通一般存在多种现象和原因，可根据以下现象和原因分类，尝试参考解决方案进行排查解决：
+
+<Cards>
+  <Card title={"虚拟机无法正常通过DHCP获取IP地址，如何解决？"} href={"/docs/faq/resource-inventory/virtual-machine/the-virtual-machine-cannot-obtain-an-ip-address-via-dhcp-how-do-i-resolve-this"} />
+  <Card title={"SSH登录虚拟机失败，如何解决？"} href={"/docs/faq/resource-inventory/virtual-machine/ssh-login-to-the-virtual-machine-fails-how-do-i-resolve-this"} />
+</Cards>
+
+SSH登录虚拟机失败一般存在多种现象和原因，可根据以下现象和原因分类，尝试参考解决方案进行排查解决：
+
+<Cards>
+  <Card title={"虚拟机无法获取IPv6地址，如何排查？"} href={"/docs/faq/resource-inventory/virtual-machine/the-virtual-machine-cannot-obtain-an-ipv6-address-how-do-i-troubleshoot-this"} />
+  <Card title={"虚拟机自动暂停，如何解决？"} href={"/docs/faq/resource-inventory/virtual-machine/the-virtual-machine-pauses-automatically-how-do-i-resolve-this"} />
+  <Card title={"CentOS虚拟机在救援模式下切换到/bin/bash目录报错，怎么办？"} href={"/docs/faq/resource-inventory/virtual-machine/switching-to-the-bin-bash-directory-in-rescue-mode-on-a-centos-virtual-machine-returns-an-error"} />
+  <Card title={"CentOS虚拟机DNS设置在重启后恢复默认设置，怎么办？"} href={"/docs/faq/resource-inventory/virtual-machine/the-dns-settings-on-a-centos-virtual-machine-revert-to-defaults-after-a-restart-what-should-i-do"} />
+  <Card title={"虚拟机启动后报错“ The root file system is already mounted read-write.”，怎么办？"} href={"/docs/faq/resource-inventory/virtual-machine/the-virtual-machine-displays-the-error-the-root-file-system-is-already-mounted-read-write-after"} />
+  <Card title={"使用分布式端口组的Windows虚拟机的DNS地址经常自动丢失，如何解决？"} href={"/docs/faq/resource-inventory/virtual-machine/the-dns-address-of-a-windows-virtual-machine-using-a-distributed-port-group-is-frequently-lost-a"} />
+  <Card title={"网络无异常但虚拟机SSH连接慢，如何解决？"} href={"/docs/faq/resource-inventory/virtual-machine/the-network-is-normal-but-ssh-connection-to-the-virtual-machine-is-slow-how-do-i-resolve-this"} />
+  <Card title={"CentOS虚拟机无法进入系统，长时间处于黑屏，怎么解决？"} href={"/docs/faq/resource-inventory/virtual-machine/centos-virtual-machine-cannot-boot-and-displays-a-black-screen-for-an-extended-period"} />
+  <Card title={"Windows2016虚拟机可以ping通互联网地址，但不能通过浏览器访问这个互联网地址，怎么解决？"} href={"/docs/faq/resource-inventory/virtual-machine/windows-2016-virtual-machine-can-ping-an-internet-address-but-cannot-access-it-through-a-browser"} />
+</Cards>

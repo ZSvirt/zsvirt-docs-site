@@ -1,0 +1,20 @@
+---
+title: "The virtual machine cannot be accessed via SSH. What should I do?"
+---
+
+<HistoricalNamingNote locale="en" />
+
+## Symptom
+The virtual machine responds to `Ping` but cannot be connected via SSH.
+
+## Cause
+A storage disconnection caused an I/O error on the virtual machine, putting it in read-only mode.
+
+## Solution
+1.  Log in to the virtual machine console and run the following command to create a file and check whether the virtual machine is in read-only mode:
+
+    ```
+    [root@localhost ~]# touch  /root/zstack.txt
+    ```
+
+2.  If the file cannot be created, restart the virtual machine.

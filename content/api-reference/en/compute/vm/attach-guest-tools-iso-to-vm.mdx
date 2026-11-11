@@ -1,0 +1,82 @@
+---
+title: "Attach Guest Tools ISO To VM"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "attachGuestToolsIsoToVm": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"attachGuestToolsIsoToVm":{}}' http://localhost:8080/zstack/v1/vm-instances/f58d939e32073aa49acc4897bf81ae45/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Resource UUID, uniquely identifies the resource| |3.7.0|
+|systemTags \(Optional\)|List|body|System Tag| |3.7.0|
+|userTags \(Optional\)|List|body|User Tag| |3.7.0|
+
+<Callout type="info">
+-   ZSvirt supports recording GuestTools version after loading enhanced tools for Virtual Machine, **SystemTags** adds **GuestTools** option.
+</Callout>
+    -   Option format: `GuestTools::TOOLS_VERSION`. The initial value of TOOLS\_VERSION is 1.0.0, and this value will change as the tool version advances.
+    -   For example: `GuestTools::1.0.0`
+    -   Significance: Records the GuestTools ISO version on the Host, compared with the ISO version in the management node directory `/opt/zstack-dvd`, to determine if an upgrade is needed.
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On error, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+AttachGuestToolsIsoToVmAction action = new AttachGuestToolsIsoToVmAction();
+action.uuid = "f58d939e32073aa49acc4897bf81ae45";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AttachGuestToolsIsoToVmAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AttachGuestToolsIsoToVmAction action = AttachGuestToolsIsoToVmAction()
+action.uuid = "f58d939e32073aa49acc4897bf81ae45"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AttachGuestToolsIsoToVmAction.Result res = action.call()
+```
+
+</APIPage>

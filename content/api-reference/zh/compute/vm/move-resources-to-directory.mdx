@@ -1,0 +1,84 @@
+---
+title: "移动资源至分组目录"
+---
+
+<APIPage method="PUT" path="/v1/move/resources/directory">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "moveResourcesToDirectory": {
+    "resourceUuids": [
+      "4330b08677e93bdb9c02f2e62d5e1136",
+      "1cba5c53426e34118c3b35821d9fcfa6"
+    ],
+    "directoryUuid": "192dda86ccb3388c97a272775b9d292e"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"moveResourcesToDirectory":{"resourceUuids":["4330b08677e93bdb9c02f2e62d5e1136","1cba5c53426e34118c3b35821d9fcfa6"],"directoryUuid":"192dda86ccb3388c97a272775b9d292e"}}' http://localhost:8080/zstack/v1/move/resources/directory
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|resourceUuids|List|body\(包含在**params**结构中\)|批量资源UUID| |4.6.0|
+|directoryUuid|String|body\(包含在**params**结构中\)|目录UUID| |4.6.0|
+|systemTags \(可选\)|List|body|系统标签| |4.6.0|
+|userTags \(可选\)|List|body|用户标签| |4.6.0|
+
+## API返回
+该API成功时返回一个空的JSON结构**`{}`**，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+MoveResourcesToDirectoryAction action = new MoveResourcesToDirectoryAction();
+action.resourceUuids = asList("4330b08677e93bdb9c02f2e62d5e1136","1cba5c53426e34118c3b35821d9fcfa6");
+action.directoryUuid = "192dda86ccb3388c97a272775b9d292e";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+MoveResourcesToDirectoryAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+MoveResourcesToDirectoryAction action = MoveResourcesToDirectoryAction()
+action.resourceUuids = [4330b08677e93bdb9c02f2e62d5e1136, 1cba5c53426e34118c3b35821d9fcfa6]
+action.directoryUuid = "192dda86ccb3388c97a272775b9d292e"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+MoveResourcesToDirectoryAction.Result res = action.call()
+```
+
+</APIPage>

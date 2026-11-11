@@ -1,0 +1,78 @@
+---
+title: "Update Factory Mode State"
+---
+
+<APIPage method="PUT" path="/v1/management-nodes/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateFactoryModeState": {
+    "factoryModeState": true
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the `systemTags` and `userTags` fields can be omitted. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateFactoryModeState":{"factoryModeState":true}}' \
+http://localhost:8080/zstack/v1/management-nodes/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|factoryModeState|Boolean|body\(included in the `updateFactoryModeState` structure\)|The factory mode enabled state| |3.8|
+|systemTags \(Optional\)|List|body| | |3.8|
+|userTags \(Optional\)|List|body| | |3.8|
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+UpdateFactoryModeStateAction action = new UpdateFactoryModeStateAction();
+action.factoryModeState = true;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateFactoryModeStateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateFactoryModeStateAction action = UpdateFactoryModeStateAction()
+action.factoryModeState = true
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateFactoryModeStateAction.Result res = action.call()
+```
+
+</APIPage>

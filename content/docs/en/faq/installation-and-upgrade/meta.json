@@ -1,0 +1,12 @@
+{
+  "title": "Installation and Upgrade",
+  "pages": [
+    "how-do-i-specify-a-nic-for-installing-zstack-zsphere-on-a-host-with-multiple-nics",
+    "the-operating-system-installation-page-cannot-be-accessed-when-using-ultraiso-to-burn-a-usb-driv",
+    "hosts-lose-connectivity-after-a-platform-upgrade-how-do-i-resolve-this",
+    "a-management-node-upgrade-fails-how-do-i-resolve-this",
+    "how-do-i-upgrade-the-kernel-to-version-4-18-0-and-gcc-to-version-8-x-when-using-a-series-gpus-on",
+    "the-database-installation-fails-when-installing-the-management-node-service-how-do-i-resolve-thi"
+  ],
+  "pagesIndex": "index"
+}

@@ -1,0 +1,63 @@
+---
+title: "Query Xsky Block Volume"
+---
+
+<APIPage method="GET" path="/v1/xksy/block-volumes" altPaths={["/v1/xsky/block-volumes/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Examples
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/xksy/block-volumes?q=uuid=xxx&q=name=xxx
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/xsky/block-volumes/54e1b033658b3aa28536d0064c07c536
+```
+
+Queryable Fields
+
+Run the CLI command tool, enter `QueryXskyBlockVolume` and press Tab to view all queryable fields and resource names that support cross-table queries.
+
+## API Response
+When the API succeeds, it returns an empty JSON structure `{}`. When an error occurs, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+QueryXskyBlockVolumeAction action = new QueryXskyBlockVolumeAction();
+action.conditions = asList("uuid=xxx","name=xxx");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryXskyBlockVolumeAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryXskyBlockVolumeAction action = QueryXskyBlockVolumeAction()
+action.conditions = ["uuid=xxx","name=xxx"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryXskyBlockVolumeAction.Result res = action.call()
+```
+
+</APIPage>

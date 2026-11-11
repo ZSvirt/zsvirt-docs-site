@@ -1,0 +1,123 @@
+---
+title: "在物理网口配置ip"
+---
+
+<APIPage method="POST" path="/v1/hosts/nics/{interfaceUuid}/ip">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "ipAddress": "1.1.1.1",
+    "netmask": "255.255.0.0"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"ipAddress":"1.1.1.1","netmask":"255.255.0.0"}}' http://localhost:8080/zstack/v1/hosts/nics/d50ade48aec73edc87b0f7c2d6a84bcc/ip
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|interfaceUuid|String|url|物理网口UUID| |4.7.0|
+|ipAddress \(可选\)|String|body \(包含在**params**结构中\)|IP地址| |4.7.0|
+|netmask \(可选\)|String|body \(包含在**params**结构中\)|子网掩码| |4.7.0|
+|isDefaultRoute \(可选\)|Boolean|body \(包含在**params**结构中\)|是否设置默认路由| |4.7.0|
+|systemTags \(可选\)|List|body|系统标签| |4.7.0|
+|userTags \(可选\)|List|body|用户标签| |4.7.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "hostUuid": "d7fd94874d4235439abe33e041dd0928",
+    "ipAddresses": [
+      "192.168.1.1"
+    ]
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.7.0|
+|inventory|HostNetworkInterfaceInventory|详情参考[inventory](#p_ks2_kp2_wmb)|4.7.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_sry_hp2_wmb)|4.7.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.7.0|
+|hostUuid|String|主机UUID|4.7.0|
+|bondingUuid|String|Bond UUID|4.7.0|
+|interfaceName|String|网卡名称|4.7.0|
+|interfaceType|String|网卡应用状态，有nomaster、bridgeSlave、bondSlave|4.7.0|
+|speed|Long|网卡速率|4.7.0|
+|slaveActive|Boolean|Bond链路状态|4.7.0|
+|carrierActive|Boolean|物理链路状态|4.7.0|
+|ipAddresses|List|IP地址|4.7.0|
+|gateway|String|网关地址|4.7.0|
+|mac|String|MAC地址|4.7.0|
+|callBackIp|String|回调地址|4.7.0|
+|pciDeviceAddress|String|网卡PCI地址|4.7.0|
+|offloadStatus|String| |4.7.0|
+|description|String|资源的详细描述|4.7.0|
+|createDate|Timestamp|创建时间|4.7.0|
+|lastOpDate|Timestamp|最后一次修改时间|4.7.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.7.0|
+|description|String|错误的概要描述|4.7.0|
+|details|String|错误的详细信息|4.7.0|
+|elaboration|String|保留字段，默认为null|4.7.0|
+|opaque|LinkedHashMap|保留字段，默认为null|4.7.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.7.0|
+
+## SDK示例
+Java SDK
+
+```
+SetIpOnHostNetworkInterfaceAction action = new SetIpOnHostNetworkInterfaceAction();
+action.interfaceUuid = "d50ade48aec73edc87b0f7c2d6a84bcc";
+action.ipAddress = "1.1.1.1";
+action.netmask = "255.255.0.0";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+SetIpOnHostNetworkInterfaceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SetIpOnHostNetworkInterfaceAction action = SetIpOnHostNetworkInterfaceAction()
+action.interfaceUuid = "d50ade48aec73edc87b0f7c2d6a84bcc"
+action.ipAddress = "1.1.1.1"
+action.netmask = "255.255.0.0"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+SetIpOnHostNetworkInterfaceAction.Result res = action.call()
+```
+
+</APIPage>

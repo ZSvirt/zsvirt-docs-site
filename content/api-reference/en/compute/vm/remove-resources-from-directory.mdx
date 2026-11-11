@@ -1,0 +1,64 @@
+---
+title: "Remove Resources from Group Directory"
+---
+
+<APIPage method="DELETE" path="/v1/remove/resources/directory">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/remove/resources/directory
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|resourceUuids|List|body|Batch Resource UUID| |4.6.0|
+|directoryUuid|String|body|Directory UUID| |4.6.0|
+|systemTags \(optional\)|List|body|System Tags| |4.6.0|
+|userTags \(optional\)|List|body|User Tags| |4.6.0|
+
+## API Response
+This API returns an empty JSON structure **`{}`** on success. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+RemoveResourcesFromDirectoryAction action = new RemoveResourcesFromDirectoryAction();
+action.resourceUuids = asList("564a0f94cf5432fea482f3b415730984","6278513ce2ad336f9083ef62a49c614c");
+action.directoryUuid = "5612979b05e438aabefc6c7978aed875";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RemoveResourcesFromDirectoryAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+RemoveResourcesFromDirectoryAction action = RemoveResourcesFromDirectoryAction()
+action.resourceUuids = [564a0f94cf5432fea482f3b415730984, 6278513ce2ad336f9083ef62a49c614c]
+action.directoryUuid = "5612979b05e438aabefc6c7978aed875"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+RemoveResourcesFromDirectoryAction.Result res = action.call()
+```
+
+</APIPage>

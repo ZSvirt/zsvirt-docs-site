@@ -1,0 +1,12 @@
+---
+title: "执行ceph -s报错“ImportError: No module named cephargparse”，怎么办？"
+---
+
+## 现象
+企业版分布式存储中，执行`ceph -s`，提示"`ImportError: No module named cephargparse`"。
+
+## 原因
+缺失`cephargparse`文件。
+
+## 解决方案
+检查`/usr/lib/python2.7/site-packages/ceph argparse,py`文件是否存在，如文件丢失，需要从正常节点拷贝。

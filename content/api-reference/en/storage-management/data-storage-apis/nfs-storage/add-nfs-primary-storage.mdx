@@ -1,0 +1,133 @@
+---
+title: "Add NFS Storage"
+---
+
+<APIPage method="POST" path="/v1/primary-storage/nfs">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "url": "192.168.0.25:/share/nfs",
+    "name": "PS1",
+    "type": "NFS",
+    "zoneUuid": "4539fbc9b2704ef0a9ee7ee30af7c64e"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Examples
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"url":"192.168.0.25:/share/nfs","name":"PS1","type":"NFS","zoneUuid":"9ce5da0042333fcaa16e0f7ff20aba13"}}' \
+http://localhost:8080/zstack/v1/primary-storage/nfs
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|url|String|body \(nested in **params** structure\)|NFS exported address, format is nfs-host:/path/to/export| |0.6|
+|name|String|body \(nested in **params** structure\)|NFS storage name| |0.6|
+|description \(optional\)|String|body \(nested in **params** structure\)|Detailed description of the NFS storage| |0.6|
+|type \(optional\)|String|body \(nested in **params** structure\)|Type is NFS| |0.6|
+|zoneUuid|String|body \(nested in **params** structure\)|Data Center UUID| |0.6|
+|resourceUuid \(optional\)|String|body \(nested in **params** structure\)|Resource UUID. If specified, the NFS data storage will use this value as its UUID.| |0.6|
+|systemTags \(optional\)|List|body|System tags| |0.6|
+|userTags \(optional\)|List|body|User tags| |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "name": "PS1",
+    "url": "/Cloud_ps",
+    "type": "LocalStorage",
+    "state": "Enabled",
+    "status": "Connected",
+    "attachedClusterUuids": [
+      "d949efe47c4141508073e2d77f005211"
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, indicates the operation failed. This field is null when the operation succeeds. For details, see [error](#p_ew1_vs1_n1b)|0.6|
+|inventory|PrimaryStorageInventory|For details, see [inventory](#p_lwt_5s1_n1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier for the error, such as SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause. The source error that triggered the current error. If there is no original error, this field is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|zoneUuid|String|Data Center UUID|0.6|
+|name|String|Resource name|0.6|
+|url|String| |0.6|
+|description|String|Detailed description of the resource|0.6|
+|totalCapacity|Long| |0.6|
+|availableCapacity|Long| |0.6|
+|totalPhysicalCapacity|Long| |0.6|
+|availablePhysicalCapacity|Long| |0.6|
+|systemUsedCapacity|Long| |0.6|
+|type|String| |0.6|
+|state|String| |0.6|
+|status|String| |0.6|
+|mountPath|String| |0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+|attachedClusterUuids|List| |0.6|
+
+## SDK Examples
+Java SDK
+
+```
+AddNfsPrimaryStorageAction action = new AddNfsPrimaryStorageAction();
+action.url = "192.168.0.25:/share/nfs";
+action.name = "PS1";
+action.type = "NFS";
+action.zoneUuid = "af419954499e4b92b30a9a1467ef83a8";
+action.sessionId = "03c711c7f3c84733a032d86796e7bdee";
+AddNfsPrimaryStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddNfsPrimaryStorageAction action = AddNfsPrimaryStorageAction()
+action.url = "192.168.0.25:/share/nfs"
+action.name = "PS1"
+action.type = "NFS"
+action.zoneUuid = "57d530e766014126861c6873ea6fbc7d"
+action.sessionId = "4b9d819194df4e57821921721a856e2d"
+AddNfsPrimaryStorageAction.Result res = action.call()
+```
+
+</APIPage>

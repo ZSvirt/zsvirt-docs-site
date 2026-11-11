@@ -1,0 +1,9 @@
+{
+  "title": "Perform Backups Manually",
+  "pages": [
+    "index",
+    "backup-now",
+    "create-unplanned-backup"
+  ],
+  "pagesIndex": "index"
+}

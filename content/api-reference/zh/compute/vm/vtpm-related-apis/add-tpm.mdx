@@ -1,0 +1,123 @@
+---
+title: "虚拟机添加TPM"
+---
+
+<APIPage method="POST" path="/v1/tpms">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "keyProviderUuid": "ff03c7091617357eb4022d11c6860e00",
+    "vmInstanceUuid": "ff01ec80fd11327cba7519b66119d900"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"keyProviderUuid":"ff03c7091617357eb4022d11c6860e00","vmInstanceUuid":"ff01ec80fd11327cba7519b66119d900"}}' \
+http://localhost:8080/zstack/v1/tpms
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|keyProviderUuid \(可选\)|String|body\(包含在`params`结构中\)|密钥提供程序 UUID| |5.0.0|
+|vmInstanceUuid|String|body\(包含在`params`结构中\)|虚拟机 UUID| |5.0.0|
+|resourceUuid \(可选\)|String|body\(包含在`params`结构中\)|资源 UUID| |5.0.0|
+|tagUuids \(可选\)|List|body\(包含在`params`结构中\)|标签 UUID 列表| |5.0.0|
+|systemTags \(可选\)|List|body|系统标签| |5.0.0|
+|userTags \(可选\)|List|body|用户标签| |5.0.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "ff00de2d3ab43127b1abdac68f1e7f00",
+    "name": "TPM-for-VM-ff01ec80fd11327cba7519b66119d900",
+    "vmInstanceUuid": "ff01ec80fd11327cba7519b66119d900",
+    "createDate": "Nov 14, 2017 2:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean|添加是否成功|5.0.0|
+|inventory|TpmInventory|详情参考[inventory](#p_ldg_4pf_2jc)|5.0.0|
+|error|ErrorCode|详情参考[error](#p_p35_npf_2jc)|5.0.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|TPM UUID|5.0.0|
+|name|String|TPM 资源名称|5.0.0|
+|vmInstanceUuid|String|虚拟机 UUID|5.0.0|
+|createDate|Timestamp|创建时间|5.0.0|
+|lastOpDate|Timestamp|最后一次修改时间|5.0.0|
+|hostRefs|List|详情参考[hostRefs](#p_ix1_4pf_2jc)|5.0.0|
+
+### hostRefs
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|相关文件 UUID|5.0.0|
+|vmInstanceUuid|String|虚拟机 UUID|5.0.0|
+|hostUuid|String|主机 UUID|5.0.0|
+|type|String|文件类型, 按用途分类, 可能是 NvRam 或者 TpmState|5.0.0|
+|path|String|主机侧相关文件或目录的路径|5.0.0|
+|createDate|Timestamp|创建时间|5.0.0|
+|lastOpDate|Timestamp|最后一次修改时间|5.0.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+AddTpmAction action = new AddTpmAction();
+action.keyProviderUuid = "ff03c7091617357eb4022d11c6860e00";
+action.vmInstanceUuid = "ff01ec80fd11327cba7519b66119d900";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddTpmAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = AddTpmAction()
+action.keyProviderUuid = "ff03c7091617357eb4022d11c6860e00"
+action.vmInstanceUuid = "ff01ec80fd11327cba7519b66119d900"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,87 @@
+---
+title: "Query Feishu @ User"
+---
+
+<APIPage method="GET" path="/v1/sns/application-endpoints/feishu/at-persons" altPaths={["/v1/sns/application-endpoints/feishu/at-persons/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/sns/application-endpoints/feishu/at-persons?q=uuid=0fce8f7cc0fb3c54b4f2ce7c53a1547a&q=endpointUuid=2ba8eb33d960377087c0f461de85642c
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/sns/application-endpoints/feishu/at-persons/66e1178e2a6d3941b472c2532abe0450
+```
+
+Queryable Fields
+
+Run the zstack-cli tool, enter `QuerySNSFeiShuAtPerson` and press Tab to view all queryable fields and cross-table queryable resource names.
+
+## API Response
+Response example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "zhang.san",
+      "endpointUuid": "bcb849d464dd3a0aba49fba91209b4e2"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.2.0|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_b1q_chy_p1b)|4.2.0|
+|inventories|List|For details, see [inventories](#p_ywy_chy_p1b)|4.2.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number, a globally unique identifier for the error, for example, SYS.1000 or HOST.1001|5.0.0|
+|description|String|A brief description of the error|5.0.0|
+|details|String|Detailed information about the error|5.0.0|
+|elaboration|String|Reserved field. Defaults to null|5.0.0|
+|opaque|LinkedHashMap|Reserved field. Defaults to null|5.0.0|
+|cause|ErrorCode|The root error that caused the current error. This field is null if there is no root cause|5.0.0|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource, uniquely identifying this resource|4.2.0|
+|userId|String|Feishu user ID|4.2.0|
+|endpointUuid|String|Feishu endpoint UUID|4.2.0|
+
+## SDK Examples
+Java SDK
+
+```
+QuerySNSFeiShuAtPersonAction action = new QuerySNSFeiShuAtPersonAction();
+action.conditions = asList("uuid=3c1da61415ec3311a18e7ff94f488fc9","endpointUuid=5ceba2786e113cf5ae1af0f95ff3623c");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QuerySNSFeiShuAtPersonAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QuerySNSFeiShuAtPersonAction action = QuerySNSFeiShuAtPersonAction()
+action.conditions = ["uuid=c309bdc1cb213847aa4be3d57b4b2d55","endpointUuid=8b95394f0d55320085f44175ee0d116f"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QuerySNSFeiShuAtPersonAction.Result res = action.call()
+```
+
+</APIPage>

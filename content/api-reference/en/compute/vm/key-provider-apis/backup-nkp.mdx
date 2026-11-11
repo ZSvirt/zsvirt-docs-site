@@ -1,0 +1,93 @@
+---
+title: "Back Up a Native Key Provider"
+---
+
+<APIPage method="PUT" path="/v1/key-providers/nkp/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "backupNkp": {
+    "password": "password"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding example, the `systemTags` and `userTags` fields can be omitted. They are listed to indicate that the body can include these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"backupNkp":{"password":"password"}}' \
+http://localhost:8080/zstack/v1/key-providers/nkp/ff0415ff372f33b5b6b757d3b99ad900/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Optional Value|Since|
+|----|----|--------|-----------|--------------|-----|
+|uuid|String|url|Resource UUID, which uniquely identifies the resource| |5.0.0|
+|password \(optional\)|String|body \(contained in `backupNkp` structure\)|Backup protection password| |5.0.0|
+|systemTags \(optional\)|List|body|System tags| |5.0.0|
+|userTags \(optional\)|List|body|User tags| |5.0.0|
+
+## API Response
+Response Example
+
+```
+{
+  "content": "BASE64_ENCODED_NKP_BACKUP"
+}
+```
+
+|Name|Type|Description|Since|
+|----|----|-----------|-----|
+|success|boolean| |5.0.0|
+|content|String|Backup content \(Base64-encoded\)|5.0.0|
+|error|ErrorCode|For details, see [error](#p_t4f_pp2_2jc)|5.0.0|
+
+### error
+|Name|Type|Description|Since|
+|----|----|-----------|-----|
+|code|String|Error code, which is the globally unique identifier of the error, for example, SYS.1000 or HOST.1001|0.6|
+|description|String|Summary description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. The default value is null.|0.6|
+|opaque|LinkedHashMap|Reserved field. The default value is null.|0.6|
+|cause|ErrorCode|Root error that caused the current error. If no root error exists, this field is null.|0.6|
+
+## SDK Example
+Java SDK
+
+```
+BackupNkpAction action = new BackupNkpAction();
+action.uuid = "ff0415ff372f33b5b6b757d3b99ad900";
+action.password = "password";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+BackupNkpAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = BackupNkpAction()
+action.uuid = "ff0415ff372f33b5b6b757d3b99ad900"
+action.password = "password"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

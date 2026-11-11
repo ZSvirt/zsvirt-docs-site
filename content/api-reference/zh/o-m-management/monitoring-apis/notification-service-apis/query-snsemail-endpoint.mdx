@@ -1,0 +1,63 @@
+---
+title: "查询邮件接收端"
+---
+
+<APIPage method="GET" path="/v1/sns/application-endpoints/emails" altPaths={["/v1/sns/application-endpoints/emails/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/sns/application-endpoints/emails?q=email=test@cloud.io
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/sns/application-endpoints/emails/bbae379b811f3d18a422d73557ece1b1
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QuerySNSEmailEndpoint`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+该API成功时返回一个空的JSON结构**`{}`**，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+QuerySNSEmailEndpointAction action = new QuerySNSEmailEndpointAction();
+action.conditions = asList("email=test@cloud.io");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QuerySNSEmailEndpointAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QuerySNSEmailEndpointAction action = QuerySNSEmailEndpointAction()
+action.conditions = ["email=test@cloud.io"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QuerySNSEmailEndpointAction.Result res = action.call()
+```
+
+</APIPage>

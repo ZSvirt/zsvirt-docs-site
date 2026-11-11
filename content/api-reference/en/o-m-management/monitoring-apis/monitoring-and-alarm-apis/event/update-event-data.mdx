@@ -1,0 +1,275 @@
+---
+title: "Update Event Data"
+---
+
+<APIPage method="PUT" path="/v1/zwatch/events/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateEventData": {
+    "dataUuid": "a24e9918fdf83d0aae19846bd52411e4",
+    "updateMode": "OnlyOne",
+    "readStatus": "Read"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateEventData":{"dataUuid":"a24e9918fdf83d0aae19846bd52411e4","updateMode":"OnlyOne","readStatus":"Read"}}' http://localhost:8080/zstack/v1/zwatch/events/actions
+```
+
+Parameter List
+
+<table id="table_r35_5m3_kgb"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+dataUuid \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **updateEventData** structure\)
+
+</td><td>
+
+The UUID of the resource. Uniquely identifies the resource.
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.3.0
+
+</td></tr><tr><td>
+
+dataStartTime \(Optional\)
+
+</td><td>
+
+Long
+
+</td><td>
+
+body \(contained in the **updateEventData** structure\)
+
+</td><td>
+
+The start time for selecting target messages. The updateMode must be set to InRange.
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.3.0
+
+</td></tr><tr><td>
+
+dataEndTime \(Optional\)
+
+</td><td>
+
+Long
+
+</td><td>
+
+body \(contained in the **updateEventData** structure\)
+
+</td><td>
+
+The end time for selecting target messages. The updateMode must be set to InRange.
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.3.0
+
+</td></tr><tr><td>
+
+updateMode
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **updateEventData** structure\)
+
+</td><td>
+
+The scope of target messages to update. OnlyOne updates only the specified message, InRange updates messages generated within a specific time range, All updates all messages.
+
+</td><td>
+
+-   OnlyOne
+-   InRange
+-   All
+
+</td><td>
+
+3.3.0
+
+</td></tr><tr><td>
+
+readStatus \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **updateEventData** structure\)
+
+</td><td>
+
+Updates the read status of the message.
+
+</td><td>
+
+-   Read
+-   Unread
+
+</td><td>
+
+3.3.0
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags.
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.3.0
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags.
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.3.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On failure, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+UpdateEventDataAction action = new UpdateEventDataAction();
+action.dataUuid = "a24e9918fdf83d0aae19846bd52411e4";
+action.updateMode = "OnlyOne";
+action.readStatus = "Read";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateEventDataAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateEventDataAction action = UpdateEventDataAction()
+action.dataUuid = "a24e9918fdf83d0aae19846bd52411e4"
+action.updateMode = "OnlyOne"
+action.readStatus = "Read"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateEventDataAction.Result res = action.call()
+```
+
+</APIPage>

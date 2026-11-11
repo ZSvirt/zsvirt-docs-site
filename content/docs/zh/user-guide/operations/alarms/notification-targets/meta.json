@@ -1,0 +1,9 @@
+{
+  "title": "通知对象",
+  "pages": [
+    "index",
+    "create",
+    "manage"
+  ],
+  "pagesIndex": "index"
+}

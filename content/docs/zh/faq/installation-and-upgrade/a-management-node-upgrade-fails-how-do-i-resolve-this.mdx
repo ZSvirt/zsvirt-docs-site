@@ -1,0 +1,36 @@
+---
+title: "管理节点升级失败，如何解决？"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+## 现象
+在双管理节点部署环境中，其中一个管理节点升级失败。
+
+## 原因
+数据库同步异常，导致其中一个管理节点升级失败。
+
+## 解决方案
+1.  在每个管理节点上执行以下命令，备份数据库：
+
+    ```
+    [root@localhost ~]# zstack-ctl dump_mysql
+    ```
+
+2.  在升级失败的管理节点上执行以下命令，单独升级该节点：
+
+    ```
+    [root@localhost ~]# bash zstack-install.bin -u
+    ```
+
+3.  在另一个管理节点上执行以下命令，重新安装双管理节点服务：
+
+    ```
+    [root@localhost ~]# ./zsha2 install-ha -config zs-install.conf
+    ```
+
+4.  安装成功，环境恢复正常。
+
+    <Callout type="warning">
+    虚拟化平台升级期间，请勿对系统执行其他操作，以免升级失败。
+    </Callout>

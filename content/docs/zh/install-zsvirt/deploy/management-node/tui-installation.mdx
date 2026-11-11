@@ -1,0 +1,234 @@
+---
+title: "使用 TUI 安装"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+本章介绍通过 ISO 部署计算节点模式，并在 TUI 中将管理网络配置为 bond，最终在该计算节点上安装管理节点的完整流程。
+
+## 操作步骤
+
+1.  选择引导项。
+
+    进入 ISO 系统引导界面，选择默认选项开始安装操作系统。您可根据实际情况选择，建议使用图形界面安装。若服务器无 VGA 接口，仅支持串口连接，您可使用 VNC 方式或字符安装方式。
+
+    -   图形界面方式
+    -   VNC 方式
+    -   字符安装方式
+    如[Figure 1](#fig_sx2_rpz_cdc)所示：
+
+    ![系统引导](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_1_1.png)
+
+2.  进入 INSTALLATION SUMMARY 安装向导。
+
+    自动加载安装引导界面后，最终进入 INSTALLATION SUMMARY 页面。此页面需重点关注三个配置项：**Installation Destination**、**Software Selection**、**Root Password**。
+
+    ![INSTALLATION SUMMARY 总览](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_3_1.png)
+
+3.  配置 Installation Destination。
+
+    1.  点击 **Installation Destination**。
+
+    2.  在 **Local Standard Disks** 中选择一块磁盘作为系统盘。
+
+    3.  **Storage Configuration** 保持默认 **Automatic**。
+
+    4.  点击左上角 **Done** 返回。
+
+    ![选择系统盘](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_3_2.png)
+
+4.  配置 Software Selection。
+
+    1.  点击 **Software Selection**。
+
+    2.  在 **Base Environment** 中选择 **ZSvirt Compute Node** 计算节点模式。
+
+    3.  点击左上角 **Done** 返回。
+
+    ![选择计算节点模式](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_3_3.png)
+
+5.  配置 Root Password。
+
+    1.  点击 **Root Password**。
+
+    2.  输入并确认 root 密码。
+
+        密码强度需符合提示要求。
+
+    3.  点击 **Done** 返回。
+
+6.  启动安装并等待完成。
+
+    确认所有红框标识项均已配置完成\(不再有黄色警告条\)，点击右下角 **Begin Installation** 开始安装。
+
+    ![开始安装](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_3_4.png)
+
+    安装过程将自动完成，期间无需手动干预。安装完成后系统会重启并进入 TUI 界面。
+
+7.  进入 TUI 主界面并完成 root 身份认证。
+
+    TUI 界面分为四个信息区域：
+
+    -   **NODE INFO**：节点运行时间、负载、CPU、内存使用率。
+    -   **DISK INFO**：磁盘挂载点和容量。
+    -   **NIC INFO**：网卡名称及 IP，首次启动会显示默认网卡。如 ens3。
+    -   **VM INFO**：当前节点上的虚拟机列表。
+    界面底部提示快捷键：
+
+    -   **&lt;F2&gt; System Configuration**：进入系统配置。
+    -   **&lt;F12&gt; Reboot/Poweroff**：重启或关机。
+    ![TUI界面](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_3_5.png)
+
+    1.  按 **F2** 进入系统配置，弹出 ROOT PASSWORD 验证框。
+
+    2.  输入 root 密码并按 **Enter** 确认。
+
+    ![输入 root 密码进行身份验证](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_3_6.png)
+
+8.  进入 Configure Networks 配置项。
+
+    通过身份验证后进入 System Configuration 菜单。
+
+    1.  使用方向键选择 **Configure Networks** 后按 **Enter**。
+
+    2.  在弹出的 **CONFIGURE NETWORKS** 对话框中，选择需要配置的物理网卡\(如 ens3\)。
+
+    3.  将键盘切换至**大写**状态。
+
+    4.  按字母 **A** 键，触发 **Link &lt;A>ggregation** 链路聚合操作。
+
+        <Callout type="info">
+            必须确保键盘已切换至**大写**状态，否则按 **A** 不会触发 Bond 创建流程。
+        </Callout>
+
+    ![选择网卡并触发 Link Aggregation](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_3_7.png)
+
+9.  选择 Bond 模式。
+
+    1.  弹出 CONFIGURE BOND 对话框，选择 Bond 模式。
+
+    2.  本章示例选择 **Active-Backup**，按 **Enter** 确认。
+
+    ![选择 Active-Backup Bond 模式](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_3_8.png)
+
+10. 命名 Bond 并选择 Slave 网卡。
+
+    进入 **CONFIGURE BOND SLAVE** 对话框，完成以下设置。
+
+    1.  在 **BOND NAME** 中输入 Bond 名称，如 bond0。
+
+    2.  在 **Select SLAVES** 中，使用方向键移动到目标网卡，按**空格**键选中。
+
+        选中后显示 `[X]` 标记。
+
+    3.  全部选择完成后按 **Enter** 确认。
+
+    ![输入 Bond 名称并选中 Slave 网卡](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_3_9.png)
+
+11. 确认 Bond 配置。
+
+    系统弹出 CONFIGURE BOND NETWORK CONFIRM 警告框，提示以下信息：
+
+    ```
+    Be careful! Changing the network configuration may cause failure!
+    If you know what you are doing, then enter 'Y' to continue!
+    ```
+
+    1.  将键盘切换至**大写**状态。
+
+    2.  按字母 **Y** 键确认配置。
+
+        ![确认 Bond 网络配置](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_3_10.png)
+
+    3.  成功后弹出 **SUCCESS** 提示框，提示 `Network configuration is changed successfully!`，按 **Enter** 关闭。
+
+        ![Bond 创建成功](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_3_11.png)
+
+12. 选择 Bond 进入 IP 配置。
+
+    回到 Configure Networks 对话框。
+
+    1.  在网卡列表中选择上一步创建的 Bond \(如 bond0\)。
+
+    2.  按 **Enter** 进入 IP 配置。
+
+    ![选择 bond0 进行 IP 配置](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_3_12.png)
+
+13. 配置管理网 IP 地址。
+
+    1.  在 CONFIGURE NETWORK 对话框中，参考示例依次填写以下字段：
+
+        -   **VLAN ID**：输入管理网 VLAN ID，无 VLAN 留空。
+        -   **IP ADDR**：输入管理网 IP 地址，例如 *172.26.215.195*
+        -   **NETMASK**：输入子网掩码，例如 *255.255.0.0*
+        -   **GATEWAY\(DEF\)**：输入默认网关，例如 *172.26.0.1*
+    2.  按 **Enter** 确认。
+
+    ![IP 配置示例](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_3_13.png)
+
+14. 确认 IP 配置。
+
+    1.  按 **Enter** 提交，弹出 CONFIGURE NETWORK CONFIRM 二次确认。
+
+    2.  键盘切换至**大写**状态。
+
+    3.  按字母 **Y** 键确认。
+
+        ![IP 配置二次确认](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_3_14.png)
+
+    4.  弹出 **SUCCESS** 提示框，按 **Enter** 关闭。
+
+15. 进入 Install ZSvirt 选项。
+
+    1.  按 **Esc** 键，回到 System Configuration 菜单，
+
+    2.  使用方向键选择 **Install ZSvirt**。
+
+    3.  按 **Enter**。
+
+    ![进入 Install ZSvirt 选项](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_3_16.png)
+
+16. 确认安装管理节点。
+
+    系统弹出 **INSTALL ZSvirt** 警告框，提示以下信息：
+
+    ```
+    This process will install a brand new ZSvirt, please confirm
+    ```
+
+    1.  完整输入字符串 `install zstack`。
+
+    2.  按 **Enter** 确认。
+
+17. 等待管理节点安装完成。
+
+    进入安装等待状态，界面提示 `Please wait...`，请耐心等待安装完成。
+
+18. 安装完成后，查看 TUI 主界面。
+
+    管理节点安装完成后，TUI 主界面中的信息将出现如下变化：
+
+    -   **DISK INFO**：新增 `/var/lib/zstack`、`/usr/local/zstack` 等挂载点。
+    -   **NIC INFO**：显示新增的 `docker0` \(管理服务相关\)，以及配置好的 `bond0` 与对应 IP \(如 *172.26.215.195*\)。
+    ![安装完成后的 TUI 主界面](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_3_19.png)
+
+19. 通过命令行验证管理节点状态。
+
+    1.  按组合键 **Ctrl + Alt + F2** 切换到命令行登录界面。
+
+    2.  使用 root 账号登录。
+
+    3.  执行如下命令查询管理节点状态：
+
+        ```
+        [root@localhost ~]# zstack-ctl status
+        ```
+
+        管理节点处于运行状态时，正常输出示例：
+
+        ```
+        MN status: Running
+        UI status: Running
+        ```
+
+    ![命令行验证管理节点状态](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_3_20.png)

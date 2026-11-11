@@ -1,0 +1,11 @@
+{
+  "title": "报警文本模板",
+  "pages": [
+    "create-snstext-template",
+    "delete-snstext-template",
+    "query-snstext-template",
+    "get-text-template-arg",
+    "update-snstext-template"
+  ],
+  "pagesIndex": "index"
+}

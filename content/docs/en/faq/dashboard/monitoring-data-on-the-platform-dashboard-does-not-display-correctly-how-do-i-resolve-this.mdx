@@ -1,0 +1,11 @@
+---
+title: "Monitoring data on the platform dashboard does not display correctly. How do I resolve this?"
+---
+
+## Cause
+The host time was modified, causing a monitoring service error.
+
+## Solution
+-   Try restarting the prometheus service to retrieve monitoring data. The procedure is as follows:
+
+-   Log in to the Management Node and run `systemctl restart prometheus` to restart the prometheus service. After the service restarts, check the monitoring data on the platform dashboard. The data displays correctly.

@@ -1,0 +1,31 @@
+---
+title: "The platform cannot be logged in to. How do I resolve this?"
+---
+
+<HistoricalNamingNote locale="en" />
+
+Platform login failures generally have the following two causes. Identify the cause and refer to the corresponding solution to troubleshoot:
+
+## Cause 1
+The management IP in the Management Node configuration file does not match the IP shown in the management service status output.
+
+## Solution
+1.  Connect to the Management Node via SSH.
+
+2.  Edit the Management Node configuration file: open `/usr/local/zstack/apache-tomcat/webapps/zstack/WEB-INF/classes/zstack.properties` and update **management.server.ip** and any other related IP addresses to the correct values.
+
+3.  Run the following command to restart the Management Node service:
+
+    ```
+    [root@localhost ~]# zstack-ctl stop && zstack-ctl start
+    ```
+
+4.  Log in to the platform again. The login succeeds.
+
+## Cause 2
+The platform is inaccessible and the host `dmesg` output shows a **Temperature above threshold** message, which may indicate abnormal CPU temperature on the host.
+
+## Solution
+-   Check whether the data center air conditioning is functioning properly.
+
+-   Check the status of the rack where the host is located.

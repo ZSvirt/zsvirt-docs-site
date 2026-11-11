@@ -1,0 +1,85 @@
+---
+title: "检查快照组可用性"
+---
+
+<APIPage method="GET" path="/v1/volume-snapshots/groups/availabilities">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/volume-snapshots/groups/availabilities?uuids=cc389f9eb3223c698f565621d2abcf72
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuids|List|query|快照组UUIDs| |3.6.0|
+|systemTags \(可选\)|List|query| | |3.6.0|
+|userTags \(可选\)|List|query| | |3.6.0|
+
+## API返回
+返回示例
+
+```
+{
+  "results": [
+    {
+      "uuid": "78dd38e3e58134cead860f270143a474",
+      "available": true,
+      "reason": ""
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_tnb_sng_x3b)|3.6.0|
+|results|List|详情参考[results](#p_h1n_rng_x3b)|3.6.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.6.0|
+|description|String|错误的概要描述|3.6.0|
+|details|String|错误的详细信息|3.6.0|
+|elaboration|String|保留字段，默认为null|3.6.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.6.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.6.0|
+
+### results
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.6.0|
+|available|boolean|是否可以恢复|3.6.0|
+|reason|String|不可恢复的理由，如可恢复则为空|3.6.0|
+
+## SDK示例
+Java SDK
+
+```
+CheckVolumeSnapshotGroupAvailabilityAction action = new CheckVolumeSnapshotGroupAvailabilityAction();
+action.uuids = asList("cc389f9eb3223c698f565621d2abcf72");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CheckVolumeSnapshotGroupAvailabilityAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CheckVolumeSnapshotGroupAvailabilityAction action = CheckVolumeSnapshotGroupAvailabilityAction()
+action.uuids = [cc389f9eb3223c698f565621d2abcf72]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CheckVolumeSnapshotGroupAvailabilityAction.Result res = action.call()
+```
+
+</APIPage>

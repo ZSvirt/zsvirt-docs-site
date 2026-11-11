@@ -1,0 +1,64 @@
+---
+title: "Delete Host"
+---
+
+<APIPage method="DELETE" path="/v1/hosts/{uuid}?deleteMode={deleteMode}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/hosts/bb2e5125ac2c4b3680463d7aeaf57773?deleteMode=Permissive
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Resource UUID, uniquely identifies the resource| |0.6|
+|deleteMode \(optional\)|String|body|Delete mode \(Permissive or Enforcing, default is Permissive\)| |0.6|
+|systemTags \(optional\)|List|body|System tag| |0.6|
+|userTags \(optional\)|List|body|User tag| |0.6|
+
+## API Response
+On success, this API returns an empty JSON structure **`{}`**. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DeleteHostAction action = new DeleteHostAction();
+action.uuid = "2d4b91d9831d4630bf113ea75f78cb7a";
+action.deleteMode = "Permissive";
+action.sessionId = "923c9089a5fd4ea5b9fbfc1dec5802e2";
+DeleteHostAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteHostAction action = DeleteHostAction()
+action.uuid = "f62a37111c154ec9afeaeb2700ebcfe6"
+action.deleteMode = "Permissive"
+action.sessionId = "2aa7f575d8654712ba985f4a36594f0a"
+DeleteHostAction.Result res = action.call()
+```
+
+</APIPage>

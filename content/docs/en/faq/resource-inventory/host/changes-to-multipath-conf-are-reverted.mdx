@@ -1,0 +1,31 @@
+---
+title: "Changes to multipath.conf are reverted"
+---
+
+<HistoricalNamingNote locale="en" />
+
+## Cause
+The multipath configuration file is managed by the Management Node and cannot be modified by default.
+
+## Solution
+1.  Connect to the Management Node via SSH.
+
+2.  Run the following command to start a zstack-cli session:
+
+    ```
+    [root@localhost ~]# zstack-cli
+    ```
+
+3.  Run the following command to log in to zstack-cli:
+
+    ```
+    admin >>> LogInByAccount accountName=admin password=$password  //Use the platform admin password
+    ```
+
+4.  Run the following command to update the configuration:
+
+    ```
+    admin >>>UpdateGlobalConfig category=storageDevice name=enable.multipath value=false
+    ```
+
+5.  Reconnect all hosts.

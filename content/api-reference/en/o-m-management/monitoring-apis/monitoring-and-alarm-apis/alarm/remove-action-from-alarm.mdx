@@ -1,0 +1,152 @@
+---
+title: "Remove Action from Alarm"
+---
+
+<APIPage method="DELETE" path="/v1/zwatch/alarms/{alarmUuid}/actions/{actionUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/zwatch/alarms/2c95bdf5490131bbb421622579b59eb8/actions/41c582ab1cea31d5addd02bb00bb173d
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|alarmUuid|String|url|Alarm UUID.| |2.3|
+|actionUuid|String|url|Alarm action UUID.| |2.3|
+|deleteMode \(Optional\)|String|body| | |2.3|
+|systemTags \(Optional\)|List|body|System tags.| |2.3|
+|userTags \(Optional\)|List|body|User tags.| |2.3|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "3f753a2f9dd44becb0435b2a517fd5d4",
+    "name": "VM CPU Alarm",
+    "comparisonOperator": "LessThanOrEqualTo",
+    "period": 60.0,
+    "namespace": "ZStack/VM",
+    "metricName": "org.zstack.zwatch.datatype.Metric@565e1ebe",
+    "threshold": 30.0,
+    "repeatInterval": 1800.0,
+    "status": "Alarm",
+    "state": "Enabled",
+    "createDate": "Jul 6, 2018 1:50:59 PM",
+    "lastOpDate": "Jul 6, 2018 1:50:59 PM",
+    "labels": [
+      {
+        "uuid": "cf7ff04d570f4f509e6b22851ceb231d",
+        "key": "VMUuid",
+        "operator": "=",
+        "value": "cda155f903f1417f951578ea74623f5e"
+      }
+    ],
+    "actions": [
+      {
+        "alarmUuid": "5d2a502edc8d4c34b90ae499c7fdb437",
+        "actionType": "sns",
+        "actionUuid": "4b7903efe370462aab75bb5890971e6d"
+      }
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null on success. See [error](#p_um3_rvj_p2b) for details.|2.3|
+|inventory|AlarmInventory|See [inventory](#p_azk_svj_p2b) for details.|2.3|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001.|2.3|
+|description|String|A brief description of the error.|2.3|
+|details|String|Detailed information about the error.|2.3|
+|elaboration|String|A reserved field. Default is null.|2.3|
+|opaque|LinkedHashMap|A reserved field. Default is null.|2.3|
+|cause|ErrorCode|The root error. The source error that caused the current error. This field is null if there is no root error.|2.3|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource.|2.3|
+|name|String|Resource name.|2.3|
+|description|String|Detailed description of the resource.|2.3|
+|period|Integer|Threshold duration.|2.3|
+|namespace|String|Namespace.|2.3|
+|metricName|String|Metric name.|2.3|
+|threshold|Double|Threshold.|2.3|
+|repeatInterval|Integer|Alarm repeat interval.|2.3|
+|createDate|Timestamp|Creation time.|2.3|
+|lastOpDate|Timestamp|Last modification time.|2.3|
+|comparisonOperator|ComparisonOperator|See [comparisonOperator](#p_kdl_tvj_p2b) for details.|2.3|
+|status|AlarmStatus|See [status](#p_a45_5vj_p2b) for details.|2.3|
+|labels|List|See [labels](#p_dpv_vvj_p2b) for details.|2.3|
+|actions|List|See [actions](#p_zf5_wvj_p2b) for details.|2.3|
+
+### comparisonOperator
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name.|2.3|
+|ordinal|int| |2.3|
+
+### status
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|OK|AlarmStatus|Monitoring.|2.3|
+|Alarm|AlarmStatus|Triggered.|2.3|
+|InsufficientData|AlarmStatus|Insufficient data.|2.3|
+
+### labels
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource.|2.3|
+|key|String|Label key.|2.3|
+|operator|String|Comparison operator.|2.3|
+|value|String|Label value.|2.3|
+
+### actions
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|alarmUuid|String|Alarm UUID.|2.3|
+|actionType|String|Alarm action type.|2.3|
+|actionUuid|String|Alarm action UUID.|2.3|
+
+## SDK Examples
+Java SDK
+
+```
+RemoveActionFromAlarmAction action = new RemoveActionFromAlarmAction();
+action.alarmUuid = "2c95bdf5490131bbb421622579b59eb8";
+action.actionUuid = "41c582ab1cea31d5addd02bb00bb173d";
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RemoveActionFromAlarmAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+RemoveActionFromAlarmAction action = RemoveActionFromAlarmAction()
+action.alarmUuid = "2c95bdf5490131bbb421622579b59eb8"
+action.actionUuid = "41c582ab1cea31d5addd02bb00bb173d"
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+RemoveActionFromAlarmAction.Result res = action.call()
+```
+
+</APIPage>

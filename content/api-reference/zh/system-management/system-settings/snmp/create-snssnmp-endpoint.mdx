@@ -1,0 +1,114 @@
+---
+title: "创建SNMP终端"
+---
+
+<APIPage method="POST" path="/v1/sns/application-endpoints/snmp">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "snmp endpoint",
+    "platformUuid": "c453382b049c3280b69157501914870d"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X POST -d '{"params":{"name":"snmp endpoint","platformUuid":"c453382b049c3280b69157501914870d"}}' http://localhost:8080/zstack/v1/sns/application-endpoints/snmp
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|name|String|body\(包含在**params**结构中\)|资源名称| |4.10.0|
+|description \(可选\)|String|body\(包含在**params**结构中\)|资源的详细描述| |4.10.0|
+|platformUuid \(可选\)|String|body\(包含在**params**结构中\)|应用平台UUID| |4.10.0|
+|resourceUuid \(可选\)|String|body\(包含在**params**结构中\)|资源UUID| |4.10.0|
+|tagUuids \(可选\)|List|body\(包含在**params**结构中\)|标签UUID列表| |4.10.0|
+|systemTags \(可选\)|List|body|系统标签| |4.10.0|
+|userTags \(可选\)|List|body|用户标签| |4.10.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "name": "example",
+    "uuid": "917fe66f76b241f0843dfbd6be685fc1",
+    "description": "description example",
+    "type": "Email",
+    "state": "Enabled",
+    "platformUuid": "4eb0ceebf95b452585ebeacd647d9f35",
+    "createDate": "Sep 28, 2023 4:35:44 PM",
+    "lastOpDate": "Sep 28, 2023 4:35:44 PM"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.10.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_bcl_x1v_m1b)|4.10.0|
+|inventory|SNSApplicationEndpointInventory|详情参考[inventory](#p_nqg_y1v_m1b)|4.10.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.10.0|
+|description|String|错误的概要描述|4.10.0|
+|details|String|错误的详细信息|4.10.0|
+|elaboration|String|保留字段，默认为null|4.10.0|
+|opaque|LinkedHashMap|保留字段，默认为null|4.10.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.10.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|name|String|资源名称|4.10.0|
+|uuid|String|资源的UUID，唯一标示该资源|4.10.0|
+|description|String|资源的详细描述|4.10.0|
+|type|String|类型|4.10.0|
+|platformUuid|String|应用平台UUID|4.10.0|
+|createDate|Timestamp|创建时间|4.10.0|
+|lastOpDate|Timestamp|最后一次修改时间|4.10.0|
+
+## SDK示例
+Java SDK
+
+```
+CreateSNSSnmpEndpointAction action = new CreateSNSSnmpEndpointAction();
+action.name = "snmp endpoint";
+action.platformUuid = "c453382b049c3280b69157501914870d";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateSNSSnmpEndpointAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateSNSSnmpEndpointAction action = CreateSNSSnmpEndpointAction()
+action.name = "snmp endpoint"
+action.platformUuid = "c453382b049c3280b69157501914870d"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateSNSSnmpEndpointAction.Result res = action.call()
+```
+
+</APIPage>

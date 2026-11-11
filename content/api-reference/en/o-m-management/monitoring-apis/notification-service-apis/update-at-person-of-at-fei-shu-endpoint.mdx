@@ -1,0 +1,115 @@
+---
+title: "Update Feishu @ User"
+---
+
+<APIPage method="PUT" path="/v1/sns/application-endpoints/feishu/at-persons/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateAtPersonOfAtFeiShuEndpoint": {
+    "endpointUuid": "60274b11ffdc3ea080be205b964848d2",
+    "userId": "zhang.san",
+    "remark": "jack"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding example, the **systemTags** and **userTags** fields are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateAtPersonOfAtFeiShuEndpoint":{"endpointUuid":"60274b11ffdc3ea080be205b964848d2","userId":"zhang.san","remark":"jack"}}' \
+http://localhost:8080/zstack/v1/sns/application-endpoints/feishu/at-persons/399ba943200638c2a63b65f002b6e180/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|The UUID of the resource, uniquely identifying this resource| |4.2.0|
+|endpointUuid|String|body \(Contained in the **updateAtPersonOfAtFeiShuEndpoint** structure\)|Feishu endpoint UUID| |4.2.0|
+|userId \(Optional\)|String|body \(Contained in the **updateAtPersonOfAtFeiShuEndpoint** structure\)|Feishu user ID| |4.2.0|
+|systemTags \(Optional\)|List|body|System tags| |4.2.0|
+|userTags \(Optional\)|List|body|User tags| |4.2.0|
+|remark|String|body \(Contained in the **updateAtPersonOfAtFeiShuEndpoint** structure\)|Remark| |4.2.0|
+
+## API Response
+Response example
+
+```
+{
+  "inventory": {
+    "uuid": "68149d96f5464a54b19538f157aecf21",
+    "userId": "18988887777",
+    "endpointUuid": "902fb77eff144c15970a298072e1918f",
+    "createDate": "Mar 26, 2024 2:45:15 AM",
+    "lastOpDate": "Mar 26, 2024 2:45:15 AM",
+    "remark": "jack"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.2.0|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_q55_jnx_bdb)|4.2.0|
+|inventory|SNSFeiShuAtPersonInventory|For details, see [inventory](#p_amz_jnx_bdb)|4.2.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number, a globally unique identifier for the error, for example, SYS.1000 or HOST.1001|5.0.0|
+|description|String|A brief description of the error|5.0.0|
+|details|String|Detailed information about the error|5.0.0|
+|elaboration|String|Reserved field. Defaults to null|5.0.0|
+|opaque|LinkedHashMap|Reserved field. Defaults to null|5.0.0|
+|cause|ErrorCode|The root error that caused the current error. This field is null if there is no root cause|5.0.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource, uniquely identifying this resource|4.2.0|
+|userId|String|Feishu user ID|4.2.0|
+|endpointUuid|String|Feishu endpoint UUID|4.2.0|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateAtPersonOfAtFeiShuEndpointAction action = new UpdateAtPersonOfAtFeiShuEndpointAction();
+action.uuid = "399ba943200638c2a63b65f002b6e180";
+action.endpointUuid = "60274b11ffdc3ea080be205b964848d2";
+action.userId = "zhang.san";
+action.remark = "jack";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateAtPersonOfAtFeiShuEndpointAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateAtPersonOfAtFeiShuEndpointAction action = UpdateAtPersonOfAtFeiShuEndpointAction()
+action.uuid = "399ba943200638c2a63b65f002b6e180"
+action.endpointUuid = "60274b11ffdc3ea080be205b964848d2"
+action.userId = "zhang.san"
+action.remark = "jack"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateAtPersonOfAtFeiShuEndpointAction.Result res = action.call()
+```
+
+</APIPage>

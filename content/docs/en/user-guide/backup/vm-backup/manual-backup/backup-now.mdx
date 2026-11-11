@@ -1,0 +1,19 @@
+---
+title: 'Immediate Backup'
+---
+
+If you wish to create an additional backup restore point for one or more virtual machines in a backup plan without creating a new backup plan or modifying the existing one, or if you have already associated a backup plan with the virtual machines you want to protect but no backup data has been generated according to the scheduled time, you can use manual backups.
+
+1.  In the navigation pane, choose **Data Protection** &gt; **Backup Plan**.
+
+2.  On the Backup Plan page, select the backup plan for which you want to manually perform a backup, then click **Actions** &gt; **Backup Now**.
+
+3.  In the Backup Now dialog, choose whether to enable **Full Backup** as needed.
+
+    <Callout type="info">
+    If enabled, it will manually perform a full backup once for the backup objects. If disabled, the backup mode will be the same as the next scheduled backup mode.
+    </Callout>
+
+4.  Review the configuration and click **OK**.
+
+    If your backup plan includes multiple virtual machines and you only want to generate backup data for a specific VM, you can first navigate to the Backup Resources tab of the backup plan details page. There, select the virtual machines that you do not wish to back up at this time, then click **Actions** &gt; **Backup Job State** &gt; **Disable**. Once successfully disabled, you can manually perform the backup for the backup plan, which will then only affect the active VMs.

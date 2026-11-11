@@ -1,0 +1,77 @@
+---
+title: 'zsphere_image_storage'
+description: '管理 ZSvirt 镜像存储，用于存放云主机镜像文件。'
+---
+
+<HistoricalNamingNote locale="zh" />
+
+
+# zsphere_image_storage（资源）
+
+管理 ZSvirt 镜像存储，用于存放云主机镜像文件。
+
+## 示例用法
+```terraform
+data "zsphere_datacenter" "test" {
+  name = "zone_example"
+}
+
+resource "zsphere_image_storage" "image_store" {
+  name          = "image_store_from_terraform"
+  description   = "Add An example image storage from terraform"
+  type          = "ImageStore"
+  hostname      = "192.168.1.100"
+  url           = "/zstack/imagestore"
+  ssh_port      = 22
+  username      = "root"
+  password      = "password"
+  zone_uuid     = data.zsphere_datacenter.test.data_centers[0].uuid
+  import_images = false
+}
+
+resource "zsphere_image_storage" "ceph" {
+  name        = "ceph_backup_storage_from_terraform"
+  description = "Add An example Ceph backup storage from terraform"
+  type        = "Ceph"
+  pool_name   = "images"
+  mon_urls    = ["ceph-user:password@192.168.1.10:6789"]
+  zone_uuid   = data.zsphere_zone.test.zones[0].uuid
+}
+
+output "zsphere_image_storage_image_store" {
+  value = zsphere_image_storage.image_store
+}
+
+output "zsphere_image_storage_ceph" {
+  value = zsphere_image_storage.ceph
+}
+```
+
+## 参数说明
+
+### 必填参数
+
+- `name`（字符串）Image名称 Storage
+- `type`（字符串）Image类型 Storage (ImageStore or Ceph)
+
+### 可选参数
+
+- `description`（字符串）镜像存储描述
+- `hostname`（字符串）Hostname for ImageStore type
+- `import_images`（布尔值）Import images for ImageStore type
+- `mon_urls`（字符串列表）MON URLs for Ceph type
+- `password`（字符串，敏感）Password for ImageStore type
+- `pool_name`（字符串）Pool name for Ceph type
+- `ssh_port`（数字）SSH port for ImageStore type
+- `url`（字符串）URL for ImageStore type
+- `username`（字符串）Username for ImageStore type
+- `zone_uuid`（字符串）Zone UUID to attach the Image Storage
+
+### 只读属性
+
+- `attached_zone_uuids`（字符串列表）Attached zone UUIDs
+- `available_capacity`（数字）Available capacity of the Image Storage
+- `state`（字符串）State of the Image Storage
+- `status`（字符串）Status of the Image Storage
+- `total_capacity`（数字）Total capacity of the Image Storage
+- `uuid`（字符串）UUID of the Image Storage

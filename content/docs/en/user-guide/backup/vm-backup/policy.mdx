@@ -1,0 +1,50 @@
+---
+title: 'Backup Policy'
+---
+
+## Backup Policy
+**Backup Mode**
+
+ZSvirt provides two backup modes:
+
+-   Default Incremental Backup
+
+    You only need to customize the incremental backup policy, while the full backup policy is set by default. After 63 incremental backups, the system automatically performs a full backup, with a maximum backup chain length of 64.
+
+-   Customized Incremental Backup
+
+    You need to customize both the incremental and full backup policies. By customizing the full backup policy, you can shorten the interval between full backups. Increasing the number of full backups shortens the backup chain and reduces the amount of backup data that needs to be merged during recovery.
+
+**Backup Cycle**
+
+The backup cycle determines the frequency of backup execution.
+
+-   For the incremental backup policy, ZSvirt provides multiple options including monthly, weekly, daily, hourly, and minute-based backups.
+-   For the full backup policy, ZSvirt supports monthly and weekly backups.
+
+**Execution Time**
+
+You can set more granular backup execution times, down to the minute level. For the incremental backup policy, when the backup cycle is set to monthly, weekly, or daily, you can set the incremental backup execution time. For the full backup policy, when the backup cycle is set to monthly or weekly, you can set the full backup execution time.
+
+-   Backup by Month: If you set the execution time to 00:00 on the first day of each month, the incremental backup is executed at 00:00:00 on the first day of each month.
+-   Backup by Week: If you set the execution time to 00:00 on Sunday and Tuesday of each week, the incremental backup is executed at 00:00:00 on Sunday and Tuesday of each week.
+-   Backup by Day: If you set the execution time to 00:30, the incremental backup is executed at 00:30:00 every day.
+
+**Start Time**
+
+The backup plan begins at the start time and executes backups according to the configured backup cycle and execution time.
+
+## Retention Policy
+Each successful backup generates a set of backup data used to restore virtual machine data to a previous point in time. To control the amount of backup data, you must specify a retention policy. Based on the backup scenario, ZSvirt can set separate retention policies for local backup data and remote backup data.
+
+-   Local Retention Policy:
+    -   Retain by quantity: Retain a minimum of 1 local incremental backup data and 1 local full backup data.
+    -   Retain by time: Retain a minimum of 1 day of local backup data.
+-   Remote Retention Policy:
+    -   Retain permanently: Remote backup data will not be automatically cleaned up.
+    -   Retain by quantity: Retain a minimum of 1 remote incremental backup data and 1 remote full backup data.
+    -   Retain by time: Retain a minimum of 1 day of remote backup data.
+
+<Callout type="info">
+For data generated beyond the retention policy, only the backup records are deleted, which does not affect the data security.
+</Callout>

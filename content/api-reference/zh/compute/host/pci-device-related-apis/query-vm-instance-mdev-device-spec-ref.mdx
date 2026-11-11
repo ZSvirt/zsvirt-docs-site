@@ -1,0 +1,96 @@
+---
+title: "查询虚拟机与MDEV设备规格的关联关系"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/{vmInstanceUuid}/mdev-device-specs">
+
+```
+GET zstack/v1/vm-instances/{vmInstanceUuid}/mdev-device-specs/{mdevSpecUuid}
+```
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/{vmInstanceUuid}/mdev-device-specs?q=vmInstanceUuid=15ea1f7027833d9ea566ea590184d5d2
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/{vmInstanceUuid}/mdev-device-specs/{mdevSpecUuid}?q=vmInstanceUuid=5e3c68fed5ef39089614830ff30dfd50
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryVmInstanceMdevDeviceSpecRef`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "vmInstanceUuid": "87fbb32e8d5b47be9c79611ea8b8dbca",
+      "mdevSpecUuid": "75c34cf335f84f7e85bba4289a9d5257",
+      "mdevDeviceNumber": 1,
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_vrh_k2g_xhb)|3.5.0|
+|inventories|List|详情参考[inventories](#p_utb_k2g_xhb)|3.5.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.5.0|
+|description|String|错误的概要描述|3.5.0|
+|details|String|错误的详细信息|3.5.0|
+|elaboration|String|保留字段，默认为null|3.5.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.5.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.5.0|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|vmInstanceUuid|String|虚拟机UUID|3.5.0|
+|mdevSpecUuid|String|MDEV设备规格UUID|3.5.0|
+|mdevDeviceNumber|Integer|需要为虚拟机挂载的符合设备规格的设备个数，默认为1|3.5.0|
+|createDate|Timestamp|创建时间|3.5.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.5.0|
+
+## SDK示例
+Java SDK
+
+```
+QueryVmInstanceMdevDeviceSpecRefAction action = new QueryVmInstanceMdevDeviceSpecRefAction();
+action.conditions = asList("vmInstanceUuid=308f8eccec9b320bbe082f233e7f822c");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryVmInstanceMdevDeviceSpecRefAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryVmInstanceMdevDeviceSpecRefAction action = QueryVmInstanceMdevDeviceSpecRefAction()
+action.conditions = ["vmInstanceUuid=254f7f2f30bb3b7bb26595fc5120a63b"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryVmInstanceMdevDeviceSpecRefAction.Result res = action.call()
+```
+
+</APIPage>

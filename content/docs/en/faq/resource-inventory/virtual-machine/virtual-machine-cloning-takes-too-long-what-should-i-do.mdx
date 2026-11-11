@@ -1,0 +1,9 @@
+---
+title: "Virtual machine cloning takes too long. What should I do?"
+---
+
+## Cause
+The Data Storage uses distributed storage while the Image Storage uses a Standalone Image Storage type. When cloning, the system must first create an image from the virtual machine and then create a new virtual machine from that image, causing an extended cloning duration.
+
+## Solution
+-   When using distributed storage, add an Image Storage that uses the Distributed Image Storage type.

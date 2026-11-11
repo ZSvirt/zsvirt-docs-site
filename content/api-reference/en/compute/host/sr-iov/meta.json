@@ -1,0 +1,10 @@
+{
+  "title": "SR-IOV Related Interfaces",
+  "pages": [
+    "is-vf-nic-available-in-l3-network",
+    "change-vm-nic-type",
+    "query-ethernet-vf",
+    "change-vf-nic-ha-state"
+  ],
+  "pagesIndex": "index"
+}

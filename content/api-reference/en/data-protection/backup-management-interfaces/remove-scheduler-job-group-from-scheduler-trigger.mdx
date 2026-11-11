@@ -1,0 +1,64 @@
+---
+title: "Remove Scheduler Job Group from Scheduler Trigger"
+---
+
+<APIPage method="DELETE" path="/v1/scheduler/jobgroups/{schedulerJobGroupUuid}/scheduler/triggers/{schedulerTriggerUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/scheduler/jobgroups/769b8cc2ba343736a919f4a849663fdb/scheduler/triggers/e0f1e497653b39639ff6eac7f6cd2e48?
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|schedulerJobGroupUuid|String|url|Scheduler job group UUID| |3.4.0|
+|schedulerTriggerUuid|String|url|Trigger UUID| |3.4.0|
+|systemTags \(Optional\)|List|body|System tag list| |3.4.0|
+|userTags \(Optional\)|List|body|User tag list| |3.4.0|
+
+## API Response
+On success, this API returns an empty JSON structure **`{}`**. On failure, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+RemoveSchedulerJobGroupFromSchedulerTriggerAction action = new RemoveSchedulerJobGroupFromSchedulerTriggerAction();
+action.schedulerJobGroupUuid = "769b8cc2ba343736a919f4a849663fdb";
+action.schedulerTriggerUuid = "e0f1e497653b39639ff6eac7f6cd2e48";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RemoveSchedulerJobGroupFromSchedulerTriggerAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+RemoveSchedulerJobGroupFromSchedulerTriggerAction action = RemoveSchedulerJobGroupFromSchedulerTriggerAction()
+action.schedulerJobGroupUuid = "769b8cc2ba343736a919f4a849663fdb"
+action.schedulerTriggerUuid = "e0f1e497653b39639ff6eac7f6cd2e48"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+RemoveSchedulerJobGroupFromSchedulerTriggerAction.Result res = action.call()
+```
+
+</APIPage>

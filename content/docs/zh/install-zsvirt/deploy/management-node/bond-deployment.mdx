@@ -1,0 +1,175 @@
+---
+title: "Bond 网卡部署"
+---
+
+为了满足网口带宽容量和高可靠需要，在实际生产环境中需实施网卡 Bond 配置操作。x86 服务器与 ARM 服务器安装操作系统流程一致，本章以 x86 服务器为例介绍系统安装的详细步骤。
+
+## 操作步骤
+
+1.  选择引导项。
+
+    进入 ISO 系统引导界面，选择默认选项开始安装操作系统。您可根据实际情况选择，建议使用图形界面安装。若服务器无 VGA 接口，仅支持串口连接，您可使用 VNC 方式或字符安装方式。
+
+    -   图形界面方式
+    -   VNC 方式
+    -   字符安装方式
+    如[Figure 1](#fig_sx2_rpz_cdc)所示：
+
+    ![系统引导](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_1_1.png)
+
+2.  查看安装配置汇总。
+
+    此页面展示系统安装配置，您可按需修改，ZSvirt 默认已配置以下内容：
+
+    -   **Keyboard**：默认 English \(US\)
+    -   **Language Support**：默认 English \(United States\)
+    -   **Time &amp; Date**：默认亚洲东八区，建议管理员提前检测主机时间，配置为当前时间和时区
+    如[Figure 2](#fig_mrz_1qz_cdc)所示：
+
+    ![安装系统界面](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_1_2.png)
+
+3.  选择安装模式。
+
+    1.  在 INSTALLATION SUMMARY 界面，点击 **Software Selection**。
+
+    2.  在 SOFTWARE SELECTION 界面，选择安装模式。
+
+        管理节点所在服务器选择**ZSvirt Management Node**模式，其余节点所在服务器选择**ZSvirt Compute Node**模式。
+
+    3.  选择完安装模式后，点击 **Done**。
+
+    如[Figure 3](#fig_s43_2rz_cdc)所示：
+
+    ![选择安装模式](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_1_3.png)
+
+4.  配置硬盘分区。
+
+    1.  在 INSTALLATION SUMMARY 界面，点击 **Installation Destination**，进入 INSTALLATION DESTINATION 界面。
+
+    2.  对于 Device Selection，建议此处仅配置系统盘，其余磁盘可在系统安装后配置。
+
+    3.  对于 Storage Configuration，建议选择 **Automatic** 自动配置硬盘分区。
+
+        若您需手动配置，可根据 BIOS 引导模式参考以下内容：
+
+        -   UEFI 模式：
+            -   `/boot`：存放 Linux 启动所需的核心文件，建议分配 1 GB 空间
+            -   `/boot/efi`：存放 UEFI 启动引导文件，建议分配 500 MB
+            -   `swap`：交换区，建议分配 32 GB
+            -   `/`：Linux 系统根目录，建议分配全部剩余空间
+        -   Legacy 模式
+            -   `/boot`：存放 Linux 启动所需的核心文件，建议分配 1 GB 空间
+            -   `swap`：交换区，建议分配 32 GB
+            -   `/`：Linux 系统根目录，建议分配全部剩余空间
+
+        <Callout type="info">
+
+        - 以上数值为 ZSvirt 建议分区容量（磁盘总容量大于 300 GB）。
+        - Legacy 模式下，若系统盘容量大于 2 TB，需配置 BIOS boot 分区，以支持 GPT 分区。UEFI 模式没有此限制，且支持 GPT 分区。
+
+        </Callout>
+    4.  确认配置无误后，点击 **Done**。
+
+    如[Figure 4](#fig_usl_bvz_cdc)所示：
+
+    ![配置硬盘分区](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_1_4.png)
+
+5.  添加 Bond 设备。
+
+    1.  在 INSTALLATION SUMMARY 界面，点击 **Network &amp; Host Name**。
+
+    2.  在 NETWORK &amp; HOST NAME 界面，点击页面左下角的 **+** 按钮，弹出 Add device 弹窗，在下拉菜单中选择 **Bond**，然后点击 **Add**。
+
+    如[Figure 5](#fig_s3s_zn1_ddc)所示：
+
+    ![添加 Bond 设备](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_1_5.png)
+
+6.  添加 Bond Slave。
+
+    1.  在 Bond 配置弹窗中，按需调整 Connection name 命名。
+
+        <Callout type="info">
+            **请确保 Connection name 和 Interface name 保持一致。**
+        </Callout>
+
+        如[Figure 6](#fig_ezy_xbb_ddc)所示：
+
+        ![调整 Connection name](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_1_6.png)
+
+    2.  在 Bond 配置弹窗中，点击 **Add**，添加 Bond Slave。
+
+        如[Figure 7](#fig_bbh_jcb_ddc)所示：
+
+        ![添加 Bond Slave](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_1_7.png)
+
+    3.  弹出 Choose a Connection Type 弹窗，在下拉菜单中选择连接类型，如 **Ethernet**，然后点击 **Create...**。
+
+        如[Figure 8](#fig_ms5_ncb_ddc)所示：
+
+        ![选择 Bond Slave 连接类型](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_1_8.png)
+
+    4.  弹出 Editing bond0 slave1 弹窗，在弹窗的 Ethernet 子页面，点击 **Device** 下拉菜单按钮，选择需要绑定的 Slave 设备，如 **ens3 \(相应MAC地址\)**，其它选择默认或按需自定义设置，然后点击 **Save**。
+
+        如[Figure 9](#fig_bvm_ddb_ddc)所示：
+
+        ![选择 Bond Slave 设备](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_1_9.png)
+
+7.  选择 Bond 模式。
+
+    在 Bond 配置弹窗的 **Mode** 下拉菜单中，按需选择 Bond 模式，如 **Active backup**（主备模式），其它选择默认或按需自定义设置，然后点击 **Save**。
+
+    如[Figure 10](#fig_uvd_tdb_ddc)所示：
+
+    ![选择 Bond 模式](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_1_10.png)
+
+8.  原网卡禁用 IPv4。
+
+    1.  选择原网卡，如 **Ethernet \(ens3\)**，点击 **Configure**。
+
+        如[Figure 11](#fig_wny_zdb_ddc)所示：
+
+        ![配置原网卡](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_1_11.png)
+
+    2.  弹出 Editing ens3 弹窗，点击 **IPv4 Settings**，进入 IPv4 Settings 子页面。将 **Method** 参数值改为 **Disabled**，然后点击 **Save**。
+
+        如[Figure 12](#fig_zvn_t2b_ddc)所示：
+
+        ![禁用 IPv4](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_1_12.png)
+
+9.  配置 Bond 静态 IP 地址。
+
+    1.  在 NETWORK &amp; HOST NAME 界面，选择 Bond 设备，如 **Bond \(bond0\)**，然后点击 **Configure**。
+
+    2.  弹出 Editing bond0 弹窗，点击 **IPv4 Settings**，进入 IPv4 Settings 子页面。将 **Method** 参数值改为 **Manual**，用于切换 IP 地址获取方式为手动指定。
+
+        <Callout type="info">
+            您可按需配置 IP 地址获取方式，包括使用 DHCP 自动获取、手动指定等。
+        </Callout>
+
+    3.  点击 **Add** 添加 IP 地址条目，根据按需配置 IP 地址、子网掩码、网关地址，完成后点击 **Save**保存配置。
+
+    如[Figure 13](#fig_o1g_ffb_ddc)所示：
+
+    ![配置 Bond 静态 IP 地址](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_1_13.png)
+
+10. 配置网卡自动激活。
+
+    在 Editing bond0 弹窗，点击 **General**，进入 General 子页面。勾选 **Connect automatically with priority**，用于设置网卡自动激活，然后点击 **Save**。
+
+    如[Figure 14](#fig_fm5_lfb_ddc)所示：
+
+    ![配置网卡自动激活](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_1_14.png)
+
+11. 完成 Bond 配置。
+
+    1.  检查 Bond 配置项，必须保证 **On** 开启且配置了 IP 地址，同时 Bond Slave \(如 ens3\) 也 **On** 开启，否则 ZSvirt 无法正常安装。
+
+    2.  确认配置无误后，点击 **Done**，返回 INSTALLATION SUMMARY 界面。
+
+    如[Figure 15](#fig_gcq_fkb_ddc)所示：
+
+    ![检查 Bond 配置](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_1_15.png)
+
+12. 在 INSTALLATION SUMMARY 界面，点击 **Root Password**，设置操作系统 root 密码。
+
+13. 在 INSTALLATION SUMMARY 界面，点击 **Begin Installation**，开始安装操作系统。

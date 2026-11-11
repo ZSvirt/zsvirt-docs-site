@@ -1,0 +1,299 @@
+---
+title: "获取审计数据"
+---
+
+<APIPage method="GET" path="/v1/zwatch/audits">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zwatch/audits?startTime=1.557300700509E12&limit=50.0&auditType=Resource
+```
+
+参数列表
+
+<table id="table_czb_cyx_bdb"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+startTime \(可选\)
+
+</td><td>
+
+Long
+
+</td><td>
+
+query
+
+</td><td>
+
+起始时间
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+endTime \(可选\)
+
+</td><td>
+
+Long
+
+</td><td>
+
+query
+
+</td><td>
+
+结束时间
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+limit \(可选\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+query
+
+</td><td>
+
+最大返回条数
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+labels \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+过滤标签列表
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+auditType \(可选\)
+
+</td><td>
+
+AuditType
+
+</td><td>
+
+query
+
+</td><td>
+
+审计类型，默认为Resource
+
+</td><td>
+
+-   Login
+-   Resource
+
+</td><td>
+
+3.5.0
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr></tbody>
+</table>
+
+## API返回
+返回示例
+
+```
+{
+  "audits": [
+    {
+      "resourceUuid": "b1ca3fab6ebc4302ad9249d5402cb06c",
+      "resourceType": "VmInstanceVO",
+      "clientIp": "172.0.0.1",
+      "clientBrowser": "Chrome/69.0.3497.81",
+      "apiName": "org.zstack.header.vm.APISetVmRDPMsg",
+      "operatorAccountUuid": "36c27e8ff05c4780bf6d2fa65700f22e",
+      "duration": 22.0,
+      "requestUuid": "d78093c0b2fb3850b3ce563b3a0b029d",
+      "responseUuid": "08cf3fd2c4614811b4acc0620e20a98e",
+      "sessionUuid": "05e5c663eb794faab5c5606c38103a17",
+      "responseDump": "{\"success\":true}",
+      "time": 1512037844556.0
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_dns_lyx_bdb)|2.3|
+|audits|List|详情参考[audits](#p_v2b_myx_bdb)|2.3|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### audits
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|resourceUuid|String|资源UUID|2.3|
+|resourceType|String|资源类型|2.3|
+|apiName|String|API名称|2.3|
+|error|String|错误详情|2.3|
+|operatorAccountUuid|String|发起API账号UUID|2.3|
+|duration|long|API耗时|2.3|
+|requestUuid|String|API请求UUID|2.3|
+|responseUuid|String|API返回UUID|2.3|
+|sessionUuid|String|会话UUID|2.3|
+|requestDump|String|API请求JSON存档|2.3|
+|responseDump|String|API返回JSON存档|2.3|
+|time|long|记录生成时间|2.3|
+
+## SDK示例
+Java SDK
+
+```
+GetAuditDataAction action = new GetAuditDataAction();
+action.startTime = 1.557300701132E12;
+action.limit = 50.0;
+action.conditions = asList("VMUuid=4ca37b1e21e846bf8d35b23d4138489c");
+action.auditType = "Resource";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetAuditDataAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetAuditDataAction action = GetAuditDataAction()
+action.startTime = 1.557300701178E12
+action.limit = 50.0
+action.conditions = [VMUuid=6623c395df0d44b6afc3732e76aac0ac]
+action.auditType = "Resource"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetAuditDataAction.Result res = action.call()
+```
+
+</APIPage>

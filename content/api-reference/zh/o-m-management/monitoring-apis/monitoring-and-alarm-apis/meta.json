@@ -1,0 +1,14 @@
+{
+  "title": "监控报警相关接口",
+  "pages": [
+    "get-prometheus-metric-label-value",
+    "metric",
+    "task",
+    "event",
+    "alarm",
+    "event-subscription",
+    "alarm-text-template",
+    "auditing"
+  ],
+  "pagesIndex": "index"
+}

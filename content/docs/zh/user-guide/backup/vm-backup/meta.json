@@ -1,0 +1,11 @@
+{
+  "title": "虚拟机备份",
+  "pages": [
+    "index",
+    "policy",
+    "create-plan",
+    "view-plans-and-data",
+    "manual-backup"
+  ],
+  "pagesIndex": "index"
+}

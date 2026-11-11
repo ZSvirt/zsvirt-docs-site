@@ -1,0 +1,118 @@
+---
+title: "Query USB Device"
+---
+
+<APIPage method="GET" path="/v1/usb-device/usb-devices" altPaths={["/v1/usb-device/usb-devices/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/usb-device/usb-devices
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/usb-device/usb-devices/d2da293d46ac46279168ae02b361c69f
+```
+
+Queryable Fields
+
+Run the CLI command tool, enter `QueryUsbDevice` and press Tab to view all queryable fields and resource names that support cross-table queries.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "0beadc00381c4ca09216dc2ebfb0fba3",
+      "name": "usb",
+      "hostUuid": "648749ea79fb412aab27712c5813600a",
+      "vmInstanceUuid": "f862f3c01f3340d6ab68e7a79757342f",
+      "state": "Enabled",
+      "busNum": "001",
+      "devNum": "001",
+      "idVendor": "0781",
+      "idProduct": "5591",
+      "iManufacturer": "SanDisk",
+      "iProduct": "Ultra USB 3.0",
+      "iSerial": "000000000001",
+      "usbVersion": "3.0",
+      "attachType": "PassThrough"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_ssc_whf_sbb)|2.2|
+|inventories|List|See [inventories](#p_d5h_whf_sbb)|2.2|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code, a globally unique identifier of the error, e.g. SYS.1000, HOST.1001|2.2|
+|description|String|Brief description of the error|2.2|
+|details|String|Detailed error information|2.2|
+|elaboration|String|Reserved field, defaults to null|2.2|
+|opaque|LinkedHashMap|Reserved field, defaults to null|2.2|
+|cause|ErrorCode|Root cause, the source error that caused the current error, null if no original error|2.2|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifies the resource|2.2|
+|name|String|Resource name|2.2|
+|description|String|Resource description|2.2|
+|hostUuid|String|Host UUID|2.2|
+|vmInstanceUuid|String|Virtual Machine UUID|2.2|
+|busNum|String|Bus number|2.2|
+|devNum|String|Device number|2.2|
+|idVendor|String|VendorID|2.2|
+|idProduct|String|ProductID|2.2|
+|iManufacturer|String|Manufacturer|2.2|
+|iProduct|String|Device type|2.2|
+|iSerial|String|Serial number|2.2|
+|usbVersion|String|USB version|2.2|
+|attachType|String|Attach method|3.6.0|
+|createDate|Timestamp|Create date|2.2|
+|lastOpDate|Timestamp|Last update date|2.2|
+|state|UsbDeviceState|See [state](#p_i5t_shf_sbb)|2.2|
+
+### state
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name|2.2|
+|ordinal|int| |2.2|
+
+## SDK Examples
+Java SDK
+
+```
+QueryUsbDeviceAction action = new QueryUsbDeviceAction();
+action.conditions = asList();
+action.sessionId = "b51bb939a8844869abb32e9cedbc9a1f";
+QueryUsbDeviceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryUsbDeviceAction action = QueryUsbDeviceAction()
+action.conditions = []
+action.sessionId = "9f884d4333ba46369cd1039c9ea44965"
+QueryUsbDeviceAction.Result res = action.call()
+```
+
+</APIPage>

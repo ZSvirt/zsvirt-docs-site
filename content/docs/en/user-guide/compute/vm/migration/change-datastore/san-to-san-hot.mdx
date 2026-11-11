@@ -1,0 +1,24 @@
+---
+title: 'Hot Migration from SAN Storage to SAN Storage'
+---
+
+-   Make sure that the source and destination data storage are in the same cluster.
+-   Before you migrate a virtual machine, detach the ISOs or LUN devices from the virtual machine first.
+-   If a shared disk is attached to the virtual machine, the shared disk cannot be migrated. Detach the shared disk first.
+-   Before you hot migrate a virtual machine with VF NICs attached, make sure:
+    -   The virtual machine has VMTools installed and the VMTools is running.
+    -   VF NIC VM migration may fail if the internal driver version of the VM is too low. Check and update the driver version as needed
+
+1.  In the navigation pane, choose **Inventory** &gt; **VM and Host**.
+
+2.  Select the target virtual machine and click **Actions** &gt; **Migration Management** &gt; **Change Data Storage**.
+
+3.  In the Change Data Storage dialog, choose a destination data storage and set a migration bandwidth as needed.
+
+4.  Review the configuration and click **OK**.
+
+    <Callout type="info">
+    -   If the virtual machines have VF NICs attached, depending on the actual network environment, short network interruptions may occur during the migration of VMs with VF NICs attached. Proceed with caution.
+    -   If the virtual machines have snapshots, migrating storage while the VMs are running will delete these snapshots. Proceed with caution. To keep snapshots, shut down VMs before the migration.
+    </Callout>
+After the migration, you can re-attach those data disks, ISOs, or peripheral devices to the virtual machine.

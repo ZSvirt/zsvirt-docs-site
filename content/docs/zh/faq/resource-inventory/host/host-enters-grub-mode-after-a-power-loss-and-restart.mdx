@@ -1,0 +1,51 @@
+---
+title: "主机断电重启进入grub模式，怎么办？"
+---
+
+## 原因
+主机异常断电造成虚拟机`/boot/grub2/grub.cfg`文件丢失，系统无法启动，进入grub&gt;模式。
+
+## 解决方案
+1.  可在grub页面通过以下步骤解决：
+2.  在grub模式下输入`ls`命令查询分区。使用`ls (hd0,gpt1)/grub2`或`ls (hd0,gpt2)/grub2`命令查询`grub2`目录所在分区，即boot分区。返回值为`device.map i386-pc/ locale/ fonts/ grubenv`即为正确分区。
+
+    ```
+    grub> ls (hd0,gpt1)/grub2
+    ```
+
+3.  设置系统分区：
+
+    ```
+    grub> set root=(hd0,gpt1)
+    ```
+
+4.  挂载根设备 \(将boot分区设置为启动分区，其中系统位置根据实际情况确定可以找到正常的主机查看\)：
+
+    ```
+    grub> linuxefi /vmlinuz-3.10.0-957.27.6.da38eal.el7.x86_64 root=/dev/sde3  //`/dev/sde3`为原先`/`分区挂载点，可以通过其他正常的物理节点来判断
+    ```
+
+5.  指定初始化镜像：
+
+    ```
+    grub> initrdefi /initramfs-3.10.0-957.27.6.da38eal.el7.x86_64.img
+    ```
+
+6.  启动系统：
+
+    ```
+    grub> boot
+    ```
+
+7.  系统启动后，按照如下步骤修复efi分区：
+
+    ```
+    # 生成grub.cfg文件
+    [root@localhost ~]# grub2-mkconfig -o /root/grub.cfg
+    # 卸载`efi`分区，以便重新挂载将只读权限
+    [root@localhost ~]# umount /boot/efi
+    # 重新挂载`efi`分区，将只读权限更新为读写权限
+    [root@localhost ~]# mount /dev/sde1 /boot/efi
+    # 把新生成的grub.cfg替换原损坏的grub.cfg
+    [root@localhost ~]# mv /root/grub.cfg /boot/efi/EFI/helix/grub.cfg
+    ```

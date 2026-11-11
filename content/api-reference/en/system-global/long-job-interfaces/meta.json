@@ -1,0 +1,12 @@
+{
+  "title": "Long Job Interfaces",
+  "pages": [
+    "submit-long-job",
+    "delete-long-job",
+    "update-long-job",
+    "query-long-job",
+    "clean-long-job",
+    "rerun-long-job"
+  ],
+  "pagesIndex": "index"
+}

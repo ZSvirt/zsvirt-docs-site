@@ -1,0 +1,67 @@
+---
+title: "Delete a WeCom User"
+---
+
+<APIPage method="DELETE" path="/v1/sns/application-endpoints/we-com/{endpointUuid}/at-persons/{userId}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/sns/application-endpoints/we-com/169842ede65135aeb32d0a88b644f8eb/at-persons/18988887777
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|endpointUuid|String|url|WeCom endpoint UUID| |4.2.0|
+|userId|String|url|WeCom user ID| |4.2.0|
+|deleteMode \(optional\)|String|body|Deletion mode \(Permissive / Enforcing, default: Permissive\)| |4.2.0|
+|systemTags \(optional\)|List|body|System tags| |4.2.0|
+|userTags \(optional\)|List|body|User tags| |4.2.0|
+
+## API Response
+This API returns an empty JSON structure **`{}`** on success. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+RemoveSNSWeComAtPersonAction action = new RemoveSNSWeComAtPersonAction();
+action.endpointUuid = "169842ede65135aeb32d0a88b644f8eb";
+action.userId = "18988887777";
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RemoveSNSWeComAtPersonAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+RemoveSNSWeComAtPersonAction action = RemoveSNSWeComAtPersonAction()
+action.endpointUuid = "169842ede65135aeb32d0a88b644f8eb"
+action.userId = "18988887777"
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+RemoveSNSWeComAtPersonAction.Result res = action.call()
+```
+
+</APIPage>

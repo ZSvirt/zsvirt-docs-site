@@ -1,0 +1,75 @@
+---
+title: "Delete Tag"
+---
+
+<APIPage method="DELETE" path="/v1/tags/{uuid}?deleteMode={deleteMode}">
+
+Can be used to delete system tags \(SystemTag\), user tags \(UserTag\), and resource tags \(Tag\).
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/tags/1d33d909355247508cdbf9a0c0037dbe?deleteMode=Permissive
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|The resource UUID, uniquely identifying this resource| |0.6|
+|deleteMode \(optional\)|String|body|Deletion mode \(Permissive or Enforcing, defaults to Permissive\)| |0.6|
+|systemTags \(optional\)|List|body|System tags| |0.6|
+|userTags \(optional\)|List|body|User tags| |0.6|
+
+<Callout type="info">
+-   ZSvirt supports configuring whether to automatically unload physical PCI devices allocated from device specifications when a tag is deleted and the VM is shut down. For existing VMs, you can also delete or change the configuration. **SystemTags** adds the **autoReleaseSpecReleatedPhysicalPciDevice** option.
+</Callout>
+    -   Option format: `autoReleaseSpecReleatedPhysicalPciDevice`
+    -   For example: `autoReleaseSpecReleatedPhysicalPciDevice`
+-   ZSvirt supports configuring whether to automatically unload virtual PCI devices allocated from device specifications when a tag is deleted and the VM is shut down. For existing VMs, you can also delete or change the configuration. **SystemTags** adds the **autoReleaseSpecReleatedVirtualPciDevice** option.
+    -   Option format: `autoReleaseSpecReleatedVirtualPciDevice`
+    -   For example: `autoReleaseSpecReleatedVirtualPciDevice`
+
+## API Response
+On success, this API returns an empty JSON structure **`{}`**. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DeleteTagAction action = new DeleteTagAction();
+action.uuid = "8262e178c23140f6a4de6f0d9e6a0913";
+action.deleteMode = "Permissive";
+action.sessionId = "94c2bff91f834a96b691a36e47888967";
+DeleteTagAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteTagAction action = DeleteTagAction()
+action.uuid = "86a3f5e633dd40358cab072951058ec9"
+action.deleteMode = "Permissive"
+action.sessionId = "87c504af0b5a484d87a5ad4ddac57baa"
+DeleteTagAction.Result res = action.call()
+```
+
+</APIPage>

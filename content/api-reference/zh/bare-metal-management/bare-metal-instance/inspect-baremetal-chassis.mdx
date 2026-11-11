@@ -1,0 +1,113 @@
+---
+title: "下发获取裸金属硬件信息命令"
+---
+
+<APIPage method="PUT" path="/v1/baremetal/chassis/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "inspectBaremetalChassis": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"inspectBaremetalChassis":{}}' \
+http://localhost:8080/zstack/v1/baremetal/chassis/514c293bdd6c3bc38f0dd5050f85642d/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|裸机设备UUID| |2.6.0|
+|systemTags \(可选\)|List|body|系统标签| |2.6.0|
+|userTags \(可选\)|List|body|用户标签| |2.6.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "a4871bb97ab03c818419484564fadbfb",
+    "ipmiAddress": "1.1.1.1",
+    "ipmiPort": 623,
+    "ipmiUsername": "root",
+    "ipmiPassword": "password",
+    "state": "Enabled",
+    "status": "PxeBooting"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_lvx_yyy_3gc)|2.6.0|
+|inventory|BaremetalChassisInventory|详情参考[inventory](#p_fpw_nbz_3gc)|2.6.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|2.6.0|
+|name|String|资源名称|2.6.0|
+|description|String|资源的详细描述|2.6.0|
+|zoneUuid|String|数据中心UUID|2.6.0|
+|clusterUuid|String|集群UUID|2.6.0|
+|pxeServerUuid|String| |3.1.1|
+|ipmiAddress|String|IPMI地址|2.6.0|
+|ipmiPort|Integer|IPMI端口|2.6.0|
+|ipmiUsername|String|IPMI用户名|2.6.0|
+|state|String| |2.6.0|
+|status|String| |2.6.0|
+|createDate|Timestamp|创建时间|2.6.0|
+|lastOpDate|Timestamp|最后一次修改时间|2.6.0|
+
+## SDK示例
+Java SDK
+
+```
+InspectBaremetalChassisAction action = new InspectBaremetalChassisAction();
+action.uuid = "514c293bdd6c3bc38f0dd5050f85642d";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+InspectBaremetalChassisAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = InspectBaremetalChassisAction()
+action.uuid = "514c293bdd6c3bc38f0dd5050f85642d"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

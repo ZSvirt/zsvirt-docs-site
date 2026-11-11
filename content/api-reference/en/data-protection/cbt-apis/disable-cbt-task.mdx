@@ -1,0 +1,116 @@
+---
+title: "Stop a CBT Task"
+---
+
+<APIPage method="POST" path="/v1/cbt-task/disable/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "force": false
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The `systemTags` and `userTags` fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"force":false}}' \
+http://localhost:8080/zstack/v1/cbt-task/disable/5a86262807b4363e95f2e57d2970d189
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Resource UUID. Uniquely identifies the resource| |4.10.10|
+|force \(optional\)|boolean|body \(included in the `params` structure\)| | |4.10.10|
+|systemTags \(optional\)|List|body|System tags| |4.10.10|
+|userTags \(optional\)|List|body|User tags| |4.10.10|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "5ca9c15a50c53f0dac359a64841d7b2b",
+    "name": "My Task",
+    "status": "Stopped"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.10.10|
+|inventory|CbtTaskInventory|For details, see [inventory](#p_hf1_3cr_dfc)|4.10.10|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_qwr_3cr_dfc)|4.10.10|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID. Uniquely identifies the resource|4.10.10|
+|name|String|Resource name|4.10.10|
+|description|String|Detailed description of the resource|4.10.10|
+|createDate|Timestamp|Creation time|4.10.10|
+|lastOpDate|Timestamp|Last modification time|4.10.10|
+|status|CbtTaskStatus|For details, see [status](#p_lq2_3cr_dfc)|4.10.10|
+
+### status
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Created|CbtTaskStatus| |4.10.10|
+|Starting|CbtTaskStatus| |4.10.10|
+|Running|CbtTaskStatus| |4.10.10|
+|Stopped|CbtTaskStatus| |4.10.10|
+|Failed|CbtTaskStatus| |4.10.10|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. The globally unique identifier of the error, for example, SYS.1000 or HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Default is null|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null|0.6|
+|cause|ErrorCode|Root error. The source error that caused the current error. This field is null if there is no source error|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+DisableCbtTaskAction action = new DisableCbtTaskAction();
+action.uuid = "5a86262807b4363e95f2e57d2970d189";
+action.force = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DisableCbtTaskAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DisableCbtTaskAction action = DisableCbtTaskAction()
+action.uuid = "5a86262807b4363e95f2e57d2970d189"
+action.force = false
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DisableCbtTaskAction.Result res = action.call()
+```
+
+</APIPage>

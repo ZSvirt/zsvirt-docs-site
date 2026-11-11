@@ -1,0 +1,141 @@
+---
+title: "更新快照组信息"
+---
+
+<APIPage method="PUT" path="/v1/volume-snapshots/group/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateVolumeSnapshotGroup": {
+    "name": "new name"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateVolumeSnapshotGroup":{"name":"new name"}}' http://localhost:8080/zstack/v1/volume-snapshots/group/c39089cddbd836628f346b14beafe2d3/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|name \(可选\)|String|body\(包含在**updateVolumeSnapshotGroup**结构中\)|资源名称| |3.6.0|
+|description \(可选\)|String|body\(包含在**updateVolumeSnapshotGroup**结构中\)|资源的详细描述| |3.6.0|
+|uuid|String|url|资源的UUID，唯一标示该资源| |3.6.0|
+|systemTags \(可选\)|List|body| | |3.6.0|
+|userTags \(可选\)|List|body| | |3.6.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "a261086918fe3c04be683430f15920a2",
+    "snapshotCount": 1.0,
+    "name": "group",
+    "vmInstanceUuid": "98ac921100b43981b493071b6430bb2b",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM",
+    "volumeSnapshotRefs": [
+      {
+        "volumeSnapshotUuid": "7ac8675cd8a9389ca343a2a7d49c47d7",
+        "volumeSnapshotGroupUuid": "a261086918fe3c04be683430f15920a2",
+        "deviceId": 0.0,
+        "snapshotDeleted": false,
+        "volumeUuid": "6fb0e4a0c3d6315bbb5c08a1a33bc231",
+        "volumeName": "ROOT-volume",
+        "volumeType": "Root",
+        "volumeSnapshotInstallPath": "/Cloud_ps/to/path/snap.qcow2",
+        "volumeSnapshotName": "group-ROOT-volume",
+        "createDate": "Nov 14, 2017 10:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+      }
+    ]
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_rtn_lqg_x3b)|3.6.0|
+|inventory|VolumeSnapshotGroupInventory|详情参考[inventory](#p_ab5_kqg_x3b)|3.6.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.6.0|
+|description|String|错误的概要描述|3.6.0|
+|details|String|错误的详细信息|3.6.0|
+|elaboration|String|保留字段，默认为null|3.6.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.6.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.6.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.6.0|
+|snapshotCount|Integer|组内快照数量|3.6.0|
+|name|String|资源名称|3.6.0|
+|description|String|资源的详细描述|3.6.0|
+|vmInstanceUuid|String|虚拟机UUID|3.6.0|
+|createDate|Timestamp|创建时间|3.6.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.6.0|
+|volumeSnapshotRefs|List|详情参考[volumeSnapshotRefs](#p_s35_jqg_x3b)|3.6.0|
+
+### volumeSnapshotRefs
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|volumeSnapshotUuid|String|硬盘快照UUID|3.6.0|
+|volumeSnapshotGroupUuid|String|快照组UUID|3.6.0|
+|deviceId|int|打快照时硬盘的加载序号|3.6.0|
+|snapshotDeleted|boolean|快照是否已经被删除|3.6.0|
+|volumeUuid|String|硬盘UUID|3.6.0|
+|volumeName|String|硬盘的名字|3.6.0|
+|volumeType|String|硬盘的类型|3.6.0|
+|volumeSnapshotInstallPath|String|快照的安装路径|3.6.0|
+|volumeSnapshotName|String|快照的名字|3.6.0|
+|createDate|Timestamp|创建时间|3.6.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.6.0|
+
+## SDK示例
+Java SDK
+
+```
+UpdateVolumeSnapshotGroupAction action = new UpdateVolumeSnapshotGroupAction();
+action.name = "new name";
+action.uuid = "c39089cddbd836628f346b14beafe2d3";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateVolumeSnapshotGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateVolumeSnapshotGroupAction action = UpdateVolumeSnapshotGroupAction()
+action.name = "new name"
+action.uuid = "c39089cddbd836628f346b14beafe2d3"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateVolumeSnapshotGroupAction.Result res = action.call()
+```
+
+</APIPage>

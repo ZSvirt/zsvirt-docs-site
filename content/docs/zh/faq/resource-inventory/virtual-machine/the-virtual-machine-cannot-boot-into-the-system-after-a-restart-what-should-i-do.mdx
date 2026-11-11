@@ -1,0 +1,23 @@
+---
+title: "虚拟机重启后无法进入系统，怎么办？"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+## 现象
+虚拟机无法正常进入系统，出现`Give root password for maintenance`提示。
+
+## 原因
+虚拟机`fstab`配置了自动挂载，但磁盘盘符发生变化导致虚拟机无法自动挂载。
+
+## 解决方案
+-   在虚拟机系统内依次执行以下命令，挂载磁盘：
+
+    ```
+    # 获取磁盘UUID
+    [root@localhost ~]# ll /dev/disk/by-uuid/
+    # 挂载目录
+    [root@localhost ~]# mount /dev/disk/by-uuid/$磁盘UUID /zstack_ps
+    # 使用磁盘uuid配置自动挂载
+    [root@localhost ~]# vi /etc/fstab
+    ```

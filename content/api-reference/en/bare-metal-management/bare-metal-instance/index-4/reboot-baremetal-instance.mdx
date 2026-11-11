@@ -1,0 +1,152 @@
+---
+title: "Reboot Bare Metal Instance"
+---
+
+<APIPage method="PUT" path="/v1/baremetal/instances/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "rebootBaremetalInstance": {
+    "pxeBoot": false
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that these fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"rebootBaremetalInstance":{"pxeBoot":false}}' \
+http://localhost:8080/zstack/v1/baremetal/instances/c3be8e4c6f783f0c9aecd9600b2c3768/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|UUID of the resource, uniquely identifying the resource| |2.6.0|
+|systemTags \(Optional\)|List|body|System Tag| |2.6.0|
+|userTags \(Optional\)|List|body|User Tag| |2.6.0|
+|pxeBoot \(Optional\)|Boolean|body\(included in the `rebootBaremetalInstance` structure\)|Whether to boot via network PXE| |2.6.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "227ea410fadd38668fb7dd5679d3f095",
+    "name": "BM-1",
+    "description": "This is a baremetal instance.",
+    "zoneUuid": "946022bde3053bf29c7cbbf466241c7f",
+    "clusterUuid": "a7b427907a883ae2acf0a6d408eae0e5",
+    "chassisUuid": "0746a3cc213a345d89d31bfd82b00e12",
+    "imageUuid": "828c0bc2e8f132bc924ed0a616860e66",
+    "platform": "Linux",
+    "state": "Rebooting",
+    "status": "Provisioned",
+    "createDate": "Nov 14, 2017 2:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 2:20:57 PM",
+    "bmNics": [
+      {
+        "uuid": "fe99549e3f4f3683b4fb37f623de9115",
+        "baremetalInstanceUuid": "227ea410fadd38668fb7dd5679d3f095",
+        "l3NetworkUuid": "99f6eb7273e936f3ad638ba00b474a4b",
+        "mac": "6c:b3:11:1b:0b:1e",
+        "ip": "192.168.0.10",
+        "netmask": "255.255.255.0",
+        "gateway": "192.168.0.1",
+        "pxe": false
+      }
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation is successful, this field is null. For details, see [error](#p_lvx_yyy_3gc)|2.6.0|
+|inventory|BaremetalInstanceInventory|For details, see [inventory](#p_nsv_ffz_3gc)|2.6.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, default is null|0.6|
+|opaque|LinkedHashMap|Reserved field, default is null|0.6|
+|cause|ErrorCode|Root cause: the source error that triggered the current error. If there is no original error, this field is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifying the resource|2.6.0|
+|name|String|Resource name|2.6.0|
+|description|String|Detailed description of the resource|2.6.0|
+|zoneUuid|String|Data Center UUID|2.6.0|
+|clusterUuid|String|Cluster UUID|2.6.0|
+|pxeServerUuid|String| |3.1.1|
+|chassisUuid|String|Bare metal chassis UUID|2.6.0|
+|imageUuid|String|Image UUID|2.6.0|
+|platform|String|System platform|2.6.0|
+|state|String| |2.6.0|
+|status|String| |2.6.0|
+|createDate|Timestamp|Create time|2.6.0|
+|lastOpDate|Timestamp|Last modification time|2.6.0|
+|bmNics|List|For details, see [bmNics](#p_ifq_ffz_3gc)|2.6.0|
+
+### bmNics
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifying the resource|2.6.0|
+|baremetalInstanceUuid|String|Bare metal instance UUID|2.6.0|
+|l3NetworkUuid|String|Distributed Port Group UUID|2.6.0|
+|baremetalBondingUuid|String|BOND UUID|3.4.0|
+|mac|String|Network card MAC address|2.6.0|
+|ip|String|IP address|2.6.0|
+|netmask|String|Subnet mask|2.6.0|
+|gateway|String|Gateway|2.6.0|
+|metadata|String| |2.6.0|
+|pxe|Boolean|Whether this is a PXE boot NIC|2.6.0|
+|createDate|Timestamp|Create time|2.6.0|
+|lastOpDate|Timestamp|Last modification time|2.6.0|
+
+## SDK Examples
+Java SDK
+
+```
+RebootBaremetalInstanceAction action = new RebootBaremetalInstanceAction();
+action.uuid = "c3be8e4c6f783f0c9aecd9600b2c3768";
+action.pxeBoot = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RebootBaremetalInstanceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = RebootBaremetalInstanceAction()
+action.uuid = "c3be8e4c6f783f0c9aecd9600b2c3768"
+action.pxeBoot = false
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

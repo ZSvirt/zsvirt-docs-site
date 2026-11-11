@@ -1,0 +1,10 @@
+{
+  "title": "Platform Database Backup",
+  "pages": [
+    "index",
+    "policy",
+    "create-plan",
+    "view-plans-and-data"
+  ],
+  "pagesIndex": "index"
+}

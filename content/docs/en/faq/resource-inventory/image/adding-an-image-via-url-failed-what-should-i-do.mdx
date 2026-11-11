@@ -1,0 +1,19 @@
+---
+title: "Adding an image via URL failed. What should I do?"
+---
+
+## Symptom
+Copying an image download link from the public internet and uploading it to the virtualization platform via URL fails.
+
+## Cause
+No DNS server is configured on the Image Storage, so the domain name in the URL cannot be resolved.
+
+## Solution
+1.  Log in to the Image Storage via SSH.
+
+2.  Run the following command to edit the `/etc/resolv.conf` configuration file and add the following entry:
+
+    ```
+    [root@localhost ~]# vim /etc/resolv.conf
+    nameserver 114.114.114.114
+    ```

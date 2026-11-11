@@ -1,0 +1,41 @@
+---
+title: 'zsphere_datacenter'
+description: '管理 ZSvirt 数据中心（区域）。数据中心是顶层资源容器，用于组织集群、存储与网络资源。'
+---
+
+<HistoricalNamingNote locale="zh" />
+
+
+# zsphere_datacenter（资源）
+
+管理 ZSvirt 数据中心（区域）。数据中心是顶层资源容器，用于组织集群、存储与网络资源。
+
+## 示例用法
+```terraform
+resource "zsphere_datacenter" "datacenter" {
+  name        = "datacenter_from_terraform"
+  description = "Add an example datacenter from terraform"
+  is_default  = false
+}
+
+output "zsphere_datacenter" {
+  value = zsphere_datacenter.datacenter
+}
+```
+
+## 参数说明
+
+### 必填参数
+
+- `name`（字符串）The name of the datacenter. 必填项。
+
+### 可选参数
+
+- `description`（字符串）A description of the datacenter, providing additional context or details.
+- `is_default`（布尔值）是否 this is the default datacenter. Only one datacenter can be the default.
+
+### 只读属性
+
+- `state`（字符串）The state of the datacenter, 如 'Enabled' or 'Disabled'.
+- `type`（字符串）The type of the datacenter. Currently only 'zstack' is supported.
+- `uuid`（字符串）唯一标识符，由 ZSvirt 管理。 datacenter. 由 ZSvirt 自动生成。

@@ -1,0 +1,13 @@
+{
+  "title": "许可证相关接口",
+  "pages": [
+    "get-license-info",
+    "get-license-records",
+    "get-license-capabilities",
+    "delete-license",
+    "reload-license",
+    "update-license",
+    "register-license-requested-application"
+  ],
+  "pagesIndex": "index"
+}

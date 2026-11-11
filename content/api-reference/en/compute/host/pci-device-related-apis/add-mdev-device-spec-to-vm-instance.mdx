@@ -1,0 +1,111 @@
+---
+title: "Attach MDEV Device Spec to Virtual Machine"
+---
+
+<APIPage method="POST" path="/v1/mdev-device-specs/{mdevSpecUuid}/vm-instances/{vmInstanceUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "mdevDeviceNumber": 1
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The **systemTags** and **userTags** fields can be omitted in the above example. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"mdevDeviceNumber":1.0}}' \
+http://localhost:8080/zstack/v1/mdev-device-specs/dbcfe5ae889933a2a740584935e63e72/vm-instances/3d0b1d8b82ba3dd0b95a7903f735bdd1
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|mdevSpecUuid|String|url|MDEV device spec UUID| |3.5.0|
+|vmInstanceUuid|String|url|Virtual Machine UUID| |3.5.0|
+|mdevDeviceNumber \(Optional\)|Integer|body\(contained in **params** structure\)| | |3.5.0|
+|systemTags \(Optional\)|List|body|System tags| |3.5.0|
+|userTags \(Optional\)|List|body|User tags| |3.5.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "vmInstanceUuid": "0f3a0fd4cd7646afb445e601e885b83e",
+    "mdevSpecUuid": "621c2f8c637b4d7ebbfe5a55f60c8a60",
+    "mdevDeviceNumber": 1,
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_k5k_qcg_xhb)|3.5.0|
+|inventory|VmInstanceMdevDeviceSpecRefInventory|See [inventory](#p_ysg_qcg_xhb)|3.5.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code, a globally unique identifier of the error, e.g. SYS.1000, HOST.1001|3.5.0|
+|description|String|Brief description of the error|3.5.0|
+|details|String|Detailed error information|3.5.0|
+|elaboration|String|Reserved field, defaults to null|3.5.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|3.5.0|
+|cause|ErrorCode|Root cause, the source error that caused the current error, null if no original error|3.5.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|vmInstanceUuid|String|Virtual Machine UUID|3.5.0|
+|mdevSpecUuid|String|MDEV device spec UUID|3.5.0|
+|mdevDeviceNumber|Integer|Number of mdev devices that meet the spec to attach to the VM, defaults to 1|3.5.0|
+|createDate|Timestamp|Create date|3.5.0|
+|lastOpDate|Timestamp|Last update date|3.5.0|
+
+## SDK Examples
+Java SDK
+
+```
+AddMdevDeviceSpecToVmInstanceAction action = new AddMdevDeviceSpecToVmInstanceAction();
+action.mdevSpecUuid = "dbcfe5ae889933a2a740584935e63e72";
+action.vmInstanceUuid = "3d0b1d8b82ba3dd0b95a7903f735bdd1";
+action.mdevDeviceNumber = 1;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddMdevDeviceSpecToVmInstanceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddMdevDeviceSpecToVmInstanceAction action = AddMdevDeviceSpecToVmInstanceAction()
+action.mdevSpecUuid = "dbcfe5ae889933a2a740584935e63e72"
+action.vmInstanceUuid = "3d0b1d8b82ba3dd0b95a7903f735bdd1"
+action.mdevDeviceNumber = 1
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddMdevDeviceSpecToVmInstanceAction.Result res = action.call()
+```
+
+</APIPage>

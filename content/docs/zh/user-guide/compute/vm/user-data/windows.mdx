@@ -1,0 +1,41 @@
+---
+title: "Windows 虚拟机导入 User Data"
+---
+
+-   导入 User Data 前，确保虚拟机镜像已安装 Cloudbase-init，推荐版本：0.9.11。有关 Cloudbase-init 的更多信息，请参阅 Cloudbase官方文档。
+-   若通过 User Data 方式设置主机名和 SSH 登录密码，请勿在平台上重复设置主机名和密码，以避免冲突。
+-   若使用已安装 Cloudbase-init 的虚拟机镜像新建 Windows 虚拟机，必须导入 User Data，否则 Cloudbase-init 任务会等待直到超时。
+
+1.  准备所需实现功能的 User Data 脚本。
+
+    脚本示例：
+
+    ```
+    #cloud-config
+    write_files:
+       -   encoding: b64
+           content: NDI=
+           path: C:\b64
+           permissions: '0644'
+       -   encoding: base64
+           content: NDI=
+           path: C:\b64_1
+           permissions: '0644'
+       -   encoding: gzip
+           content: !!binary |
+               H4sIAGUfoFQC/zMxAgCIsCQyAgAAAA==
+           path: C:\gzip
+           permissions: '0644'
+    ```
+
+    上述示例实现以下功能：在虚拟机启动过程中，在 C 盘下创建`b64`、`b64_1`、`gzip`三个文件。
+
+2.  在导航栏中，选择**资源清单**。
+
+3.  在资源清单中，右键单击集群、主机或镜像，然后点击**新建虚拟机**。
+
+4.  在新建虚拟机弹窗中，选择**高级设置** > **常规选项**。
+
+5.  在**User Data**输入框中粘贴脚本。
+
+6.  完成虚拟机新建流程，即可导入 User Data。

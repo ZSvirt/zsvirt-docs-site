@@ -1,0 +1,85 @@
+---
+title: "Set Virtual Machine NIC Rate Limit"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "setNicQos": {
+    "outboundBandwidth": 819200.0,
+    "inboundBandwidth": 819200.0
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"setNicQos":{"outboundBandwidth":819200.0,"inboundBandwidth":819200.0}}' \
+http://localhost:8080/zstack/v1/vm-instances/1d86edf8c2e73980b83005e946449c57/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Virtual Machine NIC UUID| |0.6|
+|outboundBandwidth \(Optional\)|Long|body \(contained in the **params** structure\)|Outbound bandwidth limit| |0.6|
+|inboundBandwidth \(Optional\)|Long|body \(contained in the **params** structure\)|Inbound bandwidth limit| |0.6|
+|systemTags \(Optional\)|List|body| | |0.6|
+|userTags \(Optional\)|List|body| | |0.6|
+
+## API Response
+This API returns an empty JSON structure **`{}`** on success. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+SetNicQoSAction action = new SetNicQoSAction();
+action.uuid = "00cc6445774649b488f6a03b023d6701";
+action.outboundBandwidth = 819200.0;
+action.inboundBandwidth = 819200.0;
+action.sessionId = "d5a1b6a5424e4b1c8cc23f77e8ba6d58";
+SetNicQoSAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SetNicQoSAction action = SetNicQoSAction()
+action.uuid = "71548ce2c00240a3a5b065080d47f399"
+action.outboundBandwidth = 819200.0
+action.inboundBandwidth = 819200.0
+action.sessionId = "a86b3caf907045b9a82e3a0cb0597330"
+SetNicQoSAction.Result res = action.call()
+```
+
+</APIPage>

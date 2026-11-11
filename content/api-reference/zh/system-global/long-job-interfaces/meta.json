@@ -1,0 +1,12 @@
+{
+  "title": "长时任务相关接口",
+  "pages": [
+    "submit-long-job",
+    "delete-long-job",
+    "update-long-job",
+    "query-long-job",
+    "clean-long-job",
+    "rerun-long-job"
+  ],
+  "pagesIndex": "index"
+}

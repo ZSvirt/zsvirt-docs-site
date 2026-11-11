@@ -1,0 +1,18 @@
+---
+title: "The DNS address of a Windows virtual machine using a Distributed Port Group is frequently lost automatically. How do I resolve this?"
+---
+
+## Symptom
+The DNS address of a Windows virtual machine using a Distributed Port Group is frequently lost automatically.
+
+## Cause
+The Windows virtual machine has a DNS cache issue.
+
+## Solution
+1.  In the virtual machine console, press the Windows key and R simultaneously, type CMD in the dialog box that appears, and press Enter to open the Command Prompt.
+
+2.  In the Command Prompt, run `ipconfig /flushdns` to flush the virtual machine DNS cache.
+
+3.  In the Command Prompt, run `netsh winsock reset` to reset the virtual machine Winsock catalog.
+
+4.  Restart the virtual machine for the changes to take effect.

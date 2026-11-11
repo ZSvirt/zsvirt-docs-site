@@ -1,0 +1,10 @@
+{
+  "title": "Manage Migration Service",
+  "pages": [
+    "index",
+    "upgrade",
+    "enable-disable",
+    "delete"
+  ],
+  "pagesIndex": "index"
+}

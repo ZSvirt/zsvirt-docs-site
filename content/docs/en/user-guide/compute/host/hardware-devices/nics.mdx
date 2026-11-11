@@ -1,0 +1,88 @@
+---
+title: 'Host NIC'
+---
+
+On the host Hardware Device tab, click **Physical NIC** to check and manage the physical NICs and bonds on the host.
+
+-   [Physical NIC - Standard Configuration Changes](#section_urc_lld_x1c)
+-   [Physical NIC - SR-IOV Virtualization](#section_ess_mld_x1c)
+-   [Physical NIC - View and Maintain LLDP Information](#section_gbb_pld_x1c)
+-   [Bond - View and Configure](#section_wb2_qld_x1c)
+
+## Physical NIC - Standard Configuration Changes
+You can perform editing or IP address modification operations on physical NICs of the host:
+
+-   **Edit**: Modify the description of the physical NIC.
+-   **Modify IP Address**: If the NIC has not been added to a bond interface and is not part of a distributed switch, you can modify the IP address and subnet mask of the NIC as needed.
+
+## Physical NIC - SR-IOV Virtualization
+You can virtualize and partition a single physical NIC into multiple VF (Virtual Function) NICs based on the SR-IOV specification, which can then be directly assigned to virtual machines. This allows for near-native I/O performance and reduces consumption of host CPU resources.
+
+**Prerequisites**
+
+-   Ensure that the physical NIC supports SR-IOV partitioning.
+-   Ensure that the BIOS of the host containing this physical NIC has Intel VT-d/AMD IOMMU and SR-IOV features enabled.
+-   Ensure that the IOMMU readiness status of the host containing this physical NIC is **Available**.
+
+**Procedure**
+
+1.  Navigate to **Host Details Page** &gt; **Hardware Device** &gt; **Physical NIC**.
+2.  Select the target physical NIC, then click **Actions** &gt; **Configure SR-IOV**.
+3.  In the Configure SR-IOV dialog, enable the **SR-IOV Status**, and specify the number of VF NICs to be created.
+
+**Notes**
+
+-   If the physical NIC is already configured in a bond, continuing to use the SR-IOV feature may affect communication between VF cards and vNIC cards. It is recommended to first perform SR-IOV partitioning on the physical NIC, then configure the bond from the distributed switch, selecting only one partitioned physical NIC per host.
+-   If VF cards are currently being used by virtual machines, turning off the **SR-IOV Status** switch will simultaneously unload the related NICs from the virtual machines.
+-   Virtual machines that are powered on and have loaded VF cards do not support migration operations. You need to power off the virtual machine or first unload the VF cards before migration can occur.
+
+## Physical NIC - View and Maintain LLDP Information
+**View Peer Device Information**
+
+Using the Link Layer Discovery Protocol (LLDP), you can identify the physical switch port of the distributed switch to which the physical NIC is connected. Before viewing the peer device information, ensure that your NIC supports LLDP and that the peer switch device has LLDP enabled.
+
+-   Recommended Hardware Specifications:
+
+    -   Switches: Huawei Switches, H3C Switches, and Shengke Switches.
+    -   NICs: Intel 82599ES, Intel x710, Intel x722, and Mellanox CX4.
+    Supported OS Types:
+
+    -   x86: H84r or x86\_KylinV10P3
+    -   ARM: arm\_KylinV10P3 or H22e
+-   Procedure:
+
+    1.  Click on the physical NIC name to open the details page.
+    2.  Click **LLDP** to view the peer device information. [For the interpretation of LLDP TLV units, refer to Table 1](#table_e1q_3nd_x1c).
+
+**Modify LLDP Mode**
+
+Using the Link Layer Discovery Protocol (LLDP), you can obtain peer device information connected to the port or send your own device information to neighboring devices directly connected to you, allowing for link communication status queries and judgments.
+
+Steps:
+
+1.  Click on the physical NIC name to open the details page.
+2.  In the NIC details page, click **LLDP**.
+3.  On the LLDP tab, click **Modify**.
+4.  In the Modify NIC LLDP Mode dialog, select the LLDP mode from the dropdown options.
+    -   **Receive Only**: The default mode, which only parses and displays the peer LLDP information received on this port.
+    -   **Send Only**: Sends the LLDP information from this port but does not parse the received LLDP information. Peer device information cannot be viewed in this mode.
+    -   **Send and Receive**: Parses and displays the peer LLDP information received on this port while also sending the LLDP information from this port to the connected peer device.
+    -   **Disabled**: Does not parse received LLDP information and does not send any LLDP information from this port. Peer device information cannot be viewed in this mode.
+5.  Click **OK**.
+
+|Field|Description|
+|-----|-----------|
+|Device ID|Chassis ID, which is the bridge MAC address of the sending device.|
+|Port ID|Port ID, which identifies the port.|
+|Management Address|Management Address, which is the management address of the sending port.|
+|TTL|Time to Live, indicating how long this device's information remains on neighbor devices.|
+|Port Description|Port Description, which provides details about the port.|
+|System Name|System Name, which identifies the name of the device.|
+|System Description|System Description, providing information about the system.|
+|System Capabilities|System Capabilities, indicating the primary functions of the system and those that are in use.|
+|VLAN ID|Primary VLAN ID of the port.|
+|Aggregation Status|Link Aggregation, indicating whether the port supports link aggregation and if it has been enabled.|
+|MTU|Maximum Frame Size, which is the maximum frame length supported by the port, taken from the configured Maximum Transmission Unit (MTU) value.|
+
+## Bond - View and Configure
+If you associate a physical network port with a distributed switch for aggregation when creating the distributed switch, you can view the aggregation port on the corresponding host resource's physical NIC **Bond** page. Click the Refresh button to view the latest information, including the port's aggregation mode, aggregation port status, rate, associated distributed switch, IPv4 address, and creation time. If you need to manage the aggregation port configuration for this host, refer to Manage Joined Hosts.

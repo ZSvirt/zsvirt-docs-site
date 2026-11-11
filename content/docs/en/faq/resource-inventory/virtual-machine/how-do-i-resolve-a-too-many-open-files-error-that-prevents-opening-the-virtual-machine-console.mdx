@@ -1,0 +1,33 @@
+---
+title: "How do I resolve a \"Too many open files\" error that prevents opening the virtual machine console?"
+---
+
+## Solution
+1.  Try the following steps to resolve the issue:
+2.  Log in to the host system where the virtual machine resides.
+
+3.  Run the following command to check the maximum number of open files allowed by the system:
+
+    ```
+    [root@localhost ~]# ulimit -n  //default output is 1024
+    ```
+
+4.  Run the following command to open the `limits.conf` configuration file and add the following entries to set the maximum number of open files to 262144:
+
+    ```
+    [root@localhost ~]# vim /etc/security/limits.conf
+    ...
+    soft nofile 262144
+    hard nofile 262144
+    soft nproc 10240
+    hard nproc 10240
+    ```
+
+5.  Run the following commands to restart the libvirtd and virtlogd services:
+
+    ```
+    [root@localhost ~]# service libvirtd restart
+    [root@localhost ~]# service virtlogd restart
+    ```
+
+6.  After the host reconnects successfully, open the virtual machine console.

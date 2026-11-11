@@ -1,0 +1,60 @@
+---
+title: "解锁登录次数限制请求"
+---
+
+<APIPage method="GET" path="/v1/login/control/unlock">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X GET http://localhost:8080/zstack/v1/login/control/unlock
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|resourceName|String|query| | |3.5.1|
+|loginType|String|query|登录类型| |3.5.1|
+|systemTags \(可选\)|List|query|系统标签| |3.5.1|
+|userTags \(可选\)|List|query|用户标签| |3.5.1|
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+UnlockIdentityAction action = new UnlockIdentityAction();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UnlockIdentityAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UnlockIdentityAction action = UnlockIdentityAction()
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UnlockIdentityAction.Result res = action.call()
+```
+
+</APIPage>

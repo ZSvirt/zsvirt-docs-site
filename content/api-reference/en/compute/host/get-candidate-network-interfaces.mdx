@@ -1,0 +1,297 @@
+---
+title: "Get Host Candidate NIC Information"
+---
+
+<APIPage method="GET" path="/v1/cluster/hosts-network-interfaces">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/cluster/hosts-network-interfaces?hostUuids=5712f3960ae23d24988f4e091bf5704f&interfaceType=all&intersecting=true&limit=1000&start=0
+```
+
+Parameter List
+
+<table id="table_zbn_lsb_3cb"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+hostUuids
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+Host UUIDs
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+interfaceType \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+NIC type
+
+</td><td>
+
+-   interface
+-   bonding
+-   all
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+limit \(optional\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+query
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+start \(optional\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+query
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+systemTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tag
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+userTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tag
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+intersecting \(optional\)
+
+</td><td>
+
+boolean
+
+</td><td>
+
+query
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "slaveNames": [
+    "eth0",
+    "eth1"
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|slaveNames|List|NIC names|4.7.0|
+|success|boolean| |4.7.0|
+|candidateNics|List|See details [candidateNics](#p_pl5_y1r_51c)|4.7.0|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See details [error](#p_sry_hp2_wmb)|4.7.0|
+
+### candidateNics
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|3.5.0|
+|hostUuid|String|Host UUID|3.5.0|
+|bondingUuid|String|Bond UUID|3.5.0|
+|interfaceName|String|NIC name|3.5.0|
+|interfaceType|String|NIC usage state, can be nomaster, bridgeSlave, bondSlave|3.5.0|
+|speed|Long|NIC speed|3.5.0|
+|slaveActive|Boolean|Bond link status|3.5.0|
+|carrierActive|Boolean|Physical link status|3.5.0|
+|ipAddresses|List|IP addresses|3.5.0|
+|gateway|String|Gateway address|4.7.0|
+|mac|String|MAC address|3.5.0|
+|callBackIp|String|Callback address|4.7.0|
+|pciDeviceAddress|String|NIC PCI address|3.5.0|
+|offloadStatus|String| |4.7.0|
+|description|String|Resource description|4.7.0|
+|createDate|Timestamp|Creation time|3.5.0|
+|lastOpDate|Timestamp|Last modification time|3.5.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, e.g. SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, default is null|0.6|
+|opaque|LinkedHashMap|Reserved field, default is null|0.6|
+|cause|ErrorCode|Root cause, the error that caused the current error. If there is no original error, this field is null|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+GetCandidateNetworkInterfacesAction action = new GetCandidateNetworkInterfacesAction();
+action.hostUuids = asList("5712f3960ae23d24988f4e091bf5704f");
+action.interfaceType = "all";
+action.intersecting = true;
+action.limit = 1000;
+action.start = 0;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetCandidateNetworkInterfacesAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetCandidateNetworkInterfacesAction action = GetCandidateNetworkInterfacesAction()
+action.hostUuids = [5712f3960ae23d24988f4e091bf5704f]
+action.interfaceType = "all"
+action.intersecting = true
+action.limit = 1000
+action.start = 0
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetCandidateNetworkInterfacesAction.Result res = action.call()
+```
+
+</APIPage>

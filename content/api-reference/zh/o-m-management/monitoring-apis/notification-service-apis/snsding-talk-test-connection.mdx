@@ -1,0 +1,115 @@
+---
+title: "测试钉钉连通性"
+---
+
+<APIPage method="POST" path="/v1/sns/application-endpoints/ding-talk/test-connection">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "url": "https://example.invalid/webhook",
+    "atAll": true,
+    "atPersonPhoneNumbers": [
+      "13062689903",
+      "13062689901"
+    ],
+    "secret": "YOUR_WEBHOOK_SECRET",
+    "testMsg": "hello world",
+    "endpointUuid": "1c201c27a81740ddadbc5d2f3f38a5e4"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"url":"https://example.invalid/webhook","atAll":true,"atPersonPhoneNumbers":["13062689903","13062689901"],"secret":"YOUR_WEBHOOK_SECRET","testMsg":"hello world","endpointUuid":"1c201c27a81740ddadbc5d2f3f38a5e4"}}' \
+http://localhost:8080/zstack/v1/sns/application-endpoints/ding-talk/test-connection
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|testMsg|String|body\(包含在**params**结构中\)|测试消息| |4.2.0|
+|endpointUuid \(可选\)|String|body\(包含在**params**结构中\)|钉钉终端UUID| |4.2.0|
+|systemTags \(可选\)|List|body|系统标签| |4.2.0|
+|userTags \(可选\)|List|body|用户标签| |4.2.0|
+|url \(可选\)|String|body\(包含在**params**结构中\)|webhook url| |4.2.0|
+|atAll \(可选\)|Boolean|body\(包含在**params**结构中\)|@所有人| |4.2.0|
+|atPersonPhoneNumbers \(可选\)|List|body\(包含在**params**结构中\)|@手机号| |4.2.0|
+|secret \(可选\)|String|body\(包含在**params**结构中\)|钉钉秘钥| |4.2.0|
+
+## API返回
+返回示例
+
+```
+{
+  "connected": true,
+  "webhookResp": {}
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.2.0|
+|connected|boolean|Webhook URL连通性标识\(仅代表能否连通\)|4.2.0|
+|webhookResp|LinkedHashMap|Webhook URL发送测试消息对端返回\([https://open.dingtalk.com/document/robots/custom-robot-access\#title-7ur-3ok-s1a](https://open.dingtalk.com/document/robots/custom-robot-access#title-7ur-3ok-s1a)\)|4.2.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_kzq_vpx_bdb)|4.2.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|5.0.0|
+|description|String|错误的概要描述|5.0.0|
+|details|String|错误的详细信息|5.0.0|
+|elaboration|String|保留字段，默认为null|5.0.0|
+|opaque|LinkedHashMap|保留字段，默认为null|5.0.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|5.0.0|
+
+## SDK示例
+Java SDK
+
+```
+SNSDingTalkTestConnectionAction action = new SNSDingTalkTestConnectionAction();
+action.url = "https://example.invalid/webhook";
+action.atAll = true;
+action.atPersonPhoneNumbers = asList("13062689903","13062689901");
+action.secret = "YOUR_WEBHOOK_SECRET";
+action.testMsg = "hello world";
+action.endpointUuid = "1c201c27a81740ddadbc5d2f3f38a5e4";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+SNSDingTalkTestConnectionAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SNSDingTalkTestConnectionAction action = SNSDingTalkTestConnectionAction()
+action.url = "https://example.invalid/webhook"
+action.atAll = true
+action.atPersonPhoneNumbers = [13062689903, 13062689901]
+action.secret = "YOUR_WEBHOOK_SECRET"
+action.testMsg = "hello world"
+action.endpointUuid = "1c201c27a81740ddadbc5d2f3f38a5e4"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+SNSDingTalkTestConnectionAction.Result res = action.call()
+```
+
+</APIPage>

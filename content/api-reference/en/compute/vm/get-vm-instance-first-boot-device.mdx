@@ -1,0 +1,72 @@
+---
+title: "Get VM Instance First Boot Device"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/{uuid}/first-boot-device">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/50d8c8ed7d4737fd99a2e323cefeac81/first-boot-device
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Resource UUID, uniquely identifies the resource| |3.7.0|
+|systemTags \(Optional\)|List|query|System Tag| |3.7.0|
+|userTags \(Optional\)|List|query|User Tag| |3.7.0|
+
+## API Response
+Response Example
+
+```
+{
+  "firstBootDevice": "CdRom"
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|firstBootDevice|String|Virtual Machine first boot device|3.7.0|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation succeeds, this field is null. For details, see [error](#p_pvc_gz1_mjb)|3.7.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier of the error, for example SYS.1000, HOST.1001|3.7.0|
+|description|String|Brief description of the error|3.7.0|
+|details|String|Detailed error information|3.7.0|
+|elaboration|String|Reserved field, defaults to null|3.7.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|3.7.0|
+|cause|ErrorCode|Root cause. The error that triggered the current error. If there is no original error, this field is null|3.7.0|
+
+## SDK Examples
+Java SDK
+
+```
+GetVmInstanceFirstBootDeviceAction action = new GetVmInstanceFirstBootDeviceAction();
+action.uuid = "50d8c8ed7d4737fd99a2e323cefeac81";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetVmInstanceFirstBootDeviceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetVmInstanceFirstBootDeviceAction action = GetVmInstanceFirstBootDeviceAction()
+action.uuid = "50d8c8ed7d4737fd99a2e323cefeac81"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetVmInstanceFirstBootDeviceAction.Result res = action.call()
+```
+
+</APIPage>

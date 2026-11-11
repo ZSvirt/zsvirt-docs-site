@@ -1,0 +1,119 @@
+---
+title: "Get Alarm Data"
+---
+
+<APIPage method="GET" path="/v1/zwatch/alarm-histories">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zwatch/alarm-histories?startTime=1.596444525E9&endTime=1.596530925E9&limit=200.0&count=false&excludeOtherAccount=false&start=0.0
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|startTime \(Optional\)|Long|query|Start time.| |2.3|
+|endTime \(Optional\)|Long|query|End time.| |2.3|
+|limit \(Optional\)|Integer|query|Maximum number of records to return.| |2.3|
+|conditions \(Optional\)|List|query|Condition list for filtering results.| |2.3|
+|count \(Optional\)|boolean|query|Whether to query message count.| |3.3.0|
+|excludeOtherAccount \(Optional\)|boolean|query|Whether to exclude messages from other accounts \(only effective for SystemAdmin\).| |3.3.0|
+|endpointUuid \(Optional\)|String|query|Endpoint UUID.| |3.10.0|
+|systemTags \(Optional\)|List|query|System tags.| |2.3|
+|userTags \(Optional\)|List|query|User tags.| |2.3|
+
+## API Response
+Response Example
+
+```
+{
+  "histories": [
+    {
+      "alarmUuid": "143b24a12d193c1992c4774dc3b34fda",
+      "namespace": "ZStack/VM",
+      "metricName": "CPUUsedUtilization",
+      "accountUuid": "90aea7a1dfe93cf7bd3379254dddbdf9",
+      "resourceUuid": "4e6bb5390d3938cb9ce830a4766ee4d8",
+      "resourceType": "VmInstanceVO",
+      "alarmStatus": "Alarm",
+      "alarmName": "test-alarm",
+      "threshold": 90.0,
+      "labels": "VMUuid Equal 4e6bb5390d3938cb9ce830a4766ee4d8, CPUNum Equal 2",
+      "metricValue": 10.0,
+      "comparisonOperator": "LessThan",
+      "time": 1510669257141.0
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null on success. See [error](#p_u5h_w2s_l2b) for details.|2.3|
+|histories|List|See [histories](#p_knd_x2s_l2b) for details.|2.3|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001.|2.3|
+|description|String|A brief description of the error.|2.3|
+|details|String|Detailed information about the error.|2.3|
+|elaboration|String|A reserved field. Default is null.|2.3|
+|opaque|LinkedHashMap|A reserved field. Default is null.|2.3|
+|cause|ErrorCode|The root error. The source error that caused the current error. This field is null if there is no root error.|2.3|
+
+### histories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|alarmUuid|String|Alarm UUID.|2.3|
+|namespace|String|Namespace.|2.3|
+|metricName|String|Metric name.|2.3|
+|accountUuid|String|Account UUID.|2.3|
+|resourceUuid|String|Resource UUID.|2.3|
+|resourceType|String|Resource type.|2.3|
+|alarmStatus|String|Alarm status.|2.3|
+|alarmName|String|Alarm name.|2.3|
+|threshold|Double|Alarm threshold.|2.3|
+|period|Integer|Threshold duration.|2.3|
+|labels|String|Tag list.|2.3|
+|metricValue|Double|Metric value at the time.|2.3|
+|time|long|Alarm record generation time.|2.3|
+
+## SDK Examples
+Java SDK
+
+```
+GetAlarmDataAction action = new GetAlarmDataAction();
+action.startTime = 1.530856218E9;
+action.endTime = 1.530942618E9;
+action.limit = 200.0;
+action.count = false;
+action.excludeOtherAccount = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetAlarmDataAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetAlarmDataAction action = GetAlarmDataAction()
+action.startTime = 1.530856218E9
+action.endTime = 1.530942618E9
+action.limit = 200.0
+action.count = false;
+action.excludeOtherAccount = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetAlarmDataAction.Result res = action.call()
+```
+
+</APIPage>

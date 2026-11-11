@@ -1,0 +1,282 @@
+---
+title: "Get Scheduler Execution Report"
+---
+
+<APIPage method="GET" path="/v1/scheduler/report">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/scheduler/report?startTime=1.5856704E12&intervalTimeUnit=Month&range=4.0&schedulerJobTypes=vmBackup
+```
+
+Parameter List
+
+<table id="table_b4p_3x3_mlb"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+startTime
+
+</td><td>
+
+long
+
+</td><td>
+
+query
+
+</td><td>
+
+Report start time
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.9.0
+
+</td></tr><tr><td>
+
+intervalTimeUnit
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+Interval time unit
+
+</td><td>
+
+-   Hour
+-   Month
+
+</td><td>
+
+3.9.0
+
+</td></tr><tr><td>
+
+range
+
+</td><td>
+
+int
+
+</td><td>
+
+query
+
+</td><td>
+
+Report time range
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.9.0
+
+</td></tr><tr><td>
+
+schedulerJobTypes
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+Scheduler job types
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.9.0
+
+</td></tr><tr><td>
+
+systemTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.9.0
+
+</td></tr><tr><td>
+
+userTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.9.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "successRecords": [
+    100.0,
+    99.0,
+    50.0,
+    0.0
+  ],
+  "failureRecords": [
+    0.0,
+    1.0,
+    34.0,
+    0.0
+  ],
+  "partialSuccessRecords": [
+    0.0,
+    0.0,
+    16.0,
+    0.0
+  ],
+  "waitingRecords": [
+    0.0,
+    0.0,
+    0.0,
+    100.0
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|successRecords|List|Success records|3.9.0|
+|failureRecords|List|Failure records|3.9.0|
+|partialSuccessRecords|List|Partial success records|3.9.0|
+|waitingRecords|List|Waiting for execution records|3.9.0|
+|success|boolean| |3.9.0|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_uph_qx3_mlb)|3.9.0|
+|error|ErrorCode|For details, see [error](#p_gdm_qx3_mlb)|3.9.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. The globally unique identifier of the error, for example, SYS.1000 or HOST.1001|3.9.0|
+|description|String|Brief description of the error|3.9.0|
+|details|String|Detailed information about the error|3.9.0|
+|elaboration|String|Reserved field. Default is null|3.9.0|
+|opaque|LinkedHashMap|Reserved field. Default is null|3.9.0|
+|cause|ErrorCode|Root error. The source error that caused the current error. This field is null if there is no source error|3.9.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. The globally unique identifier of the error, for example, SYS.1000 or HOST.1001|3.9.0|
+|description|String|Brief description of the error|3.9.0|
+|details|String|Detailed information about the error|3.9.0|
+|elaboration|String|Reserved field. Default is null|3.9.0|
+|opaque|LinkedHashMap|Reserved field. Default is null|3.9.0|
+|cause|ErrorCode|Root error. The source error that caused the current error. This field is null if there is no source error|3.9.0|
+
+## SDK Examples
+Java SDK
+
+```
+GetSchedulerExecutionReportAction action = new GetSchedulerExecutionReportAction();
+action.startTime = 1.5856704E12;
+action.intervalTimeUnit = "Month";
+action.range = 4.0;
+action.schedulerJobTypes = asList("vmBackup");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetSchedulerExecutionReportAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetSchedulerExecutionReportAction action = GetSchedulerExecutionReportAction()
+action.startTime = 1.5856704E12
+action.intervalTimeUnit = "Month"
+action.range = 4.0
+action.schedulerJobTypes = [vmBackup]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetSchedulerExecutionReportAction.Result res = action.call()
+```
+
+</APIPage>

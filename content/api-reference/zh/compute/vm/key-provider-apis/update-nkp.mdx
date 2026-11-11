@@ -1,0 +1,68 @@
+---
+title: "更新原生密钥提供程序"
+---
+
+<APIPage method="PUT" path="/v1/key-providers/nkp/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateNkp": {
+    "description": "example"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateNkp":{"description":"example"}}' \
+http://localhost:8080/zstack/v1/key-providers/nkp/ff0415ff372f33b5b6b757d3b99ad900/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |5.0.0|
+|description \(可选\)|String|body\(包含在`updateNkp`结构中\)|资源的详细描述| |5.0.0|
+|systemTags \(可选\)|List|body|系统标签| |5.0.0|
+|userTags \(可选\)|List|body|用户标签| |5.0.0|
+
+## SDK示例
+Java SDK
+
+```
+UpdateNkpAction action = new UpdateNkpAction();
+action.uuid = "ff0415ff372f33b5b6b757d3b99ad900";
+action.description = "example";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateNkpAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = UpdateNkpAction()
+action.uuid = "ff0415ff372f33b5b6b757d3b99ad900"
+action.description = "example"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

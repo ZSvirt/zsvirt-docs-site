@@ -1,0 +1,25 @@
+---
+title: SLS 内容转化看板
+description: 使用 SLS 聚合 ZSvirt 官网页面访问、下载点击、搜索和社区转化事件。
+---
+
+## 看板范围
+
+SLS 看板第一阶段只展示匿名聚合指标，不展示个人身份数据。核心数据来自 `/api/track` 清洗后的事件。
+
+## 推荐图表
+
+1. Top 页面：按 `path` 汇总 `page_view`。
+2. 博客访问：按 `content_id` 和 `path` 汇总 `blog_view`。
+3. 访问来源：按 `utm_source`、`utm_medium` 和 `referrer` 汇总 `page_view`。
+4. 下载点击：按 `download_click` 和 `resource_download` 汇总下载动作。
+5. 下载文件动作：从 schema v4 `download_click.detail` 对比 ISO 与 ZMigrate；浏览器、设备及国家/地区/城市分布读取 Supabase `download_click_events`，不保存原始 IP 或经纬度。
+6. 快速开始：按 `quick_start_click` 汇总安装入口点击。
+7. 评估路径导航：按 `evaluation_journey_click` 汇总首页和场景中心后的站内去向。
+8. 社区转化：按 `github_click`、`github_issue_click`、`github_star_click` 和 `discussion_click` 对比来源页面。
+9. 搜索质量：按 `docs_search` 汇总查询词和结果状态，并用 `docs_search_no_results` 跟踪无结果搜索。
+10. 文档下一步：按 `doc_next_doc_click`、`doc_related_resource_click` 和 `doc_next_action_click` 汇总文档后的去向。
+
+## 发布后复盘
+
+每次重要内容发布后，在第 7 天和第 30 天记录访问、访问来源、下载、GitHub、Discussions 和搜索表现。复盘结论应回写到对应内容 PR 或 Roadmap 讨论中。

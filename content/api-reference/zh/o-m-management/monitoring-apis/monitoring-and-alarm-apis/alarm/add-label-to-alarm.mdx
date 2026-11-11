@@ -1,0 +1,337 @@
+---
+title: "增加标签到报警器"
+---
+
+<APIPage method="POST" path="/v1/zwatch/alarms/{alarmUuid}/labels">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "key": "VMUuid",
+    "value": "2840f151485641cca48b190ebb989cbf",
+    "operator": "Equal"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"key":"VMUuid","value":"165af818089b4e9f8c07691de549f8d4","operator":"Equal"}}' http://localhost:8080/zstack/v1/zwatch/alarms/00b90ca9d59d3f539530fbcc8572c403/labels
+```
+
+参数列表
+
+<table id="table_vfr_mwj_p2b"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+alarmUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+报警器UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+key
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+标签键
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+value
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+标签值
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+operator
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+操作符
+
+</td><td>
+
+-   Regex
+-   Equal
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+resourceUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr></tbody>
+</table>
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "3f54b760c8d64e17bc282258335b718a",
+    "key": "VMUuid",
+    "operator": "=",
+    "value": "dd5b28c103594573b7bb21a02cb000c4"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_h5p_5wj_p2b)|2.3|
+|inventory|AlarmInventory|详情参考[inventory](#p_slh_wwj_p2b)|2.3|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|2.3|
+|description|String|错误的概要描述|2.3|
+|details|String|错误的详细信息|2.3|
+|elaboration|String|保留字段，默认为null|2.3|
+|opaque|LinkedHashMap|保留字段，默认为null|2.3|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|2.3|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|2.3|
+|name|String|资源名称|2.3|
+|description|String|资源的详细描述|2.3|
+|period|Integer|阈值持续时间|2.3|
+|namespace|String|名字空间|2.3|
+|metricName|String|监控项名称|2.3|
+|threshold|Double|阈值|2.3|
+|repeatInterval|Integer|报警重复时间|2.3|
+|createDate|Timestamp|创建时间|2.3|
+|lastOpDate|Timestamp|最后一次修改时间|2.3|
+|comparisonOperator|ComparisonOperator|详情参考[comparisonOperator](#p_bc1_ywj_p2b)|2.3|
+|status|AlarmStatus|详情参考[status](#p_xz3_ywj_p2b)|2.3|
+|labels|List|详情参考[labels](#p_vy4_1xj_p2b)|2.3|
+|actions|List|详情参考[actions](#p_xts_bxj_p2b)|2.3|
+
+### comparisonOperator
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|name|String|资源名称|2.3|
+|ordinal|int| |2.3|
+
+### status
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|OK|AlarmStatus|监控中|2.3|
+|Alarm|AlarmStatus|已触发|2.3|
+|InsufficientData|AlarmStatus|数据不足|2.3|
+
+### labels
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|2.3|
+|key|String|标签键|2.3|
+|operator|String|比较符|2.3|
+|value|String|标签值|2.3|
+
+### actions
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|alarmUuid|String|报警器UUID|2.3|
+|actionType|String|报警动作类型|2.3|
+|actionUuid|String|报警动作UUID|2.3|
+
+## SDK示例
+Java SDK
+
+```
+AddLabelToAlarmAction action = new AddLabelToAlarmAction();
+action.alarmUuid = "00b90ca9d59d3f539530fbcc8572c403";
+action.key = "VMUuid";
+action.value = "bfaa02ec5c37490d829ae95bebf15b78";
+action.operator = "Equal";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddLabelToAlarmAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddLabelToAlarmAction action = AddLabelToAlarmAction()
+action.alarmUuid = "00b90ca9d59d3f539530fbcc8572c403"
+action.key = "VMUuid"
+action.value = "b4eb5d369bfb45719fbe862484011563"
+action.operator = "Equal"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddLabelToAlarmAction.Result res = action.call()
+```
+
+</APIPage>

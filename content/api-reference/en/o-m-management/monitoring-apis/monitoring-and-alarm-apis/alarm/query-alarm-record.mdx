@@ -1,0 +1,110 @@
+---
+title: "Query Alarm Records"
+---
+
+<APIPage method="GET" path="/v1/zwatch/alarm-records">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zwatch/alarm-records?q=dataUuid=f30e0a92898a3cf39b98c7b20d5d09d7
+```
+
+Queryable Fields
+
+Run the CLI command-line tool, enter `QueryAlarmRecord` and press Tab to view all queryable fields and cross-table queryable resource names.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "id": 1.0,
+      "createTime": 1510669257141.0,
+      "accountUuid": "ce8e0ae7bfb93fb09c3339443fb79b5a",
+      "alarmName": "ZStack Primary Storage Physical Available Capacity Alarm",
+      "alarmStatus": "Alarm",
+      "alarmUuid": "701f9528318737bb9db81c4f9b5721a7",
+      "comparisonOperator": "LessThan",
+      "context": "{\"PrimaryStorageType\":\"LocalStorage\"}",
+      "dataUuid": "2e6afdb668443ef9a9a82fcba794d21b",
+      "emergencyLevel": "Emergent",
+      "metricName": "AvailablePhysicalCapacityInPercent",
+      "metricValue": 20.0,
+      "namespace": "ZStack/PrimaryStorage",
+      "period": 600.0,
+      "readStatus": false,
+      "resourceUuid": "8a596bd1689c3e83a408c2713d99fc6e",
+      "threshold": 21.0
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null on success. See [error](#p_u5h_w2s_l2b) for details.|4.1.0|
+|histograms|List| |4.1.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001.|4.1.0|
+|description|String|A brief description of the error.|4.1.0|
+|details|String|Detailed information about the error.|4.1.0|
+|elaboration|String|A reserved field. Default is null.|4.1.0|
+|opaque|LinkedHashMap|A reserved field. Default is null.|4.1.0|
+|cause|ErrorCode|The root error. The source error that caused the current error. This field is null if there is no root error.|4.1.0|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|id|long|Message ID.|4.1.0|
+|createTime|long|Creation time.|4.1.0|
+|accountUuid|String|Account UUID.|4.1.0|
+|alarmName|String|Alarm name.|4.1.0|
+|alarmStatus|String|Alarm status.|4.1.0|
+|alarmUuid|String|Alarm UUID.|4.1.0|
+|comparisonOperator|String|Comparison operator.|4.1.0|
+|context|String|Content.|4.1.0|
+|dataUuid|String|Message UUID.|4.1.0|
+|emergencyLevel|String|Alarm level.|4.1.0|
+|labels|String|Tag list.|4.1.0|
+|metricName|String|Metric name.|4.1.0|
+|metricValue|Double|Metric value.|4.1.0|
+|namespace|String|Namespace.|4.1.0|
+|period|int|Threshold duration.|4.1.0|
+|readStatus|Boolean|Read status.|4.1.0|
+|resourceUuid|String|Resource UUID.|4.1.0|
+|threshold|Double|Threshold.|4.1.0|
+
+## SDK Examples
+Java SDK
+
+```
+QueryAlarmRecordAction action = new QueryAlarmRecordAction();
+action.conditions = asList("dataUuid=8860f33a964e3141aee2c3ffde2918b7");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryAlarmRecordAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryAlarmRecordAction action = QueryAlarmRecordAction()
+action.conditions = ["dataUuid=a83224ddc145340b9b7b12170ba614ba"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryAlarmRecordAction.Result res = action.call()
+```
+
+</APIPage>

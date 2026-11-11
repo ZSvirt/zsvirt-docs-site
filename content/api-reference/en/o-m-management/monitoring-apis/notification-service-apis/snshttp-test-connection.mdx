@@ -1,0 +1,104 @@
+---
+title: "Send Test HTTP Request"
+---
+
+<APIPage method="POST" path="/v1/sns/application-endpoints/http/test-connection">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "url": "https://open.feishu.cn/open-apis/bot/v2/hook/006879a3-0898-4428-aad4-3221db3daf81",
+    "username": "admin",
+    "password": "password",
+    "endpointUuid": "1c201c27a81740ddadbc5d2f3f38a5e4"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding example, the `systemTags` and `userTags` fields are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"url":"https://open.feishu.cn/open-apis/bot/v2/hook/006879a3-0898-4428-aad4-3221db3daf81","username":"admin","password":"password","endpointUuid":"1c201c27a81740ddadbc5d2f3f38a5e4"}}' \
+http://localhost:8080/zstack/v1/sns/application-endpoints/http/test-connection
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|url \(Optional\)|String|body \(Contained in the `params` structure\)|webhook url| |4.10.0|
+|username \(Optional\)|String|body \(Contained in the `params` structure\)|Basic Auth username| |4.10.0|
+|password \(Optional\)|String|body \(Contained in the `params` structure\)|Basic Auth password| |4.10.0|
+|endpointUuid \(Optional\)|String|body \(Contained in the `params` structure\)|Endpoint UUID| |4.10.0|
+|systemTags \(Optional\)|List|body|System tags| |4.10.0|
+|userTags \(Optional\)|List|body|User tags| |4.10.0|
+
+## API Response
+Response example
+
+```
+{
+  "connected": true,
+  "webhookResp": "{'result': 'success'}"
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.10.0|
+|connected|boolean|Send result|4.10.0|
+|webhookResp|Object|Remote endpoint response|4.10.0|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_iwx_hcj_p2b)|4.10.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number, a globally unique identifier for the error, for example, SYS.1000 or HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field. Defaults to null|0.6|
+|cause|ErrorCode|The root error that caused the current error. This field is null if there is no root cause|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+SNSHttpTestConnectionAction action = new SNSHttpTestConnectionAction();
+action.url = "https://open.feishu.cn/open-apis/bot/v2/hook/006879a3-0898-4428-aad4-3221db3daf81";
+action.username = "admin";
+action.password = "password";
+action.endpointUuid = "1c201c27a81740ddadbc5d2f3f38a5e4";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+SNSHttpTestConnectionAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SNSHttpTestConnectionAction action = SNSHttpTestConnectionAction()
+action.url = "https://open.feishu.cn/open-apis/bot/v2/hook/006879a3-0898-4428-aad4-3221db3daf81"
+action.username = "admin"
+action.password = "password"
+action.endpointUuid = "1c201c27a81740ddadbc5d2f3f38a5e4"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+SNSHttpTestConnectionAction.Result res = action.call()
+```
+
+</APIPage>

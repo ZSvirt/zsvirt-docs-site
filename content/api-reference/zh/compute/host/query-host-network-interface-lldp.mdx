@@ -1,0 +1,108 @@
+---
+title: "查询主机物理网卡LLDP配置"
+---
+
+<APIPage method="GET" path="/v1/hostNetworkInterface/lldp/all" altPaths={["/v1/hostNetworkInterface/lldp/{interfaceUuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/hostNetworkInterface/lldp/all
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/hostNetworkInterface/lldp/{interfaceUuid}
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryHostNetworkInterfaceLldp`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "interfaceUuid": "d90dd5538ca2343099ea96cb89857aca",
+      "mode": "rx_only"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.1.0|
+|inventories|List|详情参考[inventories](#p_mh4_sbk_51c)|4.1.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_m5s_sbk_51c)|4.1.0|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.1.0|
+|interfaceUuid|String|物理网口Uuid|4.1.0|
+|mode|String|lldp工作模式|4.1.0|
+|createDate|Timestamp|创建时间|4.1.0|
+|lastOpDate|Timestamp|最后一次修改时间|4.1.0|
+|lldp|HostNetworkInterfaceLldpRefInventory|详情参考[lldp](#p_q4c_r2q_51c)|4.1.0|
+
+### lldp
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|lldpUuid|String|LLDP UUID|4.1.0|
+|chassisId|String|机箱标识|4.1.0|
+|timeToLive|Integer|生存时间|4.1.0|
+|managementAddress|String|管理地址|4.1.0|
+|systemName|String|系统名称|4.1.0|
+|systemDescription|String|系统描述|4.1.0|
+|systemCapabilities|String|系统能力|4.1.0|
+|portId|String|端口标识|4.1.0|
+|portDescription|String|端口描述|4.1.0|
+|vlanId|Integer|VLAN标识|4.1.0|
+|aggregationPortId|Long|聚合端口标识|4.1.0|
+|mtu|Integer|最大传输单元|4.1.0|
+|createDate|Timestamp|创建时间|4.1.0|
+|lastOpDate|Timestamp|最后一次修改时间|4.1.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.1.0|
+|description|String|错误的概要描述|4.1.0|
+|details|String|错误的详细信息|4.1.0|
+|elaboration|String|保留字段，默认为null|4.1.0|
+|opaque|LinkedHashMap|保留字段，默认为null|4.1.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.1.0|
+
+## SDK示例
+Java SDK
+
+```
+QueryHostNetworkInterfaceLldpAction action = new QueryHostNetworkInterfaceLldpAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryHostNetworkInterfaceLldpAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryHostNetworkInterfaceLldpAction action = QueryHostNetworkInterfaceLldpAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryHostNetworkInterfaceLldpAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,89 @@
+---
+title: "获取日志服务器配置"
+---
+
+<APIPage method="GET" path="/v1/log/configurations">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" -X GET http://localhost:8080/zstack/v1/log/configurations
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|systemTags \(可选\)|List|query| | |3.10.0|
+|userTags \(可选\)|List|query| | |3.10.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "id": 0.0,
+      "labelKey": "log4j2-0201c1784c6e48d2ba26954d4c688fae",
+      "labelValue": "{\n\"appenderType\": \"Syslog\",\n\"configuration\": {\n\"hostname\": \"192.168.0.13\",\n\"port\": \"514\",\n\"protocol\": \"UDP\",\n\"facility\": \"LOCAL5\"\n}\n}"
+    },
+    {
+      "id": 0.0,
+      "labelKey": "log4j2-ba2cf0a6945d4267bfdc1994776b509d",
+      "labelValue": "{\n\"appenderType\": \"Syslog\",\n\"configuration\": {\n\"hostname\": \"192.168.0.11\",\n\"port\": \"514\",\n\"protocol\": \"UDP\",\n\"facility\": \"LOCAL5\"\n}\n}"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_vth_4k4_ckb)|3.10.0|
+|inventories|List|详情参考[inventories](#p_ast_nk4_ckb)|3.10.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.10.0|
+|description|String|错误的概要描述|3.10.0|
+|details|String|错误的详细信息|3.10.0|
+|elaboration|String|保留字段，默认为null|3.10.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.10.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.10.0|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|id|long| |3.10.0|
+|labelKey|String| |3.10.0|
+|labelValue|String| |3.10.0|
+|resourceUuid|String|资源UUID|3.10.0|
+|createDate|Timestamp|创建时间|3.10.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.10.0|
+
+## SDK示例
+Java SDK
+
+```
+GetLogConfigurationAction action = new GetLogConfigurationAction();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetLogConfigurationAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetLogConfigurationAction action = GetLogConfigurationAction()
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetLogConfigurationAction.Result res = action.call()
+```
+
+</APIPage>

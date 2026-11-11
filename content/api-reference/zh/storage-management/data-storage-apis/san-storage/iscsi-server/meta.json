@@ -1,0 +1,14 @@
+{
+  "title": "iSCSI服务器相关接口",
+  "pages": [
+    "add-iscsi-server",
+    "delete-iscsi-server",
+    "query-iscsi-server",
+    "refresh-iscsi-server",
+    "update-iscsi-server",
+    "attach-iscsi-server-to-cluster",
+    "detach-iscsi-server-from-cluster",
+    "query-iscsi-lun"
+  ],
+  "pagesIndex": "index"
+}

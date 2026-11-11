@@ -1,0 +1,140 @@
+---
+title: "Discover External Primary Storage"
+---
+
+<APIPage method="POST" path="/v1/primary-storage/addon/discover">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "url": "http://operator:password@172.25.1.5:80"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"url":"http://operator:password@172.25.1.5:80"}}' \
+http://localhost:8080/zstack/v1/primary-storage/addon/discover
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|url|String|body\(contained in `params` structure\)| | |5.0.0|
+|identity \(Optional\)|String|body\(contained in `params` structure\)|Storage Identity| |5.0.0|
+|config \(Optional\)|String|body\(contained in `params` structure\)|Configuration| |5.0.0|
+|systemTags \(Optional\)|List|body|System Tags| |5.0.0|
+|userTags \(Optional\)|List|body|User Tags| |5.0.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "identity": "expon",
+    "addonInfo": {
+      "pools": [
+        {
+          "name": "pool1",
+          "availableCapacity": 100,
+          "totalCapacity": 200
+        },
+        {
+          "name": "pool2",
+          "availableCapacity": 100,
+          "totalCapacity": 200
+        }
+      ]
+    },
+    "uuid": "2cb103e920c034b7a709b9cc7e0394b8",
+    "url": "http://operator:*****@172.25.1.5:80",
+    "totalCapacity": 107374182400,
+    "availableCapacity": 53687091200,
+    "createDate": "Nov 14, 2017 2:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |5.0.0|
+|inventory|ExternalPrimaryStorageInventory|See [inventory](#p_ocg_p2m_s2c)|5.0.0|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation succeeds, this field is null. See [error](#p_gxy_yw4_v3b)|5.0.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|identity|String|Storage Identity|5.0.0|
+|config|String|Configuration|5.0.0|
+|addonInfo|String|Additional Information|5.0.0|
+|outputProtocols|List|Output Protocols|5.0.0|
+|defaultProtocol|String|Default Protocol|5.0.0|
+|uuid|String|Resource UUID, uniquely identifies the resource|5.0.0|
+|zoneUuid|String|Data Center UUID|5.0.0|
+|name|String|Resource Name|5.0.0|
+|url|String| |5.0.0|
+|description|String|Resource Description|5.0.0|
+|totalCapacity|Long| |5.0.0|
+|availableCapacity|Long| |5.0.0|
+|totalPhysicalCapacity|Long| |5.0.0|
+|availablePhysicalCapacity|Long| |5.0.0|
+|systemUsedCapacity|Long| |5.0.0|
+|type|String|Type|5.0.0|
+|state|String| |5.0.0|
+|status|String| |5.0.0|
+|mountPath|String| |5.0.0|
+|createDate|Timestamp|Create Time|5.0.0|
+|lastOpDate|Timestamp|Last Modification Time|5.0.0|
+|attachedClusterUuids|List| |5.0.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause, the source error that caused the current error. If there is no original error, this field is null|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+DiscoverExternalPrimaryStorageAction action = new DiscoverExternalPrimaryStorageAction();
+action.url = "http://operator:password@172.25.1.5:80";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DiscoverExternalPrimaryStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DiscoverExternalPrimaryStorageAction action = DiscoverExternalPrimaryStorageAction()
+action.url = "http://operator:password@172.25.1.5:80"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DiscoverExternalPrimaryStorageAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,103 @@
+---
+title: "GetCandidateL2NetworksForAttachingCluster"
+---
+
+<APIPage method="GET" path="/v1/cluster/{clusterUuid}/l2-candidates">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Sample
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/cluster/016f3e0efa66377b8acf1d1b73050af0/l2-candidates?limit=1000&start=0
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|clusterUuid|String|url|The cluster UUID.| |4.0.0|
+|limit \(Optional\)|Integer|query|Optional. The maximum number of records to return. Similar to the MySQL limit.| |4.0.0|
+|start \(Optional\)|Integer|query|Optional. The starting record offset. Similar to the MySQL offset. Use with `limit` for pagination.| |4.0.0|
+|systemTags \(Optional\)|List|query|Optional. The system tags.| |4.0.0|
+|userTags \(Optional\)|List|query|Optional. The user tags.| |4.0.0|
+
+## API Response
+Sample Response
+
+```
+{
+  "inventories": [
+    {
+      "name": "l2",
+      "description": "test",
+      "physicalInterface": "eth0",
+      "vlan": 0,
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.0.0|
+|inventories|List|See [inventories](#p_lpn_vlw_51c).|4.0.0|
+|error|ErrorCode|The error code. If not null, the operation fails, or vice versa. For more information, see [error](#p_wfd_jmw_51c).|4.0.0|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The resource UUID.|4.0.0|
+|name|String|The resource name.|4.0.0|
+|poolUuid|String|The network pool UUID.|4.0.0|
+|zoneUuid|String|The Data Center UUID.|4.0.0|
+|description|String|The detailed description of the resource.|4.0.0|
+|physicalInterface|String|The NIC name.|4.0.0|
+|type|String|The Distributed Switch type.|4.0.0|
+|vni|String|The VNI number.|4.0.0|
+|vlan|int|The VLAN number.|4.0.0|
+|createDate|Timestamp|The creation date.|4.0.0|
+|lastOpDate|Timestamp|The last operation date.|4.0.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code, which is a numbered or alphanumeric code that specifies an error. For example, SYS.1000, HOST.1001.|0.6|
+|description|String|The brief description of the error.|0.6|
+|details|String|The details about the error.|0.6|
+|elaboration|String|The reserved field. Default value: null.|0.6|
+|opaque|LinkedHashMap|The reserved field. Default value: null.|0.6|
+|cause|ErrorCode|The root error, which is the associated root cause of the current error. If no root error exists, this parameter is null.|0.6|
+
+## SDK Sample
+Java SDK
+
+```
+GetCandidateL2NetworksForAttachingClusterAction action = new GetCandidateL2NetworksForAttachingClusterAction();
+action.clusterUuid = "016f3e0efa66377b8acf1d1b73050af0";
+action.limit = 1000;
+action.start = 0;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetCandidateL2NetworksForAttachingClusterAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetCandidateL2NetworksForAttachingClusterAction action = GetCandidateL2NetworksForAttachingClusterAction()
+action.clusterUuid = "016f3e0efa66377b8acf1d1b73050af0"
+action.limit = 1000
+action.start = 0
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetCandidateL2NetworksForAttachingClusterAction.Result res = action.call()
+```
+
+</APIPage>

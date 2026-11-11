@@ -1,0 +1,130 @@
+---
+title: "Delete Virtual Machine SSH Key"
+---
+
+<APIPage method="DELETE" path="/v1/vm-instances/{uuid}/ssh-keys">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth: 2698b6ec6f4241e696c75416e8e31b48" \
+-X DELETE http://localhost:8080/zstack/v1/vm-instances/2cc5bac17cf538a99aca3cd2a36a43c9/ssh-keys
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid \(Optional\)|String|url|Virtual Machine UUID| |0.6|
+|systemTags \(Optional\)|List|body|System Tag| |0.6|
+|userTags \(Optional\)|List|body|User Tag| |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "1b1b886507933498b811eb4cb02e5204",
+    "name": "Test-VM",
+    "description": "web server VM",
+    "zoneUuid": "c2000b60bd0d3b09b2eaa540dbd52593",
+    "clusterUuid": "9f0ad1b3faaa35bd9f6544b0cae6169b",
+    "imageUuid": "18f55fcf23a335c7a75b8b0c1ab6bf6f",
+    "hostUuid": "d06f5a98c17132f9afe093c26fdb4a64",
+    "lastHostUuid": "891c6111cb0537e19a64b5c118908a93",
+    "instanceOfferingUuid": "98dc7ca41563334a8b28f4cd78ee99b7",
+    "rootVolumeUuid": "77e0c10945c23f34998ef3354eda44ce",
+    "platform": "Linux",
+    "defaultL3NetworkUuid": "3aa6de8432ac3c28832d333fd3708478",
+    "type": "UserVm",
+    "hypervisorType": "KVM",
+    "memorySize": 8589934592,
+    "cpuNum": 1,
+    "allocatorStrategy": "LastHostPreferredAllocatorStrategy",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM",
+    "state": "Stopped",
+    "vmNics": [
+      {
+        "uuid": "95ec9e0a04563461804a509aae79c81c",
+        "vmInstanceUuid": "1b1b886507933498b811eb4cb02e5204",
+        "usedIpUuid": "400da1e1d2f93a60b090df24086dbd95",
+        "l3NetworkUuid": "3aa6de8432ac3c28832d333fd3708478",
+        "ip": "192.168.1.10",
+        "mac": "00:0c:29:bd:99:fc",
+        "hypervisorType": "KVM",
+        "netmask": "255.255.255.0",
+        "gateway": "192.168.1.1",
+        "deviceId": 0,
+        "state": "enable",
+        "createDate": "Nov 14, 2017 10:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+      }
+    ],
+    "allVolumes": [
+      {
+        "uuid": "77e0c10945c23f34998ef3354eda44ce",
+        "name": "Root-Volume-For-VM-1b1b886507933498b811eb4cb02e5204",
+        "primaryStorageUuid": "65ecece476553263825347f6593151f6",
+        "vmInstanceUuid": "1b1b886507933498b811eb4cb02e5204",
+        "diskOfferingUuid": "e7a7e4e9c304396c950da7f5cf970741",
+        "rootImageUuid": "18f55fcf23a335c7a75b8b0c1ab6bf6f",
+        "installPath": "/zstack_ps/rootVolumes/acct-36c27e8ff05c4780bf6d2fa65700f22e/vol-77e0c10945c23f34998ef3354eda44ce/77e0c10945c23f34998ef3354eda44ce.qcow2",
+        "type": "Root",
+        "format": "qcow2",
+        "size": 107374182400,
+        "actualSize": 21474836480,
+        "deviceId": 0,
+        "state": "Enabled",
+        "status": "Ready",
+        "createDate": "Nov 14, 2017 10:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+      }
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation is successful. For details, see [error](#p_bch_m2z_zz)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause. The source error that caused the current error. If there is no original error, this field is null|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+DeleteVmSshKeyAction action = new DeleteVmSshKeyAction();
+action.uuid = "2cc5bac17cf538a99aca3cd2a36a43c9";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteVmSshKeyAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteVmSshKeyAction action = DeleteVmSshKeyAction()
+action.uuid = "2cc5bac17cf538a99aca3cd2a36a43c9"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DeleteVmSshKeyAction.Result res = action.call()
+```
+
+</APIPage>

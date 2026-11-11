@@ -1,0 +1,397 @@
+---
+title: "更新PCI设备"
+---
+
+## API请求
+URL
+
+```
+PUT zstack/v1/pci-device/pci-devices/{uuid}/actions
+```
+
+Header
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updatePciDevice": {
+    "state": "Disabled",
+    "name": "test pci",
+    "description": "test pci",
+    "metaData": "key1:value1;key2:value2"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updatePciDevice":{"state":"Disabled","name":"test pci","description":"test pci","metaData":"key1:value1;key2:value2"}}' \
+http://localhost:8080/zstack/v1/pci-device/pci-devices/4bec7e7c2c1e337599e0455165906fd5/actions
+```
+
+参数列表
+
+<table id="table_v4s_5ms_qcb"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+资源的UUID，唯一标示该资源
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.1
+
+</td></tr><tr><td>
+
+state \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**updatePciDevice**结构中\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+-   Enabled
+-   Disabled
+
+</td><td>
+
+2.1
+
+</td></tr><tr><td>
+
+description \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**updatePciDevice**结构中\)
+
+</td><td>
+
+资源的详细描述
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.1
+
+</td></tr><tr><td>
+
+metaData \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**updatePciDevice**结构中\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.1
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.1
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.1
+
+</td></tr></tbody>
+</table>
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "description": "test pci",
+    "hostUuid": "47c749c4520c3c5ba2ddcb6bf725cc40",
+    "vmInstanceUuid": "8452e9231dd339158054902001b453d0",
+    "type": "GPU_Video_Controller",
+    "state": "Disabled",
+    "status": "Active",
+    "vendorId": "10de",
+    "deviceId": "0e0f",
+    "subvendorId": "10de",
+    "subdeviceId": "118b",
+    "pciDeviceAddress": "0000:06:00.1",
+    "metaData": {
+      "metaData": "render:Equal:true;anime:Equal:true",
+      "metaDataEntries": [
+        {
+          "key": "render",
+          "op": "Equal",
+          "value": "true"
+        },
+        {
+          "key": "anime",
+          "op": "Equal",
+          "value": "true"
+        }
+      ]
+    }
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_abf_dwf_xhb)|2.1|
+|inventory|PciDeviceInventory|详情参考[inventory](#p_gwz_cwf_xhb)|2.1|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|2.1|
+|name|String|资源名称|3.5.0|
+|description|String|资源的详细描述|2.1|
+|hostUuid|String|主机UUID|2.1|
+|parentUuid|String|物理PCI设备UUID|3.5.0|
+|vmInstanceUuid|String|虚拟机UUID|2.1|
+|pciSpecUuid|String|PCI设备规格UUID|3.5.0|
+|vendorId|String|供应商ID|2.1|
+|deviceId|String|设备ID|2.1|
+|subvendorId|String|子供应商ID|2.1|
+|subdeviceId|String|子设备ID|2.1|
+|pciDeviceAddress|String|PCI设备地址|2.1|
+|createDate|Timestamp|创建时间|2.1|
+|lastOpDate|Timestamp|最后一次修改时间|2.1|
+|type|PciDeviceType|详情参考[type](#p_hxs_cwf_xhb)|2.1|
+|state|PciDeviceState|详情参考[state](#p_xzn_cwf_xhb)|2.1|
+|status|PciDeviceStatus|详情参考[status](#p_w2k_cwf_xhb)|2.1|
+|virtStatus|PciDeviceVirtStatus|详情参考[virtStatus](#p_v2g_cwf_xhb)|3.5.0|
+|chooser|PciDeviceChooser|详情参考[chooser](#p_uqc_rbn_y1c)|4.1.0|
+|metaData|PciDeviceMetaData|详情参考[metaData](#p_thb_cwf_xhb)|2.1|
+|matchedPciDeviceOfferingRef|List|详情参考[matchedPciDeviceOfferingRef](#p_e34_bwf_xhb)|2.1|
+|mdevSpecRefs|List|详情参考[mdevSpecRefs](#p_udj_bwf_xhb)|3.5.0|
+
+### type
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|GPU\_Video\_Controller|PciDeviceType|GPU显卡控制器|2.1|
+|GPU\_Audio\_Controller|PciDeviceType|GPU声卡控制器|2.1|
+|GPU\_3D\_Controller|PciDeviceType|GPU 3D控制器|2.1|
+|Moxa\_Device|PciDeviceType|MOXA卡|2.1|
+|Generic|PciDeviceType|一般设备|2.1|
+
+### state
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Enabled|PciDeviceState|启用|2.1|
+|Disabled|PciDeviceState|停用|2.1|
+
+### status
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Active|PciDeviceStatus|就绪|2.1|
+|Attached|PciDeviceStatus|已挂载|2.1|
+|System|PciDeviceStatus|系统|2.1|
+
+### virtStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|UNVIRTUALIZABLE|PciDeviceVirtStatus|不可虚拟化|3.5.0|
+|SRIOV\_VIRTUALIZABLE|PciDeviceVirtStatus|支持SRIOV虚拟化|3.5.0|
+|VFIO\_MDEV\_VIRTUALIZABLE|PciDeviceVirtStatus|支持VFIO\_MDEV虚拟化|3.5.0|
+|SRIOV\_VIRTUALIZED|PciDeviceVirtStatus|已SRIOV虚拟化|3.5.0|
+|VFIO\_MDEV\_VIRTUALIZED|PciDeviceVirtStatus|已VFIO\_MDEV虚拟化|3.5.0|
+|SRIOV\_VIRTUAL|PciDeviceVirtStatus|SRIOV虚拟设备|3.5.0|
+|UNKNOWN|PciDeviceVirtStatus|未知|3.5.0|
+
+### chooser
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|None|PciDeviceChooser| |4.8.0|
+|Device|PciDeviceChooser| |4.8.0|
+|Spec|PciDeviceChooser| |4.8.0|
+
+### metaData
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|metaData|String| |2.1|
+|metaDataEntries|List|详情参考[metaDataEntries](#p_i1x_bwf_xhb)|2.1|
+
+### metaDataEntries
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|key|String|键|2.1|
+|value|String|值|2.1|
+|op|PciDeviceMetaDataOperator|详情参考[op](#p_xls_bwf_xhb)|2.1|
+
+### op
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Equal|PciDeviceMetaDataOperator|相等|2.1|
+|Unequal|PciDeviceMetaDataOperator|不等|2.1|
+
+### matchedPciDeviceOfferingRef
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|pciDeviceUuid|String| |2.1|
+|pciDeviceOfferingUuid|String| |2.1|
+
+### mdevSpecRefs
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|pciDeviceUuid|String|PCI设备UUID|3.5.0|
+|mdevSpecUuid|String|MDEV设备规格UUID|3.5.0|
+|effective|Boolean|当前MDEV规格是否被用于切分该PCI设备|3.5.0|
+|createDate|Timestamp|创建时间|3.5.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.5.0|
+
+## SDK示例
+Java SDK
+
+```
+UpdatePciDeviceAction action = new UpdatePciDeviceAction();
+action.uuid = "4bec7e7c2c1e337599e0455165906fd5";
+action.state = "Disabled";
+action.name = "test pci";
+action.description = "test pci";
+action.metaData = "key1:value1;key2:value2";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdatePciDeviceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdatePciDeviceAction action = UpdatePciDeviceAction()
+action.uuid = "4bec7e7c2c1e337599e0455165906fd5"
+action.state = "Disabled"
+action.name = "test pci"
+action.description = "test pci"
+action.metaData = "key1:value1;key2:value2"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdatePciDeviceAction.Result res = action.call()
+```

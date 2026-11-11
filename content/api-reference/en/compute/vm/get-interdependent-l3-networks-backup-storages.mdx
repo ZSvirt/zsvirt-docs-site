@@ -1,0 +1,118 @@
+---
+title: "Get Interdependent L3Networks Backup Storages"
+---
+
+<APIPage method="GET" path="/v1/backupStorage-l3networks/dependencies">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/backupStorage-l3networks/dependencies?zoneUuid=05861219da2d3b79ae38c89be62edb97&backupStorageUuid=1ab2d87b28683da09130464e62f13bb6
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|zoneUuid|String|query|Data Center UUID| |0.6|
+|backupStorageUuid \(Optional\)|String|query|Backup Storage UUID| |0.6|
+|l3NetworkUuids \(Optional\)|List|query|Distributed Port Group UUID| |0.6|
+|systemTags \(Optional\)|List|query|System Tag| |0.6|
+|userTags \(Optional\)|List|query|User Tag| |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "cd4b3176e7e732e0904e069475a6193e",
+      "name": "private L3",
+      "type": "L3BasicNetwork",
+      "zoneUuid": "1818e12a7ea431a5bf535ef36429083d",
+      "l2NetworkUuid": "54accee8964437f5999604bff2cb455f",
+      "state": "Enabled",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM",
+      "ipRanges": [
+        {
+          "uuid": "68f1828615333cb6a783981e8454ddfb",
+          "l3NetworkUuid": "cd4b3176e7e732e0904e069475a6193e",
+          "name": "ip range",
+          "startIp": "192.168.0.10",
+          "endIp": "192.168.0.100",
+          "netmask": "255.255.255.0",
+          "gateway": "192.168.0.1",
+          "createDate": "Nov 14, 2017 10:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+        }
+      ],
+      "networkServices": [
+        {
+          "l3NetworkUuid": "cd4b3176e7e732e0904e069475a6193e",
+          "networkServiceProviderUuid": "25005ef41b39335290e16ba6d9fd045b",
+          "networkServiceType": "DHCP"
+        },
+        {
+          "l3NetworkUuid": "cd4b3176e7e732e0904e069475a6193e",
+          "networkServiceProviderUuid": "25005ef41b39335290e16ba6d9fd045b",
+          "networkServiceType": "DNS"
+        },
+        {
+          "l3NetworkUuid": "cd4b3176e7e732e0904e069475a6193e",
+          "networkServiceProviderUuid": "25005ef41b39335290e16ba6d9fd045b",
+          "networkServiceType": "SNAT"
+        }
+      ]
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|inventories|List| |0.6|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation succeeds, this field is null. For details, see [error](#p_dgg_1zb_k1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier of the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause. The error that triggered the current error. If there is no original error, this field is null|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+GetInterdependentL3NetworksBackupStoragesAction action = new GetInterdependentL3NetworksBackupStoragesAction();
+action.zoneUuid = "05861219da2d3b79ae38c89be62edb97";
+action.backupStorageUuid = "1ab2d87b28683da09130464e62f13bb6";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetInterdependentL3NetworksBackupStoragesAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetInterdependentL3NetworksBackupStoragesAction action = GetInterdependentL3NetworksBackupStoragesAction()
+action.zoneUuid = "05861219da2d3b79ae38c89be62edb97"
+action.backupStorageUuid = "1ab2d87b28683da09130464e62f13bb6"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetInterdependentL3NetworksBackupStoragesAction.Result res = action.call()
+```
+
+</APIPage>

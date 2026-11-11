@@ -1,0 +1,64 @@
+---
+title: "Delete a KMS Key Provider"
+---
+
+<APIPage method="DELETE" path="/v1/key-providers/kms/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/key-providers/kms/ff0a9250e11b3fe5a553d61be176d300?deleteMode=Permissive
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Optional Value|Since|
+|----|----|--------|-----------|--------------|-----|
+|uuid|String|url|Resource UUID, which uniquely identifies the resource| |5.0.0|
+|deleteMode \(optional\)|String|query|Deletion mode \(Permissive / Enforcing, Permissive\)| |5.0.0|
+|systemTags \(optional\)|List|query|System tags| |5.0.0|
+|userTags \(optional\)|List|query|User tags| |5.0.0|
+
+## API Response
+When this API succeeds, it returns an empty JSON structure `{}`. When an error occurs, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Example
+Java SDK
+
+```
+DeleteKmsAction action = new DeleteKmsAction();
+action.uuid = "ff0a9250e11b3fe5a553d61be176d300";
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteKmsAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = DeleteKmsAction()
+action.uuid = "ff0a9250e11b3fe5a553d61be176d300"
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,64 @@
+---
+title: "删除邮箱接收端的地址"
+---
+
+<APIPage method="DELETE" path="/v1/sns/application-endpoints/emails/{endpointUuid}/email-addresses/{emailAddressUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/sns/application-endpoints/emails/c9d1789432133840862986db31a8e3fb/email-addresses/7671c40279e23d1cba927a5726957fcb
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|emailAddressUuid|String|url| | |3.7.0|
+|endpointUuid|String|url| | |3.7.0|
+|systemTags \(可选\)|List|body| | |3.7.0|
+|userTags \(可选\)|List|body| | |3.7.0|
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+DeleteEmailAddressOfSNSEmailEndpointAction action = new DeleteEmailAddressOfSNSEmailEndpointAction();
+action.emailAddressUuid = "7671c40279e23d1cba927a5726957fcb";
+action.endpointUuid = "c9d1789432133840862986db31a8e3fb";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteEmailAddressOfSNSEmailEndpointAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteEmailAddressOfSNSEmailEndpointAction action = DeleteEmailAddressOfSNSEmailEndpointAction()
+action.emailAddressUuid = "7671c40279e23d1cba927a5726957fcb"
+action.endpointUuid = "c9d1789432133840862986db31a8e3fb"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DeleteEmailAddressOfSNSEmailEndpointAction.Result res = action.call()
+```
+
+</APIPage>

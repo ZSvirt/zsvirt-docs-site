@@ -1,0 +1,89 @@
+---
+title: "升级管理节点 HA 环境"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+本章节以 H84r 为例，介绍如何升级设置了管理节点 HA 的环境。
+
+## 操作步骤
+
+1.  查看当前环境版本以及操作系统版本。
+
+    ```
+    [root@localhost ~]# zstack-ctl status
+    [root@localhost ~]# cat /etc/redhat-release
+    ```
+
+2.  获取安装升级包。
+
+    按需下载 zstack-upgrade 脚本、ISO软件包、安装升级包以及管理节点高可用套件。
+
+3.  关闭高可用策略。
+
+    升级前需关闭虚拟机高可用全局开关，避免意外触发虚拟机高可用影响升级。升级完成后再手动开启高可用策略。
+
+    1.  登录 ZSvirt。
+
+    2.  点击**业务可靠** > **高可用策略**，进入高可用策略页面。
+
+    3.  关闭高可用策略开关。
+
+4.  备份数据库和升级脚本。
+
+    登录管理节点操作系统，分别执行以下命令备份数据库和升级脚本用于意外恢复。
+
+    ```
+    # 备份数据库至/var/lib/zstack/mysql-backup/目录
+    [root@localhost ~]# zstack-ctl dump_mysql --file-name zstack-db-backup
+    
+    # 备份升级脚本至/root/目录
+    [root@localhost ~]# cp /usr/local/bin/zstack-upgrade /root/zstack-upgrade-bk
+    ```
+
+5.  获取 VIP 所在管理节点 IP 地址。
+
+    执行以下命令获取 VIP 所在管理节点 IP 地址，返回结果中 VIP 为 yes 的节点即为 VIP 所在的管理节点：
+
+    ```
+    [root@localhost ~]# zsha2 status
+    ```
+
+6.  导入高可用套件，并赋予可执行权限。
+
+    在 VIP 所在管理节点依次执行以下命令，从本地 ISO 仓库复制高可用套件，并对 `zsha2` 和 `zstack-hamon` 文件赋予可执行权限：
+
+    ```
+    # 从本地 ISO 仓库复制高可用套件文件
+    [root@localhost ~]# cp /opt/zstack-dvd/x86_64/h84r/zsha2_bins/* /root/
+
+    # 赋予可执行权限
+    [root@localhost ~]# chmod +x zsha2 zstack-hamon
+    ```
+
+7.  升级高可用套件。
+
+    在 VIP 所在管理节点执行以下命令，升级高可用套件：
+
+    ```
+    [root@localhost ~]# ./zsha2 upgrade-ha
+    ```
+
+8.  执行`zsha2 version`命令检查`commit id`是否与最新版本包中的一致。
+
+9.  升级 ZSvirt。
+
+    在 VIP 所在管理节点执行以下命令，升级虚拟化平台：
+
+    ```
+    zsha2 upgrade-mn -peerpass password ZSvirt-x86_64-DVD-1.0.0-h84r.iso
+    ```
+
+    **Note:** `-peerpass`为可选参数，可设置 Peer 管理节点 SSH 登录密码。
+
+
+10. 手动清理浏览器缓存。
+
+    为了保证新功能能够正常使用，建议在升级完成后登录 UI 管理界面，按下`Ctrl+F5`或`Ctrl+Shift+R`手动清理浏览器缓存。
+
+11. 开启高可用策略。

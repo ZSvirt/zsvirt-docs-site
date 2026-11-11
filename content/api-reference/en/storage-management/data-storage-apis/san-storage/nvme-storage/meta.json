@@ -1,0 +1,14 @@
+{
+  "title": "NVMe Storage Related Interfaces",
+  "pages": [
+    "query-nvme-lun",
+    "query-nvme-target",
+    "refresh-nvme-target",
+    "add-nvme-server",
+    "attach-nvme-server-to-cluster",
+    "delete-nvme-server",
+    "detach-nvme-server-from-cluster",
+    "query-nvme-server"
+  ],
+  "pagesIndex": "index"
+}

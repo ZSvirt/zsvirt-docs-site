@@ -1,0 +1,66 @@
+---
+title: "第一步 安装操作系统"
+---
+
+本场景中，管理员需分别在选取的两台服务器上安装管理节点模式。
+
+## 操作步骤
+
+1.  选择引导项。
+
+    进入 ISO 系统引导界面，选择默认选项开始安装操作系统。您可根据实际情况选择，建议使用图形界面安装。若服务器无 VGA 接口，仅支持串口连接，您可使用 VNC 方式或字符安装方式。
+
+    -   图形界面方式
+    -   VNC 方式
+    -   字符安装方式
+    如[Figure 1](#fig_sx2_rpz_cdc)所示：
+
+    ![系统引导](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_1_1.png)
+
+2.  选择安装模式。
+
+    1.  在 INSTALLATION SUMMARY 界面，点击 **Software Selection**。
+
+    2.  在 SOFTWARE SELECTION 界面，选择安装模式。
+
+        管理节点所在服务器选择**ZSvirt Management Node**模式，其余节点所在服务器选择**ZSvirt Compute Node**模式。
+
+    3.  选择完安装模式后，点击 **Done**。
+
+    如[Figure 2](#fig_s43_2rz_cdc)所示：
+
+    ![选择安装模式](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_1_3.png)
+
+3.  配置硬盘分区。
+
+    1.  在 INSTALLATION SUMMARY 界面，点击 **Installation Destination**，进入 INSTALLATION DESTINATION 界面。
+
+    2.  对于 Device Selection，建议此处仅配置系统盘，其余磁盘可在系统安装后配置。
+
+    3.  对于 Storage Configuration，建议选择 **Automatic** 自动配置硬盘分区。
+
+        若您需手动配置，可根据 BIOS 引导模式参考以下内容：
+
+        -   UEFI 模式：
+            -   `/boot`：存放 Linux 启动所需的核心文件，建议分配 1 GB 空间
+            -   `/boot/efi`：存放 UEFI 启动引导文件，建议分配 500 MB
+            -   `swap`：交换区，建议分配 32 GB
+            -   `/`：Linux 系统根目录，建议分配全部剩余空间
+        -   Legacy 模式
+            -   `/boot`：存放 Linux 启动所需的核心文件，建议分配 1 GB 空间
+            -   `swap`：交换区，建议分配 32 GB
+            -   `/`：Linux 系统根目录，建议分配全部剩余空间
+
+### Note:
+
+        -   以上数值为 ZSvirt 建议分区容量（磁盘总容量大于 300 GB）。
+        -   Legacy 模式下，若系统盘容量大于 2 TB，需配置 BIOS boot 分区，以支持 GPT 分区。UEFI 模式没有此限制，且支持 GPT 分区。
+    4.  确认配置无误后，点击 **Done**。
+
+    如[Figure 3](#fig_usl_bvz_cdc)所示：
+
+    ![配置硬盘分区](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_1_4.png)
+
+4.  在 INSTALLATION SUMMARY 界面，点击 **Root Password**，设置操作系统 root 密码。
+
+5.  在 INSTALLATION SUMMARY 界面，点击 **Begin Installation**，开始安装操作系统。

@@ -1,0 +1,124 @@
+---
+title: "GetCandidateVmNicForSecurityGroup"
+---
+
+<APIPage method="GET" path="/v1/security-groups/{securityGroupUuid}/vm-instances/candidate-nics">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/security-groups/584e70f6d3504c7a811df5eeba61839c/vm-instances/candidate-nics
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|securityGroupUuid|String|url|The security group UUID| |0.6|
+|systemTags \(Optional\)|List|query|System tags| |0.6|
+|userTags \(Optional\)|List|query|User tags| |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "80d2eab0354c329b8257e8f9fcd76d43",
+      "vmInstanceUuid": "e8af62992ec5343facac7c5fc164ddd0",
+      "l3NetworkUuid": "738cc18ef5003a00937c0e17e6c67a2d",
+      "ip": "192.168.0.123",
+      "mac": "fa:ef:34:5c:6c:00",
+      "hypervisorType": "KVM",
+      "netmask": "255.255.255.0",
+      "gateway": "192.168.0.1",
+      "internalName": "eth0",
+      "deviceId": 0.0
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See [error](#p_uss_jt5_m1b)|0.6|
+|inventories|List|See [inventories](#p_vmx_jt5_m1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root error: the source error that caused the current error. If there is no original error, this field is null|0.6|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource, uniquely identifying the resource|0.6|
+|vmInstanceUuid|String|The VM instance UUID|0.6|
+|l3NetworkUuid|String|The Distributed Port Group UUID|0.6|
+|ip|String| |0.6|
+|mac|String| |0.6|
+|hypervisorType|String| |0.6|
+|netmask|String| |0.6|
+|gateway|String| |0.6|
+|metaData|String| |0.6|
+|ipVersion|Integer|The IP version number|3.1.0|
+|driverType|String| |0.6|
+|internalName|String| |0.6|
+|deviceId|Integer| |0.6|
+|type|String| |0.6|
+|state|String|The NIC state|0.6|
+|createDate|Timestamp|The creation time|0.6|
+|lastOpDate|Timestamp|The last modification time|0.6|
+|usedIps|List|See [usedIps](#p_hjd_n12_5gb)|0.6|
+
+### usedIps
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource, uniquely identifying the resource|0.6|
+|ipRangeUuid|String|The IP range UUID|0.6|
+|l3NetworkUuid|String|The Distributed Port Group UUID|0.6|
+|ipVersion|Integer|The IP version number|3.1.0|
+|ip|String|The IP address|0.6|
+|netmask|String|The netmask|0.6|
+|gateway|String|The gateway address|0.6|
+|usedFor|String| |0.6|
+|ipInLong|long| |0.6|
+|vmNicUuid|String|The VM NIC UUID|3.1.0|
+|createDate|Timestamp|The creation time|0.6|
+|lastOpDate|Timestamp|The last modification time|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+GetCandidateVmNicForSecurityGroupAction action = new GetCandidateVmNicForSecurityGroupAction();
+action.securityGroupUuid = "d11a80c9d7ba32ad97e2bca9c0dba6a9";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetCandidateVmNicForSecurityGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = GetCandidateVmNicForSecurityGroupAction()
+action.securityGroupUuid = "d11a80c9d7ba32ad97e2bca9c0dba6a9"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

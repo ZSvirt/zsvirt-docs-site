@@ -1,0 +1,96 @@
+---
+title: "Get Bindable Resource Custom Attributes"
+---
+
+<APIPage method="GET" path="/v1/resource-configurations/bindable" altPaths={["/v1/resource-configurations/bindable/{category}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/resource-configurations/bindable?category=host
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/resource-configurations/bindable/host?category=host
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|category \(Optional\)|String|query|Configuration category| |3.4.0|
+|systemTags \(Optional\)|List|query| | |3.4.0|
+|userTags \(Optional\)|List|query| | |3.4.0|
+
+## API Response
+Response Example
+
+```
+{
+  "bindableConfigs": [
+    {
+      "name": "cpu.overProvisioning.ratio",
+      "category": "host",
+      "bindResourceTypes": [
+        "HostVO",
+        "ClusterVO",
+        "ZoneVO"
+      ]
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_lbp_kdl_zgb) for details|3.4.0|
+|bindableConfigs|List|See [bindableConfigs](#p_sv5_kdl_zgb) for details|3.4.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|3.4.0|
+|description|String|A brief description of the error|3.4.0|
+|details|String|The detailed error information|3.4.0|
+|elaboration|String|Reserved field. Default is null|3.4.0|
+|opaque|LinkedHashMap|Reserved field. Default is null|3.4.0|
+|cause|ErrorCode|The root error that caused the current error. If no root error exists, this field is null|3.4.0|
+
+### bindableConfigs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Configuration name|3.4.0|
+|category|String|Configuration category|3.4.0|
+|description|String|The detailed description of the configuration|3.4.0|
+|bindResourceTypes|List|The resource types that can be bound with the configuration|3.4.0|
+
+## SDK Examples
+Java SDK
+
+```
+GetResourceBindableConfigAction action = new GetResourceBindableConfigAction();
+action.category = "host";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetResourceBindableConfigAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetResourceBindableConfigAction action = GetResourceBindableConfigAction()
+action.category = "host"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetResourceBindableConfigAction.Result res = action.call()
+```
+
+</APIPage>

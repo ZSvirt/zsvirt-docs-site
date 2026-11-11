@@ -1,0 +1,33 @@
+---
+title: "The host time is not synchronized. What should I do?"
+---
+
+<HistoricalNamingNote locale="en" />
+
+## Cause
+The host has no time source configured, or the configured time source is inaccurate.
+
+## Solution
+1.  If you are using an internal NTP server, you can use the Management Node as the internal time source in a private network environment. Ensure the Management Node time is accurate. If the time is incorrect, use the `date` command to update the time source; other nodes will synchronize automatically. Run the following commands in sequence:
+
+    ```
+    # Check the time source node
+    [root@localhost ~]# zstack-ctl show_configuration | grep chrony
+    # Example: set the time to 21:00 on July 25, 2022
+    [root@localhost ~]# date -s "2022-07-25 21:00:00"
+    ```
+
+2.  If you are using an external NTP server, configure the Management Node to synchronize with the external time source. All other hosts in the cluster should then synchronize their clocks from the Management Node. The external NTP server must be network-reachable from the Management Node. If you use a domain name for synchronization, configure DNS on the Management Node. Run the following commands in sequence:
+
+    ```
+    # Check the time source node
+    [root@localhost ~]# zstack-ctl show_configuration | grep chrony
+    # Log in to the time source node and add an external NTP address to chrony.conf
+    [root@localhost ~]# vim /etc/chrony.conf
+    server 172.31.250.111 iburst
+    allow 0.0.0.0/0
+    # Restart the chronyd service
+    [root@localhost ~]# systemctl restart chronyd.service
+    # Verify that time synchronization is working
+    [root@localhost ~]# chronyc sources -v
+    ```

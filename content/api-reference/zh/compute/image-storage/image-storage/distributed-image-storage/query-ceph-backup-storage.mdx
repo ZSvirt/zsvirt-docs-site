@@ -1,0 +1,105 @@
+---
+title: "查询分布式镜像仓库"
+---
+
+<APIPage method="GET" path="/v1/backup-storage/ceph" altPaths={["/v1/backup-storage/ceph/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/backup-storage/ceph?q=uuid=005420eeec6c4a6292939ea7fa8a954b
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \\
+-X GET http://localhost:8080/zstack/v1/backup-storage/ceph/3e3c2f5e4f5d476ba1ef8e5ba42be06b
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryCephBackupStorage`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "name": "My Backup Storage",
+      "description": "Public Backup Storage",
+      "totalCapacity": 1073741824.0,
+      "availableCapacity": 968884224.0,
+      "type": "Ceph",
+      "state": "Enabled",
+      "status": "Connected",
+      "createDate": "Jun 7, 2017 9:21:12 PM",
+      "lastOpDate": "Jun 7, 2017 9:21:12 PM",
+      "attachedZoneUuids": [
+        "1613a61a681b4d7790ffc1d2bd2870d3"
+      ]
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_hx4_tg1_n1b)|0.6|
+|inventories|List|详情参考[inventories](#p_jsg_5g1_n1b)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|name|String|资源名称|0.6|
+|url|String| |0.6|
+|description|String|资源的详细描述|0.6|
+|totalCapacity|Long| |0.6|
+|availableCapacity|Long| |0.6|
+|type|String| |0.6|
+|state|String| |0.6|
+|status|String| |0.6|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+|attachedZoneUuids|List| |0.6|
+
+## SDK示例
+Java SDK
+
+```
+QueryCephBackupStorageAction action = new QueryCephBackupStorageAction();
+action.conditions = asList("uuid=fd7807cb1d744273bf8632362f2095aa");
+action.sessionId = "940c1b37499e4e3c831625717ddb1c8f";
+QueryCephBackupStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryCephBackupStorageAction action = QueryCephBackupStorageAction()
+action.conditions = ["uuid=2c8474f249234365993ba771e4b495ba"]
+action.sessionId = "2b7bb843955e4574b8ca8862d0223f8d"
+QueryCephBackupStorageAction.Result res = action.call()
+```
+
+</APIPage>

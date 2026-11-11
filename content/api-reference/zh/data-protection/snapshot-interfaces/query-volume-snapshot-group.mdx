@@ -1,0 +1,129 @@
+---
+title: "查询快照组"
+---
+
+<APIPage method="GET" path="/v1/volume-snapshots/group">
+
+```
+GET zstack/v1/volume-snapshots/group/{uuid}
+```
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/volume-snapshots/group?q=uuid=9480c1736b9c3798b3030cd990f0db8f
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/volume-snapshots/group/91c3de9ffbc73475a84b8038c8a2349c
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryVolumeSnapshotGroup`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "2c95e5285a733df6a2b70e198282f594",
+      "snapshotCount": 1.0,
+      "name": "group",
+      "vmInstanceUuid": "371076859fa9326fba89633429f0aa06",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM",
+      "volumeSnapshotRefs": [
+        {
+          "volumeSnapshotUuid": "bb6bc37f1c483ac1b7703b6ba58a2081",
+          "volumeSnapshotGroupUuid": "2c95e5285a733df6a2b70e198282f594",
+          "deviceId": 0.0,
+          "snapshotDeleted": false,
+          "volumeUuid": "6ff4fae70b79328bb0233313adb1226b",
+          "volumeName": "ROOT-volume",
+          "volumeType": "Root",
+          "volumeSnapshotInstallPath": "/Cloud_ps/to/path/snap.qcow2",
+          "volumeSnapshotName": "group-ROOT-volume",
+          "createDate": "Nov 14, 2017 10:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+        }
+      ]
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_dqw_y4g_x3b)|3.6.0|
+|inventories|List|详情参考[inventories](#p_sm1_y4g_x3b)|3.6.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.6.0|
+|description|String|错误的概要描述|3.6.0|
+|details|String|错误的详细信息|3.6.0|
+|elaboration|String|保留字段，默认为null|3.6.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.6.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.6.0|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.6.0|
+|snapshotCount|Integer|组内快照数量|3.6.0|
+|name|String|资源名称|3.6.0|
+|description|String|资源的详细描述|3.6.0|
+|vmInstanceUuid|String|虚拟机UUID|3.6.0|
+|createDate|Timestamp|创建时间|3.6.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.6.0|
+|volumeSnapshotRefs|List|详情参考[volumeSnapshotRefs](#p_hyf_x4g_x3b)|3.6.0|
+
+### volumeSnapshotRefs
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|volumeSnapshotUuid|String|硬盘快照UUID|3.6.0|
+|volumeSnapshotGroupUuid|String|快照组UUID|3.6.0|
+|deviceId|int|打快照时硬盘的加载序号|3.6.0|
+|snapshotDeleted|boolean|快照是否已经被删除|3.6.0|
+|volumeUuid|String|硬盘UUID|3.6.0|
+|volumeName|String|硬盘的名字|3.6.0|
+|volumeType|String|硬盘的类型|3.6.0|
+|volumeSnapshotInstallPath|String|快照的安装路径|3.6.0|
+|volumeSnapshotName|String|快照的名字|3.6.0|
+|createDate|Timestamp|创建时间|3.6.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.6.0|
+
+## SDK示例
+Java SDK
+
+```
+QueryVolumeSnapshotGroupAction action = new QueryVolumeSnapshotGroupAction();
+action.conditions = asList("uuid=102cde8f217430aaaf5652460adb7d7e");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryVolumeSnapshotGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryVolumeSnapshotGroupAction action = QueryVolumeSnapshotGroupAction()
+action.conditions = ["uuid=3ad89f9fbe823083b1918f872381a1f5"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryVolumeSnapshotGroupAction.Result res = action.call()
+```
+
+</APIPage>

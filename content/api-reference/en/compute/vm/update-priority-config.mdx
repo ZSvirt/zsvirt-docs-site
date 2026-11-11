@@ -1,0 +1,84 @@
+---
+title: "Update Priority Config"
+---
+
+<APIPage method="PUT" path="/v1/vm-priority-config/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updatePriorityConfig": {
+    "cpuShares": 2,
+    "oomScoreAdj": 100
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updatePriorityConfig":{"cpuShares":2,"oomScoreAdj":100}}' http://localhost:8080/zstack/v1/vm-priority-config/face4c7ce31f3a5a98708f60a7fc935a/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Resource UUID, uniquely identifies the resource| |3.7.0|
+|cpuShares \(Optional\)|Integer|body \(contained in **updatePriorityConfig** structure\)| | |3.7.0|
+|oomScoreAdj \(Optional\)|Integer|body \(contained in **updatePriorityConfig** structure\)| | |3.7.0|
+|systemTags \(Optional\)|List|body| | |3.7.0|
+|userTags \(Optional\)|List|body| | |3.7.0|
+
+## API Response
+On success, this API returns an empty JSON structure **`{}`**. On error, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+UpdatePriorityConfigAction action = new UpdatePriorityConfigAction();
+action.uuid = "face4c7ce31f3a5a98708f60a7fc935a";
+action.cpuShares = 2;
+action.oomScoreAdj = 100;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdatePriorityConfigAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdatePriorityConfigAction action = UpdatePriorityConfigAction()
+action.uuid = "face4c7ce31f3a5a98708f60a7fc935a"
+action.cpuShares = 2
+action.oomScoreAdj = 100
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdatePriorityConfigAction.Result res = action.call()
+```
+
+</APIPage>

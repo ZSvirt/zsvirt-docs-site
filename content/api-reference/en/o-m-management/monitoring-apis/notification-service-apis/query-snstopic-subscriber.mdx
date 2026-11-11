@@ -1,0 +1,88 @@
+---
+title: "Query SNS Topic Subscribers"
+---
+
+<APIPage method="GET" path="/v1/sns/topics/subscribers" altPaths={["/v1/sns/topics/subscribers/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/sns/topics/subscribers?q=topicUuid=3677dc0f00964b80886f3b2bbf9338cd
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/sns/topics/subscribers/15b4071325193fdcbae66b6388ea9c6f
+```
+
+Queryable Fields
+
+Run the CLI command line tool, type `QuerySNSTopicSubscriber` and press the Tab key to view all queryable fields and cross-table queryable resource names.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "topicUuid": "3677dc0f00964b80886f3b2bbf9338cd",
+      "endpointUuid": "f8c5c56233844126ad5f5a0174da3098"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |5.0.0|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_iwx_hcj_p2b)|2.3.1|
+|inventories|List|For details, see [inventories](#p_gjs_jcj_p2b)|2.3.1|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001.|2.3.1|
+|description|String|A brief description of the error|2.3.1|
+|details|String|Detailed information about the error|2.3.1|
+|elaboration|String|Reserved field. Default is null.|2.3.1|
+|opaque|LinkedHashMap|Reserved field. Default is null.|2.3.1|
+|cause|ErrorCode|The root error. The source error that caused the current error. If there is no root error, this field is null.|2.3.1|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|topicUuid|String|Topic UUID|2.3.1|
+|endpointUuid|String|Endpoint UUID|2.3.1|
+|createDate|Timestamp|Creation time|2.3.1|
+|lastOpDate|Timestamp|Last modification time|2.3.1|
+
+## SDK Examples
+Java SDK
+
+```
+QuerySNSTopicSubscriberAction action = new QuerySNSTopicSubscriberAction();
+action.conditions = asList("topicUuid=3677dc0f00964b80886f3b2bbf9338cd");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QuerySNSTopicSubscriberAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QuerySNSTopicSubscriberAction action = QuerySNSTopicSubscriberAction()
+action.conditions = ["topicUuid=3677dc0f00964b80886f3b2bbf9338cd"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QuerySNSTopicSubscriberAction.Result res = action.call()
+```
+
+</APIPage>

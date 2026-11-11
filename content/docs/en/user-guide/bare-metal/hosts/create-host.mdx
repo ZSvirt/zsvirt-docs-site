@@ -1,0 +1,46 @@
+---
+title: 'New Bare Metal Instance'
+---
+
+1.  In the navigation pane, choose **Inventory** &gt; **Bare Metal Management**.
+
+2.  Select the target bare metal chassis.
+
+3.  On the bare metal chassis details page, click **Actions** &gt; **New Bare Metal Instance**.
+
+4.  In the New Bare Metal Instance dialog, set the following parameters to complete the basic information:
+
+    -   **Name**: Set a name for the bare metal instance.
+    -   **Description**: Optional. Enter a description.
+    -   **Bare Metal Chassis**: Displays the bare metal chassis.
+    -   **Platform**: Only Linux is supported.
+    -   **Image**: Select an image for installing the OS.
+
+        <Callout type="info">
+        -   ISO format only.
+        -   You need to upload the image to the standalone image storage in advance.
+        -   Supports both custom platform OS and mainstream Linux distributions, including RHEL/CentOS series, Debian/Ubuntu series, and SUSE/openSUSE series.
+        </Callout>
+    -   **Bare Metal Template**: Select a bare metal template to quickly generate pre-configured files for unattended batch OS installation. For more information, see [Bare Metal Template](/en/docs/user-guide/bare-metal/templates).
+    -   **Auto Overwrite Data**: Choose whether to enable automatic data overwrite.
+
+        <Callout type="info">
+        -   When enabled, the original data will be automatically overwritten when bare metal instances are deployed.
+        -   Otherwise, the installation of operating systems may pause. You need to access the console to manually configure disks.
+        </Callout>
+5.  Click **Next**.
+
+6.  Set the following parameters to complete system and network configurations:
+
+    You can configure system and network information for bare metal instances either individually or in batches.
+
+    -   **Operating System**: Displays the selected OS.
+    -   **Username**: Set a username. For batch configuration, default username is root.
+    -   **Password**: Set a password.
+    -   **Network Device**: Configure a business network for the bare metal instance.
+        -   **Device Type**: Choose NIC or NIC Bond.
+        -   **NIC Bond Name**: Set a name for the NIC bond, when selecting NIC bond as the device type.
+        -   **NIC Bond Type**: Select bond mode when selecting NIC bond as the device type. Options include Mode 1 (Active-Backup) and Mode 4 (LACP).
+        -   **NIC**: Select an NIC.
+        -   **Distributed Port Group**: Select a distributed port group.
+7.  Review the configuration and click **OK**.

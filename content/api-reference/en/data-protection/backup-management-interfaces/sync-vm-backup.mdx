@@ -1,0 +1,75 @@
+---
+title: "Sync VM Backup"
+---
+
+<APIPage method="PUT" path="/v1/vm-backups/imageStore/{imageStoreUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "syncVmBackup": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The **systemTags** and **userTags** fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"syncVmBackup":{}}' http://localhost:8080/zstack/v1/vm-backups/imageStore/087b41055fbc4875aef622142cbe5ac3/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|imageStoreUuid|String|url|Backup server UUID| |3.5.0|
+|systemTags \(Optional\)|List|body| | |3.5.0|
+|userTags \(Optional\)|List|body| | |3.5.0|
+
+## API Response
+On success, this API returns an empty JSON structure **`{}`**. On failure, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+SyncVmBackupAction action = new SyncVmBackupAction();
+action.imageStoreUuid = "7c3e52e35de449c9abc1343c83b93cd5";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+SyncVmBackupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SyncVmBackupAction action = SyncVmBackupAction()
+action.imageStoreUuid = "07270eb0ae25428586b224c33e88e485"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+SyncVmBackupAction.Result res = action.call()
+```
+
+</APIPage>

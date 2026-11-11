@@ -1,0 +1,16 @@
+{
+  "title": "动态资源调度策略相关接口",
+  "pages": [
+    "get-cluster-drsstatus",
+    "query-cluster-drs",
+    "query-drsadvice",
+    "query-drsvm-migration-activity",
+    "apply-drsadvice",
+    "create-cluster-drs",
+    "delete-cluster-drs",
+    "execute-drsscheduling",
+    "update-cluster-drs",
+    "validate-cluster-support-drs"
+  ],
+  "pagesIndex": "index"
+}

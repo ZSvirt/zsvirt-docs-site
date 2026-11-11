@@ -1,0 +1,19 @@
+---
+title: "How do I resolve an issue where a Windows virtual machine cannot obtain an IP address?"
+---
+
+## Symptom
+Running the following commands in the Windows command window to request an address:
+
+```
+C:\Users\1>  ipconfig /release
+C:\Users\1>  ipconfig /renew
+```
+
+returns a **DHCP server unreachable, connection timed out** message, and the **dnsmasq.log** log shows the error `not using configured address xxxx because it was previously`.
+
+## Cause
+IP address conflict.
+
+## Solution
+-   Change the IP address of the Windows virtual machine. DHCP can then obtain an IP address normally.

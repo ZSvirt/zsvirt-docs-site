@@ -1,0 +1,294 @@
+---
+title: "Update MDEV Device Spec"
+---
+
+<APIPage method="PUT" path="/v1/mdev-device-specs/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateMdevDeviceSpec": {
+    "name": "GRID_M60-2A",
+    "description": "NVIDIA Corporation, GM204GL [Tesla M60], a1, VGA compatible controller",
+    "state": "Enabled"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The **systemTags** and **userTags** fields can be omitted in the above example. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateMdevDeviceSpec":{"name":"GRID_M60-2A","description":"NVIDIA Corporation, GM204GL [Tesla M60], a1, VGA compatible controller","state":"Enabled"}}' http://localhost:8080/zstack/v1/mdev-device-specs/fab85387affa4b74b2806ff2c538725e/actions
+```
+
+Parameter List
+
+<table id="table_xzb_2gg_xhb"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+UUID of the resource, uniquely identifies the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.5.0
+
+</td></tr><tr><td>
+
+name \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in **updateMdevDeviceSpec** structure\)
+
+</td><td>
+
+Resource name
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.5.0
+
+</td></tr><tr><td>
+
+description \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in **updateMdevDeviceSpec** structure\)
+
+</td><td>
+
+Resource description
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.5.0
+
+</td></tr><tr><td>
+
+state \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in **updateMdevDeviceSpec** structure\)
+
+</td><td>
+
+Spec state
+
+</td><td>
+
+-   Enabled
+-   Disabled
+
+</td><td>
+
+3.5.0
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.5.0
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.5.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "61d09af331304b40a80eb67fdd5e86d7",
+    "name": "GRID_M60-2A",
+    "specification": "{Max Resolution=1920*1080, GRID License=GRID-Virtual-Apps,3.0, Instance Number=4, Display Heads=4, Vendor=NVIDIA, Frame Rate Limit=60FPS, Name=GRID_M60-2A, RAM=2048MB}",
+    "type": "GPU_Video_Controller",
+    "state": "Enabled",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_ogc_kgg_xhb)|3.5.0|
+|inventory|MdevDeviceSpecInventory|See [inventory](#p_axx_jgg_xhb)|3.5.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code, a globally unique identifier of the error, e.g. SYS.1000, HOST.1001|3.5.0|
+|description|String|Brief description of the error|3.5.0|
+|details|String|Detailed error information|3.5.0|
+|elaboration|String|Reserved field, defaults to null|3.5.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|3.5.0|
+|cause|ErrorCode|Root cause, the source error that caused the current error, null if no original error|3.5.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifies the resource|3.5.0|
+|name|String|Resource name|3.5.0|
+|description|String|Resource description|3.5.0|
+|specification|String|Spec details|3.5.0|
+|createDate|Timestamp|Create date|3.5.0|
+|lastOpDate|Timestamp|Last update date|3.5.0|
+|type|MdevDeviceType|See [type](#p_w1t_jgg_xhb)|3.5.0|
+|state|MdevDeviceSpecState|See [state](#p_ahp_jgg_xhb)|3.5.0|
+
+### type
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|GPU\_Video\_Controller|MdevDeviceType|GPU video controller|3.5.0|
+
+### state
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Enabled|MdevDeviceSpecState|Enabled|3.5.0|
+|Disabled|MdevDeviceSpecState|Disabled|3.5.0|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateMdevDeviceSpecAction action = new UpdateMdevDeviceSpecAction();
+action.uuid = "54e2b878d3d9473ab611794ad04d24b7";
+action.name = "GRID_M60-2A";
+action.description = "NVIDIA Corporation, GM204GL [Tesla M60], a1, VGA compatible controller";
+action.state = "Enabled";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateMdevDeviceSpecAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateMdevDeviceSpecAction action = UpdateMdevDeviceSpecAction()
+action.uuid = "e351f911f77f422f9229cf0426ffa608"
+action.name = "GRID_M60-2A"
+action.description = "NVIDIA Corporation, GM204GL [Tesla M60], a1, VGA compatible controller"
+action.state = "Enabled"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateMdevDeviceSpecAction.Result res = action.call()
+```
+
+</APIPage>

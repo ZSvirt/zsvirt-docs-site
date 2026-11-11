@@ -1,0 +1,71 @@
+---
+title: 'zsphere_clusters'
+description: '查询 ZSvirt 集群列表及其属性。'
+---
+
+<HistoricalNamingNote locale="zh" />
+
+
+# zsphere_clusters（数据源）
+
+查询 ZSvirt 集群列表及其属性。
+
+## 示例用法
+```terraform
+data "zsphere_clusters" "test" {
+}
+
+output "zstack_secs" {
+  value = data.zsphere_clusters.test
+}
+
+# 示例输出：
+# zstack_secs = {
+#   "clusters" = tolist([
+#     {
+#       "hypervisor_type" = "KVM"
+#       "name" = "Cluster-1"
+#       "state" = "Enabled"
+#       "type" = "zstack"
+#       "uuid" = "5568b28dbaed465daf768b533b1fe72d"
+#       "zone_uuid" = "86643f5442164890b8b71de5b582dc9f"
+#     }
+#   ])
+#   "filter" = tolist([])
+#   "name" = tostring(null)
+#   "name_pattern" = tostring(null)
+# }
+```
+
+## 参数说明
+
+### 可选参数
+
+- `filter`（块列表）（参见下方嵌套结构）
+- `name`（字符串）按精确名称查询
+- `name_pattern`（字符串）按名称模糊查询，类似 MySQL LIKE。`%` 匹配多个字符，`_` 匹配单个字符
+
+### 只读属性
+
+- `clusters`（属性列表）（参见下方嵌套结构）
+
+<a id="nestedblock--filter"></a>
+### `filter` 嵌套结构
+
+必填参数：
+
+- `name`（字符串）用于过滤的字段名。
+- `values`（字符串集合）过滤值，多个值之间为 OR 关系。
+
+
+<a id="nestedatt--clusters"></a>
+### `clusters` 嵌套结构
+
+只读属性：
+
+- `hypervisor_type`（字符串）Type of hypervisor used by the cluster (e.g., KVM, ESXi)
+- `name`（字符串）cluster名称
+- `state`（字符串）State of the cluster (e.g., Enabled, Disabled)
+- `type`（字符串）ype of the cluster
+- `uuid`（字符串）cluster UUID
+- `zone_uuid`（字符串）UUID of the zone to which the cluster belongs

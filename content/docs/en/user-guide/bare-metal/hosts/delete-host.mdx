@@ -1,0 +1,21 @@
+---
+title: 'Delete a Bare Metal Instance'
+---
+
+(Optional) The platform provides deletion protection for bare metal instances. You can define how resources are deleted by customizing the deletion policy in system parameters. By default, the platform adopts a never delete policy for bare metal instances. Deleted resources are first moved to the recycle bin and retained until you manually expunge them. For more information, see System Parameters.
+
+1.  In the navigation pane, choose **Inventory** &gt; **Bare Metal Management**.
+
+2.  Select the target bare metal instance.
+
+3.  On the bare metal instance details page, click **Actions** &gt; **Move to Recycle Bin**.
+
+    To delete multiple bare metal instances at once, go to the Bare Metal Management tab of the data center details page. Select the bare metal instances that you want to delete, then click **Bulk Action** &gt; **Move to Recycle Bin**.
+
+    The delete button label changes based on the **Bare Metal Instance Deletion Policy**. When the deletion policy is set to immediate deletion, the button appears as "Delete". When the deletion policy is set to never delete, the button appears as "Move to Recycle Bin".
+
+4.  In the confirmation dialog, acknowledge the risk and click **OK**.
+
+<Callout type="warning">
+Deleting a bare metal instance also powers off related bare metal chassis, which might affect your business continuity. Proceed with caution.
+</Callout>

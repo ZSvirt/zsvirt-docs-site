@@ -1,0 +1,194 @@
+---
+title: "Get VM Attachable L3 Network List"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/{vmInstanceUuid}/l3-networks-candidates">
+
+Get the list of L3 Networks that can be attached to a Virtual Machine.
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth: YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/16bf0d8cb1e346568e4cfba52c70a9c2/l3-networks-candidates
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|vmInstanceUuid|String|url|Virtual Machine UUID| |0.6|
+|systemTags \(optional\)|List|query|System Tags| |0.6|
+|userTags \(optional\)|List|query|User Tags| |0.6|
+
+## API Response
+Return Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "d2f77ca69b1448d3b8e063c3d551cf1b",
+      "name": "private L3",
+      "type": "L3BasicNetwork",
+      "zoneUuid": "67a6601dc8dd476ebca371123ff03f14",
+      "l2NetworkUuid": "94bdffb080b346e7a3ac2f44f574cc4a",
+      "state": "Enabled",
+      "createDate": "Apr 24, 2017 7:11:08 PM",
+      "lastOpDate": "Apr 24, 2017 7:11:08 PM",
+      "ipRanges": [
+        {
+          "uuid": "e15972969ac64d1ea01c0c228d969bcc",
+          "l3NetworkUuid": "d2f77ca69b1448d3b8e063c3d551cf1b",
+          "name": "ip range",
+          "startIp": "192.168.0.10",
+          "endIp": "192.168.0.100",
+          "netmask": "255.255.255.0",
+          "gateway": "192.168.0.1",
+          "createDate": "Apr 24, 2017 7:11:08 PM",
+          "lastOpDate": "Apr 24, 2017 7:11:08 PM"
+        }
+      ],
+      "networkServices": [
+        {
+          "l3NetworkUuid": "d2f77ca69b1448d3b8e063c3d551cf1b",
+          "networkServiceProviderUuid": "a493b6286d6e43f89e06062b7a4ad182",
+          "networkServiceType": "DHCP"
+        },
+        {
+          "l3NetworkUuid": "d2f77ca69b1448d3b8e063c3d551cf1b",
+          "networkServiceProviderUuid": "a493b6286d6e43f89e06062b7a4ad182",
+          "networkServiceType": "DNS"
+        },
+        {
+          "l3NetworkUuid": "d2f77ca69b1448d3b8e063c3d551cf1b",
+          "networkServiceProviderUuid": "a493b6286d6e43f89e06062b7a4ad182",
+          "networkServiceType": "SNAT"
+        }
+      ]
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, indicates operation failure. This field is null when the operation succeeds. See [error](#p_frs_xfz_zz)|0.6|
+|inventories|List|See [inventories](#p_awf_yfz_zz)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause, the source error that triggered the current error. If there is no original error, this field is null|0.6|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|name|String|Resource name|0.6|
+|description|String|Resource description|0.6|
+|type|String| |0.6|
+|zoneUuid|String|Data Center UUID|0.6|
+|l2NetworkUuid|String|Distributed Switch UUID|0.6|
+|state|String| |0.6|
+|dnsDomain|String| |0.6|
+|system|Boolean| |0.6|
+|category|String| |0.6|
+|ipVersion|Integer|IP Protocol Number|3.1.0|
+|enableIPAM|Boolean|Enable IP Address Management|4.10.16|
+|createDate|Timestamp|Creation Time|0.6|
+|lastOpDate|Timestamp|Last Operation Date|0.6|
+|dns|List| |0.6|
+|ipRanges|List|See [ipRanges](#p_ezw_yfz_zz)|0.6|
+|networkServices|List|See [networkServices](#p_zhd_zfz_zz)|0.6|
+|hostRoute|List|See [hostRoute](#p_gs4_thr_l2b)|0.6|
+|reservedIpRanges|List|See [reservedIpRanges](#p_lzv_5qy_3gc)|4.10.16|
+
+### ipRanges
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|l3NetworkUuid|String|Distributed Port Group UUID|0.6|
+|name|String|Resource name|0.6|
+|description|String|Resource description|0.6|
+|startIp|String|Start IP Address|0.6|
+|endIp|String|End IP Address|0.6|
+|netmask|String|Netmask|0.6|
+|prefixLen|String|Prefix Length|3.1.0|
+|gateway|String|Gateway|0.6|
+|networkCidr|String|Network CIDR|0.6|
+|ipVersion|Integer|IP Protocol Number|3.1.0|
+|addressMode|String|IPv6 Address Allocation Mode|3.1.0|
+|createDate|Timestamp|Creation Time|0.6|
+|lastOpDate|Timestamp|Last Operation Date|0.6|
+|ipRangeType|IpRangeType|See [ipRangeType](#p_tdj_mnf_y1c)|3.9|
+
+### ipRangeType
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|IpRangeType|Normal IP Range|3.9|
+|AddressPool|IpRangeType|Address Pool Range|3.9|
+
+### networkServices
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|l3NetworkUuid|String|Distributed Port Group UUID|0.6|
+|networkServiceProviderUuid|String|Network Service Provider UUID|0.6|
+|networkServiceType|String| |0.6|
+
+### hostRoute
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|id|Long| |2.3|
+|l3NetworkUuid|String|Distributed Port Group UUID|2.3|
+|prefix|String| |2.3|
+|nexthop|String| |2.3|
+|createDate|Timestamp|Creation Time|2.3|
+|lastOpDate|Timestamp|Last Operation Date|2.3|
+
+### reservedIpRanges
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|4.10.16|
+|l3NetworkUuid|String|Distributed Port Group UUID|4.10.16|
+|name|String|Resource name|4.10.16|
+|description|String|Resource description|4.10.16|
+|startIp|String|Start IP \(contained in reserved IP range\)|4.10.16|
+|endIp|String|End IP \(contained in reserved IP range\)|4.10.16|
+|ipVersion|Integer|IP Protocol Number|4.10.16|
+|createDate|Timestamp|Creation Time|4.10.16|
+|lastOpDate|Timestamp|Last Operation Date|4.10.16|
+
+## SDK Examples
+Java SDK
+
+```
+GetVmAttachableL3NetworkAction action = new GetVmAttachableL3NetworkAction();
+action.vmInstanceUuid = "eb2f2966162a47768578a0fb4016d75f";
+action.sessionId = "9fe9dda1b076485baa9f3d49dacb0b3d";
+GetVmAttachableL3NetworkAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = GetVmAttachableL3NetworkAction()
+action.vmInstanceUuid = "3cda5c14384230bc9055830d69e8536d"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

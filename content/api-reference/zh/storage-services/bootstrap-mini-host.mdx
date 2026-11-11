@@ -1,0 +1,84 @@
+---
+title: "初始化Mini一体机"
+---
+
+<APIPage method="POST" path="/v1/mini-clusters/hosts">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "local": {
+      "sn": "RD-BJD-001-07311A",
+      "ipmi": {
+        "gw": "172.20.27.1",
+        "ip": "172.20.27.21/24",
+        "vlan": "27"
+      },
+      "mgmt": {
+        "gw": "172.20.26.1",
+        "ip": "172.20.26.21/24",
+        "vlan": "26",
+        "bond": "lacp"
+      }
+    },
+    "peer": {
+      "sn": "RD-BJD-001-07311B",
+      "mgmt": {
+        "gw": "172.20.26.1",
+        "ip": "172.20.26.22/24",
+        "vlan": "26",
+        "bond": "ab"
+      }
+    }
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"local":{"sn":"RD-BJD-001-07311A","ipmi":{"gw":"172.20.27.1","ip":"172.20.27.21/24","vlan":"27"},"mgmt":{"gw":"172.20.26.1","ip":"172.20.26.21/24","vlan":"26","bond":"lacp"}},"peer":{"sn":"RD-BJD-001-07311B","mgmt":{"gw":"172.20.26.1","ip":"172.20.26.22/24","vlan":"26","bond":"ab"}}}}' \
+http://localhost:8080/zstack/v1/mini-clusters/hosts
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|local|MiniHostInfo|body\(包含在`params`结构中\)| | |3.6.0|
+|peer|MiniHostInfo|body\(包含在`params`结构中\)| | |3.6.0|
+|resourceUuid \(可选\)|String|body\(包含在`params`结构中\)| | |3.6.0|
+|tagUuids \(可选\)|List|body\(包含在`params`结构中\)|标签UUID列表| |3.6.0|
+|systemTags \(可选\)|List|body| | |3.6.0|
+|userTags \(可选\)|List|body| | |3.6.0|
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+</APIPage>

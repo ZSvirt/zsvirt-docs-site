@@ -1,0 +1,19 @@
+---
+title: "Windows虚拟机获取不到IP地址，如何解决？"
+---
+
+## 现象
+在Windows命令行窗口中执行以下命令重新申请地址：
+
+```
+C:\Users\1>  ipconfig /release 
+C:\Users\1>  ipconfig /renew
+```
+
+出现**DHCP服务器无法连接，连接超时**提示，**dnsmasq.log**日志出现`not using configured address xxxx because it was previously`报错。
+
+## 原因
+IP冲突。
+
+## 解决方案
+-   更换Windows虚拟机IP地址后，DHCP可正常获取IP地址。

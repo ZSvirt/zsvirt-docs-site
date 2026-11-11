@@ -1,0 +1,183 @@
+---
+title: "Query Backup Storage"
+---
+
+<APIPage method="GET" path="/v1/backup-storage" altPaths={["/v1/backup-storage/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/backup-storage?q=uuid=435e61f882cf431bb4ae48246489a988
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/backup-storage/1ab3b836a88342e1bbc1b1a17d092f0f
+```
+
+Queryable Fields
+
+Run the CLI command tool, enter `QueryBackupStorage` and press Tab to view all queryable fields and resource names that support cross-table queries.
+
+## API Response
+Response Example \(Standalone Image Storage\)
+
+```
+{
+  "inventories": [
+    {
+      "attachedZoneUuids": [
+        "140ebc2fbdb74ae197323a69d432f25e"
+      ],
+      "availableCapacity": 4931431059456,
+      "createDate": "Apr 11, 2018 2:50:54 PM",
+      "description": "",
+      "hostname": "172.20.1.115",
+      "lastOpDate": "Dec 13, 2019 7:32:49 PM",
+      "name": "image-store",
+      "sshPort": 22,
+      "state": "Enabled",
+      "status": "Connected",
+      "totalCapacity": 9992857976832,
+      "type": "ImageStoreBackupStorage",
+      "url": "/zstack_imagestore",
+      "username": "root",
+      "uuid": "1ab3b836a88342e1bbc1b1a17d092f0f"
+    }
+  ],
+  "success": true
+}
+```
+
+Response Example \(Distributed Image Storage\)
+
+```
+{
+  "inventories": [
+    {
+      "attachedZoneUuids": [
+        "195ae9157b9248e3889cc56cfd7d0f8d"
+      ],
+      "availableCapacity": 297500737536,
+      "createDate": "Dec 14, 2019 9:46:05 AM",
+      "description": "Test",
+      "fsid": "d53902bc-ff50-4d08-8769-9d83448478d3",
+      "lastOpDate": "Dec 14, 2019 11:30:40 AM",
+      "mons": [
+        {
+          "backupStorageUuid": "eed424abee694bcda5a5e414a61ea3d3",
+          "createDate": "Dec 14, 2019 9:46:05 AM",
+          "hostname": "172.24.249.174",
+          "lastOpDate": "Dec 14, 2019 11:21:46 AM",
+          "monAddr": "172.24.249.174",
+          "monPort": 6789,
+          "monUuid": "e6707015afc8405ba0b184ca7a318b63",
+          "sshPassword": "password",
+          "sshPort": 22,
+          "sshUsername": "root",
+          "status": "Connected"
+        },
+        {
+          "backupStorageUuid": "eed424abee694bcda5a5e414a61ea3d3",
+          "createDate": "Dec 14, 2019 9:46:05 AM",
+          "hostname": "172.24.252.188",
+          "lastOpDate": "Dec 14, 2019 11:21:45 AM",
+          "monAddr": "172.24.252.188",
+          "monPort": 6789,
+          "monUuid": "d5e70424ddac4c03ab06466d600ef4ae",
+          "sshPassword": "password",
+          "sshPort": 22,
+          "sshUsername": "root",
+          "status": "Connected"
+        },
+        {
+          "backupStorageUuid": "eed424abee694bcda5a5e414a61ea3d3",
+          "createDate": "Dec 14, 2019 9:46:05 AM",
+          "hostname": "172.24.247.108",
+          "lastOpDate": "Dec 14, 2019 11:21:16 AM",
+          "monAddr": "172.24.247.108",
+          "monPort": 6789,
+          "monUuid": "378826f5f690480983f39514e0b00f75",
+          "sshPassword": "password",
+          "sshPort": 22,
+          "sshUsername": "root",
+          "status": "Connected"
+        }
+      ],
+      "name": "ceph-bs",
+      "poolAvailableCapacity": 99166913877,
+      "poolName": "bak-t-eed424abee694bcda5a5e414a61ea3d3",
+      "poolReplicatedSize": 3,
+      "poolUsedCapacity": 2787687082,
+      "state": "Enabled",
+      "status": "Connected",
+      "totalCapacity": 305863802880,
+      "type": "Ceph",
+      "url": "not used",
+      "uuid": "eed424abee694bcda5a5e414a61ea3d3"
+    }
+  ],
+  "success": true
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_oxh_gs1_n1b)|0.6|
+|inventories|List|See [inventories](#p_vcz_gs1_n1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause. The source error that triggered the current error. This field is null if there is no original error|0.6|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|name|String|Resource name|0.6|
+|url|String| |0.6|
+|description|String|Detailed description of the resource|0.6|
+|totalCapacity|Long| |0.6|
+|availableCapacity|Long| |0.6|
+|type|String| |0.6|
+|state|String| |0.6|
+|status|String| |0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+|attachedZoneUuids|List| |0.6|
+
+## SDK Examples
+Java SDK
+
+```
+QueryBackupStorageAction action = new QueryBackupStorageAction();
+action.conditions = asList("uuid=b8e17834373747ae8b6555db80e74586");
+action.sessionId = "f5d478c4facf42f4a3f16c8efbfd9628";
+QueryBackupStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryBackupStorageAction action = QueryBackupStorageAction()
+action.conditions = ["uuid=0359113913834277bc815b446a6eff25"]
+action.sessionId = "dc56b36c279f449ea2d430d2513a4cb0"
+QueryBackupStorageAction.Result res = action.call()
+```
+
+</APIPage>

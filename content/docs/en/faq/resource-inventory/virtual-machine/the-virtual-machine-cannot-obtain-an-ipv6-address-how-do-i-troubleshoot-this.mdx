@@ -1,0 +1,12 @@
+---
+title: "The virtual machine cannot obtain an IPv6 address. How do I troubleshoot this?"
+---
+
+## Solution
+1.  Check the `/etc/modprobe.d/disable_ipv6.conf` file and verify the **options ipv6 disable=0** setting.
+
+2.  Check `/etc/sysconfig/network` and verify the **NETWORKING\_IPV6=yes** setting.
+
+3.  Edit `/etc/sysctl.conf` and verify the following settings: **net.ipv6.conf.all.disable\_ipv6=0**, **net.ipv6.conf.default.disable\_ipv6=0**, and **net.ipv6.conf.lo.disable\_ipv6=0**.
+
+4.  Check the network adapter configuration file `/etc/sysconfig/network-scripts/ifcfg-ens33` and verify that the parameters are configured correctly.

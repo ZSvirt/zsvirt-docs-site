@@ -1,0 +1,76 @@
+---
+title: "Apply DRS Advice"
+---
+
+<APIPage method="PUT" path="/v1/clusters/drs/advice/{adviceUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "applyDRSAdvice": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the `systemTags` and `userTags` fields can be omitted. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"applyDRSAdvice":{}}' \
+http://localhost:8080/zstack/v1/clusters/drs/advice/ff0813227ab932de82d8c5c593993200/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|adviceUuid|String|url|The UUID of the DRS scheduling advice| |4.0.0|
+|systemTags \(Optional\)|List|body|System tags| |4.0.0|
+|userTags \(Optional\)|List|body|User tags| |4.0.0|
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+ApplyDRSAdviceAction action = new ApplyDRSAdviceAction();
+action.adviceUuid = "ff0813227ab932de82d8c5c593993200";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ApplyDRSAdviceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ApplyDRSAdviceAction action = ApplyDRSAdviceAction()
+action.adviceUuid = "ff0813227ab932de82d8c5c593993200"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ApplyDRSAdviceAction.Result res = action.call()
+```
+
+</APIPage>

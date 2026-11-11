@@ -1,0 +1,78 @@
+---
+title: "彻底删除虚拟机"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/{uuid}/actions">
+
+彻底删除一个处于Destroyed状态的虚拟机。该操作会从数据库里面删除虚拟机并在数据存储上删除该虚拟机的根硬盘。该操作一旦执行就不可恢复。
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "expungeVmInstance": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"expungeVmInstance":{}}' \
+http://localhost:8080/zstack/v1/vm-instances/e57788f713963e98a99a9f6b0bd8482c/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|虚拟机UUID| |0.6|
+|systemTags \(可选\)|List|body|系统标签| |0.6|
+|userTags \(可选\)|List|body|用户标签| |0.6|
+
+## API返回
+该API成功时返回一个空的JSON结构**`{}`**，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+ExpungeVmInstanceAction action = new ExpungeVmInstanceAction();
+action.uuid = "f3b0b9538e6a49a88e189ba2c42b728e";
+action.sessionId = "332f2d77997446fbaef62df0411b2635";
+ExpungeVmInstanceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ExpungeVmInstanceAction action = ExpungeVmInstanceAction()
+action.uuid = "1cc86ac86211480485a251a48bc1928e"
+action.sessionId = "6af024d8e8bf44709b42ffa623e96073"
+ExpungeVmInstanceAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,61 @@
+---
+title: "Delete GC Job"
+---
+
+<APIPage method="DELETE" path="/v1/gc-jobs/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/gc-jobs/3a5d968dd8d743c280888a4973ea71d5
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|The UUID of the resource. Uniquely identifies the resource| |0.6|
+|systemTags \(Optional\)|List|body| | |0.6|
+|userTags \(Optional\)|List|body| | |0.6|
+
+## API Response
+When the API succeeds, it returns an empty JSON structure **`{}`**. When an error occurs, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DeleteGCJobAction action = new DeleteGCJobAction();
+action.uuid = "6bac0ebceac44a198609b0019c40a8eb";
+action.sessionId = "78e46c7bfe0249fe9613223642222085";
+DeleteGCJobAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteGCJobAction action = DeleteGCJobAction()
+action.uuid = "42db77385ebf4768bf105011ec8e6aaf"
+action.sessionId = "331167c4de264088862128e5043c5a93"
+DeleteGCJobAction.Result res = action.call()
+```
+
+</APIPage>

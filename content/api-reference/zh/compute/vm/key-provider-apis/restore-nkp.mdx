@@ -1,0 +1,69 @@
+---
+title: "导入原生密钥提供程序"
+---
+
+<APIPage method="PUT" path="/v1/key-providers/nkp/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "restoreNkp": {
+    "contentBase64": "BASE64_ENCODED_NKP_BACKUP",
+    "password": "password"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"restoreNkp":{"contentBase64":"BASE64_ENCODED_NKP_BACKUP","password":"password"}}' \
+http://localhost:8080/zstack/v1/key-providers/nkp/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|contentBase64|String|body\(包含在`restoreNkp`结构中\)|备份内容（Base64 编码）| |5.0.0|
+|password \(可选\)|String|body\(包含在`restoreNkp`结构中\)|备份保护密码| |5.0.0|
+|systemTags \(可选\)|List|body|系统标签| |5.0.0|
+|userTags \(可选\)|List|body|用户标签| |5.0.0|
+
+## SDK示例
+Java SDK
+
+```
+RestoreNkpAction action = new RestoreNkpAction();
+action.contentBase64 = "BASE64_ENCODED_NKP_BACKUP";
+action.password = "password";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RestoreNkpAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = RestoreNkpAction()
+action.contentBase64 = "BASE64_ENCODED_NKP_BACKUP"
+action.password = "password"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

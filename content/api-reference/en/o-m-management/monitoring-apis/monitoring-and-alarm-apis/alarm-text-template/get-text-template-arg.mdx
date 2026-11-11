@@ -1,0 +1,112 @@
+---
+title: "Query Text Template Supported Parameters"
+---
+
+<APIPage method="GET" path="/v1/zwatch/textTemplateArg">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zwatch/textTemplateArg
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|systemTags \(Optional\)|List|query|System tags| |4.2.0|
+|userTags \(Optional\)|List|query|User tags| |4.2.0|
+
+## API Response
+Response Example
+
+```
+{
+  "defaultSupportedParams": {
+    "alarm": [
+      "ALARM_NAME",
+      "ALARM_UUID",
+      "ALARM_COMPARISON_OPERATOR",
+      "ALARM_COMPARISON_OPERATOR_REVERSE",
+      "ALARM_METRIC",
+      "ALARM_NAMESPACE",
+      "ALARM_THRESHOLD",
+      "ALARM_LABELS",
+      "ALARM_DURATION",
+      "ALARM_PREVIOUS_STATUS",
+      "ALARM_CURRENT_STATUS",
+      "ALARM_CURRENT_VALUE",
+      "ALARM_TIME",
+      "ALARM_RESOURCE_TYPE",
+      "ALARM_RESOURCE_ID",
+      "ALARM_RESOURCE_NAME",
+      "TITLE_ALARM_RESOURCE_NAME",
+      "ALARM_ACCOUNT_UUID",
+      "ALARM_DATA_UUID",
+      "ALARM_EMERGENCY_LEVEL",
+      "ALARM_RESOURCE_IP",
+      "ALARM_RESOURCE_CLUSTER_UUID",
+      "ALARM_RESOURCE_CLUSTER_NAME"
+    ],
+    "event": [
+      "EVENT_NAMESPACE",
+      "EVENT_NAME",
+      "EVENT_LABELS",
+      "EVENT_EMERGENCY_LEVEL",
+      "EVENT_RESOURCE_ID",
+      "EVENT_RESOURCE_NAME",
+      "EVENT_ERROR",
+      "EVENT_TIME",
+      "EVENT_SUBSCRIPTION_UUID",
+      "EVENT_ACCOUNT_UUID",
+      "EVENT_DATA_UUID",
+      "EVENT_RESOURCE_IP",
+      "EVENT_RESOURCE_CLUSTER_UUID",
+      "EVENT_RESOURCE_CLUSTER_NAME"
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|defaultSupportedParams|Map|The list of default supported parameters|4.2.0|
+|success|boolean| |4.2.0|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null on success. See [error](#p_yty_sd2_l2b)|4.2.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, such as SYS.1000, HOST.1001|2.3|
+|description|String|A brief description of the error|2.3|
+|details|String|The detailed error information|2.3|
+|elaboration|String|Reserved field. Default is null|2.3|
+|opaque|LinkedHashMap|Reserved field. Default is null|2.3|
+|cause|ErrorCode|The root error. The source error that caused the current error. This field is null if there is no root error|2.3|
+
+## SDK Examples
+Java SDK
+
+```
+GetTextTemplateArgAction action = new GetTextTemplateArgAction();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetTextTemplateArgAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetTextTemplateArgAction action = GetTextTemplateArgAction()
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetTextTemplateArgAction.Result res = action.call()
+```
+
+</APIPage>

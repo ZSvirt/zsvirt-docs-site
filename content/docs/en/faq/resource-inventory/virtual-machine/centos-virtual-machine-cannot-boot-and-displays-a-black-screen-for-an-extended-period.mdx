@@ -1,0 +1,45 @@
+---
+title: "CentOS virtual machine cannot boot and displays a black screen for an extended period"
+---
+
+## Symptom
+A CentOS virtual machine cannot boot and displays a black screen for an extended period.
+
+## Cause
+The file libselinux.so.1 was accidentally deleted.
+
+## Solution
+1.  On the details page of the affected virtual machine, click **Modify Configuration** &gt; **CD-ROM** to open the CD-ROM interface. Click **Image File** &gt; **Load ISO** to attach a CentOS ISO file to the virtual machine.
+
+2.  Click **Advanced Settings** &gt; **Boot Options** &gt; **Boot Order** to open the boot order settings, then set the virtual machine to boot from the CD-ROM.
+
+3.  On the installation page, select Troubleshooting.
+
+    As shown in [Figure 1](#fig_vbt_rj3_5xb):
+
+    ![Select Troubleshooting](/docs/en/faq/images/ZStack_FAQ_Summary_0012_102_1.png)
+
+4.  Select Rescue a CentOS system to enter rescue mode.
+
+    As shown in [Figure 2](#fig_gs1_gk3_5xb):
+
+    ![Enter rescue mode](/docs/en/faq/images/ZStack_FAQ_Summary_0012_102_2.png)
+
+5.  In the rescue mode interface, enter `1` to mount the system root filesystem to `/mnt/sysimage` in read-write mode. To switch `/mnt/sysimage` to the root directory, run the `chroot /mnt/sysimage` command.
+
+    As shown in [Figure 3](#fig_osk_rk3_5xb):
+
+    ![Mount the system root filesystem in read-write mode](/docs/en/faq/images/ZStack_FAQ_Summary_0012_102_3.png)
+
+    <Callout type="info">
+    In rescue mode, any operation triggers the following error:
+    ```
+    ls : error while loading shared libraries: libselinux.so.1: cannot open shared object file: No such file or directory  
+    ```
+    </Callout>
+
+6.  Run the `chroot /mnt/sysimage` command to mount the system.
+
+7.  Run `cp /lib64/libc.so.6 /mnt/sysimage/lib64` to copy the libc.so.6 file to the system directory.
+
+8.  Restart the virtual machine. The system boots normally.

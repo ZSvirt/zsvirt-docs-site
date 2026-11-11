@@ -1,0 +1,228 @@
+---
+title: "Parse OVF Template Information"
+---
+
+<APIPage method="POST" path="/v1/ovf/parse">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "xmlBase64": "Base64 encoded ovf file content."
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+--X POST -d '{"params":{"xmlBase64":"Base64 encoded ovf file content."}}' http://localhost:8080/zstack/v1/ovf/parse
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|xmlBase64|String|body \(included in `params` structure\)|Base64 encoded OVF file content| |4.4.6|
+|systemTags \(optional\)|List|body|System tags| |4.4.6|
+|userTags \(optional\)|List|body|User tags| |4.4.6|
+
+## API Response
+Response Example
+
+```
+{
+  "ovfInfo": {
+    "disks": [
+      {
+        "index": 0.0,
+        "diskId": "system",
+        "fileRef": "file1",
+        "fileName": "system.vmdk",
+        "format": "vmdk",
+        "populatedSize": 1688600576.0,
+        "capacity": 64424509440.0
+      }
+    ],
+    "networks": [
+      {
+        "name": "red-net"
+      }
+    ],
+    "cpu": {
+      "instanceId": "2",
+      "quantity": 4.0,
+      "coresPerSocket": 4.0
+    },
+    "memory": {
+      "instanceId": "3",
+      "quantity": 4294967296.0
+    },
+    "vmName": "VM-1",
+    "os": {
+      "id": 107.0,
+      "version": "7",
+      "osType": "centos",
+      "description": "CentOS 7"
+    },
+    "systemInfo": {
+      "virtualSystemType": "vmx-18"
+    },
+    "nics": [
+      {
+        "networkName": "red-net",
+        "nicModel": "E1000",
+        "nicName": "nic-1",
+        "autoAllocation": true
+      }
+    ],
+    "cdDrivers": [
+      {
+        "autoAllocation": true,
+        "driverType": "SATA",
+        "subType": "vmware.cdrom.remotepassthrough",
+        "name": "CD"
+      }
+    ],
+    "volumes": [
+      {
+        "name": "System Volume",
+        "diskId": "system",
+        "driverType": "IDE"
+      }
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.4.6|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See [error](#p_sry_hp2_wmb) for details.|4.4.6|
+|ovfInfo|OvfInfo|See [ovfInfo](#p_ks2_kp2_wmb) for details.|4.4.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code. A globally unique identifier for the error, for example SYS.1000, HOST.1001|4.4.6|
+|description|String|Brief description of the error|4.4.6|
+|details|String|Detailed error information|4.4.6|
+|elaboration|String|Reserved field, defaults to null|4.4.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|4.4.6|
+|cause|ErrorCode|Root error. The error that caused this error. If there is no original error, this field is null|4.4.6|
+
+### ovfInfo
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|vmName|String|VM name|4.4.6|
+|disks|List|See [disks](#p_lqz_lp2_wmb) for details.|4.4.6|
+|networks|List|See [networks](#p_vyv_1nj_5fc) for details.|4.4.6|
+|cpu|OvfCpuInfo|See [cpu](#p_s2b_bnj_5fc) for details.|4.4.6|
+|memory|OvfMemoryInfo|See [memory](#p_psf_bnj_5fc) for details.|4.4.6|
+|os|OvfOSInfo|See [os](#p_l5k_bnj_5fc) for details.|4.4.6|
+|systemInfo|OvfSystemInfo|See [systemInfo](#p_igp_bnj_5fc) for details.|4.4.6|
+|nics|List|See [nics](#p_ogt_bnj_5fc) for details.|4.4.6|
+|cdDrivers|List|See [cdDrivers](#p_lsx_bnj_5fc) for details.|4.4.6|
+|volumes|List|See [volumes](#p_vvb_cnj_5fc) for details.|4.4.6|
+
+### disks
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|index|int|Disk index|4.4.6|
+|diskId|String|Disk ID|4.4.6|
+|fileRef|String|File reference name|4.4.6|
+|fileName|String|Image file name|4.4.6|
+|format|String|Image file format|4.4.6|
+|populatedSize|Long|Image file size|4.4.6|
+|capacity|Long|Disk capacity in bytes|4.4.6|
+
+### networks
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Network name|4.4.6|
+
+### cpu
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|instanceId|String|Hardware ID|4.4.6|
+|quantity|Integer|Number of CPU cores|4.4.6|
+|coresPerSocket|Integer|Cores per socket|4.4.6|
+
+### memory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|instanceId|String|Hardware ID|4.4.6|
+|quantity|Long|Memory capacity in bytes|4.4.6|
+
+### os
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|id|Integer|Operating system ID|4.4.6|
+|version|String|Operating system version|4.4.6|
+|osType|String|Operating system type|4.4.6|
+|description|String|Operating system description|4.4.6|
+
+### systemInfo
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|virtualSystemType|String|Hardware system type|4.4.6|
+|firmwareType|String|Firmware type|4.4.6|
+
+### nics
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|networkName|String|Network name|4.4.6|
+|nicModel|String|NIC model|4.4.6|
+|nicName|String|NIC name|4.4.6|
+|autoAllocation|Boolean|Whether to auto-allocate|4.4.6|
+
+### cdDrivers
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|autoAllocation|Boolean|Whether to auto-allocate|4.4.6|
+|driverType|String|CD drive controller type|4.4.6|
+|subType|String|Sub type|4.4.6|
+|name|String|CD drive name|4.4.6|
+
+### volumes
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Disk name|4.4.6|
+|diskId|String|Disk ID|4.4.6|
+|driverType|String|Disk driver type|4.4.6|
+
+## SDK Examples
+Java SDK
+
+```
+ParseOvfAction action = new ParseOvfAction();
+action.xmlBase64 = "Base64 encoded ovf file content.";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ParseOvfAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ParseOvfAction action = ParseOvfAction()
+action.xmlBase64 = "Base64 encoded ovf file content."
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ParseOvfAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,99 @@
+---
+title: "查询集群"
+---
+
+<APIPage method="GET" path="/v1/clusters" altPaths={["/v1/clusters/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/clusters?q=hypervisorType=KVM
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/clusters/a8d5ea1ceda34616a26bec2fce3b4d8a
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryCluster`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "name": "cluster1",
+      "uuid": "41f3a4eb130347a2af6d7f2e0d21fab0",
+      "description": "test",
+      "state": "Enabled",
+      "hypervisorType": "KVM",
+      "createDate": "Jun 7, 2017 9:20:13 PM",
+      "lastOpDate": "Jun 7, 2017 9:20:13 PM",
+      "zoneUuid": "aad01c8b25774796b2e341ec51a7c9c1",
+      "type": "zstack"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_j1h_h1t_l1b)|0.6|
+|inventories|List|详情参考[inventories](#p_jxw_g1t_l1b)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|name|String|资源名称|0.6|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|description|String|资源的详细描述|0.6|
+|state|String|集群状态|0.6|
+|hypervisorType|String|虚拟机管理程序类型|0.6|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+|zoneUuid|String|数据中心UUID|0.6|
+|type|String|保留域|0.6|
+
+## SDK示例
+Java SDK
+
+```
+QueryClusterAction action = new QueryClusterAction();
+action.conditions = asList("hypervisorType=KVM");
+action.sessionId = "3e214b652cc947ea9e1aa256d05752ea";
+QueryClusterAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryClusterAction action = QueryClusterAction()
+action.conditions = ["hypervisorType=KVM"]
+action.sessionId = "ad8f3cd4b5bc4da0a3a91dc8bcbdd18c"
+QueryClusterAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,8 @@
+{
+  "title": "Add Remote Backup Storage",
+  "pages": [
+    "index",
+    "dedicated-backup-storage"
+  ],
+  "pagesIndex": "index"
+}

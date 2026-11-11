@@ -1,0 +1,78 @@
+---
+title: "获取ZMigrate网关虚拟机实例"
+---
+
+<APIPage method="GET" path="/v1/zmigrate/vm-instances">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zmigrate/vm-instances
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|systemTags \(可选\)|List|query|系统标签| |5.0.0|
+|userTags \(可选\)|List|query|用户标签| |5.0.0|
+
+## API返回
+返回示例
+
+```
+{
+  "managementVmInstanceUuid": "ff04e1736ec6391f9a1f023b524d0a00",
+  "gatewayVmInstances": [
+    {
+      "uuid": "ff01ec80fd11327cba7519b66119d900",
+      "name": "ZMigrateGatewayVmInstance",
+      "description": "ZMigrate gateway vm instance for test"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|managementVmInstanceUuid|String| |5.0.0|
+|gatewayVmInstances|List| |5.0.0|
+|success|boolean| |5.0.0|
+|error|ErrorCode|详情参考[error](#p_xm1_vmk_l1b)|5.0.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|ode|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+GetZMigrateGatewayVmInstancesAction action = new GetZMigrateGatewayVmInstancesAction();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetZMigrateGatewayVmInstancesAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = GetZMigrateGatewayVmInstancesAction()
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

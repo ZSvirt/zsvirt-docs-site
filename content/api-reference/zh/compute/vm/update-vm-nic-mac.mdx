@@ -1,0 +1,81 @@
+---
+title: "更新虚拟机mac地址"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/nics/{vmNicUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateVmNicMac": {
+    "mac": "fa:4c:ee:9a:76:00"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateVmNicMac":{"mac":"fa:4c:ee:9a:76:00"}}' \
+http://localhost:8080/zstack/v1/vm-instances/nics/c6a34d551b36322ab83b87f7eab6bd41/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|vmNicUuid|String|url|虚拟机网卡UUID| |2.3|
+|mac|String|body\(包含在**updateVmNicMac**结构中\)|mac地址| |2.3|
+|systemTags \(可选\)|List|body|系统标签| |2.3|
+|userTags \(可选\)|List|body|用户标签| |2.3|
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+UpdateVmNicMacAction action = new UpdateVmNicMacAction();
+action.vmNicUuid = "c6a34d551b36322ab83b87f7eab6bd41";
+action.mac = "fa:4c:ee:9a:76:00";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateVmNicMacAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateVmNicMacAction action = UpdateVmNicMacAction()
+action.vmNicUuid = "c6a34d551b36322ab83b87f7eab6bd41"
+action.mac = "fa:4c:ee:9a:76:00"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateVmNicMacAction.Result res = action.call()
+```
+
+</APIPage>

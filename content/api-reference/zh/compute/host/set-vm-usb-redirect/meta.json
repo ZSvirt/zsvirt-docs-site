@@ -1,0 +1,11 @@
+{
+  "title": "USB透传相关接口",
+  "pages": [
+    "attach-usb-device-to-vm",
+    "detach-usb-device-from-vm",
+    "get-usb-device-candidates-for-attaching-vm",
+    "query-usb-device",
+    "update-usb-device"
+  ],
+  "pagesIndex": "index"
+}

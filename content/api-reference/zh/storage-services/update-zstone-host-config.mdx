@@ -1,0 +1,120 @@
+---
+title: "配置 ZStone 主机"
+---
+
+<APIPage method="PUT" path="/v1/zstone-plugin/config/host">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateZStoneHostConfig": {
+    "uuid": "53c0433a817349f89f66532addeb8b6c",
+    "hostPort": 22,
+    "hosts": [
+      {
+        "uuid": "11045d20c4ae4d079b68d9aa9bd93e45",
+        "managementIp": "172.30.3.21",
+        "publicIp": "192.168.4.21"
+      },
+      {
+        "uuid": "f76c6667db6a4c0bb220b895478effcc",
+        "managementIp": "172.30.3.22",
+        "publicIp": "192.168.4.22"
+      },
+      {
+        "uuid": "0f7f889aebf0575bb223fc4f547854ef",
+        "managementIp": "172.30.3.23",
+        "publicIp": "192.168.4.23"
+      }
+    ],
+    "deployChrony": false,
+    "copySshKey": true,
+    "installWatch": true,
+    "updateHostname": true
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateZStoneHostConfig":{"uuid":"53c0433a817349f89f66532addeb8b6c","hostPort":22,"hosts":[{"uuid":"11045d20c4ae4d079b68d9aa9bd93e45","managementIp":"172.30.3.21","publicIp":"192.168.4.21"},{"uuid":"f76c6667db6a4c0bb220b895478effcc","managementIp":"172.30.3.22","publicIp":"192.168.4.22"},{"uuid":"0f7f889aebf0575bb223fc4f547854ef","managementIp":"172.30.3.23","publicIp":"192.168.4.23"}],"deployChrony":false,"copySshKey":true,"installWatch":true,"updateHostname":true}}' \
+http://localhost:8080/zstack/v1/zstone-plugin/config/host
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|body\(包含在`updateZStoneHostConfig`结构中\)|ZStone 的 UUID，唯一标示该资源| |4.10.6|
+|hostUsername|String|body\(包含在`updateZStoneHostConfig`结构中\)|登录主机使用的用户名| |4.10.6|
+|hostPassword|String|body\(包含在`updateZStoneHostConfig`结构中\)|登录主机使用的密码| |4.10.6|
+|hostPort \(可选\)|int|body\(包含在`updateZStoneHostConfig`结构中\)|ZStone 主机 SSH 端口| |4.10.6|
+|hosts|List|body\(包含在`updateZStoneHostConfig`结构中\)|ZStone 主机配置列表| |4.10.6|
+|deployChrony \(可选\)|boolean|body\(包含在`updateZStoneHostConfig`结构中\)|是否配置时间同步服务| |4.10.6|
+|copySshKey \(可选\)|boolean|body\(包含在`updateZStoneHostConfig`结构中\)|是否复制 SSH KEY| |4.10.6|
+|installWatch \(可选\)|boolean|body\(包含在`updateZStoneHostConfig`结构中\)|是否安装 Watch| |4.10.6|
+|updateHostname \(可选\)|boolean|body\(包含在`updateZStoneHostConfig`结构中\)|是否更新主机名| |4.10.6|
+|systemTags \(可选\)|List|body|系统标签| |4.10.6|
+|userTags \(可选\)|List|body|用户标签| |4.10.6|
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+UpdateZStoneHostConfigAction action = new UpdateZStoneHostConfigAction();
+action.uuid = "53c0433a817349f89f66532addeb8b6c";
+action.hostPort = 22;
+action.hosts = asList([uuid:11045d20c4ae4d079b68d9aa9bd93e45, managementIp:172.30.3.21, publicIp:192.168.4.21],[uuid:f76c6667db6a4c0bb220b895478effcc, managementIp:172.30.3.22, publicIp:192.168.4.22],[uuid:0f7f889aebf0575bb223fc4f547854ef, managementIp:172.30.3.23, publicIp:192.168.4.23]);
+action.deployChrony = false;
+action.copySshKey = true;
+action.installWatch = true;
+action.updateHostname = true;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateZStoneHostConfigAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateZStoneHostConfigAction action = UpdateZStoneHostConfigAction()
+action.uuid = "53c0433a817349f89f66532addeb8b6c"
+action.hostPort = 22
+action.hosts = [[uuid:11045d20c4ae4d079b68d9aa9bd93e45, managementIp:172.30.3.21, publicIp:192.168.4.21], [uuid:f76c6667db6a4c0bb220b895478effcc, managementIp:172.30.3.22, publicIp:192.168.4.22], [uuid:0f7f889aebf0575bb223fc4f547854ef, managementIp:172.30.3.23, publicIp:192.168.4.23]]
+action.deployChrony = false
+action.copySshKey = true
+action.installWatch = true
+action.updateHostname = true
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateZStoneHostConfigAction.Result res = action.call()
+```
+
+</APIPage>

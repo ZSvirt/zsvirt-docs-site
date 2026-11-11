@@ -1,0 +1,41 @@
+---
+title: 'VM Group Management'
+---
+
+A VM group is a logical collection that users create based on business requirements to organize virtual machines. ZSvirt offers a default group; when you create new VMs, if you have not created your own groups or assigned them to a group, they will automatically be placed in the default group. This section explains how to create and use VM groups.
+
+-   [Create New VM Groups and Subgroups](#section_xpz_dxd_zyb)
+-   [Add VMs to VM Groups or Subgroups](#section_npx_pc2_zyb)
+-   [Modify VM Group Name](#section_jl4_cf2_zyb)
+-   [Delete VM Group](#section_hzx_3f2_zyb)
+
+## Create New VM Groups and Subgroups
+The platform provides multiple entry points for creating new VM groups. You can create a new VM group or subgroup from either of the following main entry points:
+
+-   In the left navigation pane, right-click the target data center and click **New VM Group**.
+-   In the left navigation pane, select the target data center. Then on the right side of the page, click **Actions** &gt; **New VM Group**, or on the **Virtual Machine** tab under the **VM Group** tab, click **New VM Group**.
+
+To create a new VM group, set the following parameters:
+
+-   **Name**: Name of the VM group
+-   **Description**: Description of the VM group
+
+After you click **OK**, the creation is complete.
+
+Once the VM group is created, if you need to create a subgroup within this group, you can do so in the resource section of the group in the left navigation pane or on the group's page on the right side of the platform. Click **Create Subgroup** and set the following parameters:
+
+-   **Affiliated to**: Shows the parent VM group of this subgroup
+-   **Name**: Name of the VM subgroup
+
+## Add VMs to VM Groups or Subgroups
+After creating a VM group or subgroup, you can add VMs to it. The platform provides multiple entry points for adding VMs to a group. You can add VMs from any of the following main entry points:
+
+-   In the left navigation pane, right-click the target VM group and click **Create VM**. The newly created VM will belong to this group by default.
+-   In the left navigation pane, select the target VM group. Then on the right side of the page, click **Create VM**. The newly created VM will belong to this group by default.
+-   On the target VM's page, click **Actions** &gt; **System Configuration** &gt; **Change Group** to change the current VM's group to the target group.
+
+## Modify VM Group Name
+If you need to change the name of a VM group, on the target VM group page, click **Actions** &gt; **Edit Name** to modify the name.
+
+## Delete VM Group
+If you no longer need a specific VM group, on the target VM group page, click **Actions** &gt; **Delete** to remove the group. You can also delete multiple groups at once from the VMs tab under data center resources. After deleting a group, the VMs within it will be moved to the default group.

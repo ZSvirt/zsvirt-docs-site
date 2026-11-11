@@ -1,0 +1,12 @@
+{
+  "title": "镜像存储",
+  "pages": [
+    "a-standalone-image-storage-was-accidentally-deleted-how-do-i-recover-the-images",
+    "adding-an-image-storage-fails-how-do-i-troubleshoot-this",
+    "image-storage-connection-status-is-abnormal-how-do-i-troubleshoot",
+    "how-do-i-quickly-update-the-ip-address-of-an-image-storage-on-the-virtualization-platform",
+    "standalone-image-storage-has-insufficient-available-capacity-how-do-i-resolve-this",
+    "image-storage-is-disconnected-what-should-i-do"
+  ],
+  "pagesIndex": "index"
+}

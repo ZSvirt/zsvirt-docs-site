@@ -1,0 +1,84 @@
+---
+title: "Bootstrap Mini Appliance"
+---
+
+<APIPage method="POST" path="/v1/mini-clusters/hosts">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "local": {
+      "sn": "RD-BJD-001-07311A",
+      "ipmi": {
+        "gw": "172.20.27.1",
+        "ip": "172.20.27.21/24",
+        "vlan": "27"
+      },
+      "mgmt": {
+        "gw": "172.20.26.1",
+        "ip": "172.20.26.21/24",
+        "vlan": "26",
+        "bond": "lacp"
+      }
+    },
+    "peer": {
+      "sn": "RD-BJD-001-07311B",
+      "mgmt": {
+        "gw": "172.20.26.1",
+        "ip": "172.20.26.22/24",
+        "vlan": "26",
+        "bond": "ab"
+      }
+    }
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"local":{"sn":"RD-BJD-001-07311A","ipmi":{"gw":"172.20.27.1","ip":"172.20.27.21/24","vlan":"27"},"mgmt":{"gw":"172.20.26.1","ip":"172.20.26.21/24","vlan":"26","bond":"lacp"}},"peer":{"sn":"RD-BJD-001-07311B","mgmt":{"gw":"172.20.26.1","ip":"172.20.26.22/24","vlan":"26","bond":"ab"}}}}' \
+http://localhost:8080/zstack/v1/mini-clusters/hosts
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|local|MiniHostInfo|body \(included in `params` structure\)| | |3.6.0|
+|peer|MiniHostInfo|body \(included in `params` structure\)| | |3.6.0|
+|resourceUuid \(Optional\)|String|body \(included in `params` structure\)| | |3.6.0|
+|tagUuids \(Optional\)|List|body \(included in `params` structure\)|Tag UUID list| |3.6.0|
+|systemTags \(Optional\)|List|body| | |3.6.0|
+|userTags \(Optional\)|List|body| | |3.6.0|
+
+## API Response
+This API returns an empty JSON structure `{}` on success, and a JSON structure containing an error field on failure, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+</APIPage>

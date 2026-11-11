@@ -1,0 +1,114 @@
+---
+title: "设置网卡的安全组"
+---
+
+<APIPage method="PUT" path="/v1/security-groups/nics/{vmNicUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "setVmNicSecurityGroup": {
+    "refs": [
+      {
+        "securityGroupUuid": "a63c3b35a6553b4a912ee60cd06d5066",
+        "priority": 1
+      }
+    ]
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" 
+-H "Authorization: OAuth YOUR_SESSION_UUID" 
+-X PUT -d '{"setVmNicSecurityGroup":{"refs":[{"securityGroupUuid":"a63c3b35a6553b4a912ee60cd06d5066","priority":1}]}}' 
+http://localhost:8080/zstack/v1/security-groups/nics/6b7ad223ebb2328bb646f2e77b34957b/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|vmNicUuid|String|url|网卡的UUID，唯一标示该资源| |4.7.21|
+|refs|List|body\(包含在**setVmNicSecurityGroup**结构中\)|网卡挂载的安全组| |4.7.21|
+|systemTags \(可选\)|List|body|系统标签| |4.7.21|
+|userTags \(可选\)|List|body|用户标签| |4.7.21|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": [
+    {
+      "uuid": "33aa195b943c3faa87e2c75a787cb7f5",
+      "priority": 1,
+      "securityGroupUuid": "63ec5dcb248138968f0153160b5b8b3a"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.7.21|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_a3v_dx5_m1b)|4.7.21|
+|inventory|SecurityGroupInventory|详情参考[inventory](#p_c4z_dx5_m1b)|4.7.21|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.7.21|
+|description|String|错误的概要描述|4.7.21|
+|details|String|错误的详细信息|4.7.21|
+|elaboration|String|保留字段，默认为null|4.7.21|
+|opaque|LinkedHashMap|保留字段，默认为null|4.7.21|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.7.21|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|priority|Integer|安全组优先级|4.7.21|
+|vmNicUuid|String|虚拟机网卡UUID|4.7.21|
+|securityGroupUuid|String|安全组UUID|4.7.21|
+|vmInstanceUuid|String|虚拟机UUID|4.7.21|
+|createDate|Timestamp|创建时间|4.7.21|
+|lastOpDate|Timestamp|最后一次修改时间|4.7.21|
+
+## SDK示例
+Java SDK
+
+```
+SetVmNicSecurityGroupAction action = new SetVmNicSecurityGroupAction();
+action.vmNicUuid = "6b7ad223ebb2328bb646f2e77b34957b";
+action.refs = asList([securityGroupUuid:a63c3b35a6553b4a912ee60cd06d5066, priority:1]);
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+SetVmNicSecurityGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SetVmNicSecurityGroupAction action = SetVmNicSecurityGroupAction()
+action.vmNicUuid = "6b7ad223ebb2328bb646f2e77b34957b"
+action.refs = [[securityGroupUuid:a63c3b35a6553b4a912ee60cd06d5066, priority:1]]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+SetVmNicSecurityGroupAction.Result res = action.call()
+```
+
+</APIPage>

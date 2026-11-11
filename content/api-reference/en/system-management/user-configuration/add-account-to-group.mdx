@@ -1,0 +1,83 @@
+---
+title: "Add Account to Group"
+---
+
+<APIPage method="POST" path="/v1/account-groups/{groupUuid}/accounts">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "accountUuids": [
+      "ac243dc036043ad7a1ea649248e3e863"
+    ]
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, the **systemTags** and **userTags** fields are optional. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"accountUuids":["ac243dc036043ad7a1ea649248e3e863"]}}'
+http://localhost:8080/zstack/v1/account-groups/ab8c60e7c3bb3f05906adfc8f991c90b/accounts
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|groupUuid|String|url|Account group UUID| |4.10.0|
+|accountUuids|List|body \(contained in the **params** structure\)|Account UUID list| |4.10.0|
+|systemTags \(Optional\)|List|body|System tags| |4.10.0|
+|userTags \(Optional\)|List|body|User tags| |4.10.0|
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+AddAccountToGroupAction action = new AddAccountToGroupAction();
+action.groupUuid = "ab8c60e7c3bb3f05906adfc8f991c90b";
+action.accountUuids = asList("ac243dc036043ad7a1ea649248e3e863");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddAccountToGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddAccountToGroupAction action = AddAccountToGroupAction()
+action.groupUuid = "ab8c60e7c3bb3f05906adfc8f991c90b"
+action.accountUuids = [ac243dc036043ad7a1ea649248e3e863]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddAccountToGroupAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,113 @@
+---
+title: "更新主机调度组"
+---
+
+<APIPage method="PUT" path="/v1/hostSchedulingRuleGroup/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateHostSchedulingRuleGroup": {
+    "name": "test",
+    "description": "desc"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateHostSchedulingRuleGroup":{"name":"test","description":"desc"}}' http://localhost:8080/zstack/v1/hostSchedulingRuleGroup/7127bed5295f3a3c94d9b3dbc307450d
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |4.6.0|
+|name \(可选\)|String|body\(包含在**updateHostSchedulingRuleGroup**结构中\)|资源名称| |4.6.0|
+|description \(可选\)|String|body\(包含在**updateHostSchedulingRuleGroup**结构中\)|资源的详细描述| |4.6.0|
+|systemTags \(可选\)|List|body|系统标签| |4.6.0|
+|userTags \(可选\)|List|body|用户标签| |4.6.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "b96c8635e48435eca42d3cbfca25704f",
+    "name": "test",
+    "description": "desc",
+    "zoneUuid": "afcd30e31ebb38a8b0a2f013fce73f7a",
+    "clusterUuid": "ae9b2f516fd43913b1d458ebe5f7222d"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.6.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_w13_jcb_3cb)|4.6.0|
+|inventory|AffinityGroupInventory|详情参考[inventory](#p_fbm_jcb_3cb)|4.6.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.6.0|
+|description|String|错误的概要描述|4.6.0|
+|details|String|错误的详细信息|4.6.0|
+|elaboration|String|保留字段，默认为null|4.6.0|
+|opaque|LinkedHashMap|保留字段，默认为null|4.6.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.6.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.6.0|
+|name|String|资源名称|4.6.0|
+|description|String|资源的详细描述|4.6.0|
+|zoneUuid|String|数据中心UUID|4.6.0|
+|clusterUuid|String|集群UUID|4.6.0|
+|createDate|Timestamp|创建时间|4.6.0|
+|lastOpDate|Timestamp|最后一次修改时间|4.6.0|
+
+## SDK示例
+Java SDK
+
+```
+UpdateHostSchedulingRuleGroupAction action = new UpdateHostSchedulingRuleGroupAction();
+action.uuid = "7127bed5295f3a3c94d9b3dbc307450d";
+action.name = "test";
+action.description = "desc";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateHostSchedulingRuleGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateHostSchedulingRuleGroupAction action = UpdateHostSchedulingRuleGroupAction()
+action.uuid = "7127bed5295f3a3c94d9b3dbc307450d"
+action.name = "test"
+action.description = "desc"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateHostSchedulingRuleGroupAction.Result res = action.call()
+```
+
+</APIPage>

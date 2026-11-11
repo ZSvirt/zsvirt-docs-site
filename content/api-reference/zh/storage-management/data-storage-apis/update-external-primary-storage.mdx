@@ -1,0 +1,377 @@
+---
+title: "更新外部存储"
+---
+
+<APIPage method="PUT" path="/v1/primary-storage/addon/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateExternalPrimaryStorage": {
+    "config": "{\"pools\":[{\"name\":\"pool1\",\"aliasName\":\"pool-high\"}]}",
+    "defaultProtocol": "Vhost",
+    "name": "My Primary Storage",
+    "description": "New description"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateExternalPrimaryStorage":{"config":"{\"pools\":[{\"name\":\"pool1\",\"aliasName\":\"pool-high\"}]}","defaultProtocol":"Vhost","name":"My Primary Storage","description":"New description"}}' \
+http://localhost:8080/zstack/v1/primary-storage/addon/6275cc909e313b63a00acf1eea7a7e18/actions
+```
+
+参数列表
+
+<table id="table_dfg_pw4_v3b"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+config \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`updateExternalPrimaryStorage`结构中\)
+
+</td><td>
+
+配置
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+defaultProtocol \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`updateExternalPrimaryStorage`结构中\)
+
+</td><td>
+
+默认协议
+
+</td><td>
+
+-   Vhost
+-   Scsi
+-   Nvme
+-   Curve
+-   file
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+资源的UUID，唯一标示该资源
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+name \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`updateExternalPrimaryStorage`结构中\)
+
+</td><td>
+
+资源名称
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+description \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`updateExternalPrimaryStorage`结构中\)
+
+</td><td>
+
+资源的详细描述
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+url \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`updateExternalPrimaryStorage`结构中\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr></tbody>
+</table>
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "identity": "expon",
+    "config": {
+      "pools": [
+        {
+          "name": "pool1",
+          "aliasName": "pool-high"
+        },
+        {
+          "name": "pool2"
+        }
+      ]
+    },
+    "addonInfo": {
+      "pools": [
+        {
+          "name": "pool1",
+          "availableCapacity": 100,
+          "totalCapacity": 200
+        },
+        {
+          "name": "pool2",
+          "availableCapacity": 100,
+          "totalCapacity": 200
+        }
+      ]
+    },
+    "uuid": "f40dbde502013ea98a7fe9a30bac95a3",
+    "url": "http://operator:*****@172.25.1.5:80",
+    "totalCapacity": 107374182400,
+    "availableCapacity": 53687091200,
+    "createDate": "Nov 14, 2017 2:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |5.0.0|
+|inventory|ExternalPrimaryStorageInventory|详情参考[inventory](#p_ocg_p2m_s2c)|5.0.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_gxy_yw4_v3b)|5.0.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|identity|String|存储标识|5.0.0|
+|config|String|配置|5.0.0|
+|addonInfo|String|额外信息|5.0.0|
+|outputProtocols|List|可输出协议|5.0.0|
+|defaultProtocol|String|默认协议|5.0.0|
+|uuid|String|资源的UUID，唯一标示该资源|5.0.0|
+|zoneUuid|String|数据中心UUID|5.0.0|
+|name|String|资源名称|5.0.0|
+|url|String| |5.0.0|
+|description|String|资源的详细描述|5.0.0|
+|totalCapacity|Long| |5.0.0|
+|availableCapacity|Long| |5.0.0|
+|totalPhysicalCapacity|Long| |5.0.0|
+|availablePhysicalCapacity|Long| |5.0.0|
+|systemUsedCapacity|Long| |5.0.0|
+|type|String|类型|5.0.0|
+|state|String| |5.0.0|
+|status|String| |5.0.0|
+|mountPath|String| |5.0.0|
+|createDate|Timestamp|创建时间|5.0.0|
+|lastOpDate|Timestamp|最后一次修改时间|5.0.0|
+|attachedClusterUuids|List| |5.0.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+UpdateExternalPrimaryStorageAction action = new UpdateExternalPrimaryStorageAction();
+action.config = "{"pools":[{"name":"pool1","aliasName":"pool-high"}]}";
+action.defaultProtocol = "Vhost";
+action.uuid = "6275cc909e313b63a00acf1eea7a7e18";
+action.name = "My Primary Storage";
+action.description = "New description";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateExternalPrimaryStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateExternalPrimaryStorageAction action = UpdateExternalPrimaryStorageAction()
+action.config = "{"pools":[{"name":"pool1","aliasName":"pool-high"}]}"
+action.defaultProtocol = "Vhost"
+action.uuid = "6275cc909e313b63a00acf1eea7a7e18"
+action.name = "My Primary Storage"
+action.description = "New description"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateExternalPrimaryStorageAction.Result res = action.call()
+```
+
+</APIPage>

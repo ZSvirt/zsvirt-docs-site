@@ -1,0 +1,86 @@
+---
+title: "Update Block Volume"
+---
+
+<APIPage method="PUT" path="/v1/block-volumes/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateBlockVolume": {
+    "name": "example"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Examples
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateBlockVolume":{"name":"example"}}' \
+http://localhost:8080/zstack/v1/block-volumes/09c2f52fe02030019306d55b1ac7e849/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Resource UUID, uniquely identifies the resource| |4.7.11|
+|name \(optional\)|String|body \(nested in `updateBlockVolume` structure\)|Resource name| |4.7.11|
+|description \(optional\)|String|body \(nested in `updateBlockVolume` structure\)|Resource description| |4.7.11|
+|burstTotalBw \(optional\)|Long|body \(nested in `updateBlockVolume` structure\)|Burst bandwidth| |4.7.11|
+|burstTotalIops \(optional\)|Long|body \(nested in `updateBlockVolume` structure\)|Burst IOPS| |4.7.11|
+|maxTotalBw \(optional\)|Long|body \(nested in `updateBlockVolume` structure\)|Maximum bandwidth| |4.7.11|
+|maxTotalIops \(optional\)|Long|body \(nested in `updateBlockVolume` structure\)|Maximum IOPS| |4.7.11|
+|systemTags \(optional\)|List|body|System tags| |4.7.11|
+|userTags \(optional\)|List|body|User tags| |4.7.11|
+
+## API Response
+When the API succeeds, it returns an empty JSON structure `{}`. When an error occurs, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+UpdateBlockVolumeAction action = new UpdateBlockVolumeAction();
+action.uuid = "09c2f52fe02030019306d55b1ac7e849";
+action.name = "example";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateBlockVolumeAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateBlockVolumeAction action = UpdateBlockVolumeAction()
+action.uuid = "09c2f52fe02030019306d55b1ac7e849"
+action.name = "example"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateBlockVolumeAction.Result res = action.call()
+```
+
+</APIPage>

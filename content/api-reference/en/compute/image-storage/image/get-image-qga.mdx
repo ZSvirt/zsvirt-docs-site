@@ -1,0 +1,73 @@
+---
+title: "Get Image Qga"
+---
+
+<APIPage method="GET" path="/v1/images/{uuid}/qga">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/images/34a5bf0cc1014286bd944771c77e1c07/qga
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Resource UUID, uniquely identifies the resource| |0.6|
+|systemTags \(Optional\)|List|query| | |0.6|
+|userTags \(Optional\)|List|query| | |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "enable": false
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|enable|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_wsn_bqg_vbb)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause. The source error that triggered the current error. This field is null if there is no original error|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+GetImageQgaAction action = new GetImageQgaAction();
+action.uuid = "0d7b698ccb174702ae5fa7f15bce8612";
+action.sessionId = "3e59586b589d4dbeb0afd078bb887655";
+GetImageQgaAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetImageQgaAction action = GetImageQgaAction()
+action.uuid = "82a89e52f2c54fab9b73f095e23ddecb"
+action.sessionId = "fc8ea8bda61143cea7db98957ccd026f"
+GetImageQgaAction.Result res = action.call()
+```
+
+</APIPage>

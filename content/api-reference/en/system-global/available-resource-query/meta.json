@@ -1,0 +1,9 @@
+{
+  "title": "Available Resource Query",
+  "pages": [
+    "get-cpu-memory-capacity",
+    "get-external-services",
+    "reload-external-service"
+  ],
+  "pagesIndex": "index"
+}

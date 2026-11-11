@@ -1,0 +1,16 @@
+---
+title: "A virtual machine cannot access the internet after being bound to a Security Group. How do I troubleshoot?"
+---
+
+## Cause
+The Security Group may have rules that restrict outbound traffic.
+
+## Solution
+1.  Follow these steps to troubleshoot:
+2.  Remove the virtual machine from the Security Group.
+
+3.  Detach the Security Group from the virtual machine NIC.
+
+4.  Test whether the virtual machine can access the internet.
+
+5.  If internet access is restored, verify that the Security Group rules allow the required ports and protocols.

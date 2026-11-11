@@ -1,0 +1,42 @@
+---
+title: 'Import Third-Party Certificate'
+---
+
+-   You have deployed the latest ZSvirt environment. For a dual-management node environment, ensure that each management node is working properly.
+-   You need admin permissions to configure the certificates.
+-   You hold a valid commercial CA-issued certificate.
+-   Certificate files and certificate chains are supported in CTR or PEM format only. Private keys for certificates must be in KEY or PEM format.
+
+    <Callout type="info">
+    If your certificate does not meet these format requirements, convert it accordingly.
+    </Callout>
+
+1.  In the navigation pane, choose **System Management** &gt; **Certificate Management**.
+
+2.  On the Certificate Management page, click **Import Certificate**.
+
+3.  In the Certificate Import dialog, set the following parameters:
+
+    -   **Import Mode**: Select **Third-party Certificate**.
+    -   **Certificate File**: Import or enter the certificate public key.
+
+        <Callout type="info">
+        -   Only CTR and PEM formats are supported.
+        -   The certificate content must begin with `----BEGIN CERTIFICATE----` and end with `----END CERTIFICATE----`.
+        </Callout>
+    -   **Certificate Private Key**: Import or enter the certificate private key.
+
+        <Callout type="info">
+        -   Only KEY and PEM formats are supported.
+        -   The private key content must begin with `----BEGIN (RSA/EC) PRIVATE KEY----` and end with `----END (RSA/EC) PRIVATE KEY----`.
+        </Callout>
+    -   **Certificate Chain**: Import or enter the certificate chain.
+
+        <Callout type="info">
+        -   Only CTR and PEM formats are supported.
+        -   The certificate chain content must begin with `----BEGIN CERTIFICATE----` and end with `----END CERTIFICATE----`.
+        </Callout>
+    -   **HTTP Redirection**: Optional, enabled by default. When enabled, the system automatically redirects requests from port 80 of the HTTP address to port 443 of the HTTPS address.
+4.  Review the certificate information and click **OK**.
+
+After successfully importing the third-party certificate, the system will re-establish the session and reconnect to the UI management interface through port 443 of the HTTPS protocol.

@@ -1,0 +1,42 @@
+---
+title: "如何修改API超时时间"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+## 解决方案
+-   虚拟化平台为各类资源操作预制了API超时时间，本章节主要介绍如何修改虚拟机核心资源和操作的API超时时间。
+
+    修改API超时时间之前，可通过`QueryGlobalConfig category=apiTimeout name=$资源名称`命令查询相关资源操作的默认超时时间。
+
+-   修改删除快照超时时间为24小时：
+
+    1.  修改批量删除快照超时时间：
+
+        ```
+        UpdateGlobalConfig category=apiTimeout name=org.zstack.header.storage.snapshot.APIBatchDeleteVolumeSnapshotMsg value=24h
+        ```
+
+    2.  修改删除单个快照超时时间：
+
+        ```
+         UpdateGlobalConfig category=apiTimeout name=org.zstack.header.storage.snapshot.APIDeleteVolumeSnapshotMsg value=24h
+        ```
+
+-   修改主机重连超时时间为2小时：
+
+    ```
+    UpdateGlobalConfig category=apiTimeout name=org.zstack.header.host.APIReconnectHostMsg value=2h
+    ```
+
+-   修改管理节点启动超时时间为20分钟：
+
+    ```
+    zstack-ctl start_node --timeout 1200
+    ```
+
+-   修改备份任务超时时间为120小时：
+
+    ```
+    UpdateGlobalConfig category=apiTimeout name=org.zstack.header.storage.volume.backup.APICreateVolumeBackupMsg value=120h
+    ```

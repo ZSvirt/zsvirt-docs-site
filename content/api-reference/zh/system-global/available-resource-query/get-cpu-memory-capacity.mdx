@@ -1,0 +1,314 @@
+---
+title: "获取CPU和内存容量"
+---
+
+<APIPage method="GET" path="/v1/hosts/capacities/cpu-memory">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/hosts/capacities/cpu-memory?zoneUuids=6510dcd4e77939d695b035ecbcfb217c&zoneUuids=33a39cd9391538a4a4d45666e8505dda&clusterUuids=b7c233dd9c573f63b5bb97f50028fa7f&clusterUuids=08d332af6fdb351da456aea3b6b5d029&hostUuids=ba1bfc20682136c4b2f76920af8f010e&hostUuids=b09cd47a6fa93302ae55918ef8da2af4&hypervisorType=KVM&all=true
+```
+
+参数列表
+
+<table id="table_f4d_mpl_l1b"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+zoneUuids \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+数据中心的UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+clusterUuids \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+集群的UUID。用于挂载网络、存储等
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+hostUuids \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+主机的UUID。用于添加、删除host等
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+all \(可选\)
+
+</td><td>
+
+boolean
+
+</td><td>
+
+query
+
+</td><td>
+
+-   all默认为false，此时数据中心UUID，集群UUID,主机UUID必须有一个不为空，或者全部都填写
+-   all设置为true时，数据中心UUID、集群UUID、主机UUID均可不填
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+hypervisorType \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+ 
+
+</td><td>
+
+-   KVM
+-   ESC
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr></tbody>
+</table>
+
+## API返回
+返回示例
+
+```
+{
+  "totalCpu": 4.0,
+  "availableCpu": 2.0,
+  "totalMemory": 8.0,
+  "availableMemory": 4.0,
+  "managedCpuNum": 4.0,
+  "capacityData": [
+    {
+      "resourceUuid": "db558260b0b53e36aa8ebf7e40c7c9c6",
+      "totalCpu": 4.0,
+      "availableCpu": 2.0,
+      "totalMemory": 8.0,
+      "availableMemory": 4.0,
+      "managedCpuNum": 4.0
+    }
+  ],
+  "resourceType": "HostVO"
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|totalCpu|long|cpu总数|0.6|
+|availableCpu|long|可用cpu数量|0.6|
+|totalMemory|long|内存总量|0.6|
+|availableMemory|long|可用内存|0.6|
+|managedCpuNum|long|受管理的物理CPU数量|2.5.0|
+|resourceType|String|所查资源的类型（主机、集群、数据中心）|3.9.0|
+|success|boolean|成功|0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_e2b_zpl_l1b)|0.6|
+|capacityData|List|详情参考[capacityData](#p_lcf_nhl_plb)|3.9.0|
+|error|ErrorCode|详情参考[error](#p_jzz_mhl_plb)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### capacityData
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|resourceUuid|String|资源UUID|3.9.0|
+|totalCpu|long|CPU总数|3.9.0|
+|availableCpu|long|可用CPU数量|3.9.0|
+|totalMemory|long|内存总量|3.9.0|
+|availableMemory|long|可用内存|3.9.0|
+|managedCpuNum|long|受管理的物理CPU数量|3.9.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+GetCpuMemoryCapacityAction action = new GetCpuMemoryCapacityAction();
+action.zoneUuids = asList("79383afd88f54a0b994515d84dbfa447","907c8ca71ee440e3bb0327f19d60754a");
+action.clusterUuids = asList("9f5431123b834d95ae642c3cb923ba32","09cdcc7e28f340ccace7c427a32e2c05");
+action.hostUuids = asList("2926839176934652ac3c6a77e4ce1484","c1b46284d0dd4d2a8a7637f0d4792d31");
+action.hypervisorType = "KVM";
+action.all = true;
+action.sessionId = "f3aedb623b3c47a7bb215ea3f4be90d7";
+GetCpuMemoryCapacityAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetCpuMemoryCapacityAction action = GetCpuMemoryCapacityAction()
+action.zoneUuids = [28cd4ea55a72429d815205b0738b87b3, 2571613b0ba642b7a1c99ddc17aee8e3]
+action.clusterUuids = [3e9e56c96fa545fea0b759cb601aad1c, 98ec43d31af446a9bf290b117af95e52]
+action.hostUuids = [b5cf96f88a1943f89417d6bea0715b6c, b358d13ac15049a581e47c76183c1358]
+action.hypervisorType = "KVM"
+action.all = true
+action.sessionId = "b0b7e398d33d4d7893255547d0859731"
+GetCpuMemoryCapacityAction.Result res = action.call()
+```
+
+</APIPage>

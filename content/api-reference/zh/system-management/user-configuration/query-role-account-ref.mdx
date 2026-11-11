@@ -1,0 +1,87 @@
+---
+title: "查询角色账户关系"
+---
+
+<APIPage method="GET" path="/v1/identities/role-account-refs">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X GET http://localhost:8080/zstack/v1/identities/role-account-refs?q=roleUuid=686cb963323e491e955a0fd0b49dd743
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QuerySharedResource`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "roleUuid": "686cb963323e491e955a0fd0b49dd743",
+      "accountUuid": "5360250ef145409e862b4e99d2b2efc4",
+      "createDate": "Nov 14, 2017 2:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean|查询是否成功|4.10.0|
+|inventories|List|详情参考[inventories](#p_rmj_5sz_2dc)|4.10.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_a4x_jn5_m1b)|4.10.0|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|roleUuid|String|角色 UUID|4.10.0|
+|accountUuid|String|账户 UUID|4.10.0|
+|accountPermissionFrom|String|账户权限来源, 如果账户是通过加入某个账户组而获得的角色, 那么这个值就是那个账户组的 UUID。如果账户直接绑定了角色, 这个值为 null|4.10.0|
+|createDate|Timestamp|创建时间|4.10.0|
+|lastOpDate|Timestamp|最后一次修改时间|4.10.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+QueryRoleAccountRefAction action = new QueryRoleAccountRefAction();
+action.conditions = asList("roleUuid=686cb963323e491e955a0fd0b49dd743");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryRoleAccountRefAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+QueryRoleAccountRefAction action = QueryRoleAccountRefAction()
+action.conditions = ["roleUuid=686cb963323e491e955a0fd0b49dd743"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryRoleAccountRefAction.Result res = action.call()
+
+```
+
+</APIPage>

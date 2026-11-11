@@ -1,0 +1,334 @@
+---
+title: "Create a Scheduler Job Group"
+---
+
+<APIPage method="POST" path="/v1/scheduler/jobgroups">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "job",
+    "description": "description",
+    "type": "startVm"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The **systemTags** and **userTags** fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"job","description":"description","type":"startVm"}}' http://localhost:8080/zstack/v1/scheduler/jobgroups
+```
+
+Parameter List
+
+<table id="table_dd3_pcz_dhb"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+name
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(included in the **params** structure\)
+
+</td><td>
+
+Resource name
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.4.0
+
+</td></tr><tr><td>
+
+description \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(included in the **params** structure\)
+
+</td><td>
+
+Detailed description of the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.4.0
+
+</td></tr><tr><td>
+
+type
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(included in the **params** structure\)
+
+</td><td>
+
+Scheduler job type
+
+</td><td>
+
+-   startVm
+-   stopVm
+-   rebootVm
+-   volumeSnapshot
+-   volumeBackup
+-   vmBackup
+-   databaseBackup
+-   runAutoScalingGroup
+-   addIAM2ProjectLoginExpired
+-   cancleIAM2ProjectLoginExpired
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+parameters \(optional\)
+
+</td><td>
+
+Map
+
+</td><td>
+
+body \(included in the **params** structure\)
+
+</td><td>
+
+Scheduler job parameters
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.4.0
+
+</td></tr><tr><td>
+
+resourceUuid \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(included in the **params** structure\)
+
+</td><td>
+
+Resource UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.4.0
+
+</td></tr><tr><td>
+
+tagUuids \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body \(included in the **params** structure\)
+
+</td><td>
+
+Tag UUID list
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.4.0
+
+</td></tr><tr><td>
+
+systemTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tag list
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.4.0
+
+</td></tr><tr><td>
+
+userTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tag list
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.4.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "0cd85a37bb88346c8c2d122913d812df",
+    "targetResourceUuid": "c458e0fb141932d0a87af999b0d0ab81",
+    "name": "SchedulerJob",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_wnv_4rs_n3b)|3.4.0|
+|inventory|SchedulerJobInventory|For details, see [inventory](#p_bd5_rrs_n3b)|3.4.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. The globally unique identifier of the error, for example, SYS.1000 or HOST.1001|3.4.0|
+|description|String|Brief description of the error|3.4.0|
+|details|String|Detailed information about the error|3.4.0|
+|elaboration|String|Reserved field. Default is null|3.4.0|
+|opaque|LinkedHashMap|Reserved field. Default is null|3.4.0|
+|cause|ErrorCode|Root error. The source error that caused the current error. This field is null if there is no source error|3.4.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID. Uniquely identifies the resource|3.4.0|
+|targetResourceUuid|String| |3.4.0|
+|name|String|Resource name|3.4.0|
+|description|String|Detailed description of the resource|3.4.0|
+|state|String| |3.4.0|
+|createDate|Timestamp|Creation time|3.4.0|
+|lastOpDate|Timestamp|Last modification time|3.4.0|
+|triggersUuid|List| |3.4.0|
+
+## SDK Examples
+Java SDK
+
+```
+CreateSchedulerJobGroupAction action = new CreateSchedulerJobGroupAction();
+action.name = "job";
+action.description = "description";
+action.type = "startVm";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateSchedulerJobGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateSchedulerJobGroupAction action = CreateSchedulerJobGroupAction()
+action.name = "job"
+action.description = "description"
+action.type = "startVm"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateSchedulerJobGroupAction.Result res = action.call()
+```
+
+</APIPage>

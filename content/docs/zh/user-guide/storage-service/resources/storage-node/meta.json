@@ -1,0 +1,9 @@
+{
+  "title": "存储节点",
+  "pages": [
+    "index",
+    "add-general-server",
+    "manage-general-server"
+  ],
+  "pagesIndex": "index"
+}

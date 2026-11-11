@@ -1,0 +1,480 @@
+---
+title: "Get Physical Interface Network Service Type Information"
+---
+
+<APIPage method="GET" path="/v1/hosts/hosts-network-interfaces/service-type-statistic">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X GET http://localhost:8080/zstack/v1/hosts/hosts-network-interfaces/service-type-statistic? \
+interfaceUuid=d8797841479d3951bcb698164b56bd9e&interfaceType=All&sortBy=CreateDate&sortDirection=asc&start=0&limit=20&replyWithCount=false
+```
+
+Parameter List
+
+<table id="table_wy3_qlk_mlb"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+interfaceUuid \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+Host NIC UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+vlanId \(optional\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+query
+
+</td><td>
+
+VLAN interface ID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+interfaceType \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+NIC type
+
+</td><td>
+
+-   All
+-   Interface
+-   Bonding
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+serviceType \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+Network type to count
+
+</td><td>
+
+-   All
+-   ManagementNetwork
+-   TenantNetwork
+-   StorageNetwork
+-   MigrationNetwork
+-   BackupNetwork
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+zoneUuid \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+Data Center UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+clusterUuid \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+Cluster UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+hostUuid \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+Host UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+sortBy \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+Sort by
+
+</td><td>
+
+-   InterfaceName
+-   VlanId
+-   HostIp
+-   HostName
+-   ClusterName
+-   CreateDate
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+sortDirection \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+Sort direction
+
+</td><td>
+
+-   asc
+-   desc
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+start \(optional\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+query
+
+</td><td>
+
+Statistic result start offset
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+limit \(optional\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+query
+
+</td><td>
+
+Statistic result count
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+replyWithCount \(optional\)
+
+</td><td>
+
+boolean
+
+</td><td>
+
+query
+
+</td><td>
+
+Whether to return total count of results
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+systemTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+System tag
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.11
+
+</td></tr><tr><td>
+
+userTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+User tag
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.11
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "serviceTypeStatistics": [
+    {
+      "interfaceUuid": "474f9d7d7a1d3b46b8f17363dca7ebef",
+      "serviceTypes": [
+        "ManagementNetwork"
+      ]
+    }
+  ],
+  "total": 1
+}}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|total|Long|Total count of statistic results|4.7.11|
+|success|boolean|Success|4.7.11|
+|serviceTypeStatistics|List|See details [serviceTypeStatistics](#p_e4h_nsc_2yb)|4.7.11|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See details [error](#p_yzk_5lk_mlb)|4.7.11|
+
+### serviceTypeStatistics
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|interfaceUuid|String|NIC UUID|4.7.11|
+|interfaceName|String|NIC name|4.7.11|
+|vlanId|Integer|VLAN interface ID|4.7.11|
+|serviceTypes|List|Network type set|4.7.11|
+|hostUuid|String|Host UUID|4.7.11|
+|hostName|String|Host name|4.7.11|
+|hostIp|String|Host IP|4.7.11|
+|clusterUuid|String|Cluster UUID|4.7.11|
+|clusterName|String|Cluster name|4.7.11|
+|zoneUuid|String|Data Center UUID|4.7.11|
+|createDate|Timestamp|Creation time|4.7.11|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, e.g. SYS.1000, HOST.1001|4.7.11|
+|description|String|Brief description of the error|4.7.11|
+|details|String|Detailed error information|4.7.11|
+|elaboration|String|Reserved field, default is null|4.7.11|
+|opaque|LinkedHashMap|Reserved field, default is null|4.7.11|
+|cause|ErrorCode|Root cause, the error that caused the current error. If there is no original error, this field is null|4.7.11|
+
+## SDK Examples
+Java SDK
+
+```
+GetInterfaceServiceTypeStatisticAction action = new GetInterfaceServiceTypeStatisticAction();
+action.interfaceUuid = "d8797841479d3951bcb698164b56bd9e";
+action.interfaceType = "All";
+action.sortBy = "CreateDate";
+action.sortDirection = "asc";
+action.start = 0;
+action.limit = 20;
+action.replyWithCount = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetInterfaceServiceTypeStatisticAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetInterfaceServiceTypeStatisticAction action = GetInterfaceServiceTypeStatisticAction()
+action.interfaceUuid = "d8797841479d3951bcb698164b56bd9e"
+action.interfaceType = "All"
+action.sortBy = "CreateDate"
+action.sortDirection = "asc"
+action.start = 0
+action.limit = 20
+action.replyWithCount = false
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetInterfaceServiceTypeStatisticAction.Result res = action.call()
+```
+
+</APIPage>

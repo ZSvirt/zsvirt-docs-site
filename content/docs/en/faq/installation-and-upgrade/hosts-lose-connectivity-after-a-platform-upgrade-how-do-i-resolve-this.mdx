@@ -1,0 +1,18 @@
+---
+title: "Hosts lose connectivity after a platform upgrade. How do I resolve this?"
+---
+
+## Symptom
+After a platform upgrade, some hosts lose connectivity with an openIPMI package version conflict error.
+
+## Cause
+A third-party package installed separately on the host causes a package conflict. Installing third-party RPM packages on hosts is not recommended.
+
+## Solution
+1.  Run the following command on the host to remove the third-party package:
+
+    ```
+    [root@localhost ~]# yum remove openIPMI
+    ```
+
+2.  Return to the platform UI and reconnect the host. The host resumes connectivity.

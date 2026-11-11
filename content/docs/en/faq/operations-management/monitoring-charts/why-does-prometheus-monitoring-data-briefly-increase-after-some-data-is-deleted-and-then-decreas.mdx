@@ -1,0 +1,12 @@
+---
+title: "Why does Prometheus monitoring data briefly increase after some data is deleted, and then decrease again?"
+---
+
+<HistoricalNamingNote locale="en" />
+
+## Description
+-   Prometheus compresses older monitoring data. During compression, it generates new compressed data from the source data, which temporarily increases total storage usage. After compression completes, the source data is deleted, so the total usage decreases. When retained monitoring data exceeds the configured threshold, Prometheus also deletes older data blocks.
+
+-   The monitoring data retention size refers to the total size of all directories under `/var/lib/zstack/prometheus/data2/`, excluding the `wal` directory. Prometheus deletes monitoring data in block units. Each block corresponds to a subdirectory under `/var/lib/zstack/prometheus/data2/`. Because each block contains a different amount of data, the amount deleted in each operation varies.
+
+-   You can modify the **monitoring data retention size** in Global Settings as needed to control the maximum local directory size for stored monitoring data.

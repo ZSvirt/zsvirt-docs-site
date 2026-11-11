@@ -1,0 +1,63 @@
+---
+title: "Query Virtual Machine NIC"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/nics" altPaths={["/v1/vm-instances/nics/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth: YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/nics?q=ip=172.20.100.100
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth: YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/nics/7363f51baaab41538d5fe402a69d2529
+```
+
+Queryable Fields
+
+Run the CLI command-line tool, enter `QueryVmNic` and press Tab to view all queryable fields and resource names that support cross-table queries.
+
+## API Response
+This API returns an empty JSON structure **`{}`** on success. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+QueryVmNicAction action = new QueryVmNicAction();
+action.conditions = asList("ip=172.20.100.100");
+action.sessionId = "ca4e59e18f014c21afcdde859b2fba3a";
+QueryVmNicAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryVmNicAction action = QueryVmNicAction()
+action.conditions = ["ip=172.20.100.100"]
+action.sessionId = "8549e75dbbe548348ca2848692fb7fd8"
+QueryVmNicAction.Result res = action.call()
+```
+
+</APIPage>

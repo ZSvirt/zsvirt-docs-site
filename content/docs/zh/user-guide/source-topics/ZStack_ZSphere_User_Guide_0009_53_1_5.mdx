@@ -1,0 +1,73 @@
+---
+title: "使用 HashiCorp 密钥提供程序"
+---
+
+1.  在 ZSvirt 中添加 HashiCorp 密钥提供程序
+2.  （可选）使用 **KMS 证书和私钥**方式使 HashiCorp 信任 ZSvirt
+3.  （可选）使用**新建签名请求 (CSR)** 方式使 HashiCorp 信任 ZSvirt
+
+1.  在 ZSvirt 中添加 HashiCorp 密钥提供程序。
+
+    详细完整步骤请参阅 [添加标准密钥提供程序](/docs/user-guide/source-topics/ZStack_ZSphere_User_Guide_0009_53_1_1)。
+
+2.  （可选）使用 **KMS 证书和私钥**方式使 HashiCorp 信任 ZSvirt。
+
+    1.  登录 HashiCorp。
+
+    2.  点击**Vault** > **Secrets Engines**。
+
+    3.  在Secrets Engines页面，点击**kmip**进入 KMIP 模块。
+
+        <img src="/docs/user-guide/images/ZStack_ZSphere_User_Guide_0009_53_1_5_1.png" alt="进入KMIP模块" />
+
+    4.  在kmip页面，点击**Create scope**创建项目或进入已有项目。
+
+        <img src="/docs/user-guide/images/ZStack_ZSphere_User_Guide_0009_53_1_5_2.png" alt="创建或进入已有项目" />
+
+    5.  在项目详情页中，点击**Create role**创建角色。
+
+    6.  在Create a Role页面，设置角色名称并参考图例完成 TLS 配置。
+
+        <img src="/docs/user-guide/images/ZStack_ZSphere_User_Guide_0009_53_1_5_3.png" alt="创建角色" />
+
+    7.  创建完成后，点击角色进入详情页，然后点击**Generate credentials**。
+
+    8.  在Genetate Credentials页面，选择**pem**作为证书格式，然后点击**Save**。
+
+        <img src="/docs/user-guide/images/ZStack_ZSphere_User_Guide_0009_53_1_5_4.png" alt="生成证书" />
+
+    9.  复制证书和私钥。
+
+        <img src="/docs/user-guide/images/ZStack_ZSphere_User_Guide_0009_53_1_5_5.png" alt="复制证书和私钥" />
+
+    10. 登录 ZSvirt。
+
+    11. 导航至密钥提供程序页面。
+
+    12. 找到添加的 HashiCorp 标准密钥提供程序，点击**操作** > **建立信任** > **使KMS信任**。
+
+    13. 在使KMS信任弹窗中，选择**KMS证书和私钥**作为信任方式。
+
+    14. 点击**下一步**。
+
+    15. 粘贴从 HashiCorp 复制的 KMS 证书和私钥。
+
+    16. 点击**确定**。
+
+3.  （可选）使用**新建签名请求 (CSR)** 方式使 HashiCorp 信任 ZSvirt。
+
+    1.  登录 HashiCorp 后台。
+
+    2.  执行`vault login`，输入 token。
+
+    3.  生成 CSR：
+
+        ```
+        vault write -format=json kmip/scope/test/role/admin/credential/sign csr="$(cat csr.pem)" | jq -r '.data.certificate' > client.crt
+        ```
+
+    4.  登录 ZSvirt。
+
+    5.  导航至密钥提供程序页面，然后点击**操作** > **建立信任** > **上传签名CSR证书**。
+
+    6.  将获取的`client.crt`证书上传。

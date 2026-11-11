@@ -1,0 +1,311 @@
+---
+title: "Create a Native Key Provider"
+---
+
+<APIPage method="POST" path="/v1/key-providers/nkp">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "kdf": "HKDF-SHA256",
+    "saltPolicy": "providerName",
+    "name": "kp-nkp",
+    "description": "example"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding example, the `systemTags` and `userTags` fields can be omitted. They are listed to indicate that the body can include these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"kdf":"HKDF-SHA256","saltPolicy":"providerName","name":"kp-nkp","description":"example"}}' \
+http://localhost:8080/zstack/v1/key-providers/nkp
+```
+
+Parameter List
+
+<table id="table_dxx_xr2_2jc"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Optional Value
+
+</th><th>
+
+Since
+
+</th></tr></thead><tbody><tr><td>
+
+kdf \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in `params` structure\)
+
+</td><td>
+
+Key derivation function
+
+</td><td>
+
+-   HKDF-SHA256
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+saltPolicy \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in `params` structure\)
+
+</td><td>
+
+Salt policy
+
+</td><td>
+
+-   providerName
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+name
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in `params` structure\)
+
+</td><td>
+
+Resource name
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+description \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in `params` structure\)
+
+</td><td>
+
+Detailed description of the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+type \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in `params` structure\)
+
+</td><td>
+
+Key provider type
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+resourceUuid \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in `params` structure\)
+
+</td><td>
+
+Resource UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+tagUuids \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body \(contained in `params` structure\)
+
+</td><td>
+
+Tag UUID list
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+systemTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+userTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr></tbody>
+</table>
+
+## SDK Example
+Java SDK
+
+```
+CreateNkpAction action = new CreateNkpAction();
+action.kdf = "HKDF-SHA256";
+action.saltPolicy = "providerName";
+action.name = "kp-nkp";
+action.description = "example";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateNkpAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = CreateNkpAction()
+action.kdf = "HKDF-SHA256"
+action.saltPolicy = "providerName"
+action.name = "kp-nkp"
+action.description = "example"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

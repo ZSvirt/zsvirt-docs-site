@@ -1,0 +1,11 @@
+---
+title: "How do I assign a specific IP address when creating a virtual machine?"
+---
+
+## Solution
+-   When creating a virtual machine, on the Create Virtual Machine page, go to the NIC section under hardware configuration and select **Specify IPv4/IPv6 via VMTools** to configure a custom IP address for the virtual machine.
+
+    <Callout type="info">
+    -   If a custom IP address is configured, the system assigns the virtual machine an IP address based on the specified configuration. Avoid address conflicts, as they will prevent successful configuration.
+    -   When creating multiple virtual machines in batch with custom IP addresses, the system assigns IP addresses consecutively starting from the specified address. If any address in the consecutive range is already in use, the corresponding virtual machine will fail to be created.
+    </Callout>

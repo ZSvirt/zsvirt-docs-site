@@ -1,0 +1,240 @@
+---
+title: "Change Data Storage State"
+---
+
+<APIPage method="PUT" path="/v1/primary-storage/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "changePrimaryStorageState": {
+    "stateEvent": "Disabled"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"changePrimaryStorageState":{"stateEvent":"disable"}}' \
+http://localhost:8080/zstack/v1/primary-storage/2e9c3a048ce03f5db297da323061a0de/actions
+```
+
+Parameter List
+
+<table id="table_q2w_fl1_n1b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+Data Storage UUID, uniquely identifies the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+stateEvent
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in the **changePrimaryStorageState** structure\)
+
+</td><td>
+
+Target state for the Data Storage
+
+</td><td>
+
+-   enable
+-   disable
+-   maintain
+-   deleting
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User Tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "name": "PS1",
+    "url": "/Cloud_ps",
+    "type": "LocalStorage",
+    "state": "Disabled",
+    "attachedClusterUuids": [
+      "408395dfdebb427e9453048436556a66"
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation succeeds, this field is null. See [error](#p_lyc_4l1_n1b)|0.6|
+|inventory|PrimaryStorageInventory|See [inventory](#p_llx_nl1_n1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause, the source error that caused the current error. If there is no original error, this field is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|zoneUuid|String|Data Center UUID|0.6|
+|name|String|Resource Name|0.6|
+|url|String| |0.6|
+|description|String|Resource Description|0.6|
+|totalCapacity|Long| |0.6|
+|availableCapacity|Long| |0.6|
+|totalPhysicalCapacity|Long| |0.6|
+|availablePhysicalCapacity|Long| |0.6|
+|systemUsedCapacity|Long| |0.6|
+|type|String| |0.6|
+|state|String| |0.6|
+|status|String| |0.6|
+|mountPath|String| |0.6|
+|createDate|Timestamp|Create Time|0.6|
+|lastOpDate|Timestamp|Last Modification Time|0.6|
+|attachedClusterUuids|List| |0.6|
+
+## SDK Examples
+Java SDK
+
+```
+ChangePrimaryStorageStateAction action = new ChangePrimaryStorageStateAction();
+action.uuid = "236d97d1752643018266bb4151d6a431";
+action.stateEvent = "Disabled";
+action.sessionId = "bf409a0349c44104ab3dbb77415847a0";
+ChangePrimaryStorageStateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ChangePrimaryStorageStateAction action = ChangePrimaryStorageStateAction()
+action.uuid = "5c612d1387af4d13b381db54c7307059"
+action.stateEvent = "Disabled"
+action.sessionId = "441b4bd8c5e54003b62af7e4c44db8c1"
+ChangePrimaryStorageStateAction.Result res = action.call()
+```
+
+</APIPage>

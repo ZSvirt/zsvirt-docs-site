@@ -1,0 +1,87 @@
+---
+title: "Update Chrony Time Source Servers"
+---
+
+<APIPage method="PUT" path="/v1/zops/chrony/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateChronyServers": {
+    "internalHostnames": [
+      "172.0.0.1",
+      "172.0.0.2"
+    ],
+    "externalHostnames": [
+      "test1.ntp.com"
+    ]
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the `systemTags` and `userTags` fields are optional. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateChronyServers":{"internalHostnames":["172.0.0.1","172.0.0.2"],"externalHostnames":["test1.ntp.com"]}}' \
+http://localhost:8080/zstack/v1/zops/chrony/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|internalHostnames \(Optional\)|List|body \(Included in the `updateChronyServers` structure\)|Collection of internal time sources| |4.7.21|
+|externalHostnames \(Optional\)|List|body \(Included in the `updateChronyServers` structure\)|Collection of external time sources| |4.7.21|
+|systemTags \(Optional\)|List|body|System tags| |0.6|
+|userTags \(Optional\)|List|body|User tags| |0.6|
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+UpdateChronyServersAction action = new UpdateChronyServersAction();
+action.internalHostnames = asList("172.0.0.1","172.0.0.2");
+action.externalHostnames = asList("test1.ntp.com");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateChronyServersAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateChronyServersAction action = UpdateChronyServersAction()
+action.internalHostnames = [172.0.0.1, 172.0.0.2]
+action.externalHostnames = [test1.ntp.com]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateChronyServersAction.Result res = action.call()
+```
+
+</APIPage>

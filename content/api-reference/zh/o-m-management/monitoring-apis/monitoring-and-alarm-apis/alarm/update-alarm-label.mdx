@@ -1,0 +1,275 @@
+---
+title: "修改报警器标签"
+---
+
+<APIPage method="PUT" path="/v1/zwatch/alarms/labels/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateAlarmLabel": {
+    "key": "VMUuid",
+    "value": "e9859e9eb51e4ea583a7c529407208a2",
+    "operator": "Equal"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateAlarmLabel":{"key":"VMUuid","value":"59ab62f070784eb2b0d98f0d12386f0d","operator":"Equal"}}' http://localhost:8080/zstack/v1/zwatch/alarms/labels/3c228226ca213c18b54627668dd37d80/actions
+```
+
+参数列表
+
+<table id="table_qhd_vk3_kgb"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+资源的UUID，唯一标示该资源
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.3
+
+</td></tr><tr><td>
+
+key
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**updateAlarmLabel**结构中\)
+
+</td><td>
+
+标签键
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.3
+
+</td></tr><tr><td>
+
+value
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**updateAlarmLabel**结构中\)
+
+</td><td>
+
+标签值
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.3
+
+</td></tr><tr><td>
+
+operator
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**updateAlarmLabel**结构中\)
+
+</td><td>
+
+标签操作符
+
+</td><td>
+
+-   Regex
+-   Equal
+
+</td><td>
+
+3.3
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.3
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.3
+
+</td></tr></tbody>
+</table>
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "5ea6d350f0e64d0b9467d033e9c6d052",
+    "key": "VMUuid",
+    "operator": "=",
+    "value": "35956236f261467cb2cef1db8626024e"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_krp_cl3_kgb)|3.3.0|
+|inventory|AlarmLabelInventory|详情参考[inventory](#p_x5q_dl3_kgb)|3.3.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.3.0|
+|description|String|错误的概要描述|3.3.0|
+|details|String|错误的详细信息|3.3.0|
+|elaboration|String|保留字段，默认为null|3.3.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.3.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.3.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.3.0|
+|key|String| |3.3.0|
+|operator|String| |3.3.0|
+|value|String| |3.3.0|
+
+## SDK示例
+Java SDK
+
+```
+UpdateAlarmLabelAction action = new UpdateAlarmLabelAction();
+action.uuid = "3c228226ca213c18b54627668dd37d80";
+action.key = "VMUuid";
+action.value = "1a33d5ce225241e0b2cbc80123e36351";
+action.operator = "Equal";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateAlarmLabelAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateAlarmLabelAction action = UpdateAlarmLabelAction()
+action.uuid = "3c228226ca213c18b54627668dd37d80"
+action.key = "VMUuid"
+action.value = "20034c6b21a24918912857c8ed923c6b"
+action.operator = "Equal"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateAlarmLabelAction.Result res = action.call()
+```
+
+</APIPage>

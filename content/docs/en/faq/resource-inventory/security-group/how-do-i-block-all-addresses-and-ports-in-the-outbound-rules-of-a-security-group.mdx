@@ -1,0 +1,12 @@
+---
+title: "How do I block all addresses and ports in the outbound rules of a Security Group?"
+---
+
+## Solution
+1.  Delete all outbound rules. At this point, all addresses and ports are allowed in the outbound direction.
+
+2.  Add one outbound rule with the protocol set to TCP and the port range set to 0–0. All outbound traffic is then blocked.
+
+    <Callout type="info">
+    Security Groups use an allowlist mechanism. All configured rules are permit rules. Once a rule permits a specific port, any port not explicitly permitted is blocked.
+    </Callout>

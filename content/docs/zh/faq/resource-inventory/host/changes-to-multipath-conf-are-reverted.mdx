@@ -1,0 +1,31 @@
+---
+title: "Multipath.conf文件修改后被还原，如何解决？"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+## 原因
+Multipath配置文件由管理节点管控，默认无法修改。
+
+## 解决方案
+1.  SSH连接至管理节点。
+
+2.  执行以下命令，开启zstack-cli会话：
+
+    ```
+    [root@localhost ~]# zstack-cli
+    ```
+
+3.  执行以下命令，登录zstack-cli：
+
+    ```
+    admin >>> LogInByAccount accountName=admin password=$password  //密码为平台admin用户密码
+    ```
+
+4.  执行以下命令，修改配置：
+
+    ```
+    admin >>>UpdateGlobalConfig category=storageDevice name=enable.multipath value=false
+    ```
+
+5.  重连所有主机。

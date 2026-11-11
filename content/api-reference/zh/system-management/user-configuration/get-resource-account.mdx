@@ -1,0 +1,97 @@
+---
+title: "查看资源所属账户"
+---
+
+<APIPage method="GET" path="/v1/resources/accounts">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X GET http://localhost:8080/zstack/v1/resources/accounts?resourceUuids=59fc59531b6639b3b0bd6263b021df4c&resourceUuids=77115316d36839e9b1a4f832f38de8ba
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|resourceUuids|List|query| | |0.6|
+|systemTags \(可选\)|List|query| | |0.6|
+|userTags \(可选\)|List|query| | |0.6|
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": {
+    "db4e395223813bafa838ce4285a78757": {
+      "uuid": "ef68adaf368335ab8d15a4c2195749a7",
+      "name": "test",
+      "type": "Normal"
+    },
+    "736ee9f80a2230658e999c17e5be1835": {
+      "uuid": "ef68adaf368335ab8d15a4c2195749a7",
+      "name": "test",
+      "type": "Normal"
+    }
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_j4n_3jt_42b)|0.6|
+|inventories|Map|详情参考[inventories](#p_x5q_kjt_42b)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|账户的UUID，唯一标示该资源|4.0.0|
+|name|String|账户名称|4.0.0|
+|description|String|账户的详细描述|4.0.0|
+|type|String|账户类型|4.0.0|
+|state|String|账户状态|4.0.0|
+|createDate|Timestamp|创建时间|4.0.0|
+|lastOpDate|Timestamp|最后一次修改时间|4.0.0|
+
+## SDK示例
+Java SDK
+
+```
+GetResourceAccountAction action = new GetResourceAccountAction();
+action.resourceUuids = asList("59fc59531b6639b3b0bd6263b021df4c","77115316d36839e9b1a4f832f38de8ba");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetResourceAccountAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+GetResourceAccountAction action = GetResourceAccountAction()
+action.resourceUuids = [59fc59531b6639b3b0bd6263b021df4c, 77115316d36839e9b1a4f832f38de8ba]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetResourceAccountAction.Result res = action.call()
+
+```
+
+</APIPage>

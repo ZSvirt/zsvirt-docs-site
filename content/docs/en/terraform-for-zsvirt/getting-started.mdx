@@ -1,0 +1,42 @@
+---
+title: "Getting Started"
+description: "Configure the zsphere Terraform provider with credentials and environment variables."
+---
+
+<HistoricalNamingNote locale="en" />
+
+## Provider configuration
+
+```hcl
+terraform {
+  required_providers {
+    zsphere = {
+      source  = "terraform-zstack-modules/zsphere"
+      version = "~> 1.0"
+    }
+  }
+}
+
+provider "zsphere" {
+  host              = "your-zstack-host"
+  access_key_id     = "your-access-key-id"
+  access_key_secret = "your-access-key-secret"
+}
+```
+
+## Environment variables
+
+You can also configure the provider using environment variables:
+
+```bash
+export ZSPHERE_HOST="your-zstack-host"
+export ZSPHERE_ACCESS_KEY_ID="your-access-key-id"
+export ZSPHERE_ACCESS_KEY_SECRET="your-access-key-secret"
+```
+
+For the full provider schema, authentication options, and optional parameters such as `port`, see [Provider Configuration](/en/docs/terraform-for-zsphere/provider-configuration).
+
+## Next steps
+
+- Review [Instance Management](/en/docs/terraform-for-zsphere/instance-management) for VM creation patterns.
+- Browse [Resources](/en/docs/terraform-for-zsphere/resources) and [Data Sources](/en/docs/terraform-for-zsphere/data-sources) reference pages.

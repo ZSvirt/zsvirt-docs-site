@@ -1,0 +1,64 @@
+---
+title: "Clean Software Package"
+---
+
+<APIPage method="DELETE" path="/v1/software-package/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/software-package/ff04e1736ec6391f9a1f023b524d0a00?deleteMode=Permissive
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Software package UUID| |4.10.20|
+|deleteMode \(Optional\)|String|query|Delete mode \(Permissive / Enforcing, Permissive\)| |4.10.20|
+|systemTags \(Optional\)|List|query|System Tag| |4.10.20|
+|userTags \(Optional\)|List|query|User Tag| |4.10.20|
+
+## API Response
+This API returns an empty JSON structure `{}` on success, and a JSON structure containing an error field on failure, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+CleanSoftwarePackageAction action = new CleanSoftwarePackageAction();
+action.uuid = "ff04e1736ec6391f9a1f023b524d0a00";
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CleanSoftwarePackageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = CleanSoftwarePackageAction()
+action.uuid = "ff04e1736ec6391f9a1f023b524d0a00"
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

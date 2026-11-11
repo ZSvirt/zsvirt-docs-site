@@ -1,0 +1,303 @@
+---
+title: "Create Tag"
+---
+
+<APIPage method="POST" path="/v1/tags">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "new-tag",
+    "value": "new-tag",
+    "description": "tag-for-volume",
+    "color": "#FFFFFF",
+    "type": "simple"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the `systemTags` and `userTags` fields can be omitted. They are listed to show that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"new-tag","value":"new-tag","description":"tag-for-volume","color":"#FFFFFF","type":"simple"}}' http://localhost:8080/zstack/v1/tags
+```
+
+Parameter List
+
+<table id="table_ms5_xzx_yfb"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+name
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+Resource name
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.2.0
+
+</td></tr><tr><td>
+
+value
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+Tag value
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.2.0
+
+</td></tr><tr><td>
+
+description \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+Detailed description of the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.2.0
+
+</td></tr><tr><td>
+
+color \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+Tag color
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.2.0
+
+</td></tr><tr><td>
+
+type \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+Tag type
+
+</td><td>
+
+-   simple
+-   withToken
+
+</td><td>
+
+3.2.0
+
+</td></tr><tr><td>
+
+resourceUuid \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.2.0
+
+</td></tr><tr><td>
+
+systemTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.2.0
+
+</td></tr><tr><td>
+
+userTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.2.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+CreateTagAction action = new CreateTagAction();
+action.name = "new-tag";
+action.value = "new-tag";
+action.description = "tag-for-volume";
+action.color = "#FFFFFF";
+action.type = "simple";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateTagAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateTagAction action = new CreateTagAction();
+action.name = "new-tag";
+action.value = "new-tag";
+action.description = "tag-for-volume";
+action.color = "#FFFFFF";
+action.type = "simple";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateTagAction.Result res = action.call();
+```
+
+</APIPage>

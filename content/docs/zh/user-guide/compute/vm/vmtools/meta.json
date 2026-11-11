@@ -1,0 +1,11 @@
+{
+  "title": "虚拟机 VMTools 篇",
+  "pages": [
+    "index",
+    "advanced-monitoring-agent",
+    "install-linux",
+    "install-windows",
+    "os-compatibility"
+  ],
+  "pagesIndex": "index"
+}

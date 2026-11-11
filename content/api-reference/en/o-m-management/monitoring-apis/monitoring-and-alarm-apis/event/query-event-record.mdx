@@ -1,0 +1,100 @@
+---
+title: "Query Event Alarm Records"
+---
+
+<APIPage method="GET" path="/v1/zwatch/event-records">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zwatch/event-records?q=dataUuid=bcb5816592553e04a101e37c69d1837a
+```
+
+Queryable Fields
+
+Run the CLI command-line tool, enter `QueryEventRecord`, and press the Tab key to view all queryable fields and cross-table queryable resource names.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "id": 1.0,
+      "createTime": 1510669257141.0,
+      "namespace": "ZStack/PrimaryStorage",
+      "name": "PrimaryStorageDisconnected",
+      "emergencyLevel": "Emergent",
+      "resourceId": "ff1d1d9429da35cfb3d4dfad772d0f3a",
+      "dataUuid": "64f3d04e7144348db07585dfc9293582",
+      "accountUuid": "1f2c621ce02d37268da28bb368f6b265",
+      "subscriptionUuid": "e30c7668d9c13585915da7e6442f6749",
+      "readStatus": true,
+      "labels": "{\"Error\":\"No Host state is Enabled, Please check the availability of the host\"}"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_u5h_w2s_l2b) for details.|4.1.0|
+|inventories|List|See [inventories](#p_ehy_5kk_xpb) for details.|4.1.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, e.g., SYS.1000, HOST.1001.|4.1.0|
+|description|String|A brief description of the error.|4.1.0|
+|details|String|The detailed error information.|4.1.0|
+|elaboration|String|A reserved field. Default is null.|4.1.0|
+|opaque|LinkedHashMap|A reserved field. Default is null.|4.1.0|
+|cause|ErrorCode|The root error. The source error that caused the current error. This field is null if there is no root cause.|4.1.0|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|time|long|The time.|4.1.0|
+|count|long|The count.|4.1.0|
+|id|long|The message ID.|4.1.0|
+|createTime|long|The creation time.|4.1.0|
+|namespace|String|The namespace.|4.1.0|
+|name|String|The name.|4.1.0|
+|emergencyLevel|String|The alarm level.|4.1.0|
+|resourceId|String|The resource UUID.|4.1.0|
+|error|String|The error information.|4.1.0|
+|dataUuid|String|The message UUID.|4.1.0|
+|accountUuid|String|The account UUID.|4.1.0|
+|subscriptionUuid|String|The event alarm UUID.|4.1.0|
+|readStatus|Boolean|The read status.|4.1.0|
+|labels|String|The label list.|4.1.0|
+
+## SDK Examples
+Java SDK
+
+```
+QueryEventRecordAction action = new QueryEventRecordAction();
+action.conditions = asList("dataUuid=1e5badf2a4a43bae91b16dbd1aee0c0b");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryEventRecordAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryEventRecordAction action = QueryEventRecordAction()
+action.conditions = ["dataUuid=60290f65736a317cb52b0721d90ce315"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryEventRecordAction.Result res = action.call()
+```
+
+</APIPage>

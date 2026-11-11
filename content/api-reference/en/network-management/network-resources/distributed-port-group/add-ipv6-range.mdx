@@ -1,0 +1,424 @@
+---
+title: "Add IPv6 Address Range"
+---
+
+<APIPage method="POST" path="/v1/l3-networks/{l3NetworkUuid}/ipv6-ranges">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "Test-IP-Range",
+    "startIp": "2002:2001::02",
+    "endIp": "2002:2001::FE",
+    "gateway": "2002:2001::01",
+    "prefixLen": 64,
+    "addressMode": "Stateful-DHCP"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding sample, **systemTags** and **userTags** are optional. These two fields can be included in the body structure.
+</Callout>
+
+Curl Sample
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"Test-IP-Range","startIp":"2002:2001::02","endIp":"2002:2001::FE","gateway":"2002:2001::01","prefixLen":64.0,"addressMode":"Stateful-DHCP"}}' http://localhost:8080/zstack/v1/l3-networks/b6f82aa00c3f37adba4b349eb427db80/ipv6-ranges
+```
+
+Parameter List
+
+<table id="table_hsb_1gy_pfb"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+l3NetworkUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+The L3 Network UUID.
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.1.0
+
+</td></tr><tr><td>
+
+name
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in the **params** structure\)
+
+</td><td>
+
+The name of the L3 Network.
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.1.0
+
+</td></tr><tr><td>
+
+description \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in the **params** structure\)
+
+</td><td>
+
+The detailed description of the L3 Network.
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.1.0
+
+</td></tr><tr><td>
+
+startIp
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in the **params** structure\)
+
+</td><td>
+
+The start IP address.
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.1.0
+
+</td></tr><tr><td>
+
+endIp
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in the **params** structure\)
+
+</td><td>
+
+The end IP address.
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.1.0
+
+</td></tr><tr><td>
+
+gateway
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in the **params** structure\)
+
+</td><td>
+
+The gateway.
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.1.0
+
+</td></tr><tr><td>
+
+prefixLen
+
+</td><td>
+
+Integer
+
+</td><td>
+
+body\(contained in the **params** structure\)
+
+</td><td>
+
+The prefix length.
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.1.0
+
+</td></tr><tr><td>
+
+addressMode
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in the **params** structure\)
+
+</td><td>
+
+The IPv6 address allocation mode.
+
+</td><td>
+
+-   SLAAC
+-   Stateful-DHCP
+-   Stateless-DHCP
+
+</td><td>
+
+3.1.0
+
+</td></tr><tr><td>
+
+resourceUuid \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in the **params** structure\)
+
+</td><td>
+
+The resource UUID. If specified, the L3 Network will use this field value as its UUID.
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.1.0
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+The system tags.
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.1.0
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+The user tags.
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.1.0
+
+</td></tr></tbody>
+</table>
+
+<Callout type="info">
+-   ZSvirt supports specifying a DHCP server address when adding an IPv6 address range. Add the **affinityGroup** option to **SystemTags**.
+    -   Option format: `flatNetwork::DhcpServer::{%s}::ipUuid::{%s}`
+    -   Example: `flatNetwork::DhcpServer::192.168.1.100::ipUuid::null`
+</Callout>
+
+## API Response
+Sample Response
+
+```
+{
+  "inventory": {
+    "l3NetworkUuid": "10d6128c8f473a63889597becc396bba",
+    "name": "Test-IP-Range",
+    "startIp": "2002:2001::02",
+    "endIp": "2002:2001::FE",
+    "netmask": "FFFF:FFFF:FFFF:FFFF:0:0:0:0",
+	"prefixLen": "64"
+    "gateway": "2002:2001::01"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation fails, or vice versa. For more information, see [error](#p_wmy_svg_m1b)|3.1.0|
+|inventory|IpRangeInventory|For more information, see [inventory](#p_s5b_wvg_m1b)|3.1.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code, which is a numbered or alphanumeric code that specifies an error. For example, SYS.1000, HOST.1001|3.1.0|
+|description|String|The brief description of the error.|3.1.0|
+|details|String|The details about the error.|3.1.0|
+|elaboration|String|The reserved field. Default value: null|3.1.0|
+|opaque|LinkedHashMap|The reserved field. Default value: null|3.1.0|
+|cause|ErrorCode|The root error, which is the associated root cause of the current error. If no root error exists, this parameter is null|3.1.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The resource UUID, which uniquely identifies the resource.|3.1.0|
+|l3NetworkUuid|String|The L3 Network UUID.|3.1.0|
+|name|String|The resource name.|3.1.0|
+|description|String|The detailed description of the resource.|3.1.0|
+|startIp|String| |3.1.0|
+|endIp|String| |3.1.0|
+|netmask|String| |3.1.0|
+|prefixLen|String|The prefix length.|3.1.0|
+|gateway|String| |3.1.0|
+|networkCidr|String| |3.1.0|
+|ipVersion|Integer|The IP protocol number.|3.1.0|
+|addressMode|String|The IPv6 address allocation mode.|3.1.0|
+|createDate|Timestamp|The creation date.|3.1.0|
+|lastOpDate|Timestamp|The last operation date.|3.1.0|
+
+## SDK Sample
+Java SDK
+
+```
+AddIpv6RangeAction action = new AddIpv6RangeAction();
+action.l3NetworkUuid = "b6f82aa00c3f37adba4b349eb427db80";
+action.name = "Test-IP-Range";
+action.startIp = "2002:2001::02";
+action.endIp = "2002:2001::FE";
+action.gateway = "2002:2001::01";
+action.prefixLen = 64;
+action.addressMode = "Stateful-DHCP";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddIpv6RangeAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddIpv6RangeAction action = AddIpv6RangeAction()
+action.l3NetworkUuid = "b6f82aa00c3f37adba4b349eb427db80"
+action.name = "Test-IP-Range"
+action.startIp = "2002:2001::02"
+action.endIp = "2002:2001::FE"
+action.gateway = "2002:2001::01"
+action.prefixLen = 64
+action.addressMode = "Stateful-DHCP"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddIpv6RangeAction.Result res = action.call()
+```
+
+</APIPage>

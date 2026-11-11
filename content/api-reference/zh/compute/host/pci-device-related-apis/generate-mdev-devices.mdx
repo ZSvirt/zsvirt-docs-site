@@ -1,0 +1,80 @@
+---
+title: "虚拟化切分支持VFIO\\_MDEV的PCI设备"
+---
+
+<APIPage method="PUT" path="/v1/pci-devices/{pciDeviceUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "generateMdevDevices": {
+    "mdevSpecUuid": "013f5f259daa3e119ec79496ed2f5697"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"generateMdevDevices":{"mdevSpecUuid":"013f5f259daa3e119ec79496ed2f5697"}}' http://localhost:8080/zstack/v1/pci-devices/b5b60d1bc9353c948c635a500a044c97/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|pciDeviceUuid|String|url|PCI设备UUID| |3.5.0|
+|mdevSpecUuid|String|body\(包含在**generateMdevDevices**结构中\)|MDEV设备规格UUID| |3.5.0|
+|systemTags \(可选\)|List|body|系统标签| |3.5.0|
+|userTags \(可选\)|List|body|用户标签| |3.5.0|
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+GenerateMdevDevicesAction action = new GenerateMdevDevicesAction();
+action.pciDeviceUuid = "b5b60d1bc9353c948c635a500a044c97";
+action.mdevSpecUuid = "013f5f259daa3e119ec79496ed2f5697";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GenerateMdevDevicesAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GenerateMdevDevicesAction action = GenerateMdevDevicesAction()
+action.pciDeviceUuid = "b5b60d1bc9353c948c635a500a044c97"
+action.mdevSpecUuid = "013f5f259daa3e119ec79496ed2f5697"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GenerateMdevDevicesAction.Result res = action.call()
+```
+
+</APIPage>

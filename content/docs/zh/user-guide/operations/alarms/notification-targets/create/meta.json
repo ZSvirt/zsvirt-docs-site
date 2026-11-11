@@ -1,0 +1,8 @@
+{
+  "title": "新建通知对象",
+  "pages": [
+    "index",
+    "email"
+  ],
+  "pagesIndex": "index"
+}

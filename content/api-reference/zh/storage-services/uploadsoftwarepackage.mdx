@@ -1,0 +1,142 @@
+---
+title: "上传软件包"
+---
+
+<APIPage method="POST" path="/v1/software-packages/upload">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "software-package-name",
+    "type": "storage",
+    "managementNodeUuid": "ff000842a4673ab39dad7a3990df5300",
+    "hostUuid": "ff0192fa70113da886101145c084bd00",
+    "url": "http://192.168.1.1/disk/images/test.qcow2",
+    "installPath": "/root/sds/storage.tar.gz"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"software-package-name","type":"storage","managementNodeUuid":"ff000842a4673ab39dad7a3990df5300","hostUuid":"ff0192fa70113da886101145c084bd00","url":"http://192.168.1.1/disk/images/test.qcow2","installPath":"/root/sds/storage.tar.gz"}}' \
+http://localhost:8080/zstack/v1/software-packages/upload
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|name|String|body\(包含在`params`结构中\)|软件包名| |4.10.20|
+|type|String|body\(包含在`params`结构中\)|软件包类型| |4.10.20|
+|managementNodeUuid|String|body\(包含在`params`结构中\)|上传到管理节点UUID| |4.10.20|
+|hostUuid|String|body\(包含在`params`结构中\)|上传到主机UUID| |4.10.20|
+|url|String|body\(包含在`params`结构中\)|软件包URL| |4.10.20|
+|installPath|String|body\(包含在`params`结构中\)|软件包安装路径| |4.10.20|
+|resourceUuid \(可选\)|String|body\(包含在`params`结构中\)|资源UUID| |4.10.20|
+|tagUuids \(可选\)|List|body\(包含在`params`结构中\)|标签UUID列表| |4.10.20|
+|systemTags \(可选\)|List|body|系统标签| |4.10.20|
+|userTags \(可选\)|List|body|用户标签| |4.10.20|
+
+<Callout type="info">
+-   本地上传软件支持指定软件包的hash。
+</Callout>
+    -   SystemTag格式：`uploadSoftwarePackage::{%s}`
+    -   SystemTag示例：`uploadSoftwarePackage::1271232183768712367812361287`
+-   本地上传host返回UI上传软件包切片的URL。
+    -   SystemTag格式：`uploadUrl::{%s}`
+    -   SystemTag示例：`uploadUrl::http://172.1.1.1:7070/host/file/direct-upload`
+-   上传软件包的参数。
+    -   SystemTag格式：`uploadConfig::{%s}`
+    -   SystemTag示例：`APIUploadSoftwarePackageMsg转为json字符串`
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "size": 0
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean|操作成功时为true，否则为false|4.10.20|
+|error|ErrorCode|详情参考[error](#p_irn_1jx_r2c)|4.10.20|
+|inventory|SoftwarePackageInventory|详情参考[inventory](#p_m3r_rt3_mhc)|4.10.20|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.10.20|
+|name|String|资源名称|4.10.20|
+|hostUuid|String|主机UUID|4.10.20|
+|managementNodeUuid|String|上传到管理节点UUID|4.10.20|
+|installPath|String|安装路径|4.10.20|
+|unzipInstallPath|String|解压安装路径|4.10.20|
+|type|String|安装包类型|4.10.20|
+|md5sum|String|安装包MD5校验值|4.10.20|
+|status|String|安装包状态|4.10.20|
+|size|long|安装包大小|4.10.20|
+|createDate|Timestamp|创建时间|4.10.20|
+|lastOpDate|Timestamp|最后一次修改时间|4.10.20|
+
+## SDK示例
+Java SDK
+
+```
+UploadSoftwarePackageAction action = new UploadSoftwarePackageAction();
+action.name = "software-package-name";
+action.type = "storage";
+action.managementNodeUuid = "ff000842a4673ab39dad7a3990df5300";
+action.hostUuid = "ff0192fa70113da886101145c084bd00";
+action.url = "http://192.168.1.1/disk/images/test.qcow2";
+action.installPath = "/root/sds/storage.tar.gz";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UploadSoftwarePackageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = UploadSoftwarePackageAction()
+action.name = "software-package-name"
+action.type = "storage"
+action.managementNodeUuid = "ff000842a4673ab39dad7a3990df5300"
+action.hostUuid = "ff0192fa70113da886101145c084bd00"
+action.url = "http://192.168.1.1/disk/images/test.qcow2"
+action.installPath = "/root/sds/storage.tar.gz"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

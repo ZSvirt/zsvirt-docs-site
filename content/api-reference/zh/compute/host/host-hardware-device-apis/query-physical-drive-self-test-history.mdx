@@ -1,0 +1,109 @@
+---
+title: "查询Raid物理盘自检历史"
+---
+
+<APIPage method="GET" path="/v1/storage-devices/local-raid/physical-drives/self-test" altPaths={["/v1/storage-devices/local-raid/physical-drives/{raidPhysicalDriveUuid}/self-test"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/storage-devices/local-raid/physical-drives/self-test
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/storage-devices/local-raid/physical-drives/{raidPhysicalDriveUuid}/self-test
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryPhysicalDriveSelfTestHistory`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "id": 1,
+      "raidPhysicalDriveUuid": "18862cfe4f383f1c8f4e6e64e8de9f4c",
+      "runningState": "Success",
+      "testResult": "Completed without error",
+      "createDate": "Nov 14, 2017 2:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+    },
+    {
+      "id": 2,
+      "raidPhysicalDriveUuid": "adbdac3931c03ab0a1ff769558816563",
+      "runningState": "Success",
+      "testResult": "Completed without error",
+      "createDate": "Nov 14, 2017 2:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_hs2_4ct_s2c)|3.6|
+|inventories|List|详情参考[inventories](#p_fv1_rct_s2c)|3.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|id|Long|id|3.6|
+|raidPhysicalDriveUuid|String|Raid物理盘Uuid|3.6|
+|testResult|String|自检结果|3.6|
+|createDate|Timestamp|创建时间|3.6|
+|lastOpDate|Timestamp|最后一次修改时间|3.6|
+|runningState|RunningState|详情参考[runningState](#p_hnq_sct_s2c)|3.6|
+
+### runningState
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Running|RunningState|正在执行|3.6|
+|Success|RunningState|执行成果|3.6|
+|Failed|RunningState|执行失败|3.6|
+
+## SDK示例
+Java SDK
+
+```
+QueryPhysicalDriveSelfTestHistoryAction action = new QueryPhysicalDriveSelfTestHistoryAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryPhysicalDriveSelfTestHistoryAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryPhysicalDriveSelfTestHistoryAction action = QueryPhysicalDriveSelfTestHistoryAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryPhysicalDriveSelfTestHistoryAction.Result res = action.call()
+```
+
+</APIPage>

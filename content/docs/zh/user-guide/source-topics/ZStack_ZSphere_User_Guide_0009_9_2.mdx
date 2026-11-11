@@ -1,0 +1,40 @@
+---
+title: "主机NUMA拓扑"
+---
+
+主机NUMA拓扑：CPU厂商基于NUMA架构预定义的主机NUMA节点拓扑。
+
+## 相关定义
+
+-   NUMA（Non-Uniform Memory Access）：非一致性内存访问，是一种计算机内存设计架构。该架构下，CPU访问内存的时间取决于CPU与内存的相对位置。通过优先访问相对位置较近的内存可缩短延迟，从而可提升主机系统性能。
+-   pNUMA节点（pNUMA Node）：基于主机NUMA架构预定义的NUMA节点，用于主机CPU和内存管理。一台主机可有一个或多个pNUMA节点，一个pNUMA节点主要由一个或多个物理CPU核（pCPU）和本地内存组成。
+-   vNUMA节点（vNUMA Node）：基于CPU绑定透传关联的主机NUMA节点而生成的虚拟机NUMA节点，用于虚拟机CPU和内存管理。一个vNUMA节点主要由一个或多个虚拟CPU核（vCPU）和本地内存组成。
+-   vNUMA拓扑（vNUMA Topology）：基于CPU绑定生成的虚拟机NUMA节点（vNUMA Node）拓扑。
+-   本地内存：CPU（pCPU或vCPU）通过所在NUMA节点（pNUMA节点或vNUMA节点）非CPU核部件中内存控制器可直接访问的内存。相比非本地内存，CPU访问本地内存的延迟更低。
+
+## 功能原理
+
+ZSvirt添加主机后，支持查看主机pNUMA拓扑，同时基于该拓扑结构为主机上运行的虚拟机配置vNUMA。
+
+ZSvirt 虚拟机vNUMA配置基于CPU绑定实现，CPU绑定将虚拟机的vCPU与主机的pCPU严格关联，为虚拟机分配特定的pCPU。vNUMA配置时，虚拟机所有vCPU均绑定pCPU，同时单个vCPU所绑定的pCPU均处在同一个pNUMA节点中。
+
+vNUMA配置后，虚拟机直接透传关联的主机pNUMA节点拓扑，生成一个或多个vNUMA节点，构成虚拟机的vNUMA拓扑。虚拟机vCPU基于vNUMA拓扑优先访问所在节点的本地内存。
+
+如Figure 1所示：
+
+<img src="/docs/user-guide/images/ZStack_ZSphere_User_Guide_0009_9_2_1.png" alt="虚拟机vNUMA配置原理" />
+
+## pNUMA拓扑
+
+进入目标主机**摘要页面**，在硬件概览信息框中点击**查看pNUMA拓扑图**。ZSvirt主机pNUMA拓扑信息如下：
+
+-   展示主机所有pNUMA节点及各节点关联的虚拟机信息。
+-   总内存为pCPU可直接访问的所在pNUMA节点本地内存总量。
+-   空闲内存为pCPU可直接访问的所在pNUMA节点本地空闲内存。
+-   总内存和空闲内存均取自pNUMA节点真实硬件物理内存容量。
+
+如Figure 2所示：
+
+<img src="/docs/user-guide/images/ZStack_ZSphere_User_Guide_0009_9_2_2.png" alt="pNUMA拓扑" />
+
+ZSvirt支持跳转查看关联虚拟机的vNUMA拓扑结构。vNUMA拓扑详情可参考。

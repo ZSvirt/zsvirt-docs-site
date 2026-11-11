@@ -1,0 +1,125 @@
+---
+title: "Create a Metric Data HTTP Receiver"
+---
+
+<APIPage method="POST" path="/v1/zwatch/metrics/httpreceivers">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "CloudMonitor",
+    "url": "http://127.0.0.1/xxx",
+    "defaultEnable": true
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The **systemTags** and **userTags** fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"CloudMonitor","url":"http://127.0.0.1/xxx","defaultEnable":true}}' \
+http://localhost:8080/zstack/v1/zwatch/metrics/httpreceivers
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|name|String|body \(included in the `params` structure\)|Resource name| |0.6|
+|url|String|body \(included in the `params` structure\)| | |0.6|
+|description \(optional\)|String|body \(included in the `params` structure\)|Detailed description of the resource| |0.6|
+|defaultEnable \(optional\)|boolean|body \(included in the `params` structure\)| | |0.6|
+|resourceUuid \(optional\)|String|body \(included in the `params` structure\)|Resource UUID| |0.6|
+|tagUuids \(optional\)|List|body \(included in the `params` structure\)|Tag UUID list| |3.4.0|
+|systemTags \(optional\)|List|body|System tags| |0.6|
+|userTags \(optional\)|List|body|User tags| |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "3c4b2b282e4134579df0b8f74fb9a2b7",
+    "name": "CloudMonitor",
+    "url": "http://127.0.0.1/xxx",
+    "createDate": "Nov 14, 2017 2:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 2:20:57 PM",
+    "state": "Enabled"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|inventory|MetricDataHttpReceiverInventory|For details, see [inventory](#p_wtr_2n1_w2c)|0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_rys_dn1_w2c)|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID. Uniquely identifies the resource|0.6|
+|name|String|Resource name|0.6|
+|url|String| |0.6|
+|description|String|Detailed description of the resource|0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+|state|ReceiverState|For details, see [state](#p_vcd_2n1_w2c)|0.6|
+
+### state
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Enabled|ReceiverState| |0.6|
+|Disabled|ReceiverState| |0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code. The globally unique error identifier, for example, SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field. Default is null|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null|0.6|
+|cause|ErrorCode|Root error. The source error that caused the current error. This field is null if no root error exists|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+CreateMetricDataHttpReceiverAction action = new CreateMetricDataHttpReceiverAction();
+action.name = "CloudMonitor";
+action.url = "http://127.0.0.1/xxx";
+action.defaultEnable = true;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateMetricDataHttpReceiverAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateMetricDataHttpReceiverAction action = CreateMetricDataHttpReceiverAction()
+action.name = "CloudMonitor"
+action.url = "http://127.0.0.1/xxx"
+action.defaultEnable = true
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateMetricDataHttpReceiverAction.Result res = action.call()
+```
+
+</APIPage>

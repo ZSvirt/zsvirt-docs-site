@@ -1,0 +1,125 @@
+---
+title: "Batch Create Bare Metal Chassis"
+---
+
+<APIPage method="POST" path="/v1/baremetal/chassis/from-file">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "baremetalChassisInfo": "FILE CONTENT ENCODE BY BASE64"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that these fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"baremetalChassisInfo":"FILE CONTENT ENCODE BY BASE64"}}' \
+http://localhost:8080/zstack/v1/baremetal/chassis/from-file
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|baremetalChassisInfo|String|body\(included in the `params` structure\)|Bare metal chassis information encoded in base64| |3.1.1|
+|longJobName \(Optional\)|String|body\(included in the `params` structure\)|Long job name| |3.1.1|
+|longJobDescription \(Optional\)|String|body\(included in the `params` structure\)|Long job description| |3.1.1|
+|resourceUuid \(Optional\)|String|body\(included in the `params` structure\)|Resource UUID| |3.1.1|
+|systemTags \(Optional\)|List|body|System Tag| |3.1.1|
+|userTags \(Optional\)|List|body|User Tag| |3.1.1|
+|tagUuids \(Optional\)|List|body\(included in the `params` structure\)|Tag UUID list| |3.4.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "cec9662c5cc534779833c89d8104aa7d",
+    "name": "APIBatchCreateBaremetalChassisMsg",
+    "apiId": "85ef8b327b0a3c71a53827b30892f327",
+    "jobName": "APIBatchCreateBaremetalChassisMsg",
+    "jobData": "{\"createMessages\":[]",
+    "jobResult": "",
+    "state": "Succeeded",
+    "managementNodeUuid": "31c1228477b6310b9eb28a75e892b046"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation is successful, this field is null. For details, see [error](#p_wk2_hyy_3gc)|3.1.1|
+|inventory|LongJobInventory|For details, see [inventory](#p_y4y_gyy_3gc)|3.1.1|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, default is null|0.6|
+|opaque|LinkedHashMap|Reserved field, default is null|0.6|
+|cause|ErrorCode|Root cause: the source error that triggered the current error. If there is no original error, this field is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifying the resource|2.2.4|
+|name|String|Resource name|2.2.4|
+|description|String|Detailed description of the resource|2.2.4|
+|apiId|String|API ID used to correlate with TaskProgress|2.2.4|
+|jobName|String|Task name|2.2.4|
+|jobData|String|Task data|2.2.4|
+|jobResult|String|Task result|2.2.4|
+|targetResourceUuid|String|Target resource UUID|2.2.4|
+|managementNodeUuid|String|Management Node UUID|2.2.4|
+|createDate|Timestamp|Create time|2.2.4|
+|lastOpDate|Timestamp|Last modification time|2.2.4|
+|state|LongJobState|For details, see [state](#p_upt_gyy_3gc)|2.2.4|
+
+### state
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name|2.2.4|
+|ordinal|int| |2.2.4|
+
+## SDK Examples
+Java SDK
+
+```
+BatchCreateBaremetalChassisAction action = new BatchCreateBaremetalChassisAction();
+action.baremetalChassisInfo = "FILE CONTENT ENCODE BY BASE64";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+BatchCreateBaremetalChassisAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = BatchCreateBaremetalChassisAction()
+action.baremetalChassisInfo = "FILE CONTENT ENCODE BY BASE64"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

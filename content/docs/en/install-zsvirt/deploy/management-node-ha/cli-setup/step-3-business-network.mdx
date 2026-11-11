@@ -1,0 +1,43 @@
+---
+title: "Step 3: Configure Business Network"
+---
+
+The following table lists the configuration for the business network in this scenario.
+
+|Server|NIC 1|NIC 2|Bond|Bridge|IP Address|Netmask|Gateway|
+|------|-----|-----|----|------|----------|-------|-------|
+|MN 1|em1|em2|bond1|-|-|-|-|
+|MN 2|em1|em2|bond1|-|-|-|-|
+
+## Procedure
+
+1.  Log in to the **MN 1** operating system and run the following commands.
+
+    ```
+    # Create the bonded NIC bond1
+    [root@localhost ~]# zs-bond-lacp -c bond1
+    
+    # Add NICs em1 and em2 to bond1
+    [root@localhost ~]# zs-nic-to-bond -a bond1 em1
+    [root@localhost ~]# zs-nic-to-bond -a bond1 em2
+    
+    # After configuring the link aggregation, you need to set up LACP aggregation on the corresponding switch ports.
+    
+    
+    # You do not need to create a bridge for business network
+    
+    # Check if the aggregated port bond1 was created successfully
+    [root@localhost ~]# zs-show-network
+    ...
+    ----------------------------------------------------------------------------------
+    | Bond Name  | SLAVE(s)        | BONDING_OPTS                                     |
+    ----------------------------------------------------------------------------------
+    | bond1      | em1            | miimon=100 mode=4 xmit_hash_policy=layer2+3        |
+    |            | em2            |                                                    |
+    ---------------------------------------------------------------------------------
+    ```
+
+2.  Log in to the **MN 2** operating system and run the similar configuration commands.
+
+    **Note:** After adding em1 and em2 to bond1, you need to configure LACP aggregation on the corresponding switch ports. Otherwise, network communication will be disrupted.
+

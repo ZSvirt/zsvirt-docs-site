@@ -1,0 +1,64 @@
+---
+title: "将PCI设备规格从虚拟机卸载"
+---
+
+<APIPage method="DELETE" path="/v1/pci-device-specs/{pciSpecUuid}/vm-instances/{vmInstanceUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/pci-device-specs/1c8f91c1699c35bfbb1847d2c20f7371/vm-instances/422fe51c278930f085e1323b0e858e3f
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|pciSpecUuid|String|url|PCI设备规格UUID| |3.5.0|
+|vmInstanceUuid|String|url|虚拟机UUID| |3.5.0|
+|systemTags \(可选\)|List|body|系统标签| |3.5.0|
+|userTags \(可选\)|List|body|系统标签| |3.5.0|
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+RemovePciDeviceSpecFromVmInstanceAction action = new RemovePciDeviceSpecFromVmInstanceAction();
+action.pciSpecUuid = "1c8f91c1699c35bfbb1847d2c20f7371";
+action.vmInstanceUuid = "422fe51c278930f085e1323b0e858e3f";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RemovePciDeviceSpecFromVmInstanceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+RemovePciDeviceSpecFromVmInstanceAction action = RemovePciDeviceSpecFromVmInstanceAction()
+action.pciSpecUuid = "1c8f91c1699c35bfbb1847d2c20f7371"
+action.vmInstanceUuid = "422fe51c278930f085e1323b0e858e3f"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+RemovePciDeviceSpecFromVmInstanceAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,299 @@
+---
+title: "Get Audit Data"
+---
+
+<APIPage method="GET" path="/v1/zwatch/audits">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zwatch/audits?startTime=1.557300700509E12&limit=50.0&auditType=Resource
+```
+
+Parameter List
+
+<table id="table_czb_cyx_bdb"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+startTime \(Optional\)
+
+</td><td>
+
+Long
+
+</td><td>
+
+query
+
+</td><td>
+
+The start time
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+endTime \(Optional\)
+
+</td><td>
+
+Long
+
+</td><td>
+
+query
+
+</td><td>
+
+The end time
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+limit \(Optional\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+query
+
+</td><td>
+
+The maximum number of returned records
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+labels \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+The filter label list
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+auditType \(Optional\)
+
+</td><td>
+
+AuditType
+
+</td><td>
+
+query
+
+</td><td>
+
+The audit type. Default is Resource
+
+</td><td>
+
+-   Login
+-   Resource
+
+</td><td>
+
+3.5.0
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+System tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+User tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "audits": [
+    {
+      "resourceUuid": "b1ca3fab6ebc4302ad9249d5402cb06c",
+      "resourceType": "VmInstanceVO",
+      "clientIp": "172.0.0.1",
+      "clientBrowser": "Chrome/69.0.3497.81",
+      "apiName": "org.zstack.header.vm.APISetVmRDPMsg",
+      "operatorAccountUuid": "36c27e8ff05c4780bf6d2fa65700f22e",
+      "duration": 22.0,
+      "requestUuid": "d78093c0b2fb3850b3ce563b3a0b029d",
+      "responseUuid": "08cf3fd2c4614811b4acc0620e20a98e",
+      "sessionUuid": "05e5c663eb794faab5c5606c38103a17",
+      "responseDump": "{\"success\":true}",
+      "time": 1512037844556.0
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null on success. See [error](#p_dns_lyx_bdb)|2.3|
+|audits|List|See [audits](#p_v2b_myx_bdb)|2.3|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, such as SYS.1000, HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|The detailed error information|0.6|
+|elaboration|String|Reserved field. Default is null|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null|0.6|
+|cause|ErrorCode|The root error. The source error that caused the current error. This field is null if there is no root error|0.6|
+
+### audits
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|resourceUuid|String|The resource UUID|2.3|
+|resourceType|String|The resource type|2.3|
+|apiName|String|The API name|2.3|
+|error|String|The error details|2.3|
+|operatorAccountUuid|String|The UUID of the account that initiated the API call|2.3|
+|duration|long|The API execution duration|2.3|
+|requestUuid|String|The API request UUID|2.3|
+|responseUuid|String|The API response UUID|2.3|
+|sessionUuid|String|The session UUID|2.3|
+|requestDump|String|The API request JSON dump|2.3|
+|responseDump|String|The API response JSON dump|2.3|
+|time|long|The record generation time|2.3|
+
+## SDK Examples
+Java SDK
+
+```
+GetAuditDataAction action = new GetAuditDataAction();
+action.startTime = 1.557300701132E12;
+action.limit = 50.0;
+action.conditions = asList("VMUuid=4ca37b1e21e846bf8d35b23d4138489c");
+action.auditType = "Resource";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetAuditDataAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetAuditDataAction action = GetAuditDataAction()
+action.startTime = 1.557300701178E12
+action.limit = 50.0
+action.conditions = [VMUuid=6623c395df0d44b6afc3732e76aac0ac]
+action.auditType = "Resource"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetAuditDataAction.Result res = action.call()
+```
+
+</APIPage>

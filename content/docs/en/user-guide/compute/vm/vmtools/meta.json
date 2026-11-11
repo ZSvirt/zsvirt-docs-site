@@ -1,0 +1,10 @@
+{
+  "title": "Virtual Machine VMTools",
+  "pages": [
+    "index",
+    "install-linux",
+    "install-windows",
+    "os-compatibility"
+  ],
+  "pagesIndex": "index"
+}

@@ -1,0 +1,390 @@
+---
+title: "创建邮件服务器"
+---
+
+<APIPage method="POST" path="/v1/sns/application-platforms/email">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "smtpServer": "email.zstack.io",
+    "smtpPort": 20.0,
+    "username": "example@cloud.io",
+    "password": "password",
+    "encryptType": "STARTTLS",
+    "name": "email platform"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"smtpServer":"email.zstack.io","smtpPort":20.0,"username":"example@cloud.io",
+"password":"password","encryptType":"STARTTLS","name":"email platform"}}' \
+http://localhost:8080/zstack/v1/sns/application-platforms/email
+```
+
+参数列表
+
+<table id="table_lkv_nsx_bdb"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+smtpServer
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+SMTP服务器地址
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+smtpPort
+
+</td><td>
+
+Integer
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+SMTP端口
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+username
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+用户名
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+password \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+密码
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+name
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+资源名称
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+description \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+资源的详细描述
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+resourceUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+encryptType \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+-   SSL
+-   STARTTLS
+-   NONE
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr></tbody>
+</table>
+
+<Callout type="info">
+-   添加邮箱服务器时，系统会自动检测用户名、密码、邮箱服务器地址、邮箱服务器端口、加密类型是否正确，等待时间不超过5秒。
+</Callout>
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "a5c6d18fdf9b4b6fbdb1f49abce0328c",
+    "name": "email platform",
+    "description": "example description",
+    "state": "Enabled",
+    "type": "Email",
+    "createDate": "Mar 26, 2024 2:42:32 AM",
+    "lastOpDate": "Mar 26, 2024 2:42:32 AM"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_bdm_ctx_bdb)|2.3|
+|inventory|SNSApplicationPlatformInventory|详情参考[inventory](#p_vnq_ctx_bdb)|2.3|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|2.3|
+|name|String|资源名称|2.3|
+|description|String|资源的详细描述|2.3|
+|type|String|类型|2.3|
+|createDate|Timestamp|创建时间|2.3|
+|lastOpDate|Timestamp|最后一次修改时间|2.3|
+
+## SDK示例
+Java SDK
+
+```
+CreateSNSEmailPlatformAction action = new CreateSNSEmailPlatformAction();
+action.smtpServer = "email.zstack.io";
+action.smtpPort = 20.0;
+action.username = "example@cloud.io";
+action.password = "password";
+action.encryptType = "STARTTLS";
+action.name = "email platform";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateSNSEmailPlatformAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateSNSEmailPlatformAction action = CreateSNSEmailPlatformAction()
+action.smtpServer = "email.zstack.io"
+action.smtpPort = 20.0
+action.username = "example@cloud.io"
+action.password = "password"
+action.encryptType = "STARTTLS"
+action.name = "email platform"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateSNSEmailPlatformAction.Result res = action.call()
+```
+
+</APIPage>

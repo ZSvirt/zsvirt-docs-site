@@ -1,0 +1,419 @@
+---
+title: "Add Monitor Node to Distributed Image Storage"
+---
+
+<APIPage method="DELETE" path="/v1/backup-storage/ceph/{uuid}/mons">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"monUrls":["10.0.1.3"]}}' \
+http://localhost:8080/zstack/v1/backup-storage/ceph/5229b4e9acf934e1a80337a8090d72d1/mons
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|UUID of the distributed image storage| |0.6|
+|monUrls|List|body|List of monitor node names| |0.6|
+|systemTags \(Optional\)|List|body|System tags| |0.6|
+|userTags \(Optional\)|List|body|User tags| |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "mons": [
+      {
+        "monAddr": "10.0.1.2",
+        "monUuid": "d79571a057c94c41b0fad2ca688a6cec"
+      }
+    ],
+    "name": "My Ceph Backup Storage",
+    "description": "Public Ceph Backup Storage",
+    "totalCapacity": 1073741824.0,
+    "availableCapacity": 968884224.0,
+    "type": "Ceph",
+    "state": "Enabled",
+    "status": "Connected",
+    "createDate": "Jun 7, 2017 9:20:30 PM",
+    "lastOpDate": "Jun 7, 2017 9:20:30 PM",
+    "attachedZoneUuids": [
+      "4fd92cde485a4225b97c86846c9f586c"
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_kfv_pf1_n1b)|0.6|
+|inventory|CephBackupStorageInventory|See [inventory](#p_y4y_kf1_n1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause. The source error that triggered the current error. This field is null if there is no original error|0.6|
+
+### inventory
+<table id="table_nb2_bf1_n1b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Description
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+fsid
+
+</td><td>
+
+String
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+poolName
+
+</td><td>
+
+String
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+Resource UUID, uniquely identifies the resource
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+name
+
+</td><td>
+
+String
+
+</td><td>
+
+Resource name
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+url
+
+</td><td>
+
+String
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+description
+
+</td><td>
+
+String
+
+</td><td>
+
+Detailed description of the resource
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+totalCapacity
+
+</td><td>
+
+Long
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+availableCapacity
+
+</td><td>
+
+Long
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+type
+
+</td><td>
+
+String
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+state
+
+</td><td>
+
+String
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+status
+
+</td><td>
+
+String
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+createDate
+
+</td><td>
+
+Timestamp
+
+</td><td>
+
+Creation time
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+lastOpDate
+
+</td><td>
+
+Timestamp
+
+</td><td>
+
+Last modification time
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+attachedZoneUuids
+
+</td><td>
+
+List
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+poolAvailableCapacity
+
+</td><td>
+
+Long
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3.2
+
+</td></tr><tr><td>
+
+poolUsedCapacity
+
+</td><td>
+
+Long
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3.2
+
+</td></tr><tr><td>
+
+poolReplicatedSize
+
+</td><td>
+
+Integer
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3.2
+
+</td></tr><tr><td>
+
+mons
+
+</td><td>
+
+List
+
+</td><td>
+
+See [mons](#p_c5d_mf1_n1b)
+
+</td><td>
+
+0.6
+
+</td></tr></tbody>
+</table>
+
+### mons
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|hostname|String| |0.6|
+|monPort|Integer| |0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+|backupStorageUuid|String|Image storage UUID|0.6|
+|monAddr|String| |0.6|
+|sshPort|Integer| |0.6|
+|status|String| |0.6|
+|sshUsername|String| |0.6|
+|sshPassword|String| |0.6|
+|monUuid|String| |0.6|
+
+## SDK Examples
+Java SDK
+
+```
+RemoveMonFromCephBackupStorageAction action = new RemoveMonFromCephBackupStorageAction();
+action.uuid = "728cc9123a694a39a9e1915d9e50ee9f";
+action.monHostnames = asList("10.0.1.2");
+action.sessionId = "e12938edf7634fcebba3938d07acde47";
+RemoveMonFromCephBackupStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+RemoveMonFromCephBackupStorageAction action = RemoveMonFromCephBackupStorageAction()
+action.uuid = "eede3cd9cbca4b3289e92a976619b67d"
+action.monHostnames = [10.0.1.2]
+action.sessionId = "fb2ddd76c26f43729fe5346e196c8532"
+RemoveMonFromCephBackupStorageAction.Result res = action.call()
+```
+
+</APIPage>

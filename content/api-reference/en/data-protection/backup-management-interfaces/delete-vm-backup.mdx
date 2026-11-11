@@ -1,0 +1,67 @@
+---
+title: "Delete VM Backup"
+---
+
+<APIPage method="DELETE" path="/v1/vm-backups/{groupUuid}?backupStorageUuids={backupStorageUuids}&deleteMode={deleteMode}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/vm-backups/92046c016d7c3af7bdd4a5077fb91450?backupStorageUuids=255fc896605f3237a22940fa92d8670b&deleteMode=Permissive
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|groupUuid|String|url|Backup group UUID| |3.0.0|
+|backupStorageUuids \(Optional\)|List|url|Image Storage UUID list| |3.0.0|
+|deleteMode \(Optional\)|String|url| | |3.0.0|
+|systemTags \(Optional\)|List|body| | |3.0.0|
+|userTags \(Optional\)|List|body| | |3.0.0|
+
+## API Response
+On success, this API returns an empty JSON structure **`{}`**. On failure, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DeleteVmBackupAction action = new DeleteVmBackupAction();
+action.groupUuid = "92046c016d7c3af7bdd4a5077fb91450";
+action.backupStorageUuids = asList("255fc896605f3237a22940fa92d8670b");
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteVmBackupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteVmBackupAction action = DeleteVmBackupAction()
+action.groupUuid = "92046c016d7c3af7bdd4a5077fb91450"
+action.backupStorageUuids = [255fc896605f3237a22940fa92d8670b]
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DeleteVmBackupAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,37 @@
+---
+title: 'Create a Linux VM Specification'
+---
+
+Save specific Linux VM operating system settings in a customization specification, such as the hostname configuration.
+
+1.  In the navigation pane, choose **Inventory** &gt; **VM and Host**.
+
+2.  Select the root node.
+
+3.  On the details page of the root node, click **VM Specification**.
+
+4.  On the VM Specification tab, click **New VM Specification**.
+
+5.  In the New VM Specification dialog, set the following parameters:
+
+    -   **Name**: Enter a name for the VM specification.
+    -   **Description**: Enter a brief description for the VM specification.
+    -   **Target VM OS**: Select **Linux**.
+    -   **Hostname Configuration**: Select how to configure a VM hostname. Options include using the VM name and entering a name.
+
+        <Callout type="info">
+        -   When you use the virtual machine name as the hostname, the Linux VM name will be truncated if it exceeds 60 characters.
+        -   The following rules apply for specifying a Linux hostname:
+            -   Length: 2 to 60 characters.
+            -   Allowed characters: Uppercase and lowercase letters, numbers, and hyphens (-).
+            -   No consecutive hyphens. You cannot start or end with a hyphen.
+        -   When creating multiple VMs at once, a suffix (-1, -2, -3, etc.) is automatically appended to ensure uniqueness.
+        </Callout>
+    -   **Administrator Password**: Set a administrator password.
+
+        <Callout type="info">
+        The password must be 8 to 16 characters in length and contain at least two of the following: lowercase letters, uppercase letters, numbers, or special characters.
+        </Callout>
+
+    -   **Confirm Password**: Confirm the password by typing it again.
+6.  Review the configuration and click **OK**.

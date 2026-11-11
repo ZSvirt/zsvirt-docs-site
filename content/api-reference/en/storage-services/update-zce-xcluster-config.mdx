@@ -1,0 +1,126 @@
+---
+title: "Configure ZCE-X Cluster"
+---
+
+<APIPage method="PUT" path="/v1/zce-x-plugin/config/cluster">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateZceXClusterConfig": {
+    "uuid": "77e1393bf5aa4536a018b4c0c4e29c72",
+    "managementNetworkCidr": "172.26.30.1/24",
+    "publicNetworkCidr": "172.26.30.1/24",
+    "clusterNetworkCidr": "172.26.30.1/24",
+    "otherManagementIp": [
+      "172.26.30.113",
+      "172.26.30.202"
+    ],
+    "username": "admin"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateZceXClusterConfig":{"uuid":"77e1393bf5aa4536a018b4c0c4e29c72","managementNetworkCidr":"172.26.30.1/24","publicNetworkCidr":"172.26.30.1/24","clusterNetworkCidr":"172.26.30.1/24","otherManagementIp":["172.26.30.113","172.26.30.202"],"username":"admin"}}' \
+http://localhost:8080/zstack/v1/zce-x-plugin/config/cluster
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|body \(included in `updateZceXClusterConfig` structure\)|ZCE-X UUID, uniquely identifies the resource| |4.10.6|
+|managementIp \(Optional\)|String|body \(included in `updateZceXClusterConfig` structure\)|ZCE-X management node IP. If not filled, defaults to ZceXVO.uuid| |4.10.6|
+|managementNetworkCidr|String|body \(included in `updateZceXClusterConfig` structure\)|ZCE-X management network IP CIDR| |4.10.6|
+|publicNetworkCidr|String|body \(included in `updateZceXClusterConfig` structure\)|ZCE-X public network IP CIDR| |4.10.6|
+|clusterNetworkCidr|String|body \(included in `updateZceXClusterConfig` structure\)|ZCE-X cluster network IP CIDR| |4.10.6|
+|gatewayNetworkCidr \(Optional\)|String|body \(included in `updateZceXClusterConfig` structure\)|ZCE-X gateway network IP CIDR, defaults to public network IP CIDR| |4.10.6|
+|otherManagementIp|List|body \(included in `updateZceXClusterConfig` structure\)|Other two ZCE-X management node IPs. Must provide two different IPs. Passwordless authentication is required between nodes| |4.10.6|
+|otherStorageIp \(Optional\)|List|body \(included in `updateZceXClusterConfig` structure\)|Other ZCE-X storage node IP list| |4.10.6|
+|username \(Optional\)|String|body \(included in `updateZceXClusterConfig` structure\)|Administrator username created during ZCE-X initialization| |4.10.6|
+|password \(Optional\)|String|body \(included in `updateZceXClusterConfig` structure\)|Administrator password created during ZCE-X initialization| |4.10.6|
+|systemTags \(Optional\)|List|body|System Tag| |4.10.6|
+|userTags \(Optional\)|List|body|User Tag| |4.10.6|
+|softwarePackageUuid|String|body \(included in `updateZceXClusterConfig` structure\)|Distributed software package UUID| |4.10.20|
+
+<Callout type="info">
+-   Parameters for the initialization software package.
+</Callout>
+    -   SystemTag format: `initConfig::{%s}`
+    -   SystemTag example: `APIUpdateZceXClusterConfigMsg converted to json string`
+
+## API Response
+Response Example
+
+```
+{
+  "initSuccess": true,
+  "tokenCreated": true
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|clusterInitSuccess|boolean|Whether initialization was successful|4.10.20|
+|tokenCreated|boolean|Whether token generation was successful|4.10.20|
+|success|boolean|Whether configuration was successful|4.10.6|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. For details, see [error](#p_bcl_x1v_m1b)|4.10.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, for example SYS.1000, HOST.1001|4.10.0|
+|description|String|Brief summary of the error|4.10.0|
+|details|String|Detailed error information|4.10.0|
+|elaboration|String|Reserved field, defaults to null|4.10.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|4.10.0|
+|cause|ErrorCode|Root cause: the source error that triggered the current error. If there is no original error, this field is null|4.10.0|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateZceXClusterConfigAction action = new UpdateZceXClusterConfigAction();
+action.uuid = "77e1393bf5aa4536a018b4c0c4e29c72";
+action.managementNetworkCidr = "172.26.30.1/24";
+action.publicNetworkCidr = "172.26.30.1/24";
+action.clusterNetworkCidr = "172.26.30.1/24";
+action.otherManagementIp = asList("172.26.30.113","172.26.30.202");
+action.username = "admin";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateZceXClusterConfigAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = UpdateZceXClusterConfigAction()
+action.uuid = "77e1393bf5aa4536a018b4c0c4e29c72"
+action.managementNetworkCidr = "172.26.30.1/24"
+action.publicNetworkCidr = "172.26.30.1/24"
+action.clusterNetworkCidr = "172.26.30.1/24"
+action.otherManagementIp = [172.26.30.113, 172.26.30.202]
+action.username = "admin"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

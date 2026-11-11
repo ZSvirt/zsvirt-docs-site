@@ -1,0 +1,37 @@
+---
+title: 'IP Blocklist and Allowlist Management'
+---
+
+IP blocklist and allowlist: By identifying and filtering visitor IPs, it intercepts access from specific IPs or allows access from specific IPs, further enhancing the access control security of ZSvirt.
+
+-   [Basic Information](#section_p3g_f52_czb)
+-   [Add IP Blocklist or Allowlist](#section_h3n_wgn_1zb)
+-   [Manage IP Blocklist and Allowlist](#section_a4j_xgn_1zb)
+
+## Basic Information
+-   If no IP blocklists or allowlists have been added, requests from all IP addresses are allowed by default.
+-   If only an IP blocklist is added, IPs in the blocklist are denied access to the platform, while other IPs are allowed.
+-   If the same IP is added to both lists, the allowlist takes precedence over the blocklist, allowing requests from that IP.
+-   You cannot use the IP allowlist alone. Make sure to add at least one IP blocklist before you use IP allowlist. Otherwise, the IP allowlist does not take effect.
+
+## Add IP Blocklist or Allowlist
+You can follow these steps to add an IP blocklist or allowlist:
+
+1.  Navigate to **Menu** &gt; **System Management** &gt; **IP Blocklist and Allowlist**.
+2.  Click **Add IP Blocklist and Allowlist**.
+
+You can use the following example to complete the configuration:
+
+-   **Name**: The name of the IP blocklist or allowlist
+-   **Description**: The description of the IP blocklist or allowlist
+-   **Type**: Select blocklist or allowlist
+-   **IP Address**: You can enter IP addresses, IP address ranges, or IP/mask format. Separate multiple IP addresses with commas. You can add up to 100 entries.
+
+## Manage IP Blocklist and Allowlist
+You can manage IP blocklists and allowlists, including editing names and descriptions, modifying configurations, and deleting them.
+
+1.  Navigate to **Menu** &gt; **System Management** &gt; **IP Blocklist and Allowlist**.
+2.  Select a list and then click **Action**.
+    -   To modify the name and description of the list, select **Edit Name and Description**.
+    -   To modify the IP addresses in the list, select **Modify Configuration**.
+    -   To remove IP access restrictions for a particular list from the platform, select **Delete**.

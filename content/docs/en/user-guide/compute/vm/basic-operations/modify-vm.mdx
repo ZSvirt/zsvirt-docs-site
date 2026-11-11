@@ -1,0 +1,96 @@
+---
+title: 'Modify a Virtual Machine'
+---
+
+If you have already created one or more virtual machines, you can modify the virtual machine configurations according to your business scenarios as needed.
+
+## Before Modifying Virtual Machine Configurations
+Before modifying the following configurations, you need to install VMTools on the virtual machine:
+
+-   Modify failure response policy
+-   Change the virtual machine password
+-   Modify the hostname for Windows virtual machines
+-   Modify time synchronization
+
+To modify the following configurations, you need to shut down the virtual machine:
+
+<table className="doc-feature-table">
+  <thead>
+    <tr>
+      <th>Module</th>
+      <th>Modification Item</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Operating System</td>
+      <td>System Image</td>
+    </tr>
+    <tr>
+      <td rowSpan="4">CPU and Memory</td>
+      <td>Number of Cores per Socket</td>
+    </tr>
+    <tr>
+      <td>CPU Hot Plugging &amp; Memory Hot Plugging</td>
+    </tr>
+    <tr>
+      <td>CPU Mode</td>
+    </tr>
+    <tr>
+      <td>CPU Affinity</td>
+    </tr>
+    <tr>
+      <td>Network Adapter</td>
+      <td>Network Adapter Multi-Queue Count</td>
+    </tr>
+    <tr>
+      <td rowSpan="2">Graphics Card</td>
+      <td>Graphics Card Type</td>
+    </tr>
+    <tr>
+      <td>Total Graphics Memory</td>
+    </tr>
+    <tr>
+      <td>General Options</td>
+      <td>Hostname</td>
+    </tr>
+    <tr>
+      <td>Login Options</td>
+      <td>Password</td>
+    </tr>
+    <tr>
+      <td rowSpan="4">Remote Access</td>
+      <td>Console Mode</td>
+    </tr>
+    <tr>
+      <td>Console Password</td>
+    </tr>
+    <tr>
+      <td>USB Redirection</td>
+    </tr>
+    <tr>
+      <td>SSH Key</td>
+    </tr>
+    <tr>
+      <td rowSpan="2">Boot Options</td>
+      <td>BIOS Mode</td>
+    </tr>
+    <tr>
+      <td>Boot Order</td>
+    </tr>
+  </tbody>
+</table>
+
+## Modify Virtual Machine Configuration
+**Single Operation**:
+
+-   If you only need to modify the virtual machine name and description, you can click on the **Actions** &gt; **Edit Name and Description** in the target virtual machine page to make the changes.
+-   If you need to modify the Basic Information Settings and Hardware Information Settings, you can click on the **Modify Configuration** operation or the **VM Hardware** settings on the **Overview** page to make the changes.
+-   If you need to modify the Advanced Settings, you can click on the **Actions** &gt; **Advanced Settings** in the target virtual machine page and modify the corresponding settings as needed.
+-   If you need to modify the virtual machine system settings, such as resetting the virtual machine, changing the group the virtual machine is located in, issuing network configurations, or changing the owner of the virtual machine, you can click on the **Actions** &gt; **System Settings** in the target virtual machine page and modify the corresponding settings as needed.
+-   If you need to modify the tags bound to the virtual machine, you can click on the **Actions** &gt; **Tag Management** in the target virtual machine page to make the changes.
+
+**Bulk Operations**:
+
+-   If you need to modify the system settings of multiple virtual machines, such as resetting the virtual machines, changing the groups they are located in, or changing the owners of the virtual machines, you can do so on the child virtual machine page corresponding to the parent/grandparent resource (host, cluster, data center) of the target virtual machine. Select the target virtual machines and click on the **Bulk Actions** &gt; **System Settings** and modify the corresponding settings as needed.
+-   If you need to modify the tags bound to multiple virtual machines, you can do so on the child virtual machine page corresponding to the parent/grandparent resource (host, cluster, data center) of the target virtual machine. Select the target virtual machines and click on the **Bulk Actions** &gt; **Tag Management** to make the changes.

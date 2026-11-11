@@ -1,0 +1,20 @@
+---
+title: 'Convert a Template to a Virtual Machine'
+---
+
+Convert a template directly to a virtual machine. Use this when you need to modify template configurations or no longer require the VM to server as a deployment template.
+
+1.  In the navigation pane, choose **Inventory** &gt; **Image and Template**.
+
+2.  Select the target template in Template File and click **Actions** &gt; **Convert to Virtual Machine**.
+
+3.  In the Convert to Virtual Machine dialog, set the following parameters:
+
+    -   **Name**: Enter a name for the virtual machine.
+    -   **Power Status**: Choose whether to automatically power on the VM after conversion.
+    -   **Location**: Automatically assigned by default. Select a target host or cluster for the VM.
+        -   For local storage scenario, you cannot specify the VM location. By default, the VM is allocated to the host where local disks reside.
+        -   For non-local storage scenarios, you can specify the VM location.
+4.  Review the configuration and click **OK**.
+
+After converting a template to a virtual machine, you can make adjustments to the virtual machine configuration as needed and then convert the virtual machine back into a template.

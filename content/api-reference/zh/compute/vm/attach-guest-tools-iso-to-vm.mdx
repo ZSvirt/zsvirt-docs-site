@@ -1,0 +1,82 @@
+---
+title: "为虚拟机加载增强工具镜像"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "attachGuestToolsIsoToVm": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"attachGuestToolsIsoToVm":{}}' http://localhost:8080/zstack/v1/vm-instances/f58d939e32073aa49acc4897bf81ae45/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |3.7.0|
+|systemTags \(可选\)|List|body|系统标签| |3.7.0|
+|userTags \(可选\)|List|body|用户标签| |3.7.0|
+
+<Callout type="info">
+-   ZSvirt虚拟机加载增强工具后支持记录GuestTools版本功能，**SystemTags**增加**GuestTools**选项。
+</Callout>
+    -   选项格式为：`GuestTools::TOOLS_VERSION`。其中TOOLS\_VERSION初值为1.0.0，未来随着工具版本的提升，这个值会随之变化。
+    -   例如：`GuestTools::1.0.0`
+    -   意义：记录主机中GuestTools ISO版本，与管理节点`/opt/zstack-dvd`目录下的ISO版本对比，决定是否需要升级。
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+AttachGuestToolsIsoToVmAction action = new AttachGuestToolsIsoToVmAction();
+action.uuid = "f58d939e32073aa49acc4897bf81ae45";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AttachGuestToolsIsoToVmAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AttachGuestToolsIsoToVmAction action = AttachGuestToolsIsoToVmAction()
+action.uuid = "f58d939e32073aa49acc4897bf81ae45"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AttachGuestToolsIsoToVmAction.Result res = action.call()
+```
+
+</APIPage>

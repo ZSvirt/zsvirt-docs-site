@@ -1,0 +1,72 @@
+---
+title: "Reset Global Settings"
+---
+
+<APIPage method="PUT" path="/v1/global-configurations/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "resetGlobalConfig": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the `systemTags` and `userTags` fields are optional. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"resetGlobalConfig":{}}' http://localhost:8080/zstack/v1/global-configurations/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|systemTags \(Optional\)|List|body|System tags| |3.1.0|
+|userTags \(Optional\)|List|body|User tags| |3.1.0|
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+ResetGlobalConfigAction action = new ResetGlobalConfigAction();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ResetGlobalConfigAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ResetGlobalConfigAction action = ResetGlobalConfigAction()
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ResetGlobalConfigAction.Result res = action.call()
+```
+
+</APIPage>

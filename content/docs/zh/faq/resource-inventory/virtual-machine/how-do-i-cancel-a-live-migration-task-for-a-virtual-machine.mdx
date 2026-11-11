@@ -1,0 +1,18 @@
+---
+title: "如何取消虚拟机热迁移任务？"
+---
+
+## 原因
+可能由于虚拟机热迁移进度过慢、迁移时间过长，需要取消虚拟机热迁移任务。
+
+## 解决方案
+-   可进入虚拟机所在的主机系统，执行如下命令取消热迁移任务：
+
+    ```
+    # 列出该主机上运行/暂停的虚拟机
+    [root@localhost ~]# virsh list
+    # 查看目标虚拟机上的热迁移任务
+    [root@localhost ~]# virsh domjobinfo $uuid  //目标虚拟机uuid
+    # 取消目标虚拟机上的热迁移任务
+    [root@localhost ~]# virsh domjobabort $uuid  //目标虚拟机uuid
+    ```

@@ -1,0 +1,116 @@
+---
+title: "Get VM vNUMA Topology"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/{uuid}/vnuma-topology">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/21529457e42c30f0a9b2a137915a0b28/vnuma-topology
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Virtual Machine UUID| |4.3.12|
+
+## API Response
+On success, this API returns an empty JSON structure **`{}`**. On error, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "hostUuid": "7fd86bbe6ca94a8d810aa1d33e29932c",
+  "topology": [
+    {
+      "CPUsID": [
+        "0",
+        "1",
+        "2",
+        "3"
+      ],
+      "distance": [
+        "10",
+        "21"
+      ],
+      "nodeID": 0,
+      "memSize": 1024,
+      "phyNodeID": 0
+    },
+    {
+      "CPUsID": [
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      "distance": [
+        "21",
+        "10"
+      ],
+      "nodeID": 1,
+      "memSize": 2048,
+      "phyNodeID": 1
+    }
+  ],
+  "name": "vm0",
+  "uuid": "71b30db8bca34e9191ed09bff2990e80"
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation succeeds, this field is null. For details, see [error](#p_nnf_25v_k1b)|4.3.12|
+|name|String|Virtual Machine name|4.3.12|
+|uuid|String|Virtual Machine UUID, uniquely identifies the resource|4.3.12|
+|hostUuid|String|Host UUID where the Virtual Machine is located, uniquely identifies the resource|4.3.12|
+|topology|array\[json\]|vNUMA topology information, see [topology](#p_g3n_byj_zz)|4.3.12|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier of the error, for example SYS.1000, HOST.1001|4.3.12|
+|description|String|Brief description of the error|4.3.12|
+|details|String|Detailed error information|4.3.12|
+|elaboration|String|Reserved field, defaults to null|4.3.12|
+|opaque|LinkedHashMap|Reserved field, defaults to null|4.3.12|
+|cause|ErrorCode|Root cause. The error that triggered the current error. If there is no original error, this field is null|4.3.12|
+
+### topology
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|nodeID|int|vNUMA node ID|4.3.12|
+|CPUsID|array\[string\]|List of vCPU IDs included in vNUMA node|4.3.12|
+|phyNodeID|int|Host NUMA node id|4.3.12|
+|distance|array\[string\]|Distance information of VM vNUMA node|4.3.12|
+|memSize|long|Memory size of VM vNUMA node \(unit: B\)|4.3.12|
+
+## SDK Examples
+Java SDK
+
+```
+GetVmvNUMATopologyAction action = new GetVmvNUMATopologyAction()
+action.uuid ="ff6d905e75d63e18ab0a9fc2ac14951c"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetVmvNUMATopologyAction.Result res = action.call()
+```
+
+Python SDK
+
+```
+GetVmvNUMATopologyAction action = new GetVmvNUMATopologyAction()
+action.uuid ="ff6d905e75d63e18ab0a9fc2ac14951c"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetVmvNUMATopologyAction.Result res = action.call()
+```
+
+</APIPage>

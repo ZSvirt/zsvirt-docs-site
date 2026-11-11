@@ -1,0 +1,98 @@
+---
+title: "查询目录分组"
+---
+
+<APIPage method="GET" path="/v1/directories" altPaths={["/v1/directories/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/directories?q=uuid=39b8a9d8cb2e32b893bd82c5c2be7e24
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/directories/4cfe730d431f3550994064911c1c6e0e
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryDirectory`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "b3c48edddae03e05b328a5b0926ae353",
+      "name": "test",
+      "groupName": "admin/test",
+      "parentUuid": "d0dc05fcf5753c6888d0b082bc0f9caf",
+      "rootDirectoryUuid": "3830935ca3823d05b9010f242139fad4",
+      "zoneUuid": "0f7266aa26f339cb8f0b47a73d0ddc30",
+      "type": "vminstance"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.7.0|
+|inventories|List|详情参考[inventories](#p_tdl_p5z_q2c)|4.7.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_rx5_n2s_zz)|4.7.0|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.6.0|
+|name|String|资源名称|4.6.0|
+|groupName|String|所属分组|4.6.0|
+|parentUuid|String|父级目录UUID|4.6.0|
+|rootDirectoryUuid|String|根目录UUID|4.6.0|
+|zoneUuid|String|数据中心UUID|4.6.0|
+|type|String|目录类型|4.6.0|
+|createDate|Timestamp|创建时间|4.6.0|
+|lastOpDate|Timestamp|最后一次修改时间|4.6.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+QueryDirectoryAction action = new QueryDirectoryAction();
+action.conditions = asList("uuid=b07055c553733af095d0714456157626");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryDirectoryAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryDirectoryAction action = QueryDirectoryAction()
+action.conditions = ["uuid=e38b6311766c3f88ab31c2d02db4e58f"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryDirectoryAction.Result res = action.call()
+```
+
+</APIPage>

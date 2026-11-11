@@ -1,0 +1,203 @@
+---
+title: "Refresh FC SAN Storage"
+---
+
+<APIPage method="POST" path="/v1/storage-devices/fiber-channel/controllers" altPaths={["/v1/storage-devices/fiber-channel/controllers/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "uuid": "52049ca66e8135f5aac2835aecab62a0"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, the **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"uuid":"52049ca66e8135f5aac2835aecab62a0"}}' http://localhost:8080/zstack/v1/storage-devices/fiber-channel/controllers
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"uuid":"52049ca66e8135f5aac2835aecab62a0"}}' http://localhost:8080/zstack/v1/storage-devices/fiber-channel/controllers/52049ca66e8135f5aac2835aecab62a0
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid \(Optional\)|String|body \(contained in **params** structure\)|FC SAN Storage UUID, uniquely identifies the resource| |3.1.0|
+|zoneUuid|String|body \(contained in **params** structure\)|Data Center UUID| |3.1.0|
+|systemTags \(Optional\)|List|body| | |3.1.0|
+|userTags \(Optional\)|List|body| | |3.1.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "971fa2e9e689304183d4eef676ad0241",
+      "state": "Enabled",
+      "fiberChannelLuns": [
+        {
+          "fiberChannelStorageUuid": "971fa2e9e689304183d4eef676ad0241",
+          "name": "fc-lun-36b083fe000daf018000022905ba35d8f",
+          "uuid": "2fb634b5c6ae3e1390360e982cdaf9d2",
+          "wwid": "36b083fe000daf018000022905ba35d8f",
+          "vendor": "DELL",
+          "model": "MD32xx",
+          "wwn": "0x6f01faf000d5c3e7",
+          "serial": "6b083fe000daf018000015505abbe00a",
+          "type": "mpath",
+          "path": "pci-0000:05:00.0-fc-0x2012b083fedaf018-lun-11",
+          "size": 5497558138880.0,
+          "scsiLunHostRefs": [
+            {
+              "id": 3.0,
+              "scsiLunUuid": "fd0a53d0234e303c9ba7c316f5484a59",
+              "hostUuid": "ef288e9807853188b76d3d445a35b345",
+              "createDate": "Nov 14, 2017 10:20:57 PM",
+              "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+            }
+          ],
+          "scsiLunVmInstanceRefs": []
+        },
+        {
+          "fiberChannelStorageUuid": "971fa2e9e689304183d4eef676ad0241",
+          "name": "fc-lun-36f01faf000d5c3e7000023ef5ba362f2",
+          "uuid": "fb37b3bb268c38c3803b93ee60f25ef6",
+          "wwid": "36f01faf000d5c3e7000023ef5ba362f2",
+          "vendor": "DELL",
+          "model": "MD32xx",
+          "wwn": "0x6b083fe000daf018",
+          "serial": "6b083fe000daf018000015505abbe00a",
+          "type": "mpath",
+          "path": "pci-0000:05:00.0-fc-0x2012b083fedaf018-lun-12",
+          "size": 5497558138880.0,
+          "scsiLunHostRefs": [
+            {
+              "id": 3.0,
+              "scsiLunUuid": "fd0a53d0234e303c9ba7c316f5484a59",
+              "hostUuid": "ef288e9807853188b76d3d445a35b345",
+              "createDate": "Nov 14, 2017 10:20:57 PM",
+              "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+            }
+          ],
+          "scsiLunVmInstanceRefs": []
+        }
+      ],
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    },
+    {
+      "uuid": "ddc6eb334da838b08224ed6c43e67d0e",
+      "state": "Enabled",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. For details, see [error](#p_wtp_5yd_nfb)|3.1.0|
+|inventories|List|For details, see [inventories](#p_pm5_5yd_nfb)|3.1.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, e.g. SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause. The error that caused the current error. If there is no original error, this field is null|0.6|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|3.1.0|
+|name|String|Resource name|3.1.0|
+|wwnn|String|FC SAN globally unique identifier|3.1.0|
+|state|String|Enabled state|3.1.0|
+|createDate|Timestamp|Creation time|3.1.0|
+|lastOpDate|Timestamp|Last modification time|3.1.0|
+|fiberChannelLuns|List|For details, see [fiberChannelLuns](#p_ejm_tyd_nfb)|3.1.0|
+
+### fiberChannelLuns
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|3.1.0|
+|fiberChannelStorageUuid|String|FC SAN Storage UUID|3.1.0|
+|wwid|String|Disk globally unique identifier|3.1.0|
+|vendor|String|Vendor|3.1.0|
+|model|String|Model|3.1.0|
+|wwn|String|Disk WWN|3.1.0|
+|serial|String|Disk serial number|3.1.0|
+|type|String|Disk type|3.1.0|
+|path|String|Disk path|3.1.0|
+|size|Long|Disk size|3.1.0|
+|createDate|Timestamp|Creation time|3.1.0|
+|lastOpDate|Timestamp|Last modification time|3.1.0|
+|name|String|Resource name|3.1.0|
+|state|String|Enabled state|3.1.0|
+|scsiLunHostRefs|List|For details, see [scsiLunHostRefs](#p_l1l_ryd_nfb)|3.1.0|
+|scsiLunVmInstanceRefs|List|For details, see [scsiLunVmInstanceRefs](#p_tkg_ryd_nfb)|3.1.0|
+
+### scsiLunHostRefs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|scsiLunUuid|String|SCSI Lun UUID|3.1.0|
+|hostUuid|String|Host UUID|3.1.0|
+|createDate|Timestamp|Creation time|3.1.0|
+|lastOpDate|Timestamp|Last modification time|3.1.0|
+
+### scsiLunVmInstanceRefs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|scsiLunUuid|String|SCSI Lun UUID|3.1.0|
+|vmInstanceUuid|String|Virtual Machine UUID|3.1.0|
+|createDate|Timestamp|Creation time|3.1.0|
+|lastOpDate|Timestamp|Last modification time|3.1.0|
+
+## SDK Examples
+Java SDK
+
+```
+RefreshFiberChannelStorageAction action = new RefreshFiberChannelStorageAction();
+action.uuid = "52049ca66e8135f5aac2835aecab62a0";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RefreshFiberChannelStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+RefreshFiberChannelStorageAction action = RefreshFiberChannelStorageAction()
+action.uuid = "52049ca66e8135f5aac2835aecab62a0"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+RefreshFiberChannelStorageAction.Result res = action.call()
+```
+
+</APIPage>

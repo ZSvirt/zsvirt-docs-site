@@ -1,0 +1,29 @@
+---
+title: 'Dual Management Node Monitoring'
+---
+
+If your environment consists of two management nodes, navigate to **Reliability** &gt; **MN Monitoring** page to view the management node monitoring data.
+
+Before you check the management node monitoring data, you should be aware of the following information:
+
+-   This page uses three colors: green, red, and gray. Green indicates normal status, while other colors indicate abnormal status.
+-   The dual-management node setup follows a active-standby model, with only one active management node. The node displaying VIP is the active management node, and the one without VIP is the standby management node.
+-   If the standby management node is in an abnormal state, the active management node will fail to switch and the management nodes will go down. Therefore, address any management node issues promptly.
+
+The management node monitoring displays the management node IPs, node status, VIP, and management service status for multiple management nodes. The main services monitored include the following:
+
+-   **Arbiter Gateway Reachable**:
+
+    Monitors whether the arbitration IP of the active-standby management node is reachable. If unreachable, it may cause the high availability feature of the management node to fail.
+
+-   **Peer MN Reachable**:
+
+    Monitors whether the standby management node is reachable. If the standby management node is unreachable, communication with the standby node will not be possible.
+
+-   **VIP Reachable**:
+
+    Monitors whether the VIP is reachable. If the VIP is unreachable, the primary management node cannot access the UI interface via the VIP.
+
+-   **Database Status**:
+
+    Monitors the status of the database. If the database is abnormal, there may be a risk of data loss. Please restore the fault promptly.

@@ -1,0 +1,110 @@
+---
+title: "Change Resource Owner"
+---
+
+<APIPage method="POST" path="/v1/account/{accountUuid}/resources">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "resourceUuid": "abfee8286ae43b19a02179cfe37b3294"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, the **systemTags** and **userTags** fields are optional. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"resourceUuid":"abfee8286ae43b19a02179cfe37b3294"}}' \
+http://localhost:8080/zstack/v1/account/e9da3eb01abc31c78ac24dec8c8c36b5/resources
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|accountUuid|String|url|Account UUID| |0.6|
+|resourceUuid|String|body \(contained in the `params` structure\)|Resource UUID| |0.6|
+|systemTags \(Optional\)|List|body|System tags| |0.6|
+|userTags \(Optional\)|List|body|User tags| |0.6|
+
+## API Response
+Response example
+
+```
+{
+  "inventory": {
+    "id": 1,
+    "accountUuid": "819950c427763deca51c94ad5e06da42",
+    "resourceUuid": "844a5dbbd2a632678b67a610e4d761b6",
+    "resourceType": "ImageVO",
+    "type": "Own"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null on success. For details, see [error](#p_kvx_2m5_m1b)|0.6|
+|inventory|AccountResourceRefInventory|For details, see [inventory](#p_xrs_fm5_m1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, e.g., SYS.1000, HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Default is null|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null|0.6|
+|cause|ErrorCode|The root error that caused the current error. This field is null if there is no root cause|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|accountUuid|String|Account UUID|0.6|
+|resourceUuid|String|Resource UUID|0.6|
+|resourceType|String|Resource type|0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+ChangeResourceOwnerAction action = new ChangeResourceOwnerAction();
+action.accountUuid = "e9da3eb01abc31c78ac24dec8c8c36b5";
+action.resourceUuid = "abfee8286ae43b19a02179cfe37b3294";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ChangeResourceOwnerAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+ChangeResourceOwnerAction action = ChangeResourceOwnerAction()
+action.accountUuid = "e9da3eb01abc31c78ac24dec8c8c36b5"
+action.resourceUuid = "abfee8286ae43b19a02179cfe37b3294"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ChangeResourceOwnerAction.Result res = action.call()
+
+```
+
+</APIPage>

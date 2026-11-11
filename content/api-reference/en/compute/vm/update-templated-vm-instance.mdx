@@ -1,0 +1,122 @@
+---
+title: "Update VM Template"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/templatedVmInstance/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateTemplatedVmInstance": {
+    "name": "templated-vm",
+    "description": "description",
+    "cpuNum": 1,
+    "memorySize": 1073741824
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateTemplatedVmInstance":{"name":"templated-vm","description":"description","cpuNum":1,"memorySize":1073741824}}' \
+http://localhost:8080/zstack/v1/vm-instances/templatedVmInstance/d6d9c2ac923b34cd9c060b6dbb68757c/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|UUID of the resource, uniquely identifying the resource| |4.2.6|
+|name \(Optional\)|String|body\(included in the `updateTemplatedVmInstance` structure\)|Resource name| |4.2.6|
+|description \(Optional\)|String|body\(included in the `updateTemplatedVmInstance` structure\)|Detailed description of the resource| |4.2.6|
+|cpuNum \(Optional\)|Integer|body\(included in the `updateTemplatedVmInstance` structure\)|CPU Number| |4.2.6|
+|memorySize \(Optional\)|Long|body\(included in the `updateTemplatedVmInstance` structure\)|Memory Size| |4.2.6|
+|systemTags \(Optional\)|List|body|System Tag| |4.2.6|
+|userTags \(Optional\)|List|body|User Tag| |4.2.6|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "27fc31bc109231a799d943c0cf320f24",
+    "name": "templatedVmInstance",
+    "zoneUuid": "be052721ef9c35e4a4385418e4316d04",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.2.6|
+|inventory|TemplatedVmInstanceInventory|For details, see [inventory](#p_umf_lvg_fcc)|4.2.6|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation is successful, this field is null. For details, see [error](#p_vl3_lvg_fcc)|4.2.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifying the resource|4.2.6|
+|name|String|Resource name|4.2.6|
+|zoneUuid|String|Data Center UUID|4.2.6|
+|createDate|Timestamp|Create time|4.2.6|
+|lastOpDate|Timestamp|Last modification time|4.2.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, default is null|0.6|
+|opaque|LinkedHashMap|Reserved field, default is null|0.6|
+|cause|ErrorCode|Root cause: the source error that triggered the current error. If there is no original error, this field is null|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateTemplatedVmInstanceAction action = new UpdateTemplatedVmInstanceAction();
+action.uuid = "d6d9c2ac923b34cd9c060b6dbb68757c";
+action.name = "templated-vm";
+action.description = "description";
+action.cpuNum = 1;
+action.memorySize = 1073741824;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateTemplatedVmInstanceAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+UpdateTemplatedVmInstanceAction action = UpdateTemplatedVmInstanceAction()
+action.uuid = "d6d9c2ac923b34cd9c060b6dbb68757c"
+action.name = "templated-vm"
+action.description = "description"
+action.cpuNum = 1
+action.memorySize = 1073741824
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateTemplatedVmInstanceAction.Result res = action.call()
+
+```
+
+</APIPage>

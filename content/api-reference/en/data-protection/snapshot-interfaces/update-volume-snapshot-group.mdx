@@ -1,0 +1,141 @@
+---
+title: "Update Snapshot Group"
+---
+
+<APIPage method="PUT" path="/v1/volume-snapshots/group/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateVolumeSnapshotGroup": {
+    "name": "new name"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The **systemTags** and **userTags** fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateVolumeSnapshotGroup":{"name":"new name"}}' http://localhost:8080/zstack/v1/volume-snapshots/group/c39089cddbd836628f346b14beafe2d3/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|name \(Optional\)|String|body \(Contained in the **updateVolumeSnapshotGroup** structure\)|Resource name| |3.6.0|
+|description \(Optional\)|String|body \(Contained in the **updateVolumeSnapshotGroup** structure\)|Detailed description of the resource| |3.6.0|
+|uuid|String|url|The UUID of the resource. Uniquely identifies the resource| |3.6.0|
+|systemTags \(Optional\)|List|body| | |3.6.0|
+|userTags \(Optional\)|List|body| | |3.6.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "a261086918fe3c04be683430f15920a2",
+    "snapshotCount": 1.0,
+    "name": "group",
+    "vmInstanceUuid": "98ac921100b43981b493071b6430bb2b",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM",
+    "volumeSnapshotRefs": [
+      {
+        "volumeSnapshotUuid": "7ac8675cd8a9389ca343a2a7d49c47d7",
+        "volumeSnapshotGroupUuid": "a261086918fe3c04be683430f15920a2",
+        "deviceId": 0.0,
+        "snapshotDeleted": false,
+        "volumeUuid": "6fb0e4a0c3d6315bbb5c08a1a33bc231",
+        "volumeName": "ROOT-volume",
+        "volumeType": "Root",
+        "volumeSnapshotInstallPath": "/Cloud_ps/to/path/snap.qcow2",
+        "volumeSnapshotName": "group-ROOT-volume",
+        "createDate": "Nov 14, 2017 10:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+      }
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_rtn_lqg_x3b)|3.6.0|
+|inventory|VolumeSnapshotGroupInventory|For details, see [inventory](#p_ab5_kqg_x3b)|3.6.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|3.6.0|
+|description|String|A brief description of the error|3.6.0|
+|details|String|The detailed error information|3.6.0|
+|elaboration|String|A reserved field. The default value is null|3.6.0|
+|opaque|LinkedHashMap|A reserved field. The default value is null|3.6.0|
+|cause|ErrorCode|The root error. The source error that caused the current error. If no root error exists, this field is null|3.6.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource|3.6.0|
+|snapshotCount|Integer|The number of snapshots in the group|3.6.0|
+|name|String|Resource name|3.6.0|
+|description|String|Detailed description of the resource|3.6.0|
+|vmInstanceUuid|String|Virtual Machine UUID|3.6.0|
+|createDate|Timestamp|Creation time|3.6.0|
+|lastOpDate|Timestamp|Last modification time|3.6.0|
+|volumeSnapshotRefs|List|For details, see [volumeSnapshotRefs](#p_s35_jqg_x3b)|3.6.0|
+
+### volumeSnapshotRefs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|volumeSnapshotUuid|String|Disk snapshot UUID|3.6.0|
+|volumeSnapshotGroupUuid|String|Snapshot group UUID|3.6.0|
+|deviceId|int|The device ID of the disk when the snapshot was taken|3.6.0|
+|snapshotDeleted|boolean|Whether the snapshot has been deleted|3.6.0|
+|volumeUuid|String|Disk UUID|3.6.0|
+|volumeName|String|Disk name|3.6.0|
+|volumeType|String|Disk type|3.6.0|
+|volumeSnapshotInstallPath|String|Snapshot install path|3.6.0|
+|volumeSnapshotName|String|Snapshot name|3.6.0|
+|createDate|Timestamp|Creation time|3.6.0|
+|lastOpDate|Timestamp|Last modification time|3.6.0|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateVolumeSnapshotGroupAction action = new UpdateVolumeSnapshotGroupAction();
+action.name = "new name";
+action.uuid = "c39089cddbd836628f346b14beafe2d3";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateVolumeSnapshotGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateVolumeSnapshotGroupAction action = UpdateVolumeSnapshotGroupAction()
+action.name = "new name"
+action.uuid = "c39089cddbd836628f346b14beafe2d3"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateVolumeSnapshotGroupAction.Result res = action.call()
+```
+
+</APIPage>

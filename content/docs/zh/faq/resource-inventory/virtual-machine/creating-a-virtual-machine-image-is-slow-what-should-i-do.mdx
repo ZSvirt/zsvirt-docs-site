@@ -1,0 +1,26 @@
+---
+title: "虚拟机创建镜像慢，怎么办？"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+## 原因
+数据存储为Ceph类型，而镜像存储为单机镜像仓库类型。
+
+<Callout type="info">
+使用Ceph类型数据存储时，建议添加使用Ceph类型镜像存储。
+</Callout>
+## 解决方案
+1.  登录mon节点，执行以下命令手动导出Ceph镜像存储上的镜像：
+
+    ```
+    [root@localhost ~]# rbd export pool-uuid/uuid /root/ZStack.iamge
+    ```
+
+2.  执行以下命令，将导出的raw格式镜像转换为qcow2格式：
+
+    ```
+    [root@localhost ~]# qemu-img convert -f raw /root/ZStack.iamge -O qcow2 /root/ZStack.qcow2
+    ```
+
+3.  将导出的qcow2格式镜像上传至单机镜像仓库镜像存储。

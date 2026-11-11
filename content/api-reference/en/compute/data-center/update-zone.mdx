@@ -1,0 +1,117 @@
+---
+title: "Update Data Center"
+---
+
+<APIPage method="PUT" path="/v1/zones/{uuid}/actions">
+
+Update the name, description, system tags, or user tags of a Data Center.
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateZone": {
+    "name": "TestZone2",
+    "description": "test second zone"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateZone":{"name":"TestZone2","description":"test second zone"}}' \
+http://localhost:8080/zstack/v1/zones/3fc9a2d76b043ead90c537561edcb50e/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|name \(optional\)|String|body \(contained in **updateZone** structure\)|Resource name| |0.6|
+|description \(optional\)|String|body \(contained in **updateZone** structure\)|Resource description| |0.6|
+|uuid|String|url|Resource UUID, uniquely identifies the resource| |0.6|
+|systemTags \(optional\)|List|body|System tag| |0.6|
+|userTags \(optional\)|List|body|User tag| |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "eb5d94d030e84fb286c4f281520b163b",
+    "name": "TestZone",
+    "description": "Test",
+    "state": "Enabled",
+    "type": "zstack",
+    "createDate": "Jun 7, 2017 9:20:45 PM",
+    "lastOpDate": "Jun 7, 2017 9:20:45 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See details [error](#p_hgm_qvs_l1b)|0.6|
+|inventory|ZoneInventory|See details [inventory](#p_rxg_qvs_l1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, e.g. SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, default is null|0.6|
+|opaque|LinkedHashMap|Reserved field, default is null|0.6|
+|cause|ErrorCode|Root cause, the error that caused the current error. If there is no original error, this field is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|name|String|Resource name|0.6|
+|description|String|Resource description|0.6|
+|state|String| |0.6|
+|type|String| |0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateZoneAction action = new UpdateZoneAction();
+action.name = "TestZone2";
+action.description = "test second zone";
+action.uuid = "e676dc07cbad45ccb96fd6033ed3c72f";
+action.sessionId = "14b97d8a960b4c758389f6b6f5930210";
+UpdateZoneAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateZoneAction action = UpdateZoneAction()
+action.name = "TestZone2"
+action.description = "test second zone"
+action.uuid = "20ab7e6d18134e84ac5322741be661ca"
+action.sessionId = "8b46ebd366c54b808c63812ecef9fff0"
+UpdateZoneAction.Result res = action.call()
+```
+
+</APIPage>

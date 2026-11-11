@@ -1,0 +1,104 @@
+---
+title: "Update Console Proxy Agent"
+---
+
+<APIPage method="PUT" path="/v1/consoles/agents/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateConsoleProxyAgent": {
+    "consoleProxyOverriddenIp": "127.0.0.1"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding example, the **systemTags** and **userTags** fields are optional. They are listed here to show that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateConsoleProxyAgent":{"consoleProxyOverriddenIp":"127.0.0.1"}}' \
+http://localhost:8080/zstack/v1/consoles/agents/f616460f24cd330180db4188c3a905b6/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Resource UUID. Uniquely identifies the resource.| |2.3|
+|consoleProxyOverriddenIp|String|body \(enclosed in the **updateConsoleProxyAgent** structure\)|New console proxy IP| |2.3|
+|systemTags \(Optional\)|List|body|System tags| |2.3|
+|userTags \(Optional\)|List|body|User tags| |2.3|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {}
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation has failed. This field is null when the operation succeeds. For details, see [error](#p_tpz_j1k_ndb)|2.3|
+|inventory|ConsoleProxyAgentInventory|For details, see [inventory](#p_g22_k1k_ndb)|2.3|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. The globally unique identifier of the error, for example, SYS.1000 or HOST.1001.|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Default is null.|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null.|0.6|
+|cause|ErrorCode|Root error. The source error that caused the current error. This field is null if no root error exists.|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID. Uniquely identifies the resource.|0.6|
+|description|String|Detailed description of the resource|0.6|
+|managementIp|String|Management node IP|0.6|
+|type|String|Type|0.6|
+|status|String|Status \(Connected, Disconnected\)|0.6|
+|state|String|State \(Enabled, Disabled\)|0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateConsoleProxyAgentAction action = new UpdateConsoleProxyAgentAction();
+action.uuid = "f616460f24cd330180db4188c3a905b6";
+action.consoleProxyOverriddenIp = "127.0.0.1";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateConsoleProxyAgentAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateConsoleProxyAgentAction action = UpdateConsoleProxyAgentAction()
+action.uuid = "f616460f24cd330180db4188c3a905b6"
+action.consoleProxyOverriddenIp = "127.0.0.1"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateConsoleProxyAgentAction.Result res = action.call()
+```
+
+</APIPage>

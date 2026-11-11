@@ -1,0 +1,76 @@
+---
+title: "将虚拟机挂载的USB设备卸载"
+---
+
+<APIPage method="POST" path="/v1/usb-device/usb-devices/{usbDeviceUuid}/detach">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{}}' \
+http://localhost:8080/zstack/v1/usb-device/usb-devices/17a5e98e5f943e8fafa01602d50cf3ad/detach
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|usbDeviceUuid|String|url|USB设备UUID| |2.2|
+|systemTags \(可选\)|List|body|系统标签| |2.2|
+|userTags \(可选\)|List|body|用户标签| |2.2|
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+DetachUsbDeviceFromVmAction action = new DetachUsbDeviceFromVmAction();
+action.usbDeviceUuid = "5256c889e9f0489e8fd12b66d176fb7d";
+action.sessionId = "8082962f2d304a3fbee969e6b4749338";
+DetachUsbDeviceFromVmAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DetachUsbDeviceFromVmAction action = DetachUsbDeviceFromVmAction()
+action.usbDeviceUuid = "ced1bbb139c54d1d973ddc38ae565244"
+action.sessionId = "f6550a168b9847fca4c98df088d86c09"
+DetachUsbDeviceFromVmAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,112 @@
+---
+title: "Update SNS Application Platform"
+---
+
+<APIPage method="PUT" path="/v1/sns/application-platforms/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateSNSApplicationPlatform": {
+    "name": "new name"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the **systemTags** and **userTags** fields are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateSNSApplicationPlatform":{"name":"new name"}}' \
+http://localhost:8080/zstack/v1/sns/application-platforms/577aff1dcbe932798fd615e88813c7ce/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|The UUID of the resource, which uniquely identifies the resource| |2.3|
+|name \(Optional\)|String|body \(contained in the **updateSNSApplicationPlatform** structure\)|Resource name| |2.3|
+|description \(Optional\)|String|body \(contained in the **updateSNSApplicationPlatform** structure\)|Detailed description of the resource| |2.3|
+|systemTags \(Optional\)|List|body|System tags| |2.3|
+|userTags \(Optional\)|List|body|User tags| |2.3|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "7692dd68c0534f4bba9f4cbe88a2a0fd",
+    "name": "email platform",
+    "description": "example description",
+    "state": "Enabled",
+    "type": "Email",
+    "createDate": "Mar 26, 2024 2:44:23 AM",
+    "lastOpDate": "Mar 26, 2024 2:44:23 AM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |5.0.0|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null on success. See [error](#p_ayb_znx_bdb)|2.3|
+|inventory|SNSApplicationPlatformInventory|See [inventory](#p_y1m_znx_bdb)|2.3|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Default is null|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null|0.6|
+|cause|ErrorCode|The root error that caused the current error. If there is no root error, this field is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource, which uniquely identifies the resource|2.3|
+|name|String|Resource name|2.3|
+|description|String|Detailed description of the resource|2.3|
+|type|String|Type|2.3|
+|createDate|Timestamp|Creation time|2.3|
+|lastOpDate|Timestamp|Last modification time|2.3|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateSNSApplicationPlatformAction action = new UpdateSNSApplicationPlatformAction();
+action.uuid = "577aff1dcbe932798fd615e88813c7ce";
+action.name = "new name";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateSNSApplicationPlatformAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateSNSApplicationPlatformAction action = UpdateSNSApplicationPlatformAction()
+action.uuid = "577aff1dcbe932798fd615e88813c7ce"
+action.name = "new name"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateSNSApplicationPlatformAction.Result res = action.call()
+```
+
+</APIPage>

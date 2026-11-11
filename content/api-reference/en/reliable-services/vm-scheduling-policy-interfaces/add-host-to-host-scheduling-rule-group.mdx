@@ -1,0 +1,64 @@
+---
+title: "Add Host to Host Scheduling Group"
+---
+
+<APIPage method="POST" path="/v1/hostSchedulingRuleGroup/{hostGroupUuid}/host/{hostUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST http://localhost:8080/zstack/v1/hostSchedulingRuleGroup/801af67a7f1f3610a76e834e45aebf5b/host/602ca3d56dca40fcb04944dbaa9861ee
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|hostGroupUuid|String|url|Host scheduling group UUID| |4.6.0|
+|hostUuid|String|body|Host UUID| |4.6.0|
+|systemTags \(optional\)|List|body|System tags| |4.6.0|
+|userTags \(optional\)|List|body|User tags| |4.6.0|
+
+## API Response
+This API returns an empty JSON structure **`{}`** on success. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+AddHostTohostSchedulingRuleGroupAction action = new AddHostTohostSchedulingRuleGroupAction();
+action.hostGroupUuid = "663fb7c5b74f3bc9bf629ca3523fb8cc";
+action.hostUuid = "64d7de2d3eb431c99998292d1ed5411e";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddHostTohostSchedulingRuleGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddHostTohostSchedulingRuleGroupAction action = AddHostTohostSchedulingRuleGroupAction()
+action.hostGroupUuid = "663fb7c5b74f3bc9bf629ca3523fb8cc"
+action.hostUuid = "64d7de2d3eb431c99998292d1ed5411e"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddHostTohostSchedulingRuleGroupAction.Result res = action.call()
+```
+
+</APIPage>

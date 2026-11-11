@@ -1,0 +1,17 @@
+---
+title: "The virtual machine cannot be accessed via SSH. How do I resolve this?"
+---
+
+## Cause
+The SSH configuration file was incorrect when the image was sealed.
+
+## Solution
+1.  Log in to the virtual machine console, edit the `/etc/ssh/sshd_config` file, and set the **PasswordAuthentication** parameter to yes.
+
+    As shown in [Figure 1](#fig_t2k_bnb_q5b):
+
+    ![Modify the configuration](/docs/en/faq/images/ZStack_FAQ_Summary_0001_63_1.png)
+
+2.  Edit the `/etc/cloud/cloud.cfg` file and set the **ssh\_pwauth** parameter to 1.
+
+3.  After modifying the configuration, reseal the image.

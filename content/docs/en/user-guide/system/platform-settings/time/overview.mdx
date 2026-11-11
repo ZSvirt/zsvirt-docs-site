@@ -1,0 +1,36 @@
+---
+title: 'Overview'
+---
+
+Manage platform time and configure time servers. After a time server is added, all host on the platform will synchronize time with the specified time server.
+
+## Definitions
+The time configuration service involves the following concepts:
+
+-   Internal time server: Uses a management node or host as the time server for platform system time to synchronize time with other nodes on the platform.
+-   External time server: Uses an external node as the external time server to synchronize time with all nodes on the platform directly or via the internal time server.
+-   Time synchronization: The process in which the time of a node on the platform is synchronized with a time server.
+
+## Fundamentals
+The local time is synchronized with the time server via network time protocol and certain algorithms. The following list shows the basic time synchronization process:
+
+1.  Select time source: Configure either internal or external time server as reference clocks.
+2.  Obtain timestamps: Each node on the platform communicates with the time server to acquire timestamps.
+3.  Calculate time difference: Based on the acquired timestamps, each node calculates the time difference between itself and the time server.
+4.  Adjust local clock: Each node synchronizes its local clock according to the time difference.
+5.  Periodic synchronization: Each node periodically communicates with the time server to prevent clock skew and maintains continuous time synchronization.
+
+## Benefits
+The time configuration service has the following benefits:
+
+-   Precision: Uses accurate clock adjustment algorithms to achieve more precise time synchronization.
+-   Automation: Features an automatic time mechanism that periodically calibrates time without manual intervention.
+-   Reliability: Supports adding multiple time servers to enhance the reliability and stability of time synchronization.
+-   Intuitive: Displays the relationship between time servers and platform time configuration in a digram and shows the current platform time and timezone.
+
+## Scenarios
+The time configuration service is primarily used in the following scenarios:
+
+-   Network management: Provides precise time synchronization for analyzing log information collected from different network devices to facilitate fault localization.
+-   Billing system: Maintains uniform timekeeping to ensure accurate billing records.
+-   Collaborative processing: Ensures proper execution order when multiple systems process complex events simultaneously.

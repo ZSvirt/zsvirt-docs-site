@@ -1,0 +1,10 @@
+{
+  "title": "裸金属模板",
+  "pages": [
+    "index",
+    "syntax-rules",
+    "built-in-templates",
+    "add-custom-template"
+  ],
+  "pagesIndex": "index"
+}

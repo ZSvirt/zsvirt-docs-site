@@ -1,0 +1,63 @@
+---
+title: "Query Guest Tools State"
+---
+
+<APIPage method="GET" path="/v1/guesttools" altPaths={["/v1/guesttools/state"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/guesttools
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/guesttools/state
+```
+
+Queryable Fields
+
+Run the CLI command tool, enter **QueryGuestToolsState** and press Tab to view all queryable fields and resource names that can be queried across tables.
+
+## API Response
+On success, this API returns an empty JSON structure **`{}`**. On error, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+QueryGuestToolsStateAction action = new QueryGuestToolsStateAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryGuestToolsStateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryGuestToolsStateAction action = QueryGuestToolsStateAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryGuestToolsStateAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,587 @@
+---
+title: "ChangeSecurityGroupRuleState"
+---
+
+<APIPage method="PUT" path="/v1/security-groups/{securityGroupUuid}/rules/state/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "changeSecurityGroupRuleState": {
+    "ruleUuids": [
+      "c895848e49763a85a74d0a8cee5a0720"
+    ],
+    "state": "Enabled"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding sample, both **systemTags** and **userTags** are optional. They are listed here to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8"
+-H "Authorization: OAuth YOUR_SESSION_UUID"
+-X PUT -d '{"changeSecurityGroupRuleState":{"ruleUuids":["c895848e49763a85a74d0a8cee5a0720"],"state":"Enabled"}}'
+http://localhost:8080/zstack/v1/security-groups/fbd126afdf6b32caab55327d2901170f/rules/state/actions
+```
+
+Parameter List
+
+<table id="table_fyf_nq5_m1b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+securityGroupUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+The UUID of the security group, uniquely identifying the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+ruleUuids
+
+</td><td>
+
+List
+
+</td><td>
+
+body \(included in the **changeSecurityGroupRuleState** structure\)
+
+</td><td>
+
+The list of rule UUIDs
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+state
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(included in the **changeSecurityGroupRuleState** structure\)
+
+</td><td>
+
+The state of the rule
+
+</td><td>
+
+-   Enabled
+-   Disabled
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "7c95c623cc983a548dcf3c9a257f23ae",
+    "name": "web",
+    "description": "for test",
+    "state": "Enabled",
+    "createDate": "Sep 15, 2023 9:58:00 AM",
+    "lastOpDate": "Sep 15, 2023 9:58:00 AM",
+    "internalId": 0
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.7.21|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See [error](#p_ec3_mr5_m1b)|4.7.21|
+|inventory|SecurityGroupInventory|See [inventory](#p_bkq_mr5_m1b)|4.7.21|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|4.7.21|
+|description|String|Brief description of the error|4.7.21|
+|details|String|Detailed error information|4.7.21|
+|elaboration|String|Reserved field, defaults to null|4.7.21|
+|opaque|LinkedHashMap|Reserved field, defaults to null|4.7.21|
+|cause|ErrorCode|Root error: the source error that caused the current error. If there is no original error, this field is null|4.7.21|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource, uniquely identifying the resource|4.7.21|
+|name|String|The resource name|4.7.21|
+|description|String|The detailed description of the resource|4.7.21|
+|state|String| |4.7.21|
+|ipVersion|Integer|The IP version number|4.7.21|
+|createDate|Timestamp|The creation time|4.7.21|
+|lastOpDate|Timestamp|The last modification time|4.7.21|
+|attachedL3NetworkUuids|Set| |4.7.21|
+|rules|List|See [rules](#p_h1v_mr5_m1b)|4.7.21|
+
+### rules
+<table id="table_iv3_sv5_m1b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Description
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+The UUID of the resource, uniquely identifying the resource
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+securityGroupUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+The security group UUID
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+type
+
+</td><td>
+
+String
+
+</td><td>
+
+The traffic type
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+ipVersion
+
+</td><td>
+
+Integer
+
+</td><td>
+
+The IP version number
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+protocol
+
+</td><td>
+
+String
+
+</td><td>
+
+The traffic protocol type
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+state
+
+</td><td>
+
+String
+
+</td><td>
+
+The availability state of the rule
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+priority
+
+</td><td>
+
+Integer
+
+</td><td>
+
+The rule priority
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+description
+
+</td><td>
+
+String
+
+</td><td>
+
+The rule description
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+srcIpRange
+
+</td><td>
+
+String
+
+</td><td>
+
+The source IP range
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+dstIpRange
+
+</td><td>
+
+String
+
+</td><td>
+
+The destination IP range
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+srcPortRange
+
+</td><td>
+
+String
+
+</td><td>
+
+The source port range, not implemented in the current version
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+dstPortRange
+
+</td><td>
+
+String
+
+</td><td>
+
+The destination port range
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+action
+
+</td><td>
+
+String
+
+</td><td>
+
+The default action of the rule
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+remoteSecurityGroupUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+allowedCidr
+
+</td><td>
+
+String
+
+</td><td>
+
+The allowed CIDR. The meaning of the allowed CIDR varies depending on the traffic type-   For Ingress traffic, the allowed CIDR is the source CIDR that is permitted to access the VM NIC
+-   For Egress traffic, the allowed CIDR is the destination CIDR that traffic from the VM NIC is permitted to reach
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+startPort
+
+</td><td>
+
+Integer
+
+</td><td>
+
+-   For TCP/UDP, it is the start port number of the port range
+-   For ICMP, it is the ICMP type
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+endPort
+
+</td><td>
+
+Integer
+
+</td><td>
+
+-   For TCP/UDP, it is the end port number of the port range
+-   For ICMP, it is the ICMP type
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+createDate
+
+</td><td>
+
+Timestamp
+
+</td><td>
+
+The creation time
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+lastOpDate
+
+</td><td>
+
+Timestamp
+
+</td><td>
+
+The last modification time
+
+</td><td>
+
+4.7.21
+
+</td></tr></tbody>
+</table>
+
+## SDK Examples
+Java SDK
+
+```
+ChangeSecurityGroupRuleStateAction action = new ChangeSecurityGroupRuleStateAction();
+action.securityGroupUuid = "fbd126afdf6b32caab55327d2901170f";
+action.ruleUuids = asList("c895848e49763a85a74d0a8cee5a0720");
+action.state = "Enabled";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ChangeSecurityGroupRuleStateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ChangeSecurityGroupRuleStateAction action = ChangeSecurityGroupRuleStateAction()
+action.securityGroupUuid = "fbd126afdf6b32caab55327d2901170f"
+action.ruleUuids = [c895848e49763a85a74d0a8cee5a0720]
+action.state = "Enabled"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ChangeSecurityGroupRuleStateAction.Result res = action.call()
+```
+
+</APIPage>

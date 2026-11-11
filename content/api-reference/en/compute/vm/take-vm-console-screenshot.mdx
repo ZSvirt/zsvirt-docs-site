@@ -1,0 +1,87 @@
+---
+title: "Take VM Console Screenshot"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "takeVmConsoleScreenshot": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"takeVmConsoleScreenshot":{}}' http://localhost:8080/zstack/v1/vm-instances/36aa6e04beec33f98bbc72061370dc14/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Virtual Machine UUID| |4.0.0|
+|systemTags \(Optional\)|List|body|System Tag| |4.0.0|
+|userTags \(Optional\)|List|body|User Tag| |4.0.0|
+
+## API Response
+Response Example
+
+```
+{
+  "imageData": "data:image/jpg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCABEAHgDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwDxKQwkMEt7dQCG/wBcp49BTcwb1P2eHrjAnXBOOv06/pWdRQBbmaAPh4APlP8AqpQRn16H8qhLW+eI5cf749Pp61FRQBKWt9mFjkD7cZLjGfXp+lRUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQB//2Q=="
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.0.0|
+|imageData|String|Base64 of console screenshot|4.0.0|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation succeeds, this field is null. For details, see [error](#p_bpz_xyj_51c)|4.0.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier of the error, for example SYS.1000, HOST.1001|4.0.0|
+|description|String|Brief description of the error|4.0.0|
+|details|String|Detailed error information|4.0.0|
+|elaboration|String|Reserved field, defaults to null|4.0.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|4.0.0|
+|cause|ErrorCode|Root cause. The error that triggered the current error. If there is no original error, this field is null|4.0.0|
+
+## SDK Examples
+Java SDK
+
+```
+TakeVmConsoleScreenshotAction action = new TakeVmConsoleScreenshotAction();
+action.uuid = "36aa6e04beec33f98bbc72061370dc14";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+TakeVmConsoleScreenshotAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+TakeVmConsoleScreenshotAction action = TakeVmConsoleScreenshotAction()
+action.uuid = "36aa6e04beec33f98bbc72061370dc14"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+TakeVmConsoleScreenshotAction.Result res = action.call()
+```
+
+</APIPage>

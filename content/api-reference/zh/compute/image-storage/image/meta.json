@@ -1,0 +1,29 @@
+{
+  "title": "镜像相关接口",
+  "pages": [
+    "add-image",
+    "delete-image",
+    "expunge-image",
+    "query-image",
+    "recover-image",
+    "change-image-state",
+    "update-image",
+    "sync-image-size",
+    "delete-image-package",
+    "update-image-package",
+    "query-image-package",
+    "get-candidate-backup-storage-for-creating-image",
+    "create-root-volume-template-from-root-volume",
+    "create-root-volume-template-from-volume-snapshot",
+    "create-data-volume-template-from-volume",
+    "create-data-volume-template-from-volume-snapshot",
+    "get-image-qga",
+    "set-image-qga",
+    "set-image-boot-mode",
+    "get-upload-image-job-details",
+    "calculate-image-hash",
+    "get-candidate-images-for-creating-vm",
+    "set-image-security-level"
+  ],
+  "pagesIndex": "index"
+}

@@ -1,0 +1,33 @@
+---
+title: "主机安装操作系统时报错Warning：dracut-initqueue timeout - starting timeout script，怎么办？"
+---
+
+## 现象
+在主机上安装操作系统时报错：`Warning：dracut-initqueue timeout - starting timeout script`。
+
+## 原因
+镜像刻录软件制作的启动盘的名称与vmlinuz的配置信息不一致。
+
+## 解决方案
+1.  主机报错，再等待一段时间之后会进入Dracut 界面。输入以下命令查询设备信息，记录U盘所属的sdbx：
+
+    ```
+    dracut# cd /dev
+    #查询所有设备信息
+    dracut# ls 
+    ```
+
+2.  输入以下命令重启：
+
+    ```
+    dracut# reboot
+    ```
+
+3.  重启之后在install界面按下e 键修改以下内容：
+
+    ```
+    vmlinuz initrd=initrd.img inst.stage2=hd:LABEL=Helixx207x20x86_64.check quiet  
+    vmlinuz initrd=initrd.img inst.stage2=hd:/dev/sdb4 nomodeset quiet
+    ```
+
+4.  修改完后按CTRL+X键重启主机即可。

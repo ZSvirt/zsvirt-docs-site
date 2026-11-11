@@ -1,0 +1,81 @@
+---
+title: "Delete Virtual Machine NIC Rate Limit"
+---
+
+<APIPage method="DELETE" path="/v1/vm-instances/{uuid}/nic-qos?direction={direction}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "direction": "example"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/vm-instances/9f9a2eb79c9b4fe5881b109033020899/nic-QoS?direction=in
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|UUID of the Virtual Machine NIC| |0.6|
+|direction|String|url|Ingress or egress \(in or out\)|inout|0.6|
+|systemTags \(Optional\)|List|body| | |0.6|
+|userTags \(Optional\)|List|body| | |0.6|
+
+## API Response
+This API returns an empty JSON structure **`{}`** on success. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DeleteNicQoSAction action = new DeleteNicQoSAction();
+action.uuid = "27b5b55e69284a8ea07871661de562a4";
+action.direction = "example";
+action.sessionId = "d83ac78201fc4ad38b17261bba4dc17b";
+DeleteNicQoSAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteNicQoSAction action = DeleteNicQoSAction()
+action.uuid = "efb14319aaf14069a1066f2b07a0e328"
+action.direction = "example"
+action.sessionId = "a0a6598343404cc38356abfc58877bd8"
+DeleteNicQoSAction.Result res = action.call()
+
+```
+
+</APIPage>

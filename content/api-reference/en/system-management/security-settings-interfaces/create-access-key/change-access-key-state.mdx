@@ -1,0 +1,236 @@
+---
+title: "Enable or Disable AccessKey"
+---
+
+<APIPage method="PUT" path="/v1/accesskeys/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "changeAccessKeyState": {
+    "stateEvent": "disable"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The **systemTags** and **userTags** fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"changeAccessKeyState":{"stateEvent":"disable"}}' \
+http://localhost:8080/zstack/v1/accesskeys/2c9c06fee2513d4b81f1af281ab6bb7b/actions
+```
+
+Parameter List
+
+<table id="table_a4b_z4s_zfb"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+AccessKey UUID. Uniquely identifies the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.0.0
+
+</td></tr><tr><td>
+
+stateEvent
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **changeAccessKeyState** structure\)
+
+</td><td>
+
+Enable or disable
+
+</td><td>
+
+-   enable
+-   disable
+
+</td><td>
+
+4.0.0
+
+</td></tr><tr><td>
+
+systemTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.0.0
+
+</td></tr><tr><td>
+
+userTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.0.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "defe79b1a43f35818dc6d3959b571773",
+    "accountUuid": "d0c06c8d19f439b1b8f481dbdf3e3a3c",
+    "userUuid": "b622d5d01ef63237878023e93ade5003",
+    "AccessKeyID": "1234567890abcdedfhij",
+    "AccessKeySecret": "YOUR_ACCESS_KEY_SECRET",
+    "state": "Enabled"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.0.0|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_ckp_p15_zfb)|4.0.0|
+|inventory|AccessKeyInventory|See [inventory](#p_fbw_p15_zfb)|4.0.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. A globally unique identifier for the error, e.g., SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field. Defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field. Defaults to null|0.6|
+|cause|ErrorCode|Root error. The source error that caused this error. Null if no root cause exists|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource|4.0.0|
+|description|String|Detailed description of the resource|4.0.0|
+|accountUuid|String|Account UUID|4.0.0|
+|userUuid|String|User UUID|4.0.0|
+|AccessKeyID|String| |4.0.0|
+|AccessKeySecret|String| |4.0.0|
+|createDate|Timestamp|Creation time|4.0.0|
+|lastOpDate|Timestamp|Last modification time|4.0.0|
+|state|AccessKeyState|See [state](#p_ync_q15_zfb)|4.0.0|
+
+### state
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name|4.0.0|
+|ordinal|int| |4.0.0|
+
+## SDK Examples
+Java SDK
+
+```
+ChangeAccessKeyStateAction action = new ChangeAccessKeyStateAction();
+action.uuid = "2c9c06fee2513d4b81f1af281ab6bb7b";
+action.stateEvent = "disable";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ChangeAccessKeyStateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ChangeAccessKeyStateAction action = ChangeAccessKeyStateAction()
+action.uuid = "2c9c06fee2513d4b81f1af281ab6bb7b"
+action.stateEvent = "disable"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ChangeAccessKeyStateAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,86 @@
+---
+title: "Share Resource to Group"
+---
+
+<APIPage method="PUT" path="/v1/account-groups/resources/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "shareResourceToGroup": {
+    "resourceUuids": [
+      "7f610aa37f17327d9b1dd74fc4ce871d"
+    ],
+    "groupUuid": "2334f9ef50f03f2dba17abb79c6b5d53"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, the **systemTags** and **userTags** fields are optional. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"shareResourceToGroup":{"resourceUuids":["7f610aa37f17327d9b1dd74fc4ce871d"],"groupUuid":"2334f9ef50f03f2dba17abb79c6b5d53"}}' \
+http://localhost:8080/zstack/v1/account-groups/resources/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|resourceUuids|List|body \(contained in the `shareResourceToGroup` structure\)|Resource UUID list to share. Must be resources in a resource ensemble| |4.10.0|
+|groupUuid|String|body \(contained in the `shareResourceToGroup` structure\)|Account group UUID| |4.10.0|
+|systemTags \(Optional\)|List|body|System tags| |4.10.0|
+|userTags \(Optional\)|List|body|User tags| |4.10.0|
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+ShareResourceToGroupAction action = new ShareResourceToGroupAction();
+action.resourceUuids = asList("7f610aa37f17327d9b1dd74fc4ce871d");
+action.groupUuid = "2334f9ef50f03f2dba17abb79c6b5d53";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ShareResourceToGroupAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+ShareResourceToGroupAction action = ShareResourceToGroupAction()
+action.resourceUuids = [7f610aa37f17327d9b1dd74fc4ce871d]
+action.groupUuid = "2334f9ef50f03f2dba17abb79c6b5d53"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ShareResourceToGroupAction.Result res = action.call()
+
+```
+
+</APIPage>

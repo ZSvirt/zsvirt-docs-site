@@ -1,0 +1,16 @@
+---
+title: "How do I specify a NIC for installing ZSvirt on a host with multiple NICs?"
+---
+
+<HistoricalNamingNote locale="en" />
+
+## Solution
+-   When installing the Management Node service on a host with multiple NICs, the system randomly selects one NIC as the management IP by default. To specify a NIC as the management IP, log in to the host and run one of the following commands:
+
+    ```sh
+        [root@localhost ~]# bash /opt/zstack-installer.bin -I $NIC name
+    ```
+
+    ```sh
+        [root@localhost ~]# bash /opt/zstack-installer.bin -I $NIC IP
+    ```

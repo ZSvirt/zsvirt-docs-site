@@ -1,0 +1,18 @@
+---
+title: "Host restarts unexpectedly"
+---
+
+## Solution
+-   Run `last reboot` to retrieve and analyze logs at the relevant time.
+
+-   Check the `/var/log/history.d/history` log file at the relevant time to determine whether the host was restarted manually.
+
+-   Check the `/var/log/message` log file to determine whether hardware errors or out-of-memory \(OOM\) events occurred around the relevant time.
+
+-   Check the `/var/crash/` directory for relevant error logs.
+
+-   Verify that the CPU C-state configuration is disabled on the host.
+
+    Run `cat /proc/cpuinfo | grep 'cpu MHz' | awk -F " " '{print $4}'` to check the status. If all CPU frequencies are identical, C-state is disabled. Otherwise, the CPU may enter deep sleep, causing a system crash.
+
+-   Log in to the host IPMI out-of-band management page to check for hardware failure alerts.

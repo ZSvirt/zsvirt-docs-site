@@ -1,0 +1,85 @@
+---
+title: 'zsphere_vm_templates'
+description: '查询 ZSvirt 云主机模板列表及其属性。'
+---
+
+<HistoricalNamingNote locale="zh" />
+
+
+# zsphere_vm_templates（数据源）
+
+查询 ZSvirt 云主机模板列表及其属性。
+
+## 示例用法
+```terraform
+data "zsphere_vm_templates" "test" {
+}
+
+output "zsphere_vm_templates" {
+  value = data.zsphere_vm_templates.test
+}
+
+# 示例输出：
+# zsphere_vm_templates = {
+#   "filter" = tolist([])
+#   "vm_templates" = tolist([
+#     {
+#       "account_uuid" = "36c27e8ff05c4780bf6d2fa65700f22e"
+#       "name" = "my-vm-template"
+#       "uuid" = "8c00337d47e94acab448e88afdc5c872"
+#       "zone_uuid" = "b9608acd97a94af68611bcb058bc4f4d"
+#     },
+#   ])
+#   "name" = tostring(null)
+#   "name_pattern" = tostring(null)
+# }
+
+# 按名称查询
+data "zsphere_vm_templates" "by_name" {
+  name = "my-vm-template"
+}
+
+# 按名称模式查询
+data "zsphere_vm_templates" "by_pattern" {
+  name_pattern = "my-template-*"
+}
+
+# 过滤查询结果
+data "zsphere_vm_templates" "filtered" {
+  filter {
+    name   = "name"
+    values = ["template-1", "template-2"]
+  }
+}
+```
+
+## 参数说明
+
+### 可选参数
+
+- `filter`（块列表）（参见下方嵌套结构）
+- `name`（字符串）按精确名称查询
+- `name_pattern`（字符串）按名称模糊查询，类似 MySQL LIKE。`%` 匹配多个字符，`_` 匹配单个字符
+
+### 只读属性
+
+- `vm_templates`（属性列表）（参见下方嵌套结构）
+
+<a id="nestedblock--filter"></a>
+### `filter` 嵌套结构
+
+必填参数：
+
+- `name`（字符串）用于过滤的字段名。
+- `values`（字符串集合）过滤值，多个值之间为 OR 关系。
+
+
+<a id="nestedatt--vm_templates"></a>
+### `vm_templates` 嵌套结构
+
+只读属性：
+
+- `account_uuid`（字符串）拥有该云主机模板的账号 UUID。
+- `name`（字符串）云主机模板名称。
+- `uuid`（字符串）云主机模板唯一标识符（UUID）。
+- `zone_uuid`（字符串）云主机模板所在区域 UUID。

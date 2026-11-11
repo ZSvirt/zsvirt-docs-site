@@ -1,0 +1,21 @@
+---
+title: "The virtual machine fails to change its host. How do I resolve this?"
+---
+
+## Cause
+The convergence mode was not selected during virtual machine migration.
+
+## Solution
+1.  Log in to the host system where the virtual machine resides and run the following command to find the virtual machine UUID:
+
+    ```
+    [root@localhost ~]# virsh list
+    ```
+
+2.  Run the following command to cancel the migration task:
+
+    ```
+    [root@localhost ~]# virsh domjobabort $uuid  //virtual machine UUID obtained in step 1
+    ```
+
+3.  Create a new migration task and select **Enable Auto-Convergence Mode**.

@@ -1,0 +1,85 @@
+---
+title: 'zsphere_nfs_primary_storages'
+description: '查询 ZSvirt NFS 主存储列表及其属性。'
+---
+
+<HistoricalNamingNote locale="zh" />
+
+
+# zsphere_nfs_primary_storages（数据源）
+
+查询 ZSvirt NFS 主存储列表及其属性。
+
+## 示例用法
+```terraform
+data "zsphere_nfs_primary_storages" "test" {
+}
+
+output "zsphere_nfs_storages" {
+  value = data.zsphere_nfs_primary_storages.test
+}
+
+# 示例输出：
+# zsphere_nfs_storages = {
+#   "filter" = tolist([])
+#   "nfs_storages" = tolist([
+#     {
+#       "available_capacity" = 50000000000
+#       "available_physical_capacity" = 50000000000
+#       "mount_path" = "/share/nfs"
+#       "name" = "NFS-1"
+#       "state" = "Enabled"
+#       "status" = "Connected"
+#       "system_used_capacity" = 0
+#       "total_capacity" = 100000000000
+#       "total_physical_capacity" = 100000000000
+#       "type" = "NFS"
+#       "url" = "192.168.1.100:/share/nfs"
+#       "uuid" = "d1058cff5c864a84848e0ab896736578"
+#       "datacenter_uuid" = "86643f5442164890b8b71de5b582dc9f"
+#     },
+#   ])
+#   "name" = tostring(null)
+#   "name_pattern" = tostring(null)
+# }
+```
+
+## 参数说明
+
+### 可选参数
+
+- `filter`（块列表）（参见下方嵌套结构）
+- `name`（字符串）按精确名称查询
+- `name_pattern`（字符串）按名称模糊查询，类似 MySQL LIKE。`%` 匹配多个字符，`_` 匹配单个字符
+
+### 只读属性
+
+- `nfs_storages`（属性列表）（参见下方嵌套结构）
+
+<a id="nestedblock--filter"></a>
+### `filter` 嵌套结构
+
+必填参数：
+
+- `name`（字符串）用于过滤的字段名。
+- `values`（字符串集合）过滤值，多个值之间为 OR 关系。
+
+
+<a id="nestedatt--nfs_storages"></a>
+### `nfs_storages` 嵌套结构
+
+只读属性：
+
+- `available_capacity`（数字）Available capacity of the NFS primary storage in bytes
+- `available_physical_capacity`（数字）Available physical capacity of the NFS primary storage in bytes
+- `datacenter_uuid`（字符串）NFS所属数据中心 UUID primary storage
+- `mount_path`（字符串）NFS挂载路径 primary storage
+- `name`（字符串）NFS名称 primary storage
+- `state`（字符串）State of the NFS primary storage (Enabled or Disabled)
+- `status`（字符串）NFS就绪状态 primary storage
+- `system_used_capacity`（数字）System used capacity of the NFS primary storage in bytes
+- `total_capacity`（数字）Total capacity of the NFS primary storage in bytes
+- `total_physical_capacity`（数字）Total physical capacity of the NFS primary storage in bytes
+- `type`（字符串）NFS类型 primary storage
+- `url`（字符串）NFS URL primary storage
+- `uuid`（字符串）NFS UUID primary storage

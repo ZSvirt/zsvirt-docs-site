@@ -1,0 +1,75 @@
+---
+title: "Revert VM from Snapshot Group"
+---
+
+<APIPage method="PUT" path="/v1/volume-snapshots/group/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "revertVmFromSnapshotGroup": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The **systemTags** and **userTags** fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"revertVmFromSnapshotGroup":{}}' http://localhost:8080/zstack/v1/volume-snapshots/group/37050441a903313297e65e09ccbeb30f/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|UUID of the snapshot group| |3.6.0|
+|systemTags \(Optional\)|List|body| | |3.6.0|
+|userTags \(Optional\)|List|body| | |3.6.0|
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On failure, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+RevertVmFromSnapshotGroupAction action = new RevertVmFromSnapshotGroupAction();
+action.uuid = "37050441a903313297e65e09ccbeb30f";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RevertVmFromSnapshotGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+RevertVmFromSnapshotGroupAction action = RevertVmFromSnapshotGroupAction()
+action.uuid = "37050441a903313297e65e09ccbeb30f"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+RevertVmFromSnapshotGroupAction.Result res = action.call()
+```
+
+</APIPage>

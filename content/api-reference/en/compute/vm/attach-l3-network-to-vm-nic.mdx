@@ -1,0 +1,139 @@
+---
+title: "Attach L3 Network to NIC"
+---
+
+<APIPage method="POST" path="/v1/nics/{vmNicUuid}/l3-networks/{l3NetworkUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{}}' \
+http://localhost:8080/zstack/v1/nics/573a061841c833f098482a47474a4514/l3-networks/8ad81f74fbf539d98c542fa94ecfa7d9
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|vmNicUuid|String|url|Virtual Machine NIC UUID| |3.1.0|
+|l3NetworkUuid|String|url|Distributed Port Group UUID| |3.1.0|
+|staticIp \(Optional\)|String|body \(contained in **params** structure\)|Specify the IP address to assign to the Virtual Machine| |3.1.0|
+|systemTags \(Optional\)|List|body| | |3.1.0|
+|userTags \(Optional\)|List|body| | |3.1.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "243f7b018d8931c0a3098c61a982c4cb",
+    "vmInstanceUuid": "1d109154036639d990acd002eda6b353",
+    "usedIpUuid": "dc7bd6facfce3d4fa3e713374f574be0",
+    "l3NetworkUuid": "a4fd5f8fb7e33b3c92ac0d4c6d96c800",
+    "ip": "192.168.1.10",
+    "mac": "00:0c:29:bd:99:fc",
+    "netmask": "255.255.255.0",
+    "gateway": "192.168.1.1",
+    "deviceId": 0,
+    "state": "enable"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation is successful. For details, see [error](#p_wmy_svg_m1b)|3.1.0|
+|inventory|VmNicInventory|For details, see [inventory](#p_s5b_wvg_m1b)|3.1.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|3.1.0|
+|description|String|Brief description of the error|3.1.0|
+|details|String|Detailed error information|3.1.0|
+|elaboration|String|Reserved field, defaults to null|3.1.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|3.1.0|
+|cause|ErrorCode|Root cause. The source error that caused the current error. If there is no original error, this field is null|3.1.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifies the resource|3.1.0|
+|vmInstanceUuid|String|Virtual Machine UUID|3.1.0|
+|l3NetworkUuid|String|Distributed Port Group UUID|3.1.0|
+|ip|String| |3.1.0|
+|mac|String| |3.1.0|
+|hypervisorType|String| |4.7.13|
+|netmask|String| |3.1.0|
+|gateway|String| |3.1.0|
+|metaData|String| |3.1.0|
+|ipVersion|Integer|IP protocol number|3.1.0|
+|driverType|String| |4.7.13|
+|internalName|String| |4.7.13|
+|deviceId|Integer| |3.1.0|
+|type|String| |4.7.13|
+|state|String|NIC State|4.7.13|
+|createDate|Timestamp|Create time|3.1.0|
+|lastOpDate|Timestamp|Last modification time|3.1.0|
+|usedIps|List|For details, see [usedIps](#p_lc2_yww_pfb)|3.1.0|
+
+### usedIps
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifies the resource|3.1.0|
+|ipRangeUuid|String|IP Range UUID|3.1.0|
+|l3NetworkUuid|String|Distributed Port Group UUID|3.1.0|
+|ipVersion|Integer|IP protocol number|3.1.0|
+|ip|String|IP address|3.1.0|
+|netmask|String|Network mask|3.1.0|
+|gateway|String|Gateway address|3.1.0|
+|usedFor|String| |3.1.0|
+|ipInLong|long| |3.1.0|
+|vmNicUuid|String|Virtual Machine NIC UUID|3.1.0|
+|createDate|Timestamp|Create time|3.1.0|
+|lastOpDate|Timestamp|Last modification time|3.1.0|
+
+## SDK Examples
+Java SDK
+
+```
+AttachL3NetworkToVmNicAction action = new AttachL3NetworkToVmNicAction();
+action.vmNicUuid = "573a061841c833f098482a47474a4514";
+action.l3NetworkUuid = "8ad81f74fbf539d98c542fa94ecfa7d9";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AttachL3NetworkToVmNicAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = AttachL3NetworkToVmNicAction()
+action.vmNicUuid = "573a061841c833f098482a47474a4514"
+action.l3NetworkUuid = "8ad81f74fbf539d98c542fa94ecfa7d9"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,127 @@
+---
+title: "Create Database Backup"
+---
+
+<APIPage method="POST" path="/v1/database-backups">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "cloud-db",
+    "backupStorageUuid": "676c5945223647698fcf4da2fa46d1dd"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The **systemTags** and **userTags** fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"cloud-db","backupStorageUuid":"0c0f5fc523d8420a97a9be367f112b4a"}}' http://localhost:8080/zstack/v1/database-backups
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|name|String|body \(Contained in the **params** structure\)|Resource name| |3.0.0|
+|description|String|body \(Contained in the **params** structure\)|Detailed description of the resource| |3.0.0|
+|backupStorageUuid|String|body \(Contained in the **params** structure\)|Image Storage UUID| |3.0.0|
+|resourceUuid \(Optional\)|String|body \(Contained in the **params** structure\)| | |3.0.0|
+|systemTags \(Optional\)|List|body| | |3.0.0|
+|userTags \(Optional\)|List|body| | |3.0.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "7decf4a7cb7c41dabc57446df2784476",
+    "name": "zsdb",
+    "state": "Enabled",
+    "size": 1000.0,
+    "metadata": "{\"version\":\"3.0.0\"}",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null on success. For details, see [error](#p_p5j_v2m_2fb)|3.0.0|
+|inventory|DatabaseBackupInventory|For details, see [inventory](#p_mhf_bfm_2fb)|3.0.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|3.0.0|
+|description|String|A brief description of the error|3.0.0|
+|details|String|The detailed error information|3.0.0|
+|elaboration|String|Reserved field. Default is null|3.0.0|
+|opaque|LinkedHashMap|Reserved field. Default is null|3.0.0|
+|cause|ErrorCode|The root error. The source error that caused the current error. This field is null if there is no root error|3.0.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource|3.0.0|
+|name|String|Resource name|3.0.0|
+|description|String|Detailed description of the resource|3.0.0|
+|state|String| |3.0.0|
+|status|String| |3.0.0|
+|size|Long| |3.0.0|
+|metadata|String| |3.0.0|
+|createDate|Timestamp|Creation time|3.0.0|
+|lastOpDate|Timestamp|Last modification time|3.0.0|
+|backupStorageRefs|List|For details, see [backupStorageRefs](#p_wjl_bfm_2fb)|3.0.0|
+
+### backupStorageRefs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|databaseBackupUuid|String| |3.0.0|
+|backupStorageUuid|String|Image Storage UUID|3.0.0|
+|installPath|String| |3.0.0|
+|exportUrl|String| |3.0.0|
+|status|String| |3.0.0|
+|createDate|Timestamp|Creation time|3.0.0|
+|lastOpDate|Timestamp|Last modification time|3.0.0|
+
+## SDK Examples
+Java SDK
+
+```
+CreateDatabaseBackupAction action = new CreateDatabaseBackupAction();
+action.name = "cloud-db";
+action.backupStorageUuid = "35c0d1e417d84bf498be201091f39c49";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateDatabaseBackupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateDatabaseBackupAction action = CreateDatabaseBackupAction()
+action.name = "cloud-db"
+action.backupStorageUuid = "476870bf9c4241c8993340bd0703d0bf"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateDatabaseBackupAction.Result res = action.call()
+```
+
+</APIPage>

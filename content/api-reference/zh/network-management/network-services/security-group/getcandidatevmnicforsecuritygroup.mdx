@@ -1,0 +1,124 @@
+---
+title: "获取可应用安全组的网卡列表清单"
+---
+
+<APIPage method="GET" path="/v1/security-groups/{securityGroupUuid}/vm-instances/candidate-nics">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/security-groups/584e70f6d3504c7a811df5eeba61839c/vm-instances/candidate-nics
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|securityGroupUuid|String|url|安全组UUID| |0.6|
+|systemTags \(可选\)|List|query|系统标签| |0.6|
+|userTags \(可选\)|List|query|用户标签| |0.6|
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "80d2eab0354c329b8257e8f9fcd76d43",
+      "vmInstanceUuid": "e8af62992ec5343facac7c5fc164ddd0",
+      "l3NetworkUuid": "738cc18ef5003a00937c0e17e6c67a2d",
+      "ip": "192.168.0.123",
+      "mac": "fa:ef:34:5c:6c:00",
+      "hypervisorType": "KVM",
+      "netmask": "255.255.255.0",
+      "gateway": "192.168.0.1",
+      "internalName": "eth0",
+      "deviceId": 0.0
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_uss_jt5_m1b)|0.6|
+|inventories|List|详情参考[inventories](#p_vmx_jt5_m1b)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|vmInstanceUuid|String|虚拟机UUID|0.6|
+|l3NetworkUuid|String|分布式端口组UUID|0.6|
+|ip|String| |0.6|
+|mac|String| |0.6|
+|hypervisorType|String| |0.6|
+|netmask|String| |0.6|
+|gateway|String| |0.6|
+|metaData|String| |0.6|
+|ipVersion|Integer|ip协议号|3.1.0|
+|driverType|String| |0.6|
+|internalName|String| |0.6|
+|deviceId|Integer| |0.6|
+|type|String| |0.6|
+|state|String|网卡状态|0.6|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+|usedIps|List|详情参考[usedIps](#p_hjd_n12_5gb)|0.6|
+
+### usedIps
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|ipRangeUuid|String|IP段UUID|0.6|
+|l3NetworkUuid|String|分布式端口组UUID|0.6|
+|ipVersion|Integer|IP协议号|3.1.0|
+|ip|String|IP地址|0.6|
+|netmask|String|网络掩码|0.6|
+|gateway|String|网关地址|0.6|
+|usedFor|String| |0.6|
+|ipInLong|long| |0.6|
+|vmNicUuid|String|虚拟机网卡UUID|3.1.0|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+
+## SDK示例
+Java SDK
+
+```
+GetCandidateVmNicForSecurityGroupAction action = new GetCandidateVmNicForSecurityGroupAction();
+action.securityGroupUuid = "d11a80c9d7ba32ad97e2bca9c0dba6a9";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetCandidateVmNicForSecurityGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = GetCandidateVmNicForSecurityGroupAction()
+action.securityGroupUuid = "d11a80c9d7ba32ad97e2bca9c0dba6a9"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

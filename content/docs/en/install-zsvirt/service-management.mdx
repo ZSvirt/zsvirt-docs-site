@@ -1,0 +1,68 @@
+---
+title: "Manage ZSvirt Service"
+---
+
+<HistoricalNamingNote locale="en" />
+
+## Check MN Service Status
+You can use the `zstack-ctl status` command to check the running status of the services related to the ZSvirt management node.
+
+```
+[root@localhost ~]# zstack-ctl status
+ZSTACK_HOME: /usr/local/zstack/apache-tomcat/webapps/zstack
+zstack.properties: /usr/local/zstack/apache-tomcat/webapps/zstack/WEB-INF/classes/zstack.properties
+log4j2.xml: /usr/local/zstack/apache-tomcat/webapps/zstack/WEB-INF/classes/log4j2.xml
+PID file: /usr/local/zstack/management-server.pid
+log file: /usr/local/zstack/apache-tomcat/logs/management-server.log
+version: 1.0.0 (ZSvirt 1.0.0)
+MN status: Running [PID:123135]
+UI status: Running [PID:795] https://10.0.0.254:443
+```
+
+You can also use the `zstack-ctl ui_status` command to check the status of the Web UI separately.
+
+```
+[root@localhost ~]# zstack-ctl ui_status
+UI status: Running [PID:8459] https://10.0.0.254:443
+```
+
+## Change MN Service Status
+If you need to restart the management node service without restarting the Web UI service during use, run the following command:
+
+```
+zstack-ctl restart_node
+```
+
+It is not recommended to stop and restart all services at once during use. If you must restart all services, you can run the following command:
+
+```
+zstack-ctl stop && zstack-ctl start
+```
+
+If the management node stops services due to maintenance or other issues, you need to start the services manually. To start the ZSvirt service, run the following command:
+
+```
+# This command will start both the management node and Web UI services
+[root@localhost ~]#zstack-ctl start
+```
+
+## Check Service Status of MN HA
+You can run the `zsha2 status` command to check if the zsha2 service is running normally.
+
+## Export Log of MN HA
+You can run the following commands to collect logs related to zsha2 service:
+
+```
+[root@localhost ~]# zsha2 collect-log
+Collecting logs ...
+Collected log: zsha2-log-2018-09-17T154358+0800.tgz
+
+# Unpack the log archive
+[root@localhost ~]# tar zxvf zsha2-log-2021-01-17T154358+0800.tgz
+tmp/zsha2-log588815976/
+tmp/zsha2-log588815976/zsha2-status.log
+tmp/zsha2-log588815976/zstack-ha.log
+tmp/zsha2-log588815976/keepalived.data
+tmp/zsha2-log588815976/zs-vip-192.168.199.151.log
+tmp/zsha2-log588815976/keepalived_status.log
+```

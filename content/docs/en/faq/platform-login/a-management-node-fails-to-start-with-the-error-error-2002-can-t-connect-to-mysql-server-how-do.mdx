@@ -1,0 +1,30 @@
+---
+title: "A Management Node fails to start with the error \"ERROR 2002: Can't connect to MySQL server.\" How do I resolve this?"
+---
+
+<HistoricalNamingNote locale="en" />
+
+## Symptom
+The Management Node fails to start with the error: ERROR 2002: Can't connect to MySQL server.
+
+## Cause
+The Management Node database is in an abnormal state with the error: `service changed on disk`.
+
+## Solution
+1.  Log in to the Management Node and run the following command to reload the configuration file:
+
+    ```
+    systemctl daemon-reload
+    ```
+
+2.  Run the following command to restart the database service:
+
+    ```
+    systemctl restart mariadb
+    ```
+
+3.  Run the following command to start the Management Node:
+
+    ```
+    zstack-ctl start
+    ```

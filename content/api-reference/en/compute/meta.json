@@ -1,0 +1,11 @@
+{
+  "title": "Compute Management",
+  "pages": [
+    "data-center",
+    "cluster",
+    "host",
+    "image-storage",
+    "vm"
+  ],
+  "pagesIndex": "index"
+}

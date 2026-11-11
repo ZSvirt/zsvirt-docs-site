@@ -1,0 +1,81 @@
+---
+title: "取消虚拟机网卡限速"
+---
+
+<APIPage method="DELETE" path="/v1/vm-instances/{uuid}/nic-qos?direction={direction}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "direction": "example"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/vm-instances/9f9a2eb79c9b4fe5881b109033020899/nic-QoS?direction=in
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|虚拟机网卡的UUID| |0.6|
+|direction|String|url|入方向还是出方向\(in or out\)|inout|0.6|
+|systemTags \(可选\)|List|body| | |0.6|
+|userTags \(可选\)|List|body| | |0.6|
+
+## API返回
+该API成功时返回一个空的JSON结构**`{}`**，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+DeleteNicQoSAction action = new DeleteNicQoSAction();
+action.uuid = "27b5b55e69284a8ea07871661de562a4";
+action.direction = "example";
+action.sessionId = "d83ac78201fc4ad38b17261bba4dc17b";
+DeleteNicQoSAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteNicQoSAction action = DeleteNicQoSAction()
+action.uuid = "efb14319aaf14069a1066f2b07a0e328"
+action.direction = "example"
+action.sessionId = "a0a6598343404cc38356abfc58877bd8"
+DeleteNicQoSAction.Result res = action.call()
+
+```
+
+</APIPage>

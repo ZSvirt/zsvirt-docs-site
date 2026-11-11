@@ -1,0 +1,82 @@
+---
+title: "查询 ZCE-X 和第三方报警平台的关系"
+---
+
+<APIPage method="GET" path="/v1/zce-x-plugin/alert-platform">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zce-x-plugin/alert-platform?q=zceXUuid=77e1393bf5aa4536a018b4c0c4e29c72
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryZceX`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "zceXUuid": "77e1393bf5aa4536a018b4c0c4e29c72",
+      "thirdPartyPlatformUuid": "eec32b6fe11a464790641439f1d7c754",
+      "createDate": "Nov 14, 2017 2:20:57 PM"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean|查询是否成功|4.10.6|
+|inventories|List|详情参考[inventories](#p_q5z_fnt_q2c)|4.10.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_bcl_x1v_m1b)|4.10.6|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|zceXUuid|String|ZCE-X 资源 UUID|4.10.6|
+|thirdPartyPlatformUuid|String|关联的第三方报警平台 UUID|4.10.6|
+|createDate|Timestamp|创建时间|4.10.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.10.0|
+|description|String|错误的概要描述|4.10.0|
+|details|String|错误的详细信息|4.10.0|
+|elaboration|String|保留字段，默认为null|4.10.0|
+|opaque|LinkedHashMap|保留字段，默认为null|4.10.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.10.0|
+
+## SDK示例
+Java SDK
+
+```
+QueryZceXThirdPartyPlatformAlertRefAction action = new QueryZceXThirdPartyPlatformAlertRefAction();
+action.conditions = asList("zceXUuid=77e1393bf5aa4536a018b4c0c4e29c72");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryZceXThirdPartyPlatformAlertRefAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryZceXThirdPartyPlatformAlertRefAction action = QueryZceXThirdPartyPlatformAlertRefAction()
+action.conditions = ["zceXUuid=77e1393bf5aa4536a018b4c0c4e29c72"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryZceXThirdPartyPlatformAlertRefAction.Result res = action.call()
+```
+
+</APIPage>

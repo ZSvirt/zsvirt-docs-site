@@ -1,0 +1,25 @@
+---
+title: 'Install VMTools on Windows VMs'
+---
+
+During the installation, you will be guided to first attach the VMTools ISO, then enter the VM console to install VMTools following the prompted steps.
+
+Make sure the virtual machine is in the running state.
+
+1.  On the target VM page, click **Actions** &gt; **VMTools** &gt; **Install VMTools**.
+
+2.  In the Install VMTools dialog, click **Next: Install on VM Console**.
+
+    When attaching the VMTools ISO, the system automatically chooses a CD/DVD drive based on the following rules:
+
+    -   When a CD/DVD drive is available, the system automatically selects the first one and attaches the VMTools ISO.
+    -   When no CD/DVD drive is available, the system automatically detaches the original image on CD/DVD drive 1 and attach the VMTools ISO.
+3.  Click **Launch Console**.
+
+4.  Enter the VM console and install VMTools following the prompted steps.
+
+    1.  Load the VMTools image: Click install VMTools in the VMTools installation prompt to load the image to the virtual CD Drive.
+    2.  Install VMTools: Run the VMTools installation program and install VMTools, commonly-used tools, and virtio driver.
+    3.  Confirm the installation and reboot the virtual machine: Reboot the virtual machine to make the modification take effect after the installation.
+
+To update your VMTools version, click **Actions** &gt; **VMTools** &gt; **Reinstall VMTools** on the target VM page.

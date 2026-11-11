@@ -1,0 +1,58 @@
+---
+title: 'New Backup Plan'
+---
+
+-   Make sure the platform has sufficient authorized backup quota.
+-   ZSvirt supports only one platform database backup plan. Make sure that there is no existing platform database backup plan.
+
+1.  In the navigation pane, choose **Data Protection** &gt; **Backup Plan**.
+
+2.  On the Backup Plan page, click **New Backup Plan**.
+
+3.  In the New Backup Plan dialog, complete the basic configuration and backup configuration.
+
+4.  For **Basic Configuration**, set the following parameters:
+
+    **Basic Information**
+
+    -   **Name**: Name of the backup plan.
+    -   **Description**: Description of the backup plan.
+    -   **Data Center**: Select a data center.
+    **Backup Storage**
+
+    -   **Local Backup Storage**: Add local backup storage, with a maximum of 2 backup storage allowed for seamless failover.
+    -   **Sync to Remote Backup Storage**: Disabled by default. You can choose whether to synchronize local backup data to a remote backup storage.
+
+        <Callout type="info">
+        If enabled, ensure that remote backup storage has been added in advance on the platform. For more information, see [Add Remote Backup Storage](/en/docs/user-guide/backup/backup-storage/remote).
+        </Callout>
+
+        -   **Remote Backup Storage**: After enabling synchronization to remote backup storage, it displays the name and available capacity of the remote backup storage.
+    **Backup Object**
+
+    -   **Backup Object Type**: Select Platform Database.
+
+        <Callout type="info">
+        If a platform database backup plan already exists, the platform database option will not be displayed.
+        </Callout>
+
+5.  Review the configuration and click **Next**.
+
+6.  For **Backup Configuration**, set the following parameters:
+
+    **Backup Policy**
+
+    -   **Backup Cycle**: Select the backup cycle as needed, including weekly, daily, or hourly backups.
+    -   **Execution Time**: After selecting a weekly or daily backup cycle, you need to set the execution time.
+    -   **Start Time**: Set a start time for the backup plan.
+    [For more information about backup policies, see Backup Policy](/en/docs/user-guide/backup/platform-database-backup/policy).
+
+    **Retention Policy**
+
+    -   **Local Retention Policy**: Set the local backup retention policy by quantity or time.
+    -   **Remote Retention Policy**: After enabling **Sync to Remote Backup Storage**, this parameter must be set. You can set the remote retention policy as permanently or by quantity or time.
+    [For more information about retention policies, see Backup Policy](/en/docs/user-guide/backup/platform-database-backup/policy).
+
+7.  Review the configuration and click **OK**.
+
+After you performed backups, you can use them to restore the platform database. For more information, see [Data Recovery](/en/docs/user-guide/backup/restore).

@@ -1,0 +1,52 @@
+{
+  "scope": "local-development-build-preview-and-ecs-deployment",
+  "snapshot": {
+    "schemaVersion": 1,
+    "buildPath": "out/docs/search-index.json",
+    "version": "sha256-of-canonical-records",
+    "locales": ["zh", "en"]
+  },
+  "search": {
+    "method": "GET",
+    "path": "/api/search",
+    "query": {
+      "query": { "required": true, "maxLength": 200, "emptyResult": [] },
+      "locale": { "required": true, "enum": ["zh", "en"] }
+    },
+    "unknownOrRepeatedParameters": "reject",
+    "response": "Fumadocs SortedResult[]",
+    "maxResults": 20,
+    "cacheControl": "no-store",
+    "requestIdHeader": "x-request-id"
+  },
+  "health": {
+    "method": "GET",
+    "path": "/health",
+    "readyStatus": 200,
+    "unavailableStatus": 503,
+    "fields": ["ready", "version", "counts"]
+  },
+  "package": {
+    "directory": "out/_doc-search",
+    "files": ["server.mjs", "runtime.json", "THIRD-PARTY-LICENSES.txt"],
+    "minimumNodeMajor": 22,
+    "runtimeMetadata": ["bundleSha256", "licensesSha256", "snapshotVersion", "counts"],
+    "deploymentMetadata": ["sourceCommit"]
+  },
+  "ecsDeployment": {
+    "repository": "ZSvirt/zsvirt-docs-site",
+    "configuration": "root-owned /etc/zsvirt-docs-deploy.json supplies root, origin, siteHost and searchOrigin",
+    "service": "zsvirt-doc-search",
+    "nginxHosts": ["docs.zsvirt.io"],
+    "privatePackagePrefix": "/_doc-search/",
+    "release": "same-current-symlink-as-static-pages-and-snapshot",
+    "deploymentUser": "zsvirt-docs-deploy",
+    "receiverOwner": "root",
+    "unitOwner": "root",
+    "unitRuntime": "DynamicUser",
+    "unitManagement": "fixed-unit-provisioned-by-infrastructure; receiver-may-only-restart",
+    "gatewayOwner": "private-zsvirt-site-repository",
+    "rollback": "receipt-verified-current-and-fixed-search-service",
+    "verification": "receipt-source-identity-and-docs-host-search-version"
+  }
+}

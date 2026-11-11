@@ -1,0 +1,159 @@
+---
+title: "将SCSI LUN加载到虚拟机"
+---
+
+<APIPage method="POST" path="/v1/vm-instances/{vmInstanceUuid}/scsi-lun/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "disableMultiPathAttach": false
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"disableMultiPathAttach":false}}' http://localhost:8080/zstack/v1/vm-instances/e5bc51b4fdd13d35b4abe7be408435d4/scsi-lun/e4ea0f73829b3206a497c88b896613d6
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|SCSI LUN的UUID，唯一标示该资源| |3.1.0|
+|vmInstanceUuid|String|url|虚拟机UUID| |3.1.0|
+|disableMultiPathAttach \(可选\)|String|url|关闭自动加载多路径设备| |3.1.0|
+|systemTags \(可选\)|List|body| | |3.1.0|
+|userTags \(可选\)|List|body| | |3.1.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "name": "fc-lun-36b083fe000daf018000022905ba35d8f",
+    "uuid": "d20114f179003943904fee1127d16eba",
+    "wwid": "36b083fe000daf018000022905ba35d8f",
+    "vendor": "DELL",
+    "model": "MD32xx",
+    "wwn": "0x6f01faf000d5c3e7",
+    "serial": "6b083fe000daf018000015505abbe00a",
+    "type": "mpath",
+    "path": "pci-0000:05:00.0-fc-0x2012b083fedaf018-lun-11",
+    "size": 5497558138880.0,
+    "scsiLunHostRefs": [
+      {
+        "id": 1.0,
+        "scsiLunUuid": "d20114f179003943904fee1127d16eba",
+        "hostUuid": "e62d261d3f293e0182f85779e105eb13",
+        "createDate": "Nov 14, 2017 10:20:57 PM"
+      }
+    ],
+    "scsiLunVmInstanceRefs": [
+      {
+        "id": 1.0,
+        "scsiLunUuid": "d20114f179003943904fee1127d16eba",
+        "vmInstanceUuid": "84af387a5ef034818cc8488eaddbf5f3",
+        "createDate": "Nov 14, 2017 10:20:57 PM",
+        "attachMultipath": false
+      }
+    ],
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_qng_gvd_nfb)|3.1.0|
+|inventory|ScsiLunInventory|详情参考[inventory](#p_o1l_gvd_nfb)|3.1.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.1.0|
+|description|String|错误的概要描述|3.1.0|
+|details|String|错误的详细信息|3.1.0|
+|elaboration|String|保留字段，默认为null|3.1.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.1.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.1.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|name|String|资源名称|3.1.0|
+|uuid|String|资源的UUID，唯一标示该资源|3.1.0|
+|wwid|String|磁盘全局唯一表示|3.1.0|
+|vendor|String|磁盘供应商|3.1.0|
+|model|String|磁盘型号|3.1.0|
+|wwn|String|磁盘WWN|3.1.0|
+|serial|String|磁盘序列号|3.1.0|
+|type|String|磁盘类型|3.1.0|
+|path|String|磁盘路径|3.1.0|
+|state|String|磁盘启用状态|3.1.0|
+|size|Long|磁盘大小|3.1.0|
+|createDate|Timestamp|创建时间|3.1.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.1.0|
+|scsiLunHostRefs|List|详情参考[scsiLunHostRefs](#p_vjn_dvd_nfb)|3.1.0|
+|scsiLunVmInstanceRefs|List|详情参考[scsiLunVmInstanceRefs](#p_rsf_dvd_nfb)|3.1.0|
+
+### scsiLunHostRefs
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|scsiLunUuid|String|SCSI LUN UUID|3.1.0|
+|hostUuid|String|主机UUID|3.1.0|
+|createDate|Timestamp|创建时间|3.1.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.1.0|
+
+### scsiLunVmInstanceRefs
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|scsiLunUuid|String|SCSI LUN UUID|3.1.0|
+|vmInstanceUuid|String|虚拟机UUID|3.1.0|
+|createDate|Timestamp|创建时间|3.1.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.1.0|
+
+## SDK示例
+Java SDK
+
+```
+AttachScsiLunToVmInstanceAction action = new AttachScsiLunToVmInstanceAction();
+action.uuid = "e4ea0f73829b3206a497c88b896613d6";
+action.vmInstanceUuid = "e5bc51b4fdd13d35b4abe7be408435d4";
+action.disableMultiPathAttach = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AttachScsiLunToVmInstanceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AttachScsiLunToVmInstanceAction action = AttachScsiLunToVmInstanceAction()
+action.uuid = "e4ea0f73829b3206a497c88b896613d6"
+action.vmInstanceUuid = "e5bc51b4fdd13d35b4abe7be408435d4"
+action.disableMultiPathAttach = false
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AttachScsiLunToVmInstanceAction.Result res = action.call()
+```
+
+</APIPage>

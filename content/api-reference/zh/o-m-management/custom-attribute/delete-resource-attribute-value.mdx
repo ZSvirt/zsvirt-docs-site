@@ -1,0 +1,64 @@
+---
+title: "删除自定义属性值"
+---
+
+<APIPage method="DELETE" path="/v1/resource-attributes/{keyUuid}/resources">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/resource-attributes/ff03a2b491023030bf58b1b35ea9cd00/resources?resourceUuids=ff01ec80fd11327cba7519b66119d900
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|keyUuid|String|url|自定义属性键 UUID| |4.10.16|
+|resourceUuids|List|query|资源 UUID| |4.10.16|
+|systemTags \(可选\)|List|query|系统标签| |4.10.16|
+|userTags \(可选\)|List|query|用户标签| |4.10.16|
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+DeleteResourceAttributeValueAction action = new DeleteResourceAttributeValueAction();
+action.keyUuid = "ff03a2b491023030bf58b1b35ea9cd00";
+action.resourceUuids = asList("ff01ec80fd11327cba7519b66119d900");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteResourceAttributeValueAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = DeleteResourceAttributeValueAction()
+action.keyUuid = "ff03a2b491023030bf58b1b35ea9cd00"
+action.resourceUuids = [ff01ec80fd11327cba7519b66119d900]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

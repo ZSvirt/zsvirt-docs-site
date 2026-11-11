@@ -1,0 +1,260 @@
+---
+title: "解除资源共享"
+---
+
+<APIPage method="PUT" path="/v1/accounts/resources/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "revokeResourceSharing": {
+    "resourceUuids": [
+      "6551ce5374243f14875351219cdb69ba",
+      "18501632374c331692e10ab976f56e28"
+    ],
+    "toPublic": false,
+    "accountUuids": [
+      "9a0c56a8bcbd31edbd384b28b8ffeffc",
+      "3627b63ad55939cf8df5fa4848abd6f2"
+    ],
+    "all": false
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X PUT -d '{"revokeResourceSharing":{"resourceUuids":["6551ce5374243f14875351219cdb69ba","18501632374c331692e10ab976f56e28"],"toPublic":false,"accountUuids":["9a0c56a8bcbd31edbd384b28b8ffeffc","3627b63ad55939cf8df5fa4848abd6f2"],"all":false}}' \
+http://localhost:8080/zstack/v1/accounts/resources/actions
+```
+
+参数列表
+
+<table id="table_zzp_rm5_m1b"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+resourceUuids
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(包含在**revokeResourceSharing**结构中\)
+
+</td><td>
+
+资源UUID列表
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+toPublic \(可选\)
+
+</td><td>
+
+boolean
+
+</td><td>
+
+body\(包含在结构中\)
+
+</td><td>
+
+全局共享
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+accountUuids \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(包含在**revokeResourceSharing**结构中\)**Note:** all参数设为false时，账户UUID不能为空
+
+</td><td>
+
+账户UUID列表
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+all \(可选\)
+
+</td><td>
+
+boolean
+
+</td><td>
+
+body\(包含在**revokeResourceSharing**结构中\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr></tbody>
+</table>
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+RevokeResourceSharingAction action = new RevokeResourceSharingAction();
+action.resourceUuids = asList("6551ce5374243f14875351219cdb69ba","18501632374c331692e10ab976f56e28");
+action.toPublic = false;
+action.accountUuids = asList("9a0c56a8bcbd31edbd384b28b8ffeffc","3627b63ad55939cf8df5fa4848abd6f2");
+action.all = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RevokeResourceSharingAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+RevokeResourceSharingAction action = RevokeResourceSharingAction()
+action.resourceUuids = [6551ce5374243f14875351219cdb69ba, 18501632374c331692e10ab976f56e28]
+action.toPublic = false
+action.accountUuids = [9a0c56a8bcbd31edbd384b28b8ffeffc, 3627b63ad55939cf8df5fa4848abd6f2]
+action.all = false
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+RevokeResourceSharingAction.Result res = action.call()
+
+```
+
+</APIPage>

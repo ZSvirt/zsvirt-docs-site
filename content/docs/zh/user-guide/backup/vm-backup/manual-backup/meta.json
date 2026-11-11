@@ -1,0 +1,9 @@
+{
+  "title": "手动执行备份",
+  "pages": [
+    "index",
+    "backup-now",
+    "create-unplanned-backup"
+  ],
+  "pagesIndex": "index"
+}

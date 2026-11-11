@@ -1,0 +1,15 @@
+{
+  "title": "用户手册",
+  "pages": [
+    "index",
+    "getting-started",
+    "resource-definitions",
+    "compute",
+    "storage",
+    "network",
+    "operations",
+    "system",
+    "backup",
+    "bare-metal"
+  ]
+}

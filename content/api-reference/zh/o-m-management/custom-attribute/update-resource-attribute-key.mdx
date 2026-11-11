@@ -1,0 +1,126 @@
+---
+title: "更新自定义属性键"
+---
+
+<APIPage method="PUT" path="/v1/resource-attributes/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateResourceAttributeKey": {
+    "description": "test"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateResourceAttributeKey":{"description":"test"}}' \
+http://localhost:8080/zstack/v1/resource-attributes/ff03a2b491023030bf58b1b35ea9cd00/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|自定义属性键 UUID| |4.10.16|
+|name \(可选\)|String|body\(包含在`updateResourceAttributeKey`结构中\)|键名称| |4.10.16|
+|description \(可选\)|String|body\(包含在`updateResourceAttributeKey`结构中\)|资源的详细描述| |4.10.16|
+|resourceTypes \(可选\)|List|body\(包含在`updateResourceAttributeKey`结构中\)|该属性支持的资源类型列表| |4.10.16|
+|createConstraints \(可选\)|List|body\(包含在`updateResourceAttributeKey`结构中\)|新创建的限制| |4.10.16|
+|updateConstraints \(可选\)|List|body\(包含在`updateResourceAttributeKey`结构中\)|更新的限制| |4.10.16|
+|deleteConstraintIds \(可选\)|List|body\(包含在`updateResourceAttributeKey`结构中\)|删除的限制的 ID 列表| |4.10.16|
+|systemTags \(可选\)|List|body|系统标签| |4.10.16|
+|userTags \(可选\)|List|body|用户标签| |4.10.16|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "ff03a2b491023030bf58b1b35ea9cd00",
+    "name": "OperationsPersonnel",
+    "description": "Kinny",
+    "resourceTypes": [
+      "VmInstanceVO"
+    ],
+    "createDate": "Nov 14, 2017 2:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 2:20:57 PM",
+    "constraints": [
+      {
+        "id": 1,
+        "keyUuid": "ff03a2b491023030bf58b1b35ea9cd00",
+        "type": "option",
+        "parameter": "Kinny",
+        "createDate": "Nov 14, 2017 2:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+      }
+    ]
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean|更新是否成功|4.10.16|
+|inventory|ResourceAttributeKeyInventory|详情参考[inventory](#p_ahr_n2y_3gc)|4.10.16|
+|error|ErrorCode|详情参考[error](#p_xm1_vmk_l1b)|4.10.16|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|自定义属性键 UUID|4.10.16|
+|name|String|自定义属性键名称|4.10.16|
+|description|String|资源的详细描述|4.10.16|
+|createDate|Timestamp|创建时间|4.10.16|
+|lastOpDate|Timestamp|最后一次修改时间|4.10.16|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|ode|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+UpdateResourceAttributeKeyAction action = new UpdateResourceAttributeKeyAction();
+action.uuid = "ff03a2b491023030bf58b1b35ea9cd00";
+action.description = "test";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateResourceAttributeKeyAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = UpdateResourceAttributeKeyAction()
+action.uuid = "ff03a2b491023030bf58b1b35ea9cd00"
+action.description = "test"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

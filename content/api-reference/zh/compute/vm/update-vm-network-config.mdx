@@ -1,0 +1,82 @@
+---
+title: "同步虚拟机网络配置应答"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/{vmInstanceUuid}/update-nic-config">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateVmNetworkConfig": {
+    "vmNicUuids": [
+      "afb48d4bfd193c6b9d46b866cb29a767"
+    ]
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \-X PUT -d '{"updateVmNetworkConfig":{"vmNicUuids":["afb48d4bfd193c6b9d46b866cb29a767"]}}' \
+http://localhost:8080/zstack/v1/vm-instances/1c8470e916873fe6ae0251c3f592a6c4/update-nic-config
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|vmInstanceUuid|String|url|虚拟机UUID| |4.6.21|
+|vmNicUuids|List|body\(包含在**updateVmNetworkConfig**结构中\)| | |4.6.21|
+|systemTags \(可选\)|List|body|系统标签| |4.6.21|
+|userTags \(可选\)|List|body|用户标签| |4.6.21|
+
+## API返回
+该API成功时返回一个空的JSON结构**`{}`**，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+UpdateVmNetworkConfigAction action = new UpdateVmNetworkConfigAction();
+action.vmInstanceUuid = "1c8470e916873fe6ae0251c3f592a6c4";
+action.vmNicUuids = asList("afb48d4bfd193c6b9d46b866cb29a767");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateVmNetworkConfigAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateVmNetworkConfigAction action = UpdateVmNetworkConfigAction()
+action.vmInstanceUuid = "1c8470e916873fe6ae0251c3f592a6c4"
+action.vmNicUuids = [afb48d4bfd193c6b9d46b866cb29a767]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateVmNetworkConfigAction.Result res = action.call()
+```
+
+</APIPage>

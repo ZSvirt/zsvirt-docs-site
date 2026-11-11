@@ -1,0 +1,110 @@
+---
+title: "Add Email Address to SNS Email Endpoint"
+---
+
+<APIPage method="POST" path="/v1/sns/application-endpoints/emails/email-addresses">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "emailAddress": "example@cloud.io",
+    "endpointUuid": "74220bbf0d8b3c6b943a294c2679ca69"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding example, the **systemTags** and **userTags** fields are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"emailAddress":"example@cloud.io","endpointUuid":"74220bbf0d8b3c6b943a294c2679ca69"}}' http://localhost:8080/zstack/v1/sns/application-endpoints/emails/email-addresses
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|emailAddress|String|body \(Contained in the **params** structure\)|Email address| |3.7.0|
+|endpointUuid|String|body \(Contained in the **params** structure\)|Endpoint UUID| |3.7.0|
+|resourceUuid \(Optional\)|String|body \(Contained in the **params** structure\)| | |3.7.0|
+|tagUuids \(Optional\)|List|body \(Contained in the **params** structure\)|Tag UUID list| |3.7.0|
+|systemTags \(Optional\)|List|body| | |3.7.0|
+|userTags \(Optional\)|List|body| | |3.7.0|
+
+## API Response
+Response example
+
+```
+{
+  "inventory": {
+    "uuid": "bb8164224a924d0e893a41a3bad86169",
+    "emailAddress": "example@zstack.io",
+    "endpointUuid": "5aed9326cdeb4cf39a5f83860256b6e6",
+    "createDate": "Mar 26, 2024 2:42:53 AM",
+    "lastOpDate": "Mar 26, 2024 2:42:53 AM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |5.0.0|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_jrb_gxz_ljb)|3.7.0|
+|inventory|SNSEmailAddressInventory|For details, see [inventory](#p_kvn_fxz_ljb)|3.7.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number, a globally unique identifier for the error, for example, SYS.1000 or HOST.1001|3.7.0|
+|description|String|A brief description of the error|3.7.0|
+|details|String|Detailed information about the error|3.7.0|
+|elaboration|String|Reserved field. Defaults to null|3.7.0|
+|opaque|LinkedHashMap|Reserved field. Defaults to null|3.7.0|
+|cause|ErrorCode|The root error that caused the current error. This field is null if there is no root cause|3.7.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource, uniquely identifying this resource|3.7.0|
+|emailAddress|String| |3.7.0|
+|endpointUuid|String| |3.7.0|
+|createDate|Timestamp|Creation time|5.0.0|
+|lastOpDate|Timestamp|Last modification time|5.0.0|
+
+## SDK Examples
+Java SDK
+
+```
+AddEmailAddressToSNSEmailEndpointAction action = new AddEmailAddressToSNSEmailEndpointAction();
+action.emailAddress = "example@cloud.io";
+action.endpointUuid = "74220bbf0d8b3c6b943a294c2679ca69";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddEmailAddressToSNSEmailEndpointAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddEmailAddressToSNSEmailEndpointAction action = AddEmailAddressToSNSEmailEndpointAction()
+action.emailAddress = "example@cloud.io"
+action.endpointUuid = "74220bbf0d8b3c6b943a294c2679ca69"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddEmailAddressToSNSEmailEndpointAction.Result res = action.call()
+```
+
+</APIPage>

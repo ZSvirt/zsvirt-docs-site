@@ -1,0 +1,94 @@
+---
+title: "Query VM Template"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/templatedVmInstance" altPaths={["/v1/vm-instances/templatedVmInstance/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/templatedVmInstance?q=uuid=2ed42f5960c43ba287bb486badfdd727
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/templatedVmInstance/8152b4c564f537808ae6e46dd8d8c245
+```
+
+Queryable Fields
+
+Run the CLI command tool, enter `QueryTemplatedVmInstance` and press Tab to view all queryable fields and resource names that can be queried across tables.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "e0746082b05030a1ac908cc43a424b84",
+      "name": "templatedVmInstance",
+      "zoneUuid": "ecf920e0ded43afe831b2c9fbde1c0d9",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.2.6|
+|inventories|List|For details, see [inventories](#p_umf_lvg_fcc)|4.2.6|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation is successful, this field is null. For details, see [error](#p_vl3_lvg_fcc)|4.2.6|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifying the resource|4.2.6|
+|name|String|Resource name|4.2.6|
+|zoneUuid|String|Data Center UUID|4.2.6|
+|createDate|Timestamp|Create time|4.2.6|
+|lastOpDate|Timestamp|Last modification time|4.2.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, default is null|0.6|
+|opaque|LinkedHashMap|Reserved field, default is null|0.6|
+|cause|ErrorCode|Root cause: the source error that triggered the current error. If there is no original error, this field is null|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+QueryTemplatedVmInstanceAction action = new QueryTemplatedVmInstanceAction();
+action.conditions = asList("uuid=5866861926f03755a9855f15f892a446");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryTemplatedVmInstanceAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+QueryTemplatedVmInstanceAction action = QueryTemplatedVmInstanceAction()
+action.conditions = ["uuid=49a7e94d15fb3e2092dd8ea3c8d7ecdf"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryTemplatedVmInstanceAction.Result res = action.call()
+
+```
+
+</APIPage>

@@ -1,0 +1,10 @@
+{
+  "title": "Storage Management",
+  "pages": [
+    "index",
+    "add-datastore",
+    "datastore-config",
+    "datastore-cleanup-delete"
+  ],
+  "pagesIndex": "index"
+}

@@ -1,0 +1,75 @@
+---
+title: "Get NIC Attached Network Service Names"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/nics/{vmNicUuid}/attached-networkservices">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/nics/8c193a29a4a43fccab83fea5a7281856/attached-networkservices
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|vmNicUuid|String|url|Virtual Machine NIC UUID| |4.1.0|
+|systemTags \(Optional\)|List|query|System Tag| |4.1.0|
+|userTags \(Optional\)|List|query|User Tag| |4.1.0|
+
+## API Response
+Response Example
+
+```
+{
+  "networkServices": [
+    "Eip"
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|networkServices|List| |4.1.0|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation is successful. For details, see [error](#p_pvc_gz1_mjb)|4.1.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|4.1.0|
+|description|String|Brief description of the error|4.1.0|
+|details|String|Detailed error information|4.1.0|
+|elaboration|String|Reserved field, defaults to null|4.1.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|4.1.0|
+|cause|ErrorCode|Root cause. The source error that caused the current error. If there is no original error, this field is null|4.1.0|
+
+## SDK Examples
+Java SDK
+
+```
+GetVmNicAttachedNetworkServiceAction action = new GetVmNicAttachedNetworkServiceAction();
+action.vmNicUuid = "8c193a29a4a43fccab83fea5a7281856";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetVmNicAttachedNetworkServiceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetVmNicAttachedNetworkServiceAction action = GetVmNicAttachedNetworkServiceAction()
+action.vmNicUuid = "8c193a29a4a43fccab83fea5a7281856"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetVmNicAttachedNetworkServiceAction.Result res = action.call()
+```
+
+</APIPage>

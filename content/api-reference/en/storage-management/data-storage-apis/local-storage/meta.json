@@ -1,0 +1,13 @@
+{
+  "title": "Local Storage Related Interfaces",
+  "pages": [
+    "add-local-primary-storage",
+    "query-local-storage-resource-ref",
+    "local-storage-migrate-volume",
+    "get-local-storage-host-disk-capacity",
+    "local-storage-get-volume-migratable-hosts",
+    "get-physical-machine-block-devices",
+    "mount-block-device"
+  ],
+  "pagesIndex": "index"
+}

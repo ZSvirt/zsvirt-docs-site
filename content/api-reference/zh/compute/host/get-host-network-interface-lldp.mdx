@@ -1,0 +1,104 @@
+---
+title: "获取主机物理网卡LLDP信息"
+---
+
+<APIPage method="GET" path="/v1/hostNetworkInterface/lldp/{interfaceUuid}/info">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/hostNetworkInterface/lldp/e1b5f128aa183da6a6b719f136fdc5d2/info
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|interfaceUuid|String|url|物理网卡UUID| |4.1.0|
+|systemTags \(可选\)|List|query|系统标签| |4.1.0|
+|userTags \(可选\)|List|query|用户标签| |4.1.0|
+
+## API返回
+返回示例
+
+```
+{
+  "lldp": {
+    "lldpUuid": "6b7c1267888a38779eac7694315855f0",
+    "chassisId": "mac 00:1e:08:1d:05:ba",
+    "timeToLive": 120,
+    "managementAddress": "172.25.2.4",
+    "systemName": "BM-MN-3",
+    "systemDescription": " CentecOS software, E530, Version 7.4.7 Copyright (C) 2004-2021 Centec Networks Inc.  All Rights Reserved.",
+    "systemCapabilities": "Bridge, on  Router, on",
+    "portId": "ifname eth-0-5",
+    "portDescription": "eth-0-4",
+    "vlanId": 3999,
+    "aggregationPortId": 4294965248,
+    "mtu": 9600
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.1.0|
+|lldp|HostNetworkInterfaceLldpRefInventory|详情参考[lldp](#p_mh4_sbk_51c)|4.1.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_m5s_sbk_51c)|4.1.0|
+
+### lldp
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|lldpUuid|String|LLDP UUID|4.1.0|
+|chassisId|String|机箱标识|4.1.0|
+|timeToLive|Integer|生存时间|4.1.0|
+|managementAddress|String|管理地址|4.1.0|
+|systemName|String|系统名称|4.1.0|
+|systemDescription|String|系统描述|4.1.0|
+|systemCapabilities|String|系统能力|4.1.0|
+|portId|String|端口标识|4.1.0|
+|portDescription|String|端口描述|4.1.0|
+|vlanId|Integer|VLAN标识|4.1.0|
+|aggregationPortId|Long|聚合端口标识|4.1.0|
+|mtu|Integer|最大传输单元|4.1.0|
+|createDate|Timestamp|创建时间|4.1.0|
+|lastOpDate|Timestamp|最后一次修改时间|4.1.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.1.0|
+|description|String|错误的概要描述|4.1.0|
+|details|String|错误的详细信息|4.1.0|
+|elaboration|String|保留字段，默认为null|4.1.0|
+|opaque|LinkedHashMap|保留字段，默认为null|4.1.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.1.0|
+
+## SDK示例
+Java SDK
+
+```
+GetHostNetworkInterfaceLldpAction action = new GetHostNetworkInterfaceLldpAction();
+action.interfaceUuid = "e1b5f128aa183da6a6b719f136fdc5d2";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetHostNetworkInterfaceLldpAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetHostNetworkInterfaceLldpAction action = GetHostNetworkInterfaceLldpAction()
+action.interfaceUuid = "e1b5f128aa183da6a6b719f136fdc5d2"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetHostNetworkInterfaceLldpAction.Result res = action.call()
+```
+
+</APIPage>

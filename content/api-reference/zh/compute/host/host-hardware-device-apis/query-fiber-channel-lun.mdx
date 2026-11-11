@@ -1,0 +1,142 @@
+---
+title: "查询FC存储LUN"
+---
+
+<APIPage method="GET" path="/v1/storage-devices/fiber-channel/luns" altPaths={["/v1/storage-devices/fiber-channel/luns/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/storage-devices/fiber-channel/luns
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/storage-devices/fiber-channel/luns/2bb2719f7d45316a80e333c90bbf6e59
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryFiberChannelLun`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "fiberChannelStorageUuid": "9f1895c8d1b6306e908df42244901617",
+      "scsiLunHostRefs": [],
+      "scsiLunVmInstanceRefs": [],
+      "name": "fc-lun-36b083fe000daf018000022905ba35d8f",
+      "uuid": "aaab6d1a63713ae0ac18a21b9547312b",
+      "wwid": "36b083fe000daf018000022905ba35d8f",
+      "vendor": "DELL",
+      "model": "MD32xx",
+      "wwn": "0x6f01faf000d5c3e7",
+      "serial": "6b083fe000daf018000015505abbe00a",
+      "type": "mpath",
+      "path": "pci-0000:05:00.0-fc-0x2012b083fedaf018-lun-11",
+      "size": 5497558138880
+    },
+    {
+      "fiberChannelStorageUuid": "9452ad8bb69f33c495bf0da260d80003",
+      "scsiLunHostRefs": [],
+      "scsiLunVmInstanceRefs": [],
+      "name": "fc-lun-36f01faf000d5c3e7000023ef5ba362f2",
+      "uuid": "cc050d2f06163d9dbf6d82cd61b7f008",
+      "wwid": "36f01faf000d5c3e7000023ef5ba362f2",
+      "vendor": "DELL",
+      "model": "MD32xx",
+      "wwn": "0x6b083fe000daf018",
+      "serial": "6b083fe000daf018000015505abbe00a",
+      "type": "mpath",
+      "path": "pci-0000:05:00.0-fc-0x2012b083fedaf018-lun-12",
+      "size": 5497558138880
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_e44_znm_qfb)|3.1.0|
+|inventories|List|详情参考[inventories](#p_ic5_znm_qfb)|3.1.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.1.0|
+|fiberChannelStorageUuid|String|FC SAN存储UUID|3.1.0|
+|wwid|String|磁盘全局唯一表示|3.1.0|
+|vendor|String|供应商|3.1.0|
+|model|String|型号|3.1.0|
+|wwn|String|磁盘WWN|3.1.0|
+|serial|String|磁盘序列号|3.1.0|
+|type|String|磁盘类型|3.1.0|
+|path|String|磁盘路径|3.1.0|
+|size|Long|磁盘大小|3.1.0|
+|createDate|Timestamp|创建时间|3.1.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.1.0|
+|name|String|资源名称|3.1.0|
+|state|String|启用状态|3.1.0|
+|scsiLunHostRefs|List|详情参考[scsiLunHostRefs](#p_dzf_hxl_s2c)|3.1.0|
+|scsiLunVmInstanceRefs|List|详情参考[scsiLunVmInstanceRefs](#p_wwq_jxl_s2c)|3.1.0|
+
+### scsiLunHostRefs
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|scsiLunUuid|String|SCSI Lun UUID|3.1.0|
+|hostUuid|String|主机UUID|3.1.0|
+|createDate|Timestamp|创建时间|3.1.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.1.0|
+
+### scsiLunVmInstanceRefs
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|scsiLunUuid|String|SCSI Lun UUID|3.1.0|
+|vmInstanceUuid|String|虚拟机UUID|3.1.0|
+|createDate|Timestamp|创建时间|3.1.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.1.0|
+
+## SDK示例
+Java SDK
+
+```
+QueryFiberChannelLunAction action = new QueryFiberChannelLunAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryFiberChannelLunAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryFiberChannelLunAction action = QueryFiberChannelLunAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryFiberChannelLunAction.Result res = action.call()
+```
+
+</APIPage>

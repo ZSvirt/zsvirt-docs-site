@@ -1,0 +1,338 @@
+---
+title: "获取空闲IP"
+---
+
+<APIPage method="GET" path="/v1/l3-networks/ip/free">
+
+```
+GET zstack/v1/l3-networks/{l3NetworkUuid}/ip/free
+```
+
+```
+GET zstack/v1/l3-networks/ip-ranges/{ipRangeUuid}/ip/free
+```
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/l3-networks/ip/free?l3NetworkUuid=c8cd63a1882331a9a5ee83e5d9b265ec&ipRangeUuid=10fc8508fd723e63bcc57b8bb6d7a133&limit=100.0
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/l3-networks/c8cd63a1882331a9a5ee83e5d9b265ec/ip/free?l3NetworkUuid=c8cd63a1882331a9a5ee83e5d9b265ec&ipRangeUuid=10fc8508fd723e63bcc57b8bb6d7a133&limit=100.0
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/l3-networks/ip-ranges/10fc8508fd723e63bcc57b8bb6d7a133/ip/free?l3NetworkUuid=c8cd63a1882331a9a5ee83e5d9b265ec&ipRangeUuid=10fc8508fd723e63bcc57b8bb6d7a133&limit=100.0
+```
+
+参数列表
+
+<table id="table_pnb_h1h_m1b"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+l3NetworkUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+分布式端口组UUID**Note:** l3NetworkUuid和ipRangeUuid二选一
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+ipRangeUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+IP段UUID**Note:** l3NetworkUuid和ipRangeUuid二选一
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+start \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+起始值
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+ipRangeType \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+地址类型
+
+</td><td>
+
+-   Normal
+-   AddressPool
+
+</td><td>
+
+3.9.0
+
+</td></tr><tr><td>
+
+ipVersion \(可选\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+query
+
+</td><td>
+
+IP地址版本号
+
+</td><td>
+
+-   4
+-   6
+
+</td><td>
+
+3.10.0
+
+</td></tr><tr><td>
+
+limit \(可选\)
+
+</td><td>
+
+int
+
+</td><td>
+
+query
+
+</td><td>
+
+数量限制
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr></tbody>
+</table>
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "ipRangeUuid": "662d600a4b644f98a0c49df2e5430d69",
+      "ip": "10.20.10.5",
+      "netmask": "255.255.255.0",
+      "gateway": "10.20.10.1"
+    },
+    {
+      "ipRangeUuid": "662d600a4b644f98a0c49df2e5430d69",
+      "ip": "10.20.10.6",
+      "netmask": "255.255.255.0",
+      "gateway": "10.20.10.1"
+    },
+    {
+      "ipRangeUuid": "662d600a4b644f98a0c49df2e5430d69",
+      "ip": "10.20.10.10",
+      "netmask": "255.255.255.0",
+      "gateway": "10.20.10.1"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_bqn_p1h_m1b)|0.6|
+|inventory|L3NetworkInventory|详情参考[inventory](#p_xsj_q1h_m1b)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|ipRangeUuid|String|IP段UUID|0.6|
+|ip|String| |0.6|
+|netmask|String| |0.6|
+|gateway|String| |0.6|
+
+## SDK示例
+Java SDK
+
+```
+GetFreeIpAction action = new GetFreeIpAction();
+action.l3NetworkUuid = "c8cd63a1882331a9a5ee83e5d9b265ec";
+action.ipRangeUuid = "10fc8508fd723e63bcc57b8bb6d7a133";
+action.limit = 100.0;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetFreeIpAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetFreeIpAction action = GetFreeIpAction()
+action.l3NetworkUuid = "c8cd63a1882331a9a5ee83e5d9b265ec"
+action.ipRangeUuid = "10fc8508fd723e63bcc57b8bb6d7a133"
+action.limit = 100.0
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetFreeIpAction.Result res = action.call()
+```
+
+</APIPage>

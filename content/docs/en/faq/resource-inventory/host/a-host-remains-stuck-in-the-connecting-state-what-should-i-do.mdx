@@ -1,0 +1,95 @@
+---
+title: "A host remains stuck in the Connecting state. What should I do?"
+---
+
+<HistoricalNamingNote locale="en" />
+
+There are five common causes for a host remaining stuck in the Connecting state. Identify the applicable cause and follow the corresponding solution to resolve the issue.
+
+## Cause 1
+The license capacity is inconsistent between the two Management Nodes, causing the host to remain stuck in the Connecting state.
+
+## Solution
+1.  Log in to both Management Nodes and run the following command to clear the license:
+
+    ```
+    [root@localhost ~]# zstack-ctl clear_license
+    ```
+
+2.  Log in to the virtualization platform using the virtual IP address. In the License Management interface, click **Upload License** in the upper-right corner. In the Upload License dialog box, upload the new license from your local machine.
+
+## Cause 2
+The root disk of the host system is full.
+
+## Solution
+1.  Log in to the host and run the following commands to check disk usage:
+
+    ```
+    # Check root directory usage
+    [root@localhost ~]# du -sh
+    # Check detailed root directory usage
+    [root@localhost ~]# du -h / --max-depth=1
+    ```
+
+2.  Delete unnecessary log files from the `/var/log` directory.
+
+3.  Delete large files from the `/var/lib/zstack/prometheus/data2` directory as needed. This directory stores monitoring data for the virtualization platform.
+
+## Cause 3
+The host password was changed at the OS level but not updated in the UI.
+
+## Solution
+-   Log in to the virtualization platform. Go to **Resource Center** &gt; **Hosts and VMs** to open the Hosts interface. Select the host and click **Actions** &gt; **Update SSH Info**.
+
+-   Update the root password of the monitoring node in the Data Storage settings.
+
+-   Update the password for the Standalone Image Storage in the Image Storage settings. For Ceph-type Image Storage, update the root password of the monitoring node.
+
+## Cause 4
+The Management Node queue is stuck.
+
+## Solution
+1.  Log in to the Management Node and run the following commands to check task status and identify any queue bottlenecks. Analyze the **management-server.log** file, search for the DUMP keyword, and check the current message queue. Verify whether there are tasks waiting to execute under **PENDING TASK NUMBER**.
+
+    ```
+    [root@localhost ~]# zstack-cli
+    admin >>>LogInByAccount accountName=admin password=$password
+    # Enable debug mode
+    admin >>>DebugSignal signals=DumpTaskQueue
+    admin >>>exit
+    ```
+
+2.  Run the following commands to restart the Management Node service:
+
+    ```
+    # Check Management Node mode; output indicates dual Management Node mode
+    [root@localhost ~]# zsha2 status
+    # Single Management Node
+    [root@localhost ~]# zstack-ctl stop_node;zstack start_node
+    # Dual Management Node
+    [root@localhost ~]# zsha2 stop-node;zsha2 start-node
+    ```
+
+## Cause 5
+The host reconnection fails with a `Too many open files` error. This may be caused by too many open file handles on the host.
+
+## Solution
+1.  On the host, edit the `/etc/security/limits.conf` configuration file and add the following entries:
+
+    ```
+    [root@localhost ~]# vim /etc/security/limits.conf
+    * soft nofile 262144
+    * hard nofile 262144
+    * soft nproc 10240
+    * hard nproc 10240
+    ```
+
+2.  Run `ulimit -n 262144` to apply the change temporarily. Then run the following commands in sequence:
+
+    ```
+    [root@localhost ~]# kill -HUP `pgrep collectdmon`
+    [root@localhost ~]# service virtlogd restart
+    [root@localhost ~]# service libvirtd restart
+    [root@localhost ~]# service zstack-kvmagent restart
+    
+    ```

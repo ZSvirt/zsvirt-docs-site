@@ -1,0 +1,300 @@
+---
+title: "Create SNS Topic"
+---
+
+<APIPage method="POST" path="/v1/sns/topics">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "api topic",
+    "locale": "zh_CN"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the **systemTags** and **userTags** fields are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"api topic","locale":"zh_CN"}}' \
+http://localhost:8080/zstack/v1/sns/topics
+```
+
+Parameter List
+
+<table id="table_v2j_3fx_bdb"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+name
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+Resource name
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+description \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+Detailed description of the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+resourceUuid \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+tagUuids \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+Tag UUID list
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+locale \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+Internationalization language
+
+</td><td>
+
+-   zh\_CN
+-   en\_US
+
+</td><td>
+
+5.0.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "b3033f326b9d4f0fb01fa900d2dd6c2f",
+    "name": "new name",
+    "state": "Enabled",
+    "locale": "zh_CN",
+    "createDate": "Mar 26, 2024 2:46:30 AM",
+    "lastOpDate": "Mar 26, 2024 2:46:30 AM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |5.0.0|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null on success. See [error](#p_b1q_chy_p1b)|2.3|
+|inventory|SNSTopicInventory|See [inventory](#p_ywy_chy_p1b)|2.3|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Default is null|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null|0.6|
+|cause|ErrorCode|The root error that caused the current error. If there is no root error, this field is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource, which uniquely identifies the resource|2.3|
+|name|String|Resource name|2.3|
+|description|String|Detailed description of the resource|2.3|
+|state|String|State|2.3|
+|lastOpDate|Timestamp|Last modification time|2.3|
+|createDate|Timestamp|Creation time|2.3|
+
+## SDK Examples
+Java SDK
+
+```
+CreateSNSTopicAction action = new CreateSNSTopicAction();
+action.name = "api topic";
+action.locale = "zh_CN";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateSNSTopicAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateSNSTopicAction action = CreateSNSTopicAction()
+action.name = "api topic"
+action.locale = "zh_CN"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateSNSTopicAction.Result res = action.call()
+```
+
+</APIPage>

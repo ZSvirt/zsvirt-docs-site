@@ -1,0 +1,88 @@
+---
+title: "Set VM QXL Memory"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "setVmQxlMemory": {
+    "ram": 65536,
+    "vram": 32768,
+    "vgamem": 16384
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"setVmQxlMemory":{"ram":65536,"vram":32768,"vgamem":16384}}' http://localhost:8080/zstack/v1/vm-instances/cc590b2129c437a487311b0f9a8a0dbc/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Virtual Machine UUID| |3.7.0|
+|ram \(Optional\)|Integer|body \(contained in **setVmQxlMemory** structure\)|Default value is 65536| |3.7.0|
+|vram \(Optional\)|Integer|body \(contained in **setVmQxlMemory** structure\)|Default value is 32768| |3.7.0|
+|vgamem \(Optional\)|Integer|body \(contained in **setVmQxlMemory** structure\)|Default value is 16384| |3.7.0|
+|systemTags \(Optional\)|List|body| | |3.7.0|
+|userTags \(Optional\)|List|body| | |3.7.0|
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On error, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+SetVmQxlMemoryAction action = new SetVmQxlMemoryAction();
+action.uuid = "cc590b2129c437a487311b0f9a8a0dbc";
+action.ram = 65536;
+action.vram = 32768;
+action.vgamem = 16384;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+SetVmQxlMemoryAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SetVmQxlMemoryAction action = SetVmQxlMemoryAction()
+action.uuid = "cc590b2129c437a487311b0f9a8a0dbc"
+action.ram = 65536
+action.vram = 32768
+action.vgamem = 16384
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+SetVmQxlMemoryAction.Result res = action.call()
+```
+
+</APIPage>

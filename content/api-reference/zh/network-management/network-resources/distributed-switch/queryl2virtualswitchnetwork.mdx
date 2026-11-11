@@ -1,0 +1,126 @@
+---
+title: "查询分布式交换机"
+---
+
+<APIPage method="GET" path="/v1/l2-networks/virtual-switch" altPaths={["/v1/l2-networks/virtual-switch/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/l2-networks/virtual-switch
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/l2-networks/virtual-switch/95f17f8b6b6137e3815cedcfa39d812d
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryL2VirtualSwitchNetwork`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "name": "Test-dvs",
+      "description": "Test",
+      "zoneUuid": "55210de8afc03d42bddc8e098c69410c",
+      "physicalInterface": "eth0",
+      "type": "virtualSwitch"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.1.0|
+|inventories|List|详情参考[inventories](#p_lpn_vlw_51c)|4.1.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_wfd_jmw_51c)|4.1.0|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|isDistributed|Boolean|是否为分布式|4.1.0|
+|uuid|String|资源的UUID，唯一标示该资源|4.1.0|
+|name|String|资源名称|4.1.0|
+|description|String|资源的详细描述|4.1.0|
+|zoneUuid|String|数据中心UUID|4.1.0|
+|physicalInterface|String|物理网卡|4.1.0|
+|type|String|分布式交换机类型|4.1.0|
+|vSwitchType|String|虚拟交换机类型|4.1.0|
+|virtualNetworkId|Integer|虚拟网络ID|4.1.0|
+|createDate|Timestamp|创建时间|4.1.0|
+|lastOpDate|Timestamp|最后一次修改时间|4.1.0|
+|attachedClusterUuids|List|挂载集群的UUID列表|4.1.0|
+|portGroups|List|详情参考[portGroups](#p_oyp_w4w_51c)|4.1.0|
+
+### portGroups
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|vSwitchUuid|String|虚拟交换机UUID|4.1.0|
+|vlanId|Integer|VLAN ID|4.1.0|
+|vlanRanges|String|VLAN范围|4.1.0|
+|uuid|String|资源的UUID，唯一标示该资源|4.1.0|
+|name|String|资源名称|4.1.0|
+|description|String|资源的详细描述|4.1.0|
+|zoneUuid|String|数据中心UUID|4.1.0|
+|physicalInterface|String|物理网卡|4.1.0|
+|type|String|分布式交换机类型|4.1.0|
+|vSwitchType|String|虚拟交换机类型|4.1.0|
+|virtualNetworkId|Integer|虚拟网络ID|4.1.0|
+|createDate|Timestamp|创建时间|4.1.0|
+|lastOpDate|Timestamp|最后一次修改时间|4.1.0|
+|attachedClusterUuids|List|挂载集群的UUID列表|4.1.0|
+|vlanMode|L2PortGroupVlanMode|详情参考[vlanMode](#p_vpd_gmw_51c)|4.1.0|
+
+### vlanMode
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|ACCESS|L2PortGroupVlanMode| |4.2.0|
+|TRUNK|L2PortGroupVlanMode| |4.2.0|
+|PVLAN|L2PortGroupVlanMode| |4.2.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.1.0|
+|description|String|错误的概要描述|4.1.0|
+|details|String|错误的详细信息|4.1.0|
+|elaboration|String|保留字段，默认为null|4.1.0|
+|opaque|LinkedHashMap|保留字段，默认为null|4.1.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.1.0|
+
+## SDK示例
+Java SDK
+
+```
+QueryL2VirtualSwitchNetworkAction action = new QueryL2VirtualSwitchNetworkAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryL2VirtualSwitchNetworkAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryL2VirtualSwitchNetworkAction action = QueryL2VirtualSwitchNetworkAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryL2VirtualSwitchNetworkAction.Result res = action.call()
+```
+
+</APIPage>

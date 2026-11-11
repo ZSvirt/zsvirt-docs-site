@@ -1,0 +1,12 @@
+{
+  "title": "Snapshot Basic Operations",
+  "pages": [
+    "index",
+    "create",
+    "restore",
+    "create-vm",
+    "view",
+    "delete"
+  ],
+  "pagesIndex": "index"
+}

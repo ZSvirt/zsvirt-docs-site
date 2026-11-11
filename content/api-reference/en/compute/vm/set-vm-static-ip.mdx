@@ -1,0 +1,93 @@
+---
+title: "Set VM Static IP"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/{vmInstanceUuid}/actions">
+
+Assign a static IP to a Virtual Machine NIC. Users can control the IP address allocated to the Virtual Machine NIC through this API.
+
+Users must ensure that the specified IP is within the specified Distributed Port Group and the IP is not already in use.
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "setVmStaticIp": {
+    "l3NetworkUuid": "61e66d487dff454f9509a1f19606d274",
+    "ip": "192.168.10.10"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"setVmStaticIp":{"l3NetworkUuid":"9fcbd78edb58391f8d9b879ea87598fd","ip":"192.168.10.10"}}' http://localhost:8080/zstack/v1/vm-instances/e3749802228a36038d0e17041414fd17/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|vmInstanceUuid|String|url|Virtual Machine UUID| |0.6|
+|l3NetworkUuid|String|body \(contained in **setVmStaticIp** structure\)|Distributed Port Group UUID| |0.6|
+|ip \(Optional\)|String|body \(contained in **setVmStaticIp** structure\)|Specified IP address| |4.6.21|
+|ip6 \(Optional\)|String|body \(contained in **setVmStaticIp** structure\)|Specified IPv6 address| |3.10.0|
+|systemTags \(Optional\)|List|body|System Tags| |0.6|
+|userTags \(Optional\)|List|body|User Tags| |0.6|
+|netmask \(Optional\)|String|body \(contained in **setVmStaticIp** structure\)|IPv4 subnet mask| |4.6.21|
+|gateway \(Optional\)|String|body \(contained in **setVmStaticIp** structure\)|IPv4 gateway| |4.6.21|
+|ipv6Gateway \(Optional\)|String|body \(contained in **setVmStaticIp** structure\)|IPv6 gateway| |4.6.21|
+|ipv6Prefix \(Optional\)|String|body \(contained in **setVmStaticIp** structure\)|IPv6 prefix length| |4.6.21|
+
+## API Response
+On success, this API returns an empty JSON structure **`{}`**. On error, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+SetVmStaticIpAction action = new SetVmStaticIpAction();
+action.vmInstanceUuid = "e3749802228a36038d0e17041414fd17";
+action.l3NetworkUuid = "9fcbd78edb58391f8d9b879ea87598fd";
+action.ip = "192.168.10.10";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+SetVmStaticIpAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SetVmStaticIpAction action = SetVmStaticIpAction()
+action.vmInstanceUuid = "e3749802228a36038d0e17041414fd17"
+action.l3NetworkUuid = "9fcbd78edb58391f8d9b879ea87598fd"
+action.ip = "192.168.10.10"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+SetVmStaticIpAction.Result res = action.call()
+```
+
+</APIPage>

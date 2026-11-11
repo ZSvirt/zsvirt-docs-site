@@ -1,0 +1,217 @@
+---
+title: "获取虚拟机可启动目的地列表"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/{uuid}/starting-target-hosts">
+
+获取一个停止的虚拟机可以启动的集群、主机列表。用户可以用该API判断一个停止的虚拟机可以在哪些集群、主机上启动。
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth: YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/d8cfc97f5099454bb3eed367a79d4e4c/starting-target-hosts
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|虚拟机UUID| |0.6|
+|systemTags \(可选\)|List|query|系统标签| |0.6|
+|userTags \(可选\)|List|query|用户标签| |0.6|
+
+## API返回
+返回示例
+
+```
+{
+  "hostInventories": [
+    {
+      "zoneUuid": "d876132a577135729b0d9c6a3913b66d",
+      "name": "example",
+      "uuid": "690fe2a9e75d3cd89697b4bc9de615e7",
+      "clusterUuid": "cadc7dac02873192bf76262f86e57fb4",
+      "description": "example",
+      "managementIp": "192.168.0.1",
+      "hypervisorType": "KVM",
+      "state": "Enabled",
+      "status": "Connected",
+      "totalCpuCapacity": 4,
+      "availableCpuCapacity": 2,
+      "totalMemoryCapacity": 4,
+      "availableMemoryCapacity": 4,
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ],
+  "clusterInventories": [
+    {
+      "name": "cluster1",
+      "uuid": "a7036593626b3d418ff55f9a767aec58",
+      "hypervisorType": "KVM",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM",
+      "zoneUuid": "faa41ed7d0a53cae99ff2a6d2c5d55dc"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_nts_4cz_zz)|0.6|
+|hosts|List|详情参考[hosts](#p_xsb_pcz_zz)|0.6|
+|clusters|List|详情参考[clusters](#p_oy3_pcz_zz)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### hosts
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|zoneUuid|String|数据中心UUID|0.6|
+|name|String|资源名称|0.6|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|clusterUuid|String|集群UUID|0.6|
+|description|String|资源的详细描述|0.6|
+|managementIp|String| |0.6|
+|hypervisorType|String| |0.6|
+|state|String| |0.6|
+|status|String| |0.6|
+|totalCpuCapacity|Long| |0.6|
+|availableCpuCapacity|Long| |0.6|
+|cpuSockets|Integer|物理CPU插槽数量|0.6|
+|totalMemoryCapacity|Long| |0.6|
+|availableMemoryCapacity|Long| |0.6|
+|cpuNum|Integer| |0.6|
+|ipmiAddress|String|IPMI地址|0.6|
+|ipmiUsername|String|IPMI用户名|0.6|
+|ipmiPort|Integer|IPMI端口|0.6|
+|ipmiPowerStatus|String|IPMI电源状态|0.6|
+|architecture|String| |0.6|
+|nqn|String|NVMe 限定名称|4.10.6|
+|hostname|String|主机名|4.10.20|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+|cpuStatus|HwMonitorStatus|详情参考[cpuStatus](#p_wvd_kkm_lhc)|4.10.0|
+|memoryStatus|HwMonitorStatus|详情参考[memoryStatus](#p_nhh_kkm_lhc)|4.10.0|
+|diskStatus|HwMonitorStatus|详情参考[diskStatus](#p_esk_kkm_lhc)|4.10.0|
+|nicStatus|HwMonitorStatus|详情参考[nicStatus](#p_n24_kkm_lhc)|4.10.0|
+|gpuStatus|HwMonitorStatus|详情参考[gpuStatus](#p_zgr_kkm_lhc)|4.10.0|
+|powerSupplyStatus|HwMonitorStatus|详情参考[powerSupplyStatus](#p_o35_kkm_lhc)|4.10.0|
+|fanStatus|HwMonitorStatus|详情参考[fanStatus](#p_m2x_kkm_lhc)|4.10.0|
+|raidStatus|HwMonitorStatus|详情参考[raidStatus](#p_oc1_lkm_lhc)|4.10.0|
+|temperatureStatus|HwMonitorStatus|详情参考[temperatureStatus](#p_cyd_lkm_lhc)|4.10.0|
+
+### cpuStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|HwMonitorStatus|正常|4.10.0|
+|Error|HwMonitorStatus|异常|4.10.0|
+|Unknown|HwMonitorStatus|未知|4.10.0|
+
+### memoryStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|HwMonitorStatus|正常|4.10.0|
+|Error|HwMonitorStatus|异常|4.10.0|
+|Unknown|HwMonitorStatus|未知|4.10.0|
+
+### diskStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|HwMonitorStatus|正常|4.10.0|
+|Error|HwMonitorStatus|异常|4.10.0|
+|Unknown|HwMonitorStatus|未知|4.10.0|
+
+### nicStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|HwMonitorStatus|正常|4.10.0|
+|Error|HwMonitorStatus|异常|4.10.0|
+|Unknown|HwMonitorStatus|未知|4.10.0|
+
+### gpuStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|HwMonitorStatus|正常|4.10.0|
+|Error|HwMonitorStatus|异常|4.10.0|
+|Unknown|HwMonitorStatus|未知|4.10.0|
+
+### powerSupplyStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|HwMonitorStatus|正常|4.10.0|
+|Error|HwMonitorStatus|异常|4.10.0|
+|Unknown|HwMonitorStatus|未知|4.10.0|
+
+### fanStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|HwMonitorStatus|正常|4.10.0|
+|Error|HwMonitorStatus|异常|4.10.0|
+|Unknown|HwMonitorStatus|未知|4.10.0|
+
+### raidStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|HwMonitorStatus|正常|4.10.0|
+|Error|HwMonitorStatus|异常|4.10.0|
+|Unknown|HwMonitorStatus|未知|4.10.0|
+
+### temperatureStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|HwMonitorStatus|正常|4.10.0|
+|Error|HwMonitorStatus|异常|4.10.0|
+|Unknown|HwMonitorStatus|未知|4.10.0|
+
+### clusters
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|name|String|资源名称|0.6|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|description|String|资源的详细描述|0.6|
+|state|String|集群状态|0.6|
+|hypervisorType|String|虚拟机管理程序类型|0.6|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+|zoneUuid|String|数据中心UUID|0.6|
+|type|String|保留域|0.6|
+
+## SDK示例
+Java SDK
+
+```
+GetVmStartingCandidateClustersHostsAction action = new GetVmStartingCandidateClustersHostsAction();
+action.uuid = "b2789350a2f438ab9190bd18b7773527";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetVmStartingCandidateClustersHostsAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = GetVmStartingCandidateClustersHostsAction()
+action.uuid = "b2789350a2f438ab9190bd18b7773527"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

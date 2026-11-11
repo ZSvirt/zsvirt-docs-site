@@ -1,0 +1,9 @@
+{
+  "title": "Change Host",
+  "pages": [
+    "index",
+    "hot-migration",
+    "cold-migration"
+  ],
+  "pagesIndex": "index"
+}

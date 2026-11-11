@@ -1,0 +1,94 @@
+---
+title: "查询定时任务记录"
+---
+
+<APIPage method="GET" path="/v1/scheduler/job/history">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/scheduler/job/history?q=schedulerJobGroupUuid=7ae6456c0b01324dae6d4bef358a5772
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QuerySchedulerJobHistory`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "id": 1.0,
+      "triggerUuid": "add8c5eea85f41999baff295e47567bc",
+      "schedulerJobUuid": "d7696913343040d8b98de04d59727711",
+      "startTime": "Nov 14, 2017 10:20:57 PM",
+      "executeTime": 900.0,
+      "targetResourceUuid": "7cd923fa779044fd8510e8ee97aa579e",
+      "requestDump": "{\"bsUuid\":\"716078c20a0047a69102174c6097a690\"}",
+      "resultDump": "{\"apiId\":\"f8cf5b6281164e519c0575a73b1b0d9c\",\"success\":true,\"headers\":{},\"id\":\"d70a61ab1b20407c8df94ba7d90be081\",\"createdTime\":1557305707668}",
+      "success": true
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_htl_cqv_vhb)|3.5.0|
+|inventories|List|详情参考[inventories](#p_qjs_cqv_vhb)|3.5.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.5.0|
+|description|String|错误的概要描述|3.5.0|
+|details|String|错误的详细信息|3.5.0|
+|elaboration|String|保留字段，默认为null|3.5.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.5.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.5.0|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|id|long| |3.5.0|
+|triggerUuid|String|定时器UUID|3.5.0|
+|schedulerJobUuid|String|定时任务UUID|3.5.0|
+|schedulerJobGroupUuid|String|定时任务组UUID|3.5.0|
+|startTime|Timestamp|开始时间|3.5.0|
+|executeTime|long|执行时长|3.5.0|
+|targetResourceUuid|String|目标资源UUID|3.5.0|
+|requestDump|String|任务请求|3.5.0|
+|resultDump|String|任务结果|3.5.0|
+|success|boolean| |3.5.0|
+
+## SDK示例
+Java SDK
+
+```
+QuerySchedulerJobHistoryAction action = new QuerySchedulerJobHistoryAction();
+action.conditions = asList("schedulerJobGroupUuid=7ae6456c0b01324dae6d4bef358a5772");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QuerySchedulerJobHistoryAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QuerySchedulerJobHistoryAction action = QuerySchedulerJobHistoryAction()
+action.conditions = ["schedulerJobGroupUuid=7ae6456c0b01324dae6d4bef358a5772"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QuerySchedulerJobHistoryAction.Result res = action.call()
+```
+
+</APIPage>

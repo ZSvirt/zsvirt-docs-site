@@ -1,0 +1,11 @@
+{
+  "title": "Introduction",
+  "pages": [
+    "index",
+    "product-features",
+    "interface",
+    "initialization",
+    "manual-initialization",
+    "restore-from-backup"
+  ]
+}

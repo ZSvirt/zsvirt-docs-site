@@ -1,0 +1,10 @@
+{
+  "title": "VM Scheduling Policy",
+  "pages": [
+    "overview",
+    "create-vm-policy",
+    "create-host-policy",
+    "manage"
+  ],
+  "pagesIndex": "overview"
+}

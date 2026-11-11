@@ -1,0 +1,86 @@
+---
+title: "Test ZStone Connection"
+---
+
+<APIPage method="PUT" path="/v1/zstone-plugin/test-connection">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "zStoneTestConnection": {
+    "managementIp": "172.0.0.1",
+    "port": 4010,
+    "url": "/open/ping"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"zStoneTestConnection":{"managementIp":"172.0.0.1","port":4010,"url":"/open/ping"}}' \
+http://localhost:8080/zstack/v1/zstone-plugin/test-connection
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|managementIp|String|body \(included in `zStoneTestConnection` structure\)|ZStone management node IP| |4.10.6|
+|port \(Optional\)|Integer|body \(included in `zStoneTestConnection` structure\)|ZStone API service port| |4.10.6|
+|url \(Optional\)|String|body \(included in `zStoneTestConnection` structure\)|ZStone test connection URL| |4.10.6|
+|systemTags \(Optional\)|List|body|System Tag| |4.10.6|
+|userTags \(Optional\)|List|body|User Tag| |4.10.6|
+
+## API Response
+This API returns an empty JSON structure `{}` on success, and a JSON structure containing an error field on failure, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+ZStoneTestConnectionAction action = new ZStoneTestConnectionAction();
+action.managementIp = "172.0.0.1";
+action.port = 4010;
+action.url = "/open/ping";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ZStoneTestConnectionAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ZStoneTestConnectionAction action = ZStoneTestConnectionAction()
+action.managementIp = "172.0.0.1"
+action.port = 4010
+action.url = "/open/ping"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ZStoneTestConnectionAction.Result res = action.call()
+```
+
+</APIPage>

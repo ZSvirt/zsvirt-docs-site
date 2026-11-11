@@ -1,0 +1,9 @@
+{
+  "title": "ZSvirt Upgrade",
+  "pages": [
+    "index",
+    "management-node-environment",
+    "management-node-ha-environment"
+  ],
+  "pagesIndex": "index"
+}

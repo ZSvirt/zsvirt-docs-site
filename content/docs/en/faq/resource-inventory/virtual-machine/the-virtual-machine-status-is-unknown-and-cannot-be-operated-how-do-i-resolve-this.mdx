@@ -1,0 +1,21 @@
+---
+title: "The virtual machine status is unknown and cannot be operated. How do I resolve this?"
+---
+
+<HistoricalNamingNote locale="en" />
+
+## Cause
+The host is in an abnormal state, preventing virtual machine operations through the virtualization platform UI.
+
+## Solution
+1.  Check whether the host running the virtual machine is in a disconnected state.
+
+2.  Log in to the Management Node and run the following commands to stop the virtual machine:
+
+    ```
+    [root@localhost ~]# zstack-cli
+    admin >>> LogInByAccount accountName=admin password=$password  //admin password
+    admin >>>  UpdateVmInstance state=Stopped uuid=$UUID  //UUID of the target virtual machine
+    ```
+
+3.  Restart the virtual machine from the virtualization platform UI.

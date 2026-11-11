@@ -1,0 +1,11 @@
+---
+title: "The Linux VNC console displays uppercase/lowercase characters that are reversed from keyboard input. How do I resolve this?"
+---
+
+## Cause
+The Virtual Machine operating system has a Caps Lock state mismatch.
+
+## Solution
+-   Run one of the following commands inside the operating system:
+
+    `setleds +caps` or `setleds -caps`

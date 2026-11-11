@@ -1,0 +1,86 @@
+---
+title: "从镜像存储元数据中同步镜像"
+---
+
+<APIPage method="PUT" path="/v1/backup-storage/image-store/{imageStoreUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "syncImage": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"syncImage":{}}' \
+http://localhost:8080/zstack/v1/backup-storage/image-store/81f447310d194ef5a8c0f7bbdcdc8401/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|imageStoreUuid|String|url|镜像仓库UUID| |4.7.11|
+|systemTags \(可选\)|List|body|系统标签| |4.7.11|
+|userTags \(可选\)|List|body|用户标签| |4.7.11|
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.7.11|
+|description|String|错误的概要描述|4.7.11|
+|details|String|错误的详细信息|4.7.11|
+|elaboration|String|保留字段，默认为null|4.7.11|
+|opaque|LinkedHashMap|保留字段，默认为null|4.7.11|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.7.11|
+
+## SDK示例
+Java SDK
+
+```
+SyncImageAction action = new SyncImageAction();
+action.imageStoreUuid = "cff07127e2134fe28396a1aaeb70a1cf";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+SyncImageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SyncImageAction action = SyncImageAction()
+action.imageStoreUuid = "8a1247ffe8354566adb6ccae56aa1db3"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+SyncImageAction.Result res = action.call()
+```
+
+</APIPage>

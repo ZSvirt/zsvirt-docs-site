@@ -1,0 +1,337 @@
+---
+title: "Add Label to Alarm"
+---
+
+<APIPage method="POST" path="/v1/zwatch/alarms/{alarmUuid}/labels">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "key": "VMUuid",
+    "value": "2840f151485641cca48b190ebb989cbf",
+    "operator": "Equal"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the **systemTags** and **userTags** fields can be omitted. They are listed here to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"key":"VMUuid","value":"165af818089b4e9f8c07691de549f8d4","operator":"Equal"}}' http://localhost:8080/zstack/v1/zwatch/alarms/00b90ca9d59d3f539530fbcc8572c403/labels
+```
+
+Parameter List
+
+<table id="table_vfr_mwj_p2b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+alarmUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+Alarm UUID.
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+key
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+Label key.
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+value
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+Label value.
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+operator
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+Operator.
+
+</td><td>
+
+-   Regex
+-   Equal
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+resourceUuid \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags.
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags.
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "3f54b760c8d64e17bc282258335b718a",
+    "key": "VMUuid",
+    "operator": "=",
+    "value": "dd5b28c103594573b7bb21a02cb000c4"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null on success. See [error](#p_h5p_5wj_p2b) for details.|2.3|
+|inventory|AlarmInventory|See [inventory](#p_slh_wwj_p2b) for details.|2.3|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001.|2.3|
+|description|String|A brief description of the error.|2.3|
+|details|String|Detailed information about the error.|2.3|
+|elaboration|String|A reserved field. Default is null.|2.3|
+|opaque|LinkedHashMap|A reserved field. Default is null.|2.3|
+|cause|ErrorCode|The root error. The source error that caused the current error. This field is null if there is no root error.|2.3|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource.|2.3|
+|name|String|Resource name.|2.3|
+|description|String|Detailed description of the resource.|2.3|
+|period|Integer|Threshold duration.|2.3|
+|namespace|String|Namespace.|2.3|
+|metricName|String|Metric name.|2.3|
+|threshold|Double|Threshold.|2.3|
+|repeatInterval|Integer|Alarm repeat interval.|2.3|
+|createDate|Timestamp|Creation time.|2.3|
+|lastOpDate|Timestamp|Last modification time.|2.3|
+|comparisonOperator|ComparisonOperator|See [comparisonOperator](#p_bc1_ywj_p2b) for details.|2.3|
+|status|AlarmStatus|See [status](#p_xz3_ywj_p2b) for details.|2.3|
+|labels|List|See [labels](#p_vy4_1xj_p2b) for details.|2.3|
+|actions|List|See [actions](#p_xts_bxj_p2b) for details.|2.3|
+
+### comparisonOperator
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name.|2.3|
+|ordinal|int| |2.3|
+
+### status
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|OK|AlarmStatus|Monitoring.|2.3|
+|Alarm|AlarmStatus|Triggered.|2.3|
+|InsufficientData|AlarmStatus|Insufficient data.|2.3|
+
+### labels
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource.|2.3|
+|key|String|Label key.|2.3|
+|operator|String|Comparison operator.|2.3|
+|value|String|Label value.|2.3|
+
+### actions
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|alarmUuid|String|Alarm UUID.|2.3|
+|actionType|String|Alarm action type.|2.3|
+|actionUuid|String|Alarm action UUID.|2.3|
+
+## SDK Examples
+Java SDK
+
+```
+AddLabelToAlarmAction action = new AddLabelToAlarmAction();
+action.alarmUuid = "00b90ca9d59d3f539530fbcc8572c403";
+action.key = "VMUuid";
+action.value = "bfaa02ec5c37490d829ae95bebf15b78";
+action.operator = "Equal";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddLabelToAlarmAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddLabelToAlarmAction action = AddLabelToAlarmAction()
+action.alarmUuid = "00b90ca9d59d3f539530fbcc8572c403"
+action.key = "VMUuid"
+action.value = "b4eb5d369bfb45719fbe862484011563"
+action.operator = "Equal"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddLabelToAlarmAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,9 @@
+{
+  "title": "消息模板",
+  "pages": [
+    "index",
+    "create",
+    "manage"
+  ],
+  "pagesIndex": "index"
+}

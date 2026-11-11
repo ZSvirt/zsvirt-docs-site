@@ -1,0 +1,17 @@
+---
+title: 'User Group Management'
+---
+
+A user group is a collection of users that supports permission control at the group level. With user groups, you can assign permissions to multiple users for easier management. For example, if you have a user group named UserGroup-1 and associate it with roles that involve storage resource permissions, then all users within this group will automatically inherit the role permissions from UserGroup-1. If there's a new user who needs storage resource permissions, you can achieve the necessary permission allocation by adding this user to the UserGroup-1 user group. In case of changes in users, such as replacing old users with new ones, you don't need to modify permissions for each old user individually; instead, you can simply remove the old users from the user group.
+
+Some key features of user groups include:
+
+-   A user group can contain multiple users, and a user can belong to multiple user groups.
+-   User groups cannot be nested. User groups can only contain users, not other user groups.
+-   A user group can be assigned multiple roles. When a user group is assigned multiple roles, users within the group will inherit the combined permissions of those roles.
+
+-   **[New User Group](/en/docs/user-guide/system/iam/user-groups/create-group)**  
+Create a user group, add users to the group, so that all users under the user group can obtain the corresponding permissions, facilitating unified permission management.
+-   **[Modify User Group Configuration](/en/docs/user-guide/system/iam/user-groups/modify-group)**  
+Edit the basic information of a user group, such as the users within the group, roles assigned to the group, and resources shared with the group.
+-   **[Delete User Group](/en/docs/user-guide/system/iam/user-groups/delete-group)**

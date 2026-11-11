@@ -1,0 +1,10 @@
+{
+  "title": "添加本地备份存储",
+  "pages": [
+    "index",
+    "reuse-image-storage",
+    "reuse-host",
+    "dedicated-backup-storage"
+  ],
+  "pagesIndex": "index"
+}

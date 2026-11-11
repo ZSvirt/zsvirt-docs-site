@@ -1,0 +1,64 @@
+---
+title: "删除主机"
+---
+
+<APIPage method="DELETE" path="/v1/hosts/{uuid}?deleteMode={deleteMode}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/hosts/bb2e5125ac2c4b3680463d7aeaf57773?deleteMode=Permissive
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |0.6|
+|deleteMode \(可选\)|String|body|删除模式\(Permissive 或者 Enforcing，默认 Permissive\)| |0.6|
+|systemTags \(可选\)|List|body|系统标签| |0.6|
+|userTags \(可选\)|List|body|用户标签| |0.6|
+
+## API返回
+该API成功时返回一个空的JSON结构**`{}`**，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+DeleteHostAction action = new DeleteHostAction();
+action.uuid = "2d4b91d9831d4630bf113ea75f78cb7a";
+action.deleteMode = "Permissive";
+action.sessionId = "923c9089a5fd4ea5b9fbfc1dec5802e2";
+DeleteHostAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteHostAction action = DeleteHostAction()
+action.uuid = "f62a37111c154ec9afeaeb2700ebcfe6"
+action.deleteMode = "Permissive"
+action.sessionId = "2aa7f575d8654712ba985f4a36594f0a"
+DeleteHostAction.Result res = action.call()
+```
+
+</APIPage>

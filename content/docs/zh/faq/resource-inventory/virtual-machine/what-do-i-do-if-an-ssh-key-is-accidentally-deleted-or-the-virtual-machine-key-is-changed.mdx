@@ -1,0 +1,28 @@
+---
+title: "误删除SSH Key或修改虚拟机密钥，怎么办？"
+---
+
+## 现象
+虚拟机无法使用密钥连接。
+
+## 原因
+虚拟机密钥丢失或更新了密钥。
+
+## 解决方案
+1.  在虚拟机系统内执行以下命令，重新生成密钥：
+
+    ```
+    [root@localhost ~]# ssh-keygen
+    Generating public/private rsa key pair.
+    Enter file in which to save the key (/root/.ssh/id_rsa):
+    # 点击【回车】
+    /root/.ssh/id_rsa already exists.
+    Overwrite (y/n)?
+    # 点击【回车】
+    ```
+
+2.  执行以下命令，配置免密，并将密钥发送至对端虚拟机：
+
+    ```
+    [root@localhost ~]# ssh-copy-id $IP
+    ```

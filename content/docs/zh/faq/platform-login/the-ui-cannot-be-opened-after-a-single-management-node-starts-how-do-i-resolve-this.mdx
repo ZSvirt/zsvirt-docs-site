@@ -1,0 +1,18 @@
+---
+title: "单管理节点启动后无法打开UI界面，如何解决？"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+## 现象
+无法打开UI界面，出现**permission denied**提示。
+
+## 原因
+管理节点配置文件权限异常。
+
+## 解决方案
+-   登录管理节点系统执行以下命令，修改`zstack.properties`所属用户组为zstack。
+
+    ```
+    [root@localhost ~]#  chown  zstack:zstack  /usr/local/zstack/apache-tomcat/webapps/zstack/WEB-INF/classes/zstack.properties
+    ```

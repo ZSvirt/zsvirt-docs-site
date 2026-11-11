@@ -1,0 +1,73 @@
+---
+title: "Demote Current Management Node in Dual-MN Setup"
+---
+
+<APIPage method="PUT" path="/v1/management-nodes/zsha2/demote">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "zSha2Demote": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the `systemTags` and `userTags` fields can be omitted. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"zSha2Demote":{}}' \
+http://localhost:8080/zstack/v1/management-nodes/zsha2/demote
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|systemTags \(Optional\)|List|query|System tags| |4.10.20|
+|userTags \(Optional\)|List|query|User tags| |4.10.20|
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+ZSha2DemoteAction action = new ZSha2DemoteAction();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ZSha2DemoteAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = ZSha2DemoteAction()
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

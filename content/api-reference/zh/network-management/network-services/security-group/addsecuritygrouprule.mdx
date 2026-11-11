@@ -1,0 +1,461 @@
+---
+title: "添加安全组规则"
+---
+
+<APIPage method="POST" path="/v1/security-groups/{securityGroupUuid}/rules">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "rules": [
+      {
+        "type": "Ingress",
+        "state": "Enabled",
+        "description": "test",
+        "remoteSecurityGroupUuid": "7d4337c2b18339ffb6f5d1023fc2ea42",
+        "ipVersion": 4,
+        "protocol": "TCP",
+        "srcIpRange": "10.0.0.1,10.0.0.2-10.0.0.200,10.1.1.0/24",
+        "dstIpRange": "10.0.0.1,10.0.0.2-10.0.0.200,10.1.1.0/24",
+        "dstPortRange": "1000,1001,1002-1005,1008",
+        "action": "ACCEPT"
+      }
+    ],
+    "priority": -1
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" 
+-H "Authorization: OAuth YOUR_SESSION_UUID" 
+-X POST -d '{"params":{"rules":[{"type":"Ingress","state":"Enabled","description":"test","remoteSecurityGroupUuid":"7d4337c2b18339ffb6f5d1023fc2ea42","ipVersion":4,"protocol":"TCP","srcIpRange":"10.0.0.1,10.0.0.2-10.0.0.200,10.1.1.0/24","dstIpRange":"10.0.0.1,10.0.0.2-10.0.0.200,10.1.1.0/24","dstPortRange":"1000,1001,1002-1005,1008","action":"ACCEPT"}],"priority":-1}}' 
+http://localhost:8080/zstack/v1/security-groups/00fdf47ec62b316a8f17c80d0ee59a01/rules
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|securityGroupUuid|String|url|安全组UUID| |0.6|
+|rules|List|body\(包含在**params**结构中\)|安全组中的规则| |0.6|
+|remoteSecurityGroupUuids \(可选\)|List|body\(包含在**params**结构中\)|应用组间策略的远端安全组UUID| |2.1|
+|priority\(可选\)|Integer|body\(包含在**params**结构中\)|规则优先级| |4.7.21|
+|systemTags \(可选\)|List|body|系统标签| |0.6|
+|userTags \(可选\)|List|body|用户标签| |0.6|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "5949aece9cd64d5a939d6dc5e2c1f327",
+    "name": "web",
+    "description": "for test",
+    "state": "Enabled",
+    "createDate": "Sep 22, 2017 12:24:11 PM",
+    "lastOpDate": "Sep 22, 2017 12:24:11 PM",
+    "internalId": 0
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_qyp_cw5_m1b)|0.6|
+|inventory|SecurityGroupInventory|详情参考[inventory](#p_qj5_cw5_m1b)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|name|String|资源名称|0.6|
+|description|String|资源的详细描述|0.6|
+|state|String| |0.6|
+|ipVersion|Integer|ip协议号|3.1.0|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+|attachedL3NetworkUuids|Set| |0.6|
+|rules|List|详情参考[rules](#p_ipx_cw5_m1b)|0.6|
+
+### rules
+<table id="table_iv3_sv5_m1b"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+描述
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+资源的UUID，唯一标示该资源
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+securityGroupUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+安全组UUID
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+type
+
+</td><td>
+
+String
+
+</td><td>
+
+流量类型
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+ipVersion
+
+</td><td>
+
+Integer
+
+</td><td>
+
+ip协议号
+
+</td><td>
+
+3.1.0
+
+</td></tr><tr><td>
+
+protocol
+
+</td><td>
+
+String
+
+</td><td>
+
+流量协议类型
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+state
+
+</td><td>
+
+String
+
+</td><td>
+
+规则的可用状态
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+priority
+
+</td><td>
+
+Integer
+
+</td><td>
+
+规则优先级
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+description
+
+</td><td>
+
+String
+
+</td><td>
+
+规则描述
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+srcIpRange
+
+</td><td>
+
+String
+
+</td><td>
+
+源IP范围
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+dstIpRange
+
+</td><td>
+
+String
+
+</td><td>
+
+目的IP范围
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+srcPortRange
+
+</td><td>
+
+String
+
+</td><td>
+
+源端口范围，当前版本未实现
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+dstPortRange
+
+</td><td>
+
+String
+
+</td><td>
+
+目的端口范围
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+action
+
+</td><td>
+
+String
+
+</td><td>
+
+规则的默认动作
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+remoteSecurityGroupUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+allowedCidr
+
+</td><td>
+
+String
+
+</td><td>
+
+允许的CIDR，根据流量类型的不同，允许的CIDR有不同的含义-   如果流量类型是Ingress，允许的CIDR是允许访问虚拟机网卡的源CIDR
+-   如果流量类型是Egress，允许的CIDR是允许从虚拟机网卡离开并到达的目的地CIDR创建时间
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+startPort
+
+</td><td>
+
+Integer
+
+</td><td>
+
+-   如果协议是TCP/UDP，它是端口范围（port range）的起始端口号
+-   如果协议是ICMP，它是ICMP类型（type）
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+endPort
+
+</td><td>
+
+Integer
+
+</td><td>
+
+-   如果协议是TCP/UDP，它是端口范围（port range）的起始端口号
+-   如果协议是ICMP，它是ICMP类型（type）
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+createDate
+
+</td><td>
+
+Timestamp
+
+</td><td>
+
+创建时间
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+lastOpDate
+
+</td><td>
+
+Timestamp
+
+</td><td>
+
+最后一次修改时间
+
+</td><td>
+
+0.6
+
+</td></tr></tbody>
+</table>
+
+## SDK示例
+Java SDK
+
+```
+AddSecurityGroupRuleAction action = new AddSecurityGroupRuleAction();
+action.securityGroupUuid = "00fdf47ec62b316a8f17c80d0ee59a01";
+action.rules = asList([type:Ingress, state:Enabled, description:test, remoteSecurityGroupUuid:7d4337c2b18339ffb6f5d1023fc2ea42, ipVersion:4, protocol:TCP, srcIpRange:10.0.0.1,10.0.0.2-10.0.0.200,10.1.1.0/24, dstIpRange:10.0.0.1,10.0.0.2-10.0.0.200,10.1.1.0/24, dstPortRange:1000,1001,1002-1005,1008, action:ACCEPT]);
+action.priority = -1;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddSecurityGroupRuleAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+AddSecurityGroupRuleAction action = AddSecurityGroupRuleAction()
+action.securityGroupUuid = "00fdf47ec62b316a8f17c80d0ee59a01"
+action.rules = [[type:Ingress, state:Enabled, description:test, remoteSecurityGroupUuid:7d4337c2b18339ffb6f5d1023fc2ea42, ipVersion:4, protocol:TCP, srcIpRange:10.0.0.1,10.0.0.2-10.0.0.200,10.1.1.0/24, dstIpRange:10.0.0.1,10.0.0.2-10.0.0.200,10.1.1.0/24, dstPortRange:1000,1001,1002-1005,1008, action:ACCEPT]]
+action.priority = -1
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddSecurityGroupRuleAction.Result res = action.call()
+
+```
+
+</APIPage>

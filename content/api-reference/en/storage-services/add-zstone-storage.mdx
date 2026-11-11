@@ -1,0 +1,123 @@
+---
+title: "Add ZStone"
+---
+
+<APIPage method="POST" path="/v1/zstone-plugin">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "zstone-storage",
+    "username": "admin",
+    "managementIp": "172.0.0.1",
+    "logInPort": 4000,
+    "apiPort": 4010,
+    "logInUrl": "/sso/v1/accounts/login"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"zstone-storage","username":"admin","managementIp":"172.0.0.1","logInPort":4000,"apiPort":4010,"logInUrl":"/sso/v1/accounts/login"}}' \
+http://localhost:8080/zstack/v1/zstone-plugin
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|name|String|body \(included in `params` structure\)|Name of this ZStone-Storage in ZSvirt| |4.10.6|
+|username \(Optional\)|String|body \(included in `params` structure\)|Username for login, typically admin| |4.10.6|
+|password \(Optional\)|String|body \(included in `params` structure\)|Password for login| |4.10.6|
+|managementIp|String|body \(included in `params` structure\)|ZStone management node IP| |4.10.6|
+|logInPort \(Optional\)|int|body \(included in `params` structure\)|ZStone login service port| |4.10.6|
+|apiPort \(Optional\)|int|body \(included in `params` structure\)|ZStone API service port| |4.10.6|
+|logInUrl \(Optional\)|String|body \(included in `params` structure\)|ZStone login URL| |4.10.6|
+|resourceUuid \(Optional\)|String|body \(included in `params` structure\)|Resource UUID| |4.10.6|
+|tagUuids \(Optional\)|List|body \(included in `params` structure\)|Tag UUID list| |4.10.6|
+|systemTags \(Optional\)|List|body|System Tag| |4.10.6|
+|userTags \(Optional\)|List|body|User Tag| |4.10.6|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "53c0433a817349f89f66532addeb8b6c",
+    "name": "zstone-plugin",
+    "username": "admin",
+    "managementIp": "127.0.0.1",
+    "authorizationServer": "Local",
+    "logInPort": 4000,
+    "apiPort": 4010,
+    "logInUrl": "/sso/v1/accounts/login",
+    "createDate": "Nov 14, 2017 2:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean|Whether the creation was successful|4.10.6|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. For details, see [error](#p_bcl_x1v_m1b)|4.10.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, for example SYS.1000, HOST.1001|4.10.0|
+|description|String|Brief summary of the error|4.10.0|
+|details|String|Detailed error information|4.10.0|
+|elaboration|String|Reserved field, defaults to null|4.10.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|4.10.0|
+|cause|ErrorCode|Root cause: the source error that triggered the current error. If there is no original error, this field is null|4.10.0|
+
+## SDK Examples
+Java SDK
+
+```
+AddZStoneAction action = new AddZStoneAction();
+action.name = "zstone-storage";
+action.username = "admin";
+action.managementIp = "172.0.0.1";
+action.logInPort = 4000;
+action.apiPort = 4010;
+action.logInUrl = "/sso/v1/accounts/login";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddZStoneAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddZStoneAction action = AddZStoneAction()
+action.name = "zstone-storage"
+action.username = "admin"
+action.managementIp = "172.0.0.1"
+action.logInPort = 4000
+action.apiPort = 4010
+action.logInUrl = "/sso/v1/accounts/login"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddZStoneAction.Result res = action.call()
+```
+
+</APIPage>

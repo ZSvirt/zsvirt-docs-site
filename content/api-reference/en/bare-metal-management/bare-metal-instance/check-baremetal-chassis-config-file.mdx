@@ -1,0 +1,78 @@
+---
+title: "Check Bare Metal Chassis Config File"
+---
+
+<APIPage method="POST" path="/v1/baremetal/chassis/from-file/check">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "baremetalChassisInfo": "FILE CONTENT ENCODE BY BASE64"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that these fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"baremetalChassisInfo":"FILE CONTENT ENCODE BY BASE64"}}' \
+http://localhost:8080/zstack/v1/baremetal/chassis/from-file/check
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|baremetalChassisInfo|String|body\(included in the `params` structure\)|Bare metal chassis information encoded in base64| |3.1.1|
+|systemTags \(Optional\)|List|body|System Tag| |3.1.1|
+|userTags \(Optional\)|List|body|User Tag| |3.1.1|
+
+## API Response
+This API returns an empty JSON structure `{}` on success. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+CheckBaremetalChassisConfigFileAction action = new CheckBaremetalChassisConfigFileAction();
+action.baremetalChassisInfo = "FILE CONTENT ENCODE BY BASE64";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CheckBaremetalChassisConfigFileAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = CheckBaremetalChassisConfigFileAction()
+action.baremetalChassisInfo = "FILE CONTENT ENCODE BY BASE64"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,93 @@
+---
+title: '(Optional) Manage VM Access and Boot Options'
+---
+
+Before accessing a virtual machine, you may configure the following settings according to your business needs: boot options, remote access, and login authentication.
+
+## Manage Boot Options
+The boot options include the following settings:
+
+-   Boot Order: Define the sequence for loading the operating system during VM startup.
+
+    For example, if you set the boot order as (1) Disk 1, (2) CD/DVD Drive, and (3) Network, the VM boots in this sequence:
+
+    1.  First the VM attempts to boot from disk 1. If successful, the VM will not try CD/DVD drive.
+    2.  If booting from disk 1 fails, the VM attempts to boot from CD/DVD drive. If successful, the VM will not try the network.
+    3.  If booting from CD/DVD drive fails, the VM attempts to boot from the network. If the system loads successfully from the network, boot succeeds. Otherwise, boot fails and the system will not start.
+-   BIOS Mode: Select the BIOS mode based on the image format:
+
+    -   Legacy: Supports x86 architecture and all operating systems.
+    -   UEFI: Required for aarch64 architecture. Supports Windows and CentOS. Windows 7/2008 requires compatibility support module (CSM).
+    Mismatched BIOS mode may cause virtual machines to malfunction:
+
+    -   For qcow2 or raw images, select the BIOS mode that is consistent with the template.
+    -   For iso images, you can select a BIOS mode as needed. Then, the system will be booted accordingly.
+-   BIOS Post Delay: Set the automatic delay time for BIOS interface. Valid value: 1 to 60 seconds. If you do not perform any operation during this period, the system automatically proceeds to boot.
+
+**Prerequisites**
+
+To configure boot options, make sure the virtual machine is shut down.
+
+**Procedure**
+
+1.  On the target virtual machine page, click **Advanced Settings**.
+2.  On the Advanced Settings tab, choose **Boot Options**.
+3.  Click **Edit**, then configure boot order, BIOS mode, BIOS post delay as needed.
+
+## Manage Remote Access Settings
+The remote access includes the following settings:
+
+-   Console Mode: Select the protocol type for connecting to the VM console:
+    -   VNC: Support both Linux and Windows systems. Primarily used for Linux server management with typical network traffic around 100 KB.
+    -   SPICE: Support Linux systems with superior color/audio/video/USB capabilities. Ideal for virtual desktop applications with typical network traffic around 10 to 20 MB. In this mode, you can configure the number of connected displays and video streaming mode (off, all, or filter).
+    -   VNC+SPICE: Support both VNC and SPICE protocols. You can configure the number of connected displays and video streaming mode (off, all, or filter).
+-   Condole Password: Set the console access password.
+
+    -   Character requirements: Support letters, numbers, and these special characters: -\`=\[\];',./~!@\#$%^&amp;\*()\_+\|\{\}:"&lt;&gt;?
+    -   Length requirements: 6 to 8 characters.
+    You can customize the VNC console password strength. For more information, see Security Settings.
+
+**Prerequisites**
+
+To configure remote access, make sure the virtual machine is shut down.
+
+**Procedure**
+
+1.  On the target virtual machine page, click **Advanced Settings**.
+2.  On the Advanced Settings tab, choose **Remote Access**.
+3.  Click **Edit**, then configure console mode and console password as needed.
+
+## Manage Login Authentication Settings
+The login authentication includes the following settings:
+
+-   Set SSH Key:
+
+    1.  After installing cloud-init, the SSH authentication is disabled by default. To enabled it, set the `ssh_pwauth` parameter to **1** in `/etc/cloud/cloud.cfg`.
+    2.  Generate an SSH key pair using the `ssh-keygen` command. The public key is stored in `/root/.ssh/id_rsa.pub` by default.
+    3.  Copy and paste the file content into the SSH Key input field.
+    <Callout type="info">
+    -   When injecting SSH KEY during new VM creation, it takes effect after the first boot.
+    -   For existing VMs receiving SSH KEY for the first time, you must reboot the VM.
+    -   To re-inject SSH KEY for VMs with existing configurations, first run `rm -rf /var/lib/cloud/instances` to clear previous settings before injecting the new SSH KEY and rebooting.
+    -   Deleting SSH KEY only removes the record from the system, not from VM configurations. To completely remove SSH KEY, manually delete it from `/root/.ssh/authorized_keys` in the VM.
+    </Callout>
+-   Change VM Password:
+    1.  Modify the login name as needed. Options include system default and custom login name.
+
+        Default login name: root for Linux and Administrator for Windows.
+
+    2.  Set a new password.
+        -   Character requirements: Support letters, numbers, and these special characters: -\`=\[\];',./~!@\#$%^&amp;\*()\_+\|\{\}:"&lt;&gt;?
+
+            You can customize the VM password strength. For more information, see Security Settings.
+
+**Prerequisites**
+
+-   Before configuring SSH public key, you must install VMTools (cloud-init). Recommended versions: 0.7.9, 17.1, 19.4, or later.
+-   Before changing VM password, ensure the VM is running and has VMTools (QGA) installed.
+
+**Procedure**
+
+1.  On the target virtual machine page, click **Advanced Settings**.
+2.  On the Advanced Settings tab, choose **Login Authentication**.
+3.  Click **Set SSH Key** or **Change VM Password**.

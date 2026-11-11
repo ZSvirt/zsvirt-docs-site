@@ -1,0 +1,64 @@
+---
+title: "Delete Email Address of SNS Email Endpoint"
+---
+
+<APIPage method="DELETE" path="/v1/sns/application-endpoints/emails/{endpointUuid}/email-addresses/{emailAddressUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/sns/application-endpoints/emails/c9d1789432133840862986db31a8e3fb/email-addresses/7671c40279e23d1cba927a5726957fcb
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|emailAddressUuid|String|url| | |3.7.0|
+|endpointUuid|String|url| | |3.7.0|
+|systemTags \(Optional\)|List|body| | |3.7.0|
+|userTags \(Optional\)|List|body| | |3.7.0|
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DeleteEmailAddressOfSNSEmailEndpointAction action = new DeleteEmailAddressOfSNSEmailEndpointAction();
+action.emailAddressUuid = "7671c40279e23d1cba927a5726957fcb";
+action.endpointUuid = "c9d1789432133840862986db31a8e3fb";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteEmailAddressOfSNSEmailEndpointAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteEmailAddressOfSNSEmailEndpointAction action = DeleteEmailAddressOfSNSEmailEndpointAction()
+action.emailAddressUuid = "7671c40279e23d1cba927a5726957fcb"
+action.endpointUuid = "c9d1789432133840862986db31a8e3fb"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DeleteEmailAddressOfSNSEmailEndpointAction.Result res = action.call()
+```
+
+</APIPage>

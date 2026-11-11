@@ -1,0 +1,104 @@
+---
+title: 'New Resource Alarm'
+---
+
+Resource alarms are used to monitor time-series data of resources within the platform. For example, you can set an alarm for the CPU usage of a virtual machine. If the CPU usage exceeds 80% and persists for 5 minutes, it will trigger a system alarm.
+
+## Before You Begin
+
+- ZSvirt provides system parameter functionality to globally control the default behavior of platform settings. You can customize parameters related to alarms within the system parameters. For more information, see System Parameters.
+- Some alarm items require VMTools for monitoring and alerting. For more information about VMTools, see Virtual Machine VMTools.
+
+## Procedure
+
+<Steps>
+
+<Step>
+
+### Go to Resource Alarms
+
+In the navigation pane, choose **O&M Management** &gt; **Alarm** &gt; **Resource Alarm**.
+
+On the Resource Alarm page, click **New Resource Alarm**.
+
+</Step>
+
+<Step>
+
+### Configure the Alarm
+
+In the New Resource Alarm dialog, set the following parameters.
+
+### Basic Information
+
+<table className="doc-feature-table">
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Name</strong></td>
+      <td>Enter the name for the resource alarm.</td>
+    </tr>
+    <tr>
+      <td><strong>Description</strong></td>
+      <td>Provide a description for the resource alarm.</td>
+    </tr>
+  </tbody>
+</table>
+
+### Configuration Information
+
+<table className="doc-feature-table">
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Resource Type</strong></td>
+      <td>Select the type of resource.</td>
+    </tr>
+    <tr>
+      <td><strong>Metric Item</strong></td>
+      <td>Choose alarm items based on the selected resource type. Some alarm items require selecting a resource and setting corresponding alarm trigger rules.</td>
+    </tr>
+    <tr>
+      <td><strong>Alarm Interval</strong></td>
+      <td>Choose the alarm interval type, including one-time and repeated alarms.</td>
+    </tr>
+    <tr>
+      <td><strong>Emergency Level</strong></td>
+      <td>Different levels of alarms will issue messages according to their severity, including Emergent, Major, and Info.</td>
+    </tr>
+    <tr>
+      <td><strong>Alarm Recovery Notification</strong></td>
+      <td>Disabled by default. If enabled, you will receive a recovery notification when any monitored resource returns to a normal state from an alarm state.</td>
+    </tr>
+    <tr>
+      <td><strong>Endpoint</strong></td>
+      <td>After the alarm is triggered, the alarm message will be pushed to the specified endpoint.</td>
+    </tr>
+  </tbody>
+</table>
+
+Recovery notifications are sent using the default message template, but you can also customize the message template. For more information, see [New Message Template](/en/docs/user-guide/operations/alarms/message-templates/create).
+
+The system provides the default endpoint. You can also create custom endpoints. For more information, see [New Endpoint](/en/docs/user-guide/operations/alarms/notification-targets/create).
+
+</Step>
+
+<Step>
+
+### Complete the Creation
+
+Review the configuration and click **OK**.
+
+</Step>
+
+</Steps>

@@ -1,0 +1,10 @@
+{
+  "title": "分布式交换机上行链路篇",
+  "pages": [
+    "index",
+    "modify-uplink",
+    "manage-hosts",
+    "configure-host-uplink"
+  ],
+  "pagesIndex": "index"
+}

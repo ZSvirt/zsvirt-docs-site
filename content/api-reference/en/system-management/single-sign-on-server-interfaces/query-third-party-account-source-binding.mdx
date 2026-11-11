@@ -1,0 +1,88 @@
+---
+title: "Query Single Sign-On User Source Bindings"
+---
+
+<APIPage method="GET" path="/v1/account-import/bindings">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/account-import/bindings?q=accountUuid=bcfc6b1c7aaf3a43a39ab4edf8b9107d
+```
+
+Queryable Fields
+
+Run the CLI command line tool, enter `QueryThirdPartyAccountSourceBinding` and press the Tab key to view all queryable fields and cross-table queryable resource names.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "id": 1,
+      "credentials": "ou=Employee,uid=test",
+      "accountSourceUuid": "617cef7cda233b559d134245cf8211d5",
+      "accountUuid": "f29adf4e230831f3b34f4d4bf7cfa1dc"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean|Whether the API call is successful|4.3.0|
+|error|ErrorCode|Error code. If not null, the operation has failed. This field is null when the operation succeeds. For details, see [error](#p_vqn_jrf_fcc)|4.3.0|
+|inventories|List|For details, see [inventories](#p_cys_jrf_fcc)|4.3.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. The globally unique identifier of the error, for example, SYS.1000 or HOST.1001.|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Default is null.|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null.|0.6|
+|cause|ErrorCode|Root error. The source error that caused the current error. This field is null if no root error exists.|0.6|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|id|Long|Uniquely identifies the relationship|4.3.0|
+|credentials|String|Unique identifier of the user from the import source. For example, for users imported from an LDAP source, this is the UID used for login.|4.3.0|
+|accountSourceUuid|String|Import source server UUID|4.3.0|
+|accountUuid|String|Account UUID|4.3.0|
+|createDate|Timestamp|Creation time|4.3.0|
+|lastOpDate|Timestamp|Last modification time|4.3.0|
+
+## SDK Examples
+Java SDK
+
+```
+QueryThirdPartyAccountSourceBindingAction action = new QueryThirdPartyAccountSourceBindingAction();
+action.conditions = asList("accountUuid=5ec5476a24423683ad3f51da0891682e");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryThirdPartyAccountSourceBindingAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+QueryThirdPartyAccountSourceBindingAction action = QueryThirdPartyAccountSourceBindingAction()
+action.conditions = ["accountUuid=c02ff535be723284947cad9f679cc1b9"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryThirdPartyAccountSourceBindingAction.Result res = action.call()
+
+```
+
+</APIPage>

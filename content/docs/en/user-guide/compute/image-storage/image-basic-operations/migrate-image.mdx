@@ -1,0 +1,19 @@
+---
+title: 'Migrate an Image'
+---
+
+-   You can migrate images between distributed image storage.
+-   Before migrating images, ensure the network connectivity between the monitoring nodes of the two distributed image storage.
+-   When migrating an ISO image across data centers, virtual machines using the ISO image need to detach the ISO image before they can start normally.
+
+1.  In the navigation pane, choose **Inventory** &gt; **Image and Template**.
+
+2.  Right-click the target image and choose **Change Image Storage**.
+
+3.  In the Change Image Storage dialog, select the target distributed image storage.
+
+4.  Click **OK**.
+
+<Callout type="warning">
+After migration, the original image data remains in the image storage. You can manually clean up the data in the image storage. Once cleaned up, the data cannot be recovered. Proceed with caution.
+</Callout>

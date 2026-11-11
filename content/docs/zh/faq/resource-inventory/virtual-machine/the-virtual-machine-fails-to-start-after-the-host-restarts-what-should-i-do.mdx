@@ -1,0 +1,31 @@
+---
+title: "主机重启后虚拟机无法正常启动，怎么办？"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+## 现象
+虚拟机无法正常启动，且本地存储类型数据存储失联。
+
+## 原因
+主机重启后本地存储目录未挂载至对应磁盘。
+
+## 解决方案
+1.  在虚拟机系统内依次执行以下命令，手动挂载本地存储至对应目录：
+
+    ```
+    # 获取磁盘UUID
+    [root@localhost ~]# ll /dev/disk/by-uuid/
+    # 挂载目录
+    [root@localhost ~]# mount /dev/disk/by-uuid/$磁盘UUID /zstack_ps
+    ```
+
+2.  依次执行以下命令，配置自动挂载：
+
+    ```
+    # 获取磁盘UUID
+    [root@localhost ~]# echo sleep 5 >> /etc/rc.d/rc.local
+    [root@localhost ~]# echo mount /dev/disk/by-uuid/$磁盘UUID /zstack_ps >> /etc/rc.d/rc.local
+    # 检查挂载情况
+    [root@localhost ~]# df -Th
+    ```

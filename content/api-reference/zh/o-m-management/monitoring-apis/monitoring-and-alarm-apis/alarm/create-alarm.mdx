@@ -1,0 +1,644 @@
+---
+title: "创建报警器"
+---
+
+<APIPage method="POST" path="/v1/zwatch/alarms">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "VM CPU Alarm",
+    "comparisonOperator": "LessThanOrEqualTo",
+    "period": 60.0,
+    "namespace": "ZStack/VM",
+    "metricName": "org.zstack.zwatch.datatype.Metric@53fa9b19",
+    "threshold": 60.0,
+    "repeatInterval": 1800.0,
+    "enableRecovery": true,
+    "labels": [
+      {
+        "key": "VMUuid",
+        "value": "ca6b4ad7a0e446c6a8c4f52d93215f6e",
+        "op": "Equal"
+      }
+    ],
+    "actions": [
+      {
+        "actionUuid": "19b7cfaf6134408897d95588b01308fe",
+        "actionType": "sns"
+      }
+    ],
+    "repeatCount": -1.0,
+    "type": "Any" 
+    "enableRecovery": true
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"VM CPU Alarm","comparisonOperator":"LessThanOrEqualTo","period":60.0,"namespace":"ZStack/VM","metricName":"org.zstack.zwatch.datatype.Metric@53fa9b19","threshold":60.0,"repeatInterval":1800.0,"labels":[{"key":"VMUuid","value":"61f6b705fcb944df8138ea6b52b0b4a6","op":"Equal"}],"actions":[{"actionUuid":"699541db497e4d3e9c49020c2dad8d6c","actionType":"sns"}],"repeatCount":-1.0,"type":"Any","enableRecovery":true}}' http://localhost:8080/zstack/v1/zwatch/alarms
+```
+
+参数列表
+
+<table id="table_lbf_pqj_p2b"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+name
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+资源名称
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+description \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+资源的详细描述
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+comparisonOperator
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+阈值比较符
+
+</td><td>
+
+-   GreaterThanOrEqualTo
+-   GreaterThan
+-   LessThan
+-   LessThanOrEqualTo
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+period\(可选\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+阈值持续时间
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+namespace
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+名字空间
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+metricName
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+监控项名
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+threshold
+
+</td><td>
+
+Double
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+阈值
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+repeatInterval \(可选\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+报警重复时间
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+labels \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+标签列表
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+actions \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+报警动作列表
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+resourceUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+repeatCount \(可选\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+报警重复次数
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.3.0
+
+</td></tr><tr><td>
+
+type \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+报警器类型
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.3.0
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+enableRecovery
+
+</td><td>
+
+Boolean
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+开启恢复通知
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.4.0
+
+</td></tr><tr><td>
+
+emergencyLevel \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+报警等级
+
+</td><td>
+
+-   Emergent
+-   Important
+-   Normal
+
+</td><td>
+
+3.8.0
+
+</td></tr></tbody>
+</table>
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "6ff094db7e8b4640880751c5a17e7b63",
+    "name": "VM CPU Alarm",
+    "comparisonOperator": "LessThanOrEqualTo",
+    "period": 60.0,
+    "namespace": "ZStack/VM",
+    "metricName": "org.zstack.zwatch.datatype.Metric@c2e79f0",
+    "threshold": 30.0,
+    "repeatInterval": 1800.0,
+    "repeatCount": -1.0,
+    "status": "Alarm",
+    "state": "Enabled",
+    "enableRecovery": true,
+    "createDate": "Jul 6, 2018 1:51:02 PM",
+    "lastOpDate": "Jul 6, 2018 1:51:02 PM",
+    "labels": [
+      {
+        "uuid": "cccd980c3bb84f4486d96a960eb08edb",
+        "key": "VMUuid",
+        "operator": "=",
+        "value": "f486fd81583747459d8a6cd47f9228e5"
+      }
+    ],
+    "actions": [
+      {
+        "alarmUuid": "8a6a98e3cc484388a746d725265886b3",
+        "actionType": "sns",
+        "actionUuid": "86a2b51fbc7f406c906711081852fa49"
+      }
+    ]
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_dl3_frj_p2b)|2.3|
+|inventory|AlarmInventory|详情参考[inventory](#p_vwc_3rj_p2b)|2.3|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|2.3|
+|description|String|错误的概要描述|2.3|
+|details|String|错误的详细信息|2.3|
+|elaboration|String|保留字段，默认为null|2.3|
+|opaque|LinkedHashMap|保留字段，默认为null|2.3|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|2.3|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|2.3|
+|name|String|资源名称|2.3|
+|description|String|资源的详细描述|2.3|
+|period|Integer|阈值持续时间|2.3|
+|namespace|String|名字空间|2.3|
+|metricName|String|监控项名称|2.3|
+|threshold|Double|阈值|2.3|
+|repeatInterval|Integer|报警重复时间|2.3|
+|enableRecovery|Boolean|开启恢复通知|3.4.0|
+|createDate|Timestamp|创建时间|2.3|
+|lastOpDate|Timestamp|最后一次修改时间|2.3|
+|comparisonOperator|ComparisonOperator|详情参考[comparisonOperator](#p_ejx_hrj_p2b)|2.3|
+|status|AlarmStatus|详情参考[status](#p_bkl_jrj_p2b)|2.3|
+|labels|List|详情参考[labels](#p_q1h_krj_p2b)|2.3|
+|actions|List|详情参考[actions](#p_jmy_lrj_p2b)|2.3|
+
+### comparisonOperator
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|name|String|资源名称|2.3|
+|ordinal|int| |2.3|
+
+### status
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|OK|AlarmStatus|监控中|2.3|
+|Alarm|AlarmStatus|已触发|2.3|
+|InsufficientData|AlarmStatus|数据不足|2.3|
+
+### labels
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|2.3|
+|key|String|标签键|2.3|
+|operator|String|比较符|2.3|
+|value|String|标签值|2.3|
+
+### actions
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|alarmUuid|String|报警器UUID|2.3|
+|actionType|String|报警动作类型|2.3|
+|actionUuid|String|报警动作UUID|2.3|
+
+## SDK示例
+Java SDK
+
+```
+CreateAlarmAction action = new CreateAlarmAction();
+action.name = "VM CPU Alarm";
+action.comparisonOperator = "LessThanOrEqualTo";
+action.period = 60.0;
+action.namespace = "ZStack/VM";
+action.metricName = "org.zstack.zwatch.datatype.Metric@c2e79f0";
+action.threshold = 60.0;
+action.repeatInterval = 1800.0;
+action.labels = asList([key:VMUuid, value:45821a26f579447fa77bfb82b1b0268e, op:Equal]);
+action.actions = asList([actionUuid:8e06ec09862c46c3aaf9fc6337815ffb, actionType:sns]);
+action.repeatCount = -1.0;
+action.type = "Any";
+action.enableRecovery = true;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateAlarmAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateAlarmAction action = CreateAlarmAction()
+action.name = "VM CPU Alarm"
+action.comparisonOperator = "LessThanOrEqualTo"
+action.period = 60.0
+action.namespace = "ZStack/VM"
+action.metricName = "org.zstack.zwatch.datatype.Metric@c2e79f0"
+action.threshold = 60.0
+action.repeatInterval = 1800.0
+action.labels = [[key:VMUuid, value:7dd44bfe750f42859528b27ef90f1412, op:Equal]]
+action.actions = [[actionUuid:b1acb139666140d09f4f93b8dd96f49f, actionType:sns]]
+action.repeatCount = -1.0
+action.type = "Any"
+action.enableRecovery = true
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateAlarmAction.Result res = action.call()
+```
+
+</APIPage>

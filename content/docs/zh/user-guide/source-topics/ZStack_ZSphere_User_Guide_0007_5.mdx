@@ -1,0 +1,19 @@
+---
+title: "存储资源|存储设备"
+---
+
+SAN存储可通过iSCSI存储（iSCSI Storage）、FC存储（FC Storage）以及NVMe存储（NVMe Storage）搭建：
+
+-   iSCSI存储（iSCSI Storage）：基于iSCSI协议构建的SAN存储。用户可将iSCSI存储上划分的块设备添加为SAN数据存储，或直接透传给虚拟机使用。
+-   FC存储（FC Storage）：基于FC协议构建的SAN存储。用户可将FC存储上划分的块设备添加为SAN数据存储，或直接透传给虚拟机使用。
+-   NVMe存储（NVMe Storage）：基于NVMe-oF协议构建的存储阵列，用户可将NVMe存储上划分的块设备添加为SAN数据存储。
+
+## 快速使用流程
+
+需新增三种存储如何快速使用，参考NVMe存储
+
+## 使用须知
+
+-   未被加载到虚拟机的LUN设备，支持添加为SAN存储。
+-   若LUN设备添加为SAN存储，该设备不可作他用。
+-   未添加为SAN存储的LUN设备支持加载到虚拟机。两者数量关系为n:n，即一个LUN设备支持加载到多个虚拟机，一个虚拟机支持加载多个LUN设备。

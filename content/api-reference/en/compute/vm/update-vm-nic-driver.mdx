@@ -1,0 +1,287 @@
+---
+title: "Update VM NIC Driver"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/{vmInstanceUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateVmNicDriver": {
+    "vmNicUuid": "1954794b830e32edbcf17f36344bbd14",
+    "driverType": "e1000"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateVmNicDriver":{"vmNicUuid":"1954794b830e32edbcf17f36344bbd14","driverType":"e1000"}}' http://localhost:8080/zstack/v1/vm-instances/ca775a57e8d73a3ca85f490b53647b80/actions
+```
+
+Parameter List
+
+<table id="table_ytl_zf1_llb"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+vmInstanceUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+Virtual Machine UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.9.0
+
+</td></tr><tr><td>
+
+vmNicUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+Virtual Machine NIC UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.9.0
+
+</td></tr><tr><td>
+
+driverType
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Virtual Machine NIC driver type
+
+</td><td>
+
+-   virtio
+-   e1000
+-   rtl8139
+
+</td><td>
+
+3.9.0
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.9.0
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.9.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "b6af955c36b23be693fca2db0df03737",
+    "vmInstanceUuid": "ed3f3ea119883726b1a97ec3cc4b1583",
+    "usedIpUuid": "78b119bae906373d825fa7e68faf6a0b",
+    "l3NetworkUuid": "307365f47f933bf09ff951cb67b52c5b",
+    "ip": "192.168.1.10",
+    "mac": "00:0c:29:bd:99:fc",
+    "netmask": "255.255.255.0",
+    "gateway": "192.168.1.1",
+    "driverType": "e1000",
+    "deviceId": 0,
+    "state": "enable"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation succeeds, this field is null. For details, see [error](#p_est_fg1_llb)|3.9.0|
+|inventory|VmNicInventory|For details, see [inventory](#p_u33_fg1_llb)|3.9.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier of the error, for example SYS.1000, HOST.1001|3.9.0|
+|description|String|Brief description of the error|3.9.0|
+|details|String|Detailed error information|3.9.0|
+|elaboration|String|Reserved field, defaults to null|3.9.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|3.9.0|
+|cause|ErrorCode|Root cause. The error that triggered the current error. If there is no original error, this field is null|3.9.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|3.9.0|
+|vmInstanceUuid|String|Virtual Machine UUID|3.9.0|
+|l3NetworkUuid|String|L3 Network UUID|3.9.0|
+|ip|String| |3.9.0|
+|mac|String| |3.9.0|
+|hypervisorType|String| |4.7.13|
+|netmask|String| |3.9.0|
+|gateway|String| |3.9.0|
+|metaData|String| |3.9.0|
+|ipVersion|Integer|IP protocol version|3.9.0|
+|driverType|String| |4.7.13|
+|internalName|String| |4.7.13|
+|deviceId|Integer| |3.9.0|
+|type|String| |4.7.13|
+|state|String|NIC status|4.7.13|
+|createDate|Timestamp|Create time|3.9.0|
+|lastOpDate|Timestamp|Last update time|3.9.0|
+|usedIps|List|For details, see [usedIps](#p_m35_2g1_llb)|3.9.0|
+
+### usedIps
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|3.9.0|
+|ipRangeUuid|String|IP Range UUID|3.9.0|
+|l3NetworkUuid|String|L3 Network UUID|3.9.0|
+|ipVersion|Integer|IP protocol version|3.9.0|
+|ip|String|IP address|3.9.0|
+|netmask|String|Network mask|3.9.0|
+|gateway|String|Gateway address|3.9.0|
+|usedFor|String| |3.9.0|
+|ipInLong|long| |3.9.0|
+|vmNicUuid|String|Virtual Machine NIC UUID|3.9.0|
+|createDate|Timestamp|Create time|3.9.0|
+|lastOpDate|Timestamp|Last update time|3.9.0|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateVmNicDriverAction action = new UpdateVmNicDriverAction();
+action.vmInstanceUuid = "ca775a57e8d73a3ca85f490b53647b80";
+action.vmNicUuid = "1954794b830e32edbcf17f36344bbd14";
+action.driverType = "e1000";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateVmNicDriverAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = UpdateVmNicDriverAction()
+action.vmInstanceUuid = "ca775a57e8d73a3ca85f490b53647b80"
+action.vmNicUuid = "1954794b830e32edbcf17f36344bbd14"
+action.driverType = "e1000"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

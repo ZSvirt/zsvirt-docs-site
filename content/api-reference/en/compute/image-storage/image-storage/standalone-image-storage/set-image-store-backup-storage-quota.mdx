@@ -1,0 +1,84 @@
+---
+title: "Set Image Store Backup Storage Quota"
+---
+
+<APIPage method="PUT" path="/v1/backup-storage/image-store/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "setImageStoreBackupStorageQuota": {
+    "uuids": [
+      "ff0e1223a4983a10b94369dc6b93ce00"
+    ],
+    "maxCapacity": 1099511627776
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"setImageStoreBackupStorageQuota":{"uuids":["ff0e1223a4983a10b94369dc6b93ce00"],"maxCapacity":1099511627776}}' \
+http://localhost:8080/zstack/v1/backup-storage/image-store/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuids \(Optional\)|List|body \(contained in `setImageStoreBackupStorageQuota` structure\)| | |0.6|
+|maxCapacity|long|body \(contained in `setImageStoreBackupStorageQuota` structure\)| | |0.6|
+|systemTags \(Optional\)|List|body|System tags| |0.6|
+|userTags \(Optional\)|List|body|User tags| |0.6|
+
+## API Response
+This API returns an empty JSON structure `{}` on success. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+SetImageStoreBackupStorageQuotaAction action = new SetImageStoreBackupStorageQuotaAction();
+action.uuids = asList("ff0e1223a4983a10b94369dc6b93ce00");
+action.maxCapacity = 1099511627776;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+SetImageStoreBackupStorageQuotaAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SetImageStoreBackupStorageQuotaAction action = SetImageStoreBackupStorageQuotaAction()
+action.uuids = [ff0e1223a4983a10b94369dc6b93ce00]
+action.maxCapacity = 1099511627776
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+SetImageStoreBackupStorageQuotaAction.Result res = action.call()
+```
+
+</APIPage>

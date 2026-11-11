@@ -1,0 +1,361 @@
+---
+title: "订阅事件"
+---
+
+<APIPage method="POST" path="/v1/zwatch/events/subscriptions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "namespace": "ZStack/VM",
+    "eventName": "VMUuid",
+    "actions": [
+      {
+        "actionUuid": "2fbeae18082445d09c890fa076ff9fd9",
+        "actionType": "sns"
+      }
+    ],
+    "labels": [
+      {
+        "key": "VMUuid",
+        "value": "0c60949d81964f23a0d860b30472c51b",
+        "op": "Equal"
+      }
+    ]
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"namespace":"ZStack/VM","eventName":"VMUuid","actions":[{"actionUuid":"c7b1b7e054494aeab843a9c7371cdfc4","actionType":"sns"}],"labels":[{"key":"VMUuid","value":"47056270f2ea45409a419f1165f83945","op":"Equal"}]}}' \
+http://localhost:8080/zstack/v1/zwatch/events/subscriptions
+```
+
+参数列表
+
+<table id="table_cjn_ymk_p2b"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+namespace
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+名字空间
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+eventName
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+事件名
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+actions \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+事件动作
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+labels \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+事件标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+resourceUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+name \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+资源名称
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+emergencyLevel \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+报警等级
+
+</td><td>
+
+-   Emergent
+-   Important
+-   Normal
+
+</td><td>
+
+3.8.0
+
+</td></tr><tr><td>
+
+tagUuids \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+标签UUID列表
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.8.0
+
+</td></tr></tbody>
+</table>
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+SubscribeEventAction action = new SubscribeEventAction();
+action.namespace = "ZStack/VM";
+action.eventName = "VMUuid";
+action.actions = asList([actionUuid:08a502ad6e944ceb8c70f523b69385e3, actionType:sns]);
+action.labels = asList([key:VMUuid, value:896391b873dc41288c0841b5fe8cb71b, op:Equal]);
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+SubscribeEventAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SubscribeEventAction action = SubscribeEventAction()
+action.namespace = "ZStack/VM"
+action.eventName = "VMUuid"
+action.actions = [[actionUuid:393df28f2bab49aba01fc229dae849c8, actionType:sns]]
+action.labels = [[key:VMUuid, value:abd2e73d08d248b6be73e31eb6a97e82, op:Equal]]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+SubscribeEventAction.Result res = action.call()
+```
+
+</APIPage>

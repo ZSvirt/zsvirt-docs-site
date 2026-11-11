@@ -1,0 +1,72 @@
+---
+title: "Get Host Allocation Strategies"
+---
+
+<APIPage method="GET" path="/v1/hosts/allocators/strategies">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/hosts/allocators/strategies
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|systemTags \(optional\)|List|query|System tag| |0.6|
+|userTags \(optional\)|List|query|User tag| |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "hostAllocatorStrategies": [
+    "b39183b36b8e4cb386bd7bb45c7c1997",
+    "e01d613c77a44b65b6bef75b4ef2accb"
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|strategies|List|Strategies|0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See details [error](#p_p11_w5v_m1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, e.g. SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, default is null|0.6|
+|opaque|LinkedHashMap|Reserved field, default is null|0.6|
+|cause|ErrorCode|Root cause, the error that caused the current error. If there is no original error, this field is null|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+GetHostAllocatorStrategiesAction action = new GetHostAllocatorStrategiesAction();
+action.sessionId = "c10fb9fbab4744ecae6686b4193423e8";
+GetHostAllocatorStrategiesAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetHostAllocatorStrategiesAction action = GetHostAllocatorStrategiesAction()
+action.sessionId = "caa6b3db2d5b42f79b44566b10763973"
+GetHostAllocatorStrategiesAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,80 @@
+---
+title: "Check KVM Host Config File Syntax"
+---
+
+## API Request
+URLs
+
+```
+POST /v1/hosts/kvm/from-file/check
+```
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "hostInfo": "FILE CONTENT ENCODE BY BASE64"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"hostInfo":"FILE CONTENT ENCODE BY BASE64"}}' http://localhost:8080/zstack/v1/hosts/kvm/from-file/check
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|hostInfo|String|body \(contained in **params** structure\)|Host information encoded in base64| |3.1.0|
+|systemTags \(optional\)|List|body| | |3.1.0|
+|userTags \(optional\)|List|body| | |3.1.0|
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+CheckKVMHostConfigFileAction action = new CheckKVMHostConfigFileAction();
+action.hostInfo = "FILE CONTENT ENCODE BY BASE64";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CheckKVMHostConfigFileAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CheckKVMHostConfigFileAction action = CheckKVMHostConfigFileAction()
+action.hostInfo = "FILE CONTENT ENCODE BY BASE64"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CheckKVMHostConfigFileAction.Result res = action.call()
+```

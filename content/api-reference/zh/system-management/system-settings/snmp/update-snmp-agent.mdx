@@ -1,0 +1,417 @@
+---
+title: "更新SNMP代理"
+---
+
+<APIPage method="PUT" path="/v1/snmp/agent/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateSnmpAgent": {
+    "version": "v2c",
+    "readCommunity": "zstack",
+    "port": 1161
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X PUT -d '{"updateSnmpAgent":{"version":"v2c","readCommunity":"zstack","port":1161}}' \
+http://localhost:8080/zstack/v1/snmp/agent/actions
+```
+
+参数列表
+
+<table id="table_wpz_r1v_m1b"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**updateSnmpAgent**结构中\)
+
+</td><td>
+
+资源的UUID，唯一标示该资源
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+version
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**updateSnmpAgent**结构中\)
+
+</td><td>
+
+SNMP代理使用协议版本
+
+</td><td>
+
+-   v2c
+-   v3
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+readCommunity \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**updateSnmpAgent**结构中\)
+
+</td><td>
+
+读团体字\(version为v2c时使用\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+userName \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**updateSnmpAgent**结构中\)
+
+</td><td>
+
+用户名\(version为v3时使用\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+authAlgorithm \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**updateSnmpAgent**结构中\)
+
+</td><td>
+
+认证算法
+
+</td><td>
+
+-   MD5
+-   SHA
+-   SHA224
+-   SHA256
+-   SHA384
+-   SHA512
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+authPassword \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**updateSnmpAgent**结构中\)
+
+</td><td>
+
+认证密码
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+privacyAlgorithm \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**updateSnmpAgent**结构中\)
+
+</td><td>
+
+隐私算法
+
+</td><td>
+
+-   DES
+-   AES128
+-   AES192
+-   AES256
+-   3DES
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+privacyPassword \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**updateSnmpAgent**结构中\)
+
+</td><td>
+
+隐私密码
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+port
+
+</td><td>
+
+int
+
+</td><td>
+
+body\(包含在**updateSnmpAgent**结构中\)
+
+</td><td>
+
+端口
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.0
+
+</td></tr></tbody>
+</table>
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "cad9965ebedd495aa1f5718f31da1aa8",
+    "version": "v3",
+    "userName": "zstack",
+    "authAlgorithm": "SHA",
+    "authPassword": "authPassword",
+    "privacyAlgorithm": "AES128",
+    "privacyPassword": "privPassword",
+    "port": 162
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.10.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_bcl_x1v_m1b)|4.10.0|
+|inventory|SnmpAgentInventory|详情参考[inventory](#p_nqg_y1v_m1b)|4.10.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.10.0|
+|description|String|错误的概要描述|4.10.0|
+|details|String|错误的详细信息|4.10.0|
+|elaboration|String|保留字段，默认为null|4.10.0|
+|opaque|LinkedHashMap|保留字段，默认为null|4.10.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.10.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.10.0|
+|version|String|SNMP代理使用协议版本|4.10.0|
+|readCommunity|String|读团体字\(version为v2c时使用\)|4.10.0|
+|userName|String|用户名\(version为v3时使用\)|4.10.0|
+|authAlgorithm|String|认证算法|4.10.0|
+|authPassword|String|认证密码|4.10.0|
+|privacyAlgorithm|String|隐私算法|4.10.0|
+|privacyPassword|String|隐私密码|4.10.0|
+|port|int|端口|4.10.0|
+|status|String|SNMP代理是否启用|4.10.0|
+|securityLevel|String|安全等级|4.10.0|
+|createDate|Timestamp|创建时间|4.10.0|
+|lastOpDate|Timestamp|最后一次修改时间|4.10.0|
+
+## SDK示例
+Java SDK
+
+```
+UpdateSnmpAgentAction action = new UpdateSnmpAgentAction();
+action.version = "v2c";
+action.readCommunity = "zstack";
+action.port = 1161;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateSnmpAgentAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateSnmpAgentAction action = UpdateSnmpAgentAction()
+action.version = "v2c"
+action.readCommunity = "zstack"
+action.port = 1161
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateSnmpAgentAction.Result res = action.call()
+```
+
+</APIPage>

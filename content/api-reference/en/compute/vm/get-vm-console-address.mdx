@@ -1,0 +1,88 @@
+---
+title: "Get Virtual Machine Console Address"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/{uuid}/console-addresses">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/bf2211ae8eaf408b817d3a05c19e2226/console-addresses
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Virtual Machine UUID| |0.6|
+|systemTags \(Optional\)|List|query|System Tag| |0.6|
+|userTags \(Optional\)|List|query|User Tag| |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "hostIp": "192.168.10.100",
+  "port": 5900,
+  "protocol": "vnc",
+  "vdiPortInfo": {
+    "vncPort": 5900
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|hostIp|String|Virtual Machine running host IP|0.6|
+|port|int|Virtual Machine console port|0.6|
+|protocol|String|Virtual Machine console protocol, vnc or spice or vncAndSpice|0.6|
+|success|boolean|Operation success or not|0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation is successful. For details, see [error](#p_crg_yp2_sbb)|0.6|
+|vdiPortInfo|vdiPortInfo|For details, see [vdiPortInfo](#p_d1v_5xj_kjb)|3.7.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause. The source error that caused the current error. If there is no original error, this field is null|0.6|
+
+### vdiPortInfo
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|vncPort|Integer|VNC port number|3.7.0|
+|spicePort|Integer|SPICE port number|3.7.0|
+|spiceTlsPort|Integer|SPICE TLS encryption enabled, there will be both spiceTlsPort and spicePort port numbers. To connect to the Virtual Machine through SPICE client, you need to use the spiceTlsPort port number|3.7.0|
+
+## SDK Examples
+Java SDK
+
+```
+GetVmConsoleAddressAction action = new GetVmConsoleAddressAction();
+action.uuid = "d6bb8b652c1445969b5c4227385956d3";
+action.sessionId = "1c0ec00749234a96978591d641e0c64d";
+GetVmConsoleAddressAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetVmConsoleAddressAction action = GetVmConsoleAddressAction()
+action.uuid = "f6b7fe2da3ae4c929ad1c8ed14f37c8e"
+action.sessionId = "5f127b3df90245ed93ef9da531442fdc"
+GetVmConsoleAddressAction.Result res = action.call()
+```
+
+</APIPage>

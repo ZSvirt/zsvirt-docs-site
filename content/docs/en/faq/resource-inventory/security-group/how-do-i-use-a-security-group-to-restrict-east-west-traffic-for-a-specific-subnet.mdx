@@ -1,0 +1,14 @@
+---
+title: "How do I use a Security Group to restrict east-west traffic for a specific subnet?"
+---
+
+## Solution
+1.  Use one of the following approaches:
+
+2.  Create multiple Distributed Port Groups, assign virtual machines to groups as needed, attach each group to a different Distributed Port Group, and use switch ACLs or physical firewalls to control access between Distributed Port Groups.
+
+    <Callout type="warning">
+    This approach affects running services and requires a change window to execute.
+    </Callout>
+
+3.  Group virtual machines as needed and add them to different Security Groups. Virtual machines within the same group can communicate with each other, while communication between groups is not allowed. Configure inbound rules for each Security Group to allow traffic from any IP address except the x.x.x.x/x subnet.

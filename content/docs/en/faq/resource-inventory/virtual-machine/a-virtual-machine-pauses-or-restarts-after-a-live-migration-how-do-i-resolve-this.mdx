@@ -1,0 +1,9 @@
+---
+title: "A Virtual Machine pauses or restarts after a live migration. How do I resolve this?"
+---
+
+## Cause
+The Virtual Machine CPU mode may be set to pass-through, and the target Host has a different CPU model than the source Host.
+
+## Solution
+-   If a Cluster contains Hosts with different CPU models, set the Virtual Machine CPU mode to a non-pass-through mode to prevent migration failures.

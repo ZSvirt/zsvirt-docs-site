@@ -1,0 +1,89 @@
+---
+title: "Get Log Server Configuration"
+---
+
+<APIPage method="GET" path="/v1/log/configurations">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" -X GET http://localhost:8080/zstack/v1/log/configurations
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|systemTags \(optional\)|List|query| | |3.10.0|
+|userTags \(optional\)|List|query| | |3.10.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "id": 0.0,
+      "labelKey": "log4j2-0201c1784c6e48d2ba26954d4c688fae",
+      "labelValue": "{\n\"appenderType\": \"Syslog\",\n\"configuration\": {\n\"hostname\": \"192.168.0.13\",\n\"port\": \"514\",\n\"protocol\": \"UDP\",\n\"facility\": \"LOCAL5\"\n}\n}"
+    },
+    {
+      "id": 0.0,
+      "labelKey": "log4j2-ba2cf0a6945d4267bfdc1994776b509d",
+      "labelValue": "{\n\"appenderType\": \"Syslog\",\n\"configuration\": {\n\"hostname\": \"192.168.0.11\",\n\"port\": \"514\",\n\"protocol\": \"UDP\",\n\"facility\": \"LOCAL5\"\n}\n}"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_vth_4k4_ckb)|3.10.0|
+|inventories|List|See [inventories](#p_ast_nk4_ckb)|3.10.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. A globally unique identifier for the error, e.g., SYS.1000, HOST.1001|3.10.0|
+|description|String|Brief description of the error|3.10.0|
+|details|String|Detailed error information|3.10.0|
+|elaboration|String|Reserved field. Defaults to null|3.10.0|
+|opaque|LinkedHashMap|Reserved field. Defaults to null|3.10.0|
+|cause|ErrorCode|Root error. The source error that caused this error. Null if no root cause exists|3.10.0|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|id|long| |3.10.0|
+|labelKey|String| |3.10.0|
+|labelValue|String| |3.10.0|
+|resourceUuid|String|Resource UUID|3.10.0|
+|createDate|Timestamp|Creation time|3.10.0|
+|lastOpDate|Timestamp|Last modification time|3.10.0|
+
+## SDK Examples
+Java SDK
+
+```
+GetLogConfigurationAction action = new GetLogConfigurationAction();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetLogConfigurationAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetLogConfigurationAction action = GetLogConfigurationAction()
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetLogConfigurationAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,94 @@
+---
+title: "Query Scheduler Job History"
+---
+
+<APIPage method="GET" path="/v1/scheduler/job/history">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/scheduler/job/history?q=schedulerJobGroupUuid=7ae6456c0b01324dae6d4bef358a5772
+```
+
+Queryable Fields
+
+Run the CLI command line tool, enter `QuerySchedulerJobHistory`, and press Tab to view all queryable fields and the resource names that support cross-table queries.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "id": 1.0,
+      "triggerUuid": "add8c5eea85f41999baff295e47567bc",
+      "schedulerJobUuid": "d7696913343040d8b98de04d59727711",
+      "startTime": "Nov 14, 2017 10:20:57 PM",
+      "executeTime": 900.0,
+      "targetResourceUuid": "7cd923fa779044fd8510e8ee97aa579e",
+      "requestDump": "{\"bsUuid\":\"716078c20a0047a69102174c6097a690\"}",
+      "resultDump": "{\"apiId\":\"f8cf5b6281164e519c0575a73b1b0d9c\",\"success\":true,\"headers\":{},\"id\":\"d70a61ab1b20407c8df94ba7d90be081\",\"createdTime\":1557305707668}",
+      "success": true
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_htl_cqv_vhb)|3.5.0|
+|inventories|List|For details, see [inventories](#p_qjs_cqv_vhb)|3.5.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. The globally unique identifier of the error, for example, SYS.1000 or HOST.1001|3.5.0|
+|description|String|Brief description of the error|3.5.0|
+|details|String|Detailed information about the error|3.5.0|
+|elaboration|String|Reserved field. Default is null|3.5.0|
+|opaque|LinkedHashMap|Reserved field. Default is null|3.5.0|
+|cause|ErrorCode|Root error. The source error that caused the current error. This field is null if there is no source error|3.5.0|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|id|long| |3.5.0|
+|triggerUuid|String|Trigger UUID|3.5.0|
+|schedulerJobUuid|String|Scheduler job UUID|3.5.0|
+|schedulerJobGroupUuid|String|Scheduler job group UUID|3.5.0|
+|startTime|Timestamp|Start time|3.5.0|
+|executeTime|long|Execution duration|3.5.0|
+|targetResourceUuid|String|Target resource UUID|3.5.0|
+|requestDump|String|Job request|3.5.0|
+|resultDump|String|Job result|3.5.0|
+|success|boolean| |3.5.0|
+
+## SDK Examples
+Java SDK
+
+```
+QuerySchedulerJobHistoryAction action = new QuerySchedulerJobHistoryAction();
+action.conditions = asList("schedulerJobGroupUuid=7ae6456c0b01324dae6d4bef358a5772");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QuerySchedulerJobHistoryAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QuerySchedulerJobHistoryAction action = QuerySchedulerJobHistoryAction()
+action.conditions = ["schedulerJobGroupUuid=7ae6456c0b01324dae6d4bef358a5772"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QuerySchedulerJobHistoryAction.Result res = action.call()
+```
+
+</APIPage>

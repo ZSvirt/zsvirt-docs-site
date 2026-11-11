@@ -1,0 +1,254 @@
+---
+title: "修改网卡的默认流量策略"
+---
+
+<APIPage method="PUT" path="/v1/security-groups/nics/{vmNicUuid}/security-policy/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "changeVmNicSecurityPolicy": {
+    "ingressPolicy": "ALLOW",
+    "egressPolicy": "DENY"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" 
+-H "Authorization: OAuth YOUR_SESSION_UUID" 
+-X PUT -d '{"changeVmNicSecurityPolicy":{"ingressPolicy":"ALLOW","egressPolicy":"DENY"}}' 
+http://localhost:8080/zstack/v1/security-groups/nics/5551303bee7037c8848cdb5741be7ff7/security-policy/actions
+```
+
+参数列表
+
+<table id="table_fyf_nq5_m1b"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+vmNicUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+网卡的UUID，唯一标示该资源
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+ingressPolicy \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**changeVmNicSecurityPolicy**结构中\)
+
+</td><td>
+
+网卡入方向安全策略
+
+</td><td>
+
+-   DENY
+-   ALLOW
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+egressPolicy \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**changeVmNicSecurityPolicy**结构中\)
+
+</td><td>
+
+网卡出方向安全策略
+
+</td><td>
+
+-   DENY
+-   ALLOW
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.21
+
+</td></tr></tbody>
+</table>
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "2c8164f7e3213f1491640a2f98d0a979",
+    "vmNicUuid": "c731cb960eb635a997e58d154d3c4252",
+    "ingressPolicy": "DENY",
+    "egressPolicy": "ALLOW",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.7.21|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_ec3_mr5_m1b)|4.7.21|
+|inventory|SecurityGroupInventory|详情参考[inventory](#p_bkq_mr5_m1b)|4.7.21|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.7.21|
+|description|String|错误的概要描述|4.7.21|
+|details|String|错误的详细信息|4.7.21|
+|elaboration|String|保留字段，默认为null|4.7.21|
+|opaque|LinkedHashMap|保留字段，默认为null|4.7.21|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.7.21|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|vmNicUuid|String|虚拟机网卡UUID|4.7.21|
+|ingressPolicy|String|网卡入方向安全策略|4.7.21|
+|egressPolicy|String|网卡出方向安全策略|4.7.21|
+|createDate|Timestamp|创建时间|4.7.21|
+|lastOpDate|Timestamp|最后一次修改时间|4.7.21|
+
+## SDK示例
+Java SDK
+
+```
+ChangeVmNicSecurityPolicyAction action = new ChangeVmNicSecurityPolicyAction();
+action.vmNicUuid = "5551303bee7037c8848cdb5741be7ff7";
+action.ingressPolicy = "ALLOW";
+action.egressPolicy = "DENY";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ChangeVmNicSecurityPolicyAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ChangeVmNicSecurityPolicyAction action = ChangeVmNicSecurityPolicyAction()
+action.vmNicUuid = "5551303bee7037c8848cdb5741be7ff7"
+action.ingressPolicy = "ALLOW"
+action.egressPolicy = "DENY"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ChangeVmNicSecurityPolicyAction.Result res = action.call()
+```
+
+</APIPage>

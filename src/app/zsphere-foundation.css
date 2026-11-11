@@ -1,0 +1,151 @@
+/* Theme tokens, document reset, focus, and motion preferences. */
+
+html {
+  color-scheme: light;
+  font-kerning: normal;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+:focus-visible {
+  outline: 2px solid var(--docs-brand);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+:root {
+  --color-fd-overlay: rgb(17 24 39 / 12%);
+  --docs-shadow-sm: none;
+  color-scheme: light;
+  --zsphere-brand-base: #005596;
+  --zsphere-brand: var(--zsphere-brand-base);
+  --zsphere-hover: rgb(220 227 239 / 25%);
+  --zsphere-bg: #ffffff;
+  --zsphere-surface: #ffffff;
+  --zsphere-surface-subtle: #f5f5f5;
+  --zsphere-surface-active: #e1f1ff;
+  --zsphere-heading: #000000;
+  --zsphere-copy: rgb(0 0 0 / 75%);
+  --zsphere-muted: rgb(0 0 0 / 75%);
+  --zsphere-border: rgb(0 0 0 / 10%);
+  --zsphere-border-soft: rgb(0 0 0 / 6%);
+  --zsphere-blue: var(--zsphere-brand);
+  --zsphere-blue-surface: color-mix(in srgb, var(--zsphere-brand) 8%, transparent);
+  --zsphere-blue-border: color-mix(in srgb, var(--zsphere-brand) 24%, transparent);
+  --zsphere-radius-control: 12px;
+  --zsphere-radius-card: 16px;
+  --zsphere-radius-modal: 20px;
+  --zsphere-header-height: 112px;
+  --zsphere-mobile-header-height: 120px;
+  --zsphere-sidebar-width: 288px;
+  --zsphere-toc-width: 304px;
+  --color-fd-background: var(--zsphere-bg);
+  --color-fd-foreground: var(--zsphere-heading);
+  --color-fd-muted: var(--zsphere-surface-subtle);
+  --color-fd-muted-foreground: var(--zsphere-muted);
+  --color-fd-popover: var(--zsphere-surface);
+  --color-fd-popover-foreground: var(--zsphere-heading);
+  --color-fd-card: var(--zsphere-surface);
+  --color-fd-card-foreground: var(--zsphere-heading);
+  --color-fd-border: var(--zsphere-border);
+  --color-fd-primary: var(--zsphere-brand);
+  --color-fd-primary-foreground: #ffffff;
+  --color-fd-secondary: var(--zsphere-surface-subtle);
+  --color-fd-secondary-foreground: var(--zsphere-heading);
+  --color-fd-accent: var(--zsphere-hover);
+  --color-fd-accent-foreground: var(--zsphere-heading);
+  --color-fd-ring: var(--zsphere-brand);
+  --docs-paper: var(--zsphere-bg);
+  --docs-ink: var(--zsphere-heading);
+  --docs-mist: var(--zsphere-surface-subtle);
+  --docs-cloud: var(--zsphere-border);
+  --docs-brand: var(--zsphere-brand);
+  --docs-brand-bright: var(--zsphere-brand);
+  --docs-brand-wash: color-mix(in srgb, var(--zsphere-brand) 8%, transparent);
+  --docs-muted: var(--zsphere-muted);
+  --docs-muted-strong: var(--zsphere-copy);
+  --docs-radius-control: var(--zsphere-radius-control);
+  --docs-radius-card: var(--zsphere-radius-card);
+  --docs-radius-container: var(--zsphere-radius-card);
+}
+
+.dark {
+  --color-fd-overlay: rgb(0 0 0 / 48%);
+  --docs-shadow-sm: none;
+  color-scheme: dark;
+  --zsphere-brand: #66a8d6;
+  --zsphere-hover: rgb(220 227 239 / 25%);
+  --zsphere-bg: #0f0f0f;
+  --zsphere-surface: #0f0f0f;
+  --zsphere-surface-subtle: #171717;
+  --zsphere-surface-active: rgb(0 85 150 / 32%);
+  --zsphere-heading: #dfdfdf;
+  --zsphere-copy: #9f9f9f;
+  --zsphere-muted: rgb(255 255 255 / 75%);
+  --zsphere-border: rgb(255 255 255 / 10%);
+  --zsphere-border-soft: rgb(255 255 255 / 6%);
+  --zsphere-blue: var(--zsphere-brand);
+  --zsphere-blue-surface: color-mix(in srgb, var(--zsphere-brand) 20%, transparent);
+  --zsphere-blue-border: color-mix(in srgb, var(--zsphere-brand) 42%, transparent);
+  --color-fd-background: var(--zsphere-bg);
+  --color-fd-foreground: var(--zsphere-heading);
+  --color-fd-muted: var(--zsphere-surface-subtle);
+  --color-fd-muted-foreground: var(--zsphere-copy);
+  --color-fd-popover: var(--zsphere-surface);
+  --color-fd-popover-foreground: #ffffff;
+  --color-fd-card: var(--zsphere-surface);
+  --color-fd-card-foreground: var(--zsphere-heading);
+  --color-fd-border: var(--zsphere-border);
+  --color-fd-primary: var(--zsphere-brand);
+  --color-fd-primary-foreground: #ffffff;
+  --color-fd-secondary: var(--zsphere-surface-subtle);
+  --color-fd-secondary-foreground: var(--zsphere-heading);
+  --color-fd-accent: var(--zsphere-hover);
+  --color-fd-accent-foreground: var(--zsphere-heading);
+  --color-fd-ring: var(--zsphere-brand);
+  --docs-paper: var(--zsphere-bg);
+  --docs-ink: var(--zsphere-heading);
+  --docs-mist: var(--zsphere-surface-subtle);
+  --docs-cloud: var(--zsphere-border);
+  --docs-brand: var(--zsphere-brand);
+  --docs-brand-bright: var(--zsphere-brand);
+  --docs-brand-wash: color-mix(in srgb, var(--zsphere-brand) 18%, transparent);
+  --docs-muted: var(--zsphere-copy);
+  --docs-muted-strong: var(--zsphere-heading);
+}
+
+html,
+body {
+  background: var(--zsphere-bg);
+  color: var(--zsphere-copy);
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  font-feature-settings: normal;
+  letter-spacing: normal;
+}
+
+body {
+  font-size: 16px;
+  line-height: 24px;
+}
+
+::selection {
+  background: #e1f1ff;
+  color: #000000;
+}
+
+.dark ::selection {
+  background: rgb(0 85 150 / 48%);
+  color: var(--zsphere-heading);
+}

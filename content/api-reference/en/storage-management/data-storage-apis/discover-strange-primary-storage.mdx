@@ -1,0 +1,82 @@
+---
+title: "Discover Primary Storage on Cluster Hosts Not Managed by the Current Platform"
+---
+
+<APIPage method="GET" path="/v1/primary-storage/stranger">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/primary-storage/stranger?clusterUuid=3f7c761b89a5384ebeb6c186012d0997
+```
+
+Parameters
+
+|Name|Type|Location|Description|Optional Values|Since|
+|----|----|--------|-----------|---------------|-----|
+|clusterUuid|String|query|Cluster UUID| |5.0.0|
+|systemTags \(Optional\)|List|query|System tags| |5.0.0|
+|userTags \(Optional\)|List|query|User tags| |5.0.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "name": "SharedBlockGroup-1",
+      "url": "/dev/vg_uuid",
+      "type": "SharedBlock",
+      "attachedClusterUuids": [
+        "7a8202c37ea63e1093acb2c8d1d03e97"
+      ]
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Since|
+|----|----|-----------|-----|
+|inventories|List|List of discovered primary storage inventories|5.0.0|
+|success|boolean|Whether the operation succeeded|5.0.0|
+|error|ErrorCode|For details, see [error](#p_qnb_1nf_2jc)|5.0.0|
+
+### error
+|Name|Type|Description|Since|
+|----|----|-----------|-----|
+|code|String|Error code, which is the globally unique identifier of the error, such as SYS.1000 or HOST.1001|0.6|
+|description|String|Summary description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. The default value is null.|0.6|
+|opaque|LinkedHashMap|Reserved field. The default value is null.|0.6|
+|cause|ErrorCode|Root error that caused the current error. If there is no original error, this field is null.|0.6|
+
+## SDK Example
+Java SDK
+
+```
+DiscoverStrangePrimaryStorageAction action = new DiscoverStrangePrimaryStorageAction();
+action.clusterUuid = "3f7c761b89a5384ebeb6c186012d0997";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DiscoverStrangePrimaryStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = DiscoverStrangePrimaryStorageAction()
+action.clusterUuid = "3f7c761b89a5384ebeb6c186012d0997"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

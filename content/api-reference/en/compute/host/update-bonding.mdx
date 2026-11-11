@@ -1,0 +1,323 @@
+---
+title: "Update Bond Interface"
+---
+
+<APIPage method="PUT" path="/v1/hosts/bondings/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateBonding": {
+    "mode": "802.3ad",
+    "xmitHashPolicy": "layer2+3"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateBonding":{"mode":"802.3ad","xmitHashPolicy":"layer2+3"}}' http://localhost:8080/zstack/v1/hosts/bondings/1facb0c5125037a5bc4167cd2ad30d1f/actions
+```
+
+Parameter List
+
+<table id="table_zbn_lsb_3cb"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+Resource UUID, uniquely identifies the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+slaveUuids \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body \(contained in **updateBonding** structure\)
+
+</td><td>
+
+Slave NIC UUID list
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+slaveNames \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body \(contained in **updateBonding** structure\)
+
+</td><td>
+
+Slave NIC name list
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+type \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **updateBonding** structure\)
+
+</td><td>
+
+Bond type
+
+</td><td>
+
+-   LinuxBonding
+-   OvsBonding
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+mode \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **updateBonding** structure\)
+
+</td><td>
+
+Bond mode
+
+</td><td>
+
+-   802.3ad
+-   active-backup
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+xmitHashPolicy \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **updateBonding** structure\)
+
+</td><td>
+
+Hash policy
+
+</td><td>
+
+-   layer2
+-   layer2+3
+-   layer3+4
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+description \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **updateBonding** structure\)
+
+</td><td>
+
+Resource description
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+systemTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tag
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr><tr><td>
+
+userTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tag
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.7.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+On success, this API returns an empty JSON structure **`{}`**. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+UpdateBondingAction action = new UpdateBondingAction();
+action.uuid = "1facb0c5125037a5bc4167cd2ad30d1f";
+action.mode = "802.3ad";
+action.xmitHashPolicy = "layer2+3";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateBondingAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateBondingAction action = UpdateBondingAction()
+action.uuid = "1facb0c5125037a5bc4167cd2ad30d1f"
+action.mode = "802.3ad"
+action.xmitHashPolicy = "layer2+3"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateBondingAction.Result res = action.call()
+```
+
+</APIPage>

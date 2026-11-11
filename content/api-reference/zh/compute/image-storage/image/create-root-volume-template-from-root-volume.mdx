@@ -1,0 +1,471 @@
+---
+title: "从根硬盘创建根硬盘镜像"
+---
+
+<APIPage method="POST" path="/v1/images/root-volume-templates/from/volumes/{rootVolumeUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "My Root Volume Template",
+    "backupStorageUuids": [
+      "a3cb55d45fb63d1da4911b9d16273a55"
+    ],
+    "platform": "Linux",
+    "system": false
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"My Root Volume Template","backupStorageUuids":["a3cb55d45fb63d1da4911b9d16273a55"],"platform":"Linux","system":false}}' http://localhost:8080/zstack/v1/images/root-volume-templates/from/volumes/3bfc6f9eaf243299b8515382310be47b
+```
+
+参数列表
+
+<table id="table_tfh_jm2_l1b"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+name
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+根硬盘镜像名称
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+description \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+根硬盘镜像的详细描述
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+guestOsType \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+根硬盘镜像对应客户机操作系统类型
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+backupStorageUuids \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+镜像仓库UUID列表
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+rootVolumeUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+根硬盘UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+platform \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+根硬盘镜像对应的系统平台
+
+</td><td>
+
+-   Linux
+-   Windows
+-   WindowsVirtio
+-   Other
+-   Paravirtualization
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+system \(可选\)
+
+</td><td>
+
+boolean
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+是否系统根硬盘镜像
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+resourceUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+根硬盘镜像UUID。若指定，根硬盘镜像会使用该字段值作为UUID。
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+architecture \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.0.0
+
+</td></tr><tr><td>
+
+tagUuids \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+标签UUID列表
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.0.0
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr></tbody>
+</table>
+
+<Callout type="info">
+-   ZSvirt从根硬盘创建根硬盘镜像时支持从虚拟机拷贝GuestTools标签值到镜像， 使用该镜像创建虚拟机时，从镜像拷贝GuestTools标签值到新虚拟机。**SystemTags**增加**GuestTools**选项。
+    -   选项格式为：`GuestTools::TOOLS_VERSION`，其中TOOLS\_VERSION初值为1.0.0，未来随着工具版本的提升，这个值会随之变化。
+    -   例如：`GuestTools::1.0.0`
+    -   补充说明：虚拟机根硬盘创建镜像时，从虚拟机拷贝GuestTools标签值到镜像。
+</Callout>
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "cad3a82224363f1e8592a7fd0bf419f9",
+    "name": "My Root Volume Template",
+    "mediaType": "RootVolumeTemplate",
+    "platform": "Linux",
+    "architecture": "x86_64",
+    "format": "raw",
+    "backupStorageRefs": [
+      {
+        "id": 0.0,
+        "imageUuid": "cad3a82224363f1e8592a7fd0bf419f9",
+        "backupStorageUuid": "ac938bdf013b3a94acf679955f69f647",
+        "installPath": "ceph://zs-images/0cd599ec519249489475112a058bb93a",
+        "status": "Ready"
+      }
+    ]
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_xkr_2n2_l1b)|0.6|
+|inventory|ImageInventory|详情参考[inventory](#p_n5t_4n2_l1b)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|name|String|资源名称|0.6|
+|description|String|资源的详细描述|0.6|
+|state|String|镜像的启动状态|4.0.0|
+|status|String|镜像的就绪状态|4.0.0|
+|size|Long|镜像大小|4.0.0|
+|actualSize|Long|镜像真实容量|4.0.0|
+|md5Sum|String|镜像的md5值|4.0.0|
+|url|String|镜像的URL地址|4.0.0|
+|mediaType|String|镜像的类型|4.0.0|
+|guestOsType|String|镜像对应的客户机操作系统类型|4.0.0|
+|type|String|内部使用字段|4.0.0|
+|platform|String|镜像的系统平台|4.0.0|
+|format|String|镜像的格式，比如：raw|4.0.0|
+|system|Boolean|标识是否为系统镜像|4.0.0|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+|backupStorageRefs|List|详情参考[backupStorageRefs](#p_ebg_pn2_l1b)|0.6|
+
+### backupStorageRefs
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|imageUuid|String|镜像UUID|0.6|
+|backupStorageUuid|String|镜像存储UUID|0.6|
+|installPath|String|在镜像仓库上的安装路径|4.0.0|
+|exportUrl|String|导出镜像的url|4.0.0|
+|exportMd5Sum|String|导出镜像的md5值|4.0.0|
+|status|String|镜像就绪状态|4.0.0|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+
+## SDK示例
+Java SDK
+
+```
+CreateRootVolumeTemplateFromRootVolumeAction action = new CreateRootVolumeTemplateFromRootVolumeAction();
+action.name = "My Root Volume Template";
+action.backupStorageUuids = asList("a3cb55d45fb63d1da4911b9d16273a55");
+action.rootVolumeUuid = "3bfc6f9eaf243299b8515382310be47b";
+action.platform = "Linux";
+action.system = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateRootVolumeTemplateFromRootVolumeAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateRootVolumeTemplateFromRootVolumeAction action = CreateRootVolumeTemplateFromRootVolumeAction()
+action.name = "My Root Volume Template"
+action.backupStorageUuids = [a3cb55d45fb63d1da4911b9d16273a55]
+action.rootVolumeUuid = "3bfc6f9eaf243299b8515382310be47b"
+action.platform = "Linux"
+action.system = false
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateRootVolumeTemplateFromRootVolumeAction.Result res = action.call()
+```
+
+</APIPage>

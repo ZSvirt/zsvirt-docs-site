@@ -1,0 +1,94 @@
+---
+title: "获取虚拟机可用的最新增强工具"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/{uuid}/latest-guest-tools">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/f7be56d67fb731ac9e201c69428c6a69/latest-guest-tools
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |3.7.0|
+|systemTags \(可选\)|List|query|系统标签| |3.7.0|
+|userTags \(可选\)|List|query|用户标签| |3.7.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "281ed8f30eff42c4a8d788384b782977",
+    "managementNodeUuid": "9fbb4361b1e2466f933558d45746bb59",
+    "architecture": "x86_64",
+    "hypervisorType": "kvm",
+    "version": "1.0.0",
+    "createDate": "Oct 9, 2019 7:37:57 PM",
+    "lastOpDate": "Oct 9, 2019 7:37:57 PM"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean|成功|3.7.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_md3_xz1_mjb)|3.7.0|
+|inventory|GuestToolsInventory|详情参考[inventory](#p_byw_wz1_mjb)|3.7.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.7.0|
+|description|String|错误的概要描述|3.7.0|
+|details|String|错误的详细信息|3.7.0|
+|elaboration|String|保留字段，默认为null|3.7.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.7.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.7.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.7.0|
+|name|String|资源名称|3.7.0|
+|description|String|资源的详细描述|3.7.0|
+|managementNodeUuid|String|管理节点UUID|3.7.0|
+|architecture|String|架构|3.7.0|
+|hypervisorType|String|虚拟化类型|3.7.0|
+|version|String|版本|3.7.0|
+|createDate|Timestamp|创建时间|3.7.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.7.0|
+
+## SDK示例
+Java SDK
+
+```
+GetLatestGuestToolsForVmAction action = new GetLatestGuestToolsForVmAction();
+action.uuid = "f7be56d67fb731ac9e201c69428c6a69";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetLatestGuestToolsForVmAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetLatestGuestToolsForVmAction action = GetLatestGuestToolsForVmAction()
+action.uuid = "f7be56d67fb731ac9e201c69428c6a69"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetLatestGuestToolsForVmAction.Result res = action.call()
+```
+
+</APIPage>

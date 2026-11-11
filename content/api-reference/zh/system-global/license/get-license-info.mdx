@@ -1,0 +1,93 @@
+---
+title: "获取许可证信息"
+---
+
+<APIPage method="GET" path="/v1/licenses">
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-X GET http://localhost:8080/zstack/v1/licenses
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|additionSession \(可选\)|String|query|额外的信息,是一个json字符串| |4.1.0|
+|systemTags \(可选\)|List|query|系统标签| |0.6|
+|userTags \(可选\)|List|query|用户标签| |0.6|
+
+-   ZSvirt获取许可证信息时支持获取虚拟化平台ID，**SystemTags**增加**platformId**选项。
+    -   选项格式为：`platformId::{%s}`。其中\{%s\}为请求码md5值的前10位。
+    -   例如：`platformId::a95d3ee34r`
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "licenseType": "Free",
+    "licenseRequest": "example request",
+    "issuedDate": "2017-01-19 14:31:06",
+    "user": "example",
+    "hostNum": 10.0,
+    "expired": true,
+    "managementNodeUuid": "00898b3538e53e70bb7521e54ff80276"
+  },
+  "additions": []
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_vx2_tjr_zdb)|0.6|
+|inventory|LicenseInventory|详情参考[inventory](#p_xtx_sjr_zdb)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.1.0|
+|licenseType|String| |0.6|
+|licenseRequest|String| |0.6|
+|expiredDate|String| |0.6|
+|issuedDate|String| |0.6|
+|user|String| |0.6|
+|prodInfo|String|许可证产品名称|4.1.0|
+|hostNum|Integer| |0.6|
+|cpuNum|Integer| |0.6|
+|vmNum|Integer| |4.1.0|
+|availableHostNum|Integer| |0.6|
+|availableCpuNum|Integer| |0.6|
+|availableVmNum|Integer| |4.1.0|
+|expired|boolean| |0.6|
+|managementNodeUuid|String| |4.1.0|
+
+## SDK示例
+Java SDK
+
+```
+GetLicenseInfoAction action = new GetLicenseInfoAction();
+GetLicenseInfoAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetLicenseInfoAction action = GetLicenseInfoAction()
+GetLicenseInfoAction.Result res = action.call()
+```
+
+</APIPage>

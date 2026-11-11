@@ -1,0 +1,75 @@
+---
+title: "删除标签"
+---
+
+<APIPage method="DELETE" path="/v1/tags/{uuid}?deleteMode={deleteMode}">
+
+可用于删除系统标签（SystemTag）、用户标签（UserTag）、以及资源标签（Tag）。
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/tags/1d33d909355247508cdbf9a0c0037dbe?deleteMode=Permissive
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |0.6|
+|deleteMode \(可选\)|String|body|删除模式\(Permissive 或者 Enforcing, 默认 Permissive\)| |0.6|
+|systemTags \(可选\)|List|body|系统标签| |0.6|
+|userTags \(可选\)|List|body|用户标签| |0.6|
+
+<Callout type="info">
+-   ZSvirt删除标签时支持配置是否关机自动卸载从设备规格分配的物理PCI设备，对已有虚拟机，也可以删除或更改其配置。**SystemTags**增加**autoReleaseSpecReleatedPhysicalPciDevice**选项。
+</Callout>
+    -   选项格式为：`autoReleaseSpecReleatedPhysicalPciDevice`
+    -   例如：`autoReleaseSpecReleatedPhysicalPciDevice`
+-   ZSvirt删除标签时支持配置是否关机自动卸载从设备规格分配的虚拟PCI设备，对已有虚拟机，也可以删除或更改其配置。**SystemTags**增加**autoReleaseSpecReleatedVirtualPciDevice**选项。
+    -   选项格式为：`autoReleaseSpecReleatedVirtualPciDevice`
+    -   例如：`autoReleaseSpecReleatedVirtualPciDevice`
+
+## API返回
+该API成功时返回一个空的JSON结构**`{}`**，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+DeleteTagAction action = new DeleteTagAction();
+action.uuid = "8262e178c23140f6a4de6f0d9e6a0913";
+action.deleteMode = "Permissive";
+action.sessionId = "94c2bff91f834a96b691a36e47888967";
+DeleteTagAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteTagAction action = DeleteTagAction()
+action.uuid = "86a3f5e633dd40358cab072951058ec9"
+action.deleteMode = "Permissive"
+action.sessionId = "87c504af0b5a484d87a5ad4ddac57baa"
+DeleteTagAction.Result res = action.call()
+```
+
+</APIPage>

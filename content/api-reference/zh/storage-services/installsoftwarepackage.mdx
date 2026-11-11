@@ -1,0 +1,87 @@
+---
+title: "安装软件包"
+---
+
+<APIPage method="PUT" path="/v1/software-package/install/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "installSoftwarePackage": {
+    "config": "{}"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"installSoftwarePackage":{"config":"{}"}}' \
+http://localhost:8080/zstack/v1/software-package/install/ff04e1736ec6391f9a1f023b524d0a00/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|软件包UUID| |4.10.20|
+|config \(可选\)|String|body\(包含在`installSoftwarePackage`结构中\)|安装软件包配置| |4.10.20|
+|systemTags \(可选\)|List|body|系统标签| |4.10.20|
+|userTags \(可选\)|List|body|用户标签| |4.10.20|
+
+<Callout type="info">
+-   安装软件包的参数。
+</Callout>
+    -   SystemTag格式：`installConfig::{%s}`
+    -   SystemTag示例：`APIInstallSoftwarePackageMsg转为json字符串`
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+InstallSoftwarePackageAction action = new InstallSoftwarePackageAction();
+action.uuid = "ff04e1736ec6391f9a1f023b524d0a00";
+action.config = "{}";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+InstallSoftwarePackageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = InstallSoftwarePackageAction()
+action.uuid = "ff04e1736ec6391f9a1f023b524d0a00"
+action.config = "{}"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

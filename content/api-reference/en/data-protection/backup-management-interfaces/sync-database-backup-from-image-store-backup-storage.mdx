@@ -1,0 +1,129 @@
+---
+title: "Sync to DS"
+---
+
+<APIPage method="PUT" path="/v1/database-backups/{uuid}/actions">
+
+Sync backup to backup storage.
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "syncDatabaseBackupFromImageStoreBackupStorage": {
+    "srcBackupStorageUuid": "72ad4c5419d63f5aaf37faf985c95a65",
+    "dstBackupStorageUuid": "76b2c6b412a73ef8a4263e659c104fff"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The **systemTags** and **userTags** fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"syncDatabaseBackupFromImageStoreBackupStorage":{"srcBackupStorageUuid":"72ad4c5419d63f5aaf37faf985c95a65","dstBackupStorageUuid":"76b2c6b412a73ef8a4263e659c104fff"}}' http://localhost:8080/zstack/v1/database-backups/4594a949f00e3a55932f5b5e66ec9d67/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|The UUID of the resource. Uniquely identifies the resource| |3.0.0|
+|srcBackupStorageUuid|String|body \(Contained in the **syncDatabaseBackupFromImageStoreBackupStorage** structure\)| | |3.0.0|
+|dstBackupStorageUuid|String|body \(Contained in the **syncDatabaseBackupFromImageStoreBackupStorage** structure\)| | |3.0.0|
+|systemTags \(Optional\)|List|body| | |3.0.0|
+|userTags \(Optional\)|List|body| | |3.0.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "c04683f1c53039d1bb0b0f0b601b5a5b",
+    "name": "Backup-1",
+    "description": "database backup",
+    "size": 1048576.0,
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null on success. For details, see[error](#p_k5t_b4m_2fb)|3.0.0|
+|inventory|DatabaseBackupInventory|For details, see[inventory](#p_qtz_b4m_2fb)|3.0.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|3.0.0|
+|description|String|A brief description of the error|3.0.0|
+|details|String|The detailed error information|3.0.0|
+|elaboration|String|Reserved field. Default is null|3.0.0|
+|opaque|LinkedHashMap|Reserved field. Default is null|3.0.0|
+|cause|ErrorCode|The root error. The source error that caused the current error. This field is null if there is no root error|3.0.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource|3.0.0|
+|name|String|Resource name|3.0.0|
+|description|String|Detailed description of the resource|3.0.0|
+|state|String| |3.0.0|
+|status|String| |3.0.0|
+|size|Long| |3.0.0|
+|metadata|String| |3.0.0|
+|createDate|Timestamp|Creation time|3.0.0|
+|lastOpDate|Timestamp|Last modification time|3.0.0|
+|backupStorageRefs|List|For details, see[backupStorageRefs](#p_imf_c4m_2fb)|3.0.0|
+
+### backupStorageRefs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|databaseBackupUuid|String| |3.0.0|
+|backupStorageUuid|String|Image Storage UUID|3.0.0|
+|installPath|String| |3.0.0|
+|exportUrl|String| |3.0.0|
+|status|String| |3.0.0|
+|createDate|Timestamp|Creation time|3.0.0|
+|lastOpDate|Timestamp|Last modification time|3.0.0|
+
+## SDK Examples
+Java SDK
+
+```
+SyncDatabaseBackupFromImageStoreBackupStorageAction action = new SyncDatabaseBackupFromImageStoreBackupStorageAction();
+action.uuid = "4594a949f00e3a55932f5b5e66ec9d67";
+action.srcBackupStorageUuid = "72ad4c5419d63f5aaf37faf985c95a65";
+action.dstBackupStorageUuid = "76b2c6b412a73ef8a4263e659c104fff";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+SyncDatabaseBackupFromImageStoreBackupStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SyncDatabaseBackupFromImageStoreBackupStorageAction action = SyncDatabaseBackupFromImageStoreBackupStorageAction()
+action.uuid = "4594a949f00e3a55932f5b5e66ec9d67"
+action.srcBackupStorageUuid = "72ad4c5419d63f5aaf37faf985c95a65"
+action.dstBackupStorageUuid = "76b2c6b412a73ef8a4263e659c104fff"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+SyncDatabaseBackupFromImageStoreBackupStorageAction.Result res = action.call()
+```
+
+</APIPage>

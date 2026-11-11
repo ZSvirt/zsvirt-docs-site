@@ -1,0 +1,64 @@
+---
+title: "Delete AccessKey"
+---
+
+<APIPage method="DELETE" path="/v1/accesskeys/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/accesskeys/7fcbb0096e3d3e2a8dd4f83610d3dac9?
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|AccessKey UUID. Uniquely identifies the resource.| |4.0.0|
+|deleteMode \(Optional\)|String|url| | |4.0.0|
+|systemTags \(Optional\)|List|body| | |4.0.0|
+|userTags \(Optional\)|List|body| | |4.0.0|
+
+## API Response
+This API returns an empty JSON structure `{}` on success. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DeleteAccessKeyAction action = new DeleteAccessKeyAction();
+action.uuid = "7fcbb0096e3d3e2a8dd4f83610d3dac9";
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteAccessKeyAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteAccessKeyAction action = DeleteAccessKeyAction()
+action.uuid = "7fcbb0096e3d3e2a8dd4f83610d3dac9"
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DeleteAccessKeyAction.Result res = action.call()
+```
+
+</APIPage>

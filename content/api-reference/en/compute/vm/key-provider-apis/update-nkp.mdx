@@ -1,0 +1,68 @@
+---
+title: "Update a Native Key Provider"
+---
+
+<APIPage method="PUT" path="/v1/key-providers/nkp/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateNkp": {
+    "description": "example"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding example, the `systemTags` and `userTags` fields can be omitted. They are listed to indicate that the body can include these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateNkp":{"description":"example"}}' \
+http://localhost:8080/zstack/v1/key-providers/nkp/ff0415ff372f33b5b6b757d3b99ad900/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Optional Value|Since|
+|----|----|--------|-----------|--------------|-----|
+|uuid|String|url|Resource UUID, which uniquely identifies the resource| |5.0.0|
+|description \(optional\)|String|body \(contained in `updateNkp` structure\)|Detailed description of the resource| |5.0.0|
+|systemTags \(optional\)|List|body|System tags| |5.0.0|
+|userTags \(optional\)|List|body|User tags| |5.0.0|
+
+## SDK Example
+Java SDK
+
+```
+UpdateNkpAction action = new UpdateNkpAction();
+action.uuid = "ff0415ff372f33b5b6b757d3b99ad900";
+action.description = "example";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateNkpAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = UpdateNkpAction()
+action.uuid = "ff0415ff372f33b5b6b757d3b99ad900"
+action.description = "example"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

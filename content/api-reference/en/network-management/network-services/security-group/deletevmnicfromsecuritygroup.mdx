@@ -1,0 +1,69 @@
+---
+title: "DeleteVmNicFromSecurityGroup"
+---
+
+Delete VM NICs from a security group. This command is executed asynchronously. After it returns, the rules may not have taken effect on all VM NICs yet.
+
+## API Request
+URLs
+
+```
+DELETE /v1/security-groups/{securityGroupUuid}/vm-instances/nics?vmNicUuids={vmNicUuids}
+```
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/security-groups/2c78da48235c3015aa9f9c99e81060b2/vm-instances/nics?vmNicUuids=9aef4c831b1540e7832332972138d78c&vmNicUuids=c40dd02ddf654031aec25346626db553
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|securityGroupUuid|String|url|The security group UUID| |0.6|
+|vmNicUuids|List|body|The list of NIC UUIDs| |0.6|
+|systemTags \(Optional\)|List|body|System tags| |0.6|
+|userTags \(Optional\)|List|body|User tags| |0.6|
+
+## API Response
+This API returns a null JSON object `{}` when it succeeds, and returns a JSON object containing an `error` field when it fails. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DeleteVmNicFromSecurityGroupAction action = new DeleteVmNicFromSecurityGroupAction();
+action.securityGroupUuid = "2c78da48235c3015aa9f9c99e81060b2";
+action.vmNicUuids = asList("f8e9c3a73e7c399ca148057f8b2897c3","ae09cd7292913bfe84e467286aaa7a9f");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteVmNicFromSecurityGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteVmNicFromSecurityGroupAction action = DeleteVmNicFromSecurityGroupAction()
+action.securityGroupUuid = "2c78da48235c3015aa9f9c99e81060b2"
+action.vmNicUuids = [f8e9c3a73e7c399ca148057f8b2897c3, ae09cd7292913bfe84e467286aaa7a9f]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DeleteVmNicFromSecurityGroupAction.Result res = action.call()
+```

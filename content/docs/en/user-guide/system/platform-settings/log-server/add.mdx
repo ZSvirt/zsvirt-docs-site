@@ -1,0 +1,29 @@
+---
+title: 'Add Log Server'
+---
+
+A log server can be used to collect management node logs, enabling quick issue identification and improving the operational efficiency of the platform.
+
+-   You must have admin permissions to configure the log server.
+-   Make sure the communication between the management node and the log server is properly established.
+-   Make sure the log server has `syslog server` installed.
+
+1.  In the navigation pane, choose **System Management** &gt; **Log Server**.
+
+2.  On the Log Server page, click **Add Log Server**.
+
+3.  In the Add Log Server dialog, set the following parameters:
+
+    -   **Name**: Set the name of the log server.
+    -   **Description**: Optionally fill in a description for the log server.
+    -   **IP Address**: Enter the IP address of the log server.
+    -   **UDP Port**: Enter the port number that provides service for the UDP protocol.
+    -   **Log Identifier**: Select the log device category to match the log server, supporting LOCAL0~LOCAL7.
+
+        <Callout type="info">
+        The level must be consistent with the setting in the log server's `rsyslog.conf` file to properly receive log information.
+        </Callout>
+
+4.  (Optional) Click **Test Connection** to check the IP address connectivity.
+
+5.  Review the configuration and click **OK**.

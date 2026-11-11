@@ -1,0 +1,229 @@
+---
+title: "获取主机磁盘信息"
+---
+
+<APIPage method="GET" path="/v1/host/get-block-devices">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/host/get-block-devices?username=username&password=password&sshPort=22&hostName=192.168.1.1
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|username|String|query|主机名| |4.3.0|
+|password \(可选\)|String|query|主机密码| |4.3.0|
+|sshPort|Integer|query|主机端口| |4.3.0|
+|hostName|String|query|主机IP| |4.3.0|
+|excludedTypes \(可选\)|List|query|指定排除的磁盘类型| |4.3.0|
+|systemTags \(可选\)|List|query|系统标签| |4.3.0|
+|userTags \(可选\)|List|query|用户标签| |4.3.0|
+
+## **API返回**
+返回示例
+
+```
+{
+  "blockDevices": {
+    "unusedBlockDevices": [
+      {
+        "name": "/dev/vdb",
+        "type": "disk",
+        "size": 322122547200,
+        "used": 0,
+        "available": 0,
+        "physicalSector": 512,
+        "logicalSector": 512,
+        "partitionTable": "msdos",
+        "usedRatio": 0,
+        "multipath": false
+      },
+      {
+        "name": "/dev/vdc",
+        "type": "disk",
+        "size": 429496729600,
+        "used": 0,
+        "available": 0,
+        "physicalSector": 512,
+        "logicalSector": 512,
+        "partitionTable": "unknown",
+        "usedRatio": 0,
+        "multipath": false
+      }
+    ],
+    "usedBlockDevices": [
+      {
+        "name": "/dev/vda",
+        "type": "disk",
+        "size": 429496729600,
+        "used": 0,
+        "available": 0,
+        "physicalSector": 512,
+        "logicalSector": 512,
+        "children": [
+          {
+            "name": "/dev/vda1",
+            "type": "part",
+            "size": 1073741824,
+            "used": 0,
+            "available": 0,
+            "physicalSector": 512,
+            "logicalSector": 512,
+            "mountPoint": "/boot",
+            "partitionTable": "unknown",
+            "usedRatio": 0,
+            "multipath": false
+          },
+          {
+            "name": "/dev/vda2",
+            "type": "part",
+            "size": 428421939200,
+            "used": 0,
+            "available": 0,
+            "physicalSector": 512,
+            "logicalSector": 512,
+            "children": [
+              {
+                "name": "/dev/mapper/zstack-root",
+                "type": "lvm",
+                "size": 419950493696,
+                "used": 0,
+                "available": 0,
+                "physicalSector": 512,
+                "logicalSector": 512,
+                "mountPoint": "/",
+                "partitionTable": "unknown",
+                "usedRatio": 0,
+                "multipath": false
+              },
+              {
+                "name": "/dev/mapper/zstack-swap",
+                "type": "lvm",
+                "size": 8468299776,
+                "used": 0,
+                "available": 0,
+                "physicalSector": 512,
+                "logicalSector": 512,
+                "mountPoint": "[SWAP]",
+                "partitionTable": "unknown",
+                "usedRatio": 0,
+                "multipath": false
+              }
+            ],
+            "partitionTable": "unknown",
+            "usedRatio": 0,
+            "multipath": false
+          }
+        ],
+        "partitionTable": "unknown",
+        "usedRatio": 0,
+        "multipath": false
+      }
+    ]
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.3.0|
+|blockDevices|BlockDevices|详情参考[blockDevices](#p_yp5_d43_gcc)|4.3.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_vr4_d43_gcc)|4.3.0|
+
+### blockDevices
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|unusedBlockDevices|List|详情参考[unusedBlockDevices](#p_jqv_lwk_gcc)|4.3.0|
+|usedBlockDevices|List|详情参考[usedBlockDevices](#p_fwg_lwk_gcc)|4.3.0|
+
+### unusedBlockDevices
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|name|String|硬盘设备名字|zsv 4.3.0|
+|type|String|磁盘类型|zsv 4.3.0|
+|size|long|磁盘容量|zsv 4.3.0|
+|used|long|磁盘已使用容量|zsv 4.10.0|
+|available|long|磁盘可使用容量|zsv 4.10.0|
+|physicalSector|long|物理扇区大小|zsv 4.3.0|
+|logicalSector|long|逻辑扇区大小|zsv 4.3.0|
+|mountPoint|String|挂载点|zsv 4.3.0|
+|partitionTable|String|分区表类型|zsv 4.3.0|
+|fsType|String|文件系统类型|zsv 4.10.0|
+|serialNumber|String|序列号|zsv 4.10.0|
+|model|String|型号|zsv 4.10.0|
+|mediaType|String|介质类型|zsv 4.10.0|
+|usedRatio|String|使用率|zsv 4.10.0|
+|smartPassed|Boolean|获取磁盘smart状态|zsv 4.10.0|
+|smartMessage|String|获取磁盘smart状态失败时输出信息|zsv 4.10.0|
+|multipath|boolean|是否为多路径设备；true 表示该磁盘自身为 multipath 设备或为 multipath 底层路径盘|zsv 5.0.0|
+|children|List|详情参考children|zsv 4.3.0|
+
+### usedBlockDevices
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|name|String|硬盘设备名字|zsv 4.3.0|
+|type|String|磁盘类型|zsv 4.3.0|
+|size|long|磁盘容量|zsv 4.3.0|
+|used|long|磁盘已使用容量|zsv 4.10.0|
+|available|long|磁盘可使用容量|zsv 4.10.0|
+|physicalSector|long|物理扇区大小|zsv 4.3.0|
+|logicalSector|long|逻辑扇区大小|zsv 4.3.0|
+|mountPoint|String|挂载点|zsv 4.3.0|
+|partitionTable|String|分区表类型|zsv 4.3.0|
+|fsType|String|文件系统类型|zsv 4.10.0|
+|serialNumber|String|序列号|zsv 4.10.0|
+|model|String|型号|zsv 4.10.0|
+|mediaType|String|介质类型|zsv 4.10.0|
+|usedRatio|String|使用率|zsv 4.10.0|
+|smartPassed|Boolean|获取磁盘smart状态|zsv 4.10.0|
+|smartMessage|String|获取磁盘smart状态失败时输出信息|zsv 4.10.0|
+|multipath|boolean|是否为多路径设备；true 表示该磁盘自身为 multipath 设备或为 multipath 底层路径盘|zsv 5.0.0|
+|children|List|详情参考children|zsv 4.3.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+GetPhysicalMachineBlockDevicesAction action = new GetPhysicalMachineBlockDevicesAction();
+action.username = "username";
+action.password = "password";
+action.sshPort = 22;
+action.hostName = "192.168.1.1";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetPhysicalMachineBlockDevicesAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = GetPhysicalMachineBlockDevicesAction()
+action.username = "username"
+action.password = "password"
+action.sshPort = 22
+action.hostName = "192.168.1.1"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

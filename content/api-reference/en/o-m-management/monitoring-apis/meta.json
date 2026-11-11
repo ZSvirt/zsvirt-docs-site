@@ -1,0 +1,9 @@
+{
+  "title": "Monitoring APIs",
+  "pages": [
+    "monitoring-and-alarm-apis",
+    "notification-service-apis",
+    "capacity-management-apis"
+  ],
+  "pagesIndex": "index"
+}

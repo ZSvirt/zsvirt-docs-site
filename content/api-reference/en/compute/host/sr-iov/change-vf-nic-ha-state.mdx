@@ -1,0 +1,265 @@
+---
+title: "Change VF NIC HA State"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/nics/{vfNicUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "changeVfNicHaState": {
+    "haState": "Enabled"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The `systemTags` and `userTags` fields can be omitted in the above example. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"changeVfNicHaState":{"haState":"Enabled"}}' \
+http://localhost:8080/zstack/v1/vm-instances/nics/8536b111015d3fd289907c5f53c80153/actions
+```
+
+Parameter List
+
+<table id="table_tnd_sql_s2c"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+vfNicUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+VF NIC UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+haState
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(contained in `changeVfNicHaState` structure\)
+
+</td><td>
+
+HA state
+
+</td><td>
+
+-   Enabled
+-   Disabled
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "pciDeviceUuid": "4935759d5e543ff7bb9901262d67e805",
+    "haState": "Enabled",
+    "uuid": "5a39466d15e9303d8cd091be8f8b98a0",
+    "vmInstanceUuid": "0c9912e742793004bd585150a4e243d0",
+    "usedIpUuid": "6c1404d271ce3da4a5a845563b65ab55",
+    "l3NetworkUuid": "0d42b1c567da3721b04d1bc316b2e0cb",
+    "ip": "192.168.1.2",
+    "mac": "00:0c:29:bd:99:fc",
+    "hypervisorType": "KVM",
+    "netmask": "255.255.255.0",
+    "gateway": "192.168.1.1",
+    "deviceId": 0,
+    "type": "VF",
+    "state": "enable"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.10.0|
+|inventory|VmVfNicInventory|See [inventory](#p_svq_brl_s2c)|4.10.0|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_ndn_grl_s2c)|4.10.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|pciDeviceUuid|String|NIC PCI address|4.10.0|
+|haState|String|HA state|4.10.0|
+|uuid|String|UUID of the resource, uniquely identifies the resource|4.10.0|
+|vmInstanceUuid|String|Virtual Machine UUID|4.10.0|
+|l3NetworkUuid|String|Distributed Port Group UUID|4.10.0|
+|ip|String| |4.10.0|
+|mac|String| |4.10.0|
+|hypervisorType|String| |4.10.0|
+|netmask|String| |4.10.0|
+|gateway|String| |4.10.0|
+|metaData|String| |4.10.0|
+|ipVersion|Integer| |4.10.0|
+|driverType|String| |4.10.0|
+|internalName|String| |4.10.0|
+|deviceId|Integer| |4.10.0|
+|type|String| |4.10.0|
+|state|String| |4.10.0|
+|createDate|Timestamp|Create date|4.10.0|
+|lastOpDate|Timestamp|Last update date|4.10.0|
+|usedIps|List|See [usedIps](#p_r4q_drl_s2c)|4.10.0|
+
+### usedIps
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifies the resource|4.10.0|
+|ipRangeUuid|String|IP Range UUID|4.10.0|
+|l3NetworkUuid|String|Distributed Port Group UUID|4.10.0|
+|ipVersion|Integer| |4.10.0|
+|ip|String| |4.10.0|
+|netmask|String| |4.10.0|
+|gateway|String| |4.10.0|
+|usedFor|String| |4.10.0|
+|ipInLong|long| |4.10.0|
+|vmNicUuid|String|Virtual Machine NIC UUID|4.10.0|
+|createDate|Timestamp|Create date|4.10.0|
+|lastOpDate|Timestamp|Last update date|4.10.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code, a globally unique identifier of the error, e.g. SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause, the source error that caused the current error, null if no original error|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+ChangeVfNicHaStateAction action = new ChangeVfNicHaStateAction();
+action.vfNicUuid = "8536b111015d3fd289907c5f53c80153";
+action.haState = "Enabled";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ChangeVfNicHaStateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = ChangeVfNicHaStateAction()
+action.vfNicUuid = "8536b111015d3fd289907c5f53c80153"
+action.haState = "Enabled"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

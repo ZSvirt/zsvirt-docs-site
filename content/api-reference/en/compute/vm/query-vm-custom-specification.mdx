@@ -1,0 +1,114 @@
+---
+title: "Query Virtual Machine Custom Operating System Specification"
+---
+
+<APIPage method="GET" path="/v1/vm-custom-specifications" altPaths={["/v1/vm-custom-specifications/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-custom-specifications?q=uuid=ff0a9e874342368bb28daaf2c9b3cc00
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-custom-specifications/a821a017ad343c50929c7e0c14bc3f90
+```
+
+Queryable Fields
+
+Run the CLI command tool, enter `QueryVmCustomSpecification` and press Tab to view all queryable fields and resource names that can be queried across tables.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "ff0a9e874342368bb28daaf2c9b3cc00",
+      "vmInstanceUuid": "ff01ec80fd11327cba7519b66119d900",
+      "name": "custom-specification-for-vm-1",
+      "description": "Test",
+      "platform": "Windows",
+      "hostname": "vm-1",
+      "rootPassword": "password",
+      "generateSID": true,
+      "domainMode": "Domain",
+      "domainName": "zsv.test",
+      "domainUsername": "test",
+      "domainPassword": "password",
+      "organization": "OU=zsv,DC=zsv,DC=test"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.10.18|
+|inventories|List|For details, see [inventories](#p_ts1_1fm_lhc)|4.10.18|
+|error|ErrorCode|For details, see [error](#p_xj2_1fm_lhc)|4.10.18|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifying the resource|4.10.18|
+|vmInstanceUuid|String|Virtual Machine UUID|4.10.18|
+|name|String|Resource name|4.10.18|
+|description|String|Detailed description of the resource|4.10.18|
+|platform|String|Virtual Machine Operating System Platform Type|4.10.18|
+|hostname|String|Host Name|4.10.18|
+|generateSID|Boolean|Whether to Generate SID|4.10.18|
+|domainName|String|Domain Name or Workgroup Name|4.10.18|
+|domainUsername|String|Domain Username|4.10.18|
+|organization|String|Organization Unit|4.10.18|
+|createDate|Timestamp|Create time|4.10.18|
+|lastOpDate|Timestamp|Last modification time|4.10.18|
+|domainMode|VmCustomSpecificationDomainMode|For details, see [domainMode](#p_v4g_dfm_lhc)|4.10.18|
+
+### domainMode
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|WorkGroup|VmCustomSpecificationDomainMode|Workgroup|4.10.18|
+|Domain|VmCustomSpecificationDomainMode|Domain|4.10.18|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, default is null|0.6|
+|opaque|LinkedHashMap|Reserved field, default is null|0.6|
+|cause|ErrorCode|Root cause: the source error that triggered the current error. If there is no original error, this field is null|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+QueryVmCustomSpecificationAction action = new QueryVmCustomSpecificationAction();
+action.conditions = asList("uuid=ff0a9e874342368bb28daaf2c9b3cc00");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryVmCustomSpecificationAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = QueryVmCustomSpecificationAction()
+action.conditions = ["uuid=ff0a9e874342368bb28daaf2c9b3cc00"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

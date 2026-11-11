@@ -1,0 +1,9 @@
+{
+  "title": "查看备份计划和数据",
+  "pages": [
+    "index",
+    "view-plan-execution",
+    "view-vm-backup-data"
+  ],
+  "pagesIndex": "index"
+}

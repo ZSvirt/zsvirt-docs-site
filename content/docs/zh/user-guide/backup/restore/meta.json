@@ -1,0 +1,10 @@
+{
+  "title": "数据恢复",
+  "pages": [
+    "index",
+    "overwrite-vm",
+    "create-vm-from-backup",
+    "overwrite-platform-database"
+  ],
+  "pagesIndex": "index"
+}

@@ -1,0 +1,65 @@
+---
+title: "Delete License"
+---
+
+## API Request
+URLs
+
+```
+DELETE /v1/licenses/mn/{managementNodeUuid}/actions?uuid={uuid}
+```
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/licenses/mn/4a1821df62404868ada349c672e79a5b/actions?uuid=jh34g5uy4g5434i5h45ui93457348
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid \(Optional\)|String|url|The UUID of the resource. Uniquely identifies the resource.| |0.6|
+|managementNodeUuid|String|url|The UUID of the management node| |0.6|
+|systemTags \(Optional\)|List|body| | |0.6|
+|userTags \(Optional\)|List|body| | |0.6|
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On failure, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DeleteLicenseAction action = new DeleteLicenseAction();
+action.managementNodeUuid = "a762967a15a14d69833002d91119c493";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteLicenseAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteLicenseAction action = DeleteLicenseAction()
+action.managementNodeUuid = "32875f270bfc4bdb842ede0b42ed39a3"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DeleteLicenseAction.Result res = action.call()
+```

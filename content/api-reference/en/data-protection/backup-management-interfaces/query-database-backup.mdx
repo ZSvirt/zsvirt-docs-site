@@ -1,0 +1,106 @@
+---
+title: "Query Database Backup"
+---
+
+<APIPage method="GET" path="/v1/database-backups" altPaths={["/v1/database-backups/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/database-backups?q=uuid=9f5010336a233d6ebbd82594a6d56e7c
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/database-backups/296a7da913333dd992d89bf30d9304ed
+```
+
+Queryable Fields
+
+Run the CLI command line tool, enter `QueryDatabaseBackup` and press the Tab key to view all queryable fields and cross-table queryable resource names.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "742a7c7d4a4f3a01b206632a40ac414f",
+      "name": "db-backup",
+      "description": "db-backup",
+      "size": 13107.0
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null on success. For details, see [error](#p_qk4_ylm_2fb)|3.0.0|
+|inventories|List|For details, see [inventories](#p_fbv_ylm_2fb)|3.0.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|3.0.0|
+|description|String|A brief description of the error|3.0.0|
+|details|String|The detailed error information|3.0.0|
+|elaboration|String|Reserved field. Default is null|3.0.0|
+|opaque|LinkedHashMap|Reserved field. Default is null|3.0.0|
+|cause|ErrorCode|The root error. The source error that caused the current error. This field is null if there is no root error|3.0.0|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource|3.0.0|
+|name|String|Resource name|3.0.0|
+|description|String|Detailed description of the resource|3.0.0|
+|state|String| |3.0.0|
+|status|String| |3.0.0|
+|size|Long| |3.0.0|
+|metadata|String| |3.0.0|
+|createDate|Timestamp|Creation time|3.0.0|
+|lastOpDate|Timestamp|Last modification time|3.0.0|
+|backupStorageRefs|List|For details, see [backupStorageRefs](#p_lqc_zlm_2fb)|3.0.0|
+
+### backupStorageRefs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|databaseBackupUuid|String| |3.0.0|
+|backupStorageUuid|String|Image Storage UUID|3.0.0|
+|installPath|String| |3.0.0|
+|exportUrl|String| |3.0.0|
+|status|String| |3.0.0|
+|createDate|Timestamp|Creation time|3.0.0|
+|lastOpDate|Timestamp|Last modification time|3.0.0|
+
+## SDK Examples
+Java SDK
+
+```
+QueryDatabaseBackupAction action = new QueryDatabaseBackupAction();
+action.conditions = asList("uuid=74b420b3e877354e832a900915aab41a");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryDatabaseBackupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryDatabaseBackupAction action = QueryDatabaseBackupAction()
+action.conditions = ["uuid=b11af605703231b4a898bed3fb7d94c0"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryDatabaseBackupAction.Result res = action.call()
+```
+
+</APIPage>

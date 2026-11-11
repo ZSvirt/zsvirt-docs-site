@@ -1,0 +1,118 @@
+---
+title: "Stop SNMP Agent"
+---
+
+<APIPage method="PUT" path="/v1/snmp/agent/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "stopSnmpAgent": {
+    "uuid": "253c4449901c49f9928d2d7fd2119715"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The `systemTags` and `userTags` fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"stopSnmpAgent":{"uuid":"d3dcbba6129e497480af319ee4e42749"}}' \
+http://localhost:8080/zstack/v1/snmp/agent/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|body \(contained in the **stopSnmpAgent** structure\)|Resource UUID. Uniquely identifies the resource| |4.10.0|
+|systemTags \(optional\)|List|body|System tags| |4.10.0|
+|userTags \(optional\)|List|body|User tags| |4.10.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "b32ac27ffdd03e7ea7857d318d5cfdd8",
+    "version": "v3",
+    "userName": "zstack",
+    "authAlgorithm": "SHA512",
+    "authPassword": "auth_password",
+    "privacyAlgorithm": "DES",
+    "privacyPassword": "priv_password",
+    "port": 161,
+    "status": "Enable",
+    "securityLevel": "authPriv"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.10.0|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_bcl_x1v_m1b)|4.10.0|
+|inventory|SnmpAgentInventory|See [inventory](#p_nqg_y1v_m1b)|4.10.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. A globally unique identifier for the error, e.g., SYS.1000, HOST.1001|4.10.0|
+|description|String|Brief description of the error|4.10.0|
+|details|String|Detailed error information|4.10.0|
+|elaboration|String|Reserved field. Defaults to null|4.10.0|
+|opaque|LinkedHashMap|Reserved field. Defaults to null|4.10.0|
+|cause|ErrorCode|Root error. The source error that caused this error. Null if no root cause exists|4.10.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID. Uniquely identifies the resource|4.10.0|
+|version|String|SNMP agent protocol version|4.10.0|
+|readCommunity|String|Read community string \(used when version is v2c\)|4.10.0|
+|userName|String|Username \(used when version is v3\)|4.10.0|
+|authAlgorithm|String|Authentication algorithm|4.10.0|
+|authPassword|String|Authentication password|4.10.0|
+|privacyAlgorithm|String|Privacy algorithm|4.10.0|
+|privacyPassword|String|Privacy password|4.10.0|
+|port|int|Port|4.10.0|
+|status|String|Whether the SNMP agent is enabled|4.10.0|
+|securityLevel|String|Security level|4.10.0|
+|createDate|Timestamp|Creation time|4.10.0|
+|lastOpDate|Timestamp|Last modification time|4.10.0|
+
+## SDK Examples
+Java SDK
+
+```
+StopSnmpAgentAction action = new StopSnmpAgentAction();
+action.uuid = "5b470e397e794dff84efa29375d9cef8";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+StopSnmpAgentAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+StopSnmpAgentAction action = StopSnmpAgentAction()
+action.uuid = "e48db055707445d3b70e8e52f7ee0ca3"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+StopSnmpAgentAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,95 @@
+---
+title: "获取候选列表"
+---
+
+<APIPage method="GET" path="/v1/backup-storage/{srcBackupStorageUuid}/migration-candidates">
+
+获取镜像迁移的目标镜像仓库候选列表。
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/backup-storage/3c738531e0b64399a354022d59a46ebb/migration-candidates
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|srcBackupStorageUuid|String|url|待迁移镜像所在镜像仓库UUID| |2.2|
+|systemTags \(可选\)|List|query|系统标签| |2.2|
+|userTags \(可选\)|List|query|用户标签| |2.2|
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "7ed005f5dcfd4ca7b1883b97c803f53b",
+      "name": "BS-1"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_gkf_1qz_qbb)|2.2|
+|inventories|List|详情参考[inventories](#p_owz_zpz_qbb)|2.2|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|2.2|
+|description|String|错误的概要描述|2.2|
+|details|String|错误的详细信息|2.2|
+|elaboration|String|保留字段，默认为null|2.2|
+|opaque|LinkedHashMap|保留字段，默认为null|2.2|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|2.2|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|2.2|
+|name|String|资源名称|2.2|
+|url|String| |2.2|
+|description|String|资源的详细描述|2.2|
+|totalCapacity|Long| |2.2|
+|availableCapacity|Long| |2.2|
+|type|String| |2.2|
+|state|String| |2.2|
+|status|String| |2.2|
+|createDate|Timestamp|创建时间|2.2|
+|lastOpDate|Timestamp|最后一次修改时间|2.2|
+|attachedZoneUuids|List| |2.2|
+
+## SDK示例
+Java SDK
+
+```
+GetBackupStorageCandidatesForImageMigrationAction action = new GetBackupStorageCandidatesForImageMigrationAction();
+action.srcBackupStorageUuid = "cf9fb97b3045411ab5345fe678116bf8";
+action.sessionId = "2887bb5380f242f8ab43ae2d8649cb73";
+GetBackupStorageCandidatesForImageMigrationAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetBackupStorageCandidatesForImageMigrationAction action = GetBackupStorageCandidatesForImageMigrationAction()
+action.srcBackupStorageUuid = "962c8f5399354df591c08fc3d25b58c1"
+action.sessionId = "ab7451c36d8c4c3ea85d3c7395389fda"
+GetBackupStorageCandidatesForImageMigrationAction.Result res = action.call()
+```
+
+</APIPage>

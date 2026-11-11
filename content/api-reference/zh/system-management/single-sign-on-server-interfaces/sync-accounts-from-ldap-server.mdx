@@ -1,0 +1,80 @@
+---
+title: "从LDAP服务器上同步用户"
+---
+
+<APIPage method="PUT" path="/v1/ldap/servers/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "syncAccountsFromLdapServer": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X PUT -d '{"syncAccountsFromLdapServer":{}}' \
+http://localhost:8080/zstack/v1/ldap/servers/0fdb3f15019f362396cd13645d5e5135/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|LDAP服务器的UUID，唯一标示该资源| |4.3.0|
+|createAccountStrategy \(可选\)|String|body\(包含在`syncAccountsFromLdapServer`结构中\)|从LDAP服务器同步时，对于LDAP服务器中新创建的用户，该虚拟化平台的处理策略，是创建对应的account还是无动作| |4.3.0|
+|deleteAccountStrategy \(可选\)|String|body\(包含在`syncAccountsFromLdapServer`结构中\)|从LDAP服务器同步时，对于LDAP服务器中已删除的用户，该虚拟化平台的处理策略，是删除对应的account、标记已删除还是无动作| |4.3.0|
+|systemTags \(可选\)|List|body|系统标签| |4.3.0|
+|userTags \(可选\)|List|body|用户标签| |4.3.0|
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+SyncAccountsFromLdapServerAction action = new SyncAccountsFromLdapServerAction();
+action.uuid = "0fdb3f15019f362396cd13645d5e5135";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+SyncAccountsFromLdapServerAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+SyncAccountsFromLdapServerAction action = SyncAccountsFromLdapServerAction()
+action.uuid = "0fdb3f15019f362396cd13645d5e5135"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+SyncAccountsFromLdapServerAction.Result res = action.call()
+
+```
+
+</APIPage>

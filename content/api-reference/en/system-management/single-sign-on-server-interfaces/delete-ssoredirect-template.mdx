@@ -1,0 +1,82 @@
+---
+title: "Delete SSO Redirect Template"
+---
+
+<APIPage method="POST" path="/v1/delete/sso/redirect/template">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "uuid": "9df30dceb13a3989aa3bfa20051bae9a",
+    "deleteMode": "Permissive"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding example, the `systemTags` and `userTags` fields are optional. They are listed here to show that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"uuid":"9df30dceb13a3989aa3bfa20051bae9a","deleteMode":"Permissive"}}' \
+http://localhost:8080/zstack/v1/delete/sso/redirect/template
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|body \(enclosed in the `params` structure\)|Template UUID. Uniquely identifies the resource.| |4.3.0|
+|deleteMode \(Optional\)|String|body \(enclosed in the `params` structure\)|Deletion mode \(Permissive / Enforcing, Permissive\)| |4.3.0|
+|systemTags \(Optional\)|List|body|System tags| |4.3.0|
+|userTags \(Optional\)|List|body|User tags| |4.3.0|
+
+## API Response
+This API returns an empty JSON structure `{}` on success. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DeleteSSORedirectTemplateAction action = new DeleteSSORedirectTemplateAction();
+action.uuid = "9df30dceb13a3989aa3bfa20051bae9a";
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteSSORedirectTemplateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteSSORedirectTemplateAction action = DeleteSSORedirectTemplateAction()
+action.uuid = "9df30dceb13a3989aa3bfa20051bae9a"
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DeleteSSORedirectTemplateAction.Result res = action.call()
+```
+
+</APIPage>

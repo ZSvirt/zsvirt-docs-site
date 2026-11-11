@@ -1,0 +1,71 @@
+---
+title: 'zsphere_image_storages'
+description: '查询 ZSvirt 镜像存储列表及其属性。'
+---
+
+<HistoricalNamingNote locale="zh" />
+
+
+# zsphere_image_storages（数据源）
+
+查询 ZSvirt 镜像存储列表及其属性。
+
+## 示例用法
+```terraform
+data "zsphere_image_storages" "test" {
+}
+
+output "zstack_secs" {
+  value = data.zsphere_image_storages.test
+}
+
+# 示例输出：
+# zstack_secs = {
+#   "filter" = tolist([])
+#   "image_storages" = tolist([
+#     {
+#       "available_capacity" = 263827959808
+#       "name" = "Host-1"
+#       "state" = "Enabled"
+#       "status" = "Connected"
+#       "total_capacity" = 312423686144
+#       "uuid" = "e3f8b6038e274f0c9354962a78f46177"
+#     },
+#   ])
+#   "name" = tostring(null)
+#   "name_pattern" = tostring(null)
+# }
+```
+
+## 参数说明
+
+### 可选参数
+
+- `filter`（块列表）（参见下方嵌套结构）
+- `name`（字符串）按精确名称查询
+- `name_pattern`（字符串）按名称模糊查询，类似 MySQL LIKE。`%` 匹配多个字符，`_` 匹配单个字符
+
+### 只读属性
+
+- `image_storages`（属性列表）（参见下方嵌套结构）
+
+<a id="nestedblock--filter"></a>
+### `filter` 嵌套结构
+
+必填参数：
+
+- `name`（字符串）用于过滤的字段名。
+- `values`（字符串集合）过滤值，多个值之间为 OR 关系。
+
+
+<a id="nestedatt--image_storages"></a>
+### `image_storages` 嵌套结构
+
+只读属性：
+
+- `available_capacity`（数字）Available capacity of the Image storage in bytes
+- `name`（字符串）Image名称 storage
+- `state`（字符串）State of the Image storage (Enabled or Disabled)
+- `status`（字符串）Image就绪状态 storage
+- `total_capacity`（数字）Total capacity of the Image storage in bytes
+- `uuid`（字符串）Image UUID storage

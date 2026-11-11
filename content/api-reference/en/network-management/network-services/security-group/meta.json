@@ -1,0 +1,27 @@
+{
+  "title": "Security Group",
+  "pages": [
+    "createsecuritygroup",
+    "deletesecuritygroup",
+    "querysecuritygroup",
+    "updatesecuritygroup",
+    "changesecuritygroupstate",
+    "attachsecuritygrouptol3network",
+    "detachsecuritygroupfroml3network",
+    "getcandidatevmnicforsecuritygroup",
+    "addvmnictosecuritygroup",
+    "deletevmnicfromsecuritygroup",
+    "queryvmnicinsecuritygroup",
+    "addsecuritygrouprule",
+    "deletesecuritygrouprule",
+    "querysecuritygrouprule",
+    "validatesecuritygrouprule",
+    "changesecuritygrouprule",
+    "changesecuritygrouprulestate",
+    "updatesecuritygrouprulepriority",
+    "queryvmnicsecuritypolicy",
+    "changevmnicsecuritypolicy",
+    "setvmnicsecuritygroup"
+  ],
+  "pagesIndex": "index"
+}

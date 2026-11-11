@@ -1,0 +1,81 @@
+---
+title: "Operate Raid Physical Drive Locator LED"
+---
+
+<APIPage method="PUT" path="/v1/storage-devices/local-raid/physical-drives/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "locateLocalRaidPhysicalDrive": {
+    "locate": true
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"locateLocalRaidPhysicalDrive":{"locate":true}}' \
+http://localhost:8080/zstack/v1/storage-devices/local-raid/physical-drives/572005810d8536c6a24ef9509f362c84/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|UUID of the resource. Uniquely identifies the resource.| |3.6|
+|locate \(Optional\)|Boolean|body\(contained in the `locateLocalRaidPhysicalDrive` structure\)|Turn on or off the locator LED| |3.6|
+|systemTags \(Optional\)|List|body| | |3.6|
+|userTags \(Optional\)|List|body| | |3.6|
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+LocateLocalRaidPhysicalDriveAction action = new LocateLocalRaidPhysicalDriveAction();
+action.uuid = "572005810d8536c6a24ef9509f362c84";
+action.locate = true;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+LocateLocalRaidPhysicalDriveAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+LocateLocalRaidPhysicalDriveAction action = LocateLocalRaidPhysicalDriveAction()
+action.uuid = "572005810d8536c6a24ef9509f362c84"
+action.locate = true
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+LocateLocalRaidPhysicalDriveAction.Result res = action.call()
+```
+
+</APIPage>

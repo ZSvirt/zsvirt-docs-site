@@ -1,0 +1,206 @@
+---
+title: "卸载PCI设备"
+---
+
+<APIPage method="POST" path="/v1/pci-device/pci-devices/{pciDeviceUuid}/detach">
+
+从虚拟机上卸载PCI设备
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "vmInstanceUuid": "42d2fcfc217f38faa02035132e7b4b16"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"vmInstanceUuid":"42d2fcfc217f38faa02035132e7b4b16"}}' \
+http://localhost:8080/zstack/v1/pci-device/pci-devices/f44964a4252a3de3a435d2ab04bb9fb8/detach
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|pciDeviceUuid|String|url| | |2.1|
+|vmInstanceUuid|String|body\(包含在**params**结构中\)|虚拟机UUID| |2.1|
+|systemTags \(可选\)|List|body| | |2.1|
+|userTags \(可选\)|List|body| | |2.1|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "b4e48cb6b04f328fb92dfb6cb9e804a3",
+    "hostUuid": "93b41d6ac72f360f88fb33ff62dfcfa1",
+    "type": "GPU_Video_Controller",
+    "status": "Active",
+    "vendorId": "10de",
+    "deviceId": "0e0f",
+    "subvendorId": "10de",
+    "subdeviceId": "118b",
+    "pciDeviceAddress": "0000:06:00.1"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_hsz_jrf_xhb)|2.1|
+|inventory|PciDeviceInventory|详情参考[inventory](#p_rbx_yqf_xhb)|2.1|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|2.1|
+|name|String|资源名称|3.5.0|
+|description|String|资源的详细描述|2.1|
+|hostUuid|String|主机UUID|2.1|
+|parentUuid|String|物理PCI设备UUID|3.5.0|
+|vmInstanceUuid|String|虚拟机UUID|2.1|
+|pciSpecUuid|String|PCI设备规格UUID|3.5.0|
+|vendorId|String|供应商ID|2.1|
+|deviceId|String|设备ID|2.1|
+|subvendorId|String|子供应商ID|2.1|
+|subdeviceId|String|子设备ID|2.1|
+|pciDeviceAddress|String|PCI设备地址|2.1|
+|createDate|Timestamp|创建时间|2.1|
+|lastOpDate|Timestamp|最后一次修改时间|2.1|
+|type|PciDeviceType|详情参考[type](#p_arv_zqf_xhb)|2.1|
+|state|PciDeviceState|详情参考[state](#p_zxk_1rf_xhb)|2.1|
+|status|PciDeviceStatus|详情参考[status](#p_s3l_brf_xhb)|2.1|
+|virtStatus|PciDeviceVirtStatus|详情参考[virtStatus](#p_c2v_crf_xhb)|3.5.0|
+|chooser|PciDeviceChooser|详情参考[chooser](#p_pm5_lsm_y1c)|4.1.0|
+|metaData|PciDeviceMetaData|详情参考[metaData](#p_evs_drf_xhb)|2.1|
+|matchedPciDeviceOfferingRef|List|详情参考[matchedPciDeviceOfferingRef](#p_yfb_hrf_xhb)|2.1|
+|mdevSpecRefs|List|详情参考[mdevSpecRefs](#p_nxl_hrf_xhb)|3.5.0|
+
+### type
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|GPU\_Video\_Controller|PciDeviceType|GPU显卡控制器|2.1|
+|GPU\_Audio\_Controller|PciDeviceType|GPU声卡控制器|2.1|
+|GPU\_3D\_Controller|PciDeviceType|GPU 3D控制器|2.1|
+|Moxa\_Device|PciDeviceType|MOXA卡|2.1|
+|Generic|PciDeviceType|一般设备|2.1|
+
+### state
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Enabled|PciDeviceState|启用|2.1|
+|Disabled|PciDeviceState|停用|2.1|
+
+### status
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Active|PciDeviceStatus|就绪|2.1|
+|Attached|PciDeviceStatus|已挂载|2.1|
+|System|PciDeviceStatus|系统|2.1|
+
+### virtStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|UNVIRTUALIZABLE|PciDeviceVirtStatus|不可虚拟化|3.5.0|
+|SRIOV\_VIRTUALIZABLE|PciDeviceVirtStatus|支持SRIOV虚拟化|3.5.0|
+|VFIO\_MDEV\_VIRTUALIZABLE|PciDeviceVirtStatus|支持VFIO\_MDEV虚拟化|3.5.0|
+|SRIOV\_VIRTUALIZED|PciDeviceVirtStatus|已SRIOV虚拟化|3.5.0|
+|VFIO\_MDEV\_VIRTUALIZED|PciDeviceVirtStatus|已VFIO\_MDEV虚拟化|3.5.0|
+|SRIOV\_VIRTUAL|PciDeviceVirtStatus|SRIOV虚拟设备|3.5.0|
+|UNKNOWN|PciDeviceVirtStatus|未知|3.5.0|
+
+### chooser
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|None|PciDeviceChooser| |4.8.0|
+|Device|PciDeviceChooser| |4.8.0|
+|Spec|PciDeviceChooser| |4.8.0|
+
+### metaData
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|metaData|String| |2.1|
+|metaDataEntries|List|详情参考[metaDataEntries](#p_ens_2rf_xhb)|2.1|
+
+### metaDataEntries
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|key|String|键|2.1|
+|value|String|值|2.1|
+|op|PciDeviceMetaDataOperator|详情参考[op](#p_bl5_frf_xhb)|2.1|
+
+### op
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Equal|PciDeviceMetaDataOperator|相等|2.1|
+|Unequal|PciDeviceMetaDataOperator|不等|2.1|
+
+### matchedPciDeviceOfferingRef
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|pciDeviceUuid|String| |2.1|
+|pciDeviceOfferingUuid|String| |2.1|
+
+### mdevSpecRefs
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|pciDeviceUuid|String|PCI设备UUID|3.5.0|
+|mdevSpecUuid|String|MDEV设备规格UUID|3.5.0|
+|effective|Boolean|当前MDEV规格是否被用于切分该PCI设备|3.5.0|
+|createDate|Timestamp|创建时间|3.5.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.5.0|
+
+SDK示例
+
+Java SDK
+
+```
+DetachPciDeviceFromVmAction action = new DetachPciDeviceFromVmAction();
+action.pciDeviceUuid = "f44964a4252a3de3a435d2ab04bb9fb8";
+action.vmInstanceUuid = "42d2fcfc217f38faa02035132e7b4b16";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DetachPciDeviceFromVmAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DetachPciDeviceFromVmAction action = DetachPciDeviceFromVmAction()
+action.pciDeviceUuid = "f44964a4252a3de3a435d2ab04bb9fb8"
+action.vmInstanceUuid = "42d2fcfc217f38faa02035132e7b4b16"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DetachPciDeviceFromVmAction.Result res = action.call()
+```
+
+</APIPage>

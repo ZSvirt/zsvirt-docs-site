@@ -1,0 +1,22 @@
+---
+title: "How do I resolve a network connectivity issue on a Red Hat 5.7 virtual machine?"
+---
+
+## Cause
+By default, Linux network adapter interrupt responses are periodically distributed across all CPU cores by the interrupt balance daemon \(irqbalance daemon\). This can cause interrupt response delays for the network adapter and affect process handling time.
+
+## Solution
+1.  Configure the interrupt balance daemon so that network adapter interrupt responses are handled by CPU core 0 by default. Use the following steps to disable the daemon:
+2.  Verify that the system network adapter configuration file is correct.
+
+3.  Run the following command in the virtual machine to disable the interrupt balance daemon:
+
+    ```
+    [root@localhost ~]# chkconfig  irqbalance  off
+    ```
+
+4.  Run the following command to restart the virtual machine:
+
+    ```
+    [root@localhost ~]# reboot
+    ```

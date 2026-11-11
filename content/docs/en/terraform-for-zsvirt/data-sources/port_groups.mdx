@@ -1,0 +1,130 @@
+---
+title: 'zsphere_port_groups'
+description: 'Fetches a list of Port Groups and their associated attributes from the Zsphere environment.'
+---
+
+<HistoricalNamingNote locale="en" />
+
+# zsphere_port_groups (Data Source)
+
+Fetches a list of Port Groups and their associated attributes from the Zsphere environment.
+
+## Example Usage
+
+```terraform
+data "zsphere_port_groups" "test" {
+}
+
+output "zstack_secs" {
+  value = data.zsphere_port_groups.test
+}
+
+# example output:
+# zstack_secs = {
+#   "filter" = tolist([])
+#   "name" = tostring(null)
+#   "name_pattern" = tostring(null)
+#   "port_groups" = tolist([
+#     {
+#       "category" = "Private"
+#       "dns" = tolist([])
+#       "free_ips" = tolist([
+#         {
+#           "gateway" = "192.168.1.1"
+#           "ip" = "192.168.1.100"
+#           "ip_range_uuid" = "9199704321e94de98f60eb06ba563b53"
+#           "netmask" = "255.255.255.0"
+#         },
+#         {
+#           "gateway" = "192.168.1.1"
+#           "ip" = "192.168.1.101"
+#           "ip_range_uuid" = "9199704321e94de98f60eb06ba563b53"
+#           "netmask" = "255.255.255.0"
+#         },
+#         {
+#           "gateway" = "192.168.1.1"
+#           "ip" = "192.168.1.102"
+#           "ip_range_uuid" = "9199704321e94de98f60eb06ba563b53"
+#           "netmask" = "255.255.255.0"
+#         },
+#       ])
+#       "ip_range" = tolist([
+#         {
+#           "cidr" = "192.168.1.0/24"
+#           "end_ip" = "192.168.1.102"
+#           "gateway" = "192.168.1.1"
+#           "ip_range_name" = "192.168.1.100-192.168.1.102"
+#           "netmask" = "255.255.255.0"
+#           "start_ip" = "192.168.1.100"
+#         },
+#       ])
+#       "name" = "Port-group-1"
+#       "uuid" = "5cc7cd5963fd45149901336116a261a6"
+#     },
+#   ])
+# }
+```
+
+## Schema
+
+### Optional
+
+- `filter` (Block List) Filter resources based on any field in the schema. For example, to filter by status, use `name = "status"` and `values = ["Ready"]`. (see [below for nested schema](#nestedblock--filter))
+- `name` (String) Exact name for searching Port Groups.
+- `name_pattern` (String) Pattern for fuzzy name search, similar to MySQL LIKE. Use % for multiple characters and _ for exactly one character.
+
+### Read-Only
+
+- `port_groups` (Attributes List) List of L3 networks matching the specified filters. (see [below for nested schema](#nestedatt--port_groups))
+
+<a id="nestedblock--filter"></a>
+### Nested Schema for `filter`
+
+Required:
+
+- `name` (String) Name of the field to filter by (e.g., status, state).
+- `values` (Set of String) Values to filter by. Multiple values will be treated as an OR condition.
+
+
+<a id="nestedatt--port_groups"></a>
+### Nested Schema for `port_groups`
+
+Read-Only:
+
+- `category` (String) Category of the L3 network.
+- `dns` (Attributes List) List of DNS servers for the L3 network. (see [below for nested schema](#nestedatt--port_groups--dns))
+- `free_ips` (Attributes List) List of free IPs available in the L3 network. (see [below for nested schema](#nestedatt--port_groups--free_ips))
+- `ip_range` (Attributes List) List of IP ranges in the L3 network. (see [below for nested schema](#nestedatt--port_groups--ip_range))
+- `name` (String) Name of the L3 network
+- `uuid` (String) UUID of the L3 network.
+
+<a id="nestedatt--port_groups--dns"></a>
+### Nested Schema for `port_groups.dns`
+
+Read-Only:
+
+- `dns_model` (String) DNS server address.
+
+
+<a id="nestedatt--port_groups--free_ips"></a>
+### Nested Schema for `port_groups.free_ips`
+
+Read-Only:
+
+- `gateway` (String) Gateway for the free IP.
+- `ip` (String) Free IP address.
+- `ip_range_uuid` (String) UUID of the IP range containing the free IP.
+- `netmask` (String) Netmask for the free IP.
+
+
+<a id="nestedatt--port_groups--ip_range"></a>
+### Nested Schema for `port_groups.ip_range`
+
+Read-Only:
+
+- `cidr` (String) CIDR notation for the IP range.
+- `end_ip` (String) Ending IP address in the range.
+- `gateway` (String) Gateway for the IP range.
+- `ip_range_name` (String) Name of the IP range.
+- `netmask` (String) Netmask of the IP range.
+- `start_ip` (String) Starting IP address in the range.

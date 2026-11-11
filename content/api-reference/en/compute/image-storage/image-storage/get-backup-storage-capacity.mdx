@@ -1,0 +1,220 @@
+---
+title: "Get Backup Storage Capacity"
+---
+
+<APIPage method="GET" path="/v1/backup-storage/capacities">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/backup-storage/capacities?zoneUuids=6c4a26e1ec274395977b1fd98144dd27&all=true
+```
+
+Parameter List
+
+<table id="table_ev2_n41_n1b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+zoneUuids \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+Data Center UUID list
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+backupStorageUuids \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+Backup Storage UUID list-   At least one of zoneUuids or backupStorageUuids must not be empty
+-   If both zoneUuids and backupStorageUuids are empty, all is true
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+all \(Optional\)
+
+</td><td>
+
+boolean
+
+</td><td>
+
+query
+
+</td><td>
+
+When the backup storage UUID list is empty, this field being true queries all backup storage in the system.
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+System tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+User tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "totalCapacity": 1073741824.0,
+  "availableCapacity": 968884224.0
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|totalCapacity|long|Total capacity \(in bytes\)|0.6|
+|availableCapacity|long|Available capacity \(in bytes\)|0.6|
+|success|boolean|Success or failure flag|0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_ryc_t41_n1b)|0.6|
+| |ErrorCode|See [error](#p_ryc_t41_n1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause. The source error that triggered the current error. This field is null if there is no original error|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+GetBackupStorageCapacityAction action = new GetBackupStorageCapacityAction();
+action.zoneUuids = asList("aae3e25dc11b41f8ae41739814949cfe");
+action.all = true;
+action.sessionId = "fbcc6cc548a44caea69bb492ea13a4bd";
+GetBackupStorageCapacityAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetBackupStorageCapacityAction action = GetBackupStorageCapacityAction()
+action.zoneUuids = [afa2a794d1244f55acc0f8d2d0e5cdc7]
+action.all = true
+action.sessionId = "1574e3585df94016a047e1d836978f3e"
+GetBackupStorageCapacityAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,11 @@
+{
+  "title": "存储管理",
+  "pages": [
+    "index",
+    "add-datastore",
+    "datastore-state",
+    "datastore-config",
+    "datastore-cleanup-delete"
+  ],
+  "pagesIndex": "index"
+}

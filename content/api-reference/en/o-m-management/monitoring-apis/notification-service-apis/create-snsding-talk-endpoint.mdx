@@ -1,0 +1,157 @@
+---
+title: "Create DingTalk Endpoint"
+---
+
+<APIPage method="POST" path="/v1/sns/application-endpoints/ding-talk">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "url": "https://example.invalid/webhook",
+    "atAll": false,
+    "secret": "YOUR_WEBHOOK_SECRET",
+    "atPersonPhoneNumbers": [
+      "18900002222",
+      "13377778888"
+    ],
+    "atPersonList": {
+      "13377778888": "jack"
+    },
+    "name": "dinding"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding example, the **systemTags** and **userTags** fields are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"url":"https://example.invalid/webhook","atAll":false,"secret":"YOUR_WEBHOOK_SECRET","atPersonPhoneNumbers":["18900002222","13377778888"],"atPersonList":{"13377778888":"jack"},"name":"dinding"}}' \
+http://localhost:8080/zstack/v1/sns/application-endpoints/ding-talk
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|url|String|body \(Contained in the **params** structure\)|DingTalk robot URL| |2.3|
+|atAll \(Optional\)|Boolean|body \(Contained in the **params** structure\)|Whether to @ all users in the message| |2.3|
+|atPersonPhoneNumbers \(Optional\)|List|body \(Contained in the **params** structure\)|Phone numbers of users to @| |2.3|
+|name|String|body \(Contained in the **params** structure\)|Resource name| |2.3|
+|description \(Optional\)|String|body \(Contained in the **params** structure\)|Detailed description of the resource| |2.3|
+|resourceUuid \(Optional\)|String|body \(Contained in the **params** structure\)| | |2.3|
+|systemTags \(Optional\)|List|body|System tags| |2.3|
+|userTags \(Optional\)|List|body|User tags| |2.3|
+|platformUuid \(Optional\)|String|body \(Contained in the **params** structure\)|Notification platform UUID| |2.3|
+|tagUuid \(Optional\)|List|body \(Contained in the **params** structure\)|Tag UUID list| |5.0.0|
+|secret \(Optional\)|String|body \(Contained in the **params** structure\)|DingTalk secret key| |5.0.0|
+|atPersonList \(Optional\)|Map|body \(Contained in the **params** structure\)|@ user information| |5.0.0|
+
+## API Response
+Response example
+
+```
+{
+  "inventory": {
+    "url": "https://example.invalid/webhook",
+    "atAll": false,
+    "secret": "YOUR_WEBHOOK_SECRET",
+    "atPersonPhoneNumbers": [
+      "18900001111"
+    ],
+    "name": "example",
+    "uuid": "917fe66f76b241f0843dfbd6be685fc1",
+    "description": "description example",
+    "type": "Email",
+    "state": "Enabled",
+    "platformUuid": "4eb0ceebf95b452585ebeacd647d9f35",
+    "createDate": "Mar 26, 2024 2:43:38 AM",
+    "lastOpDate": "Mar 26, 2024 2:43:38 AM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |5.0.0|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_ehg_qqx_bdb)|2.3|
+|inventory|SNSDingTalkEndpointInventory|For details, see [inventory](#p_kxl_qqx_bdb)|2.3|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number, a globally unique identifier for the error, for example, SYS.1000 or HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field. Defaults to null|0.6|
+|cause|ErrorCode|The root error that caused the current error. This field is null if there is no root cause|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|url|String|DingTalk robot URL|2.3|
+|atAll|boolean|Whether to @ all users|2.3|
+|secret|String|DingTalk secret key|5.0.0|
+|atPersonPhoneNumbers|List|Phone numbers of @ users|2.3|
+|name|String|Resource name|2.3|
+|uuid|String|The UUID of the resource, uniquely identifying this resource|2.3|
+|description|String|Detailed description of the resource|2.3|
+|type|String|Endpoint type|2.3|
+|state|String|State|5.0.0|
+|platformUuid|String|Application platform UUID|2.3|
+|createDate|Timestamp|Creation time|2.3|
+|lastOpDate|Timestamp|Last modification time|2.3|
+|platform|SNSApplicationPlatformInventory|For details, see [platform](#table_pdp_jwz_c1c)|5.0.0|
+
+### platform
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource, uniquely identifying this resource|5.0.0|
+|name|String|Resource name|5.0.0|
+|description|String|Detailed description of the resource|5.0.0|
+|type|String|Type|5.0.0|
+|createDate|Timestamp|Creation time|5.0.0|
+|lastOpDate|Timestamp|Last modification time|5.0.0|
+
+## SDK Examples
+Java SDK
+
+```
+CreateSNSDingTalkEndpointAction action = new CreateSNSDingTalkEndpointAction();
+action.url = "https://example.invalid/webhook";
+action.atAll = false;
+action.atPersonPhoneNumbers = asList("18900002222","13377778888");
+action.name = "dinding";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateSNSDingTalkEndpointAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateSNSDingTalkEndpointAction action = new CreateSNSDingTalkEndpointAction()
+action.url = "https://example.invalid/webhook"
+action.atAll = false
+action.atPersonPhoneNumbers = asList("18900002222","13377778888")
+action.name = "dinding"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateSNSDingTalkEndpointAction.Result res = action.call()
+```
+
+</APIPage>

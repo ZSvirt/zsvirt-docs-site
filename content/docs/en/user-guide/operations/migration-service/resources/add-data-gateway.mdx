@@ -1,0 +1,37 @@
+---
+title: 'Add a Data Gateway'
+---
+
+1.  In the navigation pane, select **O&M Management** &gt; **Migration Resource** &gt; **Data Gateway**.
+
+2.  On the Data Gateway page, click **Add Data Gateway**.
+
+3.  In the Add Data Gateway dialog, set the following parameters:
+
+    -   **Name**: Set a name for the data gateway.
+    -   **Addition Method**: Select the method for adding the data gateway. You can create a new virtual machine or use an existing IP address.
+
+        If you select **New Virtual Machine**:
+
+        -   **Data Center**: Select the data center where the virtual machine resides.
+        -   **Location**: Select where the virtual machine runs.
+        -   **CPU**: Default is 8 cores. Set the number of CPU cores.
+        -   **Memory**: Default is 8 GB. Set the memory size.
+        -   **Storage Location**: Specify the data storage.
+        -   **Disk 1**: Default is 100 GB. Set the system disk size.
+        -   **Network**: Specify a distributed port group. Ensure that the selected distributed port group has network connectivity with both the source platform and the destination platform to guarantee data transfer.
+        -   **IPv4 Address**: Specify the IP address.
+
+            <Callout type="info">
+            The IP address allocation method depends on the configuration of the selected migration network:
+            </Callout>
+
+            -   When DHCP is enabled on the migration network, the system automatically assigns an IP address.
+            -   When DHCP is not enabled on the migration network, you must manually specify an IP address.
+            -   When IP address management is enabled on the migration network, if you manually specify an IP address, ensure that the address is within the selected network segment.
+        If you select **Existing IP**:
+
+        -   **IP Address**: Enter the IP address.
+        -   **Host Name**: After the IP address is connected, the corresponding name is automatically retrieved.
+        -   **Connectivity Check**: Click **Check** to verify network connectivity.
+4.  Review the configuration and click **OK**.

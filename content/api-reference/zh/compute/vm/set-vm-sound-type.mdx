@@ -1,0 +1,197 @@
+---
+title: "设置虚拟机虚拟声卡类型"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "setVmSoundType": {
+    "soundType": "ac97"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"setVmSoundType":{"soundType":"ac97"}}' http://localhost:8080/zstack/v1/vm-instances/0ae1191601f430d88e1707716d24ff39/actions
+```
+
+参数列表
+
+<table id="table_iml_1p3_kjb"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+虚拟机UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.7.0
+
+</td></tr><tr><td>
+
+soundType
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**setVmSoundType**结构中\)
+
+</td><td>
+
+虚拟声卡类型，默认为ich6
+
+</td><td>
+
+-   ac97
+-   ich6
+
+</td><td>
+
+3.7.0
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.7.0
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.7.0
+
+</td></tr></tbody>
+</table>
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+SetVmSoundTypeAction action = new SetVmSoundTypeAction();
+action.uuid = "0ae1191601f430d88e1707716d24ff39";
+action.soundType = "ac97";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+SetVmSoundTypeAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SetVmSoundTypeAction action = SetVmSoundTypeAction()
+action.uuid = "0ae1191601f430d88e1707716d24ff39"
+action.soundType = "ac97"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+SetVmSoundTypeAction.Result res = action.call()
+```
+
+</APIPage>

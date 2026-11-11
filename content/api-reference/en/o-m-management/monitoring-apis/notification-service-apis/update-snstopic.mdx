@@ -1,0 +1,278 @@
+---
+title: "Update SNS Topic"
+---
+
+<APIPage method="PUT" path="/v1/sns/topics/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateSNSTopic": {
+    "name": "new name",
+    "locale": "zh_CN"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the **systemTags** and **userTags** fields are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateSNSTopic":{"name":"new name","locale":"zh_CN"}}' \
+http://localhost:8080/zstack/v1/sns/topics/3e7550bf8ead3f02b366df6e499dc285/actions
+```
+
+Parameter List
+
+<table id="table_upb_snx_bdb"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+The UUID of the resource, which uniquely identifies the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+name \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **updateSNSTopic** structure\)
+
+</td><td>
+
+Resource name
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+description \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **updateSNSTopic** structure\)
+
+</td><td>
+
+Detailed description of the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+locale \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **updateSNSTopic** structure\)
+
+</td><td>
+
+Internationalization language
+
+</td><td>
+
+-   zh\_CN
+-   en\_US
+
+</td><td>
+
+5.0.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "adf76a202bd64d7f827ca262d899d5bd",
+    "name": "new name",
+    "state": "Enabled",
+    "locale": "zh_CN",
+    "createDate": "Mar 26, 2024 2:44:38 AM",
+    "lastOpDate": "Mar 26, 2024 2:44:38 AM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |5.0.0|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null on success. See [error](#p_ayb_znx_bdb)|2.3|
+|inventory|SNSTopicInventory|See [inventory](#p_y1m_znx_bdb)|2.3|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Default is null|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null|0.6|
+|cause|ErrorCode|The root error that caused the current error. If there is no root error, this field is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource, which uniquely identifies the resource|2.3|
+|name|String|Resource name|2.3|
+|description|String|Detailed description of the resource|2.3|
+|state|String|State|2.3|
+|createDate|Timestamp|Creation time|2.3|
+|lastOpDate|Timestamp|Last modification time|2.3|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateSNSTopicAction action = new UpdateSNSTopicAction();
+action.uuid = "3e7550bf8ead3f02b366df6e499dc285";
+action.name = "new name";
+action.locale = "zh_CN";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateSNSTopicAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateSNSTopicAction action = UpdateSNSTopicAction()
+action.uuid = "3e7550bf8ead3f02b366df6e499dc285"
+action.name = "new name"
+action.locale = "zh_CN"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateSNSTopicAction.Result res = action.call()
+```
+
+</APIPage>

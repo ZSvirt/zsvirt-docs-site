@@ -1,0 +1,216 @@
+---
+title: "Update Host IOMMU State"
+---
+
+<APIPage method="PUT" path="/v1/pci-device/hosts/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateHostIommuState": {
+    "state": "Enabled"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+systemTags and userTags fields can be omitted in the above example. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateHostIommuState":{"state":"Enabled"}}' \
+http://localhost:8080/zstack/v1/pci-device/hosts/7619742c9ff43b898487db33e1f096a4/actions
+```
+
+Parameter List
+
+<table id="table_a2c_xbm_t1b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+UUID of the resource, uniquely identifies the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.1
+
+</td></tr><tr><td>
+
+state
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(inside the **updateHostIommuState** structure\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+-   Enabled
+-   Disabled
+
+</td><td>
+
+2.1
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.1
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.1
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "state": "Enabled"
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_nzg_ghm_t1b)|2.1|
+|state|HostIommuStateType|See [state](#p_c4b_ghm_t1b)|2.1|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code, a globally unique identifier of the error, e.g. SYS.1000, HOST.1001|2.1|
+|description|String|Brief description of the error|2.1|
+|details|String|Detailed error information|2.1|
+|elaboration|String|Reserved field, defaults to null|2.1|
+|opaque|LinkedHashMap|Reserved field, defaults to null|2.1|
+|cause|ErrorCode|Root cause, the source error that caused the current error, null if no original error|2.1|
+
+### state
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name|0.6|
+|ordinal|int| |0.6|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateHostIommuStateAction action = new UpdateHostIommuStateAction();
+action.uuid = "7619742c9ff43b898487db33e1f096a4";
+action.state = "Enabled";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateHostIommuStateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateHostIommuStateAction action = UpdateHostIommuStateAction()
+action.uuid = "7619742c9ff43b898487db33e1f096a4"
+action.state = "Enabled"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateHostIommuStateAction.Result res = action.call()
+```
+
+</APIPage>

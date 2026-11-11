@@ -1,0 +1,126 @@
+---
+title: "Update Long Job"
+---
+
+<APIPage method="PUT" path="/v1/longjobs/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateLongJob": {
+    "name": "new-name",
+    "description": "new-description"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the **systemTags** and **userTags** fields are optional. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateLongJob":{"name":"new-name","description":"new-description"}}' http://localhost:8080/zstack/v1/longjobs/dee3e1e3706f3e52a2cb9a47850508e7/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|The UUID of the resource. Uniquely identifies the resource.| |3.9.0|
+|name \(Optional\)|String|body \(contained in the **updateLongJob** structure\)|Resource name| |3.9.0|
+|description \(Optional\)|String|body \(contained in the **updateLongJob** structure\)|Detailed description of the resource| |3.9.0|
+|systemTags \(Optional\)|List|body|System tags| |3.9.0|
+|userTags \(Optional\)|List|body|User tags| |3.9.0|
+
+## API Response
+Response example
+
+```
+{
+  "inventory": {
+    "uuid": "464cdf695427358696dae171544b67ef",
+    "name": "new-name",
+    "description": "new-description"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_slg_lqv_llb)|3.9.0|
+|inventory|LongJobInventory|For details, see [inventory](#p_esy_kqv_llb)|3.9.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, such as SYS.1000, HOST.1001.|3.9.0|
+|description|String|A brief description of the error|3.9.0|
+|details|String|The detailed error information|3.9.0|
+|elaboration|String|A reserved field. Default is null.|3.9.0|
+|opaque|LinkedHashMap|A reserved field. Default is null.|3.9.0|
+|cause|ErrorCode|The root error. The source error that caused the current error. This field is null if there is no root error.|3.9.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource.|3.9.0|
+|name|String|Resource name|3.9.0|
+|description|String|Detailed description of the resource|3.9.0|
+|apiId|String|The API ID used to associate with TaskProgress|3.9.0|
+|jobName|String|Job name|3.9.0|
+|jobData|String|Job data|3.9.0|
+|jobResult|String|Job result|3.9.0|
+|targetResourceUuid|String|Target resource UUID|3.9.0|
+|managementNodeUuid|String|Management node UUID|3.9.0|
+|createDate|Timestamp|Creation time|3.9.0|
+|lastOpDate|Timestamp|Last modification time|3.9.0|
+|state|LongJobState|For details, see [state](#p_ncs_kqv_llb)|3.9.0|
+
+### state
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Waiting|LongJobState| |3.9.0|
+|Suspended|LongJobState| |3.9.0|
+|Running|LongJobState| |3.9.0|
+|Succeeded|LongJobState| |3.9.0|
+|Canceling|LongJobState| |3.9.0|
+|Canceled|LongJobState| |3.9.0|
+|Failed|LongJobState| |3.9.0|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateLongJobAction action = new UpdateLongJobAction();
+action.uuid = "dee3e1e3706f3e52a2cb9a47850508e7";
+action.name = "new-name";
+action.description = "new-description";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateLongJobAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateLongJobAction action = UpdateLongJobAction()
+action.uuid = "dee3e1e3706f3e52a2cb9a47850508e7"
+action.name = "new-name"
+action.description = "new-description"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateLongJobAction.Result res = action.call()
+```
+
+</APIPage>

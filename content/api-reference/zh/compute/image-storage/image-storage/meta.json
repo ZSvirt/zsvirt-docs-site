@@ -1,0 +1,22 @@
+{
+  "title": "镜像存储相关接口",
+  "pages": [
+    "delete-backup-storage",
+    "query-backup-storage",
+    "reconnect-backup-storage",
+    "change-backup-storage-state",
+    "get-backup-storage-capacity",
+    "get-backup-storage-types",
+    "update-backup-storage",
+    "export-image-from-backup-storage",
+    "sync-image",
+    "delete-exported-image-from-backup-storage",
+    "attach-backup-storage-to-zone",
+    "detach-backup-storage-from-zone",
+    "backup-storage-migrate-image",
+    "get-backup-storage-candidates-for-image-migration",
+    "standalone-image-storage",
+    "distributed-image-storage"
+  ],
+  "pagesIndex": "index"
+}

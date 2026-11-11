@@ -1,0 +1,114 @@
+---
+title: "Query Standalone Image Storage"
+---
+
+<APIPage method="GET" path="/v1/backup-storage/image-store" altPaths={["/v1/backup-storage/image-store/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/backup-storage/image-store?q=uuid=5870d2edddff4ccc9f27a67e3a23391a
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/backup-storage/image-store/3f326deb28fa4176964867d888b197a4
+```
+
+Queryable Fields
+
+Run the CLI command tool, enter `QueryImageStoreBackupStorage` and press Tab to view all queryable fields and resource names that support cross-table queries.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "hostname": "127.0.0.1",
+      "username": "zstack",
+      "sshPort": 22.0,
+      "uuid": "744dc382db7b3598af79246b67e45230",
+      "name": "ImageStoreBS",
+      "url": "/Cloud_bs",
+      "description": "My ImageStore Backup Storage.",
+      "totalCapacity": 1099511627776.0,
+      "availableCapacity": 549755813888.0,
+      "type": "ImageStoreBackupStorage",
+      "state": "Enabled",
+      "status": "Connected",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM",
+      "attachedZoneUuids": [
+        "c3affca1fde2388691216e0f7884f515"
+      ]
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_bnh_5rv_cmb)|0.6|
+|inventories|List|See [inventories](#p_iln_5rv_cmb)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause. The source error that triggered the current error. This field is null if there is no original error|0.6|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|hostname|String| |0.6|
+|username|String| |0.6|
+|sshPort|Integer| |0.6|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|name|String|Resource name|0.6|
+|url|String| |0.6|
+|description|String|Detailed description of the resource|0.6|
+|totalCapacity|Long| |0.6|
+|availableCapacity|Long| |0.6|
+|type|String| |0.6|
+|state|String| |0.6|
+|status|String| |0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+|attachedZoneUuids|List| |0.6|
+
+SDK Examples
+
+Java SDK
+
+```
+QueryImageStoreBackupStorageAction action = new QueryImageStoreBackupStorageAction();
+action.conditions = asList("uuid=d087b11dccd94ea8933ecc37b193fd50");
+action.sessionId = "3b90553d582f4ec2aebfb8a384e4e447";
+QueryImageStoreBackupStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryImageStoreBackupStorageAction action = QueryImageStoreBackupStorageAction()
+action.conditions = ["uuid=0c5b7c9cb2d84636aa2bbe20ce576ff8"]
+action.sessionId = "89dbffa3dab64d5693b61cacce2d2268"
+QueryImageStoreBackupStorageAction.Result res = action.call()
+```
+
+</APIPage>

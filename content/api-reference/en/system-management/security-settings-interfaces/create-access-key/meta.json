@@ -1,0 +1,10 @@
+{
+  "title": "Create AccessKey",
+  "pages": [
+    "delete-access-key",
+    "update-console-proxy-agent",
+    "query-access-key",
+    "change-access-key-state"
+  ],
+  "pagesIndex": "index"
+}

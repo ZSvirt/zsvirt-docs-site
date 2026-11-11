@@ -1,0 +1,15 @@
+{
+  "title": "SNMP相关接口",
+  "pages": [
+    "create-snmp-agent",
+    "query-snmp-agent",
+    "start-snmp-agent",
+    "stop-snmp-agent",
+    "update-snmp-agent",
+    "create-snssnmp-endpoint",
+    "create-snssnmp-platform",
+    "query-snssnmp-platform",
+    "update-snssnmp-platform"
+  ],
+  "pagesIndex": "index"
+}

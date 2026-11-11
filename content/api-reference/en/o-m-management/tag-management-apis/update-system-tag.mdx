@@ -1,0 +1,112 @@
+---
+title: "Update a System Tag"
+---
+
+<APIPage method="PUT" path="/v1/system-tags/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateSystemTag": {
+    "tag": "for-large-DB"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, the **systemTags** and **userTags** fields are optional. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateSystemTag":{"tag":"for-large-DB"}}' \
+http://localhost:8080/zstack/v1/system-tags/2cb4ac52794535c3ae61f9612c1579e7/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|The UUID of the resource. Uniquely identifies the resource.| |0.6|
+|tag|String|body \(contained in the **updateSystemTag** structure\)|Tag string| |0.6|
+|systemTags \(optional\)|List|body|System tags| |0.6|
+|userTags \(optional\)|List|body|User tags| |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "inherent": false,
+    "uuid": "c17377dfd0794521a4fe02b6eb16cc5a",
+    "resourceType": "HostVO",
+    "tag": "reservedMemory::1G",
+    "type": "System",
+    "createDate": "May 11, 2017 1:22:30 PM",
+    "lastOpDate": "May 11, 2017 1:22:30 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_vrz_3qk_l1b)|0.6|
+|inventory|SystemTagInventory|For details, see [inventory](#p_xzf_jqk_l1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001.|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Default is null.|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null.|0.6|
+|cause|ErrorCode|The root error. The source error that caused the current error. If there is no root error, this field is null.|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|inherent|Boolean|Internal system tag|0.6|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource.|0.6|
+|resourceUuid|String|User-specified resource UUID. If specified, the system will not randomly assign a UUID to the resource.|0.6|
+|resourceType|String|When creating a tag, the user must specify the resource type associated with the tag.|0.6|
+|tag|String|Tag string|0.6|
+|type|String|Reserved field. Do not use.|0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateSystemTagAction action = new UpdateSystemTagAction();
+action.uuid = "1ba32bc1af0446b29bd969029a6052a5";
+action.tag = "for-large-DB";
+action.sessionId = "367f6162107a47d58c471c9164139fab";
+UpdateSystemTagAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateSystemTagAction action = UpdateSystemTagAction()
+action.uuid = "be98b2f4e342485486cfa612eeabcaa5"
+action.tag = "for-large-DB"
+action.sessionId = "6b7af956a9a9477eba02753417380070"
+UpdateSystemTagAction.Result res = action.call()
+```
+
+</APIPage>

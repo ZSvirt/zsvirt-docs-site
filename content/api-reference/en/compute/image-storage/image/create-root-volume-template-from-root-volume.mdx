@@ -1,0 +1,471 @@
+---
+title: "Create Root Volume Template from Root Volume"
+---
+
+<APIPage method="POST" path="/v1/images/root-volume-templates/from/volumes/{rootVolumeUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "My Root Volume Template",
+    "backupStorageUuids": [
+      "a3cb55d45fb63d1da4911b9d16273a55"
+    ],
+    "platform": "Linux",
+    "system": false
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"My Root Volume Template","backupStorageUuids":["a3cb55d45fb63d1da4911b9d16273a55"],"platform":"Linux","system":false}}' http://localhost:8080/zstack/v1/images/root-volume-templates/from/volumes/3bfc6f9eaf243299b8515382310be47b
+```
+
+Parameter List
+
+<table id="table_tfh_jm2_l1b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+name
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Root Volume Image name
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+description \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Detailed description of the Root Volume Image
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+guestOsType \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Guest Operating System type corresponding to the Root Volume Image
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+backupStorageUuids \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Image Storage UUID List
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+rootVolumeUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Root Volume UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+platform \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+System platform corresponding to the Root Volume Image
+
+</td><td>
+
+-   Linux
+-   Windows
+-   WindowsVirtio
+-   Other
+-   Paravirtualization
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+system \(Optional\)
+
+</td><td>
+
+boolean
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Whether it is a system Root Volume Image
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+resourceUuid \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Root Volume Image UUID. If specified, the Root Volume Image will use this field value as its UUID.
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+architecture \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.0.0
+
+</td></tr><tr><td>
+
+tagUuids \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Tag UUID List
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.0.0
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System Tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User Tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr></tbody>
+</table>
+
+<Callout type="info">
+-   ZSvirt supports copying GuestTools label values from the VM to the Image when creating a Root Volume Image from a Root Volume. When using this Image to create a VM, the GuestTools label values are copied from the Image to the new VM. Add **GuestTools** option to **SystemTags**.
+    -   Option format: `GuestTools::TOOLS_VERSION`, where TOOLS\_VERSION initial value is 1.0.0. This value will change as the tool version advances.
+    -   Example: `GuestTools::1.0.0`
+    -   Additional note: When creating an Image from a VM's Root Volume, copy the GuestTools label values from the VM to the Image.
+</Callout>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "cad3a82224363f1e8592a7fd0bf419f9",
+    "name": "My Root Volume Template",
+    "mediaType": "RootVolumeTemplate",
+    "platform": "Linux",
+    "architecture": "x86_64",
+    "format": "raw",
+    "backupStorageRefs": [
+      {
+        "id": 0.0,
+        "imageUuid": "cad3a82224363f1e8592a7fd0bf419f9",
+        "backupStorageUuid": "ac938bdf013b3a94acf679955f69f647",
+        "installPath": "ceph://zs-images/0cd599ec519249489475112a058bb93a",
+        "status": "Ready"
+      }
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_xkr_2n2_l1b)|0.6|
+|inventory|ImageInventory|See [inventory](#p_n5t_4n2_l1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause. The source error that triggered the current error. This field is null if there is no original error|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|name|String|Resource name|0.6|
+|description|String|Detailed description of the resource|0.6|
+|state|String|Image boot state|4.0.0|
+|status|String|Image ready state|4.0.0|
+|size|Long|Image size|4.0.0|
+|actualSize|Long|Image actual capacity|4.0.0|
+|md5Sum|String|Image md5 value|4.0.0|
+|url|String|Image URL address|4.0.0|
+|mediaType|String|Image type|4.0.0|
+|guestOsType|String|Guest Operating System type corresponding to the Image|4.0.0|
+|type|String|Internal use field|4.0.0|
+|platform|String|Image system platform|4.0.0|
+|format|String|Image format, for example: raw|4.0.0|
+|system|Boolean|Indicates whether it is a system Image|4.0.0|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+|backupStorageRefs|List|See [backupStorageRefs](#p_ebg_pn2_l1b)|0.6|
+
+### backupStorageRefs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|imageUuid|String|Image UUID|0.6|
+|backupStorageUuid|String|Image Storage UUID|0.6|
+|installPath|String|Installation path on the Image Storage|4.0.0|
+|exportUrl|String|Export Image URL|4.0.0|
+|exportMd5Sum|String|Export Image md5 value|4.0.0|
+|status|String|Image ready state|4.0.0|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+CreateRootVolumeTemplateFromRootVolumeAction action = new CreateRootVolumeTemplateFromRootVolumeAction();
+action.name = "My Root Volume Template";
+action.backupStorageUuids = asList("a3cb55d45fb63d1da4911b9d16273a55");
+action.rootVolumeUuid = "3bfc6f9eaf243299b8515382310be47b";
+action.platform = "Linux";
+action.system = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateRootVolumeTemplateFromRootVolumeAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateRootVolumeTemplateFromRootVolumeAction action = CreateRootVolumeTemplateFromRootVolumeAction()
+action.name = "My Root Volume Template"
+action.backupStorageUuids = [a3cb55d45fb63d1da4911b9d16273a55]
+action.rootVolumeUuid = "3bfc6f9eaf243299b8515382310be47b"
+action.platform = "Linux"
+action.system = false
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateRootVolumeTemplateFromRootVolumeAction.Result res = action.call()
+```
+
+</APIPage>

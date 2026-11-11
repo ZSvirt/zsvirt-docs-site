@@ -1,0 +1,47 @@
+---
+title: 'zsphere_vm_template'
+description: '管理 ZSvirt 云主机模板。模板由已有云主机实例转换而来。'
+---
+
+<HistoricalNamingNote locale="zh" />
+
+
+# zsphere_vm_template（资源）
+
+管理 ZSvirt 云主机模板。模板由已有云主机实例转换而来。
+
+## 示例用法
+```terraform
+resource "zsphere_vm_template" "example" {
+  name             = "my-updated-template"
+  description      = "This template was managed by Terraform"
+  vm_instance_uuid = var.vm_instance_uuid
+}
+
+output "vm_template" {
+  value = zsphere_vm_template.example
+}
+
+# 说明：云主机模板通过将已有云主机实例转换而来。
+# 本资源用于管理已有模板（读取、更新、删除）。
+# 创建模板需通过以下方式：
+# 1. 在 ZStack 控制台将已有云主机转换为模板
+# 2. 调用 API：POST /vm-instances/{uuid}/create-templated-vmInstance
+# 3. 或使用 zsphere_instance 资源的 convert_to_template = true
+```
+
+## 参数说明
+
+### 必填参数
+
+- `name`（字符串）云主机模板名称。
+
+### 可选参数
+
+- `description`（字符串）云主机模板描述。
+- `vm_instance_uuid`（字符串）要转换为模板的云主机实例 UUID。 修改此参数将重建资源。
+
+### 只读属性
+
+- `cluster_uuid`（字符串）云主机模板所属集群 UUID。
+- `uuid`（字符串）唯一标识符，由 ZSvirt 管理。 VM template. 由 ZSvirt 自动生成。

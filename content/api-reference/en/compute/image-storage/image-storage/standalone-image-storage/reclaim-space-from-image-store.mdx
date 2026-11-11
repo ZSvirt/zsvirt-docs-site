@@ -1,0 +1,76 @@
+---
+title: "Reclaim Disk Space from Image Storage"
+---
+
+<APIPage method="PUT" path="/v1/backup-storage/image-store/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "reclaimSpaceFromImageStore": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"reclaimSpaceFromImageStore":{}}' \
+http://localhost:8080/zstack/v1/backup-storage/image-store/ec74c4664f52342e898fb0fa966d915e/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|UUID of the image storage, uniquely identifies the resource| |1.10|
+|systemTags \(Optional\)|List|body \(contained in **params** structure\)|System tags| |1.10|
+|userTags \(Optional\)|List|body \(contained in **params** structure\)|User tags| |1.10|
+
+## API Response
+This API returns an empty JSON structure `{}` on success. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+ReclaimSpaceFromImageStoreAction action = new ReclaimSpaceFromImageStoreAction();
+action.uuid = "1dbdc3a4c7cd47d288f6c71116ae5b1f";
+action.sessionId = "2e4a160b40b64fb4a9faa04829000d68";
+ReclaimSpaceFromImageStoreAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ReclaimSpaceFromImageStoreAction action = ReclaimSpaceFromImageStoreAction()
+action.uuid = "713fa4965e6f4f70aeb1c96cd9d959ef"
+action.sessionId = "87839a65f127443093bc708bcdaf3b0c"
+ReclaimSpaceFromImageStoreAction.Result res = action.call()
+```
+
+</APIPage>

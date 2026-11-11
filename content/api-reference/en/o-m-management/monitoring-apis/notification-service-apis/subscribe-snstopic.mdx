@@ -1,0 +1,79 @@
+---
+title: "Subscribe to an SNS Topic"
+---
+
+<APIPage method="POST" path="/v1/sns/topics/{topicUuid}/endpoints/{endpointUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, the **systemTags** and **userTags** fields are optional. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{}}' \
+http://localhost:8080/zstack/v1/sns/topics/755ac6aea82f3365a66b86258c55189e/endpoints/c1f5c1e23ff13001b249c18253984741
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|topicUuid|String|url|Application topic UUID| |2.3|
+|endpointUuid|String|url|Endpoint UUID| |2.3|
+|systemTags \(optional\)|List|body|System tags| |2.3|
+|userTags \(optional\)|List|body|User tags| |2.3|
+
+## API Response
+This API returns an empty JSON structure **`{}`** on success. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+SubscribeSNSTopicAction action = new SubscribeSNSTopicAction();
+action.topicUuid = "755ac6aea82f3365a66b86258c55189e";
+action.endpointUuid = "c1f5c1e23ff13001b249c18253984741";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+SubscribeSNSTopicAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SubscribeSNSTopicAction action = SubscribeSNSTopicAction()
+action.topicUuid = "755ac6aea82f3365a66b86258c55189e"
+action.endpointUuid = "c1f5c1e23ff13001b249c18253984741"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+SubscribeSNSTopicAction.Result res = action.call()
+```
+
+</APIPage>

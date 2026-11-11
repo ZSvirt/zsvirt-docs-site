@@ -1,0 +1,129 @@
+---
+title: "Create Alibaba Cloud SMS Endpoint"
+---
+
+<APIPage method="POST" path="/v1/sns/sms-endpoints/aliyunsms">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "accessKeyUuid": "4eb00e2bf95bp5s505e6eccd647d9k35",
+    "receivers": [
+      "13555555555",
+      "18666666666"
+    ],
+    "name": "AliyunSms",
+    "description": "This is an Aliyun SMS Endpoint"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding example, the **systemTags** and **userTags** fields are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"accessKeyUuid":"4eb00e2bf95bp5s505e6eccd647d9k35","receivers":["13555555555","18666666666"],"name":"AliyunSms","description":"This is an Aliyun SMS Endpoint"}}' http://localhost:8080/zstack/v1/sns/sms-endpoints/aliyunsms
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|accessKeyUuid|String|body \(Contained in the **params** structure\)|Alibaba Cloud AccessKey UUID| |3.7.0|
+|receivers \(Optional\)|List|body \(Contained in the **params** structure\)|SMS receivers| |3.7.0|
+|name|String|body \(Contained in the **params** structure\)|Endpoint name| |3.7.0|
+|description \(Optional\)|String|body \(Contained in the **params** structure\)|Detailed description of the endpoint| |3.7.0|
+|platformUuid \(Optional\)|String|body \(Contained in the **params** structure\)| | |3.7.0|
+|resourceUuid \(Optional\)|String|body \(Contained in the **params** structure\)| | |3.7.0|
+|tagUuids \(Optional\)|List|body \(Contained in the **params** structure\)|Tag UUID list| |3.7.0|
+|systemTags \(Optional\)|List|body|System tags| |3.7.0|
+|userTags \(Optional\)|List|body|User tags| |3.7.0|
+
+## API Response
+Response example
+
+```
+{
+  "inventory": {
+    "name": "example",
+    "uuid": "041723a4d9d14e8686dbec7d1369c05e",
+    "description": "example SNSSmsEndpoint Description",
+    "type": "AliyunSms",
+    "state": "Enabled",
+    "platformUuid": "4eb0ceebf95b452585ebeacd647d9f35",
+    "createDate": "Mar 26, 2024 2:43:19 AM",
+    "lastOpDate": "Mar 26, 2024 2:43:19 AM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |5.0.0|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_jqc_j4w_jjb)|3.7.0|
+|inventory|SNSSmsEndpointInventory|For details, see [inventory](#p_zv4_j4w_jjb)|3.7.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number, a globally unique identifier for the error, for example, SYS.1000 or HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field. Defaults to null|0.6|
+|cause|ErrorCode|The root error that caused the current error. This field is null if there is no root cause|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|receivers|List|SMS receivers|3.7.0|
+|name|String|SMS endpoint name|3.7.0|
+|uuid|String|The UUID of the SMS endpoint, uniquely identifying this resource|3.7.0|
+|description|String|Detailed description of the SMS endpoint|3.7.0|
+|type|String|SMS endpoint type|3.7.0|
+|state|String|SMS endpoint state|3.7.0|
+|platformUuid|String| |3.7.0|
+|createDate|Timestamp|Creation time|3.7.0|
+|lastOpDate|Timestamp|Last modification time|3.7.0|
+
+## SDK Examples
+Java SDK
+
+```
+CreateSNSAliyunSmsEndpointAction action = new CreateSNSAliyunSmsEndpointAction();
+action.accessKeyUuid = "4eb00e2bf95bp5s505e6eccd647d9k35";
+action.receivers = asList("13555555555","18666666666");
+action.name = "AliyunSms";
+action.description = "This is an Aliyun SMS Endpoint";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateSNSAliyunSmsEndpointAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateSNSAliyunSmsEndpointAction action = CreateSNSAliyunSmsEndpointAction()
+action.accessKeyUuid = "4eb00e2bf95bp5s505e6eccd647d9k35"
+action.receivers = [13555555555, 18666666666]
+action.name = "AliyunSms"
+action.description = "This is an Aliyun SMS Endpoint"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateSNSAliyunSmsEndpointAction.Result res = action.call()
+```
+
+</APIPage>

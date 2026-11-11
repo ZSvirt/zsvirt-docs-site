@@ -1,0 +1,390 @@
+---
+title: "Create Email Server"
+---
+
+<APIPage method="POST" path="/v1/sns/application-platforms/email">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "smtpServer": "email.zstack.io",
+    "smtpPort": 20.0,
+    "username": "example@cloud.io",
+    "password": "password",
+    "encryptType": "STARTTLS",
+    "name": "email platform"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the **systemTags** and **userTags** fields are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"smtpServer":"email.zstack.io","smtpPort":20.0,"username":"example@cloud.io",
+"password":"password","encryptType":"STARTTLS","name":"email platform"}}' \
+http://localhost:8080/zstack/v1/sns/application-platforms/email
+```
+
+Parameter List
+
+<table id="table_lkv_nsx_bdb"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+smtpServer
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+SMTP server address
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+smtpPort
+
+</td><td>
+
+Integer
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+SMTP port
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+username
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+Username
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.1.0
+
+</td></tr><tr><td>
+
+password \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+Password
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+name
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+Resource name
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+description \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+Detailed description of the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+resourceUuid \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+encryptType \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+-   SSL
+-   STARTTLS
+-   NONE
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr></tbody>
+</table>
+
+<Callout type="info">
+-   When adding an email server, the system automatically validates the username, password, email server address, email server port, and encryption type. The validation takes no more than 5 seconds.
+</Callout>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "a5c6d18fdf9b4b6fbdb1f49abce0328c",
+    "name": "email platform",
+    "description": "example description",
+    "state": "Enabled",
+    "type": "Email",
+    "createDate": "Mar 26, 2024 2:42:32 AM",
+    "lastOpDate": "Mar 26, 2024 2:42:32 AM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null on success. See [error](#p_bdm_ctx_bdb)|2.3|
+|inventory|SNSApplicationPlatformInventory|See [inventory](#p_vnq_ctx_bdb)|2.3|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Default is null|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null|0.6|
+|cause|ErrorCode|The root error that caused the current error. If there is no root error, this field is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource, which uniquely identifies the resource|2.3|
+|name|String|Resource name|2.3|
+|description|String|Detailed description of the resource|2.3|
+|type|String|Type|2.3|
+|createDate|Timestamp|Creation time|2.3|
+|lastOpDate|Timestamp|Last modification time|2.3|
+
+## SDK Examples
+Java SDK
+
+```
+CreateSNSEmailPlatformAction action = new CreateSNSEmailPlatformAction();
+action.smtpServer = "email.zstack.io";
+action.smtpPort = 20.0;
+action.username = "example@cloud.io";
+action.password = "password";
+action.encryptType = "STARTTLS";
+action.name = "email platform";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateSNSEmailPlatformAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateSNSEmailPlatformAction action = CreateSNSEmailPlatformAction()
+action.smtpServer = "email.zstack.io"
+action.smtpPort = 20.0
+action.username = "example@cloud.io"
+action.password = "password"
+action.encryptType = "STARTTLS"
+action.name = "email platform"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateSNSEmailPlatformAction.Result res = action.call()
+```
+
+</APIPage>

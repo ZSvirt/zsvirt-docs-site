@@ -1,0 +1,126 @@
+---
+title: "Upload a Software Package to Backup Storage"
+---
+
+<APIPage method="POST" path="/v1/software-packages/backup-storage/upload">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "software-package-name",
+    "type": "ZMigrate",
+    "backupStorageUuid": "ff081de062bd338eb907962028e64d00",
+    "url": "http://192.168.1.1/disk/images/test.qcow2",
+    "installPath": "/root/zmigrate.tar.gz"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding example, the `systemTags` and `userTags` fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"software-package-name","type":"ZMigrate","backupStorageUuid":"ff081de062bd338eb907962028e64d00","url":"http://192.168.1.1/disk/images/test.qcow2","installPath":"/root/zmigrate.tar.gz"}}' \
+http://localhost:8080/zstack/v1/software-packages/backup-storage/upload
+```
+
+Parameters
+
+|Name|Type|Location|Description|Valid Values|Since|
+|----|----|--------|-----------|------------|-----|
+|name|String|body\(contained in the `params` structure\)|Resource name| |5.0.0|
+|type|String|body\(contained in the `params` structure\)|Software package type| |5.0.0|
+|backupStorageUuid \(optional\)|String|body\(contained in the `params` structure\)|Backup storage UUID| |5.0.0|
+|url|String|body\(contained in the `params` structure\)|Software package URL| |5.0.0|
+|installPath|String|body\(contained in the `params` structure\)|Installation path| |5.0.0|
+|resourceUuid \(optional\)|String|body\(contained in the `params` structure\)|Resource UUID| |5.0.0|
+|tagUuids \(optional\)|String|body\(contained in the `params` structure\)|Tag UUID list| |5.0.0|
+|systemTags \(optional\)|List|body|System tags| |5.0.0|
+|userTags \(optional\)|List|body|User tags| |5.0.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "size": 0
+  }
+}
+```
+
+|Name|Type|Description|Since|
+|----|----|-----------|-----|
+|success|boolean| |5.0.0|
+|inventory|SoftwarePackageInventory|For details, see [inventory](#p_rsw_zmf_2jc)|5.0.0|
+|error|ErrorCode|For details, see [error](#p_qnb_1nf_2jc)|5.0.0|
+
+### inventory
+|Name|Type|Description|Since|
+|----|----|-----------|-----|
+|uuid|String|Resource UUID, which uniquely identifies the resource|4.10.20|
+|name|String|Resource name|4.10.20|
+|hostUuid|String|host UUID|4.10.20|
+|managementNodeUuid|String|UUID of the management node to which the package is uploaded|4.10.20|
+|installPath|String|Installation path|4.10.20|
+|unzipInstallPath|String|Extraction installation path|4.10.20|
+|type|String|Installation package type|4.10.20|
+|md5sum|String|MD5 checksum of the installation package|4.10.20|
+|status|String|Installation package status|4.10.20|
+|size|long|Installation package size|4.10.20|
+|createDate|Timestamp|Creation time|4.10.20|
+|lastOpDate|Timestamp|Last modification time|4.10.20|
+
+### error
+|Name|Type|Description|Since|
+|----|----|-----------|-----|
+|code|String|Error code, a globally unique identifier of the error, for example, SYS.1000 or HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. The default value is null|0.6|
+|opaque|LinkedHashMap|Reserved field. The default value is null|0.6|
+|cause|ErrorCode|Root error, which is the source error that caused the current error. If there is no source error, this field is null|0.6|
+
+## SDK Example
+Java SDK
+
+```
+UploadSoftwarePackageToBackupStorageAction action = new UploadSoftwarePackageToBackupStorageAction();
+action.name = "software-package-name";
+action.type = "ZMigrate";
+action.backupStorageUuid = "ff081de062bd338eb907962028e64d00";
+action.url = "http://192.168.1.1/disk/images/test.qcow2";
+action.installPath = "/root/zmigrate.tar.gz";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UploadSoftwarePackageToBackupStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = UploadSoftwarePackageToBackupStorageAction()
+action.name = "software-package-name"
+action.type = "ZMigrate"
+action.backupStorageUuid = "ff081de062bd338eb907962028e64d00"
+action.url = "http://192.168.1.1/disk/images/test.qcow2"
+action.installPath = "/root/zmigrate.tar.gz"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

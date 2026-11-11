@@ -1,0 +1,77 @@
+---
+title: 'Create a Security Group and Related Rules'
+---
+
+To use security groups with your virtual machine, you need to create a new security group, add rules to the security group, and bind the security group to the NIC:
+
+1.  [Create a Security Group](#section_zsp_f2n_vyb)
+2.  [Add Rules](#section_l4n_lfl_xyb)
+3.  [Associate VM NIC](#section_mxv_nk4_bzb)
+
+## Create a Security Group
+On the ZSvirt platform, select the target data center, then click **Network** &gt; **Security Group**, and follow the configuration below to create a new security group:
+
+-   **Name**: Enter the name for the security group.
+-   **Description**: Provide a description for the security group.
+
+After clicking **OK**, the new security group will be created.
+
+## Add Rules
+After creating a new security group, you can add individual or batch inbound and outbound rules to the security group on its **Overview** page.
+
+-   [Add Individually](#p_wwx_1n4_bzb)
+-   [Add in Batch](#p_ur4_bn4_bzb)
+
+Add Individually: Depending on the direction of the rule you wish to add, select the **Ingress Rule** or **Egress Rule** tab, and click the **Add Rule** button. Follow the example below to add the rule:
+
+-   **Type**: The direction of traffic controlled by the rule, displayed as Ingress or Egress.
+-   **Priority**: The priority of the rule, which automatically increments by 1 for each new rule added. Higher numbers indicate lower priority.
+-   **IP Address Type**: Supports IPv4 address type.
+-   **Protocol**: The communication protocol targeted by the rule, supporting ALL, TCP, UDP, and ICMP.
+-   **Port**: When selecting TCP or UDP, specify the port targeted by the rule:
+    -   If specifying a range of ports, use the format `Start Port-End Port`.
+    -   If specifying multiple ports or ranges, separate them with an English comma “,”. You can specify up to 10 ports or ranges.
+-   **Source**: Required when adding an inbound rule, indicating whether to allow or deny traffic from the specified IP addresses/ranges or security groups:
+    -   When specifying by IP address/range, you can enter a range using the format `Start IP-End IP`.
+    -   When specifying by IP address/range, you can enter CIDR notation. If specifying CIDR along with other types of IP addresses, the CIDR mask must be 24 bits. If specifying only CIDR, there is no limit on the mask.
+    -   If specifying multiple IP addresses/ranges, separate them with an English comma “,”.
+-   **Destination**: Required when adding an outbound rule, indicating whether to allow or deny traffic from the NICs in this group to the specified IP addresses or security groups:
+    -   When specifying by IP address/range, you can enter a range using the format `Start IP-End IP`.
+    -   When specifying by IP address/range, you can enter CIDR notation. If specifying CIDR along with other types of IP addresses, the CIDR mask must be 24 bits. If specifying only CIDR, there is no limit on the mask.
+    -   If specifying multiple IP addresses/ranges, separate them with an English comma “,”.
+-   **State**: Whether to enable the rule immediately after creating the security group. By default, the rule is enabled. If set to disabled, the interfaces in the group will not match this rule until you manually enable it.
+-   **Description**: Description of the security group rule.
+
+After clicking **OK**, the rule will be successfully added.
+
+Batch Add: You can add multiple inbound and outbound rules to a security group by importing rules:
+
+-   Click **Actions** &gt; **Import Rule**, upload a CSV file, and click **OK**. The rules will be imported successfully.
+
+    <Callout type="info">
+    -   The imported rules will not affect existing rules. Their priority will default to be placed after existing rules and will be in a disabled state.
+    -   After import, users can manually adjust the priority and enable these rules.
+    -   To ensure system compatibility, the imported file must be edited using Microsoft Excel.
+    </Callout>
+-   If you need to reuse the rules of one security group for another security group, you can do the following on the security group page, depending on the scenario:
+
+    -   If you only need to export inbound rules or outbound rules, you can click the download button at the top right of the rule list under the corresponding tab and choose to export the current page or all ****. This will export the rules in CSV format.
+    -   If you need to export all inbound and outbound rules, click **Actions** &gt; **Export Rule**. This will export the rules in CSV format.
+    After exporting, you can import them into the target security group following the steps above.
+
+## Associate VM NIC
+After adding rules to a security group, you can choose the following paths to bind the security group to virtual machine NICs based on your scenario:
+
+-   If you need to bind the security group to multiple virtual machine NICs, you can select target interfaces in bulk on the **VM NIC** page of the security group, and follow the example below to bind them:
+    -   **Network**: Select the network scope applicable to the security group, choosing either all distributed port groups or specific port groups in the data center.
+    -   **NIC**: Select target NIC to bind.
+
+        <Callout type="info">
+        If the IP address of a virtual machine NIC is shown as empty on the platform, the default security group rule (intra-group communication rule) will not apply to that interface.
+        </Callout>
+
+-   If you need to bind multiple security groups to a virtual machine NIC, you can do so on the **Overview** page of the target virtual machine, using **Edit Configuration** to bind security groups to the virtual machine NICs in bulk. The smaller the number assigned to a security group, the higher its priority for taking effect.
+
+    <Callout type="info">
+    Please configure carefully to avoid conflicts between rules across different security groups.
+    </Callout>

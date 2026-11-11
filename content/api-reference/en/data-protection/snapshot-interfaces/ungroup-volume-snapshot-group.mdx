@@ -1,0 +1,61 @@
+---
+title: "Ungroup Snapshot Group"
+---
+
+<APIPage method="DELETE" path="/v1/volume-snapshots/ungroup/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/volume-snapshots/ungroup/8903cef5a11c3457881bfd7bd5f04757
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|UUID of the snapshot group| |3.6.0|
+|systemTags \(Optional\)|List|body| | |3.6.0|
+|userTags \(Optional\)|List|body| | |3.6.0|
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On failure, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+UngroupVolumeSnapshotGroupAction action = new UngroupVolumeSnapshotGroupAction();
+action.uuid = "8903cef5a11c3457881bfd7bd5f04757";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UngroupVolumeSnapshotGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UngroupVolumeSnapshotGroupAction action = UngroupVolumeSnapshotGroupAction()
+action.uuid = "8903cef5a11c3457881bfd7bd5f04757"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UngroupVolumeSnapshotGroupAction.Result res = action.call()
+```
+
+</APIPage>

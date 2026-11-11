@@ -1,0 +1,13 @@
+{
+  "title": "自定义属性相关接口",
+  "pages": [
+    "create-resource-attribute-key",
+    "delete-resource-attribute-key",
+    "update-resource-attribute-key",
+    "query-resource-attribute-key",
+    "create-resource-attribute-value",
+    "delete-resource-attribute-value",
+    "query-resource-attribute-value"
+  ],
+  "pagesIndex": "index"
+}

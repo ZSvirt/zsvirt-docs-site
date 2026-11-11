@@ -1,0 +1,85 @@
+---
+title: 'zsphere_vm_templates'
+description: 'Fetches a list of VM templates and their associated attributes from the ZSvirt environment.'
+---
+
+<HistoricalNamingNote locale="en" />
+
+# zsphere_vm_templates (Data Source)
+
+Fetches a list of VM templates and their associated attributes from the ZSvirt environment.
+
+## Example Usage
+
+```terraform
+data "zsphere_vm_templates" "test" {
+}
+
+output "zsphere_vm_templates" {
+  value = data.zsphere_vm_templates.test
+}
+
+# Example output:
+# zsphere_vm_templates = {
+#   "filter" = tolist([])
+#   "vm_templates" = tolist([
+#     {
+#       "account_uuid" = "36c27e8ff05c4780bf6d2fa65700f22e"
+#       "name" = "my-vm-template"
+#       "uuid" = "8c00337d47e94acab448e88afdc5c872"
+#       "zone_uuid" = "b9608acd97a94af68611bcb058bc4f4d"
+#     },
+#   ])
+#   "name" = tostring(null)
+#   "name_pattern" = tostring(null)
+# }
+
+# Search by name
+data "zsphere_vm_templates" "by_name" {
+  name = "my-vm-template"
+}
+
+# Search by name pattern
+data "zsphere_vm_templates" "by_pattern" {
+  name_pattern = "my-template-*"
+}
+
+# Filter results
+data "zsphere_vm_templates" "filtered" {
+  filter {
+    name   = "name"
+    values = ["template-1", "template-2"]
+  }
+}
+```
+
+## Schema
+
+### Optional
+
+- `filter` (Block List) Filter resources based on any field in the schema. For example, to filter by status, use `name = "status"` and `values = ["Ready"]`. (see [below for nested schema](#nestedblock--filter))
+- `name` (String) Exact name for searching VM templates
+- `name_pattern` (String) Pattern for fuzzy name search, similar to MySQL LIKE. Use % for multiple characters and _ for exactly one character.
+
+### Read-Only
+
+- `vm_templates` (Attributes List) (see [below for nested schema](#nestedatt--vm_templates))
+
+<a id="nestedblock--filter"></a>
+### Nested Schema for `filter`
+
+Required:
+
+- `name` (String) Name of the field to filter by (e.g., status, state).
+- `values` (Set of String) Values to filter by. Multiple values will be treated as an OR condition.
+
+
+<a id="nestedatt--vm_templates"></a>
+### Nested Schema for `vm_templates`
+
+Read-Only:
+
+- `account_uuid` (String) The UUID of the account that owns the VM template.
+- `name` (String) The name of the VM template.
+- `uuid` (String) The unique identifier (UUID) of the VM template.
+- `zone_uuid` (String) The UUID of the zone in which the VM template is located.

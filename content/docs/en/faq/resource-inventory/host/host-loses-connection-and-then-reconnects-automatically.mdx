@@ -1,0 +1,15 @@
+---
+title: "Host loses connection and then reconnects automatically"
+---
+
+## Cause
+The sshd service has reached the maximum number of sessions.
+
+## Solution
+1.  SSH into the host and edit `/etc/ssh/sshd_config`. Change the **MaxSessions** parameter from the default value of 10 to 50.
+
+2.  Run the following command to restart the sshd service:
+
+    ```
+    [root@localhost ~]# systemctl restart sshd.service
+    ```

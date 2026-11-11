@@ -1,0 +1,27 @@
+---
+title: "用户管理"
+---
+
+用户表示自然人，是身份与访问管理中的基本单位。用户由 admin 创建或统一认证系统同步，且受 admin 管理。通过将资源共享给用户以及为用户绑定角色，可以实现对资源归属以及权限控制的细粒度划分。
+
+以下为用户的一些特点：
+
+-   用户包括本地用户和统一认证用户。本地用户由 admin 直接创建，统一认证用户由统一认证服务器同步至平台。
+-   用户配额是 admin 对用户的资源总量进行控制的衡量标准，包括计算资源、数据存储资源、网络资源等。
+-   用户可以加入一个或多个用户组。
+-   用户可以绑定一个或多个角色，当用户绑定有多个角色时，用户将拥有这些角色对应权限的合集。当用户加入用户组后，除了自身已绑定的角色外，用户还将拥有从用户组继承的角色。
+
+-   **[新建用户](/docs/user-guide/source-topics/ZStack_ZSphere_User_Guide_0016_5_1)**  
+    创建本地用户，为其分配划分资源归属并绑定角色，然后使用用户登录。
+
+-   **[停用/启用用户](/docs/user-guide/source-topics/ZStack_ZSphere_User_Guide_0016_5_2)**  
+    停用普通用户后，除非 admin 重新启用该用户，否则该用户将无法登录到 ZSvirt。
+
+-   **[修改用户配置](/docs/user-guide/source-topics/ZStack_ZSphere_User_Guide_0016_5_3)**  
+    修改用户的基本信息，如该用户绑定的角色、加入的用户组、以及共享给该用户的资源。
+
+-   **[修改用户密码](/docs/user-guide/source-topics/ZStack_ZSphere_User_Guide_0016_5_4)**  
+
+-   **[变更为管理员用户](/docs/user-guide/source-topics/ZStack_ZSphere_User_Guide_0016_5_6)**  
+
+-   **[删除用户](/docs/user-guide/source-topics/ZStack_ZSphere_User_Guide_0016_5_5)**

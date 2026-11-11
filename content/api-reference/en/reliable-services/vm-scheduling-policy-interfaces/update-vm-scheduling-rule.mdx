@@ -1,0 +1,136 @@
+---
+title: "Update VM Scheduling Policy"
+---
+
+<APIPage method="PUT" path="/v1/vmSchedulingRule/{uuid}/update">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateVmSchedulingRule": {
+    "name": "new name",
+    "description": "desc",
+    "mode": "SOFT"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The **systemTags** and **userTags** fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateVmSchedulingRule":{"name":"new name","description":"desc","mode":"SOFT"}}' http://localhost:8080/zstack/v1/vmSchedulingRule/5c23ac3de87f33ff955430556e9d1104/update
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|UUID of the resource. Uniquely identifies the resource| |4.6.0|
+|name \(optional\)|String|body \(contained in the **updateVmSchedulingRule** structure\)|Resource name| |4.6.0|
+|description \(optional\)|String|body \(contained in the **updateVmSchedulingRule** structure\)|Detailed description of the resource| |4.6.0|
+|mode \(optional\)|String|body \(contained in the **updateVmSchedulingRule** structure\)| | |4.6.0|
+|systemTags \(optional\)|List|body|System tags| |4.6.0|
+|userTags \(optional\)|List|body|User tags| |4.6.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "rule": "AFFINITY",
+    "mode": "SOFT",
+    "uuid": "36f4174c0fcf3aefa24927f33aa2eba8",
+    "name": "group",
+    "description": "group for test",
+    "policy": "ANTISOFT",
+    "type": "HOST"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.6.0|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_w13_jcb_3cb)|4.6.0|
+|inventory|AffinityGroupInventory|For details, see [inventory](#p_fbm_jcb_3cb)|4.6.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|4.6.0|
+|description|String|Brief description of the error|4.6.0|
+|details|String|Detailed information about the error|4.6.0|
+|elaboration|String|Reserved field. Default is null|4.6.0|
+|opaque|LinkedHashMap|Reserved field. Default is null|4.6.0|
+|cause|ErrorCode|Root error. The source error that caused the current error. This field is null if no root error exists|4.6.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|rule|String|Rule|4.6.0|
+|mode|String|Execution mode|4.6.0|
+|uuid|String|UUID of the resource. Uniquely identifies the resource|4.6.0|
+|name|String|Resource name|4.6.0|
+|description|String|Detailed description of the resource|4.6.0|
+|policy|String| |4.6.0|
+|version|String| |4.6.0|
+|type|String| |4.6.0|
+|appliance|String| |4.6.0|
+|zoneUuid|String|Data Center UUID|4.6.0|
+|state|String| |4.6.0|
+|createDate|Timestamp|Creation time|4.6.0|
+|lastOpDate|Timestamp|Last modification time|4.6.0|
+|usages|List|For details, see [usages](#p_cyy_jcb_3cb)|4.6.0|
+
+### usages
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the VM scheduling group-to-resource binding relationship|4.6.0|
+|affinityGroupUuid|String|Affinity group UUID|4.6.0|
+|resourceUuid|String|Resource UUID|4.6.0|
+|resourceType|String|Resource type|4.6.0|
+|createDate|Timestamp|Creation time|4.6.0|
+|lastOpDate|Timestamp|Last modification time|4.6.0|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateVmSchedulingRuleAction action = new UpdateVmSchedulingRuleAction();
+action.uuid = "5c23ac3de87f33ff955430556e9d1104";
+action.name = "new name";
+action.description = "desc";
+action.mode = "SOFT";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateVmSchedulingRuleAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateVmSchedulingRuleAction action = UpdateVmSchedulingRuleAction()
+action.uuid = "5c23ac3de87f33ff955430556e9d1104"
+action.name = "new name"
+action.description = "desc"
+action.mode = "SOFT"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateVmSchedulingRuleAction.Result res = action.call()
+```
+
+</APIPage>

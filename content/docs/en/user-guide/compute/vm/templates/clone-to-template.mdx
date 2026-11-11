@@ -1,0 +1,32 @@
+---
+title: 'Clone a Virtual Machine to a Template'
+---
+
+Clone a virtual machine to a template. The source virtual machine remains available for use after it has been cloned into a template.
+
+-   Make sure the virtual machine is running, paused, shut down, or crashed.
+-   Detach all shared disks and RDM disks on the virtual machine.
+
+1.  In the navigation pane, choose **Inventory** &gt; **VM and Host**.
+
+2.  Select the target VM and click **Actions** &gt; **Clone** &gt; **Clone to Template**.
+
+3.  In the Clone Virtual Machine to Template dialog, set the following parameters:
+
+    -   **Name**: Enter the template name.
+
+        <Callout type="info">
+        The name must be unique and cannot duplicate the names of existing virtual machines or templates.
+        </Callout>
+
+    -   **Data Storage**: Location where the template will be stored. By default, this is consistent with the source virtual machine's data storage.
+    -   **Tag**: Attach tags to identify different templates. For more information, see Tag Management
+    <Callout type="info">
+    If the VM has GPU, USB, or PCIe devices attached (except for PCIe devices automatically attached by SR-IOV NICs), the cloned template will not include these devices. To keep these devices, you can convert the VM to a template.
+    </Callout>
+
+4.  Review the configuration and click **OK**.
+
+After cloning a virtual machine as a template, you can use this template to quickly deploy virtual machines with the same attributes.
+
+You can modify the template without affecting the normal use of the source virtual machine.

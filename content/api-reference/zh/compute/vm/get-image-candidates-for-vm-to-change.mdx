@@ -1,0 +1,126 @@
+---
+title: "获取候选镜像列表"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/{vmInstanceUuid}/image-candidates">
+
+获取用于修改虚拟机根硬盘的候选镜像列表。
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/54f0aebe7a2536978aafb9eb7a95003e/image-candidates
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|vmInstanceUuid \(可选\)|String|url|虚拟机UUID| |2.2|
+|systemTags \(可选\)|List|query|系统标签| |2.2|
+|userTags \(可选\)|List|query|用户标签| |2.2|
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "2354990ad5ee343eba48bb07851a1423",
+      "name": "TinyLinux",
+      "url": "http://192.168.1.20/share/images/tinylinux.qcow2",
+      "mediaType": "RootVolumeTemplate",
+      "platform": "Linux",
+      "format": "qcow2",
+      "backupStorageRefs": [
+        {
+          "id": 0.0,
+          "imageUuid": "2354990ad5ee343eba48bb07851a1423",
+          "backupStorageUuid": "a03a78dbdab23444bb109d67a5059389",
+          "installPath": "ceph://zs-images/f0b149e053b34c7eb7fe694b182ebffd",
+          "status": "Ready"
+        }
+      ]
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_v34_5xx_bcb)|2.2|
+|inventories|List|详情参考[inventories](#p_rvs_5xx_bcb)|2.2|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|2.2|
+|description|String|错误的概要描述|2.2|
+|details|String|错误的详细信息|2.2|
+|elaboration|String|保留字段，默认为null|2.2|
+|opaque|LinkedHashMap|保留字段，默认为null|2.2|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|2.2|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|2.2|
+|name|String|资源名称|2.2|
+|description|String|资源的详细描述|2.2|
+|state|String| |2.2|
+|status|String| |2.2|
+|size|Long| |2.2|
+|actualSize|Long| |2.2|
+|md5Sum|String| |2.2|
+|url|String| |2.2|
+|mediaType|String| |2.2|
+|guestOsType|String| |2.2|
+|type|String| |2.2|
+|platform|String| |2.2|
+|format|String| |2.2|
+|system|Boolean| |2.2|
+|createDate|Timestamp|创建时间|2.2|
+|lastOpDate|Timestamp|最后一次修改时间|2.2|
+|backupStorageRefs|List|详情参考[backupStorageRefs](#p_ryt_pxx_bcb)|2.2|
+
+### backupStorageRefs
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|imageUuid|String|镜像UUID|2.2|
+|backupStorageUuid|String|镜像存储UUID|2.2|
+|installPath|String| |2.2|
+|exportUrl|String| |2.2|
+|exportMd5Sum|String| |2.2|
+|status|String| |2.2|
+|createDate|Timestamp|创建时间|2.2|
+|lastOpDate|Timestamp|最后一次修改时间|2.2|
+
+## SDK示例
+Java SDK
+
+```
+GetImageCandidatesForVmToChangeAction action = new GetImageCandidatesForVmToChangeAction();
+action.vmInstanceUuid = "54f0aebe7a2536978aafb9eb7a95003e";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetImageCandidatesForVmToChangeAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetImageCandidatesForVmToChangeAction action = GetImageCandidatesForVmToChangeAction()
+action.vmInstanceUuid = "54f0aebe7a2536978aafb9eb7a95003e"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetImageCandidatesForVmToChangeAction.Result res = action.call()
+```
+
+</APIPage>

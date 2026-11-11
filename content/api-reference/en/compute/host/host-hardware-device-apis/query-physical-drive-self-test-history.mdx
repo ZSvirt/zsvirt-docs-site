@@ -1,0 +1,109 @@
+---
+title: "Query Raid Physical Drive Self-Test History"
+---
+
+<APIPage method="GET" path="/v1/storage-devices/local-raid/physical-drives/self-test" altPaths={["/v1/storage-devices/local-raid/physical-drives/{raidPhysicalDriveUuid}/self-test"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/storage-devices/local-raid/physical-drives/self-test
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/storage-devices/local-raid/physical-drives/{raidPhysicalDriveUuid}/self-test
+```
+
+Queryable Fields
+
+Run the CLI command-line tool, enter `QueryPhysicalDriveSelfTestHistory` and press Tab to view all queryable fields and resource names that support cross-table queries.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "id": 1,
+      "raidPhysicalDriveUuid": "18862cfe4f383f1c8f4e6e64e8de9f4c",
+      "runningState": "Success",
+      "testResult": "Completed without error",
+      "createDate": "Nov 14, 2017 2:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+    },
+    {
+      "id": 2,
+      "raidPhysicalDriveUuid": "adbdac3931c03ab0a1ff769558816563",
+      "runningState": "Success",
+      "testResult": "Completed without error",
+      "createDate": "Nov 14, 2017 2:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See [error](#p_hs2_4ct_s2c) for details|3.6|
+|inventories|List|See [inventories](#p_fv1_rct_s2c) for details|3.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. Globally unique identifier of the error, for example SYS.1000, HOST.1001.|0.6|
+|description|String|Brief error description|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause error. The error that caused the current error. If there is no original error, this field is null.|0.6|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|id|Long|Id|3.6|
+|raidPhysicalDriveUuid|String|Raid Physical Drive Uuid|3.6|
+|testResult|String|Self-test result|3.6|
+|createDate|Timestamp|Create time|3.6|
+|lastOpDate|Timestamp|Last update time|3.6|
+|runningState|RunningState|See [runningState](#p_hnq_sct_s2c) for details|3.6|
+
+### runningState
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Running|RunningState|In progress|3.6|
+|Success|RunningState|Completed successfully|3.6|
+|Failed|RunningState|Execution failed|3.6|
+
+## SDK Examples
+Java SDK
+
+```
+QueryPhysicalDriveSelfTestHistoryAction action = new QueryPhysicalDriveSelfTestHistoryAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryPhysicalDriveSelfTestHistoryAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryPhysicalDriveSelfTestHistoryAction action = QueryPhysicalDriveSelfTestHistoryAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryPhysicalDriveSelfTestHistoryAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,97 @@
+---
+title: "Check Network Reachability Between Multiple Hosts"
+---
+
+<APIPage method="GET" path="/v1/zops/check/network">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zops/check/network?sourceHostnames=172.0.0.1&targetHostnames=test1.com&targetHostnames=test2.com
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|sourceHostnames \(Optional\)|List|query|Collection of source IP addresses or domain names| |4.7.21|
+|targetHostnames|List|query|Collection of target IP addresses or domain names| |4.7.21|
+|systemTags \(Optional\)|List|query|System tags| |4.7.21|
+|userTags \(Optional\)|List|query|User tags| |4.7.21|
+
+## API Response
+Response Example
+
+```
+{
+  "results": [
+    {
+      "sourceHostname": "172.0.0.1",
+      "targetHostname": "test2.com",
+      "status": "Disconnected"
+    },
+    {}
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.7.21|
+|results|List|See [results](#p_ekj_mk1_w2c) for details|4.7.21|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_jck_lk1_w2c) for details|4.7.21|
+
+### results
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|sourceHostname|String|Source address|4.7.21|
+|targetHostname|String|Target address|4.7.21|
+|status|HostConnectedStatus|See [status](#p_opx_lk1_w2c) for details|4.7.21|
+
+### status
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Connected|HostConnectedStatus|Network reachable|4.7.21|
+|Disconnected|HostConnectedStatus|Network unreachable|4.7.21|
+|Unknown|HostConnectedStatus|Network connection status unknown|4.7.21|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|The detailed error information|0.6|
+|elaboration|String|Reserved field. Default is null|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null|0.6|
+|cause|ErrorCode|The root error that caused the current error. If no root error exists, this field is null|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+CheckNetworkReachableAction action = new CheckNetworkReachableAction();
+action.sourceHostnames = asList("172.0.0.1");
+action.targetHostnames = asList("test1.com","test2.com");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CheckNetworkReachableAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CheckNetworkReachableAction action = CheckNetworkReachableAction()
+action.sourceHostnames = [172.0.0.1]
+action.targetHostnames = [test1.com, test2.com]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CheckNetworkReachableAction.Result res = action.call()
+```
+
+</APIPage>

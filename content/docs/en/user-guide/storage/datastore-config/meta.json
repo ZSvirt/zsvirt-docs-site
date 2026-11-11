@@ -1,0 +1,10 @@
+{
+  "title": "Modify Data Storage Configuration",
+  "pages": [
+    "index",
+    "local-storage",
+    "nfs-storage",
+    "san-storage"
+  ],
+  "pagesIndex": "index"
+}

@@ -1,0 +1,10 @@
+{
+  "title": "System Management",
+  "pages": [
+    "user-configuration",
+    "single-sign-on-server-interfaces",
+    "security-settings-interfaces",
+    "system-settings"
+  ],
+  "pagesIndex": "index"
+}

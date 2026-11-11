@@ -1,0 +1,12 @@
+{
+  "title": "身份与访问管理",
+  "pages": [
+    "overview",
+    "prerequisites",
+    "sso",
+    "roles",
+    "users",
+    "user-groups"
+  ],
+  "pagesIndex": "overview"
+}

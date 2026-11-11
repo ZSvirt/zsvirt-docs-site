@@ -1,0 +1,78 @@
+---
+title: "Get ZMigrate Gateway VM Instances"
+---
+
+<APIPage method="GET" path="/v1/zmigrate/vm-instances">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zmigrate/vm-instances
+```
+
+Parameters
+
+|Name|Type|Location|Description|Optional Values|Since|
+|----|----|--------|-----------|---------------|-----|
+|systemTags \(Optional\)|List|query|System tags| |5.0.0|
+|userTags \(Optional\)|List|query|User tags| |5.0.0|
+
+## API Response
+Response Example
+
+```
+{
+  "managementVmInstanceUuid": "ff04e1736ec6391f9a1f023b524d0a00",
+  "gatewayVmInstances": [
+    {
+      "uuid": "ff01ec80fd11327cba7519b66119d900",
+      "name": "ZMigrateGatewayVmInstance",
+      "description": "ZMigrate gateway vm instance for test"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Since|
+|----|----|-----------|-----|
+|managementVmInstanceUuid|String| |5.0.0|
+|gatewayVmInstances|List| |5.0.0|
+|success|boolean| |5.0.0|
+|error|ErrorCode|For details, see [error](#p_xm1_vmk_l1b)|5.0.0|
+
+### error
+|Name|Type|Description|Since|
+|----|----|-----------|-----|
+|ode|String|Error code, which is the globally unique identifier of the error, such as SYS.1000 or HOST.1001|0.6|
+|description|String|Summary description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. The default value is null.|0.6|
+|opaque|LinkedHashMap|Reserved field. The default value is null.|0.6|
+|cause|ErrorCode|Root error that caused the current error. If there is no original error, this field is null.|0.6|
+
+## SDK Example
+Java SDK
+
+```
+GetZMigrateGatewayVmInstancesAction action = new GetZMigrateGatewayVmInstancesAction();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetZMigrateGatewayVmInstancesAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = GetZMigrateGatewayVmInstancesAction()
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

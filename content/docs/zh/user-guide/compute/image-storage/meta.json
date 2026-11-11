@@ -1,0 +1,11 @@
+{
+  "title": "镜像存储",
+  "pages": [
+    "index",
+    "basic-operations",
+    "state-transitions",
+    "image-basic-operations",
+    "cross-platform"
+  ],
+  "pagesIndex": "index"
+}

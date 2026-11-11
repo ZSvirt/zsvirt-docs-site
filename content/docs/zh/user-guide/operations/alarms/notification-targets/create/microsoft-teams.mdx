@@ -1,0 +1,27 @@
+---
+title: "Microsoft Teams"
+---
+
+## 前提条件
+
+-   确保 ZSvirt 已安装高级版许可证，并且许可证处于有效状态。
+-   需在 Microsoft Teams 中预先添加 Incoming Webhook 应用。添加完成后，获取 Webhook 地址。有关更多信息，请参阅 Microsoft Teams 官方文档。
+
+## 操作步骤
+
+1.  在导航栏中，选择**运维管理** > **通知对象**。
+
+2.  在通知对象页面，点击**新建通知对象**。
+
+3.  在新建通知对象弹窗中，参考以下示例完成配置：
+
+    -   **名称**：设置通知对象名称
+    -   **简介**：按需填写通知对象简介
+    -   **类型**：选择 **Microsoft Teams**
+    -   **地址**：从 Microsoft Teams 中获取到的 Webhook 地址
+    -   **通知语言**：报警消息的通知语言，包括简体中文、English
+
+4.  确认配置无误后，点击**确定**。
+
+-   可前往设置报警消息模板，确保报警消息按指定格式统一发出。有关更多信息，请参阅 [消息模板](/docs/user-guide/operations/alarms/message-templates)。
+-   可前往新建报警器，资源的报警消息将推送至指定的通知对象。有关更多信息，请参阅 [报警器](/docs/user-guide/operations/alarms/alarm-rules)。

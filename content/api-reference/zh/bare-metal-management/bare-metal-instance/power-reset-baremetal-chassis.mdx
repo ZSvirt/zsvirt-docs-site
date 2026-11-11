@@ -1,0 +1,76 @@
+---
+title: "重启裸金属设备电源"
+---
+
+<APIPage method="PUT" path="/v1/baremetal/chassis/{chassisUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "powerResetBaremetalChassis": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"powerResetBaremetalChassis":{}}' \
+http://localhost:8080/zstack/v1/baremetal/chassis/8a947fc86c0c3e1d89462722af254ddf/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|chassisUuid|String|url|裸机设备UUID| |2.6.0|
+|systemTags \(可选\)|List|body|系统标签| |2.6.0|
+|userTags \(可选\)|List|body|用户标签| |2.6.0|
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+PowerResetBaremetalChassisAction action = new PowerResetBaremetalChassisAction();
+action.chassisUuid = "8a947fc86c0c3e1d89462722af254ddf";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+PowerResetBaremetalChassisAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = PowerResetBaremetalChassisAction()
+action.chassisUuid = "8a947fc86c0c3e1d89462722af254ddf"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,94 @@
+---
+title: "查询账户"
+---
+
+<APIPage method="GET" path="/v1/accounts" altPaths={["/v1/accounts/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X GET http://localhost:8080/zstack/v1/accounts?q=name=test
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X GET http://localhost:8080/zstack/v1/accounts/fa37d4ea030937b797cb97b2ea09840b
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryAccount`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "5c4b1e96b2833c2db31c5d7f175c817d",
+      "name": "test",
+      "type": "Normal"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_e45_wdl_l1b)|0.6|
+|inventories|List|详情参考[inventories](#p_ngc_xdl_l1b)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|账户的UUID，唯一标示该资源|4.0.0|
+|name|String|账户名称|4.0.0|
+|description|String|账户的详细描述|4.0.0|
+|type|String|账户类型|4.0.0|
+|state|String|账户状态|4.0.0|
+|createDate|Timestamp|创建时间|4.0.0|
+|lastOpDate|Timestamp|最后一次修改时间|4.0.0|
+
+## SDK示例
+Java SDK
+
+```
+QueryAccountAction action = new QueryAccountAction();
+action.conditions = asList("name=test");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryAccountAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+QueryAccountAction action = QueryAccountAction()
+action.conditions = ["name=test"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryAccountAction.Result res = action.call()
+
+```
+
+</APIPage>

@@ -1,0 +1,257 @@
+---
+title: "共享资源给账户"
+---
+
+<APIPage method="PUT" path="/v1/accounts/resources/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "shareResource": {
+    "resourceUuids": [
+      "62113cf71892442daf57fe1a21606e7b",
+      "e8d14f0a61d7497c83cf9451bdd392a3"
+    ],
+    "accountUuids": [
+      "17c6a138e5f04df4ad8938fa8bd06340",
+      "7063dc465e7c42739fdb5fd7d3e373f4"
+    ],
+    "toPublic": false
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X PUT -d '{"shareResource":{"resourceUuids":["05c5cdd1a5693e53ad3212a69b808883","49c6493b8eaf3765806aeb17071e779f"],"accountUuids":["62c084e3a2053b089b8b95fe452856e7","194f8c7d98963e628b9967b0df7eecae"],"toPublic":false}}' \
+http://localhost:8080/zstack/v1/accounts/resources/actions
+```
+
+参数列表
+
+<table id="table_ufg_cpl_l1b"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+resourceUuids
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(包含在**shareResource**结构中\)
+
+</td><td>
+
+资源UUID列表
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+accountUuids \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(包含在**shareResource**结构中\)
+
+</td><td>
+
+账户UUID列表
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+toPublic \(可选\)
+
+</td><td>
+
+boolean
+
+</td><td>
+
+body\(包含在**shareResource**结构中\)
+
+</td><td>
+
+全局共享**Note:** toPublic参数被设为false时，账户uuid不能为空
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+permission \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**shareResource**结构中\)
+
+</td><td>
+
+共享的权限, WRITE 表示写权限, READ 表示读权限
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.2.0
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr></tbody>
+</table>
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+ShareResourceAction action = new ShareResourceAction();
+action.resourceUuids = asList("05c5cdd1a5693e53ad3212a69b808883","49c6493b8eaf3765806aeb17071e779f");
+action.accountUuids = asList("62c084e3a2053b089b8b95fe452856e7","194f8c7d98963e628b9967b0df7eecae");
+action.toPublic = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ShareResourceAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+ShareResourceAction action = ShareResourceAction()
+action.resourceUuids = [05c5cdd1a5693e53ad3212a69b808883, 49c6493b8eaf3765806aeb17071e779f]
+action.accountUuids = [62c084e3a2053b089b8b95fe452856e7, 194f8c7d98963e628b9967b0df7eecae]
+action.toPublic = false
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ShareResourceAction.Result res = action.call()
+
+```
+
+</APIPage>

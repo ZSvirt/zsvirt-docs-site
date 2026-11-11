@@ -1,0 +1,44 @@
+---
+title: "虚拟机控制台内显示“Guest has not initialized the display (yet)”报错，如何解决？"
+---
+
+虚拟机控制台出现`Guest has not initialized the display (yet)`报错一般有以下两种原因，可根据原因分类，尝试参考解决方案进行排查解决。
+
+## 原因一
+该问题多出现在VMware嵌套环境下，可能是由于该模拟硬件未支持内存硬件虚拟化EPT的特性。
+
+## 解决方案
+-   可参考以下方式尝试解决：
+-   可在关闭所有虚拟机后，在主机详情页关闭Intel EPT硬件辅助。重启主机后，再创建虚拟机即可正常访问控制台。
+
+-   对生产环境的主机进行上述操作会严重降低虚拟机性能，请谨慎操作。
+
+## 原因二
+使用旧的服务器作为计算节点，可能会遇到因CPU型号过早，无法创建虚拟机或者创建的虚拟机不能显示控制台界面的问题。
+
+如[Figure 1](#fig_izh_fpc_x5b)所示
+
+![无法显示控制台界面](/docs/faq/images/ZStack_2.0_Maintenance_Manual_0018_6.png)
+
+![无法显示控制台界面](/docs/faq/images/ZStack_2.0_Maintenance_Manual_0018_6_1.png)
+
+## 解决方案
+1.  可尝试参考以下步骤排查解决：
+2.  在虚拟机系统内执行以下命令，编辑`kvm-nested.conf`配置文件，加上`ept=0`：
+
+    ```
+    [root@localhost ~]# vim /etc/modprobe.d/kvm-nested.conf
+    options kvm_intel nested=1 ept=0
+    ```
+
+3.  执行以下命令移除`kvm_intel`：
+
+    ```
+    [root@localhost ~]# rmmod kvm_intel
+    ```
+
+4.  执行以下命令，重新加载`kvm_intel`：
+
+    ```
+    [root@localhost ~]# modprobe kvm-intel ept=0 unrestricted_guest=0
+    ```

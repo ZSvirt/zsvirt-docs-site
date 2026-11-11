@@ -1,0 +1,73 @@
+---
+title: "降级双管中当前管理节点"
+---
+
+<APIPage method="PUT" path="/v1/management-nodes/zsha2/demote">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "zSha2Demote": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"zSha2Demote":{}}' \
+http://localhost:8080/zstack/v1/management-nodes/zsha2/demote
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|systemTags \(可选\)|List|query|系统标签| |4.10.20|
+|userTags \(可选\)|List|query|用户标签| |4.10.20|
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+ZSha2DemoteAction action = new ZSha2DemoteAction();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ZSha2DemoteAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = ZSha2DemoteAction()
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

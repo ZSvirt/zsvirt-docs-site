@@ -1,0 +1,61 @@
+---
+title: "Get Candidate Images for Creating VM"
+---
+
+<APIPage method="GET" path="/v1/images/primaryStorage/{primaryStorageUuid}/candidate-image">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/images/primaryStorage/f9a502b0665b33faa19c15ebf389408f/candidate-image
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|primaryStorageUuid|String|url|Primary Storage UUID| |4.1.1|
+|systemTags \(Optional\)|List|query|System Tags| |4.1.1|
+|userTags \(Optional\)|List|query|User Tags| |4.1.1|
+
+## API Response
+This API returns an empty JSON object `{}` on success. On error, the returned JSON contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+GetCandidateImagesForCreatingVmAction action = new GetCandidateImagesForCreatingVmAction();
+action.primaryStorageUuid = "f9a502b0665b33faa19c15ebf389408f";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetCandidateImagesForCreatingVmAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetCandidateImagesForCreatingVmAction action = GetCandidateImagesForCreatingVmAction()
+action.primaryStorageUuid = "f9a502b0665b33faa19c15ebf389408f"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetCandidateImagesForCreatingVmAction.Result res = action.call()
+```
+
+</APIPage>

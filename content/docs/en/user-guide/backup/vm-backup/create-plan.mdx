@@ -1,0 +1,69 @@
+---
+title: 'New Backup Plan'
+---
+
+-   Make sure the platform has sufficient authorized backup quota.
+-   Make sure the virtual machines to be backed up are in a running or paused state and are not associated with any other backup plans.
+-   You cannot associate a backup plan with a virtual machine, if it uses ZHPS distributed storage.
+
+1.  In the navigation pane, choose **Data Protection** &gt; **Backup Plan**.
+
+2.  On the Backup Plan page, click **New Backup Plan**.
+
+3.  In the New Backup Plan dialog, complete the basic configuration and backup configuration.
+
+4.  For **Basic Configuration**, set the following parameters:
+
+    **Basic Information**
+
+    -   **Name**: Name of the backup plan.
+    -   **Description**: Description of the backup plan.
+    -   **Data Center**: Select a data center.
+    **Backup Storage**
+
+    -   **Local Backup Storage**: Add local backup storage, with a maximum of 2 backup storage allowed for seamless failover.
+    -   **Sync to Remote Backup Storage**: Disabled by default. You can choose whether to synchronize local backup data to a remote backup storage.
+
+        <Callout type="info">
+        If enabled, ensure that remote backup storage has been added in advance on the platform. For more information, see [Add Remote Backup Storage](/en/docs/user-guide/backup/backup-storage/remote).
+        </Callout>
+
+        -   **Remote Backup Storage**: After enabling synchronization to remote backup storage, it displays the name and available capacity of the remote backup storage.
+    **Backup Object**
+
+    -   **Backup Object Type**: Select **Virtual Machine**.
+    -   **Virtual Machine**: Add virtual machines that need to be backed up, and set the backup priority as needed.
+
+        <Callout type="info">
+        -   The number of selected virtual machines must not exceed the authorized backup quota.
+        -   If the selected virtual machine already has backup data, creating a new backup plan will not additionally consume authorized backup quota.
+        -   By default, the entire VM is backed up. However, shared disks and RDM disks attached to VMs are excluded form backup.
+        </Callout>
+5.  Review the configuration and click **Next**.
+
+6.  For **Backup Configuration**, set the following parameters:
+
+    **Backup Policy**
+
+    -   **Backup Mode**: Select default incremental backup or customized incremental backup as needed.
+    -   **Incremental Backup Policy**: Customize the incremental backup policy, including the backup cycle and execution time.
+    -   **Full Backup Policy**: When the backup mode is set to customized incremental backup, you need to customize the full backup policy, including the backup cycle and execution time.
+    -   **Maximum Backup Chain Length**: Display the length of the backup chain under the current policy, with a maximum length not exceeding 64.
+    -   **Start Time**: Set a start time for the backup plan.
+    -   **Disk Read Speed**: Set a maximum disk read speed limit. Default value: unlimited. Units: MB/s, GB/s. Range: 1MB/s to 100GB/s.
+
+        <Callout type="info">
+        QoS settings should match the physical network bandwidth and account for the bandwidth occupied by concurrent backups.
+        </Callout>
+
+    [For more information about backup policies, see Backup Policy](/en/docs/user-guide/backup/vm-backup/policy).
+
+    **Retention Policy**
+
+    -   **Local Retention Policy**: Set the local backup retention policy by quantity or time.
+    -   **Remote Retention Policy**: After enabling **Sync to Remote Backup Storage**, this parameter must be set. You can set the remote retention policy as permanently or by quantity or time.
+    [For more information about retention policies, see Backup Policy](/en/docs/user-guide/backup/vm-backup/policy).
+
+7.  Review the configuration and click **OK**.
+
+After you performed backups, you can use them to restore virtual machines. For more information, see [Data Recovery](/en/docs/user-guide/backup/restore).

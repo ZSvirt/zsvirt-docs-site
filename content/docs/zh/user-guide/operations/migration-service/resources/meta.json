@@ -1,0 +1,11 @@
+{
+  "title": "迁移资源管理",
+  "pages": [
+    "index",
+    "add-source-platform",
+    "delete-source-platform",
+    "add-data-gateway",
+    "delete-data-gateway"
+  ],
+  "pagesIndex": "index"
+}

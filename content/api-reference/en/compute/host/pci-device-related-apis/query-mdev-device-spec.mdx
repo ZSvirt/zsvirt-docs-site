@@ -1,0 +1,134 @@
+---
+title: "Query MDEV Device Specs Partitioned from PCI Devices"
+---
+
+<APIPage method="GET" path="/v1/mdev-device-specs">
+
+```
+GET zstack/v1/mdev-device-specs/{uuid}
+```
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/mdev-device-specs?q=uuid=80e1584c51673827abf32ad7c57fa5ed
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/mdev-device-specs/21accb3c691435f4a453de1566f19a37
+```
+
+Queryable Fields
+
+Run the CLI command tool, enter `QueryMdevDeviceSpec` and press Tab to view all queryable fields and resource names that support cross-table queries.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "b127c9ba357a459aa1c3b92eb40e8277",
+      "name": "GRID M60-2A",
+      "parentUuid": "284f35b038ae4b23847238f995281a64",
+      "hostUuid": "c461675365b9439ab5794f86c8652fce",
+      "mdevSpecUuid": "891086ddf1d0414c94d2a7adbfec15fe",
+      "type": "GPU_Video_Controller",
+      "state": "Enabled",
+      "status": "Active",
+      "chooser": "None",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_qrs_5dg_xhb)|3.5.0|
+|inventories|List|See [inventories](#p_rb4_5dg_xhb)|3.5.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code, a globally unique identifier of the error, e.g. SYS.1000, HOST.1001|3.5.0|
+|description|String|Brief description of the error|3.5.0|
+|details|String|Detailed error information|3.5.0|
+|elaboration|String|Reserved field, defaults to null|3.5.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|3.5.0|
+|cause|ErrorCode|Root cause, the source error that caused the current error, null if no original error|3.5.0|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifies the resource|3.5.0|
+|name|String|Resource name|3.5.0|
+|description|String|Resource description|3.5.0|
+|parentUuid|String|Physical PCI device UUID|3.5.0|
+|hostUuid|String|Host UUID|3.5.0|
+|vmInstanceUuid|String|Virtual Machine UUID|3.5.0|
+|mdevSpecUuid|String|MDEV device spec UUID|3.5.0|
+|createDate|Timestamp|Create date|3.5.0|
+|lastOpDate|Timestamp|Last update date|3.5.0|
+|type|MdevDeviceType|See [type](#p_zfk_5dg_xhb)|3.5.0|
+|state|MdevDeviceSpecState|See [state](#p_jg2_5dg_xhb)|3.5.0|
+|status|MdevDeviceStatus|See [status](#p_d51_vtn_y1c)|3.5.0|
+|chooser|MdevDeviceChooser|See [chooser](#p_xxw_5tn_y1c)|4.1.0|
+
+### type
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|GPU\_Video\_Controller|MdevDeviceType|GPU video controller|3.5.0|
+
+### state
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Enabled|MdevDeviceSpecState|Enabled|3.5.0|
+|Disabled|MdevDeviceSpecState|Disabled|3.5.0|
+
+### status
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Active|MdevDeviceStatus|Ready|3.5.0|
+|Attached|MdevDeviceStatus|Attached|3.5.0|
+
+### chooser
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|None|PciDeviceChooser| |4.2.0|
+|Device|PciDeviceChooser| |4.2.0|
+|Spec|PciDeviceChooser| |4.2.0|
+
+## SDK Examples
+Java SDK
+
+```
+QueryMdevDeviceAction action = new QueryMdevDeviceAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryMdevDeviceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryMdevDeviceAction action = QueryMdevDeviceAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryMdevDeviceAction.Result res = action.call()
+```
+
+</APIPage>

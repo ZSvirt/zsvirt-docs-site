@@ -1,0 +1,14 @@
+---
+title: "Host status shows as disconnected or connecting"
+---
+
+## Solution
+-   Verify that the host SSH port, username, and password are correct, and that the user has `sudo` privileges.
+
+-   Verify that the host operating system is running normally, and that CPU, memory, System Disk storage capacity, and filesystem write access are sufficient.
+
+-   Verify that the host NIC device name matches the network attached to the Cluster.
+
+    For example, if the Distributed Switch attached to the Cluster specifies device bond0, but the host NIC device name has changed and bond0 no longer exists, the host cannot reconnect successfully.
+
+-   Verify that all Data Storage attached to the host is in a normal state.

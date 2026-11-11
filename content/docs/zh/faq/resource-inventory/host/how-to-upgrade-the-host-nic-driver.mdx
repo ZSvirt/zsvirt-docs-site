@@ -1,0 +1,49 @@
+---
+title: "如何升级主机网卡驱动？"
+---
+
+## 解决方案
+1.  本文以3.10.0-957.27.2.el7.x86\_64内核版本为例介绍升级步骤：
+2.  进入主机系统，查看当前主机网卡驱动版本。
+
+    ```
+    [root@localhost ~]# modinfo ixgbe |grep -v alias
+    ```
+
+3.  下载官方升级版本的网卡驱动。
+
+4.  备份旧驱动：
+
+    ```
+    [root@localhost ~]# cp /lib/modules/3.10.0-957.27.2.el7.x86_64/kernel/drivers/net/ethernet/intel/ixgbe/ixgbe.ko.xz /root/ixgbe.ko.xz_lod
+    ```
+
+5.  替换旧驱动：
+
+    ```
+    [root@localhost ~]# cp /root/ixgbe.ko.xz /lib/modules/3.10.0-957.27.2.el7.x86_64/kernel/drivers/net/ethernet/intel/ixgbe/ixgbe.ko.xz
+    ```
+
+6.  检查依赖：
+
+    ```
+    [root@localhost ~]# depmod -a
+    ```
+
+7.  备份initramfs文件：
+
+    ```
+    [root@localhost ~]# mv /boot/initramfs-3.10.0-957.27.2.el7.x86_64.img /boot/initramfs-3.10.0-957.27.2.el7.x86_64.img_bak
+    ```
+
+8.  重构initramfs文件：
+
+    ```
+    [root@localhost ~]# cp /root/ixgbe.ko.xz /lib/modules/3.10.0-957.27.2.el7.x86_64/kernel/drivers/net/ethernet/intel/ixgbe/ixgbe.ko.xz
+    ```
+
+9.  重启主机：
+
+    ```
+    [root@localhost ~]# sync && sync && shutdown -r now
+    ```

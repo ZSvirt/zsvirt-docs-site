@@ -1,0 +1,110 @@
+---
+title: "设置虚拟机默认CDROM"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/{vmInstanceUuid}/cdroms/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "setVmInstanceDefaultCdRom": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"setVmInstanceDefaultCdRom":{}}' http://localhost:8080/zstack/v1/vm-instances/d447a8ba0a7739ebb9ea4328740cb6df/cdroms/65a54c4273433d74970e8bac4c406cd8/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |3.3.0|
+|vmInstanceUuid|String|url|虚拟机UUID| |3.3.0|
+|systemTags \(可选\)|List|body|系统标签| |3.3.0|
+|userTags \(可选\)|List|body|用户标签| |3.3.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "vmInstanceUuid": "ec0fdf7fd86f39e89510b3102ad1c66e",
+    "deviceId": 0,
+    "isoUuid": "57adfd535d05345895007787f74d11a0",
+    "name": "cd-1",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_wsd_dpt_lgb)|3.3.0|
+|inventory|VmCdRomInventory|详情参考[inventory](#p_jkj_dpt_lgb)|3.3.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.3.0|
+|description|String|错误的概要描述|3.3.0|
+|details|String|错误的详细信息|3.3.0|
+|elaboration|String|保留字段，默认为null|3.3.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.3.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.3.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.3.0|
+|vmInstanceUuid|String|虚拟机UUID|3.3.0|
+|deviceId|Integer|光驱顺序号|3.3.0|
+|isoUuid|String|ISO镜像UUID|3.3.0|
+|isoInstallPath|String|ISO镜像挂载路径|3.3.0|
+|name|String|资源名称|3.3.0|
+|description|String|资源的详细描述|3.3.0|
+|createDate|Timestamp|创建时间|3.3.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.3.0|
+
+## SDK示例
+Java SDK
+
+```
+SetVmInstanceDefaultCdRomAction action = new SetVmInstanceDefaultCdRomAction();
+action.uuid = "65a54c4273433d74970e8bac4c406cd8";
+action.vmInstanceUuid = "d447a8ba0a7739ebb9ea4328740cb6df";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+SetVmInstanceDefaultCdRomAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SetVmInstanceDefaultCdRomAction action = SetVmInstanceDefaultCdRomAction()
+action.uuid = "65a54c4273433d74970e8bac4c406cd8"
+action.vmInstanceUuid = "d447a8ba0a7739ebb9ea4328740cb6df"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+SetVmInstanceDefaultCdRomAction.Result res = action.call()
+```
+
+</APIPage>

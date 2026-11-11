@@ -1,0 +1,11 @@
+{
+  "title": "裸金属集群",
+  "pages": [
+    "index",
+    "create-cluster",
+    "load-unload-dvs",
+    "manage-deployment-server",
+    "delete-cluster"
+  ],
+  "pagesIndex": "index"
+}

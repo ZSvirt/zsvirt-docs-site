@@ -1,0 +1,131 @@
+---
+title: "Migrate Volume Across Data Storage"
+---
+
+<APIPage method="PUT" path="/v1/primary-storage/volumes/{volumeUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "primaryStorageMigrateVolume": {
+    "dstPrimaryStorageUuid": "aafceb95938e42a6be5475f19a92eec9"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"primaryStorageMigrateVolume":{"dstPrimaryStorageUuid":"ed4370b338da37d8a537bfb738e736f2"}}' \
+http://localhost:8080/zstack/v1/primary-storage/volumes/b6e9b22601f7319fadd329d065b0cd1b/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|volumeUuid|String|url|Volume UUID| |2.2|
+|dstPrimaryStorageUuid|String|body\(contained in the **primaryStorageMigrateVolume** structure\)|Destination Data Storage UUID| |2.2|
+|systemTags \(Optional\)|List|body|System Tags| |2.2|
+|userTags \(Optional\)|List|body|User Tags| |2.2|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "5fa2d1c7adcd4963b1f9016075764fcb",
+    "name": "test-volume",
+    "primaryStorageUuid": "6ebc0be6faaa41f28874daa6076322bd",
+    "vmInstanceUuid": "2c528326ddcf43dd9bdd1d80da7a15ef",
+    "diskOfferingUuid": "2af3082d23444be9833c32c53ea2b1ed",
+    "rootImageUuid": "254bdaf01a33407082d8afe540b76796",
+    "installPath": "/Cloud_ps/rootVolumes/acct-36c27e8ff05c4780bf6d2fa65700f22e/vol-5fa2d1c7adcd4963b1f9016075764fcb/5fa2d1c7adcd4963b1f9016075764fcb.qcow2",
+    "type": "Root",
+    "format": "qcow2",
+    "size": 107374182400.0,
+    "actualSize": 21474836480.0,
+    "deviceId": 0.0,
+    "state": "Enabled",
+    "status": "Ready",
+    "createDate": "Oct 26, 2017 3:38:58 PM",
+    "lastOpDate": "Oct 26, 2017 3:38:58 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation succeeds, this field is null. See [error](#p_z2d_331_rbb)|2.2|
+|inventory|VolumeInventory|See [inventory](#p_hlh_331_rbb)|2.2|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|2.2|
+|description|String|Brief description of the error|2.2|
+|details|String|Detailed error information|2.2|
+|elaboration|String|Reserved field, defaults to null|2.2|
+|opaque|LinkedHashMap|Reserved field, defaults to null|2.2|
+|cause|ErrorCode|Root cause, the source error that caused the current error. If there is no original error, this field is null|2.2|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|2.2|
+|name|String|Resource Name|2.2|
+|description|String|Resource Description|2.2|
+|primaryStorageUuid|String|Data Storage UUID|2.2|
+|vmInstanceUuid|String|VM Instance UUID|2.2|
+|diskOfferingUuid|String|Disk Offering UUID|2.2|
+|rootImageUuid|String| |2.2|
+|installPath|String| |2.2|
+|type|String| |2.2|
+|format|String| |2.2|
+|size|Long| |2.2|
+|actualSize|Long| |2.2|
+|deviceId|Integer| |2.2|
+|state|String| |2.2|
+|status|String| |2.2|
+|createDate|Timestamp|Create Time|2.2|
+|lastOpDate|Timestamp|Last Modification Time|2.2|
+|isShareable|Boolean| |2.2|
+
+## SDK Examples
+Java SDK
+
+```
+PrimaryStorageMigrateVolumeAction action = new PrimaryStorageMigrateVolumeAction();
+action.volumeUuid = "af5d94f0f24c45f79280fc4661919b2c";
+action.dstPrimaryStorageUuid = "e8d756d48e5d48a69f5bec6221ddbc79";
+action.sessionId = "c186caf64d0043158b2c5ea9784697ab";
+PrimaryStorageMigrateVolumeAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+PrimaryStorageMigrateVolumeAction action = PrimaryStorageMigrateVolumeAction()
+action.volumeUuid = "7e170d744c014517b3b38f20111f400d"
+action.dstPrimaryStorageUuid = "8c2cc857b81d4d75b404809e57e02deb"
+action.sessionId = "ec12693efdf14d72b2a59de9c039870a"
+PrimaryStorageMigrateVolumeAction.Result res = action.call()
+```
+
+</APIPage>

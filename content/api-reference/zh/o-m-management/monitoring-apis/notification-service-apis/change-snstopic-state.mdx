@@ -1,0 +1,227 @@
+---
+title: "更改SNS主题状态"
+---
+
+<APIPage method="PUT" path="/v1/zwatch/topics/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "changeSNSTopicState": {
+    "stateEvent": "disable"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"changeSNSTopicState":{"stateEvent":"disable"}}' \
+http://localhost:8080/zstack/v1/zwatch/topics/89f0adcff110385a8a8fa2568a744ab5/actions
+```
+
+参数列表
+
+<table id="table_omw_bqw_bdb"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+资源的UUID，唯一标示该资源
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+stateEvent
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**changeSNSTopicState**结构中\)
+
+</td><td>
+
+状态事件
+
+</td><td>
+
+-   enable
+-   disable
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3
+
+</td></tr></tbody>
+</table>
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "5437b9b1455142db890143ffb80c63ec",
+    "name": "new name",
+    "state": "Enabled",
+    "locale": "zh_CN",
+    "createDate": "Mar 26, 2024 2:46:27 AM",
+    "lastOpDate": "Mar 26, 2024 2:46:27 AM"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |5.0.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_b1q_chy_p1b)|2.3|
+|inventory|SNSTopicInventory|详情参考[inventory](#p_ywy_chy_p1b)|2.3|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|2.3|
+|name|String|资源名称|2.3|
+|description|String|资源的详细描述|2.3|
+|state|String|状态|2.3|
+|lastOpDate|Timestamp|最后一次修改时间|2.3|
+|createDate|Timestamp|创建时间|2.3|
+
+## SDK示例
+Java SDK
+
+```
+ChangeSNSTopicStateAction action = new ChangeSNSTopicStateAction();
+action.uuid = "89f0adcff110385a8a8fa2568a744ab5";
+action.stateEvent = "disable";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ChangeSNSTopicStateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ChangeSNSTopicStateAction action = ChangeSNSTopicStateAction()
+action.uuid = "89f0adcff110385a8a8fa2568a744ab5"
+action.stateEvent = "disable"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ChangeSNSTopicStateAction.Result res = action.call()
+```
+
+</APIPage>

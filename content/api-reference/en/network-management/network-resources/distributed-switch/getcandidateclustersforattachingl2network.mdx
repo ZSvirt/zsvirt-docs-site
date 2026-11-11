@@ -1,0 +1,105 @@
+---
+title: "GetCandidateClustersForAttachingL2Network"
+---
+
+<APIPage method="GET" path="/v1/l2-networks/{l2NetworkUuid}/cluster-candidates">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Sample
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/l2-networks/0b888b1f97993dbc9a22667219bcc690/cluster-candidates?limit=1000&start=0
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|l2NetworkUuid|String|url|The Distributed Switch UUID.| |4.0.0|
+|clusterTypes \(Optional\)|List|query|Optional. The cluster type list.| |4.0.0|
+|limit \(Optional\)|Integer|query|Optional. The maximum number of records to return. Similar to the MySQL limit.| |4.0.0|
+|start \(Optional\)|Integer|query|Optional. The starting record offset. Similar to the MySQL offset. Use with `limit` for pagination.| |4.0.0|
+|systemTags \(Optional\)|List|query|Optional. The system tags.| |4.0.0|
+|userTags \(Optional\)|List|query|Optional. The user tags.| |4.0.0|
+
+## API Response
+Sample Response
+
+```
+{
+  "inventories": [
+    {
+      "name": "cluster1",
+      "uuid": "170abd61de68305cb2ccaa008a17c11e",
+      "description": "test",
+      "state": "Enabled",
+      "hypervisorType": "KVM",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM",
+      "zoneUuid": "8de4bc023e4c3be6bfa7c514eb3bb024",
+      "type": "zstack"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.0.0|
+|inventories|List|See [inventories](#p_lpn_vlw_51c).|4.0.0|
+|error|ErrorCode|The error code. If not null, the operation fails, or vice versa. For more information, see [error](#p_wfd_jmw_51c).|4.0.0|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|The resource name.|0.6|
+|uuid|String|The resource UUID.|0.6|
+|description|String|The detailed description of the resource.|0.6|
+|state|String|The cluster state.|0.6|
+|hypervisorType|String|The hypervisor type.|0.6|
+|createDate|Timestamp|The creation date.|0.6|
+|lastOpDate|Timestamp|The last operation date.|0.6|
+|zoneUuid|String|The Data Center UUID.|0.6|
+|type|String|The reserved field.|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code, which is a numbered or alphanumeric code that specifies an error. For example, SYS.1000, HOST.1001.|0.6|
+|description|String|The brief description of the error.|0.6|
+|details|String|The details about the error.|0.6|
+|elaboration|String|The reserved field. Default value: null.|0.6|
+|opaque|LinkedHashMap|The reserved field. Default value: null.|0.6|
+|cause|ErrorCode|The root error, which is the associated root cause of the current error. If no root error exists, this parameter is null.|0.6|
+
+## SDK Sample
+Java SDK
+
+```
+GetCandidateClustersForAttachingL2NetworkAction action = new GetCandidateClustersForAttachingL2NetworkAction();
+action.l2NetworkUuid = "0b888b1f97993dbc9a22667219bcc690";
+action.limit = 1000;
+action.start = 0;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetCandidateClustersForAttachingL2NetworkAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetCandidateClustersForAttachingL2NetworkAction action = GetCandidateClustersForAttachingL2NetworkAction()
+action.l2NetworkUuid = "0b888b1f97993dbc9a22667219bcc690"
+action.limit = 1000
+action.start = 0
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetCandidateClustersForAttachingL2NetworkAction.Result res = action.call()
+```
+
+</APIPage>

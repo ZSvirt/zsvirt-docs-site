@@ -1,0 +1,9 @@
+{
+  "title": "Add a Backup Storage",
+  "pages": [
+    "index",
+    "local",
+    "remote"
+  ],
+  "pagesIndex": "index"
+}

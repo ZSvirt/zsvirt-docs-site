@@ -1,0 +1,381 @@
+---
+title: "Get L3 Network IP Address Usage Statistics"
+---
+
+<APIPage method="GET" path="/v1/l3-networks/{l3NetworkUuid}/ip-statistic">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Sample
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/l3-networks/9bdd769f3e603f65bd368512ebe8b998/ip-statistic?resourceType=All&sortBy=Ip&sortDirection=asc&start=0&limit=20&replyWithCount=false
+```
+
+Parameter List
+
+<table id="table_ufx_jnv_jjb"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+l3NetworkUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+The L3 Network UUID.
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.7.0
+
+</td></tr><tr><td>
+
+resourceType \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+The resource type for statistics.
+
+</td><td>
+
+-   All
+-   Vip
+-   VM
+-   KernelInterface
+
+</td><td>
+
+3.7.0
+
+</td></tr><tr><td>
+
+ip \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+The specified IP address.
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.7.0
+
+</td></tr><tr><td>
+
+sortBy \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+The sort method.
+
+</td><td>
+
+-   Ip
+-   CreateDate
+
+</td><td>
+
+3.7.0
+
+</td></tr><tr><td>
+
+sortDirection \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+The sort direction.
+
+</td><td>
+
+-   asc
+-   desc
+
+</td><td>
+
+3.7.0
+
+</td></tr><tr><td>
+
+start \(Optional\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+query
+
+</td><td>
+
+The start offset of the statistics result.
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.7.0
+
+</td></tr><tr><td>
+
+limit \(Optional\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+query
+
+</td><td>
+
+The number of statistics results.
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.7.0
+
+</td></tr><tr><td>
+
+replyWithCount \(Optional\)
+
+</td><td>
+
+boolean
+
+</td><td>
+
+query
+
+</td><td>
+
+Whether to return the total count of statistics results.
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.7.0
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+The system tags.
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.7.0
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+The user tags.
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.7.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Sample Response
+
+```
+{
+  "ipStatistics": [
+    {
+      "ip": "192.168.0.1",
+      "resourceTypes": [
+        "Other"
+      ]
+    }
+  ],
+  "total": 1
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|total|Long|The total number of IP statistics results.|3.7.0|
+|success|boolean|Success.|3.7.0|
+|error|ErrorCode|The error code. If not null, the operation fails, or vice versa. For more information, see [error](#p_vsh_14v_jjb)|3.7.0|
+|ipStatistics|List|For more information, see [ipStatistics](#p_zb4_14v_jjb)|3.7.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code, which is a numbered or alphanumeric code that specifies an error. For example, SYS.1000, HOST.1001|3.7.0|
+|description|String|The brief description of the error.|3.7.0|
+|details|String|The details about the error.|3.7.0|
+|elaboration|String|The reserved field. Default value: null|3.7.0|
+|opaque|LinkedHashMap|The reserved field. Default value: null|3.7.0|
+|cause|ErrorCode|The root error, which is the associated root cause of the current error. If no root error exists, this parameter is null|3.7.0|
+
+### ipStatistics
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|ip|String|The IP address.|3.7.0|
+|vipUuid|String|The VIP UUID.|3.7.0|
+|vipName|String|The VIP name.|3.7.0|
+|vmInstanceUuid|String|The VM instance UUID.|3.7.0|
+|vmInstanceName|String|The VM instance name.|3.7.0|
+|vmInstanceType|String|The VM instance type.|3.7.0|
+|applianceVmOwnerUuid|String|The network service UUID of the appliance VM instance.|4.1.0|
+|vmDefaultIp|String|The default IP of the VM instance.|3.7.0|
+|resourceTypes|List|The list of resource types bound to the IP address.|3.7.0|
+|state|String|The resource state.|3.7.0|
+|useFor|String|The network service bound to the VIP.|3.7.0|
+|createDate|Timestamp|The creation date.|3.7.0|
+|ownerName|String|The resource owner name.|3.7.0|
+|resourceOwnerUuid|String|The resource owner UUID.|4.1.0|
+|usedIpUuid|String|The IP UUID.|4.1.0|
+
+## SDK Sample
+Java SDK
+
+```
+GetL3NetworkIpStatisticAction action = new GetL3NetworkIpStatisticAction();
+action.l3NetworkUuid = "9bdd769f3e603f65bd368512ebe8b998";
+action.resourceType = "All";
+action.sortBy = "Ip";
+action.sortDirection = "asc";
+action.start = 0;
+action.limit = 20;
+action.replyWithCount = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetL3NetworkIpStatisticAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+GetL3NetworkIpStatisticAction action = GetL3NetworkIpStatisticAction()
+action.l3NetworkUuid = "9bdd769f3e603f65bd368512ebe8b998"
+action.resourceType = "All"
+action.sortBy = "Ip"
+action.sortDirection = "asc"
+action.start = 0
+action.limit = 20
+action.replyWithCount = false
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetL3NetworkIpStatisticAction.Result res = action.call()
+
+```
+
+</APIPage>

@@ -1,0 +1,28 @@
+---
+title: "如何关闭主机swap交换分区？"
+---
+
+## 解决方案
+1.  在主机系统中执行以下命令，查看具体swap分区信息和内存磁盘使用情况：
+
+    ```
+    [root@localhost ~]# free -m
+    ```
+
+2.  在虚拟化平台中将该主机上的全部虚拟机迁移至其他主机，确保没有数据写入swap分区。
+
+3.  执行以下命令，关闭swap分区：
+
+    ```
+    [root@localhost ~]# swapoff -a
+    ```
+
+4.  在`/etc/fstab`文件中注释swap分区挂载信息。
+
+5.  修改`/etc/sysctl.conf`配置文件，加入**vm.swappiness=0**。
+
+6.  执行以下命令使配置永久生效：
+
+    ```
+    [root@localhost ~]# sysctl -p
+    ```

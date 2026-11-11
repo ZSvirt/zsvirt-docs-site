@@ -1,0 +1,16 @@
+---
+title: "How do I modify the network segment of an existing Distributed Port Group?"
+---
+
+## Solution
+-   Go to the network details page and click **Actions** &gt; **Add IPv4/IPv6 Network Segment**.
+
+    <Callout type="info">
+    The new IP address range must not overlap with existing ranges.
+    </Callout>
+
+-   To reduce an existing network segment, delete it and then add the desired range.
+
+    <Callout type="info">
+    Deleting a network segment causes the NICs of associated virtual machines to be detached.
+    </Callout>

@@ -1,0 +1,81 @@
+---
+title: "Set Virtual Machine Security Level"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "setVmSecurityLevel": {
+    "securityLevel": "low"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"setVmSecurityLevel":{"securityLevel":"low"}}' \
+http://localhost:8080/zstack/v1/vm-instances/c630ac079c003596a7a44115d8a2b148/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|UUID of the resource, uniquely identifying the resource| |0.6|
+|securityLevel \(Optional\)|String|body\(included in the `setVmSecurityLevel` structure\)| | |0.6|
+|systemTags \(Optional\)|List|body|System Tag| |0.6|
+|userTags \(Optional\)|List|body|User Tag| |0.6|
+
+## API Response
+When the API succeeds, it returns an empty JSON structure `{}`. When an error occurs, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+SetVmSecurityLevelAction action = new SetVmSecurityLevelAction();
+action.uuid = "c630ac079c003596a7a44115d8a2b148";
+action.securityLevel = "low";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+SetVmSecurityLevelAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SetVmSecurityLevelAction action = SetVmSecurityLevelAction()
+action.uuid = "c630ac079c003596a7a44115d8a2b148"
+action.securityLevel = "low"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+SetVmSecurityLevelAction.Result res = action.call()
+```
+
+</APIPage>

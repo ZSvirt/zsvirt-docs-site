@@ -1,0 +1,132 @@
+---
+title: "Create a System Tag"
+---
+
+<APIPage method="POST" path="/v1/system-tags">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "resourceType": "HostVO",
+    "resourceUuid": "c31d63c6d40d489e87fa7e1ee5707d47",
+    "tag": "reservedMemory::1G"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, the **systemTags** and **userTags** fields are optional. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"resourceType":"HostVO","resourceUuid":"47609e353c6f331f93ac114d06379f8d","tag":"reservedMemory::1G"}}' \
+http://localhost:8080/zstack/v1/system-tags
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|resourceType|String|body \(contained in the **params** structure\)|When creating a tag, the user must specify the resource type associated with the tag.| |0.6|
+|resourceUuid|String|body \(contained in the **params** structure\)|User-specified resource UUID. If specified, the system will not randomly assign a UUID to the resource.| |0.6|
+|tag|String|body \(contained in the **params** structure\)|Tag string| |0.6|
+|systemTags \(optional\)|List|body|System tags| |0.6|
+|userTags \(optional\)|List|body|User tags| |0.6|
+
+<Callout type="info">
+-   ZSvirt supports configuring whether to automatically release physical PCI devices allocated from device specifications when a VM is stopped. This can also be deleted or changed for existing VMs. The **SystemTags** option **autoReleaseSpecReleatedPhysicalPciDevice** is added.
+</Callout>
+    -   Option format: `autoReleaseSpecReleatedPhysicalPciDevice`
+    -   Example: `autoReleaseSpecReleatedPhysicalPciDevice`
+-   ZSvirt supports configuring whether to automatically release virtual PCI devices allocated from device specifications when a VM is stopped. This can also be deleted or changed for existing VMs. The **SystemTags** option **autoReleaseSpecReleatedVirtualPciDevice** is added.
+    -   Option format: `autoReleaseSpecReleatedVirtualPciDevice`
+    -   Example: `autoReleaseSpecReleatedVirtualPciDevice`
+-   ZSvirt supports setting cross-cluster HA policies for VMs when creating system tags. The **SystemTags** option **resourceBindings** is added.
+    -   Option format: `resourceBindings::Cluster:clusterUuid`, where clusterUuid is the UUID of the corresponding cluster.
+    -   Example: `resourceBindings::Cluster:2sdasf231jvznsdak`
+-   ZSvirt supports adding custom parameters to the **boot.ipxe** file when creating system tags. The **SystemTags** option **extraBootParams** is added.
+    -   Option format: `extraBootParams::{custom parameters}`
+    -   Example: `extraBootParams::{acpi=noirq noapic}`
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "inherent": false,
+    "uuid": "55d86810cb564ecc934fa79d498b9dc3",
+    "resourceType": "HostVO",
+    "tag": "reservedMemory::1G",
+    "type": "System",
+    "createDate": "Apr 24, 2017 7:10:55 PM",
+    "lastOpDate": "Apr 24, 2017 7:10:55 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_xm1_vmk_l1b)|0.6|
+|inventory|SystemTagInventory|For details, see [inventory](#p_d44_5mk_l1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|ode|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001.|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Default is null.|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null.|0.6|
+|cause|ErrorCode|The root error. The source error that caused the current error. If there is no root error, this field is null.|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|inherent|Boolean|Internal system tag|0.6|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource.|0.6|
+|resourceUuid|String|User-specified resource UUID. If specified, the system will not randomly assign a UUID to the resource.|0.6|
+|resourceType|String|When creating a tag, the user must specify the resource type associated with the tag.|0.6|
+|tag|String|Tag string|0.6|
+|type|String|Reserved field. Do not use.|0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+CreateSystemTagAction action = new CreateSystemTagAction();
+action.resourceType = "HostVO";
+action.resourceUuid = "c63dfecc5c3f4f24bdab3eda92036eef";
+action.tag = "reservedMemory::1G";
+action.sessionId = "494209d421304d1cb9b8aaab7cac3a45";
+CreateSystemTagAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateSystemTagAction action = CreateSystemTagAction()
+action.resourceType = "HostVO"
+action.resourceUuid = "d8f0bf84c4bc41c99ff7129a369515c1"
+action.tag = "reservedMemory::1G"
+action.sessionId = "f84ee562742b4aaab791842d71f5d472"
+CreateSystemTagAction.Result res = action.call()
+```
+
+</APIPage>

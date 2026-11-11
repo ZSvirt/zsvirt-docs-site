@@ -1,0 +1,122 @@
+---
+title: "更新虚拟机VMTools状态"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/{vmInstanceUuid}/guesttools-state">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateGuestToolsState": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateGuestToolsState":{}}' \
+http://localhost:8080/zstack/v1/vm-instances/5222bedcc3333b848b4cfb67e14bcc2d/guesttools-state
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|vmInstanceUuid|String|url|虚拟机UUID| |4.6.21|
+|systemTags \(可选\)|List|body|系统标签| |4.6.21|
+|userTags \(可选\)|List|body|用户标签| |4.6.21|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "vmInstanceUuid": "321e85ca08b335e09f172041f7e710b5",
+    "qgaState": "Running",
+    "zwatchState": "Running",
+    "version": "4.6.11",
+    "platform": "Kylin",
+    "osType": "Kylin"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.6.21|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_rx5_n2s_zz)|4.6.21|
+|inventory|GuestToolsStateInventory|详情参考[inventory](#p_e23_42s_zz)|4.6.21|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.6.21|
+|description|String|错误的概要描述|4.6.21|
+|details|String|错误的详细信息|4.6.21|
+|elaboration|String|保留字段，默认为null|4.6.21|
+|opaque|LinkedHashMap|保留字段，默认为null|4.6.21|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.6.21|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|vmInstanceUuid|String|虚拟机UUID|4.6.21|
+|version|String|虚拟机VMTools版本|4.6.21|
+|platform|String|虚拟机OS平台类型|4.6.21|
+|osType|String|虚拟机OS类型|4.6.21|
+|createDate|Timestamp|创建时间|4.6.21|
+|lastOpDate|Timestamp|最后一次修改时间|4.6.21|
+|qgaState|GuestToolsQgaState|详情参考[qgaState](#p_wv1_b3m_cxb)|4.6.21|
+|zwatchState|GuestToolsZWatchState|详情参考[zwatchState](#p_als_b3m_cxb)|4.6.21|
+
+### qgaState
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|NotInstalled|GuestToolsQgaState|未安装|4.6.21|
+|Running|GuestToolsQgaState|运行中|4.6.21|
+|NotRunning|GuestToolsQgaState|停止|4.6.21|
+|NotUpgraded|GuestToolsQgaState|待升级|4.6.21|
+
+### zwatchState
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|NotInstalled|GuestToolsZWatchState|未安装|4.6.21|
+|Running|GuestToolsZWatchState|运行中|4.6.21|
+|NotRunning|GuestToolsZWatchState|未运行|4.6.21|
+
+## SDK示例
+Java SDK
+
+```
+UpdateGuestToolsStateAction action = new UpdateGuestToolsStateAction();
+action.vmInstanceUuid = "5222bedcc3333b848b4cfb67e14bcc2d";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateGuestToolsStateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateGuestToolsStateAction action = UpdateGuestToolsStateAction()
+action.vmInstanceUuid = "5222bedcc3333b848b4cfb67e14bcc2d"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateGuestToolsStateAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,35 @@
+---
+title: 'Add an NFS Storage'
+---
+
+If you wish to use a Network File System (NFS) to create storage resources, you can refer to this section for instructions.
+
+-   Make sure to plan the mount path and set the appropriate directory permissions on the NFS Server in advance.
+-   Check whether the NFS Server supports mount parameters in advance. If it does, you can specify relevant parameters when adding NFS storage to optimize the performance, security, and reliability of the network file system.
+-   It is recommended to plan a separate storage network in advance to avoid network congestion.
+-   Check the quantity and type limitations between the cluster and the data storage to the attached. For more information, see Cluster and Data Storage.
+
+1.  In the navigation pane, choose **Inventory** &gt; **Data Storage**.
+
+2.  Select the target data center and click **Actions** &gt; **Add Data Storage**.
+
+3.  In the Add Data Storage dialog, set the following parameters:
+
+    **Basic Information**
+
+    -   **Name**: Name of the NFS storage.
+    -   **Description**: Optional. You can add relevant information as a note.
+    -   **Type**: Select **NFS**.
+    -   **Data Center**: Location of the data center where the NFS storage resides.
+    **Configurations**
+
+    -   **Cluster**: The cluster where the NFS storage needs to be attached.
+    -   **Mount Path**: The shared directory URL of the NFS Server. Format: *NFS\_Server\_IP:/NFS\_Share\_folder*
+
+        <Callout type="info">
+        System directories such as `/`, `/dev/`, `/proc/`, `/sys/`, `/usr/bin`, and `/bin` cannot be used. Using system directories might cause the hosts unable to work properly.
+        </Callout>
+
+    -   **Mount Option**: Mount parameters for the NFS Server end, you can refer to the content in the `-o` parameter of `mount`. If the parameters set here conflict with those on the NFS Server, the NFS Server's settings take precedence.
+    -   **Storage Network**: The CIDR of the storage network specified for the NFS storage.
+4.  Review the configuration and click **OK**.

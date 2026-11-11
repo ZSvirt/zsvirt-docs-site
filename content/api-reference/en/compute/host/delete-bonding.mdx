@@ -1,0 +1,64 @@
+---
+title: "Delete Bond Interface"
+---
+
+<APIPage method="DELETE" path="/v1/hosts/bondings/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/hosts/bondings/6176f82c38f336d0a9ade9a84e1931a1
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Resource UUID, uniquely identifies the resource| |4.7.0|
+|deleteMode \(optional\)|String|body|Delete mode \(Permissive/Enforcing\)| |4.7.0|
+|systemTags \(optional\)|List|body|System tag| |4.7.0|
+|userTags \(optional\)|List|body|User tag| |4.7.0|
+
+## API Response
+On success, this API returns an empty JSON structure **`{}`**. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DeleteBondingAction action = new DeleteBondingAction();
+action.uuid = "6176f82c38f336d0a9ade9a84e1931a1";
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteBondingAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteBondingAction action = DeleteBondingAction()
+action.uuid = "6176f82c38f336d0a9ade9a84e1931a1"
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DeleteBondingAction.Result res = action.call()
+```
+
+</APIPage>

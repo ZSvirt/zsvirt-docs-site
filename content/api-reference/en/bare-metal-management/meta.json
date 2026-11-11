@@ -1,0 +1,11 @@
+{
+  "title": "Bare Metal Management",
+  "pages": [
+    "bare-metal-template",
+    "bare-metal-cluster",
+    "bare-metal-instance",
+    "index-4",
+    "bare-metal-network-apis"
+  ],
+  "pagesIndex": "index"
+}

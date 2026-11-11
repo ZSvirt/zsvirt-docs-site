@@ -1,0 +1,11 @@
+{
+  "title": "镜像基础操作篇",
+  "pages": [
+    "index",
+    "add-image",
+    "sync-image",
+    "migrate-image",
+    "delete-image"
+  ],
+  "pagesIndex": "index"
+}

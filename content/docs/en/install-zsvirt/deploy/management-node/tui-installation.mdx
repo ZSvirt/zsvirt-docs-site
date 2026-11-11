@@ -1,0 +1,232 @@
+---
+title: "Install Through TUI"
+---
+
+<HistoricalNamingNote locale="en" />
+
+This chapter describes the complete procedure for deploying a Compute Node from an ISO, configuring the management network as a bond in the TUI, and installing the management node on that compute node.
+
+## Procedure
+
+1.  Select the boot option.
+
+    Enter the ISO boot interface and choose the default option to start the operating system installation. You can select based on your actual situation, but we recommend using the graphical user interface \(GUI\) for installation. If the server does not have a VGA port and only supports serial connections, you can use either VNC or text mode installation methods.
+
+    -   GUI method
+    -   VNC method
+    -   Text mode method
+    ![System Boot](/docs/en/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_1_1.png)
+
+2.  Enter the INSTALLATION SUMMARY wizard.
+
+    After the installation boot screen loads automatically, the INSTALLATION SUMMARY page appears. On this page, focus on the following three configuration items: **Installation Destination**, **Software Selection**, and **Root Password**.
+
+    ![INSTALLATION SUMMARY Overview](/docs/en/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_3_1.png)
+
+3.  Configure Installation Destination.
+
+    1.  Click **Installation Destination**.
+
+    2.  Under **Local Standard Disks**, select a disk to use as the system disk.
+
+    3.  Keep **Storage Configuration** set to the default **Automatic**.
+
+    4.  Click **Done** in the upper-left corner to return.
+
+    ![Select the System Disk](/docs/en/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_3_2.png)
+
+4.  Configure Software Selection.
+
+    1.  Click **Software Selection**.
+
+    2.  Under **Base Environment**, select **ZSvirt Compute Node** for the compute node mode.
+
+    3.  Click **Done** in the upper-left corner to return.
+
+    ![Select the Compute Node Mode](/docs/en/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_3_3.png)
+
+5.  Configure the Root Password.
+
+    1.  Click **Root Password**.
+
+    2.  Enter and confirm the root password.
+
+        The password must meet the strength requirements indicated by the prompt.
+
+    3.  Click **Done** to return.
+
+6.  Start the installation and wait for it to finish.
+
+    Verify that all items marked with red boxes are configured \(no yellow warning bars remain\), and click **Begin Installation** in the lower-right corner to start the installation.
+
+    ![Begin Installation](/docs/en/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_3_4.png)
+
+    The installation completes automatically and requires no manual intervention. After the installation finishes, the system reboots and the TUI appears.
+
+7.  Enter the TUI main screen and complete root authentication.
+
+    The TUI is divided into four information areas:
+
+    -   **NODE INFO**: Node uptime, load, CPU, and memory usage.
+    -   **DISK INFO**: Disk mount points and capacity.
+    -   **NIC INFO**: NIC names and IP addresses. The default NIC, such as ens3, is displayed at first boot.
+    -   **VM INFO**: List of virtual machines on the current node.
+    The shortcut keys are shown at the bottom of the screen:
+
+    -   **&lt;F2&gt; System Configuration**: Enter system configuration.
+    -   **&lt;F12&gt; Reboot/Poweroff**: Reboot or shut down the system.
+    ![TUI Screen](/docs/en/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_3_5.png)
+
+    1.  Press **F2** to enter system configuration. The ROOT PASSWORD authentication dialog box appears.
+
+    2.  Enter the root password and press **Enter** to confirm.
+
+    ![Enter the Root Password for Authentication](/docs/en/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_3_6.png)
+
+8.  Open the Configure Networks settings.
+
+    After authentication, the System Configuration menu appears.
+
+    1.  Use the arrow keys to select **Configure Networks**, and then press **Enter**.
+
+    2.  In the **CONFIGURE NETWORKS** dialog box that appears, select the physical NIC to configure \(for example, ens3\).
+
+    3.  Switch the keyboard to **uppercase**.
+
+    4.  Press the **A** key to trigger the **Link &lt;A>ggregation** operation.
+
+        <Callout type="info">
+            Make sure the keyboard is in **uppercase** mode. Otherwise, pressing **A** will not start the bond creation process.
+        </Callout>
+
+    ![Select a NIC and Trigger Link Aggregation](/docs/en/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_3_7.png)
+
+9.  Select the bond mode.
+
+    1.  In the CONFIGURE BOND dialog box that appears, select a bond mode.
+
+    2.  This chapter uses **Active-Backup** as an example. Press **Enter** to confirm.
+
+    ![Select the Active-Backup Bond Mode](/docs/en/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_3_8.png)
+
+10. Name the bond and select slave NICs.
+
+    The **CONFIGURE BOND SLAVE** dialog box appears. Configure the following settings.
+
+    1.  In **BOND NAME**, enter a name for the bond, for example, bond0.
+
+    2.  In **Select SLAVES**, use the arrow keys to navigate to the target NIC and press **Space** to select it.
+
+        A selected NIC is marked with `[X]`.
+
+    3.  After selecting all required NICs, press **Enter** to confirm.
+
+    ![Enter the Bond Name and Select Slave NICs](/docs/en/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_3_9.png)
+
+11. Confirm the bond configuration.
+
+    The CONFIGURE BOND NETWORK CONFIRM warning dialog box appears with the following message:
+
+    ```
+    Be careful! Changing the network configuration may cause failure!
+    If you know what you are doing, then enter 'Y' to continue!
+    ```
+
+    1.  Switch the keyboard to **uppercase**.
+
+    2.  Press the **Y** key to confirm the configuration.
+
+        ![Confirm the Bond Network Configuration](/docs/en/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_3_10.png)
+
+    3.  When the operation is successful, the **SUCCESS** dialog box appears with the message `Network configuration is changed successfully!`. Press **Enter** to close it.
+
+        ![Bond Created Successfully](/docs/en/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_3_11.png)
+
+12. Select the bond to configure its IP.
+
+    You return to the Configure Networks dialog box.
+
+    1.  In the NIC list, select the bond created in the previous step \(for example, bond0\).
+
+    2.  Press **Enter** to enter the IP configuration.
+
+    ![Select bond0 to Configure the IP Address](/docs/en/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_3_12.png)
+
+13. Configure the management network IP address.
+
+    1.  In the CONFIGURE NETWORK dialog box, enter the following fields as shown in the example:
+
+        -   **VLAN ID**: Enter the VLAN ID of the management network. Leave it empty if no VLAN is used.
+        -   **IP ADDR**: Enter the management network IP address, for example, *172.26.215.195*.
+        -   **NETMASK**: Enter the subnet mask, for example, *255.255.0.0*.
+        -   **GATEWAY\(DEF\)**: Enter the default gateway, for example, *172.26.0.1*.
+    2.  Press **Enter** to confirm.
+
+    ![IP Configuration Example](/docs/en/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_3_13.png)
+
+14. Confirm the IP configuration.
+
+    1.  Press **Enter** to submit. The CONFIGURE NETWORK CONFIRM confirmation dialog box appears.
+
+    2.  Switch the keyboard to **uppercase**.
+
+    3.  Press the **Y** key to confirm.
+
+        ![Confirm the IP Configuration](/docs/en/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_3_14.png)
+
+    4.  The **SUCCESS** dialog box appears. Press **Enter** to close it.
+
+15. Open the Install ZSvirt option.
+
+    1.  Press **Esc** to return to the System Configuration menu.
+
+    2.  Use the arrow keys to select **Install ZSvirt**.
+
+    3.  Press **Enter**.
+
+    ![Open the Install ZSvirt Option](/docs/en/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_3_16.png)
+
+16. Confirm the management node installation.
+
+    The **INSTALL ZSvirt** warning dialog box appears with the following message:
+
+    ```
+    This process will install a brand new ZSvirt, please confirm
+    ```
+
+    1.  Type the full string `install zstack`.
+
+    2.  Press **Enter** to confirm.
+
+17. Wait for the management node installation to complete.
+
+    The screen enters a waiting state and displays the message `Please wait...`. Wait for the installation to complete.
+
+18. After the installation is complete, view the TUI main screen.
+
+    After the management node installation completes, the information on the TUI main screen changes as follows:
+
+    -   **DISK INFO**: New mount points such as `/var/lib/zstack` and `/usr/local/zstack` are added.
+    -   **NIC INFO**: A new `docker0` interface \(related to the management service\) is displayed, along with the configured `bond0` and its IP address \(for example, *172.26.215.195*\).
+    ![TUI Main Screen After Installation](/docs/en/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_3_19.png)
+
+19. Verify the management node status from the command line.
+
+    1.  Press **Ctrl + Alt + F2** to switch to the command line login screen.
+
+    2.  Log in as the root user.
+
+    3.  Run the following command to query the management node status:
+
+        ```
+        [root@localhost ~]# zstack-ctl status
+        ```
+
+        When the management node is running, the expected output is as follows:
+
+        ```
+        MN status: Running
+        UI status: Running
+        ```
+
+    ![Verify the Management Node Status from the Command Line](/docs/en/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0004_3_20.png)

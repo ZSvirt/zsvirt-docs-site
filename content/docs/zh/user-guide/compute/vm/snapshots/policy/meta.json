@@ -1,0 +1,11 @@
+{
+  "title": "快照策略基础操作",
+  "pages": [
+    "index",
+    "create",
+    "enable-disable",
+    "modify",
+    "delete"
+  ],
+  "pagesIndex": "index"
+}

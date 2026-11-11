@@ -1,0 +1,104 @@
+---
+title: "Query LDAP Server"
+---
+
+<APIPage method="GET" path="/v1/ldap/servers" altPaths={["/v1/ldap/servers/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/ldap/servers?q=name=ldap server
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/ldap/servers/68ff5ef58b4634dba740b26db67d3b01
+```
+
+Queryable Fields
+
+Run the CLI command line tool, enter `QueryLdapServer` and press the Tab key to view all queryable fields and cross-table queryable resource names.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "fea82960cbaa33bb9f3de91c8054af8d",
+      "name": "miao",
+      "description": "miao desc",
+      "url": "ldap://localhost:1888",
+      "base": "dc=example,dc=com",
+      "username": "",
+      "password": "",
+      "encryption": "None"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.3.0|
+|error|ErrorCode|Error code. If not null, the operation has failed. This field is null when the operation succeeds. For details, see [error](#p_fdz_lxf_fcc)|4.3.0|
+|inventories|List|For details, see [inventories](#p_esc_mxf_fcc)|4.3.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. The globally unique identifier of the error, for example, SYS.1000 or HOST.1001.|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Default is null.|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null.|0.6|
+|cause|ErrorCode|Root error. The source error that caused the current error. This field is null if no root error exists.|0.6|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|Long|Resource UUID. Uniquely identifies the resource.|4.3.0|
+|name|String|Resource name|4.3.0|
+|type|String|User source type, typically ldap|4.3.0|
+|description|String|Detailed description of the resource|4.3.0|
+|url|String| |4.3.0|
+|base|String|LDAP server access URL|4.3.0|
+|username|String|Username for accessing the LDAP server|4.3.0|
+|password|String|Password|4.3.0|
+|encryption|String|Encryption method|4.3.0|
+|serverType|String|Server type. Possible values are OpenLdap or WindowsAD. Returns Unknown if the type cannot be determined.|4.3.0|
+|createDate|Timestamp|Creation time|4.3.0|
+|lastOpDate|Timestamp|Last modification time|4.3.0|
+
+## SDK Examples
+Java SDK
+
+```
+QueryLdapServerAction action = new QueryLdapServerAction();
+action.conditions = asList("name=ldap server");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryLdapServerAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+QueryLdapServerAction action = QueryLdapServerAction()
+action.conditions = ["name=ldap server"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryLdapServerAction.Result res = action.call()
+
+```
+
+</APIPage>

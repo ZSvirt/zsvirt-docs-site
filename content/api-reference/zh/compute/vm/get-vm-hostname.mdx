@@ -1,0 +1,75 @@
+---
+title: "获取虚拟机Hostname"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/{uuid}/hostnames">
+
+获取虚拟机指定的Hostname。该Hostname是用户之前用SetVmHostname指定的。
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth: 0e3cbe22c03a43bc9b7b3ae76c57a0e7" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/c5c6665ccbe2444e9cfa393366cdb5d4/hostnames
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|虚拟机UUID| |0.6|
+|systemTags \(可选\)|List|query|系统标签| |0.6|
+|userTags \(可选\)|List|query|用户标签| |0.6|
+
+## API返回
+返回示例
+
+```
+{
+  "hostname": "vm1.zstack.orgl"
+}
+```
+
+|名字|类型|描述|起始版|
+|---|---|---|---|
+|hostname|String|虚拟机hostname|0.6|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_nnf_25v_k1b)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+GetVmHostnameAction action = new GetVmHostnameAction();
+action.uuid = "82c0f5918de14f65abe7ba5d37c28502";
+action.sessionId = "24f9301f25784707a477483c5702c034";
+GetVmHostnameAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetVmHostnameAction action = GetVmHostnameAction()
+action.uuid = "5070e337b731448ca0698f83c7fc4c26"
+action.sessionId = "f13e0ed993134a8ea35a3d382a971b14"
+GetVmHostnameAction.Result res = action.call()
+```
+
+</APIPage>

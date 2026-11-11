@@ -1,0 +1,325 @@
+---
+title: "Update Account"
+---
+
+<APIPage method="PUT" path="/v1/accounts/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateAccount": {
+    "password": "updatepassword",
+    "name": "updatename"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the **systemTags** and **userTags** fields can be omitted. They are listed to show that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateAccount":{"password":"updatepassword","name":"updatename"}}' \
+http://localhost:8080/zstack/v1/accounts/99fcb2ad540c36f09e87c820ac6cb4cb
+```
+
+Parameter List
+
+<table id="table_yzk_gfl_l1b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+The resource UUID, uniquely identifying this resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+password \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **updateAccount** structure\)
+
+</td><td>
+
+Password
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+name \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **updateAccount** structure\)
+
+</td><td>
+
+Account name
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+description \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **updateAccount** structure\)
+
+</td><td>
+
+Detailed description of the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+systemTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+userTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+oldPassword \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **updateAccount** structure\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.6.0
+
+</td></tr><tr><td>
+
+state \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **updateAccount** structure\)
+
+</td><td>
+
+Account state
+
+</td><td>
+
+-   Enabled
+-   Disabled
+-   Staled
+
+</td><td>
+
+4.3.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response example
+
+```
+{
+  "inventory": {
+    "uuid": "ffbf2fac53b83b838d4551edcaff1d39",
+    "name": "test",
+    "type": "Normal"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_wc5_ggl_l1b)|0.6|
+|inventory|AccountInventory|For details, see [inventory](#p_fs1_hgl_l1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number, a globally unique identifier for the error, e.g., SYS.1000, HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|The detailed error information|0.6|
+|elaboration|String|Reserved field. Defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field. Defaults to null|0.6|
+|cause|ErrorCode|The root error, the cause of the current error. This field is null if there is no root error|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The account UUID, uniquely identifying this resource|4.0.0|
+|name|String|Account name|4.0.0|
+|description|String|Detailed description of the account|4.0.0|
+|type|state|Account type|4.0.0|
+|state|state|Account state|4.0.0|
+|createDate|Timestamp|Creation time|4.0.0|
+|lastOpDate|Timestamp|Last modification time|4.0.0|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateAccountAction action = new UpdateAccountAction();
+action.uuid = "99fcb2ad540c36f09e87c820ac6cb4cb";
+action.password = "updatepassword";
+action.name = "updatename";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateAccountAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateAccountAction action = UpdateAccountAction()
+action.uuid = "99fcb2ad540c36f09e87c820ac6cb4cb"
+action.password = "updatepassword"
+action.name = "updatename"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateAccountAction.Result res = action.call()
+```
+
+</APIPage>

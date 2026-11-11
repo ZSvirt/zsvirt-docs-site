@@ -1,0 +1,87 @@
+---
+title: "查询飞书@用户"
+---
+
+<APIPage method="GET" path="/v1/sns/application-endpoints/feishu/at-persons" altPaths={["/v1/sns/application-endpoints/feishu/at-persons/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/sns/application-endpoints/feishu/at-persons?q=uuid=0fce8f7cc0fb3c54b4f2ce7c53a1547a&q=endpointUuid=2ba8eb33d960377087c0f461de85642c
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/sns/application-endpoints/feishu/at-persons/66e1178e2a6d3941b472c2532abe0450
+```
+
+可查询字段
+
+运行zstack-cli命令行工具，输入`QuerySNSFeiShuAtPerson`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+该API成功时返回一个空的JSON结构**`{}`**，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "zhang.san",
+      "endpointUuid": "bcb849d464dd3a0aba49fba91209b4e2"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.2.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_b1q_chy_p1b)|4.2.0|
+|inventories|List|详情参考[inventories](#p_ywy_chy_p1b)|4.2.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|5.0.0|
+|description|String|错误的概要描述|5.0.0|
+|details|String|错误的详细信息|5.0.0|
+|elaboration|String|保留字段，默认为null|5.0.0|
+|opaque|LinkedHashMap|保留字段，默认为null|5.0.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|5.0.0|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.2.0|
+|userId|String|飞书用户id|4.2.0|
+|endpointUuid|String|飞书endpoint uuid|4.2.0|
+
+## SDK示例
+Java SDK
+
+```
+QuerySNSFeiShuAtPersonAction action = new QuerySNSFeiShuAtPersonAction();
+action.conditions = asList("uuid=3c1da61415ec3311a18e7ff94f488fc9","endpointUuid=5ceba2786e113cf5ae1af0f95ff3623c");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QuerySNSFeiShuAtPersonAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QuerySNSFeiShuAtPersonAction action = QuerySNSFeiShuAtPersonAction()
+action.conditions = ["uuid=c309bdc1cb213847aa4be3d57b4b2d55","endpointUuid=8b95394f0d55320085f44175ee0d116f"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QuerySNSFeiShuAtPersonAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,325 @@
+---
+title: "更新KMS密钥提供程序"
+---
+
+<APIPage method="PUT" path="/v1/key-providers/kms/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateKms": {
+    "endpoint": "kms.example.com",
+    "port": 5696,
+    "kmipVersion": "1.2",
+    "username": "user",
+    "password": "password",
+    "description": "example"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateKms":{"endpoint":"kms.example.com","port":5696,"kmipVersion":"1.2","username":"user","password":"password","description":"example"}}' \
+http://localhost:8080/zstack/v1/key-providers/kms/ff0a9250e11b3fe5a553d61be176d300/actions
+```
+
+参数列表
+
+<table id="table_dxx_xr2_2jc"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+endpoint \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`updateKms`结构中\)
+
+</td><td>
+
+地址
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+port \(可选\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+body\(包含在`updateKms`结构中\)
+
+</td><td>
+
+端口
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+kmipVersion \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`updateKms`结构中\)
+
+</td><td>
+
+KMIP协议版本
+
+</td><td>
+
+-   1.0
+-   1.1
+-   1.2
+-   1.3
+-   1.4
+-   2.0
+-   2.1
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+username \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`updateKms`结构中\)
+
+</td><td>
+
+用户名
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+password \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`updateKms`结构中\)
+
+</td><td>
+
+密码
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+资源的UUID，唯一标示该资源
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+description \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`updateKms`结构中\)
+
+</td><td>
+
+资源的详细描述
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+5.0.0
+
+</td></tr></tbody>
+</table>
+
+## SDK示例
+Java SDK
+
+```
+UpdateKmsAction action = new UpdateKmsAction();
+action.endpoint = "kms.example.com";
+action.port = 5696;
+action.kmipVersion = "1.2";
+action.username = "user";
+action.password = "password";
+action.uuid = "ff0a9250e11b3fe5a553d61be176d300";
+action.description = "example";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateKmsAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = UpdateKmsAction()
+action.endpoint = "kms.example.com"
+action.port = 5696
+action.kmipVersion = "1.2"
+action.username = "user"
+action.password = "password"
+action.uuid = "ff0a9250e11b3fe5a553d61be176d300"
+action.description = "example"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

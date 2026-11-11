@@ -1,0 +1,104 @@
+---
+title: "Clear Data Storage Trash"
+---
+
+<APIPage method="PUT" path="/v1/primary-storage/{uuid}/storagetrash/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "cleanUpStorageTrashOnPrimaryStorage": {
+    "force": false
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"cleanUpStorageTrashOnPrimaryStorage":{"force":false}}'\
+http://localhost:8080/zstack/v1/primary-storage/238259a845cb344bbb5ad7013f91d644/storagetrash/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Data Storage UUID, uniquely identifies the resource| |4.8.0|
+|force \(Optional\)|boolean|body\(contained in the **cleanUpStorageTrashOnPrimaryStorage** structure\)|Whether to force cleanup of Data Storage trash| |4.8.0|
+|systemTags \(Optional\)|List|body|System Tags| |4.8.0|
+|userTags \(Optional\)|List|body|User Tags| |4.8.0|
+
+## **API Response**
+Response Example
+
+```
+{
+  "result": {
+    "pool-2": [
+      "E92501AC0F30486282317C3412E27307",
+      "876D1F78BB35405DBBFEC61226B13FDA"
+    ],
+    "pool-1": [
+      "09f35ca96dfa4f7d8171a6583bbcc4fe",
+      "7ae6b23ab27e48b7b7abd25c22f1f91a"
+    ]
+  },
+  "total": 4
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.8.0|
+|result|Map|Collection of successfully cleaned storage trash|4.8.0|
+|total|Integer|Number of successfully cleaned storage trash items|4.8.0|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation succeeds, this field is null. See [error](#p_knh_lyg_m1b)|4.8.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|4.8.0|
+|description|String|Brief description of the error|4.8.0|
+|details|String|Detailed error information|4.8.0|
+|elaboration|String|Reserved field, defaults to null|4.8.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|4.8.0|
+|cause|ErrorCode|Root cause, the source error that caused the current error. If there is no original error, this field is null|4.8.0|
+
+## SDK Examples
+Java SDK
+
+```
+CleanUpStorageTrashOnPrimaryStorageAction action = new CleanUpStorageTrashOnPrimaryStorageAction();
+action.uuid = "238259a845cb344bbb5ad7013f91d644";
+action.force = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CleanUpStorageTrashOnPrimaryStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CleanUpStorageTrashOnPrimaryStorageAction action = new CleanUpStorageTrashOnPrimaryStorageAction();
+action.uuid = "238259a845cb344bbb5ad7013f91d644";
+action.force = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CleanUpStorageTrashOnPrimaryStorageAction.Result res = action.call();
+```
+
+</APIPage>

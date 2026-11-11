@@ -1,0 +1,26 @@
+{
+  "title": "Host Hardware Device APIs",
+  "pages": [
+    "get-host-block-devices",
+    "get-host-sensors",
+    "update-host-nqn",
+    "query-hbadevice",
+    "query-fiber-channel-lun",
+    "query-gpu-device",
+    "get-host-multipath-topology",
+    "refresh-nvme-server",
+    "update-nvme-server",
+    "check-scsi-lun-cluster-status",
+    "detach-scsi-lun-from-host",
+    "get-scsi-lun-candidates-for-attaching-vm",
+    "query-scsi-lun",
+    "get-local-raid-physical-drive-smart",
+    "locate-local-raid-physical-drive",
+    "query-local-raid-controller",
+    "query-local-raid-physical-drive",
+    "query-physical-drive-self-test-history",
+    "refresh-local-raid",
+    "self-test-local-raid"
+  ],
+  "pagesIndex": "index"
+}

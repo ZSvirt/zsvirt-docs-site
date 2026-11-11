@@ -1,0 +1,9 @@
+{
+  "title": "VM User Data",
+  "pages": [
+    "index",
+    "linux",
+    "windows"
+  ],
+  "pagesIndex": "index"
+}

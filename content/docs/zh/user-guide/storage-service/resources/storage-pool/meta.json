@@ -1,0 +1,9 @@
+{
+  "title": "存储池",
+  "pages": [
+    "index",
+    "create-general-pool",
+    "manage-general-pool"
+  ],
+  "pagesIndex": "index"
+}

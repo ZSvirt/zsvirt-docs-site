@@ -1,0 +1,90 @@
+---
+title: "获取上传软件包任务详情"
+---
+
+<APIPage method="GET" path="/v1/software-package/upload-jobs/details/{softwarePackageId}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/software-package/upload-jobs/details/ff04e1736ec6391f9a1f023b524d0a00
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|softwarePackageId|String|url|软件包Id\(默认为hash值\)| |4.10.20|
+|systemTags \(可选\)|List|query|系统标签| |4.10.20|
+|userTags \(可选\)|List|query|用户标签| |4.10.20|
+
+## API返回
+返回示例
+
+```
+{
+  "existingJobDetails": [
+    {
+      "longJobUuid": "ff05232082b53f4f8e657884f462f600",
+      "longJobState": "Running",
+      "softwarePackageUuid": "ff04e1736ec6391f9a1f023b524d0a00",
+      "softwarePackageUploadUrl": "http://127.0.0.1:8001/host/file/upload",
+      "offset": 452984832
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean|操作成功时为true，否则为false|4.10.20|
+|existingJobDetails|List|详情参考[existingJobDetails](#p_a1h_sp3_mhc)|4.10.20|
+|error|ErrorCode|详情参考[error](#p_irn_1jx_r2c)|4.10.20|
+
+### existingJobDetails
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|longJobUuid|String|任务UUID|4.10.20|
+|longJobState|String|任务状态|4.10.20|
+|softwarePackageUuid|String|软件包UUID|4.10.20|
+|softwarePackageUploadUrl|String|软件包上传URL|4.10.20|
+|offset|long|上传偏移量|4.10.20|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+GetUploadSoftwarePackageJobDetailsAction action = new GetUploadSoftwarePackageJobDetailsAction();
+action.softwarePackageId = "ff04e1736ec6391f9a1f023b524d0a00";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetUploadSoftwarePackageJobDetailsAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = GetUploadSoftwarePackageJobDetailsAction()
+action.softwarePackageId = "ff04e1736ec6391f9a1f023b524d0a00"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

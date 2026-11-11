@@ -1,0 +1,81 @@
+---
+title: "Attach Role to Account"
+---
+
+<APIPage method="POST" path="/v1/identities/accounts/{accountUuid}/roles/{roleUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding example, the `systemTags` and `userTags` fields are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{}}' \
+http://localhost:8080/zstack/v1/identities/accounts/053a25bbfe2c34a889d75601e64d4a51/roles/b7a901c45db33f12993c9c7aad874ff4
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|roleUuid|String|url|Role UUID| |4.10.0|
+|accountUuid|String|url|Account UUID| |4.10.0|
+|system Tags \(Optional\)|List|body|System tags| |4.10.0|
+|userTags \(Optional\)|List|body|User tags| |4.10.0|
+
+## API Response
+This API returns an empty JSON structure `{}` on success. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+AttachRoleToAccountAction action = new AttachRoleToAccountAction();
+action.roleUuid = "b7a901c45db33f12993c9c7aad874ff4";
+action.accountUuid = "053a25bbfe2c34a889d75601e64d4a51";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AttachRoleToAccountAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+AttachRoleToAccountAction action = AttachRoleToAccountAction()
+action.roleUuid = "b7a901c45db33f12993c9c7aad874ff4"
+action.accountUuid = "053a25bbfe2c34a889d75601e64d4a51"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AttachRoleToAccountAction.Result res = action.call()
+
+```
+
+</APIPage>

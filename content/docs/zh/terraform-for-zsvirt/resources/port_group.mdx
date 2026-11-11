@@ -1,0 +1,95 @@
+---
+title: 'zsphere_port_group'
+description: '管理 ZSvirt 端口组，用于定义虚拟机网络、VLAN 与 IP 地址管理（IPAM）等配置。'
+---
+
+<HistoricalNamingNote locale="zh" />
+
+
+# zsphere_port_group（资源）
+
+管理 ZSvirt 端口组，用于定义虚拟机网络、VLAN 与 IP 地址管理（IPAM）等配置。
+
+## 示例用法
+```terraform
+resource "zsphere_port_group" "example" {
+  name         = "example-port-group"
+  description  = "Example port group with full IPAM configuration"
+  vswitch_uuid = "85f9149abb6f42bc9b8b700abc93be67" # L2Network UUID
+  vlan         = 100
+  vlan_mode    = "PVLAN" # ACCESS, NONE, PVLAN, TRUNK
+  category     = "Private"
+  dns_domain   = "example.com"
+  ip_version   = 4 # 4 or 6
+  enable_ipam  = true
+  dhcp_service = true
+  dhcp_ip      = "192.168.100.50"
+
+  dns = ["8.8.8.8", "8.8.4.4"]
+
+  ip_range {
+    name                 = "primary-ip-range"
+    start_ip             = "192.168.100.100"
+    end_ip               = "192.168.100.200"
+    netmask              = "255.255.255.0"
+    gateway              = "192.168.100.1"
+    ip_allocate_strategy = "RandomIpAllocator"
+  }
+}
+
+output "port_group_example" {
+  value = zsphere_port_group.example
+}
+```
+
+## 参数说明
+
+### 必填参数
+
+- `name`（字符串）端口组名称。
+- `vlan`（数字）端口组 VLAN ID。
+- `vswitch_uuid`（字符串）端口组所连接的 vSwitch UUID。
+
+### 可选参数
+
+- `category`（字符串）端口组类别。
+- `description`（字符串）端口组描述。
+- `dhcp_ip`（字符串）DHCP 服务 IP 地址。
+- `dhcp_service`（布尔值）端口组是否启用 DHCP 服务。
+- `dns`（字符串列表）端口组 DNS 服务器列表。
+- `dns_domain`（字符串）端口组 DNS 域名。
+- `enable_ipam`（布尔值）端口组是否启用 IP 地址管理（IPAM）。
+- `ip_range`（块列表）（参见下方嵌套结构）
+- `ip_version`（数字）IP 版本（4 或 6）。
+- `type`（字符串）端口组类型。
+- `vlan_mode`（字符串）端口组 VLAN 模式。
+
+### 只读属性
+
+- `datacenter_uuid`（字符串）端口组所属数据中心 UUID。
+- `state`（字符串）端口组状态。
+- `uuid`（字符串）端口组 UUID。
+
+<a id="nestedblock--ip_range"></a>
+### `ip_range` 嵌套结构
+
+必填参数：
+
+- `name`（字符串）IP 地址段名称。
+
+可选参数：
+
+- `address_mode`（字符串）IPv6 地址模式：Stateful-DHCP、Stateless-DHCP 或 SLAAC。
+- `end_ip`（字符串）IP 段结束地址（IP 段模式）。
+- `gateway`（字符串）网关地址。
+- `ip_allocate_strategy`（字符串）IP 分配策略。
+- `ip_version`（数字）IP 版本（4 或 6）。
+- `is_by_cidr`（布尔值）是否使用 CIDR 表示法而非 IP 段。
+- `netmask`（字符串）子网掩码（IP 段模式）。
+- `network_cidr`（字符串）网络 CIDR（CIDR 模式）。
+- `prefix_len`（数字）IPv6 CIDR 前缀长度。
+- `start_ip`（字符串）IP 段起始地址（IP 段模式）。
+
+只读属性：
+
+- `uuid`（字符串）IP 地址段 UUID。

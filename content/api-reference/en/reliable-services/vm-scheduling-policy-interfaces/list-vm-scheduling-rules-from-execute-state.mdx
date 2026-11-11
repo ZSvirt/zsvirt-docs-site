@@ -1,0 +1,80 @@
+---
+title: "List VM Scheduling Rules by Execution State"
+---
+
+<APIPage method="POST" path="/v1/list/vmSchedulingRules/from/conflict/state">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "executeStates": [
+      "Enabled"
+    ]
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The `systemTags` and `userTags` fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"executeStates":["Enabled"]}}' \
+http://localhost:8080/zstack/v1/list/vmSchedulingRules/from/conflict/state
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|executeStates|List|body \(contained in the `params` structure\)|Scheduling state \(Conflict, Normal, Invalid\)| |4.6.0|
+|systemTags \(optional\)|List|body|System tags| |4.6.0|
+|userTags \(optional\)|List|body|User tags| |4.6.0|
+
+## API Response
+This API returns an empty JSON structure `{}` on success. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+ListVmSchedulingRulesFromExecuteStateAction action = new ListVmSchedulingRulesFromExecuteStateAction();
+action.executeStates = asList("Enabled");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ListVmSchedulingRulesFromExecuteStateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ListVmSchedulingRulesFromExecuteStateAction action = ListVmSchedulingRulesFromExecuteStateAction()
+action.executeStates = [Enabled]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ListVmSchedulingRulesFromExecuteStateAction.Result res = action.call()
+```
+
+</APIPage>

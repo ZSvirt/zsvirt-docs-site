@@ -1,0 +1,74 @@
+---
+title: "获取虚拟机支持的屏幕数"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/{uuid}/monitorNumber">
+
+获取vm支持的屏幕个数
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/deb35f3b8ebf4b7e9765726a9c8e3505/monitorNumber
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |2.2|
+|systemTags \(可选\)|List|query| | |2.2|
+|userTags \(可选\)|List|query| | |2.2|
+
+## API返回
+返回示例
+
+```
+{
+  "monitorNumber": 2.0
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|monitorNumber|Integer| |2.2|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_h23_sgg_vbb)|2.2|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|2.2|
+|description|String|错误的概要描述|2.2|
+|details|String|错误的详细信息|2.2|
+|elaboration|String|保留字段，默认为null|2.2|
+|opaque|LinkedHashMap|保留字段，默认为null|2.2|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|2.2|
+
+## SDK示例
+Java SDK
+
+```
+GetVmMonitorNumberAction action = new GetVmMonitorNumberAction();
+action.uuid = "6415ca5909524c00b7b66c9662b45df1";
+action.sessionId = "4bf39c422c2d4e01b5ab88da17096d0d";
+GetVmMonitorNumberAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetVmMonitorNumberAction action = GetVmMonitorNumberAction()
+action.uuid = "dc6e40115e674ccab14d9425d0028428"
+action.sessionId = "3f5d36676ca94b9183b567470a22ed19"
+GetVmMonitorNumberAction.Result res = action.call()
+```
+
+</APIPage>

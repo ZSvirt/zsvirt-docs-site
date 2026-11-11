@@ -1,0 +1,32 @@
+---
+title: "主机添加失败，出现“未加载kvm\\_intel”报错，怎么办？"
+---
+
+## 现象
+添加主机失败报错：“主机未加载kvm\_intel\(虚拟化\)模块，无法执行当前操作”。
+
+## 原因
+未开启VMX和CPU VT选项 。
+
+## 解决方案
+1.  设置Enable Monitor MWAIT
+
+    进入 BIOS 页面后，切换至“Socket Configuration”页面，选择“Advanced Power”选项进入Advanced Power管理配置界面。
+
+    在Advanced Power管理配置界面，选择“CPU C State Control”选项，将“Enable Monitor MWAIT”设置为 Disabled。
+
+2.  设置Intel VT for Directed I/O
+
+    返回至“Socket Configuration”页面，选择“IIO Configuration”。
+
+    将“Intel VT for Directed I/O”选项设置为 Enabled。
+
+3.  设置VMX
+
+    返回至“Socket Configuration”页面，选择“Processor Configuration”。
+
+    将“VMX”选项设置为 Enabled。
+
+4.  保存退出
+
+    至此，已完成VMX和CPU VT选项设置。按F10键，保存并退出BIOS设置。

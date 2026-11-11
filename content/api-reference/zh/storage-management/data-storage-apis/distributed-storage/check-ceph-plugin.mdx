@@ -1,0 +1,68 @@
+---
+title: "检查环境中的Ceph插件"
+---
+
+<APIPage method="PUT" path="/v1/ceph-plugin/check">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "checkCephPlugin": {
+    "managementNode": true
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"checkCephPlugin":{"managementNode":true}}' \
+http://localhost:8080/zstack/v1/ceph-plugin/check
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|managementNode \(可选\)|boolean|body\(包含在`checkCephPlugin`结构中\)|是否对所有管理节点进行检查| |4.10.7|
+|hostUuidList \(可选\)|List|body\(包含在`checkCephPlugin`结构中\)|增加检查 host 的信息列表| |4.10.7|
+|ipList \(可选\)|List|body\(包含在`checkCephPlugin`结构中\)|增加检查指定 IP 对应的主机的信息列表| |4.10.7|
+|externalHosts \(可选\)|List|body\(包含在`checkCephPlugin`结构中\)|指定用于检查的外部主机 SSH 连接参数列表| |4.10.20|
+|systemTags \(可选\)|List|body|系统标签| |4.10.7|
+|userTags \(可选\)|List|body|用户标签| |4.10.7|
+
+## SDK示例
+Java SDK
+
+```
+CheckCephPluginAction action = new CheckCephPluginAction();
+action.managementNode = true;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CheckCephPluginAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = CheckCephPluginAction()
+action.managementNode = true
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

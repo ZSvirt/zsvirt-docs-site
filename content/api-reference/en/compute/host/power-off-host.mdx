@@ -1,0 +1,108 @@
+---
+title: "Power Off Host"
+---
+
+<APIPage method="PUT" path="/v1/hosts/power-off/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "powerOffHost": {
+    "adminPassword": "password",
+    "hostUuids": [
+      "ff0192fa70113da886101145c084bd00"
+    ],
+    "waitTaskCompleted": false
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"powerOffHost":{"adminPassword":"password","hostUuids":["ff0192fa70113da886101145c084bd00"],"waitTaskCompleted":false}}' \
+http://localhost:8080/zstack/v1/hosts/power-off/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|adminPassword|String|body \(contained in `powerOffHost` structure\)| | |0.6|
+|hostUuids|List|body \(contained in `powerOffHost` structure\)| | |0.6|
+|waitTaskCompleted \(optional\)|boolean|body \(contained in `powerOffHost` structure\)| | |0.6|
+|maxWaitTime \(optional\)|Long|body \(contained in `powerOffHost` structure\)| | |0.6|
+|systemTags \(optional\)|List|body|System tag| |0.6|
+|userTags \(optional\)|List|body|User tag| |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "results": []
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|results|List|See details [results](#p_cds_cnb_w2c)|0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See details [error](#p_ncg_cnb_w2c)|0.6|
+
+### results
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See details [error](#p_ncg_cnb_w2c)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, e.g. SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, default is null|0.6|
+|opaque|LinkedHashMap|Reserved field, default is null|0.6|
+|cause|ErrorCode|Root cause, the error that caused the current error. If there is no original error, this field is null|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+PowerOffHostAction action = new PowerOffHostAction();
+action.adminPassword = "password";
+action.hostUuids = asList("ff0192fa70113da886101145c084bd00");
+action.waitTaskCompleted = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+PowerOffHostAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+PowerOffHostAction action = PowerOffHostAction()
+action.adminPassword = "password"
+action.hostUuids = [ff0192fa70113da886101145c084bd00]
+action.waitTaskCompleted = false
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+PowerOffHostAction.Result res = action.call()
+```
+
+</APIPage>

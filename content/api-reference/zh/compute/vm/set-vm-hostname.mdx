@@ -1,0 +1,87 @@
+---
+title: "设置虚拟机Hostname"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/{uuid}/actions">
+
+设置虚拟机hostname。
+
+<Callout type="info">
+ZSvirt通过DHCP服务器配置虚拟机hostname，如果虚拟机本身采用静态hostname方式，该API配置的hostname不生效。
+</Callout>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "setVmHostname": {
+    "hostname": "vm1.zstack.org"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"setVmHostname":{"hostname":"vm1.zstack.org"}}' \
+http://localhost:8080/zstack/v1/vm-instances/0d71345add0230f2a893e7789a831b81/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|虚拟机UUID| |0.6|
+|hostname|String|body\(包含在**setVmHostname**结构中\)|hostname，必须符合RFC 1123标准| |0.6|
+|systemTags \(可选\)|List|body|系统标签| |0.6|
+|userTags \(可选\)|List|body|用户标签| |0.6|
+
+## API返回
+该API成功时返回一个空的JSON结构**`{}`**，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+SetVmHostnameAction action = new SetVmHostnameAction();
+action.uuid = "0d71345add0230f2a893e7789a831b81";
+action.hostname = "vm1.zstack.org";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+SetVmHostnameAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SetVmHostnameAction action = SetVmHostnameAction()
+action.uuid = "0d71345add0230f2a893e7789a831b81"
+action.hostname = "vm1.zstack.org"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+SetVmHostnameAction.Result res = action.call()
+```
+
+</APIPage>

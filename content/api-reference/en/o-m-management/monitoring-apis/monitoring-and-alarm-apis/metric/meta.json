@@ -1,0 +1,16 @@
+{
+  "title": "Time Series Data",
+  "pages": [
+    "get-all-metric-metadata",
+    "get-metric-data",
+    "get-metric-label-value",
+    "put-metric-data",
+    "create-metric-data-http-receiver",
+    "delete-metric-data-http-receiver",
+    "query-metric-data-http-receiver",
+    "create-metric-template",
+    "delete-metric-template",
+    "query-metric-template"
+  ],
+  "pagesIndex": "index"
+}

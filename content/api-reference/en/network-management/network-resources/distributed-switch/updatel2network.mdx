@@ -1,0 +1,118 @@
+---
+title: "UpdateL2Network"
+---
+
+<APIPage method="PUT" path="/v1/l2-networks/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateL2Network": {
+    "name": "Test-Net",
+    "description": "Test"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding sample, both **systemTags** and **userTags** are optional. These two fields can be included in the body structure.
+</Callout>
+
+Curl Sample
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateL2Network":{"name":"Test-Net","description":"Test"}}' \
+http://localhost:8080/zstack/v1/l2-networks/8a44ece25f973842b841591a554f5fee/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|The resource UUID.| |0.6|
+|name \(Optional\)|String|body \(contained in **updateL2Network** structure\)|The name of the L2 network.| |0.6|
+|description \(Optional\)|String|body \(contained in **updateL2Network** structure\)|The detailed description of the L2 network.| |0.6|
+|systemTags \(Optional\)|List|body|The system tags.| |0.6|
+|userTags \(Optional\)|List|body|The user tags.| |0.6|
+
+API Response
+
+Sample Response
+
+```
+{
+  "inventory": {
+    "vlan": 10,
+    "name": "Test-Net",
+    "description": "Test",
+    "zoneUuid": "fa938a0c3dc437748ba603836bb59fda",
+    "physicalInterface": "eth0",
+    "type": "L2VlanNetwork"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation fails, or vice versa. The value is null on success. See [error](#p_et1_2qg_m1b).|0.6|
+|inventory|L2NetworkInventory|See [inventory](#p_g4g_2qg_m1b).|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code, which is a numbered or alphanumeric code that specifies an error. For example, SYS.1000, HOST.1001.|0.6|
+|description|String|The brief description of the error.|0.6|
+|details|String|The details about the error.|0.6|
+|elaboration|String|Reserved field. Default value: null.|0.6|
+|opaque|LinkedHashMap|Reserved field. Default value: null.|0.6|
+|cause|ErrorCode|The root error, which is the associated root cause of the current error. If no root error exists, this parameter is null.|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The resource UUID.|0.6|
+|name|String|The resource name.|0.6|
+|description|String|The detailed description of the resource.|0.6|
+|zoneUuid|String|The Data Center UUID.|0.6|
+|physicalInterface|String|Physical NIC.|0.6|
+|type|String|Distributed Switch type.|0.6|
+|createDate|Timestamp|The creation date.|0.6|
+|lastOpDate|Timestamp|The last operation date.|0.6|
+|attachedClusterUuids|List|The list of attached Cluster UUIDs.|0.6|
+
+## SDK Sample
+Java SDK
+
+```
+UpdateL2NetworkAction action = new UpdateL2NetworkAction();
+action.uuid = "f7ea5335fcab4d438069879d62384b0e";
+action.name = "Test-Net";
+action.description = "Test";
+action.sessionId = "05627ec42486449cb6b422ef927829f1";
+UpdateL2NetworkAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateL2NetworkAction action = UpdateL2NetworkAction()
+action.uuid = "7dc08ad01b8a4d578aab2ae0ad750f1b"
+action.name = "Test-Net"
+action.description = "Test"
+action.sessionId = "130b064e63204a479857ced03f550cf2"
+UpdateL2NetworkAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,55 @@
+---
+title: 'Template Syntax Rules'
+---
+
+Bare metal templates include both system variables and custom variables to support various unattended deployment scenarios.
+
+System templates only contain predefined system variables. Custom templates include both system variables and your custom variables.
+
+System variables example (All uppercase, underscore-separated):
+
+```
+REPO_URL  
+# Installation source URL created from selected ISO
+# Can be commented out and manually specified via `--url`
+
+USERNAME  
+# System username
+# Default is root for RHEL/CentOS or SUSE/openSUSE (only password required)
+# Required for Debian/Ubuntu systems
+
+PASSWORD  
+# Password for the system user
+
+NETWORK_CFGS 
+# NIC UUID and network UUID from UI
+# Replaced after IP assignment (automatic or manual)
+
+FORCE_INSTALL  
+# Whether to overwrite existing disk data automatically
+
+PRE_SCRIPTS  
+# Pre-installation scripts
+
+POST_SCRIPTS  
+# Post-installation scripts
+```
+
+Custom variables example (All lowercase, underscore-separated):
+
+```
+hostname  
+# Hostname
+
+keyboard  
+# Keyboard
+
+timezone  
+# Timezone
+```
+
+Different template types follow different syntax rules:
+
+-   For kickstart templates: Refer to Red Hat official documentation.
+-   For preseed or autoinstall templates: Refer to Ubuntu official documentation.
+-   For autoyast templates: Refer to SUSE official documentation.

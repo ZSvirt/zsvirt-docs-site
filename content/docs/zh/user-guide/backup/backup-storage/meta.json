@@ -1,0 +1,9 @@
+{
+  "title": "添加备份存储",
+  "pages": [
+    "index",
+    "local",
+    "remote"
+  ],
+  "pagesIndex": "index"
+}

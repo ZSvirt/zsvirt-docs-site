@@ -1,0 +1,180 @@
+---
+title: "Add LUN to SAN Storage"
+---
+
+<APIPage method="POST" path="/v1/primary-storage/sharedblockgroup/{uuid}/sharedblocks">
+
+Add shared block device to SAN storage.
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "diskUuid": "3bc916e4700e36c9ad9575fcf47222ab"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"diskUuid":"3bc916e4700e36c9ad9575fcf47222ab"}}' http://localhost:8080/zstack/v1/primary-storage/sharedblockgroup/506367e0d66d3fdb92eda345ed347c21/sharedblocks
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|diskUuid|String|body \(included in the **params** structure\)|Disk unique identifier \(e.g. UUID, WWN, WWID\)| |2.3.2|
+|uuid|String|url|Primary storage UUID| |2.3.2|
+|systemTags \(optional\)|List|body| | |2.3.2|
+|userTags \(optional\)|List|body| | |2.3.2|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "sharedBlocks": [
+      {
+        "uuid": "5bc4ef2f6f703bfd9aef732be038103d",
+        "sharedBlockGroupUuid": "08f3dd28f1c433fe871e3fe760476981",
+        "type": "LvmLogicalVolumeBasic",
+        "diskUuid": "b9a89d214e3b37eda7a1aa948c59db13",
+        "name": "test shared block",
+        "description": "description",
+        "state": "Enabled",
+        "status": "Connected",
+        "createDate": "Nov 14, 2017 10:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+      }
+    ],
+    "sharedBlockGroupType": "LvmVolumeGroupBasic",
+    "uuid": "08f3dd28f1c433fe871e3fe760476981",
+    "name": "shared block group primary storage",
+    "description": "shared block group primary storage description",
+    "availableCapacity": 1073741824.0,
+    "availablePhysicalCapacity": 1073741824.0,
+    "type": "SharedBlock",
+    "state": "Enabled",
+    "status": "Connected",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_wdk_1xk_n2b)|2.3.2|
+|inventory|SharedBlockGroupPrimaryStorageInventory|For details, see [inventory](#p_jth_dxk_n2b)|2.3.2|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, e.g. SYS.1000, HOST.1001|2.3.2|
+|description|String|Brief description of the error|2.3.2|
+|details|String|Detailed error information|2.3.2|
+|elaboration|String|Reserved field, defaults to null|2.3.2|
+|opaque|LinkedHashMap|Reserved field, defaults to null|2.3.2|
+|cause|ErrorCode|Root cause: the source error that caused the current error. If there is no original error, this field is null|2.3.2|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|2.3.2|
+|zoneUuid|String|Data Center UUID|2.3.2|
+|name|String|Resource name|2.3.2|
+|url|String|Unused|2.3.2|
+|description|String|Detailed description of the resource|2.3.2|
+|totalCapacity|Long|Total capacity|2.3.2|
+|availableCapacity|Long|Available capacity|2.3.2|
+|totalPhysicalCapacity|Long|Total physical capacity|2.3.2|
+|availablePhysicalCapacity|Long|Available physical capacity|2.3.2|
+|systemUsedCapacity|Long|System used capacity|2.3.2|
+|type|String|Data storage type|2.3.2|
+|state|String|Enabled state|2.3.2|
+|status|String|Connection status|2.3.2|
+|mountPath|String|Unused|2.3.2|
+|createDate|Timestamp|Create date|2.3.2|
+|lastOpDate|Timestamp|Last update date|2.3.2|
+|attachedClusterUuids|List|Attached clusters|2.3.2|
+|sharedBlocks|List|For details, see [sharedBlocks](#p_h31_dxk_n2b)|2.3.2|
+|sharedBlockGroupType|SharedBlockGroupType|For details, see [sharedBlockGroupType](#p_ulr_hxk_n2b)|2.3.2|
+
+### sharedBlocks
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|2.3.2|
+|sharedBlockGroupUuid|String|Shared block device group UUID|2.3.2|
+|diskUuid|String|Disk unique identifier \(e.g. UUID, WWN, WWID\)|2.3.2|
+|name|String|Resource name|2.3.2|
+|description|String|Detailed description of the resource|2.3.2|
+|createDate|Timestamp|Create date|2.3.2|
+|lastOpDate|Timestamp|Last update date|2.3.2|
+|type|SharedBlockType|For details, see [type](#p_c4m_2xk_n2b)|2.3.2|
+|state|SharedBlockState|For details, see [state](#p_gpm_fxk_n2b)|2.3.2|
+|status|SharedBlockStatus|For details, see [status](#p_f5y_hxk_n2b)|2.3.2|
+
+### type
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name|2.3.2|
+|ordinal|int| |2.3.2|
+
+### state
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name|2.3.2|
+|ordinal|int| |2.3.2|
+
+### status
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name|2.3.2|
+|ordinal|int| |2.3.2|
+
+### sharedBlockGroupType
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name|2.3.2|
+|ordinal|int| |2.3.2|
+
+## SDK Examples
+Java SDK
+
+```
+AddSharedBlockToSharedBlockGroupAction action = new AddSharedBlockToSharedBlockGroupAction();
+action.diskUuid = "3bc916e4700e36c9ad9575fcf47222ab";
+action.uuid = "506367e0d66d3fdb92eda345ed347c21";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddSharedBlockToSharedBlockGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddSharedBlockToSharedBlockGroupAction action = AddSharedBlockToSharedBlockGroupAction()
+action.diskUuid = "3bc916e4700e36c9ad9575fcf47222ab"
+action.uuid = "506367e0d66d3fdb92eda345ed347c21"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddSharedBlockToSharedBlockGroupAction.Result res = action.call()
+```
+
+</APIPage>

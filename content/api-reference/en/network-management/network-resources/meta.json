@@ -1,0 +1,8 @@
+{
+  "title": "Network Resources",
+  "pages": [
+    "distributed-switch",
+    "distributed-port-group"
+  ],
+  "pagesIndex": "index"
+}

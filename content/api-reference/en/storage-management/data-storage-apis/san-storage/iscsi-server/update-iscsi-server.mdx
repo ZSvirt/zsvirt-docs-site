@@ -1,0 +1,364 @@
+---
+title: "Update iSCSI Server Configuration"
+---
+
+<APIPage method="POST" path="/v1/storage-devices/iscsi/servers">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateIscsiServer": {
+    "name": "test-iscsi-server"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateIscsiServer":{"name":"test-iscsi-server"}}' http://localhost:8080/zstack/v1/storage-devices/iscsi/servers/98d2177199ca301d9fd842eace2dbc67/actions
+```
+
+Parameter List
+
+<table id="table_fbf_qxd_z2b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(included in the **params** structure\)
+
+</td><td>
+
+Resource UUID, uniquely identifies the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+name \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(included in the **params** structure\)
+
+</td><td>
+
+Resource Name
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+chapUserName \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(included in the **params** structure\)
+
+</td><td>
+
+CHAP Username
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+chapUserPassword \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(included in the **params** structure\)
+
+</td><td>
+
+CHAP Password
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+state \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(included in the **params** structure\)
+
+</td><td>
+
+Enabled State
+
+</td><td>
+
+-   Enabled
+-   Disabled
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+resourceUuid \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(included in the **params** structure\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+systemTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+userTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "0b77c2e947ca3b40b79f6342728ec8fc",
+    "name": "iscsi-server-10.0.0.201",
+    "ip": "10.0.0.201",
+    "port": 3260.0,
+    "chapUserName": "username",
+    "chapUserPassword": "password",
+    "state": "Enabled",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation is successful, this field is null. For details, see [error](#p_cxh_z12_z2b)|3.0.0|
+|inventory|IscsiServerInventory|For details, see [inventory](#p_sym_z12_z2b)|3.0.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, e.g. SYS.1000, HOST.1001|3.0.0|
+|description|String|Brief description of the error|3.0.0|
+|details|String|Detailed error information|3.0.0|
+|elaboration|String|Reserved field, defaults to null|3.0.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|3.0.0|
+|cause|ErrorCode|Root cause: the error that triggered the current error. If there is no original error, this field is null|3.0.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|3.0.0|
+|name|String|Resource Name|3.0.0|
+|ip|String|IP Address|3.0.0|
+|port|Integer|Port|3.0.0|
+|chapUserName|String|CHAP Username|3.0.0|
+|chapUserPassword|String|CHAP Password|3.0.0|
+|state|String|Enabled State|3.0.0|
+|createDate|Timestamp|Creation Time|3.0.0|
+|lastOpDate|Timestamp|Last Modification Time|3.0.0|
+|iscsiTargets|List|For details, see [iscsiTargets](#p_tds_z12_z2b)|3.0.0|
+|iscsiClusterRefs|List|For details, see [iscsiClusterRefs](#p_y51_1b2_z2b)|3.0.0|
+
+### iscsiTargets
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|iscsiServerUuid|String|iSCSI Server UUID|3.0.0|
+|uuid|String|Resource UUID, uniquely identifies the resource|3.0.0|
+|iqn|String|iSCSI IQN|3.0.0|
+|createDate|Timestamp|Creation Time|3.0.0|
+|lastOpDate|Timestamp|Last Modification Time|3.0.0|
+|iscsiLuns|List|For details, see [iscsiLuns](#p_cmw_z12_z2b)|3.0.0|
+
+### iscsiLuns
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|3.0.0|
+|iscsiTargetUuid|String|iSCSI Target UUID|3.0.0|
+|wwid|String|Unique Identifier ID|3.0.0|
+|vendor|String|Device Vendor|3.0.0|
+|model|String|Device Model|3.0.0|
+|wwn|String|Device WWN|3.0.0|
+|serial|String|Device Serial Number|3.0.0|
+|hctl|String|SCSI Device HCTL|3.0.0|
+|type|String|Device Type|3.0.0|
+|path|String|Device Path|3.0.0|
+|size|Long|Device Size|3.0.0|
+|createDate|Timestamp|Creation Time|3.0.0|
+|lastOpDate|Timestamp|Last Modification Time|3.0.0|
+
+### iscsiClusterRefs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|iscsiServerUuid|String| |3.0.0|
+|clusterUuid|String|Cluster UUID|3.0.0|
+|createDate|Timestamp|Creation Time|3.0.0|
+|lastOpDate|Timestamp|Last Modification Time|3.0.0|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateIscsiServerAction action = new UpdateIscsiServerAction();
+action.uuid = "98d2177199ca301d9fd842eace2dbc67";
+action.name = "test-iscsi-server";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateIscsiServerAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateIscsiServerAction action = UpdateIscsiServerAction()
+action.uuid = "98d2177199ca301d9fd842eace2dbc67"
+action.name = "test-iscsi-server"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateIscsiServerAction.Result res = action.call()
+```
+
+</APIPage>

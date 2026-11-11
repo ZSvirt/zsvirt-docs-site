@@ -1,0 +1,162 @@
+---
+title: 'Alarm Rules'
+---
+
+Before creating a new alarm, you may want to familiarize yourself with the alarm rules. This section will demonstrate how to configure alarm rules for resource-based and event-based alarms.
+
+## Resource Alarm Rules
+<table className="doc-feature-table" id="table_f1y_xpt_vcc"><thead><tr><th colSpan="2">
+
+Parameter
+
+</th><th>
+
+Description
+
+</th><th>
+
+Example
+
+</th></tr></thead><tbody><tr><td colSpan="2">
+
+Resource Type
+
+</td><td>
+
+The type of resource monitored by the alarm.
+
+</td><td>
+
+Virtual Machine
+
+</td></tr><tr><td colSpan="2">
+
+Metric Item
+
+</td><td>
+
+Types and names of various monitoring metrics.
+
+</td><td>
+
+CPU Usage
+
+</td></tr><tr><td colSpan="2">
+
+Resource
+
+</td><td>
+
+The specific resource object monitored by the alarm.
+
+</td><td>
+
+/
+
+</td></tr><tr><td rowSpan="3">
+
+Alarm Trigger Rule
+
+</td><td>
+
+Comparison Relation
+
+</td><td>
+
+Defines how the detected metric value compares to the threshold.Comparison relations include &gt;, ≥, ＜, and ≤.
+
+</td><td>
+
+＞
+
+</td></tr><tr><td>
+
+Threshold
+
+</td><td>
+
+The threshold value and unit that triggers an alarm.
+
+</td><td>
+
+85%
+
+</td></tr><tr><td>
+
+Duration
+
+</td><td>
+
+The duration for which the alarm must continuously trigger before sending an alarm message.Durations include 30 seconds, 1 minute, 5 minutes, 10 minutes, 30 minutes, 1 hour, custom.
+
+</td><td>
+
+5 minutes
+
+</td></tr><tr><td colSpan="2">
+
+Alarm Interval
+
+</td><td>
+
+When an alarm is triggered, it notifies at a specific interval.Intervals include once only, every 1 hour, custom.
+
+</td><td>
+
+Every 1 hour
+
+</td></tr><tr><td colSpan="2">
+
+Emergency Level
+
+</td><td>
+
+Alarm message levels include Emergent, Major, Info.
+
+</td><td>
+
+Major
+
+</td></tr><tr><td colSpan="2">
+
+Recovery Notification
+
+</td><td>
+
+Sends a recovery notification when the monitored resource returns from an alarm state to a normal state.
+
+</td><td>
+
+/
+
+</td></tr></tbody>
+</table>
+
+## Event Alarm Rules
+
+<table className="doc-feature-table">
+  <thead>
+    <tr>
+      <th>Parameter</th>
+      <th>Description</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Resource Type</td>
+      <td>The type of resource monitored by the alarm.</td>
+      <td>Data Storage</td>
+    </tr>
+    <tr>
+      <td>Metric Item</td>
+      <td>Name of the monitored event or metric.</td>
+      <td>Data Storage Disconnected</td>
+    </tr>
+    <tr>
+      <td>Emergency Level</td>
+      <td>Alarm message levels include Emergent, Major, Info.</td>
+      <td>Emergent</td>
+    </tr>
+  </tbody>
+</table>

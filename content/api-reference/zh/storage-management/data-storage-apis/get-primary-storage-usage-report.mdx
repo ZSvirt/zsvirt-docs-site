@@ -1,0 +1,94 @@
+---
+title: "获取数据存储预测容量报告"
+---
+
+<APIPage method="GET" path="/v1/primary-storage/{primaryStorageUuid}/usage/report">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/primary-storage/902707d77b6e36179ee0117e6614e52f/usage/report
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|primaryStorageUuid|String|url|数据存储UUID| |4.7.21|
+|uris \(可选\)|List|query|存储协议| |4.7.21|
+|systemTags \(可选\)|List|query|系统标签| |4.7.21|
+|userTags \(可选\)|List|query|用户标签| |4.7.21|
+
+## API返回
+返回示例
+
+```
+{
+  "uriUsageForecast": {},
+  "usageReport": {}
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.7.21|
+|uriUsageForecast|Map|详情参考[uriUsageForecast](#p_sdn_131_wyb)|4.7.21|
+|usageReport|UsageReport|详情参考[usagereport](#p_y11_b31_wyb)|4.7.21|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_gxy_yw4_v3b)|4.7.21|
+
+### uriUsageForecast
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|usedPhysicalCapacitiesForecast|List| |4.7.21|
+|UsedPhysicalCapacitiesHistory|List| |4.7.21|
+|TotalPhysicalCapacitiesHistory|List| |4.7.21|
+|startTime|Long| |4.7.21|
+|interval|Long| |4.7.21|
+
+### usageReport
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|usedPhysicalCapacitiesForecast|List| |4.7.21|
+|UsedPhysicalCapacitiesHistory|List| |4.7.21|
+|TotalPhysicalCapacitiesHistory|List| |4.7.21|
+|startTime|Long| |4.7.21|
+|interval|Long| |4.7.21|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.7.21|
+|description|String|错误的概要描述|4.7.21|
+|details|String|错误的详细信息|4.7.21|
+|elaboration|String|保留字段，默认为null|4.7.21|
+|opaque|LinkedHashMap|保留字段，默认为null|4.7.21|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.7.21|
+
+## SDK示例
+Java SDK
+
+```
+GetPrimaryStorageLicenseInfoAction action = new GetPrimaryStorageLicenseInfoAction();
+action.uuid = "9b624d6e4ca53a4aa10bfc341281d0ef";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetPrimaryStorageLicenseInfoAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetPrimaryStorageLicenseInfoAction action = GetPrimaryStorageLicenseInfoAction()
+action.uuid = "9b624d6e4ca53a4aa10bfc341281d0ef"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetPrimaryStorageLicenseInfoAction.Result res = action.call()
+```
+
+</APIPage>

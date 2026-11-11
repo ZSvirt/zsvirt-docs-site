@@ -1,0 +1,100 @@
+---
+title: "Query GPU Device"
+---
+
+<APIPage method="GET" path="/v1/gpu-devices" altPaths={["/v1/gpu-devices/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/gpu-devices?q=uuid=db041d8a238732be82740eaf5a43d252
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/gpu-devices/1698716626f33b6fb1637a76590e1fe6
+```
+
+Queryable Fields
+
+Run the CLI command-line tool, enter `QueryGpuDevice` and press Tab to view all queryable fields and resource names that support cross-table queries.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "4a8c3470c8ab468b96e5c98907ac0a4e",
+      "name": "Tesla P40",
+      "hostUuid": "38e3ebc0b54e3cf8a99db5f7c80ee59e",
+      "deviceId": "10de",
+      "vendorId": "10de",
+      "vendorName": "NVIDIA",
+      "gpuType": "NVIDIA",
+      "status": "Enabled"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.10.0|
+|inventories|List|See [inventories](#p_t5p_zk2_s2c) for details|4.10.0|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See [error](#p_ymg_fs1_r2c) for details|4.10.0|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource. Uniquely identifies the resource.|4.10.0|
+|name|String|Resource name|4.10.0|
+|hostUuid|String|Host UUID|4.10.0|
+|deviceId|String|Device ID|4.10.0|
+|vendorId|String|Vendor ID|4.10.0|
+|vendorName|String|Vendor name|4.10.0|
+|gpuType|String|GPU type|4.10.0|
+|status|String|Status|4.10.0|
+|createDate|String|Create time|4.10.0|
+|lastOpDate|String|Last update time|4.10.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. Globally unique identifier of the error, for example SYS.1000, HOST.1001.|0.6|
+|description|String|Brief error description|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause error. The error that caused the current error. If there is no original error, this field is null.|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+QueryGpuDeviceAction action = new QueryGpuDeviceAction();
+action.conditions = asList("uuid=744cbe74c6f8365dafdbcf9568cfafa0");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryGpuDeviceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryGpuDeviceAction action = QueryGpuDeviceAction()
+action.conditions = ["uuid=e8b3f35dce0c38da8cec8a56347899e9"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryGpuDeviceAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,112 @@
+---
+title: "Create LDAP Binding"
+---
+
+<APIPage method="POST" path="/v1/ldap/bindings">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "ldapUid": "ou=Employee,uid=test",
+    "accountUuid": "ed7d933c7a6d37fb9bd444140faeec5c"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding example, the `systemTags` and `userTags` fields are optional. They are listed here to show that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"ldapUid":"ou=Employee,uid=test","accountUuid":"ed7d933c7a6d37fb9bd444140faeec5c"}}' \
+http://localhost:8080/zstack/v1/ldap/bindings
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|ldapUid|String|body \(enclosed in the `params` structure\)|LDAP UID| |4.3.0|
+|accountUuid|String|body \(enclosed in the `params` structure\)|Account UUID| |4.3.0|
+|ldapServerUuid \(Optional\)|String|body \(enclosed in the `params` structure\)|LDAP server UUID. If not specified, the system selects the UUID of the currently active LDAP server.| |4.3.0|
+|systemTags \(Optional\)|List|body|System tags| |4.3.0|
+|userTags \(Optional\)|List|body|User tags| |4.3.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "id": 1,
+    "credentials": "ou=Employee,uid=test",
+    "accountSourceUuid": "41006790733e38db9ce810878e19f8a3",
+    "accountUuid": "3be58c2832a939bf9bce2ea959e04ce8"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.3.0|
+|error|ErrorCode|Error code. If not null, the operation has failed. This field is null when the operation succeeds. For details, see [error](#p_fdz_lxf_fcc)|4.3.0|
+|inventory|ImportAccountRefInventory|For details, see [inventory](#p_esc_mxf_fcc)|4.3.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. The globally unique identifier of the error, for example, SYS.1000 or HOST.1001.|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Default is null.|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null.|0.6|
+|cause|ErrorCode|Root error. The source error that caused the current error. This field is null if no root error exists.|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|id|Long|Uniquely identifies the relationship|4.3.0|
+|credentials|String|Unique identifier of the user from the import source. For example, for users imported from an LDAP source, this is the UID used for login.|4.3.0|
+|accountSourceUuid|String|Import source server UUID|4.3.0|
+|accountUuid|String|Account UUID|4.3.0|
+|createDate|Timestamp|Creation time|4.3.0|
+|lastOpDate|Timestamp|Last modification time|4.3.0|
+
+## SDK Examples
+Java SDK
+
+```
+CreateLdapBindingAction action = new CreateLdapBindingAction();
+action.ldapUid = "ou=Employee,uid=test";
+action.accountUuid = "ed7d933c7a6d37fb9bd444140faeec5c";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateLdapBindingAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+CreateLdapBindingAction action = CreateLdapBindingAction()
+action.ldapUid = "ou=Employee,uid=test"
+action.accountUuid = "ed7d933c7a6d37fb9bd444140faeec5c"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateLdapBindingAction.Result res = action.call()
+
+```
+
+</APIPage>

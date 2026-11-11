@@ -1,0 +1,19 @@
+---
+title: 'Snapshots Usage Recommendations'
+---
+
+This chapter mainly provides recommendations for using snapshot features in production environments.
+
+1.  In a production environment, it is recommended to keep the number of snapshots per disk to no more than five. Too many snapshots can affect the I/O performance, data security, and data storage capacity of the virtual machine/disk.
+2.  In a production environment, to ensure data integrity, it is not recommended to create snapshots for virtual machines with high I/O. When the virtual machine performs high I/O operations internally, creating a snapshot for the virtual machine means that some data in memory has not yet been written to the disk, and this part of the data will not be saved in the snapshot.
+3.  Explanation of the storage capacity occupied by snapshots:
+    -   In local storage or centralized storage scenarios, creating incremental snapshots occupies minimal storage space, while creating full snapshots occupies double the storage space.
+    -   In distributed storage scenarios, creating a snapshot does not occupy additional storage space by itself, but after creating a snapshot, writing operations to the original disk may trigger Copy-On-Write (COW) for the snapshot, resulting in each snapshot consuming the same amount of storage space as the original disk.
+4.  Before performing a snapshot rollback operation, it is strongly recommended to create a snapshot for the disk to protect the current state of the disk data.
+5.  Explanation of the impact of creating a snapshot on current operations:
+
+    Generally, there is no impact, but when creating a full snapshot, there may be additional network I/O generated on the storage network, especially in local storage or centralized storage scenarios, where the disk I/O bandwidth is significantly affected, but disk IOPS are largely unaffected.
+
+6.  Explanation of the impact of deleting a snapshot on current operations:
+
+    Generally, deleting a snapshot also deletes snapshots on its child branches and merges the data into the disk, which can generate additional disk I/O bandwidth, causing the business I/O to potentially slow down slightly.

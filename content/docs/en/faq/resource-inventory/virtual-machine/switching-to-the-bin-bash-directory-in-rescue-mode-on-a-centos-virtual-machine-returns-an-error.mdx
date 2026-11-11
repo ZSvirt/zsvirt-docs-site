@@ -1,0 +1,45 @@
+---
+title: "Switching to the /bin/bash directory in rescue mode on a CentOS virtual machine returns an error. What should I do?"
+---
+
+## Symptom
+Switching to the `/bin/bash` directory in rescue mode on a CentOS virtual machine returns a `No such file or directory` error.
+
+## Cause
+The virtual machine is missing required dependency libraries. The bash environment of the system must be restored.
+
+## Solution
+1.  Locate the affected virtual machine, click **Modify Configuration** &gt; **Optical Drive** &gt; **Image File**, and load the CentOS ISO file into the virtual machine.
+
+2.  On the virtual machine details page, click **Advanced Settings** &gt; **Boot Options** &gt; **Boot Order** to open the boot order settings and change the virtual machine boot order to optical drive first.
+
+3.  Enter the installation page and select Troubleshooting.
+
+    As shown in [Figure 1](#fig_k1g_wb3_sxb):
+
+    ![Select Troubleshooting](/docs/en/faq/images/ZStack_FAQ_Summary_0001_92_1.png)
+
+4.  Select Rescue a CentOS system to enter rescue mode.
+
+    As shown in [Figure 2](#fig_thq_5d3_sxb):
+
+    ![Select Rescue a CentOS system](/docs/en/faq/images/ZStack_FAQ_Summary_0001_92_2.png)
+
+5.  In the rescue mode interface, enter 1 to mount the system root file system to the `/mnt/sysimage` directory in read-write mode. To switch the `/mnt/sysimage` directory to the root directory, run the `chroot /mnt/sysimage` command.
+
+    As shown in [Figure 3](#fig_w1k_bg3_sxb):
+
+    ![Mount the system root file in read-write mode](/docs/en/faq/images/ZStack_FAQ_Summary_0001_92_3.png)
+
+6.  Run the following commands to copy the lib and lib64 dependency libraries from the rescue mode system to the `/mnt/sysimage/usr/lib` and `/mnt/sysimage/usr/lib64` directories respectively:
+
+    ```
+    [root@localhost ~]# cp -r /usr/lib /mnt/sysimage/usr/lib
+    [root@localhost ~]# cp -r /usr/lib64 /mnt/sysimage/usr/lib64
+    ```
+
+    <Callout type="info">
+    The version of the newly loaded CentOS image must match the version of the virtual machine's original image.
+    </Callout>
+
+7.  Switch the `/mnt/sysimage` directory back to the root directory and verify that the CentOS virtual machine environment is restored.

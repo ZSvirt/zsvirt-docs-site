@@ -1,0 +1,14 @@
+{
+  "title": "Terraform 管理 ZSvirt",
+  "pages": [
+    "index",
+    "getting-started",
+    "provider-configuration",
+    "instance-management",
+    "known-limitations",
+    "building-and-testing",
+    "resources",
+    "data-sources"
+  ],
+  "pagesIndex": "index"
+}

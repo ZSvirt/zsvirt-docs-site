@@ -1,0 +1,73 @@
+---
+title: 'zsphere_images'
+description: '查询 ZSvirt 镜像列表及其属性。'
+---
+
+<HistoricalNamingNote locale="zh" />
+
+
+# zsphere_images（数据源）
+
+查询 ZSvirt 镜像列表及其属性。
+
+## 示例用法
+```terraform
+data "zsphere_images" "test" {
+}
+
+output "zstack_secs" {
+  value = data.zsphere_images.test
+}
+
+# 示例输出：
+# zstack_secs = {
+#   "filter" = tolist([])
+#   "images" = tolist([
+#     {
+#       "architecture" = "x86_64"
+#       "format" = "qcow2"
+#       "name" = "Image-1"
+#       "platform" = ""
+#       "state" = "Enabled"
+#       "status" = "Ready"
+#       "uuid" = "8c00337d47e94acab448e88afdc5c872"
+#     },
+#   ])
+#   "name" = tostring(null)
+#   "name_pattern" = tostring(null)
+# }
+```
+
+## 参数说明
+
+### 可选参数
+
+- `filter`（块列表）（参见下方嵌套结构）
+- `name`（字符串）按精确名称查询
+- `name_pattern`（字符串）按名称模糊查询，类似 MySQL LIKE。`%` 匹配多个字符，`_` 匹配单个字符
+
+### 只读属性
+
+- `images`（属性列表）（参见下方嵌套结构）
+
+<a id="nestedblock--filter"></a>
+### `filter` 嵌套结构
+
+必填参数：
+
+- `name`（字符串）用于过滤的字段名。
+- `values`（字符串集合）过滤值，多个值之间为 OR 关系。
+
+
+<a id="nestedatt--images"></a>
+### `images` 嵌套结构
+
+只读属性：
+
+- `architecture`（字符串）CPU architecture of the image, 如 x86_64, aarch64, mips64, or longarch64
+- `format`（字符串）Format of the image, 如 qcow2, iso, vmdk, or raw
+- `name`（字符串）image名称
+- `platform`（字符串）Platform of the image, 如 Linux, Windows, or Other
+- `state`（字符串）State of the image, indicating if it is Enabled or Disabled
+- `status`（字符串）image就绪状态 (e.g., Ready or Not Ready)
+- `uuid`（字符串）image UUID

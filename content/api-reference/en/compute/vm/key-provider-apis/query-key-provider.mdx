@@ -1,0 +1,54 @@
+---
+title: "Query Key Providers"
+---
+
+<APIPage method="GET" path="/v1/key-providers">
+
+```
+GET zstack/v1/key-providers/{uuid}
+```
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/key-providers?q=uuid=ff0340e5866e385b9a86e592dd7e1900
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/key-providers/be171f47b02632e59eca8602e7413f10
+```
+
+Queryable Fields
+
+Run the CLI command line tool, enter `QueryKeyProvider`, and press Tab to view all queryable fields and resource names that can be used for cross-table queries.
+
+## SDK Example
+Java SDK
+
+```
+QueryKeyProviderAction action = new QueryKeyProviderAction();
+action.conditions = asList("uuid=ff0340e5866e385b9a86e592dd7e1900");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryKeyProviderAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = QueryKeyProviderAction()
+action.conditions = ["uuid=ff0340e5866e385b9a86e592dd7e1900"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

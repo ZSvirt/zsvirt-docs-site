@@ -1,0 +1,100 @@
+---
+title: "查询数据存储"
+---
+
+<APIPage method="GET" path="/v1/primary-storage">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/primary-storage?q=uuid=2160b1e46b0a422fbc9ce6e4a7de1023
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryPrimaryStorage`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "name": "PS1",
+      "url": "/Cloud_ps",
+      "type": "LocalStorage",
+      "state": "Enabled",
+      "status": "Connected",
+      "attachedClusterUuids": [
+        "efbdb96e4f9c457eacf11dcb19923af9"
+      ]
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_zks_4g1_n1b)|0.6|
+|inventories|List|详情参考[inventories](#p_wbj_4g1_n1b)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|zoneUuid|String|数据中心UUID|0.6|
+|name|String|资源名称|0.6|
+|url|String| |0.6|
+|description|String|资源的详细描述|0.6|
+|totalCapacity|Long| |0.6|
+|availableCapacity|Long| |0.6|
+|totalPhysicalCapacity|Long| |0.6|
+|availablePhysicalCapacity|Long| |0.6|
+|systemUsedCapacity|Long| |0.6|
+|type|String| |0.6|
+|state|String| |0.6|
+|status|String| |0.6|
+|mountPath|String| |0.6|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+|attachedClusterUuids|List| |0.6|
+
+## SDK示例
+Java SDK
+
+```
+QueryPrimaryStorageAction action = new QueryPrimaryStorageAction();
+action.conditions = asList("uuid=56235f6bf5c24513bce99d4ec824c63f");
+action.sessionId = "16f5568fa9aa48e79b3a3ed579787fd0";
+QueryPrimaryStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryPrimaryStorageAction action = QueryPrimaryStorageAction()
+action.conditions = ["uuid=52f2459af9ce4c35a0c7de9c98aaebb0"]
+action.sessionId = "ade5be353d114f948f976ae43d397815"
+QueryPrimaryStorageAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,72 @@
+---
+title: "Get VM RDP Status"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/{uuid}/rdp">
+
+Get VM RDP switch status. Return value is true or false
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/78494eb669424e97b6f18920a920adbf/rdp
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Resource UUID, uniquely identifies the resource| |2.1|
+|systemTags \(Optional\)|List|query| | |2.1|
+|userTags \(Optional\)|List|query| | |2.1|
+
+## API Response
+Response Example
+
+```
+{
+  "enable": true
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|enable|boolean|Whether VM RDP switch is enabled|2.1|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation succeeds, this field is null. For details, see [error](#p_kwk_f3g_vbb)|2.1|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier of the error, for example SYS.1000, HOST.1001|2.1|
+|description|String|Brief description of the error|2.1|
+|details|String|Detailed error information|2.1|
+|elaboration|String|Reserved field, defaults to null|2.1|
+|opaque|LinkedHashMap|Reserved field, defaults to null|2.1|
+|cause|ErrorCode|Root cause. The error that triggered the current error. If there is no original error, this field is null|2.1|
+
+## SDK Examples
+Java SDK
+
+```
+GetVmRDPAction action = new GetVmRDPAction();
+action.uuid = "2503d2eb486e43469fef0e4864fb6c90";
+action.sessionId = "380901023c664283a2a3edc0c52817f2";
+GetVmRDPAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetVmRDPAction action = GetVmRDPAction()
+action.uuid = "4cec955330e44ac980b99f20c811f1cc"
+action.sessionId = "2971ac1171da458b964bf689032ba778"
+GetVmRDPAction.Result res = action.call()
+```
+
+</APIPage>

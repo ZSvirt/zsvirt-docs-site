@@ -1,0 +1,114 @@
+---
+title: "添加钉钉@用户"
+---
+
+<APIPage method="POST" path="/v1/sns/application-endpoints/ding-talk/at-persons">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "phoneNumber": "18099997777",
+    "endpointUuid": "5b9b95ca0cda3ab4bb51b5a4e1965305",
+    "remark": "jack"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"phoneNumber":"18099997777","endpointUuid":"5b9b95ca0cda3ab4bb51b5a4e1965305","remark":"jack"}}' \
+http://localhost:8080/zstack/v1/sns/application-endpoints/ding-talk/at-persons
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|phoneNumber|String|body\(包含在**params**结构中\)|用户电话号码（钉钉用户以电话注册）| |2.3|
+|endpointUuid|String|body\(包含在**params**结构中\)|钉钉终端UUID| |2.3|
+|resourceUuid \(可选\)|String|body\(包含在**params**结构中\)| | |2.3|
+|systemTags \(可选\)|List|body|系统标签| |2.3|
+|userTags \(可选\)|List|body|用户标签| |2.3|
+|tagUuid \(可选\)|List|body\(包含在**params**结构中\)|标签UUID列表| |5.0.0|
+|remark \(可选\)|String|body\(包含在**params**结构中\)|备注| |5.0.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "6a02f7a85da9448abb88979c3de29b28",
+    "phoneNumber": "18988887777",
+    "endpointUuid": "6cb3a5c6c36042008ad2c66a5479fd49",
+    "createDate": "Mar 26, 2024 2:45:58 AM",
+    "lastOpDate": "Mar 26, 2024 2:45:58 AM",
+    "remark": "jack"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |5.0.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_kzq_vpx_bdb)|2.3|
+|inventory|SNSDingTalkAtPersonInventory|详情参考[inventory](#p_nmx_vpx_bdb)|2.3|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|5.0.0|
+|phoneNumber|String|手机号码|5.0.0|
+|endpointUuid|String|钉钉endpoint UUID|5.0.0|
+
+## SDK示例
+Java SDK
+
+```
+AddSNSDingTalkAtPersonAction action = new AddSNSDingTalkAtPersonAction();
+action.phoneNumber = "18099997777";
+action.endpointUuid = "5b9b95ca0cda3ab4bb51b5a4e1965305";
+action.remark = "jack";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddSNSDingTalkAtPersonAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddSNSDingTalkAtPersonAction action = AddSNSDingTalkAtPersonAction()
+action.phoneNumber = "18099997777"
+action.endpointUuid = "5b9b95ca0cda3ab4bb51b5a4e1965305"
+action.remark = "jack"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddSNSDingTalkAtPersonAction.Result res = action.call()
+```
+
+</APIPage>

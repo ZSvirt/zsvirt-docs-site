@@ -1,0 +1,97 @@
+---
+title: "Query Distributed Storage OSD Group"
+---
+
+<APIPage method="GET" path="/v1/primary-storage/ceph/osdgroups" altPaths={["/v1/primary-storage/ceph/osdgroups/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Examples
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/primary-storage/ceph/osdgroups\
+	q=uuid=b2c53eee77bc3bfea5374d417babff07
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/primary-storage/ceph/osdgroups/9ee0973b0e79393e9f7d03a6e3a6f645
+```
+
+Queryable Fields
+
+Run the CLI command tool, enter `QueryCephOsdGroup` and press Tab to view all queryable fields and resource names that support cross-table queries.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "osds": "osd.1",
+      "availableCapacity": 0.0,
+      "availablePhysicalCapacity": 1024.0,
+      "totalPhysicalCapacity": 1024.0,
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.5.0|
+|inventories|List|For details, see [inventories](#p_rxy_gts_qcb)|4.5.0|
+|error|ErrorCode|Error code. If not null, indicates the operation failed. This field is null when the operation succeeds. For details, see [error](#p_jrc_hts_qcb)|4.5.0|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|primaryStorageUuid|String|Primary Storage UUID|4.5.0|
+|osds|String| |4.5.0|
+|availableCapacity|long| |4.5.0|
+|availablePhysicalCapacity|long| |4.5.0|
+|totalPhysicalCapacity|long| |4.5.0|
+|createDate|Timestamp|Creation time|4.5.0|
+|lastOpDate|Timestamp|Last modification time|4.5.0|
+|uuid|String|Resource UUID, uniquely identifies the resource|4.5.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier for the error, such as SYS.1000, HOST.1001|4.5.0|
+|description|String|Brief description of the error|4.5.0|
+|details|String|Detailed error information|4.5|
+|elaboration|String|Reserved field, defaults to null|4.5.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|4.5.0|
+|cause|ErrorCode|Root cause. The source error that triggered the current error. If there is no original error, this field is null|4.5.0|
+
+## SDK Examples
+Java SDK
+
+```
+QueryCephOsdGroupAction action = new QueryCephOsdGroupAction();
+action.conditions = asList("uuid=3e479fc0962c3561a854d868fce5ab3e");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryCephOsdGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryCephOsdGroupAction action = QueryCephOsdGroupAction()
+action.conditions = ["uuid=45906504e89335809e54a79897eb1357"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryCephOsdGroupAction.Result res = action.call()
+```
+
+</APIPage>

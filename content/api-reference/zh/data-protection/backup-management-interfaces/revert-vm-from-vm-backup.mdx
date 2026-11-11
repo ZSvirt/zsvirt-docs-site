@@ -1,0 +1,226 @@
+---
+title: "从虚拟机备份恢复虚拟机"
+---
+
+<APIPage method="PUT" path="/v1/vm-backups/{groupUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "revertVmFromVmBackup": {
+    "backupStorageUuid": "99afb6149155396c8ac1b6ab62badb9d",
+    "strategy": "CreateStopped"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"revertVmFromVmBackup":{"backupStorageUuid":"99afb6149155396c8ac1b6ab62badb9d","strategy":"CreateStopped"}}' \
+http://localhost:8080/zstack/v1/vm-backups/39f4e3c4b7553dbc98b8c0ce0e8f82a1/actions
+```
+
+参数列表
+
+<table id="table_yj1_vvx_y2b"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+groupUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+备份组uuid
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+backupStorageUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**revertVmFromVmBackup**结构中\)
+
+</td><td>
+
+镜像存储UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+strategy \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**revertVmFromVmBackup**结构中\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+-   InstantStart
+-   JustCreate
+-   CreateStopped
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.0.0
+
+</td></tr></tbody>
+</table>
+
+## API返回
+该API成功时返回一个空的JSON结构**`{}`**，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+RevertVmFromVmBackupAction action = new RevertVmFromVmBackupAction();
+action.groupUuid = "39f4e3c4b7553dbc98b8c0ce0e8f82a1";
+action.backupStorageUuid = "99afb6149155396c8ac1b6ab62badb9d";
+action.strategy = "CreateStopped";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RevertVmFromVmBackupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+RevertVmFromVmBackupAction action = RevertVmFromVmBackupAction()
+action.groupUuid = "39f4e3c4b7553dbc98b8c0ce0e8f82a1"
+action.backupStorageUuid = "99afb6149155396c8ac1b6ab62badb9d"
+action.strategy = "CreateStopped"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+RevertVmFromVmBackupAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,126 @@
+---
+title: "更新长时任务"
+---
+
+<APIPage method="PUT" path="/v1/longjobs/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateLongJob": {
+    "name": "new-name",
+    "description": "new-description"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateLongJob":{"name":"new-name","description":"new-description"}}' http://localhost:8080/zstack/v1/longjobs/dee3e1e3706f3e52a2cb9a47850508e7/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |3.9.0|
+|name \(可选\)|String|body\(包含在**updateLongJob**结构中\)|资源名称| |3.9.0|
+|description \(可选\)|String|body\(包含在**updateLongJob**结构中\)|资源的详细描述| |3.9.0|
+|systemTags \(可选\)|List|body|系统标签| |3.9.0|
+|userTags \(可选\)|List|body|用户标签| |3.9.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "464cdf695427358696dae171544b67ef",
+    "name": "new-name",
+    "description": "new-description"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_slg_lqv_llb)|3.9.0|
+|inventory|LongJobInventory|详情参考[inventory](#p_esy_kqv_llb)|3.9.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.9.0|
+|description|String|错误的概要描述|3.9.0|
+|details|String|错误的详细信息|3.9.0|
+|elaboration|String|保留字段，默认为null|3.9.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.9.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.9.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.9.0|
+|name|String|资源名称|3.9.0|
+|description|String|资源的详细描述|3.9.0|
+|apiId|String|用于关联TaskProgress的APIID|3.9.0|
+|jobName|String|任务名称|3.9.0|
+|jobData|String|任务数据|3.9.0|
+|jobResult|String|任务结果|3.9.0|
+|targetResourceUuid|String|目标资源UUID|3.9.0|
+|managementNodeUuid|String|管理节点UUID|3.9.0|
+|createDate|Timestamp|创建时间|3.9.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.9.0|
+|state|LongJobState|详情参考[state](#p_ncs_kqv_llb)|3.9.0|
+
+### state
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Waiting|LongJobState| |3.9.0|
+|Suspended|LongJobState| |3.9.0|
+|Running|LongJobState| |3.9.0|
+|Succeeded|LongJobState| |3.9.0|
+|Canceling|LongJobState| |3.9.0|
+|Canceled|LongJobState| |3.9.0|
+|Failed|LongJobState| |3.9.0|
+
+## SDK示例
+Java SDK
+
+```
+UpdateLongJobAction action = new UpdateLongJobAction();
+action.uuid = "dee3e1e3706f3e52a2cb9a47850508e7";
+action.name = "new-name";
+action.description = "new-description";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateLongJobAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateLongJobAction action = UpdateLongJobAction()
+action.uuid = "dee3e1e3706f3e52a2cb9a47850508e7"
+action.name = "new-name"
+action.description = "new-description"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateLongJobAction.Result res = action.call()
+```
+
+</APIPage>

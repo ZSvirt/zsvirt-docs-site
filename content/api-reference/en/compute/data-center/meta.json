@@ -1,0 +1,11 @@
+{
+  "title": "Data Center Related Interfaces",
+  "pages": [
+    "create-zone",
+    "delete-zone",
+    "query-zone",
+    "update-zone",
+    "change-zone-state"
+  ],
+  "pagesIndex": "index"
+}

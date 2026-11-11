@@ -1,0 +1,126 @@
+---
+title: "Update Custom Attribute Key"
+---
+
+<APIPage method="PUT" path="/v1/resource-attributes/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateResourceAttributeKey": {
+    "description": "test"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the `systemTags` and `userTags` fields can be omitted. They are listed to show that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateResourceAttributeKey":{"description":"test"}}' \
+http://localhost:8080/zstack/v1/resource-attributes/ff03a2b491023030bf58b1b35ea9cd00/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Custom attribute key UUID| |4.10.16|
+|name \(optional\)|String|body \(contained in the `updateResourceAttributeKey` structure\)|Key name| |4.10.16|
+|description \(optional\)|String|body \(contained in the `updateResourceAttributeKey` structure\)|Detailed description of the resource| |4.10.16|
+|resourceTypes \(optional\)|List|body \(contained in the `updateResourceAttributeKey` structure\)|List of resource types supported by this attribute| |4.10.16|
+|createConstraints \(optional\)|List|body \(contained in the `updateResourceAttributeKey` structure\)|Newly created constraints| |4.10.16|
+|updateConstraints \(optional\)|List|body \(contained in the `updateResourceAttributeKey` structure\)|Updated constraints| |4.10.16|
+|deleteConstraintIds \(optional\)|List|body \(contained in the `updateResourceAttributeKey` structure\)|List of constraint IDs to delete| |4.10.16|
+|systemTags \(optional\)|List|body|System tags| |4.10.16|
+|userTags \(optional\)|List|body|User tags| |4.10.16|
+
+## API Response
+Response example
+
+```
+{
+  "inventory": {
+    "uuid": "ff03a2b491023030bf58b1b35ea9cd00",
+    "name": "OperationsPersonnel",
+    "description": "Kinny",
+    "resourceTypes": [
+      "VmInstanceVO"
+    ],
+    "createDate": "Nov 14, 2017 2:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 2:20:57 PM",
+    "constraints": [
+      {
+        "id": 1,
+        "keyUuid": "ff03a2b491023030bf58b1b35ea9cd00",
+        "type": "option",
+        "parameter": "Kinny",
+        "createDate": "Nov 14, 2017 2:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+      }
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean|Whether the update succeeded|4.10.16|
+|inventory|ResourceAttributeKeyInventory|For details, see [inventory](#p_ahr_n2y_3gc)|4.10.16|
+|error|ErrorCode|For details, see [error](#p_xm1_vmk_l1b)|4.10.16|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Custom attribute key UUID|4.10.16|
+|name|String|Custom attribute key name|4.10.16|
+|description|String|Detailed description of the resource|4.10.16|
+|createDate|Timestamp|Creation time|4.10.16|
+|lastOpDate|Timestamp|Last modification time|4.10.16|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|ode|String|The error code number, a globally unique identifier for the error, e.g., SYS.1000, HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|The detailed error information|0.6|
+|elaboration|String|Reserved field. Defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field. Defaults to null|0.6|
+|cause|ErrorCode|The root error, the cause of the current error. This field is null if there is no root error|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateResourceAttributeKeyAction action = new UpdateResourceAttributeKeyAction();
+action.uuid = "ff03a2b491023030bf58b1b35ea9cd00";
+action.description = "test";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateResourceAttributeKeyAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = UpdateResourceAttributeKeyAction()
+action.uuid = "ff03a2b491023030bf58b1b35ea9cd00"
+action.description = "test"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,142 @@
+---
+title: "UploadSoftwarePackage"
+---
+
+<APIPage method="POST" path="/v1/software-packages/upload">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "software-package-name",
+    "type": "storage",
+    "managementNodeUuid": "ff000842a4673ab39dad7a3990df5300",
+    "hostUuid": "ff0192fa70113da886101145c084bd00",
+    "url": "http://192.168.1.1/disk/images/test.qcow2",
+    "installPath": "/root/sds/storage.tar.gz"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding sample, both `systemTags` and `userTags` are optional. These two fields can be included in the body structure.
+</Callout>
+
+Curl Sample
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"software-package-name","type":"storage","managementNodeUuid":"ff000842a4673ab39dad7a3990df5300","hostUuid":"ff0192fa70113da886101145c084bd00","url":"http://192.168.1.1/disk/images/test.qcow2","installPath":"/root/sds/storage.tar.gz"}}' \
+http://localhost:8080/zstack/v1/software-packages/upload
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|name|String|body \(contained in the `params` structure\)|The software package name.| |4.10.20|
+|type|String|body \(contained in the `params` structure\)|The software package type.| |4.10.20|
+|managementNodeUuid|String|body \(contained in the `params` structure\)|The Management Node UUID.| |4.10.20|
+|hostUuid|String|body \(contained in the `params` structure\)|The Host UUID.| |4.10.20|
+|url|String|body \(contained in the `params` structure\)|The software package URL.| |4.10.20|
+|installPath|String|body \(contained in the `params` structure\)|The software package installation path.| |4.10.20|
+|resourceUuid \(Optional\)|String|body \(contained in the `params` structure\)|The resource UUID.| |4.10.20|
+|tagUuids \(Optional\)|List|body \(contained in the `params` structure\)|The tag UUID list.| |4.10.20|
+|systemTags \(Optional\)|List|body|The system tags.| |4.10.20|
+|userTags \(Optional\)|List|body|The user tags.| |4.10.20|
+
+<Callout type="info">
+-   Local upload software supports specifying the hash of the software package.
+</Callout>
+    -   SystemTag format: `uploadSoftwarePackage::{%s}`
+    -   SystemTag example: `uploadSoftwarePackage::1271232183768712367812361287`
+-   Local upload host returns the URL for UI to upload software package slices.
+    -   SystemTag format: `uploadUrl::{%s}`
+    -   SystemTag example: `uploadUrl::http://172.1.1.1:7070/host/file/direct-upload`
+-   Parameters for uploading the software package.
+    -   SystemTag format: `uploadConfig::{%s}`
+    -   SystemTag example: `APIUploadSoftwarePackageMsg converted to json string`
+
+## API Response
+Sample Response
+
+```
+{
+  "inventory": {
+    "size": 0
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean|The operation success. True if success, false otherwise.|4.10.20|
+|error|ErrorCode|See [error](#p_irn_1jx_r2c).|4.10.20|
+|inventory|SoftwarePackageInventory|See [inventory](#p_m3r_rt3_mhc).|4.10.20|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code, which is a numbered or alphanumeric code that specifies an error. For example, SYS.1000, HOST.1001.|0.6|
+|description|String|The brief description of the error.|0.6|
+|details|String|The details about the error.|0.6|
+|elaboration|String|Reserved field. Default value: null.|0.6|
+|opaque|LinkedHashMap|Reserved field. Default value: null.|0.6|
+|cause|ErrorCode|The root error, which is the associated root cause of the current error. If no root error exists, this parameter is null.|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The resource UUID.|4.10.20|
+|name|String|The resource name.|4.10.20|
+|hostUuid|String|The Host UUID.|4.10.20|
+|managementNodeUuid|String|The Management Node UUID.|4.10.20|
+|installPath|String|The installation path.|4.10.20|
+|unzipInstallPath|String|The unzip installation path.|4.10.20|
+|type|String|The installation package type.|4.10.20|
+|md5sum|String|The installation package MD5 checksum value.|4.10.20|
+|status|String|The installation package status.|4.10.20|
+|size|long|The installation package size.|4.10.20|
+|createDate|Timestamp|The creation date.|4.10.20|
+|lastOpDate|Timestamp|The last operation date.|4.10.20|
+
+## SDK Sample
+Java SDK
+
+```
+UploadSoftwarePackageAction action = new UploadSoftwarePackageAction();
+action.name = "software-package-name";
+action.type = "storage";
+action.managementNodeUuid = "ff000842a4673ab39dad7a3990df5300";
+action.hostUuid = "ff0192fa70113da886101145c084bd00";
+action.url = "http://192.168.1.1/disk/images/test.qcow2";
+action.installPath = "/root/sds/storage.tar.gz";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UploadSoftwarePackageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = UploadSoftwarePackageAction()
+action.name = "software-package-name"
+action.type = "storage"
+action.managementNodeUuid = "ff000842a4673ab39dad7a3990df5300"
+action.hostUuid = "ff0192fa70113da886101145c084bd00"
+action.url = "http://192.168.1.1/disk/images/test.qcow2"
+action.installPath = "/root/sds/storage.tar.gz"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

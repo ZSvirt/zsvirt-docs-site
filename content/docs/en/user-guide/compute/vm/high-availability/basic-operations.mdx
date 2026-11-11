@@ -1,0 +1,243 @@
+---
+title: 'HA Policy Basic Operations'
+---
+
+If you wish to fully understand the basic high availability policy functions of the ZSvirt platform, you can follow these steps:
+
+1.  [Enable HA Policy](#section_vff_3rl_zyb)
+2.  [Set VM Failover Strategy](#section_npw_2gf_czb)
+3.  [Set Host Error Detection](#section_fgv_rwf_mxb)
+4.  [Set Advanced Settings](#section_pwn_ywf_mxb)
+5.  [View High Availability Logs](#section_hz3_2zl_zyb)
+6.  [Disable HA Policy](#section_rxh_srl_zyb)
+
+## Enable HA Policy
+High availability policies in ZSvirt are enabled by default. If they have been disabled, you can click on the **Menu** &gt; **Business Reliability** &gt; **HA Policy**, and then turn on the switch at the top of the **HA Policy** page to enable the high availability policies.
+
+## Set VM Failover Strategy
+After enabling the high availability policies, you can set the high availability migration strategies for the four typical fault scenarios on the Migration Policies page:
+
+<table className="doc-feature-table" id="table_xym_gmf_mxb"><thead><tr><th>
+
+Typical Scenario
+
+</th><th>
+
+Management Network Connection Status
+
+</th><th>
+
+Storage Network Connection Status
+
+</th><th>
+
+Business NIC Status
+
+</th><th>
+
+Migrate on Failure?
+
+</th><th>
+
+Migration Explanation
+
+</th></tr></thead><tbody><tr><td>
+
+Scenario A
+
+</td><td>
+
+Normal
+
+</td><td>
+
+Normal
+
+</td><td>
+
+Failure
+
+</td><td>
+
+Migrate | Do Not Migrate
+
+</td><td>
+
+Supports setting to migrate or do not migrate.
+
+</td></tr><tr><td>
+
+Scenario B
+
+</td><td>
+
+Normal
+
+</td><td>
+
+Failure
+
+</td><td>
+
+Normal
+
+</td><td>
+
+Migrate | Do Not Migrate
+
+</td><td>
+
+Supports setting to migrate or do not migrate. However, in a SAN storage environment, if set to do not migrate here, the storage network connection status failure will still trigger automatic migration.
+
+</td></tr><tr><td>
+
+Scenario C
+
+</td><td>
+
+Normal
+
+</td><td>
+
+Failure
+
+</td><td>
+
+Failure
+
+</td><td>
+
+Migrate | Do Not Migrate
+
+</td><td>
+
+The migration strategy for when both the storage connection status and the business network card status fail follows the migration strategy for either status failing: -   If the migration strategy for both the storage connection status and business network card status failure scenarios is set to do not migrate, then this is set to do not migrate.
+-   If the migration strategy for one of the failure scenarios is set to migrate, then this is set to migrate.
+
+</td></tr><tr><td>
+
+Scenario D
+
+</td><td>
+
+Failure
+
+</td><td>
+
+Normal
+
+</td><td>
+
+Normal
+
+</td><td>
+
+Do Not Migrate
+
+</td><td>
+
+When the management network status is faulty, it is not supported to set a fault migration strategy.
+
+</td></tr></tbody>
+</table>
+
+<Callout type="info">
+Storage network connection status only supports detecting shared storage and does not currently support local storage.
+</Callout>
+
+## Set Host Error Detection
+After enabling the high availability policies, you can set the host failure judgment policies on the Migration Policies page:
+
+<table className="doc-feature-table">
+  <thead>
+    <tr>
+      <th>Host Error Detection Item</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Host Self-Inspection Interval</td>
+      <td>The interval that a host inspects its own status. Default: 5. Unit: second.</td>
+    </tr>
+    <tr>
+      <td>Maximum Host Self-Inspection Attempts</td>
+      <td>The maximum number of attempts that a host inspects its own status. If the self-inspection of a host fails by the maximum attempts, it is determined that network errors occur with the host. Default: 6.</td>
+    </tr>
+  </tbody>
+</table>
+
+## Set Advanced Settings
+After enabling the high availability policies, you can set the advanced settings for high availability policies on the Advanced Settings page, including advanced settings for both virtual machines and hosts.
+
+<table className="doc-feature-table">
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowSpan="4">Virtual Machine</td>
+      <td>HA VM State Update Speed</td>
+      <td>The speed of updating the state of NeverStop virtual machines on the UI. Default: 1. Valid values: -1 to 5. A higher value indicates a lower update speed. However, a lower update speed makes the system ignore a lot of outdated notifications, thus decreasing the system workload. If set to -1, the NeverStop VM states on the UI are not updated automatically.</td>
+    </tr>
+    <tr>
+      <td>Maximum Interval for VM Attempt to HA Start</td>
+      <td>The maximum interval for the system to finish the GC (garbage collection) job and attempt to restart a NeverStop VM according to the HA policy after the virtual machine is stopped unexpectedly. Default: 300. Unit: second.</td>
+    </tr>
+    <tr>
+      <td>VM Retry HA Start Inverval</td>
+      <td>The interval for a Neverstop VM to retry an HA start after the previous HA start attempt fails. Default: 60. Unit: second.</td>
+    </tr>
+    <tr>
+      <td>HA VM State Scanning Interval</td>
+      <td>The interval to scan the status of a NeverStop VM after it fails to HA start. Default: 60. Unit: second.</td>
+    </tr>
+    <tr>
+      <td rowSpan="6">Host</td>
+      <td>Timeout Period for Host Connecting to Data Storage</td>
+      <td>The time for hosts to attempt to connect to data storage. If a host fails to connect to a data storage during this period, its connection attempt is determined as timeout. Default: 5. Unit: second.</td>
+    </tr>
+    <tr>
+      <td>Abnormal Host Status Update Interval</td>
+      <td>The interval for the system to check and update the status of abnormal hosts. Default: 5. Unit: second.</td>
+    </tr>
+    <tr>
+      <td>Minimum Connection Attempts Required to Determine Host is Disconnected</td>
+      <td>The maximum times for the system to attempt to connect to a host. If the system fails to connect to the host after the specified times of attempt, the host is determined as disconnected. Default: 12.</td>
+    </tr>
+    <tr>
+      <td>Ping Response Time to Determine Host Connection is Established Successfully</td>
+      <td>The time period for the system to wait the host response after it pings the host. Receiving a response within this period indicates that the system establishes a successful connection with the host. Default: 5. Unit: second.</td>
+    </tr>
+    <tr>
+      <td>Minimum Connection Success Rate to Determine Host is Re-Connected</td>
+      <td>The minimum rate of successful connections occupied in total connection attempts to determine a disconnected host is successfully re-connected. Default: 50. Unit: %.</td>
+    </tr>
+    <tr>
+      <td>Minimum Successful Connections Required to Determine Host is Re-Connected</td>
+      <td>The minimum successful connections that the system has to establish with a disconnected host before the host can be determined as re-connected. Default: 5.</td>
+    </tr>
+  </tbody>
+</table>
+
+## View High Availability Logs
+After enabling the high availability policy, if the platform triggers the high availability mechanism, high availability logs will be generated. You can view these logs on the **O&M Management** &gt; **Tasks** &gt; **HA Task** page. The logs support viewing task results, virtual machine names, virtual machine owners, previous hosts, target hosts, start times, and completion times, enriching operational scenarios for auditing and tracing.
+
+-   Supports selecting a time period to view high availability logs for virtual machines during the selected period. Available time periods include: last 7 days, last month. By default, the latest 7 days of logs are displayed.
+-   Supports custom time periods to view high availability logs for virtual machines during the set period.
+-   Supports searching for high availability logs for virtual machines by entering the virtual machine name or owner.
+-   Supports filtering high availability logs for virtual machines by task result. Task results include: success, failure.
+-   Supports sorting high availability logs for virtual machines by start/completion time.
+-   Supports exporting high availability logs for virtual machines in CSV format.
+-   Supports adjusting the number of completed high availability logs for virtual machines displayed per page. Selectable values are: 10, 20, 50, 100, and pagination is supported.
+
+## Disable HA Policy
+If you wish to globally disable the high availability feature for virtual machines, you can do so on the **HA Policy** page by clicking the **Disable** action.
+
+<Callout type="info">
+After disabling the high availability policy, virtual machines will not automatically restart upon shutdown, which may cause service interruptions. Proceed with caution.
+</Callout>

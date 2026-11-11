@@ -1,0 +1,9 @@
+{
+  "title": "邮箱服务器",
+  "pages": [
+    "index",
+    "add",
+    "manage"
+  ],
+  "pagesIndex": "index"
+}

@@ -1,0 +1,118 @@
+---
+title: "获取事件"
+---
+
+<APIPage method="GET" path="/v1/zwatch/events">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zwatch/events?startTime=1.596444516295E12&limit=10.0&conditions=HostUuid=99ca12b945a8489c93a3412cbc744193&count=false&start=0.0
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|startTime \(可选\)|Long|query|起始时间| |2.3|
+|endTime \(可选\)|Long|query|结束时间| |2.3|
+|limit \(可选\)|Integer|query|最大返回条数| |2.3|
+|offsetAheadOfCurrentTime \(可选\)|Long|query|早于当前时间的毫秒数，例如：查询最近一小时的消息，则传入3600000| |3.3.0|
+|conditions \(可选\)|List|query|查询条件| |3.3.0|
+|count \(可选\)|boolean|query|是否查询事件数量| |3.3.0|
+|endpointUuid \(可选\)|String|query|接收端Uuid| |3.10.0|
+|systemTags \(可选\)|List|query|系统标签| |2.3|
+|userTags \(可选\)|List|query|用户标签| |2.3|
+
+## API返回
+返回示例
+
+```
+{
+  "events": [
+    {
+      "namespace": "ZStack/VM",
+      "name": "org.zstack.zwatch.datatype.EventFamily@2c24d960",
+      "labels": {},
+      "emergencyLevel": "Normal",
+      "resourceId": "b7bbe5fb9ab049c5a36bf8a646471cff",
+      "resourceName": "VmInstanceVO",
+      "time": 1596444516324.0
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|total|Long|事件数目|3.3.0|
+|success|boolean| |3.3.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_tgs_xrh_kgb)|2.3|
+|events|List|详情参考[events](#p_ltt_yrh_kgb)|2.3|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|2.3|
+|description|String|错误的概要描述|2.3|
+|details|String|错误的详细信息|2.3|
+|elaboration|String|保留字段，默认为null|2.3|
+|opaque|LinkedHashMap|保留字段，默认为null|2.3|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|2.3|
+
+### events
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|namespace|String|名字空间|2.3|
+|name|String|事件名|2.3|
+|labels|Map|标签|2.3|
+|resourceId|String|产生事件资源的ID（如果为ZSvirt资源则为资源UUID）|2.3|
+|resourceName|String|资源名称|2.3|
+|error|String|如果事件代表错误，该字段为错误详情|2.3|
+|time|long|事件产生时间|2.3|
+|dataUuid|String|消息UUID|3.3|
+|accountUuid|String|账户UUID|3.3|
+|emergencyLevel|EmergencyLevel|详情参考[emergencyLevel](#p_cf5_zrh_kgb)|2.3|
+
+### emergencyLevel
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|name|String|资源名称|2.3|
+|ordinal|int| |2.3|
+
+## SDK示例
+Java SDK
+
+```
+GetEventDataAction action = new GetEventDataAction();
+action.startTime = 1.596444516404E12;
+action.limit = 10.0;
+action.conditions = asList("HostUuid=00d80d7c47124d6d8e2c7736e9af1c34");
+action.count = false;
+action.start = 0.0;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetEventDataAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetEventDataAction action = GetEventDataAction()
+action.startTime = 1.596444516405E12
+action.limit = 10.0
+action.conditions = [HostUuid=7581302347d0439fbdde32b914e2449a]
+action.count = false
+action.start = 0.0
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetEventDataAction.Result res = action.call()
+```
+
+</APIPage>

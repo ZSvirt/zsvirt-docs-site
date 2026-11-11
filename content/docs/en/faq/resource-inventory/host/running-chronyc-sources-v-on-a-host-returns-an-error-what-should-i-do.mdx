@@ -1,0 +1,18 @@
+---
+title: "Running chronyc sources -v on a host returns an error. What should I do?"
+---
+
+<HistoricalNamingNote locale="en" />
+
+## Symptom
+Running `chronyc sources -v` on a host returns the error: `libedit.so.0: cannot open shared object file: No such file or directory`.
+
+## Cause
+The libedit dependency package is missing from the host.
+
+## Solution
+-   Log in to the host and run the following command to manually install the libedit package:
+
+    ```
+    [root@localhost ~]# yum --disablerepo=* --enablerepo=zstack-local install -y libedit
+    ```

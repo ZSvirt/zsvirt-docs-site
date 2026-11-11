@@ -1,0 +1,80 @@
+---
+title: "Set VM Boot Mode"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "setVmBootMode": {
+    "bootMode": "Legacy"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"setVmBootMode":{"bootMode":"Legacy"}}' http://localhost:8080/zstack/v1/vm-instances/aeba3a383f02352bb855f15f73e3840d/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Resource UUID, uniquely identifies the resource| |4.2.0|
+|bootMode|String|body \(contained in **setVmBootMode** structure\)| | |4.2.0|
+|systemTags \(Optional\)|List|body| | |4.2.0|
+|userTags \(Optional\)|List|body| | |4.2.0|
+
+## API Response
+On success, this API returns an empty JSON structure **`{}`**. On error, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+SetVmBootModeAction action = new SetVmBootModeAction();
+action.uuid = "aeba3a383f02352bb855f15f73e3840d";
+action.bootMode = "Legacy";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+SetVmBootModeAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SetVmBootModeAction action = SetVmBootModeAction()
+action.uuid = "aeba3a383f02352bb855f15f73e3840d"
+action.bootMode = "Legacy"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+SetVmBootModeAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,92 @@
+---
+title: "使用图形化界面设置"
+---
+
+## 前提条件
+
+-   选取的两台服务器均需要安装管理节点服务。有关如何安装管理节点服务，请参阅 [安装管理节点](/docs/install-zsphere/deploy/management-node)。
+-   确保两个管理节点的网关地址在同一网络段内，并且两个管理节点的网卡名称配置保持一致。
+-   确保两个管理节点的版本保持一致。
+-   确保两个管理节点的操作系统类型和架构受支持，且两个管理节点系统类型保持一致。
+-   确保两个管理节点使用相同类型的许可证。
+
+## 操作步骤
+
+1.  登录任意一个管理节点的 UI 管理界面。
+
+    如果是还未初始化的全新环境：
+
+    1.  在欢迎使用初始化向导弹窗中，点击**下一步**，系统将自动检测管理节点 HA 状态。
+    2.  在设置管理节点HA弹窗中，点击**前往MN Ops**。
+    3.  点击后，将在浏览器新标签页中打开 MN Ops 页面。
+    如[Figure 1](#fig_l35_zmy_ghc)所示：
+
+    ![从初始化页面前往 MN Ops](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0009_5_1.png)
+
+    如果是现有环境：
+
+    1.  在导航栏中，点击**可靠服务** > **管理节点监控**。
+    2.  在管理节点监控页面，点击**前往MN Ops**。
+    3.  点击后，将在浏览器新标签页中打开 MN Ops 页面。
+    如[Figure 2](#fig_q5y_1ny_ghc)所示：
+
+    ![从管理节点监控页面前往 MN Ops](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0009_5_2.png)
+
+2.  在 MN Ops 的管理节点监控页面，点击**设置管理节点HA**。
+
+    如[Figure 3](#fig_k4t_d4y_ghc)所示：
+
+    ![管理节点监控页面](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0009_5_3.png)
+
+3.  在设置管理节点 HA弹窗中，完成管理节点配置、配置信息确认、设置管理节点 HA。
+
+    1.  对于配置管理节点，参考以下示例完成配置：
+
+        -   **VIP**：设置 VIP 用于后续访问管理节点环境的管理界面
+
+            <Callout type="info">
+                需确保 VIP 与主管理节点 IP 在相同网络段内。
+            </Callout>
+
+        -   **主管理节点IP**：显示主管理节点的 IP 地址。指定主管理节点 SSH 用户名和密码
+        -   **备管理节点IP**：指定备管理节点的 IP 地址、SSH 用户名和密码
+
+### Note:
+
+            -   需确保备管理节点 IP 与主管理节点 IP 在相同网络段内。
+            -   设置管理节点 HA 时，密码仅支持英文字母、数字和以下特殊字符：`-=[];,./~!@#$%^&*()_+|{}:&lt;&gt;?``。若您的管理节点密码不符合此规则，请修改后再设置管理节点 HA。
+        -   **时间同步服务器**：默认使用主管理节点地址作为时间同步服务器
+        -   **强制同步**：默认关闭。当主备管理节点的数据库无法完成自动同步时，对主管理节点强制执行 zsha2 安装命令
+        -   **数据库密码**：留空不填时，默认使用初始数据库密码。若已修改过数据库密码，需填写修改后的数据库密码
+        如[Figure 4](#fig_tkn_nqy_ghc)所示：
+
+        ![配置管理节点](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0009_5_4.png)
+
+    2.  点击**下一步**。
+
+        系统将自动检测是否满足添加条件。
+
+    3.  在确认配置信息步骤中，检查主备管理节点的资源信息。
+
+### Note:
+
+        1.  确定添加后，系统将先自动备份主管理节点的数据库，再执行添加操作。
+        2.  添加时，主备管理节点将停止运行，同时备管理节点的数据库将被主管理节点的数据库覆盖，请谨慎操作。
+        3.  若在对比主备管理节点资源信息时，发现备管理节点存在较多资源，如需保留其资源，建议勾选**切换主备管理节点**。勾选后，将调换主备管理节点角色，将资源较多的备管理节点作为主管理节点来设置管理节点 HA。
+        如[Figure 5](#fig_m3g_bty_ghc)所示：
+
+        ![确认配置信息](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0009_5_5.png)
+
+    4.  输入确认信息后，点击**确定**。
+
+    5.  在设置管理节点 HA步骤中，查看添加进度及任务结果。
+
+        如[Figure 6](#fig_fnv_35y_ghc)所示：
+
+        ![设置管理节点 HA](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0009_5_6.png)
+
+4.  添加成功后，点击**前往VIP**，通过 VIP 访问平台管理界面。
+
+    如[Figure 7](#fig_iwr_3xm_qhc)所示：
+
+    ![前往VIP](/docs/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0009_5_7.png)

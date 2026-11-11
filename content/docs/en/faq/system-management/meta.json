@@ -1,0 +1,8 @@
+{
+  "title": "System Management",
+  "pages": [
+    "log-server",
+    "platform-settings"
+  ],
+  "pagesIndex": "index"
+}

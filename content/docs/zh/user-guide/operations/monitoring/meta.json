@@ -1,0 +1,11 @@
+{
+  "title": "资源监控",
+  "pages": [
+    "index",
+    "resource-performance",
+    "home-monitoring",
+    "dual-management-node",
+    "host-hardware"
+  ],
+  "pagesIndex": "index"
+}

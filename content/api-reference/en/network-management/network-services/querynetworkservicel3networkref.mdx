@@ -1,0 +1,81 @@
+---
+title: "QueryNetworkServiceL3NetworkRef"
+---
+
+<APIPage method="GET" path="/v1/l3-networks/network-services/refs">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/l3-networks/network-services/refs
+```
+
+Queryable Fields
+
+Run the CLI tool, type `QueryNetworkServiceL3NetworkRef` and press the Tab key to view all queryable fields and cross-table queryable resource names.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "l3NetworkUuid": "fc5bd613a8fd45ed9b96ff5d99ae6717",
+      "networkServiceProviderUuid": "f79573afadc44f4fb83aaf67eeb98cde",
+      "networkServiceType": "PortForwarding"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See [error](#p_ov4_5yg_m1b)|0.6|
+|inventories|List|See [inventories](#p_t41_wyg_m1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root error: the source error that caused the current error. If there is no original error, this field is null|0.6|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|l3NetworkUuid|String|The Distributed Port Group UUID|0.6|
+|networkServiceProviderUuid|String|The network service provider UUID|0.6|
+|networkServiceType|String| |0.6|
+
+## SDK Examples
+Java SDK
+
+```
+QueryNetworkServiceL3NetworkRefAction action = new QueryNetworkServiceL3NetworkRefAction();
+action.conditions = asList();
+action.sessionId = "01368722cb7e4c7eac03e7040f8b73e1";
+QueryNetworkServiceL3NetworkRefAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryNetworkServiceL3NetworkRefAction action = QueryNetworkServiceL3NetworkRefAction()
+action.conditions = []
+action.sessionId = "237996a7dddf4cf3a42f6ea15893bc76"
+QueryNetworkServiceL3NetworkRefAction.Result res = action.call()
+```
+
+</APIPage>

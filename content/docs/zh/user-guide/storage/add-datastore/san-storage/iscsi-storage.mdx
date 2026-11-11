@@ -1,0 +1,36 @@
+---
+title: "添加 iSCSI 存储"
+---
+
+已提前在存储侧做好 LUN 设备划分和映射。
+
+## 操作步骤
+
+1.  在导航栏中，选择**资源清单** > **数据存储**。
+
+2.  选择目标数据中心，然后点击**存储目标**。
+
+3.  在存储目标子页面，选择**iSCSI 存储**。
+
+4.  点击**添加 iSCSI 存储**。
+
+5.  在添加 iSCSI 存储弹窗中，参考以下示例完成配置：
+
+    -   **名称**：iSCSI 存储名称
+    -   **IP 地址**：iSCSI 存储服务器 IP 地址
+    -   **端口**：iSCSI 存储目标端口号，默认为 3260 端口
+    -   **关联集群**：iSCSI 存储加载的集群，也可添加 iSCSI 存储后再加载
+
+        <Callout type="info">
+        若您希望使用 iSCSI 存储提供的 LUN 设备，您需要将 iSCSI 存储加载到 SAN 存储所在的集群中。
+        </Callout>
+
+    -   **CHAP 用户名**：CHAP 认证用户名
+    -   **CHAP 密码**：CHAP 认证密码
+
+6.  确认配置无误后，点击**确定**。
+
+您可将 iSCSI 存储上划分的 LUN 设备添加为 SAN 存储或直接透传给虚拟机使用。已被添加为 SAN 存储的 LUN 设备不支持再透传给虚拟机使用。
+
+-   将 iSCSI 存储上的 LUN 设备添加为 SAN 存储，请参阅 [添加 SAN 存储](/docs/user-guide/storage/add-datastore/san-storage)。
+-   将 iSCSI 存储上的 LUN 设备通过 RDM 硬盘直接透传给虚拟机使用，请参阅 [新建虚拟机](/docs/user-guide/compute/vm/basic-operations/create-vm)。

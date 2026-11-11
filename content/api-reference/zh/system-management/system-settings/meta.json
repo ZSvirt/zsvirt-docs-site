@@ -1,0 +1,11 @@
+{
+  "title": "系统设置相关接口",
+  "pages": [
+    "log-server",
+    "snmp",
+    "time-management",
+    "global-setting",
+    "custom-attribute"
+  ],
+  "pagesIndex": "index"
+}

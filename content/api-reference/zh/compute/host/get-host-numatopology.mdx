@@ -1,0 +1,180 @@
+---
+title: "查询主机的NUMA拓扑信息"
+---
+
+<APIPage method="POST" path="/v1/hosts/{uuid}/numa">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/hosts/21529457e42c30f0a9b2a137915a0b28/numa
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|主机UUID| |4.3.12|
+
+## API返回
+返回示例
+
+```
+{
+  "topology": {
+    "0": {
+      "distance": [
+        "10",
+        "10",
+        "21",
+        "21"
+      ],
+      "cpus": [
+        "0",
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7"
+      ],
+      "VMsUuid": [
+        "f7bae73b9874344b8766dfcdda48ad6e",
+        "f7bae73b9874344b8766dfcdda48ad6e"
+      ],
+      "free": 5688.0,
+      "size": 8191.0
+    },
+    "1": {
+      "distance": [
+        "10",
+        "10",
+        "21",
+        "21"
+      ],
+      "cpus": [
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22",
+        "23"
+      ],
+      "VMsUuid": [
+        "f7bae73b9874344b8766dfcdda48ad6e",
+        "f7bae73b9874344b8766dfcdda48ad6e"
+      ],
+      "free": 5688.0,
+      "size": 8191.0
+    },
+    "2": {
+      "distance": [
+        "21",
+        "21",
+        "10",
+        "10"
+      ],
+      "cpus": [
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15"
+      ],
+      "VMsUuid": [
+        "f7bae73b9874344b8766dfcdda48ad6e",
+        "f7bae73b9874344b8766dfcdda48ad6e"
+      ],
+      "free": 5688.0,
+      "size": 8191.0
+    },
+    "3": {
+      "distance": [
+        "21",
+        "21",
+        "10",
+        "10"
+      ],
+      "cpus": [
+        "24",
+        "25",
+        "26",
+        "27",
+        "28",
+        "29",
+        "30",
+        "31"
+      ],
+      "VMsUuid": [
+        "f7bae73b9874344b8766dfcdda48ad6e",
+        "f7bae73b9874344b8766dfcdda48ad6e"
+      ],
+      "free": 5688.0,
+      "size": 8191.0
+    }
+  },
+  "name": "172.20.14.243",
+  "uuid": "7fd86bbe6ca94a8d810aa1d33e29932c"
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_z5m_lnk_mlb)|4.3.12|
+|name|String|资源名称|4.3.12|
+|uuid|String|资源的UUID，唯一标示该资源|4.3.12|
+|topology|String|NUMA拓扑信息，详情见[topology](#p_xds_mry_1sb)|4.3.12|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.3.12|
+|description|String|错误的概要描述|4.3.12|
+|details|String|错误的详细信息|4.3.12|
+|elaboration|String|保留字段，默认为null|4.3.12|
+|opaque|LinkedHashMap|保留字段，默认为null|4.3.12|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.3.12|
+
+### topology
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|cpus|array\[string\]|NUMA node包含的CPUs id列表|4.3.12|
+|size|long|NUMA node总内存大小\(单位为B\)|4.3.12|
+|distance|array\[string\]|该NUMA node与其他node的距离|4.3.12|
+|VMsUuid|array\[string\]|该NUMA node关联VM的Uuid|4.3.12|
+|free|long|NUMA node可用内存大小\(单位为B\)|4.3.12|
+
+## SDK示例
+Java SDK
+
+```
+GetHostNUMATopologyAction action = new GetHostNUMATopologyAction();
+action.uuid = "2b8e587e99093c46b27e774dfe93024f";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetHostNUMATopologyAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetHostNUMATopologyAction action = new GetHostNUMATopologyAction();
+action.uuid = "2b8e587e99093c46b27e774dfe93024f";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetHostNUMATopologyAction.Result res = action.call();
+```
+
+</APIPage>

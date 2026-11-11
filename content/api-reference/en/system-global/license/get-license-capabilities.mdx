@@ -1,0 +1,58 @@
+---
+title: "Get License Capabilities"
+---
+
+<APIPage method="GET" path="/v1/licenses/capabilities">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/licenses/capabilities
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|systemTags \(Optional\)|List|query|System tags| |0.6|
+|userTags \(Optional\)|List|query|User tags| |0.6|
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On failure, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+GetLicenseCapabilitiesAction action = new GetLicenseCapabilitiesAction();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetLicenseCapabilitiesAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetLicenseCapabilitiesAction action = GetLicenseCapabilitiesAction()
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetLicenseCapabilitiesAction.Result res = action.call()
+```
+
+</APIPage>

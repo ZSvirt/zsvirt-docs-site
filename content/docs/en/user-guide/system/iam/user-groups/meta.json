@@ -1,0 +1,10 @@
+{
+  "title": "User Group Management",
+  "pages": [
+    "index",
+    "create-group",
+    "modify-group",
+    "delete-group"
+  ],
+  "pagesIndex": "index"
+}

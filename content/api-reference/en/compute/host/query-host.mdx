@@ -1,0 +1,710 @@
+---
+title: "Query Host"
+---
+
+<APIPage method="GET" path="/v1/hosts" altPaths={["/v1/hosts/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/hosts?q=uuid=66547f0fc9fd45d98f6b8482488f2993
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/hosts/bb582f21cfad4f61a2ab1ec062131b4a
+```
+
+Queryable Fields
+
+Run the CLI command tool, enter `QueryHost`, and press Tab to view all queryable fields and resource names that support cross-table queries.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "zoneUuid": "37649b12f572303a883c19c4c7af0856",
+      "name": "example",
+      "uuid": "f7bae73b9874344b8766dfcdda48ad6e",
+      "clusterUuid": "d59c027b81fe3bbc9d78ef45f574febb",
+      "description": "example",
+      "managementIp": "192.168.0.1",
+      "hypervisorType": "KVM",
+      "state": "Enabled",
+      "status": "Connected",
+      "totalCpuCapacity": 4,
+      "availableCpuCapacity": 2,
+      "cpuSockets": 4,
+      "totalMemoryCapacity": 4294967296,
+      "availableMemoryCapacity": 4294967296,
+      "cpuNum": 4
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See [error](#p_blf_4hw_rcb) for details|0.6|
+|inventories|List|See [inventories](#p_pdk_mv5_m1b) for details|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier, e.g. SYS.1000, HOST.1001|0.6|
+|description|String|Brief error description|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause. The error that caused the current error. If there is no original error, this field is null|0.6|
+
+### inventories
+<table id="table_hwd_4r5_m1b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Description
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+zoneUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+Data Center UUID
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+name
+
+</td><td>
+
+String
+
+</td><td>
+
+Resource name
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+Resource UUID, uniquely identifies the resource
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+clusterUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+Cluster UUID
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+description
+
+</td><td>
+
+String
+
+</td><td>
+
+Resource description
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+managementIp
+
+</td><td>
+
+String
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+hypervisorType
+
+</td><td>
+
+String
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+state
+
+</td><td>
+
+String
+
+</td><td>
+
+Host state, including:-   Enabled
+-   Disabled
+-   PreMaintenance
+-   Maintenance
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+status
+
+</td><td>
+
+String
+
+</td><td>
+
+-   Connecting
+-   Connected
+-   Disconnected
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+totalCpuCapacity
+
+</td><td>
+
+Long
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+availableCpuCapacity
+
+</td><td>
+
+Long
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+cpuSockets
+
+</td><td>
+
+Integer
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+totalMemoryCapacity
+
+</td><td>
+
+Long
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+availableMemoryCapacity
+
+</td><td>
+
+Long
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+cpuNum
+
+</td><td>
+
+Integer
+
+</td><td>
+
+Logical CPU count
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+ipmiAddress
+
+</td><td>
+
+String
+
+</td><td>
+
+IPMI address
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+ipmiUsername
+
+</td><td>
+
+String
+
+</td><td>
+
+IPMI username
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+ipmiPort
+
+</td><td>
+
+Integer
+
+</td><td>
+
+IPMI port
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+ipmiPowerStatus
+
+</td><td>
+
+String
+
+</td><td>
+
+IPMI power status
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+architecture
+
+</td><td>
+
+String
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+nqn
+
+</td><td>
+
+String
+
+</td><td>
+
+NVMe qualified name
+
+</td><td>
+
+4.10.6
+
+</td></tr><tr><td>
+
+hostname
+
+</td><td>
+
+String
+
+</td><td>
+
+Host name
+
+</td><td>
+
+4.10.20
+
+</td></tr><tr><td>
+
+createDate
+
+</td><td>
+
+Timestamp
+
+</td><td>
+
+Creation time
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+lastOpDate
+
+</td><td>
+
+Timestamp
+
+</td><td>
+
+Last modification time
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+cpuStatus
+
+</td><td>
+
+HwMonitorStatus
+
+</td><td>
+
+See [cpuStatus](#p_wvd_kkm_lhc)
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+memoryStatus
+
+</td><td>
+
+HwMonitorStatus
+
+</td><td>
+
+See [memoryStatus](#p_nhh_kkm_lhc)
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+diskStatus
+
+</td><td>
+
+HwMonitorStatus
+
+</td><td>
+
+See [diskStatus](#p_esk_kkm_lhc)
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+nicStatus
+
+</td><td>
+
+HwMonitorStatus
+
+</td><td>
+
+See [nicStatus](#p_n24_kkm_lhc)
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+gpuStatus
+
+</td><td>
+
+HwMonitorStatus
+
+</td><td>
+
+See [gpuStatus](#p_zgr_kkm_lhc)
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+powerSupplyStatus
+
+</td><td>
+
+HwMonitorStatus
+
+</td><td>
+
+See [powerSupplyStatus](#p_o35_kkm_lhc)
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+fanStatus
+
+</td><td>
+
+HwMonitorStatus
+
+</td><td>
+
+See [fanStatus](#p_m2x_kkm_lhc)
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+raidStatus
+
+</td><td>
+
+HwMonitorStatus
+
+</td><td>
+
+See [raidStatus](#p_oc1_lkm_lhc)
+
+</td><td>
+
+4.10.0
+
+</td></tr><tr><td>
+
+temperatureStatus
+
+</td><td>
+
+HwMonitorStatus
+
+</td><td>
+
+See [temperatureStatus](#p_cyd_lkm_lhc)
+
+</td><td>
+
+4.10.0
+
+</td></tr></tbody>
+</table>
+
+### cpuStatus
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### memoryStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### diskStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### nicStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### gpuStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### powerSupplyStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### fanStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### raidStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### temperatureStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+## SDK Examples
+Java SDK
+
+```
+QueryHostAction action = new QueryHostAction();
+action.conditions = asList("uuid=2b8e587e99093c46b27e774dfe93024f");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryHostAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = QueryHostAction()
+action.conditions = ["uuid=ff6d905e75d63e18ab0a9fc2ac14951c"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,11 @@
+{
+  "title": "Snapshot Policy Basic Operations",
+  "pages": [
+    "index",
+    "create",
+    "enable-disable",
+    "modify",
+    "delete"
+  ],
+  "pagesIndex": "index"
+}

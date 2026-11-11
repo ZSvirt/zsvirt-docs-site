@@ -1,0 +1,24 @@
+---
+title: "How do I uninstall Linux VMTools?"
+---
+
+<HistoricalNamingNote locale="en" />
+
+## Solution
+1.  Log in to the virtual machine and run the following command to stop the service:
+
+    ```
+    [root@localhost ~]# service zwatch-vm-agent stop
+    ```
+
+2.  Run the following command to remove the file:
+
+    ```
+    [root@localhost ~]# mv /etc/systemd/system/zwatch-vm-agent.service
+    ```
+
+3.  Run the following command to remove the directory:
+
+    ```
+    [root@localhost ~]# mv /usr/local/zstack/zwatch-vm-agent
+    ```

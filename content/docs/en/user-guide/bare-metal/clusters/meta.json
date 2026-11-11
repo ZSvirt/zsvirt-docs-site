@@ -1,0 +1,10 @@
+{
+  "title": "Bare Metal Cluster",
+  "pages": [
+    "index",
+    "create-cluster",
+    "manage-deployment-server",
+    "delete-cluster"
+  ],
+  "pagesIndex": "index"
+}

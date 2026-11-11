@@ -1,0 +1,93 @@
+---
+title: "创建HTTP接收端"
+---
+
+<APIPage method="POST" path="/v1/sns/application-endpoints/http">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "url": "http://127.0.0.1:6666/test-url",
+    "username": "username",
+    "password": "password",
+    "name": "http"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"url":"http://127.0.0.1:6666/test-url","username":"username","password":"password","name":"http"}}' \
+http://localhost:8080/zstack/v1/sns/application-endpoints/http
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|url|String|body\(包含在**params**结构中\)|HTTP URL| |2.3|
+|username \(可选\)|String|body\(包含在**params**结构中\)|用户名| |2.3|
+|password \(可选\)|String|body\(包含在**params**结构中\)|密码| |2.3|
+|name|String|body\(包含在**params**结构中\)|资源名称| |2.3|
+|description \(可选\)|String|body\(包含在**params**结构中\)|资源的详细描述| |2.3|
+|resourceUuid \(可选\)|String|body\(包含在**params**结构中\)| | |2.3|
+|systemTags \(可选\)|List|body|系统标签| |2.3|
+|userTags \(可选\)|List|body|用户标签| |2.3|
+|platformUuid \(可选\)|String|body\(包含在**params**结构中\)| | |0.6|
+
+## API返回
+该API成功时返回一个空的JSON结构**`{}`**，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+CreateSNSHttpEndpointAction action = new CreateSNSHttpEndpointAction();
+action.url = "http://127.0.0.1:6666/test-url";
+action.username = "username";
+action.password = "password";
+action.name = "http";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateSNSHttpEndpointAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateSNSHttpEndpointAction action = CreateSNSHttpEndpointAction()
+action.url = "http://127.0.0.1:6666/test-url"
+action.username = "username"
+action.password = "password"
+action.name = "http"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateSNSHttpEndpointAction.Result res = action.call()
+```
+
+</APIPage>

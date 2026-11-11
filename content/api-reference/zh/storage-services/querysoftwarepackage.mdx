@@ -1,0 +1,106 @@
+---
+title: "查询软件包"
+---
+
+<APIPage method="GET" path="/v1/software-package" altPaths={["/v1/software-package/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/software-package?q=uuid=ff04e1736ec6391f9a1f023b524d0a00
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/software-package/dbe8d717b4f7335580774fabc403cc78
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QuerySoftwarePackage`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "53c0433a817349f89f66532addeb8b6c",
+      "name": "SoftwarePackage",
+      "hostUuid": "53c0433a817349f89f66532addeb8b61",
+      "managementNodeUuid": "53c0433a817349f89f66532addeb8b62",
+      "installPath": "/root/file/ZStone-common-installer-5.4.18-1932.tar.gz",
+      "unzipInstallPath": "/root/file/ZStone-common-installer-5.4.18-1932.tar.gz_2c1571fab770b5bab7f411d48aad5029_1762415407323/zstone-installer",
+      "type": "zstone",
+      "md5sum": "53c0433a817349f89f66532addeb8b63",
+      "status": "Uploaded",
+      "size": 1024,
+      "createDate": "Nov 14, 2017 2:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.10.20|
+|inventories|List|详情参考[inventories](#p_tm4_4s3_mhc)|4.10.20|
+|error|ErrorCode|详情参考[error](#p_irn_1jx_r2c)|4.10.20|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.10.20|
+|name|String|资源名称|4.10.20|
+|hostUuid|String|主机UUID|4.10.20|
+|managementNodeUuid|String|上传到管理节点UUID|4.10.20|
+|installPath|String|安装路径|4.10.20|
+|unzipInstallPath|String|解压安装路径|4.10.20|
+|type|String|安装包类型|4.10.20|
+|md5sum|String|安装包MD5校验值|4.10.20|
+|status|String|安装包状态|4.10.20|
+|size|long|安装包大小|4.10.20|
+|createDate|Timestamp|创建时间|4.10.20|
+|lastOpDate|Timestamp|最后一次修改时间|4.10.20|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+QuerySoftwarePackageAction action = new QuerySoftwarePackageAction();
+action.conditions = asList("uuid=ff04e1736ec6391f9a1f023b524d0a00");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QuerySoftwarePackageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = QuerySoftwarePackageAction()
+action.conditions = ["uuid=ff04e1736ec6391f9a1f023b524d0a00"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

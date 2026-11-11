@@ -1,0 +1,11 @@
+{
+  "title": "分布式存储资源管理",
+  "pages": [
+    "index",
+    "storage-pool",
+    "storage-node",
+    "data-disk",
+    "physical-disk"
+  ],
+  "pagesIndex": "index"
+}

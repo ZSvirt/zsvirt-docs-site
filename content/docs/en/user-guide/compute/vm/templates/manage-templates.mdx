@@ -1,0 +1,30 @@
+---
+title: 'Manage Virtual Machine Templates'
+---
+
+You can modify virtual machine templates according to your business needs, including editing names and descriptions, changing configurations, and altering ownership. If you no longer need a template, you can delete the virtual machine template.
+
+## Edit Name and Description
+If you only need to modify the template's name and description, in the target template page, click on the **Action** &gt; **Edit Name and Description** to make the changes.
+
+<Callout type="info">
+The new name must be unique and cannot duplicate the names of existing virtual machines or templates.
+</Callout>
+
+## Modify Configuration
+If you need to modify the basic information, total number of CPU cores, number of cores per socket, memory size, or hard disk capacity of the template, in the target template page, click on the **Action** &gt; **Modify Configuration** and make the necessary changes to the corresponding settings.
+
+If you need to make extensive adjustments to the template configuration, you can first convert the template to a virtual machine, then adjust the configuration as needed. Once the adjustments are complete, convert the virtual machine back into a template for future use.
+
+## Change Ownership
+If you need to change the owner of the template, in the target template page, click on the **Action** &gt; **Change Ownership** and specify the new owner.
+
+## Delete Virtual Machine Template
+You can delete a virtual machine template using either of the following methods:
+
+-   To delete a single template: Navigate to the target template page, click on the **Action** &gt; **Delete** to perform the deletion operation.
+-   To delete multiple templates in bulk: Navigate to the parent resource (data center) corresponding Image and Template sub-page, select the target templates, and then click on the **Bulk Action** &gt; **Delete** to perform the deletion operation.
+
+<Callout type="info">
+After deleting a template, you will not be able to recover the template files (including network card, hard disk files, and database records). Proceed with caution.
+</Callout>

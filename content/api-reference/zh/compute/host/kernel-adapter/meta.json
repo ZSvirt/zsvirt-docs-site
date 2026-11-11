@@ -1,0 +1,12 @@
+{
+  "title": "Kernel适配器相关接口",
+  "pages": [
+    "create-host-kernel-interface",
+    "delete-host-kernel-interface",
+    "update-host-kernel-interface",
+    "query-host-kernel-interface",
+    "batch-create-host-kernel-interface",
+    "get-candidate-host-kernel-interfaces"
+  ],
+  "pagesIndex": "index"
+}

@@ -1,0 +1,78 @@
+---
+title: "Through GUI"
+---
+
+## Prerequisites
+
+-   You must install management node services on the selected two servers. For installation instructions, see [Install Management Node](/en/docs/install-zsphere/deploy/management-node).
+-   Ensure both management nodes have gateway addresses on the same network segment and have consistent NIC names.
+-   Ensure both management nodes are running the same version.
+-   Ensure the operating system type and architecture are supported and both management nodes run compatible operating system types.
+-   Ensure both management nodes use the same license type.
+
+## Procedure
+
+1.  Log in to the UI management interface of either management node.
+
+    For a new environment that has not been initialized:
+
+    1.  In the Welcome to Initialization Wizard dialog, click **Next**. The system automatically detects the management node HA status.
+    2.  In the Set Up MN HA dialog, click **Go to MN Ops**.
+    3.  A new browser tab opens displaying the MN Ops page.
+    ![Go to MN Ops from the Initialization Page](/docs/en/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0009_5_1.png)
+
+    For an existing environment:
+
+    1.  In the navigation pane, choose **Reliability** > **MN Monitoring**.
+    2.  On the MN Monitoring page, click **Go to MN Ops**.
+    3.  A new browser tab opens displaying the MN Ops page.
+    ![Go to MN Ops from the MN Monitoring Page](/docs/en/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0009_5_2.png)
+
+2.  On the MN Monitoring page in MN Ops, click **Set Up MN HA**.
+
+    ![MN Monitoring](/docs/en/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0009_5_3.png)
+
+3.  In the Set Up MN HA dialog, complete configuring MN, reviewing configuration, and setting up MN HA.
+
+    1.  For Configure MN, set the following parameters:
+
+        -   **VIP**: Configure the VIP for accessing the management interface of the management node environment.
+
+            <Callout type="info">
+                Ensure the VIP is in the same network segment as the active management node IP.
+            </Callout>
+
+        -   **Active MN IP**: Display the IP address of the active management node. Specify the SSH username and password for the active management node.
+        -   **Standby MN IP**: Specify the IP address, SSH username, and SSH password for the standby management node.
+
+### Note:
+
+            -   Ensure the standby management node IP is in the same network segment as the active management node IP.
+            -   When setting up management node HA, the management node password can contain English letters, numbers, and these special characters: `-=[];,./~!@#$%^&*()_+|{}:&lt;&gt;?``. If your password does not meet this rule, update it before setting up management node HA.
+        -   **Time Sync Server**: Uses the active management node IP as the time synchronization server by default.
+        -   **Force Sync**: Disabled by default. If the databases between active and standby management nodes cannot synchronize automatically, run the zsha2 installation command forcibly on the active management node.
+        -   **Database Password**: If left blank, the initial database password will be used by default. If the password has been changed, enter the new password here.
+        ![Configure MN](/docs/en/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0009_5_4.png)
+
+    2.  Click **Next**.
+
+        The system automatically checks if the requirements for addition are met.
+
+    3.  In the Review Configuration step, check the resource information of both active and standby management nodes.
+
+### Note:
+
+        1.  Upon confirmation, the system will automatically back up databases from active and standby management nodes before proceeding.
+        2.  During this process, the active and standby MNs will shut down and the standby MN's database will be overwritten by the active MN's database. Proceed with caution.
+        3.  If you find that the standby management node contains more resources during the resource comparison, and you want to preserve these resources, we recommend that you select the **Switch Active/Standby MNs** checkbox. When selected, this option switches the roles of active and standby management nodes, using the resource-rich standby management node as the active management node to set up management node HA.
+        ![Review Configuration](/docs/en/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0009_5_5.png)
+
+    4.  Enter the confirmation information. Then, click **OK**.
+
+    5.  In the Set Up MN HA step, view the addition progress and task results.
+
+        ![Set Up MN HA](/docs/en/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0009_5_6.png)
+
+4.  After the addition completes successfully, click **Go to VIP** to access the platform management interface through the VIP.
+
+    ![Go to VIP](/docs/en/install-zsphere/images/ZStack_ZSphere_Installation_Tutorial_0009_5_7.png)

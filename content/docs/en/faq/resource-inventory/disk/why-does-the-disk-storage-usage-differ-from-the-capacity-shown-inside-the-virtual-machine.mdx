@@ -1,0 +1,9 @@
+---
+title: "Why does the disk storage usage differ from the capacity shown inside the virtual machine?"
+---
+
+## Feature description
+The platform can only detect data write operations and cannot detect deletions performed inside the virtual machine. When the virtual machine writes data, disk storage usage increases. When data is deleted inside the virtual machine, the disk storage usage on the virtualization platform does not decrease:
+
+-   For security reasons, the virtualization platform has no visibility into the business virtual machine by default. Data changes inside the virtual machine are not synchronized to the virtualization platform.
+-   To obtain the actual capacity, install VMTools and check the capacity through internal monitoring.

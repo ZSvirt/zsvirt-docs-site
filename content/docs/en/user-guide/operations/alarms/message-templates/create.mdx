@@ -1,0 +1,44 @@
+---
+title: 'New Message Template'
+---
+
+Message templates are text templates used by alarms to push notification messages to endpoints. You can specify a default message template for each type of endpoint, and alarm messages will be sent using the format of the default template.
+
+Before creating message templates for DingTalk, Lark, WeCom, or Microsoft Teams, make sure ZSvirt has an installed Advanced Edition license, and that the license is in a valid state.
+
+1.  In the navigation pane, choose **O&M Management** &gt; **Message Template**.
+
+2.  On the Message Template page, click **New Message Template**.
+
+3.  In the New Message Template dialog, set the following parameters:
+
+    **Basic Information**
+
+    -   **Name**: Enter the name for the message template.
+    -   **Description**: Provide a description for the message template.
+    **Template Information**
+
+    When the type is selected as Email, DingTalk, Lark, WeCom, HTTP Application, or Microsoft Teams, configure the template as follows:
+
+    -   **Type**: Select the message template type, choosing from Email, DingTalk, Lark, WeCom, HTTP Application, or Microsoft Teams.
+    -   **Alarm Type**: Select resource alarms or event alarms.
+    -   **Alarm Message Title**: The title displayed in the alarm message.
+    -   **Alarm Message Text**: The text displayed in the alarm message.
+    -   **Recovery Message Title**: The title of the recovery message sent when a monitored resource's status returns to normal. This parameter is only supported for resource alarms.
+    -   **Recovery Message Text**: The text of the recovery message. This parameter is only supported for resource alarms.
+    -   **Default Template**: Unchecked by default. Checking this option sets the current template as the default template.
+    When the type is selected as SMS, configure the template as follows:
+
+    -   **Type**: Select SMS as the message template type.
+    -   **Signature**: Enter the SMS signature name applied for on the third-party platform.
+    -   **Resource Alarm Template**: Set the resource alarm message template and enter the resource alarm template CODE.
+    -   **Event Alarm Template**: Set the event alarm message template and enter the event alarm template CODE.
+    -   **Default Template**: Set this template as the default template. After setting, all SMS messages will be sent in this template format.
+    <Callout type="info">
+    </Callout>
+    1.  To create an Email or Lark message template, follow the Text syntax.
+    2.  To create a DingTalk or WeCom message template, follow the Markdown syntax
+    3.  To create a HTTP Application message template, follow the JSON syntax
+    4.  To create a Microsoft Teams message template, follow the Webhook syntax requirements listed on the Microsoft Teams official website
+    5.  To create a SMS message template, you need to apply for third-party SMS signatures templates in advance. Currently, you can use Alibaba Cloud SMS service. Any template changes require re-applying through the third-party service.
+4.  Review the configuration and click **OK**.

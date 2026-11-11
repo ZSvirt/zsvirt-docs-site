@@ -1,0 +1,95 @@
+---
+title: "Sync Database Backup"
+---
+
+<APIPage method="PUT" path="/v1/database-backups/imageStore/{imageStoreUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "syncDatabaseBackup": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The **systemTags** and **userTags** fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"syncDatabaseBackup":{}}' http://localhost:8080/zstack/v1/database-backups/imageStore/77e7125f5ecf4cbe9129b0e8483a00ae/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|imageStoreUuid|String|url|Backup storage UUID| |3.2.0|
+|systemTags \(Optional\)|List|body| | |3.2.0|
+|userTags \(Optional\)|List|body| | |3.2.0|
+
+## API Response
+Response Example
+
+```
+{
+  "result": {
+    "deletedBackupCount": 1.0,
+    "newBackupCount": 3.0
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null on success. For details, see [error](#p_gvq_fj3_hkb)|0.6|
+|result|SyncBackupResult|For details, see [result](#p_ljk_fj3_hkb)|3.8.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|The detailed error information|0.6|
+|elaboration|String|Reserved field. Default is null|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null|0.6|
+|cause|ErrorCode|The root error. The source error that caused the current error. This field is null if there is no root error|0.6|
+
+### result
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|deletedBackupCount|int|Number of deleted backups|3.7.0|
+|newBackupCount|int|Number of new backups|3.7.0|
+
+## SDK Examples
+Java SDK
+
+```
+SyncDatabaseBackupAction action = new SyncDatabaseBackupAction();
+action.imageStoreUuid = "e0803f92a12b42688d20f68beef19588";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+SyncDatabaseBackupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SyncDatabaseBackupAction action = SyncDatabaseBackupAction()
+action.imageStoreUuid = "0de54b0b3067493f9461fc74906dfc54"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+SyncDatabaseBackupAction.Result res = action.call()
+```
+
+</APIPage>

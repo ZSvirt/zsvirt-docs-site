@@ -1,0 +1,99 @@
+---
+title: "获取指定标签的监控项数据"
+---
+
+<APIPage method="GET" path="/v1/zwatch/metrics/prometheus/label-values">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zwatch/metrics/prometheus/label-values?namespace=ZStack/VM&metricName=CPUIdleUtilization&startTime=1510669197141&endTime=1510669257141&labelNames=CPUNum&filterLabels=VMUuid=ff01ec80fd11327cba7519b66119d900
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|namespace|String|query|名字空间名称| |4.10.20|
+|metricName|String|query|监控指标名称| |4.10.20|
+|startTime \(可选\)|Long|query|开始时间| |4.10.20|
+|endTime \(可选\)|Long|query|结束时间| |4.10.20|
+|labelNames \(可选\)|List|query|要获取值的标签名列表| |4.10.20|
+|filterLabels \(可选\)|List|query|标签过滤器列表，例如可以指定标签HostUuid=e47f7145f4cd4fca8e2856038ecdf3e1来选择特定物理机的，labelNames中指定标签的值| |4.10.20|
+|systemTags \(可选\)|List|query|系统标签| |4.10.20|
+|userTags \(可选\)|List|query|用户标签| |4.10.20|
+
+## API返回
+返回示例
+
+```
+{
+  "labelValues": {
+    "hostUuid": [
+      "host_uuid_1",
+      "host_uuid_2"
+    ],
+    "cpuNum": [
+      "0",
+      "1",
+      "2",
+      "4"
+    ]
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|labelValues|Map|标签值|4.10.20|
+|success|boolean|获取操作是否成功|4.10.20|
+|error|ErrorCode|详情参考[error](#p_cm2_fw4_mhc)|4.10.20|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+GetPrometheusMetricLabelValueAction action = new GetPrometheusMetricLabelValueAction();
+action.namespace = "ZStack/VM";
+action.metricName = "CPUIdleUtilization";
+action.startTime = 1510669197141;
+action.endTime = 1510669257141;
+action.labelNames = asList("CPUNum");
+action.filterLabels = asList("VMUuid=ff01ec80fd11327cba7519b66119d900");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetPrometheusMetricLabelValueAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = GetPrometheusMetricLabelValueAction()
+action.namespace = "ZStack/VM"
+action.metricName = "CPUIdleUtilization"
+action.startTime = 1510669197141
+action.endTime = 1510669257141
+action.labelNames = [CPUNum]
+action.filterLabels = [VMUuid=ff01ec80fd11327cba7519b66119d900]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

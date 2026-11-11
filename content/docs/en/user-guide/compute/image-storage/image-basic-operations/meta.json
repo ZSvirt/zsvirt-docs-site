@@ -1,0 +1,11 @@
+{
+  "title": "Image Basic Operations",
+  "pages": [
+    "index",
+    "add-image",
+    "sync-image",
+    "migrate-image",
+    "delete-image"
+  ],
+  "pagesIndex": "index"
+}

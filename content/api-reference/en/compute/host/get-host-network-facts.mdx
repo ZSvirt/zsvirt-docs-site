@@ -1,0 +1,236 @@
+---
+title: "Get Host Physical Network Information"
+---
+
+<APIPage method="GET" path="/v1/hosts/network-facts/{hostUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/hosts/network-facts/9397de8c860231c08b87031e226c691b
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|hostUuid|String|url|Host UUID| |3.5.0|
+|systemTags \(optional\)|List|query| | |3.5.0|
+|userTags \(optional\)|List|query| | |3.5.0|
+
+## API Response
+Response Example
+
+```
+{
+  "bondings": [
+    {
+      "uuid": "c1ff34db684e3b8785572902ef99efea",
+      "hostUuid": "e336fa8ef9283fe4a4d746957284379a",
+      "bondingName": "bond0",
+      "mode": "active-backup 1",
+      "xmitHashPolicy": "layer2 0",
+      "miiStatus": "up",
+      "mac": "ac:1f:6b:93:6c:8c",
+      "ipAddresses": [
+        "172.20.0.116/16"
+      ],
+      "miimon": 100.0,
+      "allSlavesActive": true,
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM",
+      "slaves": [
+        {
+          "uuid": "08643629c29d34a0a4a2d858b49a41a4",
+          "hostUuid": "e336fa8ef9283fe4a4d746957284379a",
+          "bondingUuid": "c1ff34db684e3b8785572902ef99efea",
+          "interfaceName": "eno1",
+          "interfaceType": "bondingSlave",
+          "speed": 1000.0,
+          "slaveActive": true,
+          "carrierActive": true,
+          "mac": "ac:1f:6b:93:6c:8c",
+          "createDate": "Nov 14, 2017 10:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+        },
+        {
+          "uuid": "14ca7ad13e573cfdb6f929b12b750553",
+          "hostUuid": "e336fa8ef9283fe4a4d746957284379a",
+          "bondingUuid": "c1ff34db684e3b8785572902ef99efea",
+          "interfaceName": "eno2",
+          "interfaceType": "bondingSlave",
+          "speed": 1000.0,
+          "slaveActive": false,
+          "carrierActive": false,
+          "mac": "ac:1f:6b:93:6c:8c",
+          "createDate": "Nov 14, 2017 10:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+        }
+      ]
+    }
+  ],
+  "nics": [
+    {
+      "uuid": "08643629c29d34a0a4a2d858b49a41a4",
+      "hostUuid": "e336fa8ef9283fe4a4d746957284379a",
+      "bondingUuid": "c1ff34db684e3b8785572902ef99efea",
+      "interfaceName": "eno1",
+      "interfaceType": "bondingSlave",
+      "speed": 1000.0,
+      "slaveActive": true,
+      "carrierActive": true,
+      "mac": "ac:1f:6b:93:6c:8c",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    },
+    {
+      "uuid": "14ca7ad13e573cfdb6f929b12b750553",
+      "hostUuid": "e336fa8ef9283fe4a4d746957284379a",
+      "bondingUuid": "c1ff34db684e3b8785572902ef99efea",
+      "interfaceName": "eno2",
+      "interfaceType": "bondingSlave",
+      "speed": 1000.0,
+      "slaveActive": false,
+      "carrierActive": false,
+      "mac": "ac:1f:6b:93:6c:8c",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    },
+    {
+      "uuid": "8d871eb89020363ebc764ed41be4c213",
+      "hostUuid": "e336fa8ef9283fe4a4d746957284379a",
+      "interfaceName": "ens2f0",
+      "interfaceType": "noMaster",
+      "speed": 1000.0,
+      "slaveActive": true,
+      "carrierActive": true,
+      "ipAddresses": [
+        "169.254.0.115/24"
+      ],
+      "mac": "98:03:9b:00:ea:f2",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    },
+    {
+      "uuid": "d39d0eead2d53e47a8f7b3aca375c1d3",
+      "hostUuid": "e336fa8ef9283fe4a4d746957284379a",
+      "interfaceName": "ens2f1",
+      "interfaceType": "bridgeSlave",
+      "speed": 1000.0,
+      "slaveActive": false,
+      "carrierActive": false,
+      "mac": "98:03:9b:00:ea:f3",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |3.5.0|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See details [error](#p_yzk_5lk_mlb)|3.5.0|
+|bondings|List|See details [bondings](#p_dvv_5lk_mlb)|3.5.0|
+|nics|List|See details [nics](#p_ckv_vlk_mlb)|3.5.0|
+|error|ErrorCode|See details [error](#p_exg_wlk_mlb)|3.5.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, e.g. SYS.1000, HOST.1001|3.5.0|
+|description|String|Brief description of the error|3.5.0|
+|details|String|Detailed error information|3.5.0|
+|elaboration|String|Reserved field, default is null|3.5.0|
+|opaque|LinkedHashMap|Reserved field, default is null|3.5.0|
+|cause|ErrorCode|Root cause, the error that caused the current error. If there is no original error, this field is null|3.5.0|
+
+### bondings
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|3.5.0|
+|hostUuid|String|Host UUID|3.5.0|
+|bondingName|String|Bond name|3.5.0|
+|mode|String|Bond mode|3.5.0|
+|xmitHashPolicy|String|Hash policy|3.5.0|
+|miiStatus|String|MII status|3.5.0|
+|mac|String|MAC address|3.5.0|
+|ipAddresses|List|IP addresses|3.5.0|
+|miimon|Long|MII monitor interval|3.5.0|
+|allSlavesActive|Boolean| |3.5.0|
+|createDate|Timestamp|Creation time|3.5.0|
+|lastOpDate|Timestamp|Last modification time|3.5.0|
+|slaves|List|See details [slaves](#p_y1j_vlk_mlb)|3.5.0|
+
+### slaves
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|3.5.0|
+|hostUuid|String|Host UUID|3.5.0|
+|bondingUuid|String|Bond UUID|3.5.0|
+|interfaceName|String|NIC name|3.5.0|
+|interfaceType|String|NIC usage state, can be nomaster, bridgeSlave, bondSlave|3.5.0|
+|speed|Long|NIC speed|3.5.0|
+|slaveActive|Boolean|Bond link status|3.5.0|
+|carrierActive|Boolean|Physical link status|3.5.0|
+|ipAddresses|List|IP addresses|3.5.0|
+|mac|String|MAC address|3.5.0|
+|pciDeviceAddress|String|NIC PCI address|3.5.0|
+|createDate|Timestamp|Creation time|3.5.0|
+|lastOpDate|Timestamp|Last modification time|3.5.0|
+
+### nics
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|3.5.0|
+|hostUuid|String|Host UUID|3.5.0|
+|bondingUuid|String|Bond UUID|3.5.0|
+|interfaceName|String|NIC name|3.5.0|
+|interfaceType|String|NIC usage state, can be nomaster, bridgeSlave, bondSlave|3.5.0|
+|speed|Long|NIC speed|3.5.0|
+|slaveActive|Boolean|Bond link status|3.5.0|
+|carrierActive|Boolean|Physical link status|3.5.0|
+|ipAddresses|List|IP addresses|3.5.0|
+|mac|String|MAC address|3.5.0|
+|pciDeviceAddress|String|NIC PCI address|3.5.0|
+|createDate|Timestamp|Creation time|3.5.0|
+|lastOpDate|Timestamp|Last modification time|3.5.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, e.g. SYS.1000, HOST.1001|3.5.0|
+|description|String|Brief description of the error|3.5.0|
+|details|String|Detailed error information|3.5.0|
+|elaboration|String|Reserved field, default is null|3.5.0|
+|opaque|LinkedHashMap|Reserved field, default is null|3.5.0|
+|cause|ErrorCode|Root cause, the error that caused the current error. If there is no original error, this field is null|3.5.0|
+
+## SDK Examples
+Java SDK
+
+```
+GetHostNetworkFactsAction action = new GetHostNetworkFactsAction();
+action.hostUuid = "9397de8c860231c08b87031e226c691b";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetHostNetworkFactsAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetHostNetworkFactsAction action = GetHostNetworkFactsAction()
+action.hostUuid = "9397de8c860231c08b87031e226c691b"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetHostNetworkFactsAction.Result res = action.call()
+```
+
+</APIPage>

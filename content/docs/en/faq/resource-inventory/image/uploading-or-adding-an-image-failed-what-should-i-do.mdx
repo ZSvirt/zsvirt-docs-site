@@ -1,0 +1,24 @@
+---
+title: "Uploading or adding an image failed. What should I do?"
+---
+
+## Solution
+-   Check the operation log for the error message to identify the cause. If the failure persists, check or try the following:
+-   Verify that the image data is intact.
+
+-   If the image is in qcow2 format, ensure it is a standalone qcow2 file with no backing file dependencies.
+
+-   Ensure the image does not use an encrypted qcow2 file.
+
+-   If you are adding the image from a local file:
+
+    -   Do not close or refresh the page while the upload is in progress.
+    -   Verify that the terminal can communicate with the Image Storage.
+    -   Low network bandwidth between the terminal and the Image Storage may cause the upload to time out.
+-   If all of the above steps fail, try adding the image using the URL method:
+
+    1.  Upload the image to the Image Storage.
+
+        Use the `winscp` tool to copy the image to the `/root` directory on the Image Storage.
+
+    2.  Go to the Add Image page and add the image using the URL method.

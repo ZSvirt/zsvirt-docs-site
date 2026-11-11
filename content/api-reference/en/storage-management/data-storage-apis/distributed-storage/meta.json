@@ -1,0 +1,25 @@
+{
+  "title": "Distributed Storage Related Interfaces",
+  "pages": [
+    "add-ceph-primary-storage",
+    "query-ceph-primary-storage",
+    "add-mon-to-ceph-primary-storage",
+    "remove-mon-from-ceph-primary-storage",
+    "update-ceph-primary-storage-mon",
+    "add-ceph-primary-storage-pool",
+    "delete-ceph-primary-storage-pool",
+    "query-ceph-primary-storage-pool",
+    "update-ceph-primary-storage-pool",
+    "query-ceph-osd-group",
+    "create-block-volume",
+    "get-access-path",
+    "query-block-volume",
+    "query-xsky-block-volume",
+    "update-block-volume",
+    "update-xsky-block-volume",
+    "check-ceph-health-status",
+    "query-expon-block-volume",
+    "check-ceph-plugin"
+  ],
+  "pagesIndex": "index"
+}

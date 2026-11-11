@@ -1,0 +1,119 @@
+---
+title: "刷新数据存储容量"
+---
+
+<APIPage method="PUT" path="/v1/primary-storage/{primaryStorageUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "syncPrimaryStorageCapacity": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"syncPrimaryStorageCapacity":{}}' \
+http://localhost:8080/zstack/v1/primary-storage/36ad940fe805304b85ca8af209b044b5/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|primaryStorageUuid|String|url|数据存储UUID| |0.6|
+|systemTags \(可选\)|List|body|系统标签| |0.6|
+|userTags \(可选\)|List|body|用户标签| |0.6|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "name": "PS1",
+    "url": "/Cloud_ps",
+    "availableCapacity": 973078528.0,
+    "availablePhysicalCapacity": 973078528.0,
+    "type": "LocalStorage",
+    "state": "Enabled",
+    "status": "Connected",
+    "attachedClusterUuids": [
+      "06b22ab47bb74d2d97dba43ccdde8b9a"
+    ]
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_wgx_bl1_n1b)|0.6|
+|inventory|PrimaryStorageInventory|详情参考[inventory](#p_uds_bl1_n1b)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|zoneUuid|String|数据中心UUID|0.6|
+|name|String|资源名称|0.6|
+|url|String| |0.6|
+|description|String|资源的详细描述|0.6|
+|totalCapacity|Long| |0.6|
+|availableCapacity|Long| |0.6|
+|totalPhysicalCapacity|Long| |0.6|
+|availablePhysicalCapacity|Long| |0.6|
+|systemUsedCapacity|Long| |0.6|
+|type|String| |0.6|
+|state|String| |0.6|
+|status|String| |0.6|
+|mountPath|String| |0.6|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+|attachedClusterUuids|List| |0.6|
+
+## SDK示例
+Java SDK
+
+```
+SyncPrimaryStorageCapacityAction action = new SyncPrimaryStorageCapacityAction();
+action.primaryStorageUuid = "42508a6dbeb24968b4fd7c7a1f4f6859";
+action.sessionId = "bd1b393d64bd424c848cc2760c7aef0f";
+SyncPrimaryStorageCapacityAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SyncPrimaryStorageCapacityAction action = SyncPrimaryStorageCapacityAction()
+action.primaryStorageUuid = "695578d15cc04f2a84585deab75d29c7"
+action.sessionId = "fdead04edbc741f99c826afc6db003a9"
+SyncPrimaryStorageCapacityAction.Result res = action.call()
+```
+
+</APIPage>

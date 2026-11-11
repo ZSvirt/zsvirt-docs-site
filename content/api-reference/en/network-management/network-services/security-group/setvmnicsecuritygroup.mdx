@@ -1,0 +1,114 @@
+---
+title: "SetVmNicSecurityGroup"
+---
+
+<APIPage method="PUT" path="/v1/security-groups/nics/{vmNicUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "setVmNicSecurityGroup": {
+    "refs": [
+      {
+        "securityGroupUuid": "a63c3b35a6553b4a912ee60cd06d5066",
+        "priority": 1
+      }
+    ]
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding sample, both **systemTags** and **userTags** are optional. They are listed here to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8"
+-H "Authorization: OAuth YOUR_SESSION_UUID"
+-X PUT -d '{"setVmNicSecurityGroup":{"refs":[{"securityGroupUuid":"a63c3b35a6553b4a912ee60cd06d5066","priority":1}]}}'
+http://localhost:8080/zstack/v1/security-groups/nics/6b7ad223ebb2328bb646f2e77b34957b/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|vmNicUuid|String|url|The UUID of the NIC, uniquely identifying the resource| |4.7.21|
+|refs|List|body \(included in the **setVmNicSecurityGroup** structure\)|The security groups attached to the NIC| |4.7.21|
+|systemTags \(Optional\)|List|body|System tags| |4.7.21|
+|userTags \(Optional\)|List|body|User tags| |4.7.21|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": [
+    {
+      "uuid": "33aa195b943c3faa87e2c75a787cb7f5",
+      "priority": 1,
+      "securityGroupUuid": "63ec5dcb248138968f0153160b5b8b3a"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.7.21|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See [error](#p_a3v_dx5_m1b)|4.7.21|
+|inventory|SecurityGroupInventory|See [inventory](#p_c4z_dx5_m1b)|4.7.21|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|4.7.21|
+|description|String|Brief description of the error|4.7.21|
+|details|String|Detailed error information|4.7.21|
+|elaboration|String|Reserved field, defaults to null|4.7.21|
+|opaque|LinkedHashMap|Reserved field, defaults to null|4.7.21|
+|cause|ErrorCode|Root error: the source error that caused the current error. If there is no original error, this field is null|4.7.21|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|priority|Integer|The security group priority|4.7.21|
+|vmNicUuid|String|The VM NIC UUID|4.7.21|
+|securityGroupUuid|String|The security group UUID|4.7.21|
+|vmInstanceUuid|String|The VM instance UUID|4.7.21|
+|createDate|Timestamp|The creation time|4.7.21|
+|lastOpDate|Timestamp|The last modification time|4.7.21|
+
+## SDK Examples
+Java SDK
+
+```
+SetVmNicSecurityGroupAction action = new SetVmNicSecurityGroupAction();
+action.vmNicUuid = "6b7ad223ebb2328bb646f2e77b34957b";
+action.refs = asList([securityGroupUuid:a63c3b35a6553b4a912ee60cd06d5066, priority:1]);
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+SetVmNicSecurityGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SetVmNicSecurityGroupAction action = SetVmNicSecurityGroupAction()
+action.vmNicUuid = "6b7ad223ebb2328bb646f2e77b34957b"
+action.refs = [[securityGroupUuid:a63c3b35a6553b4a912ee60cd06d5066, priority:1]]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+SetVmNicSecurityGroupAction.Result res = action.call()
+```
+
+</APIPage>

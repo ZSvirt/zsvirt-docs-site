@@ -1,0 +1,14 @@
+{
+  "title": "Monitoring and Alarm APIs",
+  "pages": [
+    "get-prometheus-metric-label-value",
+    "metric",
+    "task",
+    "event",
+    "alarm",
+    "event-subscription",
+    "alarm-text-template",
+    "auditing"
+  ],
+  "pagesIndex": "index"
+}

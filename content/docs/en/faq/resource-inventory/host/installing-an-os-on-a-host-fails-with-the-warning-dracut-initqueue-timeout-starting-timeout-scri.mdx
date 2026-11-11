@@ -1,0 +1,33 @@
+---
+title: "Installing an OS on a host fails with the warning \"dracut-initqueue timeout - starting timeout script\". What should I do?"
+---
+
+## Symptom
+Installing an operating system on a host fails with the error: `Warning: dracut-initqueue timeout - starting timeout script`.
+
+## Cause
+The boot disk name created by the image-burning software does not match the configuration information in vmlinuz.
+
+## Solution
+1.  After the host displays the error, wait a moment until the Dracut interface appears. Run the following commands to query device information and note the USB drive's sdbx identifier:
+
+    ```
+    dracut# cd /dev
+    # Query all device information
+    dracut# ls 
+    ```
+
+2.  Run the following command to reboot:
+
+    ```
+    dracut# reboot
+    ```
+
+3.  After the reboot, press **e** on the install screen to edit the following entry:
+
+    ```
+    vmlinuz initrd=initrd.img inst.stage2=hd:LABEL=Helixx207x20x86_64.check quiet
+    vmlinuz initrd=initrd.img inst.stage2=hd:/dev/sdb4 nomodeset quiet
+    ```
+
+4.  Press Ctrl+X to restart the host and complete the installation.

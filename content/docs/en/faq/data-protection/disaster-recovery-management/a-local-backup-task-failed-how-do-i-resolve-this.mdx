@@ -1,0 +1,25 @@
+---
+title: "A local backup task failed. How do I resolve this?"
+---
+
+<HistoricalNamingNote locale="en" />
+
+## Cause
+The number of open files for the process exceeded the limit.
+
+## Solution
+1.  Log in to the local backup server and run the following command to check the connection count:
+
+    ```
+    [root@localhost ~]# lsof -p `pgrep zstore`|wc -l
+    ```
+
+    <Callout type="info">
+    The **max open files** limit is **4096**. If the returned connection count exceeds 4096, the process has exceeded its open file limit.
+    </Callout>
+
+2.  Run the following command to restart the zstore service and release connections:
+
+    ```
+    [root@localhost ~]#  systemctl restart zstack-imagestorebackupstorage.service
+    ```

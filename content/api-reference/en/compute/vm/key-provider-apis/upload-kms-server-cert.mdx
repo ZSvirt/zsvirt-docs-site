@@ -1,0 +1,72 @@
+---
+title: "Upload a KMS Server Certificate"
+---
+
+<APIPage method="PUT" path="/v1/key-providers/kms/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "uploadKmsServerCert": {
+    "serverCertPem": "-----BEGIN CERTIFICATE-----\n...\n-----END CERTIFICATE-----"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding example, the `systemTags` and `userTags` fields can be omitted. They are listed to indicate that the body can include these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"uploadKmsServerCert":{"serverCertPem":"-----BEGIN CERTIFICATE-----\n...\n-----END CERTIFICATE-----"}}' \
+http://localhost:8080/zstack/v1/key-providers/kms/ff0a9250e11b3fe5a553d61be176d300/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Optional Value|Since|
+|----|----|--------|-----------|--------------|-----|
+|serverCertPem|String|body \(contained in `uploadKmsServerCert` structure\)|Server certificate| |5.0.0|
+|uuid|String|url|Resource UUID, which uniquely identifies the resource| |5.0.0|
+|systemTags \(optional\)|List|body|System tags| |5.0.0|
+|userTags \(optional\)|List|body|User tags| |5.0.0|
+
+## SDK Example
+Java SDK
+
+```
+UploadKmsServerCertAction action = new UploadKmsServerCertAction();
+action.uuid = "ff0a9250e11b3fe5a553d61be176d300";
+action.serverCertPem = "-----BEGIN CERTIFICATE-----
+...
+-----END CERTIFICATE-----";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UploadKmsServerCertAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = UploadKmsServerCertAction()
+action.uuid = "ff0a9250e11b3fe5a553d61be176d300"
+action.serverCertPem = "-----BEGIN CERTIFICATE-----
+...
+-----END CERTIFICATE-----"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

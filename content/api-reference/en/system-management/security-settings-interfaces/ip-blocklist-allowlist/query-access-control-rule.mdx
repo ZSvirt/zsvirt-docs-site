@@ -1,0 +1,89 @@
+---
+title: "Query IP Access Control Rule"
+---
+
+<APIPage method="GET" path="/v1/login-control/access-control/rules">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/login-control/access-control/rules?q=uuid=4f41ad1c52ac3ba690282ede3d1ebb2a
+```
+
+Queryable Fields
+
+Run the CLI tool, enter `QueryAccessControlRule` and press Tab to view all queryable fields and cross-table queryable resource names.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "rule": "192.168.10.0/24"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_t4n_wqv_j3b)|3.5.1|
+|inventories|List|See [inventories](#p_u3g_wqv_j3b)|3.5.1|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. A globally unique identifier for the error, e.g., SYS.1000, HOST.1001|3.5.1|
+|description|String|Brief description of the error|3.5.1|
+|details|String|Detailed error information|3.5.1|
+|elaboration|String|Reserved field. Defaults to null|3.5.1|
+|opaque|LinkedHashMap|Reserved field. Defaults to null|3.5.1|
+|cause|ErrorCode|Root error. The source error that caused this error. Null if no root cause exists|3.5.1|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource|3.5.1|
+|name|String|Resource name|3.5.1|
+|description|String|Detailed description of the resource|3.5.1|
+|rule|String| |3.5.1|
+|createDate|Timestamp|Creation time|3.5.1|
+|lastOpDate|Timestamp|Last modification time|3.5.1|
+|strategy|ControlStrategy|See [strategy](#p_isw_vqv_j3b)|3.5.1|
+
+### strategy
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|ACCEPT|ControlStrategy| |3.5.1|
+|REJECT|ControlStrategy| |3.5.1|
+
+## SDK Examples
+Java SDK
+
+```
+QueryAccessControlRuleAction action = new QueryAccessControlRuleAction();
+action.conditions = asList("uuid=b4cae0f6a9ac3cd686ba36c81291d197");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryAccessControlRuleAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryAccessControlRuleAction action = QueryAccessControlRuleAction()
+action.conditions = ["uuid=4b3f7d2f1fda3f1d8089b4d037364bf9"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryAccessControlRuleAction.Result res = action.call()
+```
+
+</APIPage>

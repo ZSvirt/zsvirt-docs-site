@@ -1,0 +1,98 @@
+---
+title: "Query Directory"
+---
+
+<APIPage method="GET" path="/v1/directories" altPaths={["/v1/directories/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/directories?q=uuid=39b8a9d8cb2e32b893bd82c5c2be7e24
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/directories/4cfe730d431f3550994064911c1c6e0e
+```
+
+Queryable Fields
+
+Run the CLI tool, type `QueryDirectory` and press Tab to view all queryable fields and cross-table queryable resource names.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "b3c48edddae03e05b328a5b0926ae353",
+      "name": "test",
+      "groupName": "admin/test",
+      "parentUuid": "d0dc05fcf5753c6888d0b082bc0f9caf",
+      "rootDirectoryUuid": "3830935ca3823d05b9010f242139fad4",
+      "zoneUuid": "0f7266aa26f339cb8f0b47a73d0ddc30",
+      "type": "vminstance"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.7.0|
+|inventories|List|For details, see [inventories](#p_tdl_p5z_q2c)|4.7.0|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_rx5_n2s_zz)|4.7.0|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource. Uniquely identifies the resource.|4.6.0|
+|name|String|Resource name|4.6.0|
+|groupName|String|Group it belongs to|4.6.0|
+|parentUuid|String|Parent directory UUID|4.6.0|
+|rootDirectoryUuid|String|Root directory UUID|4.6.0|
+|zoneUuid|String|Data Center UUID|4.6.0|
+|type|String|Directory type|4.6.0|
+|createDate|Timestamp|Creation time|4.6.0|
+|lastOpDate|Timestamp|Last modification time|4.6.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. A globally unique identifier for the error, e.g., SYS.1000, HOST.1001.|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Defaults to null.|0.6|
+|opaque|LinkedHashMap|Reserved field. Defaults to null.|0.6|
+|cause|ErrorCode|Root error. The source error that caused the current error. This field is null if there is no root cause.|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+QueryDirectoryAction action = new QueryDirectoryAction();
+action.conditions = asList("uuid=b07055c553733af095d0714456157626");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryDirectoryAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryDirectoryAction action = QueryDirectoryAction()
+action.conditions = ["uuid=e38b6311766c3f88ab31c2d02db4e58f"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryDirectoryAction.Result res = action.call()
+```
+
+</APIPage>

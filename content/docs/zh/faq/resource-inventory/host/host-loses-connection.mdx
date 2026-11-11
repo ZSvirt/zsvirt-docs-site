@@ -1,0 +1,12 @@
+---
+title: "主机失联，如何解决？"
+---
+
+## 现象
+主机失联，出现`no qemu-kvm-ev-mn repo found, cannot update kvmagent dependencies`报错。
+
+## 原因
+主机异常断电导致文件丢失。
+
+## 解决方案
+-   从正常主机中拷贝`/etc/yum.repos.d/qemu-kvm-ev-mn`文件至故障主机后，重连主机。

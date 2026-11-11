@@ -1,0 +1,84 @@
+---
+title: "绑定角色和账户"
+---
+
+## API 请求
+URLs
+
+```
+POST zstack/v1/identities/accounts/{accountUuid}/roles/{roleUuid}
+```
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X POST -d '{"params":{}}' \
+http://localhost:8080/zstack/v1/identities/accounts/053a25bbfe2c34a889d75601e64d4a51/roles/b7a901c45db33f12993c9c7aad874ff4
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|roleUuid|String|url|角色 UUID| |4.10.0|
+|accountUuid|String|url|账户 UUID| |4.10.0|
+|system Tags \(可选\)|List|body|系统标签| |4.10.0|
+|userTags \(可选\)|List|body|用户标签| |4.10.0|
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+AttachRoleToAccountAction action = new AttachRoleToAccountAction();
+action.roleUuid = "b7a901c45db33f12993c9c7aad874ff4";
+action.accountUuid = "053a25bbfe2c34a889d75601e64d4a51";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AttachRoleToAccountAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+AttachRoleToAccountAction action = AttachRoleToAccountAction()
+action.roleUuid = "b7a901c45db33f12993c9c7aad874ff4"
+action.accountUuid = "053a25bbfe2c34a889d75601e64d4a51"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AttachRoleToAccountAction.Result res = action.call()
+
+```

@@ -1,0 +1,62 @@
+---
+title: "从主机调度组解绑主机"
+---
+
+<APIPage method="DELETE" path="/v1/hostSchedulingRuleGroup/{hostGroupUuid}/host">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/hostSchedulingRuleGroup/801af67a7f1f3610a76e834e45aebf5b/host
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|hostGroupUuid|String|url|主机调度组UUID| |4.6.0|
+|hostUuid|String|body|主机UUID| |4.6.0|
+|systemTags \(可选\)|List|body|系统标签| |4.6.0|
+|userTags \(可选\)|List|body|用户标签| |4.6.0|
+
+## API返回
+该API成功时返回一个空的JSON结构**`{}`**，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+DetachHostFromHostSchedulingRuleGroupAction action = new DetachHostFromHostSchedulingRuleGroupAction();
+action.hostGroupUuid = "801af67a7f1f3610a76e834e45aebf5b";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DetachHostFromHostSchedulingRuleGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DetachHostFromHostSchedulingRuleGroupAction action = DetachHostFromHostSchedulingRuleGroupAction()
+action.hostGroupUuid = "801af67a7f1f3610a76e834e45aebf5b"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DetachHostFromHostSchedulingRuleGroupAction.Result res = action.call()
+```
+
+</APIPage>

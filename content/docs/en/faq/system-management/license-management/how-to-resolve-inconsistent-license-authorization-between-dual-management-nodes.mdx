@@ -1,0 +1,34 @@
+---
+title: "How to resolve inconsistent license authorization between dual management nodes?"
+---
+
+<HistoricalNamingNote locale="en" />
+
+## Symptom
+The virtualization platform UI displays a warning indicating inconsistent license authorization between the two management nodes.
+
+## Cause
+The license authorization was applied incorrectly.
+
+## Solution
+1.  Log in to the Management Node and run the following commands in sequence to query the license add-on modules on both management nodes:
+
+    ```
+    [root@localhost ~]# zstack-cli
+    admin >>> LogInByAccount accountName=admin password=$password  //password is the platform admin user password
+    admin >>> GetLicenseAddOns
+    ```
+
+    See [Figure 1](#fig_rw3_wr5_p5b) for an example:
+
+    ![Query license modules](/docs/en/faq/images/ZStack_FAQ_Summary_0056_1_1.png)
+
+2.  Run the following command to delete the inconsistent license module:
+
+    ```
+    admin >>> DeleteLicense managementNodeUuid=$ Uuid=$
+    ```
+
+    <Callout type="warning">
+    Before deleting a license module, confirm that it is a duplicate between the two management nodes. Accidentally deleting a license module may affect normal operation of the virtualization platform.
+    </Callout>

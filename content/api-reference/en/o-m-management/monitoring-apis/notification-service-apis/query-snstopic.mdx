@@ -1,0 +1,94 @@
+---
+title: "Query SNS Topic"
+---
+
+<APIPage method="GET" path="/v1/sns/topics" altPaths={["/v1/sns/topics/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/sns/topics?q=name=api
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/sns/topics/b47d348c8c4a3559af1b09f31f7c26eb
+```
+
+Queryable Fields
+
+Run the CLI command line tool, enter `QuerySNSTopic` and press Tab to view all queryable fields and the resource names that support cross-table queries.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "8a1b79536c3341559d4538c96f87381e",
+      "name": "new name",
+      "state": "Enabled",
+      "locale": "zh_CN",
+      "createDate": "Mar 26, 2024 2:45:29 AM",
+      "lastOpDate": "Mar 26, 2024 2:45:29 AM"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |5.0.0|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null on success. See [error](#p_s12_cjx_bdb)|2.3|
+|inventories|List|See [inventories](#p_by1_1kx_bdb)|2.3|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Default is null|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null|0.6|
+|cause|ErrorCode|The root error that caused the current error. If there is no root error, this field is null|0.6|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource, which uniquely identifies the resource|2.3|
+|name|String|Resource name|2.3|
+|description|String|Detailed description of the resource|2.3|
+|state|String|State|2.3|
+|createDate|Timestamp|Creation time|2.3|
+|lastOpDate|Timestamp|Last modification time|2.3|
+
+## SDK Examples
+Java SDK
+
+```
+QuerySNSTopicAction action = new QuerySNSTopicAction();
+action.conditions = asList("name=api");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QuerySNSTopicAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QuerySNSTopicAction action = QuerySNSTopicAction()
+action.conditions = ["name=api"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QuerySNSTopicAction.Result res = action.call()
+```
+
+</APIPage>

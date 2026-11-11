@@ -1,0 +1,150 @@
+---
+title: "查询报警器"
+---
+
+<APIPage method="GET" path="/v1/zwatch/alarms" altPaths={["/v1/zwatch/alarms/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zwatch/alarms?q=name=VM
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zwatch/alarms/572c61c4a1393b6ebce520a0102dc46c
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryAlarm`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "5c9ef4b25c2a485da77eab50745d53cf",
+      "name": "VM CPU Alarm",
+      "comparisonOperator": "LessThanOrEqualTo",
+      "period": 60.0,
+      "namespace": "ZStack/VM",
+      "metricName": "org.zstack.zwatch.datatype.Metric@565e1ebe",
+      "threshold": 30.0,
+      "repeatInterval": 1800.0,
+      "status": "Alarm",
+      "state": "Enabled",
+      "createDate": "Jul 6, 2018 1:50:51 PM",
+      "lastOpDate": "Jul 6, 2018 1:50:51 PM",
+      "labels": [
+        {
+          "uuid": "5ab29656f8df43a3a78d672af8940896",
+          "key": "VMUuid",
+          "operator": "=",
+          "value": "b128326b8b944c0499992c00cabd4711"
+        }
+      ],
+      "actions": [
+        {
+          "alarmUuid": "2028f51e88b6449fb33442215810845f",
+          "actionType": "sns",
+          "actionUuid": "9486671b2f4c4413976f1d6938ac1d01"
+        }
+      ]
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_cdt_bmk_p2b)|2.3|
+|inventories|List|详情参考[inventories](#p_dkh_2mk_p2b)|2.3|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|2.3|
+|description|String|错误的概要描述|2.3|
+|details|String|错误的详细信息|2.3|
+|elaboration|String|保留字段，默认为null|2.3|
+|opaque|LinkedHashMap|保留字段，默认为null|2.3|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|2.3|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|2.3|
+|name|String|资源名称|2.3|
+|description|String|资源的详细描述|2.3|
+|period|Integer|阈值持续时间|2.3|
+|namespace|String|名字空间|2.3|
+|metricName|String|监控项名称|2.3|
+|threshold|Double|阈值|2.3|
+|repeatInterval|Integer|报警重复时间|2.3|
+|createDate|Timestamp|创建时间|2.3|
+|lastOpDate|Timestamp|最后一次修改时间|2.3|
+|comparisonOperator|ComparisonOperator|详情参考[comparisonOperator](#p_mtc_2mk_p2b)|2.3|
+|status|AlarmStatus|详情参考[status](#p_wxz_lmk_p2b)|2.3|
+|labels|List|详情参考[labels](#p_j43_gmk_p2b)|2.3|
+|actions|List|详情参考[actions](#p_y3f_hmk_p2b)|2.3|
+
+### comparisonOperator
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|name|String|资源名称|2.3|
+|ordinal|int| |2.3|
+
+### status
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|OK|AlarmStatus|监控中|2.3|
+|Alarm|AlarmStatus|已触发|2.3|
+|InsufficientData|AlarmStatus|数据不足|2.3|
+
+### labels
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|2.3|
+|key|String|标签键|2.3|
+|operator|String|比较符|2.3|
+|value|String|标签值|2.3|
+
+### actions
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|alarmUuid|String|报警器UUID|2.3|
+|actionType|String|报警动作类型|2.3|
+|actionUuid|String|报警动作UUID|2.3|
+
+## SDK示例
+Java SDK
+
+```
+QueryAlarmAction action = new QueryAlarmAction();
+action.conditions = asList("name=VM");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryAlarmAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryAlarmAction action = QueryAlarmAction()
+action.conditions = ["name=VM"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryAlarmAction.Result res = action.call()
+```
+
+</APIPage>

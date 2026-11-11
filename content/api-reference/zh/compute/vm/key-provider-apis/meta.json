@@ -1,0 +1,24 @@
+{
+  "title": "密钥提供程序相关接口",
+  "pages": [
+    "query-key-provider",
+    "rekey-key-provider-refs",
+    "create-kms",
+    "delete-kms",
+    "get-kms-server-cert-from-kms",
+    "query-kms",
+    "update-kms",
+    "upload-kms-client-csr",
+    "upload-kms-client-identity",
+    "upload-kms-client-signed-cert",
+    "upload-kms-server-cert",
+    "backup-nkp",
+    "create-nkp",
+    "delete-nkp",
+    "parse-nkp-restore",
+    "query-nkp",
+    "restore-nkp",
+    "update-nkp"
+  ],
+  "pagesIndex": "index"
+}

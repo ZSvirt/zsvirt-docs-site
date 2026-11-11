@@ -1,0 +1,286 @@
+---
+title: "跨数据存储迁移虚拟机"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/{vmInstanceUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "primaryStorageMigrateVm": {
+    "dstPrimaryStorageUuid": "21e2f323f0f73feca4269e4056497281",
+    "dstHostUuid": "2208f64378cc3b5fa4a11609ca4ef524",
+    "withDataVolumes": true,
+    "withSnapshots": false,
+    "downTime": 300,
+    "bandwidth": 0
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"primaryStorageMigrateVm":{"dstPrimaryStorageUuid":"21e2f323f0f73feca4269e4056497281","dstHostUuid":"2208f64378cc3b5fa4a11609ca4ef524","withDataVolumes":true,"withSnapshots":false,"downTime":300,"bandwidth":0}}' \
+http://localhost:8080/zstack/v1/vm-instances/332389a8b7453ccd85e625ef581694e9/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|vmInstanceUuid|String|url|虚拟机UUID| |3.1.0|
+|dstPrimaryStorageUuid|String|body\(包含在**primaryStorageMigrateVm**结构中\)|目标数据存储UUID| |3.1.0|
+|withDataVolumes \(可选\)|boolean|body\(包含在**primaryStorageMigrateVm**结构中\)|迁移包含硬盘| |3.1.0|
+|withSnapshots \(可选\)|boolean|body\(包含在**primaryStorageMigrateVm**结构中\)|迁移包含快照| |3.1.0|
+|systemTags \(可选\)|List|body| | |3.1.0|
+|userTags \(可选\)|List|body| | |3.1.0|
+|dstHostUuid \(可选\)|String|body\(包含在**primaryStorageMigrateVm**结构中\)| | |4.0.0|
+|strategy \(可选\)|String|body\(包含在**primaryStorageMigrateVm**结构中\)| | |4.6.0|
+|downTime \(可选\)|Integer|body\(包含在**primaryStorageMigrateVm**结构中\)|迁移停机时间| |4.6.21|
+|bandwidth \(可选\)|long|body\(包含在**primaryStorageMigrateVm**结构中\)|迁移存储限速，单位MB/s| |4.7.11|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "f483af349d39312c8078d142c40fb721",
+    "name": "Test-VM",
+    "description": "web server VM",
+    "zoneUuid": "b7280443258337bb9e8d2abf4a014644",
+    "clusterUuid": "a2c0ace5be2d35b5a365067a0127b377",
+    "imageUuid": "14fb13b692e837dfa31d75ffc02d4d4d",
+    "hostUuid": "f0690203b1463867bcb2f5a48a1fa91a",
+    "lastHostUuid": "655acef664af39e9b6b7fec0d4de56c0",
+    "instanceOfferingUuid": "772a66f21ef23ba7a69ad292e4489ebb",
+    "rootVolumeUuid": "65b10a950f1336f48b770f98b25176eb",
+    "platform": "Linux",
+    "defaultL3NetworkUuid": "80c8af5ff0a135e18a3e7a4d2223ebd2",
+    "type": "UserVm",
+    "hypervisorType": "KVM",
+    "memorySize": 8589934592,
+    "cpuNum": 1,
+    "allocatorStrategy": "LastHostPreferredAllocatorStrategy",
+    "createDate": "Nov 14, 2017 9:20:57 AM",
+    "lastOpDate": "Nov 14, 2017 9:20:57 AM",
+    "state": "Running",
+    "vmNics": [
+      {
+        "uuid": "b16455db309330289acb58edbfabd4b7",
+        "vmInstanceUuid": "f483af349d39312c8078d142c40fb721",
+        "usedIpUuid": "27787a727c143a7aada42e6c3b111887",
+        "l3NetworkUuid": "80c8af5ff0a135e18a3e7a4d2223ebd2",
+        "ip": "192.168.1.10",
+        "mac": "00:0c:29:bd:99:fc",
+        "hypervisorType": "KVM",
+        "netmask": "255.255.255.0",
+        "gateway": "192.168.1.1",
+        "deviceId": 0,
+        "state": "enable",
+        "createDate": "Nov 14, 2017 9:20:57 AM",
+        "lastOpDate": "Nov 14, 2017 9:20:57 AM"
+      }
+    ],
+    "allVolumes": [
+      {
+        "uuid": "65b10a950f1336f48b770f98b25176eb",
+        "name": "Root-Volume-For-VM-f483af349d39312c8078d142c40fb721",
+        "primaryStorageUuid": "55245463f914331c954909475279c3b0",
+        "vmInstanceUuid": "f483af349d39312c8078d142c40fb721",
+        "diskOfferingUuid": "b2cb37282f5034fb808dff68dc18db9e",
+        "rootImageUuid": "14fb13b692e837dfa31d75ffc02d4d4d",
+        "installPath": "/zstack_ps/rootVolumes/acct-36c27e8ff05c4780bf6d2fa65700f22e/vol-65b10a950f1336f48b770f98b25176eb/65b10a950f1336f48b770f98b25176eb.qcow2",
+        "type": "Root",
+        "format": "qcow2",
+        "size": 107374182400,
+        "actualSize": 21474836480,
+        "deviceId": 0,
+        "state": "Enabled",
+        "status": "Ready",
+        "createDate": "Nov 14, 2017 9:20:57 AM",
+        "lastOpDate": "Nov 14, 2017 9:20:57 AM"
+      },
+      {
+        "uuid": "97bf368f3bde3490b0c08d37ac8bc747",
+        "name": "Data-Volume-For-VM-f483af349d39312c8078d142c40fb721",
+        "primaryStorageUuid": "4df2eddd6ac1307ebbff27d0044f72e9",
+        "vmInstanceUuid": "f483af349d39312c8078d142c40fb721",
+        "diskOfferingUuid": "06ea8f5a59843b8aa4d18d9c6d2b7a1d",
+        "installPath": "/zstack_ps/rootVolumes/acct-36c27e8ff05c4780bf6d2fa65700f22e/vol-97bf368f3bde3490b0c08d37ac8bc747/97bf368f3bde3490b0c08d37ac8bc747.qcow2",
+        "type": "Data",
+        "format": "qcow2",
+        "size": 536870912000,
+        "actualSize": 107374182400,
+        "deviceId": 1,
+        "state": "Enabled",
+        "status": "Ready",
+        "createDate": "Nov 14, 2017 9:20:57 AM",
+        "lastOpDate": "Nov 14, 2017 9:20:57 AM"
+      }
+    ]
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.6.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_vxh_r5d_z2b)|3.1.0|
+|inventory|VmInstanceInventory|详情参考[inventory](#p_zfn_r5d_z2b)|3.1.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.1.0|
+|description|String|错误的概要描述|3.1.0|
+|details|String|错误的详细信息|3.1.0|
+|elaboration|String|保留字段，默认为null|3.1.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.1.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.1.0|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.1.0|
+|name|String|资源名称|3.1.0|
+|description|String|资源的详细描述|3.1.0|
+|zoneUuid|String|数据中心UUID|3.1.0|
+|clusterUuid|String|集群UUID|3.1.0|
+|imageUuid|String|镜像UUID|3.1.0|
+|hostUuid|String|主机UUID|3.1.0|
+|lastHostUuid|String| |3.1.0|
+|instanceOfferingUuid|String|计算规格UUID|3.1.0|
+|rootVolumeUuid|String|根硬盘UUID|3.1.0|
+|platform|String| |3.1.0|
+|architecture|String| |4.6.21|
+|defaultL3NetworkUuid|String| |3.1.0|
+|type|String| |3.1.0|
+|hypervisorType|String| |3.1.0|
+|memorySize|Long| |3.1.0|
+|cpuNum|Integer| |3.1.0|
+|cpuSpeed|Long| |3.1.0|
+|allocatorStrategy|String| |3.1.0|
+|createDate|Timestamp|创建时间|3.1.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.1.0|
+|state|String| |3.1.0|
+|guestOsType|String| |4.6.21|
+|vmNics|List|详情参考[vmNics](#p_t4v_3tx_nfb)|3.1.0|
+|allVolumes|List|详情参考[allVolumes](#p_dyb_jtx_nfb)|3.1.0|
+|vmCdRoms|List|详情参考[vmCdRoms](#p_eyk_rg2_1xb)|4.6.21|
+
+### vmNics
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.1.0|
+|vmInstanceUuid|String|虚拟机UUID|3.1.0|
+|l3NetworkUuid|String|分布式端口组UUID|3.1.0|
+|ip|String| |3.1.0|
+|mac|String| |3.1.0|
+|netmask|String| |3.1.0|
+|gateway|String| |3.1.0|
+|metaData|String| |3.1.0|
+|deviceId|Integer| |3.1.0|
+|createDate|Timestamp|创建时间|3.1.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.1.0|
+|usedIps|List|详情参考[usedIps](#p_gwc_4dc_pfb)|4.6.21|
+
+### usedIps
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.6.21|
+|ipRangeUuid|String|IP段UUID|4.6.21|
+|l3NetworkUuid|String|分布式端口组UUID|4.6.21|
+|ipVersion|Integer|IP协议号|4.6.21|
+|ip|String|IP地址|4.6.21|
+|netmask|String|网络掩码|4.6.21|
+|gateway|String|网关地址|4.6.21|
+|usedFor|String| |4.6.21|
+|ipInLong|long| |4.6.21|
+|vmNicUuid|String|虚拟机网卡UUID|4.6.21|
+|createDate|Timestamp|创建时间|4.6.21|
+|lastOpDate|Timestamp|最后一次修改时间|4.6.21|
+
+### allVolumes
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.1.0|
+|name|String|资源名称|3.1.0|
+|description|String|资源的详细描述|3.1.0|
+|primaryStorageUuid|String|数据存储UUID|3.1.0|
+|vmInstanceUuid|String|虚拟机UUID|3.1.0|
+|diskOfferingUuid|String|硬盘规格UUID|3.1.0|
+|rootImageUuid|String| |3.1.0|
+|installPath|String| |3.1.0|
+|type|String| |3.1.0|
+|format|String| |3.1.0|
+|size|Long| |3.1.0|
+|actualSize|Long| |3.1.0|
+|deviceId|Integer| |3.1.0|
+|state|String| |3.1.0|
+|status|String| |3.1.0|
+|createDate|Timestamp|创建时间|3.1.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.1.0|
+|isShareable|Boolean| |3.1.0|
+
+### vmCdRoms
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.6.21|
+|vmInstanceUuid|String|虚拟机UUID|4.6.21|
+|deviceId|Integer| |4.6.21|
+|isoUuid|String| |4.6.21|
+|isoInstallPath|String| |4.6.21|
+|name|String|资源名称|4.6.21|
+|description|String|资源的详细描述|4.6.21|
+|createDate|Timestamp|创建时间|4.6.21|
+|lastOpDate|Timestamp|最后一次修改时间|4.6.21|
+
+## SDK示例
+Java SDK
+
+```
+PrimaryStorageMigrateVmAction action = new PrimaryStorageMigrateVmAction();
+action.vmInstanceUuid = "332389a8b7453ccd85e625ef581694e9";
+action.dstPrimaryStorageUuid = "21e2f323f0f73feca4269e4056497281";
+action.dstHostUuid = "2208f64378cc3b5fa4a11609ca4ef524";
+action.withDataVolumes = true;
+action.withSnapshots = false;
+action.downTime = 300;
+action.bandwidth = 0;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+PrimaryStorageMigrateVmAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = PrimaryStorageMigrateVmAction()
+action.vmInstanceUuid = "332389a8b7453ccd85e625ef581694e9"
+action.dstPrimaryStorageUuid = "21e2f323f0f73feca4269e4056497281"
+action.dstHostUuid = "2208f64378cc3b5fa4a11609ca4ef524"
+action.withDataVolumes = true
+action.withSnapshots = false
+action.downTime = 300
+action.bandwidth = 0
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

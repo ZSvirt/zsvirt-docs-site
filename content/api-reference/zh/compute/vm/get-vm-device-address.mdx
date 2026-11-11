@@ -1,0 +1,85 @@
+---
+title: "获取虚拟机设备地址"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/devices">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/devices?uuid=a761ac08ca483af4a81d9ed3d9930ef4&resourceTypes=VolumeVO
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|query|虚拟机UUID| |3.10.0|
+|resourceTypes|List|query|资源类型|VolumeVO|3.10.0|
+|systemTags \(可选\)|List|query|系统标签| |3.10.0|
+|userTags \(可选\)|List|query|用户标签| |3.10.0|
+
+## API返回
+返回示例
+
+```
+{
+  "addresses": {
+    "VolumeVO": [
+      {
+        "address": "0000:01:00:0",
+        "addressType": "pci",
+        "deviceType": "disk",
+        "resourceType": "VolumeVO"
+      }
+    ]
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|addresses|Map|设备地址详情|3.10.0|
+|success|boolean| |3.10.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_pvc_gz1_mjb)|3.10.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.10.0|
+|description|String|错误的概要描述|3.10.0|
+|details|String|错误的详细信息|3.10.0|
+|elaboration|String|保留字段，默认为null|3.10.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.10.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.10.0|
+
+## SDK示例
+Java SDK
+
+```
+GetVmDeviceAddressAction action = new GetVmDeviceAddressAction();
+action.uuid = "a761ac08ca483af4a81d9ed3d9930ef4";
+action.resourceTypes = asList("VolumeVO");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetVmDeviceAddressAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetVmDeviceAddressAction action = GetVmDeviceAddressAction()
+action.uuid = "a761ac08ca483af4a81d9ed3d9930ef4"
+action.resourceTypes = [VolumeVO]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetVmDeviceAddressAction.Result res = action.call()
+```
+
+</APIPage>

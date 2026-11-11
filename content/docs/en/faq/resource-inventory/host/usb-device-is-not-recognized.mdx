@@ -1,0 +1,21 @@
+---
+title: "USB device is not recognized"
+---
+
+## Cause
+The issue may be caused by an enabled Huawei KVM virtual keyboard and mouse connection.
+
+## Solution
+1.  SSH into the affected host.
+
+2.  Run `lsusb` to list USB devices and check whether a Huawei KVM USB device is present.
+
+3.  Run the following command to view USB device details and check for error messages:
+
+    ```
+    [root@localhost ~]# lsusb -v -d  $ID  //Use the corresponding ID obtained in the previous step
+    ```
+
+4.  Log in to the Huawei iBMC management interface and clear the **Virtual Keyboard and Mouse Persistent Connection** option.
+
+5.  Reconnect the host.

@@ -1,0 +1,26 @@
+---
+title: "A virtual machine cannot retrieve NIC information after being attached to a Distributed Port Group. How do I resolve this?"
+---
+
+## Cause
+QEMU may have dynamically attached the virtual NIC to the virtual machine, but the virtual machine did not recognize it.
+
+## Solution
+1.  Try one of the following methods:
+2.  Restart the virtual machine. The NIC information is obtained automatically after restart.
+
+3.  Run the following commands inside the virtual machine operating system to manually add the NIC configuration file.
+
+    ```
+    [root@localhost ~]# cp /etc/sysconfig/network-scripts/ifcfg-eth0 /etc/sysconfig/network-scripts/ifcfg-eth1
+    # Assuming the existing NIC is named eth0, copy its configuration file as a template
+    [root@localhost ~]# vim /etc/sysconfig/network-scripts/ifcfg-eth1
+    # Set the following parameters
+    TYPE=Ethernet
+    BOOTPROTO=dhcp
+    NAME=eth1
+    DEVICE=eth1
+    ONBOOT=yes
+    ```
+
+4.  Run the `service network restart` command to restart the network.

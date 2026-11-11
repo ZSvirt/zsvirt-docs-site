@@ -1,0 +1,23 @@
+---
+title: 'Enable SNMP Management'
+---
+
+1.  In the navigation pane, choose **System Management** &gt; **SNMP Management**.
+
+2.  On the SNMP Management page, click **Enable SNMP Management**.
+
+3.  In the Enable SNMP Management dialog, set the following parameters:
+
+    **Basic Configuration**
+
+    -   **SNMP Agent Port**: Specify a port for receiving and responding to requests from the third-party monitoring platform. Default: 1160. Valid range: from 1024 to 65535.
+    -   **Protocol Version**: Support v2c and v3 types.
+        -   If you select the v2c type, set the **Community String** for connection authentication between the third-party monitoring platform and the virtualization platform.
+        -   If you select the v3 type, set the following parameters:
+            -   **Username**: Set a username.
+            -   **User Authentication**: For secure authentication between the third-party monitoring platform and the platform, enable this option and set an authentication protocol and password.
+            -   **Data Encryption**: To encrypt communication messages between the virtualization platform and the third-party platform, enable this option and set an encryption protocol and password.
+    **Receiver Configuration**
+
+    -   **SNMP Trap Receiver**: Enter the name, IP address, and port of the third-party server to receive pushed alert messages.
+4.  Review the configuration and click **OK**.

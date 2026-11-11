@@ -1,0 +1,88 @@
+---
+title: "查询账户资源引用"
+---
+
+<APIPage method="GET" path="/v1/accounts/resources/refs">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X GET http://localhost:8080/zstack/v1/accounts/resources/refs?q=acountUuid=279c136f406e35a6a6874e39b231a2d3
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryAccountResourceRef`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "id": 1,
+      "accountUuid": "ef9a9b4c5bd338768f18148dbfe42f1c",
+      "resourceUuid": "6e06fe5d204f30ac80ffc4c2d6372e46",
+      "resourceType": "ImageVO",
+      "type": "Own"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_zfj_24l_l1b)|0.6|
+|inventories|List|详情参考[inventories](#p_ckd_24l_l1b)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|accountUuid|String|账户UUID|0.6|
+|resourceUuid|String|资源UUID|0.6|
+|resourceType|String|资源类型|0.6|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+
+## SDK示例
+Java SDK
+
+```
+QueryAccountResourceRefAction action = new QueryAccountResourceRefAction();
+action.conditions = asList("acountUuid=dec9472c2f9b3f6abaa84ed78094171c");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryAccountResourceRefAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+QueryAccountResourceRefAction action = QueryAccountResourceRefAction()
+action.conditions = ["acountUuid=05e51ebc332935769868ecde43b8f8e6"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryAccountResourceRefAction.Result res = action.call()
+
+```
+
+</APIPage>

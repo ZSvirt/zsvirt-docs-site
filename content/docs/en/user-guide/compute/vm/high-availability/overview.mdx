@@ -1,0 +1,59 @@
+---
+title: 'Overview'
+---
+
+HA Policy: HA Policy is a mechanism that ensures sustained and stable running of the business if virtual machine are unexpectedly stopped or are errored because of errors occurring to compute, network, or storage resources associated with the virtual machines. By enabling this feature, you can customize VM HA policies to ensure your business continuity and stability.
+
+High availability policies include the following core concepts:
+
+-   Virtual Machine High Availability: Used to set whether virtual machines automatically restart when they are shut down either planned or unexpectedly. If the HA policy is not enabled on the platform, VM HA will take effect after HA policy is enabled.
+    -   If the high availability switch is turned off: Virtual machines will not automatically restart when they are shut down.
+    -   If the high availability switch is turned on:
+        -   Virtual machines will automatically restart when they are shut down plannedly or due to their own unexpected shutdown.
+        -   If related compute, storage, network, etc., resources experience failures, the virtual machine will migrate to another host and HA start according to a custom-defined fault migration policy as needed.
+-   Virtual Machine High Availability Fault Migration Policy: Used to set whether to migrate a virtual machine to another host to start when related compute, storage, network, etc., resources experience faults.
+
+    Fault migration policies support detecting the status of the following resources:
+
+    -   Management Network Connection Status:
+        -   Detects the network connection status between the host where the virtual machine is located and the management node.
+        -   If the management node itself fails or the management network is interrupted, it will result in a management network connection status failure.
+    -   Storage Network Connection Status:
+        -   Detects the network connection status between the virtual machine and the data storage resource where its system disk is located.
+        -   If the data storage where the virtual machine’s system disk is located fails or the storage network is interrupted, it will result in a storage network connection status failure for the virtual machine.
+    -   Business Network Card Status:
+        -   If the business network card of the host associated with the distributed switch of the business virtual machine or the network port directly connected to the business network card of the switch fails, it will result in a business network card failure for the virtual machine.
+    Based on resource status detection, ZSvirt provides four typical fault migration scenarios for easy configuration:
+
+    |Typical Scenario|Management Network Connection Status|Storage Network Connection Status|Business NIC Status|Migrate on Failure?|
+    |----------------|------------------------------------|---------------------------------|-------------------|-------------------|
+    |Scenario A|Normal|Normal|Failure|Migrate / Do Not Migrate|
+    |Scenario B|Normal|Failure|Normal|Migrate / Do Not Migrate|
+    |Scenario C|Normal|Failure|Failure|Migrate / Do Not Migrate|
+    |Scenario D|Failure|Normal|Normal|Do Not Migrate|
+
+## Use Cases
+The following lists typical use cases for high availability policies. If you have similar business scenarios, consider using the high availability policy feature:
+
+-   Host Business Network Card Failure Scenario:
+
+    You want all associated virtual machines to migrate to another host when the host business network card fails, ensuring high availability for your business.
+
+    -   For example: Users deploy business virtual machines to host MySQL database services, requiring that virtual machines must not experience extended downtime. You can turn on the high availability switch for these virtual machines and set the business network card status failure to trigger migration. Assuming there are sufficient host resources within the platform, when the business network card of the host where the business virtual machine is located fails, the virtual machine will migrate to another host and start running, without affecting the business operations.
+-   Virtual Machine Unexpected Shutdown Scenario:
+
+    You want virtual machines to automatically HA start when they unexpectedly shut down.
+
+    -   For example: Users deploy business virtual machines to run critical company services, aiming to avoid situations where factors such as host power loss or virtual machine overload cause the virtual machine to shut down and the service cannot automatically recover. You can turn on the high availability switch for these virtual machines. When the virtual machine shuts down, the high availability mechanism will immediately restart it, ensuring business continuity.
+
+## Functionality Principles
+The high availability policies of ZSvirt mainly include the following two mechanisms:
+
+-   Polling to detect the operational status of virtual machines. If a virtual machine shuts down due to its own abnormal condition or planned shutdown, the system checks whether the high availability switch is turned on. If the switch is on, the virtual machine will be restarted on the current host or another host.
+-   Polling to detect the status of the host where the virtual machine is located. If any of the management network connection status, storage network connection status, or business network card status is abnormal, the system checks the virtual machine fault migration policy and the virtual machine high availability mode. If the corresponding fault migration switch is turned on and the virtual machine high availability switch is turned on, the virtual machine will migrate to another host and start running.
+
+## Benefits of the Functionality
+The high availability policies offer the following advantages:
+
+-   **Comprehensive &amp; Powerful**: Covers all mainstream high availability scenarios, including various fault scenarios and shutdown scenarios. Ensures the stability and continuity of users' critical business through high availability mechanisms.
+-   **Flexible &amp; Visual**: Provides an intuitive and simple scenario configuration table, supports one-click configuration of fault migration policies, combines global and virtual machine-level high availability configurations, which can greatly increase the flexibility of business high availability configurations.

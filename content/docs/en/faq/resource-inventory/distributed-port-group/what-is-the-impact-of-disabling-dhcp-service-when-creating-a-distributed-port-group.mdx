@@ -1,0 +1,10 @@
+---
+title: "What is the impact of disabling DHCP service when creating a Distributed Port Group?"
+---
+
+## Feature description
+-   The DHCP service for a Distributed Port Group is provided by the virtualization platform and assigns IP addresses only to virtual machines within the platform.
+
+-   After DHCP is disabled, the Distributed Port Group still assigns an IP address to each virtual machine at creation. This IP address is for display purposes only. The virtual machine operating system cannot obtain the IP address automatically—you must configure it manually inside the virtual machine. It is recommended to configure the same IP address as the one assigned by the virtualization platform.
+
+-   After DHCP is disabled, VMTools cannot be installed, internal monitoring is unavailable, and network services such as the userdata feature cannot be used.

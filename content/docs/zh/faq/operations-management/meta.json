@@ -1,0 +1,8 @@
+{
+  "title": "运维管理",
+  "pages": [
+    "monitoring-charts",
+    "alarm"
+  ],
+  "pagesIndex": "index"
+}

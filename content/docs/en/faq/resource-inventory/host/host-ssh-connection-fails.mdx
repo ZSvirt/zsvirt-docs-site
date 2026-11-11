@@ -1,0 +1,12 @@
+---
+title: "Host SSH connection fails"
+---
+
+## Symptom
+The host SSH connection fails with a `This key is not known by any other names` error.
+
+## Cause
+The host was reinstalled or its SSH key was regenerated, causing the key to change.
+
+## Solution
+-   Open the `/root/.ssh/known_hosts` file, locate the entry for the affected host, and delete it. The SSH connection then succeeds.

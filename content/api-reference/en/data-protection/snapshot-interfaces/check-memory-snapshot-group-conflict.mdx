@@ -1,0 +1,90 @@
+---
+title: "Check Memory Snapshot Group Conflict"
+---
+
+<APIPage method="GET" path="/v1/memory-snapshots/groups/{uuid}/conflict-detection">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/memory-snapshots/groups/ff06c5015505317fae8e020694bad500/conflict-detection
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Memory snapshot group UUID| |4.10.16|
+|systemTags \(Optional\)|List|query|System tags| |4.10.16|
+|userTags \(Optional\)|List|query|User tags| |4.10.16|
+
+## API Response
+Response Example
+
+```
+{
+  "vmNicConflict": [
+    {
+      "ip": "127.0.0.1",
+      "mac": "00:16:3e:00:00:01",
+      "vmNicName": "vmNicName",
+      "vmInstanceName": "vmInstanceName",
+      "vmInstanceUuid": "ff01ec80fd11327cba7519b66119d900"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.10.0|
+|vmNicConflict|List|For details, see [vmNicConflict](#p_cm1_hkv_v2c)|4.10.0|
+|error|ErrorCode|For details, see [error](#p_ebq_3kv_v2c)|4.10.0|
+
+### vmNicConflict
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|ip|String|Conflicting IP|4.10.16|
+|mac|String|Conflicting MAC|4.10.16|
+|vmNicName|String|NIC name|4.10.16|
+|vmInstanceName|String|Virtual Machine name|4.10.16|
+|vmInstanceUuid|String|Virtual Machine UUID|4.10.16|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|The detailed error information|0.6|
+|elaboration|String|A reserved field. The default value is null|0.6|
+|opaque|LinkedHashMap|A reserved field. The default value is null|0.6|
+|cause|ErrorCode|The root error. The source error that caused the current error. If no root error exists, this field is null|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+CheckMemorySnapshotGroupConflictAction action = new CheckMemorySnapshotGroupConflictAction();
+action.uuid = "ff06c5015505317fae8e020694bad500";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CheckMemorySnapshotGroupConflictAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = CheckMemorySnapshotGroupConflictAction()
+action.uuid = "ff06c5015505317fae8e020694bad500"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

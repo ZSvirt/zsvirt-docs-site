@@ -1,0 +1,10 @@
+{
+  "title": "Network Resource",
+  "pages": [
+    "index",
+    "distributed-switch",
+    "port-group",
+    "kernel-adapter"
+  ],
+  "pagesIndex": "index"
+}

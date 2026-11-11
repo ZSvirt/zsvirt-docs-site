@@ -1,0 +1,143 @@
+---
+title: "Update PXE Server"
+---
+
+<APIPage method="PUT" path="/v1/baremetal/pxeservers/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateBaremetalPxeServer": {
+    "name": "test",
+    "dhcpRangeBegin": "10.0.0.200",
+    "dhcpRangeNetmask": "255.255.255.0"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that these fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateBaremetalPxeServer":{"name":"test","dhcpRangeBegin":"10.0.0.200","dhcpRangeNetmask":"255.255.255.0"}}' \
+http://localhost:8080/zstack/v1/baremetal/pxeservers/da1ddf8e5ca838ea9fa55f20946dded6/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|UUID of the resource, uniquely identifying the resource| |2.6.0|
+|name \(Optional\)|String|body\(included in the `updateBaremetalPxeServer` structure\)|Resource name| |2.6.0|
+|description \(Optional\)|String|body\(included in the `updateBaremetalPxeServer` structure\)|Detailed description of the resource| |2.6.0|
+|dhcpInterface \(Optional\)|String|body\(included in the `updateBaremetalPxeServer` structure\)|DHCP request listening NIC| |2.6.0|
+|dhcpRangeBegin \(Optional\)|String|body\(included in the `updateBaremetalPxeServer` structure\)|DHCP address range start| |2.6.0|
+|dhcpRangeEnd \(Optional\)|String|body\(included in the `updateBaremetalPxeServer` structure\)|DHCP address range end| |2.6.0|
+|dhcpRangeNetmask \(Optional\)|String|body\(included in the `updateBaremetalPxeServer` structure\)|DHCP address range netmask| |2.6.0|
+|systemTags \(Optional\)|List|body|System Tag| |2.6.0|
+|userTags \(Optional\)|List|body|User Tag| |2.6.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "1a88afcfd21b35aa82da9f4b734826b7",
+    "name": "test",
+    "hostname": "127.0.0.1",
+    "sshUsername": "root",
+    "sshPassword": "password",
+    "sshPort": 22,
+    "storagePath": "/zstack_bm_cache",
+    "dhcpInterface": "eth0",
+    "dhcpRangeBegin": "10.0.0.1",
+    "dhcpRangeEnd": "10.0.0.255",
+    "dhcpRangeNetmask": "255.255.255.0",
+    "state": "Enabled",
+    "status": "Connected"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation is successful, this field is null. For details, see [error](#p_wk2_hyy_3gc)|2.6.0|
+|inventory|BaremetalPxeServerInventory|For details, see [inventory](#p_q2t_vv2_jgc)|2.6.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, default is null|0.6|
+|opaque|LinkedHashMap|Reserved field, default is null|0.6|
+|cause|ErrorCode|Root cause: the source error that triggered the current error. If there is no original error, this field is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifying the resource|3.1.1|
+|zoneUuid|String|Data Center UUID|3.1.1|
+|name|String|Resource name|3.1.1|
+|description|String|Detailed description of the resource|3.1.1|
+|hostname|String|Deployment server address|3.1.1|
+|sshUsername|String|Deployment server SSH account|3.1.1|
+|sshPassword|String|Deployment server SSH password|3.1.1|
+|sshPort|Integer|Deployment server SSH port|3.1.1|
+|storagePath|String|Deployment server storage path|3.1.1|
+|dhcpInterface|String|DHCP request listening NIC|3.1.1|
+|dhcpInterfaceAddress|String|DHCP request listening NIC IP address|3.1.1|
+|dhcpRangeBegin|String|DHCP address range start|3.1.1|
+|dhcpRangeEnd|String|DHCP address range end|3.1.1|
+|dhcpRangeNetmask|String|DHCP subnet mask|3.1.1|
+|state|String|Deployment server running state|3.1.1|
+|status|String|Deployment server connection status|3.1.1|
+|createDate|Timestamp|Create time|3.1.1|
+|lastOpDate|Timestamp|Last modification time|3.1.1|
+|totalCapacity|Long|Storage path total capacity|3.1.1|
+|availableCapacity|Long|Storage path available capacity|3.1.1|
+|attachedClusterUuids|List|Deployment server attached cluster UUID list|3.1.1|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateBaremetalPxeServerAction action = new UpdateBaremetalPxeServerAction();
+action.uuid = "da1ddf8e5ca838ea9fa55f20946dded6";
+action.name = "test";
+action.dhcpRangeBegin = "10.0.0.200";
+action.dhcpRangeNetmask = "255.255.255.0";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateBaremetalPxeServerAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = UpdateBaremetalPxeServerAction()
+action.uuid = "da1ddf8e5ca838ea9fa55f20946dded6"
+action.name = "test"
+action.dhcpRangeBegin = "10.0.0.200"
+action.dhcpRangeNetmask = "255.255.255.0"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

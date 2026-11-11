@@ -1,0 +1,99 @@
+---
+title: "Query VM Priority Config"
+---
+
+<APIPage method="GET" path="/v1/vm-priority-config" altPaths={["/v1/vm-priority-config/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-priority-config?q=uuid=b095e162c1d9318bb0eaccd649d3c33f
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-priority-config/93521ba5b6203bebb6eb3bdba7fa6f32
+```
+
+Queryable Fields
+
+Run the CLI command tool, enter `QueryVmPriorityConfig` and press Tab to view all queryable fields and resource names that can be queried across tables.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "0fcf4c7560d63bf58a4c47a5c37c2f1f",
+      "level": "Normal",
+      "cpuShares": 2,
+      "oomScoreAdj": 100
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation succeeds, this field is null. For details, see [error](#p_cbq_zfd_kjb)|3.7.0|
+|inventories|List|For details, see [inventories](#p_hcw_zfd_kjb)|3.7.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier of the error, for example SYS.1000, HOST.1001|3.7.0|
+|description|String|Brief description of the error|3.7.0|
+|details|String|Detailed error information|3.7.0|
+|elaboration|String|Reserved field, defaults to null|3.7.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|3.7.0|
+|cause|ErrorCode|Root cause. The error that triggered the current error. If there is no original error, this field is null|3.7.0|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|3.7.0|
+|accountUuid|String|Account UUID|3.7.0|
+|cpuShares|int| |3.7.0|
+|oomScoreAdj|int| |3.7.0|
+|createDate|Timestamp|Create time|3.7.0|
+|lastOpDate|Timestamp|Last modification time|3.7.0|
+|level|VmPriorityLevel|For details, see [level](#p_qjc_1gd_kjb)|3.7.0|
+
+### level
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|VmPriorityLevel| |3.7.0|
+|High|VmPriorityLevel| |3.7.0|
+
+## SDK Examples
+Java SDK
+
+```
+QueryVmPriorityConfigAction action = new QueryVmPriorityConfigAction();
+action.conditions = asList("uuid=97e90d00e03b3529b1c218405cc6346b");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryVmPriorityConfigAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryVmPriorityConfigAction action = QueryVmPriorityConfigAction()
+action.conditions = ["uuid=c68b427cb1963529aa1d003cd7f1c1af"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryVmPriorityConfigAction.Result res = action.call()
+```
+
+</APIPage>

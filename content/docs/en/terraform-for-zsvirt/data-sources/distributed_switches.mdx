@@ -1,0 +1,51 @@
+---
+title: 'zsphere_distributed_switches'
+description: 'Query distributed switches (L2VirtualSwitch) in ZSvirt.'
+---
+
+<HistoricalNamingNote locale="en" />
+
+# zsphere_distributed_switches (Data Source)
+
+Query distributed switches (L2VirtualSwitch) in ZSvirt.
+
+
+
+## Schema
+
+### Optional
+
+- `filter` (Attributes List) (see [below for nested schema](#nestedatt--filter))
+- `name` (String) Name of the distributed switch.
+- `name_pattern` (String) Pattern to match distributed switch names.
+
+### Read-Only
+
+- `distributed_switches` (Attributes List) (see [below for nested schema](#nestedatt--distributed_switches))
+
+<a id="nestedatt--filter"></a>
+### Nested Schema for `filter`
+
+Required:
+
+- `name` (String)
+- `values` (List of String)
+
+Optional:
+
+- `regex` (Boolean)
+
+
+<a id="nestedatt--distributed_switches"></a>
+### Nested Schema for `distributed_switches`
+
+Read-Only:
+
+- `attached_cluster_uuids` (List of String) List of cluster UUIDs attached to this distributed switch.
+- `datacenter_uuid` (String) The UUID of the datacenter (zone) to which the distributed switch belongs.
+- `description` (String) Description of the distributed switch.
+- `name` (String) Name of the distributed switch.
+- `physical_interface` (String) The physical interface used by the distributed switch.
+- `type` (String) The type of the L2 network.
+- `uuid` (String) The UUID of the distributed switch.
+- `vswitch_type` (String) The type of virtual switch.

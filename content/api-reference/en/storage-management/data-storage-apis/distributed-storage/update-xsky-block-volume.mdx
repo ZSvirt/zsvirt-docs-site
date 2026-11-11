@@ -1,0 +1,86 @@
+---
+title: "Update Xsky Block Volume"
+---
+
+<APIPage method="PUT" path="/v1/xsky/block-volumes/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateXskyBlockVolume": {
+    "name": "example"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateXskyBlockVolume":{"name":"example"}}' \
+http://localhost:8080/zstack/v1/xsky/block-volumes/eeb07fe1a24833959f75c38b9c7e4132/actions
+```
+
+Parameters
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Resource UUID, uniquely identifies the resource| |4.7.11|
+|name \(Optional\)|String|body\(included in the `updateXskyBlockVolume` structure\)|Resource name| |4.7.11|
+|description \(Optional\)|String|body\(included in the `updateXskyBlockVolume` structure\)|Detailed description of the resource| |4.7.11|
+|burstTotalBw \(Optional\)|Long|body\(included in the `updateXskyBlockVolume` structure\)| | |4.7.11|
+|burstTotalIops \(Optional\)|Long|body\(included in the `updateXskyBlockVolume` structure\)| | |4.7.11|
+|maxTotalBw \(Optional\)|Long|body\(included in the `updateXskyBlockVolume` structure\)| | |4.7.11|
+|maxTotalIops \(Optional\)|Long|body\(included in the `updateXskyBlockVolume` structure\)| | |4.7.11|
+|systemTags \(Optional\)|List|body|System tag| |4.7.11|
+|userTags \(Optional\)|List|body|User tag| |4.7.11|
+
+## API Response
+This API returns an empty JSON structure `{}` on success, and returns a JSON structure containing an error field on failure. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+UpdateXskyBlockVolumeAction action = new UpdateXskyBlockVolumeAction();
+action.uuid = "eeb07fe1a24833959f75c38b9c7e4132";
+action.name = "example";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateXskyBlockVolumeAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateXskyBlockVolumeAction action = UpdateXskyBlockVolumeAction()
+action.uuid = "eeb07fe1a24833959f75c38b9c7e4132"
+action.name = "example"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateXskyBlockVolumeAction.Result res = action.call()
+```
+
+</APIPage>

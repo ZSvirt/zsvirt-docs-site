@@ -1,0 +1,105 @@
+---
+title: "Query Custom Attribute Keys"
+---
+
+<APIPage method="GET" path="/v1/resource-attributes/keys" altPaths={["/v1/resource-attributes/keys/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/resource-attributes/keys?q=name=OperationsPersonnel
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/resource-attributes/keys/dbd98db0aeb939c38a6574e64b822b7d
+```
+
+Queryable Fields
+
+Run the CLI tool, enter `QueryResourceAttributeKey` and press the Tab key to view all queryable fields and cross-table queryable resource names.
+
+## API Response
+Response example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "ff03a2b491023030bf58b1b35ea9cd00",
+      "name": "OperationsPersonnel",
+      "description": "Kinny",
+      "resourceTypes": [
+        "VmInstanceVO"
+      ],
+      "createDate": "Nov 14, 2017 2:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 2:20:57 PM",
+      "constraints": [
+        {
+          "id": 1,
+          "keyUuid": "ff03a2b491023030bf58b1b35ea9cd00",
+          "type": "option",
+          "parameter": "Kinny",
+          "createDate": "Nov 14, 2017 2:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+        }
+      ]
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean|Whether the query succeeded|4.10.16|
+|inventories|List|For details, see [inventories](#p_ahr_n2y_3gc)|4.10.16|
+|error|ErrorCode|For details, see [error](#p_xm1_vmk_l1b)|4.10.16|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Custom attribute key UUID|4.10.16|
+|name|String|Custom attribute key name|4.10.16|
+|description|String|Detailed description of the resource|4.10.16|
+|createDate|Timestamp|Creation time|4.10.16|
+|lastOpDate|Timestamp|Last modification time|4.10.16|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|ode|String|The error code number, a globally unique identifier for the error, e.g., SYS.1000, HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|The detailed error information|0.6|
+|elaboration|String|Reserved field. Defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field. Defaults to null|0.6|
+|cause|ErrorCode|The root error, the cause of the current error. This field is null if there is no root error|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+QueryResourceAttributeKeyAction action = new QueryResourceAttributeKeyAction();
+action.conditions = asList("name=OperationsPersonnel");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryResourceAttributeKeyAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = QueryResourceAttributeKeyAction()
+action.conditions = ["name=OperationsPersonnel"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,84 @@
+---
+title: "Get VM Scheduling State by Scheduling Rule"
+---
+
+<APIPage method="POST" path="/v1/get/vms/schedulingState/from/SchedulingRule">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "ruleUuid": "ff0e4855dd0f309f8b8e4914edbcbf00",
+    "vmUuids": [
+      "ff01ec80fd11327cba7519b66119d900"
+    ]
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The `systemTags` and `userTags` fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"ruleUuid":"ff0e4855dd0f309f8b8e4914edbcbf00","vmUuids":["ff01ec80fd11327cba7519b66119d900"]}}' \
+http://localhost:8080/zstack/v1/get/vms/schedulingState/from/SchedulingRule
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|ruleUuid|String|body \(contained in the `params` structure\)|Scheduling rule UUID| |4.6.0|
+|vmUuids|List|body \(contained in the `params` structure\)|Virtual Machine UUID| |4.6.0|
+|systemTags \(optional\)|List|body|System tags| |4.6.0|
+|userTags \(optional\)|List|body|User tags| |4.6.0|
+
+## API Response
+This API returns an empty JSON structure `{}` on success. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+GetVmsSchedulingStateFromSchedulingRuleAction action = new GetVmsSchedulingStateFromSchedulingRuleAction();
+action.ruleUuid = "ff0e4855dd0f309f8b8e4914edbcbf00";
+action.vmUuids = asList("ff01ec80fd11327cba7519b66119d900");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetVmsSchedulingStateFromSchedulingRuleAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetVmsSchedulingStateFromSchedulingRuleAction action = GetVmsSchedulingStateFromSchedulingRuleAction()
+action.ruleUuid = "ff0e4855dd0f309f8b8e4914edbcbf00"
+action.vmUuids = [ff01ec80fd11327cba7519b66119d900]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetVmsSchedulingStateFromSchedulingRuleAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,86 @@
+---
+title: "Revoke Resource Sharing to Group"
+---
+
+<APIPage method="PUT" path="/v1/account-groups/resources/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "revokeResourceSharingToGroup": {
+    "resourceUuids": [
+      "3d502ce7557c3aa29f40ab4cfde80bbd"
+    ],
+    "groupUuid": "c84e3415faca3a94971b14ba5b4dceb2"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, the **systemTags** and **userTags** fields are optional. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"revokeResourceSharingToGroup":{"resourceUuids":["3d502ce7557c3aa29f40ab4cfde80bbd"],"groupUuid":"c84e3415faca3a94971b14ba5b4dceb2"}}' \
+http://localhost:8080/zstack/v1/account-groups/resources/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|resourceUuids|List|body \(contained in the `revokeResourceSharingToGroup` structure\)|Resource UUID list to revoke sharing. Must be resources in a resource ensemble| |4.10.0|
+|groupUuid|String|body \(contained in the `revokeResourceSharingToGroup` structure\)|Account group UUID| |4.10.0|
+|systemTags \(Optional\)|List|body|System tags| |4.10.0|
+|userTags \(Optional\)|List|body|User tags| |4.10.0|
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+RevokeResourceSharingToGroupAction action = new RevokeResourceSharingToGroupAction();
+action.resourceUuids = asList("3d502ce7557c3aa29f40ab4cfde80bbd");
+action.groupUuid = "c84e3415faca3a94971b14ba5b4dceb2";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RevokeResourceSharingToGroupAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+RevokeResourceSharingToGroupAction action = RevokeResourceSharingToGroupAction()
+action.resourceUuids = [3d502ce7557c3aa29f40ab4cfde80bbd]
+action.groupUuid = "c84e3415faca3a94971b14ba5b4dceb2"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+RevokeResourceSharingToGroupAction.Result res = action.call()
+
+```
+
+</APIPage>

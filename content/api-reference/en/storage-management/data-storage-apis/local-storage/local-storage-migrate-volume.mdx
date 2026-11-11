@@ -1,0 +1,108 @@
+---
+title: "Migrate Disk on Local Storage"
+---
+
+<APIPage method="PUT" path="/v1/primary-storage/local-storage/volumes/{volumeUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "localStorageMigrateVolume": {
+    "destHostUuid": "511e02b9b8c9427c9fbbac55b8c7ec62"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Examples
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"localStorageMigrateVolume":{"destHostUuid":"58118467f70733cdb19f39bd07868384"}}' \
+http://localhost:8080/zstack/v1/primary-storage/local-storage/volumes/f15736d2850536f3a6ea1d68f7c89b7f/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|volumeUuid|String|url|Disk UUID| |0.6|
+|destHostUuid|String|body \(nested in **localStorageMigrateVolume** structure\)|Destination Host UUID| |0.6|
+|systemTags \(optional\)|List|body|System tags| |0.6|
+|userTags \(optional\)|List|body|User tags| |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "resourceUuid": "bad5e950cf014275bf9ba6e4cfe78a97",
+    "primaryStorageUuid": "81d893539a6b4ce7b9957c7a5d6c5df8",
+    "hostUuid": "9d250b88ae90449db567cfa18a75fecc",
+    "size": 24035328.0
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, indicates the operation failed. This field is null when the operation succeeds. For details, see [error](#p_mph_pr1_n1b)|0.6|
+|inventory|LocalStorageResourceRefInventory|For details, see [inventory](#p_bsb_pr1_n1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier for the error, such as SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause. The source error that triggered the current error. If there is no original error, this field is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|resourceUuid|String| |0.6|
+|primaryStorageUuid|String|Data Storage UUID|0.6|
+|hostUuid|String|Host UUID|0.6|
+|size|Long| |0.6|
+|resourceType|String| |0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+LocalStorageMigrateVolumeAction action = new LocalStorageMigrateVolumeAction();
+action.volumeUuid = "1d4825d4845c4bba81033de367f0a03c";
+action.destHostUuid = "e82e6f37aa3b472ab36b32962b2ba44c";
+action.sessionId = "74b8b0a565c542e8bc146d7d9c06c764";
+LocalStorageMigrateVolumeAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+LocalStorageMigrateVolumeAction action = LocalStorageMigrateVolumeAction()
+action.volumeUuid = "85f9e2cb4d2640b3a5fe4ec74ebccd22"
+action.destHostUuid = "f841732d6c604d12bf2cbbb458f09bee"
+action.sessionId = "535bc181a3aa41a0989ac795f58ba664"
+LocalStorageMigrateVolumeAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,336 @@
+---
+title: "Batch Create Host Kernel Interface"
+---
+
+<APIPage method="POST" path="/v1/l3-networks/{l3NetworkUuid}/kernel-interfaces">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "structs": [
+      {
+        "name": "host-kernel-interface-1",
+        "description": "example",
+        "hostUuid": "ff0192fa70113da886101145c084bd00",
+        "ip": "192.168.0.1",
+        "netmask": "255.255.255.0"
+      },
+      {
+        "name": "host-kernel-interface-2",
+        "description": "example",
+        "hostUuid": "ff0956f0005a313e8e1178392c01cd00",
+        "ip": "192.168.0.2",
+        "netmask": "255.255.255.0"
+      }
+    ],
+    "trafficTypes": [
+      "Management"
+    ]
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The `systemTags` and `userTags` fields can be omitted in the above example. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X POST -d '{"params":{"structs":[{"name":"host-kernel-interface-1","description":"example","hostUuid":"ff0192fa70113da886101145c084bd00","ip":"192.168.0.1","netmask":"255.255.255.0"},{"name":"host-kernel-interface-2","description":"example","hostUuid":"ff0956f0005a313e8e1178392c01cd00","ip":"192.168.0.2","netmask":"255.255.255.0"}],"trafficTypes":["Management"]}}' \
+http://localhost:8080/zstack/v1/l3-networks/ff07d561c51c3ef996d682825dcff700/kernel-interfaces
+```
+
+Parameter List
+
+<table id="table_mf5_lk3_mhc"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+structs
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(contained in `params` structure\)
+
+</td><td>
+
+Kernel adapter structure list
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.20
+
+</td></tr><tr><td>
+
+l3NetworkUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+Distributed Port Group UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.20
+
+</td></tr><tr><td>
+
+trafficTypes \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(contained in `params` structure\)
+
+</td><td>
+
+Traffic type
+
+</td><td>
+
+-   Management
+-   Storage
+
+</td><td>
+
+4.10.20
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.20
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.10.20
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "results": [
+    {
+      "inventory": {
+        "uuid": "ff054502e59933a8a494cea5dc88d700",
+        "name": "host-kernel-interface",
+        "description": "example",
+        "hostUuid": "ff0192fa70113da886101145c084bd00",
+        "l2NetworkUuid": "ff0915ef0d3e32708d3150708a72c400",
+        "l3NetworkUuid": "ff07d561c51c3ef996d682825dcff700",
+        "usedIps": [
+          {
+            "hostKernelInterfaceUuid": "ff054502e59933a8a494cea5dc88d700",
+            "uuid": "ff0d1627c13c3337a92767d011d03a00",
+            "l3NetworkUuid": "ff07d561c51c3ef996d682825dcff700",
+            "ipVersion": 4,
+            "ip": "192.168.0.2",
+            "netmask": "255.255.255.0",
+            "ipInLong": 3232235522,
+            "ipInBinary": [
+              -64,
+              -88,
+              0,
+              2
+            ],
+            "createDate": "Nov 14, 2017 2:20:57 PM",
+            "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+          }
+        ],
+        "trafficTypes": [
+          "Management"
+        ],
+        "createDate": "Nov 14, 2017 2:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+      }
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.10.20|
+|results|List|See [results](#p_mh4_sbk_51c)|4.10.20|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_m5s_sbk_51c)|4.10.20|
+
+### results
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|See [error](#p_q2s_yk3_mhc)|4.10.20|
+|inventory|HostKernelInterfaceInventory|See [inventory](#p_lvm_yk3_mhc)|4.10.20|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code, a globally unique identifier of the error, e.g. SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause, the source error that caused the current error, null if no original error|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource, uniquely identifies the resource|4.1.0|
+|name|String|Resource name|4.1.0|
+|description|String|Resource description|4.1.0|
+|hostUuid|String|Host UUID|4.1.0|
+|l2NetworkUuid|String|Distributed Switch UUID|4.1.0|
+|l3NetworkUuid|String|Distributed Port Group UUID|4.1.0|
+|trafficTypes|List|Traffic type|4.1.0|
+|createDate|Timestamp|Create date|4.1.0|
+|lastOpDate|Timestamp|Last update date|4.1.0|
+|usedIps|List|See [usedIps](#p_r4h_yk3_mhc)|4.1.0|
+
+### usedIps
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|hostKernelInterfaceUuid|String|Kernel adapter UUID|4.1.0|
+|uuid|String|UUID of the resource, uniquely identifies the resource|4.1.0|
+|ipRangeUuid|String|IP Range UUID|4.1.0|
+|l3NetworkUuid|String|Distributed Port Group UUID|4.1.0|
+|ipVersion|Integer|IP protocol number|4.1.0|
+|ip|String|IP address|4.1.0|
+|netmask|String|Netmask|4.1.0|
+|gateway|String|Gateway address|4.1.0|
+|usedFor|String|Allocation reason|4.1.0|
+|ipInLong|Long|IP address stored in long format, only valid for IPv4|4.1.0|
+|vmNicUuid|String|Virtual Machine NIC UUID|4.1.0|
+|createDate|Timestamp|Create date|4.1.0|
+|lastOpDate|Timestamp|Last update date|4.1.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code, a globally unique identifier of the error, e.g. SYS.1000, HOST.1001|4.1.0|
+|description|String|Brief description of the error|4.1.0|
+|details|String|Detailed error information|4.1.0|
+|elaboration|String|Reserved field, defaults to null|4.1.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|4.1.0|
+|cause|ErrorCode|Root cause, the source error that caused the current error, null if no original error|4.1.0|
+
+## SDK Examples
+Java SDK
+
+```
+BatchCreateHostKernelInterfaceAction action = new BatchCreateHostKernelInterfaceAction();
+action.structs = asList([name:host-kernel-interface-1, description:example, hostUuid:ff0192fa70113da886101145c084bd00, ip:192.168.0.1, netmask:255.255.255.0],[name:host-kernel-interface-2, description:example, hostUuid:ff0956f0005a313e8e1178392c01cd00, ip:192.168.0.2, netmask:255.255.255.0]);
+action.l3NetworkUuid = "ff07d561c51c3ef996d682825dcff700";
+action.trafficTypes = asList("Management");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+BatchCreateHostKernelInterfaceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = BatchCreateHostKernelInterfaceAction()
+action.structs = [[name:host-kernel-interface-1, description:example, hostUuid:ff0192fa70113da886101145c084bd00, ip:192.168.0.1, netmask:255.255.255.0], [name:host-kernel-interface-2, description:example, hostUuid:ff0956f0005a313e8e1178392c01cd00, ip:192.168.0.2, netmask:255.255.255.0]]
+action.l3NetworkUuid = "ff07d561c51c3ef996d682825dcff700"
+action.trafficTypes = [Management]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,66 @@
+---
+title: 'zsphere_security_groups'
+description: '查询 ZSvirt 安全组列表及其属性。'
+---
+
+<HistoricalNamingNote locale="zh" />
+
+
+# zsphere_security_groups（数据源）
+
+查询 ZSvirt 安全组列表及其属性。
+
+
+
+## 参数说明
+
+### 可选参数
+
+- `filter`（块列表）（参见下方嵌套结构）
+- `name`（字符串）按精确名称查询
+- `name_pattern`（字符串）按名称模糊查询，类似 MySQL LIKE。`%` 匹配多个字符，`_` 匹配单个字符
+
+### 只读属性
+
+- `rules`（块列表）（参见下方嵌套结构）
+- `security_groups`（属性列表）（参见下方嵌套结构）
+
+<a id="nestedblock--filter"></a>
+### `filter` 嵌套结构
+
+必填参数：
+
+- `name`（字符串）用于过滤的字段名。
+- `values`（字符串集合）过滤值，多个值之间为 OR 关系。
+
+
+<a id="nestedblock--rules"></a>
+### `rules` 嵌套结构
+
+只读属性：
+
+- `action`（字符串）规则动作：ACCEPT 或 DROP。
+- `allowed_cidr`（字符串）允许的 CIDR 网段。
+- `description`（字符串）规则描述。
+- `dst_ip_range`（字符串）目标 IP 范围。
+- `dst_port_range`（字符串）目标端口范围。
+- `priority`（数字）规则优先级。
+- `protocol`（字符串）协议：TCP、UDP、ICMP 或 ALL。
+- `remote_security_group_uuid`（字符串）远端安全组 UUID。
+- `src_ip_range`（字符串）源 IP 范围。
+- `state`（字符串）规则状态：Enabled 或 Disabled。
+- `type`（字符串）规则类型：Ingress 或 Egress。
+
+
+<a id="nestedatt--security_groups"></a>
+### `security_groups` 嵌套结构
+
+只读属性：
+
+- `attached_l3_network_uuids`（字符串列表）安全组绑定的三层网络 UUID 列表。
+- `description`（字符串）安全组描述。
+- `ip_version`（数字）IP 版本（4 或 6）。
+- `name`（字符串）安全组名称。
+- `state`（字符串）安全组状态。
+- `uuid`（字符串）安全组 UUID。
+- `vm_nic_uuids`（字符串列表）绑定到安全组的云主机网卡 UUID 列表。

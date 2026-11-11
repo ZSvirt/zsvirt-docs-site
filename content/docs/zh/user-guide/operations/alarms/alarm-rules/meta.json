@@ -1,0 +1,11 @@
+{
+  "title": "报警器",
+  "pages": [
+    "index",
+    "rule-reference",
+    "create-resource-alarm",
+    "create-event-alarm",
+    "manage"
+  ],
+  "pagesIndex": "index"
+}

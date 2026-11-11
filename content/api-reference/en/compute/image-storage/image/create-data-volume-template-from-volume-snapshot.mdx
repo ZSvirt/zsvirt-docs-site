@@ -1,0 +1,159 @@
+---
+title: "Create Data Volume Template from Volume Snapshot"
+---
+
+<APIPage method="POST" path="/v1/images/data-volume-templates/from/volume-snapshots/{snapshotUuid}">
+
+Create a Data Volume Image from a specified Volume Snapshot.
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "My Data Volume Template",
+    "backupStorageUuids": [
+      "dbf107f8efa531f786f243850499e010"
+    ],
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"My Data Volume Template","backupStorageUuids":["dbf107f8efa531f786f243850499e010"]}}' \
+http://localhost:8080/zstack/v1/images/data-volume-templates/from/volume-snapshots/58976137bf95309692762077cd7077e3
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|snapshotUuid|String|url|Snapshot UUID| |0.6|
+|name|String|body \(contained in **params** structure\)|Data Volume Image name| |0.6|
+|description \(Optional\)|String|body \(contained in **params** structure\)|Detailed description of the Data Volume Image| |0.6|
+|backupStorageUuids|List|body \(contained in **params** structure\)|Image Storage UUID List| |0.6|
+|resourceUuid \(Optional\)|String|body \(contained in **params** structure\)|Data Volume Image UUID. If specified, the Data Volume Image will use this field value as its UUID| |0.6|
+|tagUuids \(Optional\)|List|body \(contained in **params** structure\)|Tag UUID List| | |
+|systemTags \(Optional\)|List|body|System Tags| |0.6|
+|userTags \(Optional\)|List|body|User Tags| |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "314d80c2feb5352c984b3ffd36108c32",
+    "name": "My Data Volume Template",
+    "mediaType": "DataVolumeTemplate",
+    "platform": "Linux",
+    "format": "raw",
+    "backupStorageRefs": [
+      {
+        "id": 0.0,
+        "imageUuid": "314d80c2feb5352c984b3ffd36108c32",
+        "backupStorageUuid": "d861144baadf31e3b1cbbb282242adcf",
+        "installPath": "ceph://zs-images/0cd599ec519249489475112a058bb93a",
+        "status": "Ready"
+      }
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_ms5_nck_l1b)|0.6|
+|inventory|ImageInventory|See [inventory](#p_ixz_nck_l1b)|0.6|
+|failures|List|See [failures](#p_epn_4ck_l1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause. The source error that triggered the current error. This field is null if there is no original error|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|name|String|Resource name|0.6|
+|description|String|Detailed description of the resource|0.6|
+|state|String|Image boot state|0.6|
+|status|String|Image ready state|0.6|
+|size|Long|Image size|0.6|
+|actualSize|Long|Image actual capacity|0.6|
+|md5Sum|String|Image md5 value|0.6|
+|url|String|Image URL address|0.6|
+|mediaType|String|Image type|0.6|
+|guestOsType|String|Guest Operating System type corresponding to the Image|0.6|
+|type|String|Internal use field|0.6|
+|platform|String|Image system platform|0.6|
+|format|String|Image format, for example: raw|0.6|
+|system|Boolean|Indicates whether it is a system Image|0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+|backupStorageRefs|List|See [backupStorageRefs](#p_ujg_4ck_l1b)|0.6|
+
+### backupStorageRefs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|imageUuid|String|Image UUID|0.6|
+|backupStorageUuid|String|Image Storage UUID|0.6|
+|installPath|String|Installation path on the Image Storage|0.6|
+|exportUrl|String|Export Image URL|0.6|
+|exportMd5Sum|String|Export Image md5 value|0.6|
+|status|String|Image ready state|0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+
+### failures
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|backupStorageUuid|String|Image Storage UUID|0.6|
+|error|ErrorCode|See [error](#p_ms5_nck_l1b)|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+CreateDataVolumeTemplateFromVolumeSnapshotAction action = new CreateDataVolumeTemplateFromVolumeSnapshotAction();
+action.snapshotUuid = "58976137bf95309692762077cd7077e3";
+action.name = "My Data Volume Template";
+action.backupStorageUuids = asList("dbf107f8efa531f786f243850499e010");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateDataVolumeTemplateFromVolumeSnapshotAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateDataVolumeTemplateFromVolumeSnapshotAction action = CreateDataVolumeTemplateFromVolumeSnapshotAction()
+action.snapshotUuid = "58976137bf95309692762077cd7077e3"
+action.name = "My Data Volume Template"
+action.backupStorageUuids = [dbf107f8efa531f786f243850499e010]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateDataVolumeTemplateFromVolumeSnapshotAction.Result res = action.call()
+```
+
+</APIPage>

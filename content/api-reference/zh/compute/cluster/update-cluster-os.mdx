@@ -1,0 +1,136 @@
+---
+title: "升级集群内主机的操作系统"
+---
+
+<APIPage method="PUT" path="/v1/clusters/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateClusterOS": {
+    "excludePackages": [
+      "kernel",
+      "systemd*"
+    ],
+    "updatePackages": [
+      "zstack-release"
+    ],
+    "releaseVersion": "c74"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateClusterOS":{"excludePackages":["kernel","systemd*"],"updatePackages":["zstack-release"],"releaseVersion":"c74"}}' http://localhost:8080/zstack/v1/clusters/31c4951f39ae38969802e833448369ae/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |2.3|
+|excludePackages \(可选\)|List|body\(包含在**updateClusterOS**结构中\)|不升级的包列表| |3.7.0|
+|updatePackages \(可选\)|List|body\(包含在**updateClusterOS**结构中\)|要升级的包列表| |3.7.0|
+|releaseVersion \(可选\)|String|body\(包含在**updateClusterOS**结构中\)|升级所用源的版本| |3.7.0|
+|resourceUuid \(可选\)|String|body\(包含在**updateClusterOS**结构中\)| | |3.7.0|
+|tagUuids \(可选\)|List|body\(包含在**updateClusterOS**结构中\)|标签UUID列表| |3.7.0|
+|systemTags \(可选\)|List|body|系统标签| |2.3|
+|userTags \(可选\)|List|body|用户标签| |2.3|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "932696598b64375ea4ae6226cc0c1407"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_dkt_bhw_hdb)|2.3|
+|inventory|LongJobInventory|详情参考[inventory](#p_d55_chw_hdb)|2.2|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|2.2.4|
+|name|String|资源名称|2.2.4|
+|description|String|资源的详细描述|2.2.4|
+|apiId|String|用于关联TaskProgress的APIID|2.2.4|
+|jobName|String|任务名称|2.2.4|
+|jobData|String|任务数据|2.2.4|
+|jobResult|String|任务结果|2.2.4|
+|targetResourceUuid|String|目标资源UUID|2.2.4|
+|managementNodeUuid|String|管理节点UUID|2.2.4|
+|createDate|Timestamp|创建时间|2.2.4|
+|lastOpDate|Timestamp|最后一次修改时间|2.2.4|
+|executeTime|Long| |3.7.0|
+|state|LongJobState|详情参考[state](#p_ixh_dq5_ljb)|2.2.4|
+
+### state
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Waiting|LongJobState| |3.7.0|
+|Suspended|LongJobState| |3.7.0|
+|Running|LongJobState| |3.7.0|
+|Succeeded|LongJobState| |3.7.0|
+|Canceling|LongJobState| |3.7.0|
+|Canceled|LongJobState| |3.7.0|
+|Failed|LongJobState| |3.7.0|
+
+## SDK示例
+Java SDK
+
+```
+UpdateClusterOSAction action = new UpdateClusterOSAction();
+action.uuid = "31c4951f39ae38969802e833448369ae";
+action.excludePackages = asList("kernel","systemd*");
+action.updatePackages = asList("zstack-release");
+action.releaseVersion = "c74";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateClusterOSAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateClusterOSAction action = UpdateClusterOSAction()
+action.uuid = "31c4951f39ae38969802e833448369ae"
+action.excludePackages = [kernel, systemd*]
+action.updatePackages = [zstack-release]
+action.releaseVersion = "c74"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateClusterOSAction.Result res = action.call()
+```
+
+</APIPage>

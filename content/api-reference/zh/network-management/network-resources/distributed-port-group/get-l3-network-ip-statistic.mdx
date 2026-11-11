@@ -1,0 +1,381 @@
+---
+title: "获取分布式端口组IP地址使用情况统计"
+---
+
+<APIPage method="GET" path="/v1/l3-networks/{l3NetworkUuid}/ip-statistic">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/l3-networks/9bdd769f3e603f65bd368512ebe8b998/ip-statistic?resourceType=All&sortBy=Ip&sortDirection=asc&start=0&limit=20&replyWithCount=false
+```
+
+参数列表
+
+<table id="table_ufx_jnv_jjb"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+l3NetworkUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+分布式端口组UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.7.0
+
+</td></tr><tr><td>
+
+resourceType \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+统计资源类型
+
+</td><td>
+
+-   All
+-   Vip
+-   VM
+-   KernelInterface
+
+</td><td>
+
+3.7.0
+
+</td></tr><tr><td>
+
+ip \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+指定IP地址
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.7.0
+
+</td></tr><tr><td>
+
+sortBy \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+排序方式
+
+</td><td>
+
+-   Ip
+-   CreateDate
+
+</td><td>
+
+3.7.0
+
+</td></tr><tr><td>
+
+sortDirection \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+query
+
+</td><td>
+
+排序方向
+
+</td><td>
+
+-   asc
+-   desc
+
+</td><td>
+
+3.7.0
+
+</td></tr><tr><td>
+
+start \(可选\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+query
+
+</td><td>
+
+统计结果起始位置
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.7.0
+
+</td></tr><tr><td>
+
+limit \(可选\)
+
+</td><td>
+
+Integer
+
+</td><td>
+
+query
+
+</td><td>
+
+统计结果数量
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.7.0
+
+</td></tr><tr><td>
+
+replyWithCount \(可选\)
+
+</td><td>
+
+boolean
+
+</td><td>
+
+query
+
+</td><td>
+
+同时返回统计结果总数
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.7.0
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.7.0
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+query
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.7.0
+
+</td></tr></tbody>
+</table>
+
+## API返回
+返回示例
+
+```
+{
+  "ipStatistics": [
+    {
+      "ip": "192.168.0.1",
+      "resourceTypes": [
+        "Other"
+      ]
+    }
+  ],
+  "total": 1
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|total|Long|IP统计结果总数|3.7.0|
+|success|boolean|成功|3.7.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_vsh_14v_jjb)|3.7.0|
+|ipStatistics|List|详情参考[ipStatistics](#p_zb4_14v_jjb)|3.7.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.7.0|
+|description|String|错误的概要描述|3.7.0|
+|details|String|错误的详细信息|3.7.0|
+|elaboration|String|保留字段，默认为null|3.7.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.7.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.7.0|
+
+### ipStatistics
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|ip|String|IP地址|3.7.0|
+|vipUuid|String|虚拟IP的UUID|3.7.0|
+|vipName|String|虚拟IP名字|3.7.0|
+|vmInstanceUuid|String|虚拟机实例UUID|3.7.0|
+|vmInstanceName|String|虚拟机实例名字|3.7.0|
+|vmInstanceType|String|虚拟机实例类型|3.7.0|
+|applianceVmOwnerUuid|String|应用虚拟机实例的网络服务Uuid|4.1.0|
+|vmDefaultIp|String|虚拟机实例默认IP|3.7.0|
+|resourceTypes|List|绑定到IP地址的资源类型列表|3.7.0|
+|state|String|资源状态|3.7.0|
+|useFor|String|虚拟IP绑定的网络服务|3.7.0|
+|createDate|Timestamp|创建时间|3.7.0|
+|ownerName|String|资源所有者名字|3.7.0|
+|resourceOwnerUuid|String|资源所有者的UUID|4.1.0|
+|usedIpUuid|String|IP的UUID|4.1.0|
+
+## SDK示例
+Java SDK
+
+```
+GetL3NetworkIpStatisticAction action = new GetL3NetworkIpStatisticAction();
+action.l3NetworkUuid = "9bdd769f3e603f65bd368512ebe8b998";
+action.resourceType = "All";
+action.sortBy = "Ip";
+action.sortDirection = "asc";
+action.start = 0;
+action.limit = 20;
+action.replyWithCount = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetL3NetworkIpStatisticAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+GetL3NetworkIpStatisticAction action = GetL3NetworkIpStatisticAction()
+action.l3NetworkUuid = "9bdd769f3e603f65bd368512ebe8b998"
+action.resourceType = "All"
+action.sortBy = "Ip"
+action.sortDirection = "asc"
+action.start = 0
+action.limit = 20
+action.replyWithCount = false
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetL3NetworkIpStatisticAction.Result res = action.call()
+
+```
+
+</APIPage>

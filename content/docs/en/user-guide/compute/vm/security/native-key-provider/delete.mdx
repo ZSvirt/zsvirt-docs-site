@@ -1,0 +1,20 @@
+---
+title: 'Delete the Native Key Provider'
+---
+
+-   If you want to keep the key provider for future use, back it up first.
+-   To preserve encrypted resources, perform the **Update Key** operation on the relevant virtual machines before deletion, and re-encrypt them using the default key provider.
+
+1.  In the navigation pane, select **Inventory** &gt; **VM and Host**.
+
+2.  Select the root node.
+
+3.  On the root node details page, click **Key Providers**.
+
+4.  On the Key Providers tab, select the native key provider you want to delete, and then click **Actions** &gt; **Delete**.
+
+    <Callout type="info">
+    -   After deletion, all resources encrypted with this key provider (such as TPM-enabled virtual machines, encrypted virtual machines, and encrypted disks) will enter a locked state and become inaccessible.
+    -   The key provider is permanently deleted from the platform and cannot be recovered. Proceed with caution.
+    </Callout>
+5.  Read the risk warning, enter the confirmation information, and click **OK**.

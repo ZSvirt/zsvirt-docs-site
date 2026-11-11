@@ -1,0 +1,71 @@
+---
+title: "变更账户类型"
+---
+
+## API 请求
+URLs
+
+```
+PUT zstack/v1/accounts/{uuid}/actions
+```
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "changeAccountType": {
+    "type": "SystemAdmin"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X PUT -d '{"changeAccountType":{"type":"SystemAdmin"}}' \
+http://localhost:8080/zstack/v1/accounts/f0c72e5b9d723dbaa716d2f0fad341d9/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |5.0.0|
+|type|String|body\(包含在`changeAccountType`结构中\)|账户类型，SystemAdmin表示管理员，Normal表示普通用户（Normal暂不支持，即暂不支持降权）| |5.0.0|
+|system Tags \(可选\)|List|body|系统标签| |5.0.0|
+|userTags \(可选\)|List|body|用户标签| |5.0.0|
+
+## SDK示例
+Java SDK
+
+```
+ChangeAccountTypeAction action = new ChangeAccountTypeAction();
+action.uuid = "f0c72e5b9d723dbaa716d2f0fad341d9";
+action.type = "SystemAdmin";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ChangeAccountTypeAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = ChangeAccountTypeAction()
+action.uuid = "f0c72e5b9d723dbaa716d2f0fad341d9"
+action.type = "SystemAdmin"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```

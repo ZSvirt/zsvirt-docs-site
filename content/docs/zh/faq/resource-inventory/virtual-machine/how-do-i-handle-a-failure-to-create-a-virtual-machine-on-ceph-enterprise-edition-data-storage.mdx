@@ -1,0 +1,18 @@
+---
+title: "在Ceph企业版数据存储上创建虚拟机失败，该怎么处理？"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+## 现象
+在Ceph企业版数据存储上创建虚拟机，出现如下报错：
+
+```
+错误原因：failed to start vm[uuid:09779ea6fb6e4ae2ad6b239bf7dce7ee name:test] on kvm host[uuid:8a769650069f40a7ac97c7b98ce650d5, ip:192.168.5.252], because Traceback (most recent call last): File "/var/lib/zstack/virtualenv/kvm/lib/python2.7/site-packages/kvmagent/plugins/vm_plugin.py", line 4708, in start_vm self._start_vm(cmd) File "/var/lib/zstack/virtualenv/kvm/lib/python2.7/site-packages/kvmagent/plugins/vm_plugin.py", line 4628, in _start_vm 'unable to start vm[uuid:%s, name:%s], libvirt error: %s' % (cmd.vmInstanceUuid, cmd.vmName, str(e))) KvmError: unable to start vm[uuid:09779ea6fb6e4ae2ad6b239bf7dce7ee, name:test], libvirt error: internal error: qemu unexpectedly closed the monitor: 2021-01-13T10:14:38.093540Z qemu-kvm: -drive file=rbd:pool-b35d1f59707e4c6aabdfe74457dacccf/7133ff2b026449f8987ec8c0a10dbdee:id=zstack:auth_supported=cephx\;none:mon_host=172.25.15.120\:6789\;172.25.15.163\:6789\;172.25.12.55\:6789,file.password-secret=virtio-disk0-secret0,format=raw,if=none,id=drive-virtio-disk0: error reading header from 7133ff2b026449f8987ec8c0a10dbdee: No such file or directory
+```
+
+## 原因
+Ceph企业版中，非Mon节点以外的主机缺少网关服务器角色，导致虚拟机创建成功但无法正常启动。
+
+## 解决方案
+-   登录Ceph企业版管理节点，将Mon节点以外的主机，添加为网关服务器角色。

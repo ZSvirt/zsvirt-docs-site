@@ -1,0 +1,54 @@
+---
+title: "查询原生密钥提供程序"
+---
+
+<APIPage method="GET" path="/v1/key-providers/nkp">
+
+```
+GET zstack/v1/key-providers/nkp/{uuid}
+```
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/key-providers/nkp?q=uuid=ff0415ff372f33b5b6b757d3b99ad900
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/key-providers/nkp/12fcf606191b3b249ef4c419585ca769
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryNkp`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## SDK示例
+Java SDK
+
+```
+QueryNkpAction action = new QueryNkpAction();
+action.conditions = asList("uuid=ff0415ff372f33b5b6b757d3b99ad900");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryNkpAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = QueryNkpAction()
+action.conditions = ["uuid=ff0415ff372f33b5b6b757d3b99ad900"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,314 @@
+---
+title: "添加分布式存储存储池"
+---
+
+<APIPage method="POST" path="/v1/primary-storage/ceph/{primaryStorageUuid}/pools">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "poolName": "highPerformance",
+    "aliasName": "alias pool name",
+    "description": "for high performance data volumes",
+    "isCreate": true
+    "type": "ROOT
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"poolName":"highPerformance","aliasName":"alias pool name","description":"for high performance data volumes","isCreate":true,"type":"Root"}}' http://localhost:8080/zstack/v1/primary-storage/ceph/fe5adfa6042b33cd8ee7b5bcd994245f/pools
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|primaryStorageUuid|String|url|数据存储UUID| |0.6|
+|poolName|String|body\(包含在**params**结构中\)| | |0.6|
+|aliasName \(可选\)|String|body\(包含在**params**结构中\)| | |0.6|
+|description \(可选\)|String|body\(包含在**params**结构中\)|资源的详细描述| |0.6|
+|isCreate \(可选\)|boolean|body\(包含在**params**结构中\)| | |0.6|
+|type|String|body\(包含在**params**结构中\)|存储池类型| |3.1.1|
+|resourceUuid \(可选\)|String|body\(包含在**params**结构中\)| | |0.6|
+|systemTags \(可选\)|List|body| | |0.6|
+|userTags \(可选\)|List|body| | |0.6|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "97ac9dc5fc223f80918747a8a398478b",
+    "primaryStorageUuid": "82b127a3f6cc3ec7bd7ff01069310099",
+    "poolName": "pool name",
+    "aliasName": "alias name",
+    "description": "description",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM",
+    "type": "Data"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|详情参考[error](#p_vr5_lwk_2db)|0.6|
+|inventory|CephPrimaryStoragePoolInventory|详情参考[inventory](#p_crz_lwk_2db)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+<table id="table_s31_mvk_2db"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+描述
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+资源的UUID，唯一标示该资源
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+primaryStorageUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+数据存储UUID
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+poolName
+
+</td><td>
+
+String
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+aliasName
+
+</td><td>
+
+String
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+description
+
+</td><td>
+
+String
+
+</td><td>
+
+资源的详细描述
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+createDate
+
+</td><td>
+
+Timestamp
+
+</td><td>
+
+创建时间
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+lastOpDate
+
+</td><td>
+
+Timestamp
+
+</td><td>
+
+最后一次修改时间
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+type
+
+</td><td>
+
+String
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+availableCapacity
+
+</td><td>
+
+Long
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3.2
+
+</td></tr><tr><td>
+
+usedCapacity
+
+</td><td>
+
+Long
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3.2
+
+</td></tr><tr><td>
+
+replicatedSize
+
+</td><td>
+
+Integer
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3.2
+
+</td></tr></tbody>
+</table>
+
+## SDK示例
+Java SDK
+
+```
+AddCephPrimaryStoragePoolAction action = new AddCephPrimaryStoragePoolAction();
+action.primaryStorageUuid = "fe5adfa6042b33cd8ee7b5bcd994245f";
+action.poolName = "highPerformance";
+action.aliasName = "alias pool name";
+action.description = "for high performance data volumes";
+action.isCreate = true;
+action.type = "Root"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddCephPrimaryStoragePoolAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddCephPrimaryStoragePoolAction action = AddCephPrimaryStoragePoolAction()
+action.primaryStorageUuid = "fe5adfa6042b33cd8ee7b5bcd994245f"
+action.poolName = "highPerformance"
+action.aliasName = "alias pool name"
+action.type = "Root"
+action.description = "for high performance data volumes"
+action.isCreate = true
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddCephPrimaryStoragePoolAction.Result res = action.call()
+```
+
+</APIPage>

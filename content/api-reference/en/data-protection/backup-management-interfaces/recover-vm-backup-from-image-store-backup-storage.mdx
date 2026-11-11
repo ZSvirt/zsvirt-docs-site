@@ -1,0 +1,141 @@
+---
+title: "Recover VM Backup"
+---
+
+<APIPage method="PUT" path="/v1/vm-backups/{groupUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "recoverVmBackupFromImageStoreBackupStorage": {
+    "srcBackupStorageUuid": "c63b10a638f6302caeabb7a806d087ad",
+    "dstBackupStorageUuid": "7c7d653af1c531dfa04dabea3a085de5"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The **systemTags** and **userTags** fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"recoverVmBackupFromImageStoreBackupStorage":{"srcBackupStorageUuid":"c63b10a638f6302caeabb7a806d087ad","dstBackupStorageUuid":"7c7d653af1c531dfa04dabea3a085de5"}}' http://localhost:8080/zstack/v1/vm-backups/7913ce9f37973f4e8339aea4ff61584c/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|groupUuid|String|url|VM backup group UUID| |3.0.0|
+|srcBackupStorageUuid|String|body \(Contained in the **recoverVmBackupFromImageStoreBackupStorage** structure\)|Local Image Storage| |3.0.0|
+|dstBackupStorageUuid|String|body \(Contained in the **recoverVmBackupFromImageStoreBackupStorage** structure\)|Backup Image Storage| |3.0.0|
+|systemTags \(Optional\)|List|body| | |3.0.0|
+|userTags \(Optional\)|List|body| | |3.0.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "5e28a0c27a8e352bbeedff94a0326f9e",
+      "volumeUuid": "aa5fbdba3ffa352bbefaf913f56949f3",
+      "name": "Root-Volume-Backup-1",
+      "description": "volume backup",
+      "size": 1073741824.0,
+      "groupUuid": "0150a8120f9334db8e9abc9d3f5eea08",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    },
+    {
+      "uuid": "5924c90ddbcb3784ae6e78b70ede90ce",
+      "volumeUuid": "12d583f519f03a0593dff7514af65be4",
+      "name": "Data-Volume-Backup-1",
+      "description": "volume backup",
+      "size": 2147483648.0,
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null on success. For details, see [error](#p_zfy_3vx_y2b)|3.0.0|
+|inventories|List|For details, see [inventories](#p_a5f_jvx_y2b)|3.0.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|3.0.0|
+|description|String|A brief description of the error|3.0.0|
+|details|String|The detailed error information|3.0.0|
+|elaboration|String|Reserved field. Default is null|3.0.0|
+|opaque|LinkedHashMap|Reserved field. Default is null|3.0.0|
+|cause|ErrorCode|The root error. The source error that caused the current error. This field is null if there is no root error|3.0.0|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the disk backup. Uniquely identifies the resource|3.0.0|
+|volumeUuid|String|Disk UUID|3.0.0|
+|name|String|Backup name|3.0.0|
+|description|String|Detailed description of the backup|3.0.0|
+|type|String|Disk type|3.0.0|
+|state|String|The enabled state of the disk backup|3.0.0|
+|status|String|The status of the disk backup|3.0.0|
+|size|Long|The size of the current disk backup|3.0.0|
+|metadata|String|Metadata related to the disk backup|3.0.0|
+|createDate|Timestamp|Creation time|3.0.0|
+|lastOpDate|Timestamp|Last modification time|3.0.0|
+|backupStorageRefs|List|For details, see [backupStorageRefs](#p_g4l_jvx_y2b)|3.0.0|
+
+### backupStorageRefs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|volumeBackupUuid|String|The UUID of the disk backup|3.0.0|
+|backupStorageUuid|String|Image Storage UUID|3.0.0|
+|installPath|String|The data path of the disk backup|3.0.0|
+|status|String|The status of the disk backup on the Image Storage|3.0.0|
+|createDate|Timestamp|Creation time|3.0.0|
+|lastOpDate|Timestamp|Last modification time|3.0.0|
+
+## SDK Examples
+Java SDK
+
+```
+RecoverVmBackupFromImageStoreBackupStorageAction action = new RecoverVmBackupFromImageStoreBackupStorageAction();
+action.groupUuid = "7913ce9f37973f4e8339aea4ff61584c";
+action.srcBackupStorageUuid = "c63b10a638f6302caeabb7a806d087ad";
+action.dstBackupStorageUuid = "7c7d653af1c531dfa04dabea3a085de5";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RecoverVmBackupFromImageStoreBackupStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+RecoverVmBackupFromImageStoreBackupStorageAction action = RecoverVmBackupFromImageStoreBackupStorageAction()
+action.groupUuid = "7913ce9f37973f4e8339aea4ff61584c"
+action.srcBackupStorageUuid = "c63b10a638f6302caeabb7a806d087ad"
+action.dstBackupStorageUuid = "7c7d653af1c531dfa04dabea3a085de5"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+RecoverVmBackupFromImageStoreBackupStorageAction.Result res = action.call()
+```
+
+</APIPage>

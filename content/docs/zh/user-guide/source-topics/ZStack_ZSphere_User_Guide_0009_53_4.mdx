@@ -1,0 +1,80 @@
+---
+title: "使用 vTPM 保护虚拟机"
+---
+
+在新建虚拟机时或为现有虚拟机添加虚拟可信平台模块 (vTPM)，为虚拟机操作系统提供增强的安全性。
+
+-   平台已添加可用的密钥提供程序。若使用内置密钥提供程序，请先完成备份操作。
+-   虚拟机运行所在主机的内核、QEMU 和 libvirt 版本需满足 vTPM 支持要求。不同架构和主机操作系统版本对应的组件版本要求如下：
+
+<table class="doc-feature-table">
+  <thead>
+    <tr>
+      <th>架构</th>
+      <th>主机操作系统版本</th>
+      <th>内核版本</th>
+      <th>QEMU 版本</th>
+      <th>libvirt 版本</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td rowSpan="3">x86</td>
+      <td>H84r</td>
+      <td>`4.18.0-553.69.1.13.gc220c6303994.el8.x86_64`</td>
+      <td>`qemu-kvm-6.2.0-235.g51749aa16b.el8`</td>
+      <td>`libvirt-8.0.0-90.g4f8dd1cb01.el8.x86_64`</td>
+    </tr>
+    <tr>
+      <td>KY10 SP3</td>
+      <td>`4.19.90-52.48.v2207.ky10.x86_64`</td>
+      <td>`qemu-kvm-6.2.0-235.g51749aa16b.ky10`</td>
+      <td>`libvirt-8.0.0-90.g4f8dd1cb01.ky10.x86_64`</td>
+    </tr>
+    <tr>
+      <td>KY10 SP3.2403</td>
+      <td>`4.19.90-89.25.v2401.ky10.x86_64`</td>
+      <td>`qemu-kvm-6.2.0-232.g09252161d1.ky10`</td>
+      <td>`libvirt-8.0.0-90.g4f8dd1cb01.ky10.x86_64`</td>
+    </tr>
+    <tr>
+      <td rowSpan="3">ARM</td>
+      <td>KY10 SP3</td>
+      <td>`4.19.90-52.48.v2207.ky10.aarch64`</td>
+      <td>`qemu-6.2.0-906.g271454a05e.ky10`</td>
+      <td>`libvirt-6.2.0-415.gf2c25be909.ky10.aarch64`</td>
+    </tr>
+    <tr>
+      <td>KY10 SP3.2403</td>
+      <td>`4.19.90-89.25.v2401.ky10.aarch64`</td>
+      <td>`qemu-6.2.0-1042.g7eecd245dd.ky10`</td>
+      <td>`libvirt-6.2.0-463.g2ee090fe60.ky10.aarch64`</td>
+    </tr>
+    <tr>
+      <td>H22e</td>
+      <td>`5.10.0-136.12.0.86.oe2203sp1.aarch64`</td>
+      <td>`qemu-6.2.0-906.g271454a05e`</td>
+      <td>`libvirt-6.2.0-415.gf2c25be909.aarch64`</td>
+    </tr>
+  </tbody>
+</table>
+
+-   虚拟机引导模式需设置为 UEFI。
+-   虚拟机操作系统需支持 TPM 2.0 规格。不支持 TPM 2.0 的操作系统（包括但不限于 Windows Server 2012 及更早版本、CentOS 6 / RHEL 6、Ubuntu 14.04 及更早版本）不在支持范围内。
+-   为现有虚拟机添加 TPM 前，需先将虚拟机关机。
+
+1.  在导航栏中，选择**资源清单** > **主机与虚拟机**。
+
+2.  在资源树中，右键单击目标集群、主机、或镜像，然后点击**新建虚拟机**。
+
+3.  在请选择虚拟机新建方式弹窗中，选择**新建虚拟机**，然后点击**下一步**。
+
+4.  在新建虚拟机弹窗中，完成相关基础配置。有关虚拟机参数的更多信息，请参阅 [新建虚拟机](/docs/user-guide/source-topics/ZStack_ZSphere_User_Guide_0009_14_10)。
+
+5.  在高级设置分区，点击**引导选项**，选择**UEFI**作为虚拟机 BIOS 模式。
+
+6.  在硬件信息分区，点击**添加硬件** > **TPM**。
+
+    添加成功后，在硬件项中点击 TPM，可在右侧硬件配置中查看 TPM 状态和规格。
+
+7.  确认配置信息无误后，点击**确定**。

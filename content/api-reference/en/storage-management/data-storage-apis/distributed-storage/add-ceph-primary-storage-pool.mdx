@@ -1,0 +1,314 @@
+---
+title: "Add Distributed Storage Pool"
+---
+
+<APIPage method="POST" path="/v1/primary-storage/ceph/{primaryStorageUuid}/pools">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "poolName": "highPerformance",
+    "aliasName": "alias pool name",
+    "description": "for high performance data volumes",
+    "isCreate": true
+    "type": "ROOT
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Examples
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"poolName":"highPerformance","aliasName":"alias pool name","description":"for high performance data volumes","isCreate":true,"type":"Root"}}' http://localhost:8080/zstack/v1/primary-storage/ceph/fe5adfa6042b33cd8ee7b5bcd994245f/pools
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|primaryStorageUuid|String|url|Primary Storage UUID| |0.6|
+|poolName|String|body \(nested in **params** structure\)| | |0.6|
+|aliasName \(optional\)|String|body \(nested in **params** structure\)| | |0.6|
+|description \(optional\)|String|body \(nested in **params** structure\)|Resource description| |0.6|
+|isCreate \(optional\)|boolean|body \(nested in **params** structure\)| | |0.6|
+|type|String|body \(nested in **params** structure\)|Storage pool type| |3.1.1|
+|resourceUuid \(optional\)|String|body \(nested in **params** structure\)| | |0.6|
+|systemTags \(optional\)|List|body| | |0.6|
+|userTags \(optional\)|List|body| | |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "97ac9dc5fc223f80918747a8a398478b",
+    "primaryStorageUuid": "82b127a3f6cc3ec7bd7ff01069310099",
+    "poolName": "pool name",
+    "aliasName": "alias name",
+    "description": "description",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM",
+    "type": "Data"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|For details, see [error](#p_vr5_lwk_2db)|0.6|
+|inventory|CephPrimaryStoragePoolInventory|For details, see [inventory](#p_crz_lwk_2db)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier for the error, such as SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause. The source error that triggered the current error. If there is no original error, this field is null|0.6|
+
+### inventory
+<table id="table_s31_mvk_2db"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Description
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+Resource UUID, uniquely identifies the resource
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+primaryStorageUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+Primary Storage UUID
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+poolName
+
+</td><td>
+
+String
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+aliasName
+
+</td><td>
+
+String
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+description
+
+</td><td>
+
+String
+
+</td><td>
+
+Resource description
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+createDate
+
+</td><td>
+
+Timestamp
+
+</td><td>
+
+Creation time
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+lastOpDate
+
+</td><td>
+
+Timestamp
+
+</td><td>
+
+Last modification time
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+type
+
+</td><td>
+
+String
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+availableCapacity
+
+</td><td>
+
+Long
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3.2
+
+</td></tr><tr><td>
+
+usedCapacity
+
+</td><td>
+
+Long
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3.2
+
+</td></tr><tr><td>
+
+replicatedSize
+
+</td><td>
+
+Integer
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.3.2
+
+</td></tr></tbody>
+</table>
+
+## SDK Examples
+Java SDK
+
+```
+AddCephPrimaryStoragePoolAction action = new AddCephPrimaryStoragePoolAction();
+action.primaryStorageUuid = "fe5adfa6042b33cd8ee7b5bcd994245f";
+action.poolName = "highPerformance";
+action.aliasName = "alias pool name";
+action.description = "for high performance data volumes";
+action.isCreate = true;
+action.type = "Root"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddCephPrimaryStoragePoolAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddCephPrimaryStoragePoolAction action = AddCephPrimaryStoragePoolAction()
+action.primaryStorageUuid = "fe5adfa6042b33cd8ee7b5bcd994245f"
+action.poolName = "highPerformance"
+action.aliasName = "alias pool name"
+action.type = "Root"
+action.description = "for high performance data volumes"
+action.isCreate = true
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddCephPrimaryStoragePoolAction.Result res = action.call()
+```
+
+</APIPage>

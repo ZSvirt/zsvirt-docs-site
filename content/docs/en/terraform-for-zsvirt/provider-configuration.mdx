@@ -1,0 +1,50 @@
+---
+title: 'ZSvirt Provider'
+description: 'The ZStack provider is used to interact with the resources supported by ZStack Cloud, a powerful cloud management platform. This provider allows you to manage various cloud resources such as virtual machines, networks, storage, and more. It provides a seamless integration with Terraform, enabling you to define and manage your cloud infrastructure as code.'
+---
+
+<HistoricalNamingNote locale="en" />
+
+# zsphere Provider
+
+
+
+The ZStack provider is designed to manage resources in a ZStack Cloud environment. 
+It provides a way to interact with ZStack's API to create, update, and delete resources such as virtual machines, networks, storage, and more. 
+This provider is ideal for organizations looking to automate their cloud infrastructure management using Terraform.
+
+## Example Usage
+
+To use the ZStack provider, you need to configure it with the necessary credentials and endpoint information. Login ZStack Cloud, Operation Management -> Access Control -> AccessKey Management, Click Generate AccessKey
+Below is an example configuration:
+
+```terraform
+terraform {
+  required_providers {
+    zsphere = {
+      source  = "terraform-zstack-modules/zsphere"
+      version = "1.0.0"
+    }
+  }
+}
+
+provider "zsphere" {
+  host              = "ip address of zsphere cloud api endpoint"
+  access_key_id     = "access_key_id of zsphere cloud"
+  access_key_secret = "access_key_secret of zsphere cloud"
+}
+```
+
+## Schema
+
+### Required
+
+- `host` (String) ZSvirt Cloud MN HOST ip address. May also be provided via ZSvirt_HOST environment variable.
+
+### Optional
+
+- `access_key_id` (String) AccessKey ID for ZSvirt API. Create AccessKey ID from MN,  Operational Management->Access Control->AccessKey Management. May also be provided via ZSvirt_ACCESS_KEY_ID environment variable. Required if using AccessKey authentication. Mutually exclusive with `account_name` and `account_password`.
+- `access_key_secret` (String, Sensitive) AccessKey Secret for ZSvirt API. May also be provided via ZSvirt_ACCESS_KEY_SECRET environment variable. Required if using AccessKey authentication. Mutually exclusive with `account_name` and `account_password`.
+- `account_name` (String) Username for ZSvirt API. May also be provided via ZSvirt_ACCOUN_TNAME environment variable. Required if using Account authentication.  Only supports the platform administrator account (`admin`). Mutually exclusive with `access_key_id` and `access_key_secret`. Using `access_key_id` and `access_key_secret` is the recommended approach for authentication, as it provides more flexibility and security.
+- `account_password` (String, Sensitive) Password for ZSvirt API. May also be provided via ZSvirt_ACCOUNT_PASSWORD environment variable.Required if using Account authentication.  Only supports the platform administrator account (`admin`). Mutually exclusive with `access_key_id` and `access_key_secret`. Using `access_key_id` and `access_key_secret` is the recommended approach for authentication, as it provides more flexibility and security.
+- `port` (Number) ZSvirt Cloud MN API port. May also be provided via ZSvirt_PORT environment variable.

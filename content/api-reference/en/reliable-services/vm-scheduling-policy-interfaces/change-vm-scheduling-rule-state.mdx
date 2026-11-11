@@ -1,0 +1,248 @@
+---
+title: "Change VM Scheduling Policy State"
+---
+
+<APIPage method="PUT" path="/v1/vmSchedulingRule/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "changeVmSchedulingRuleState": {
+    "state": "enable"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The **systemTags** and **userTags** fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"changeVmSchedulingRuleState":{"state":"enable"}}' http://localhost:8080/zstack/v1/vmSchedulingRule/907848e59a963a97a237c6dcb26d96ba/actions
+```
+
+Parameter List
+
+<table id="table_i3d_2bb_3cb"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+UUID of the resource. Uniquely identifies the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.6.0
+
+</td></tr><tr><td>
+
+state
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the `changeVmSchedulingRuleState` structure\)
+
+</td><td>
+
+Target state
+
+</td><td>
+
+-   enable
+-   disable
+
+</td><td>
+
+4.6.0
+
+</td></tr><tr><td>
+
+systemTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.6.0
+
+</td></tr><tr><td>
+
+userTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.6.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "rule": "AFFINITY",
+    "mode": "SOFT",
+    "uuid": "8ab474e792183589b6a58bbe473c635a",
+    "name": "Test-AffinityGroup",
+    "description": "Test-AffinityGroup",
+    "version": "1.0",
+    "type": "HOST",
+    "appliance": "CUSTOMER",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.6.0|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_w13_jcb_3cb)|4.6.0|
+|inventory|AffinityGroupInventory|For details, see [inventory](#p_fbm_jcb_3cb)|4.6.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|4.6.0|
+|description|String|Brief description of the error|4.6.0|
+|details|String|Detailed information about the error|4.6.0|
+|elaboration|String|Reserved field. Default is null|4.6.0|
+|opaque|LinkedHashMap|Reserved field. Default is null|4.6.0|
+|cause|ErrorCode|Root error. The source error that caused the current error. This field is null if no root error exists|4.6.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|rule|String|Rule|4.6.0|
+|mode|String|Execution mode|4.6.0|
+|uuid|String|UUID of the resource. Uniquely identifies the resource|4.6.0|
+|name|String|Resource name|4.6.0|
+|description|String|Detailed description of the resource|4.6.0|
+|policy|String| |4.6.0|
+|version|String| |4.6.0|
+|type|String| |4.6.0|
+|appliance|String| |4.6.0|
+|zoneUuid|String|Data Center UUID|4.6.0|
+|state|String| |4.6.0|
+|createDate|Timestamp|Creation time|4.6.0|
+|lastOpDate|Timestamp|Last modification time|4.6.0|
+|usages|List|For details, see [usages](#p_cyy_jcb_3cb)|4.6.0|
+
+### usages
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the VM scheduling group-to-resource binding relationship|4.6.0|
+|affinityGroupUuid|String|Affinity group UUID|4.6.0|
+|resourceUuid|String|Resource UUID|4.6.0|
+|resourceType|String|Resource type|4.6.0|
+|createDate|Timestamp|Creation time|4.6.0|
+|lastOpDate|Timestamp|Last modification time|4.6.0|
+
+## SDK Examples
+Java SDK
+
+```
+ChangeVmSchedulingRuleStateAction action = new ChangeVmSchedulingRuleStateAction();
+action.uuid = "907848e59a963a97a237c6dcb26d96ba";
+action.state = "enable";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ChangeVmSchedulingRuleStateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ChangeVmSchedulingRuleStateAction action = ChangeVmSchedulingRuleStateAction()
+action.uuid = "907848e59a963a97a237c6dcb26d96ba"
+action.state = "enable"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ChangeVmSchedulingRuleStateAction.Result res = action.call()
+```
+
+</APIPage>

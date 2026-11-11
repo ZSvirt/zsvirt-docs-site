@@ -1,0 +1,10 @@
+{
+  "title": "O&M Management",
+  "pages": [
+    "monitoring-apis",
+    "tag-management-apis",
+    "custom-attribute",
+    "migration-service-apis"
+  ],
+  "pagesIndex": "monitoring-apis"
+}

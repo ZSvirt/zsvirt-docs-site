@@ -1,0 +1,126 @@
+---
+title: "配置 ZCE-X 集群"
+---
+
+<APIPage method="PUT" path="/v1/zce-x-plugin/config/cluster">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateZceXClusterConfig": {
+    "uuid": "77e1393bf5aa4536a018b4c0c4e29c72",
+    "managementNetworkCidr": "172.26.30.1/24",
+    "publicNetworkCidr": "172.26.30.1/24",
+    "clusterNetworkCidr": "172.26.30.1/24",
+    "otherManagementIp": [
+      "172.26.30.113",
+      "172.26.30.202"
+    ],
+    "username": "admin"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateZceXClusterConfig":{"uuid":"77e1393bf5aa4536a018b4c0c4e29c72","managementNetworkCidr":"172.26.30.1/24","publicNetworkCidr":"172.26.30.1/24","clusterNetworkCidr":"172.26.30.1/24","otherManagementIp":["172.26.30.113","172.26.30.202"],"username":"admin"}}' \
+http://localhost:8080/zstack/v1/zce-x-plugin/config/cluster
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|body\(包含在`updateZceXClusterConfig`结构中\)|ZCE-X 的 UUID，唯一标示该资源| |4.10.6|
+|managementIp \(可选\)|String|body\(包含在`updateZceXClusterConfig`结构中\)|ZCE-X 的管理节点 IP。如果不填，默认为 ZceXVO.uuid| |4.10.6|
+|managementNetworkCidr|String|body\(包含在`updateZceXClusterConfig`结构中\)|ZCE-X 的管理网络 IP CIDR| |4.10.6|
+|publicNetworkCidr|String|body\(包含在`updateZceXClusterConfig`结构中\)|ZCE-X 的公有网络 IP CIDR| |4.10.6|
+|clusterNetworkCidr|String|body\(包含在`updateZceXClusterConfig`结构中\)|ZCE-X 的集群使用网络 IP CIDR| |4.10.6|
+|gatewayNetworkCidr \(可选\)|String|body\(包含在`updateZceXClusterConfig`结构中\)|ZCE-X 的网关使用网络 IP CIDR，默认使用共有网络 IP CIDR| |4.10.6|
+|otherManagementIp|List|body\(包含在`updateZceXClusterConfig`结构中\)|ZCE-X 的其它两个管理节点 IP，注意必须写两个，且各不相同。节点间需要做免密| |4.10.6|
+|otherStorageIp \(可选\)|List|body\(包含在`updateZceXClusterConfig`结构中\)|ZCE-X 其它存储节点 IP 列表| |4.10.6|
+|username \(可选\)|String|body\(包含在`updateZceXClusterConfig`结构中\)|ZCE-X 初始化时创建的管理员用户名| |4.10.6|
+|password \(可选\)|String|body\(包含在`updateZceXClusterConfig`结构中\)|ZCE-X 初始化时创建的管理员密码| |4.10.6|
+|systemTags \(可选\)|List|body|系统标签| |4.10.6|
+|userTags \(可选\)|List|body|用户标签| |4.10.6|
+|softwarePackageUuid|String|body\(包含在`updateZceXClusterConfig`结构中\)|分布式软件包UUID| |4.10.20|
+
+<Callout type="info">
+-   初始化软件包的参数。
+</Callout>
+    -   SystemTag格式：`initConfig::{%s}`
+    -   SystemTag示例：`APIUpdateZceXClusterConfigMsg转为json字符串`
+
+## API返回
+返回示例
+
+```
+{
+  "initSuccess": true,
+  "tokenCreated": true
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|clusterInitSuccess|boolean|初始化是否成功|4.10.20|
+|tokenCreated|boolean|token生成是否成功|4.10.20|
+|success|boolean|配置是否成功|4.10.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_bcl_x1v_m1b)|4.10.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.10.0|
+|description|String|错误的概要描述|4.10.0|
+|details|String|错误的详细信息|4.10.0|
+|elaboration|String|保留字段，默认为null|4.10.0|
+|opaque|LinkedHashMap|保留字段，默认为null|4.10.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.10.0|
+
+## SDK示例
+Java SDK
+
+```
+UpdateZceXClusterConfigAction action = new UpdateZceXClusterConfigAction();
+action.uuid = "77e1393bf5aa4536a018b4c0c4e29c72";
+action.managementNetworkCidr = "172.26.30.1/24";
+action.publicNetworkCidr = "172.26.30.1/24";
+action.clusterNetworkCidr = "172.26.30.1/24";
+action.otherManagementIp = asList("172.26.30.113","172.26.30.202");
+action.username = "admin";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateZceXClusterConfigAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = UpdateZceXClusterConfigAction()
+action.uuid = "77e1393bf5aa4536a018b4c0c4e29c72"
+action.managementNetworkCidr = "172.26.30.1/24"
+action.publicNetworkCidr = "172.26.30.1/24"
+action.clusterNetworkCidr = "172.26.30.1/24"
+action.otherManagementIp = [172.26.30.113, 172.26.30.202]
+action.username = "admin"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

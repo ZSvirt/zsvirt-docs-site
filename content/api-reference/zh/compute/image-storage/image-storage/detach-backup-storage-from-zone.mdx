@@ -1,0 +1,107 @@
+---
+title: "从数据中心中卸载已经挂载的镜像存储"
+---
+
+## API请求
+URLs
+
+```
+DELETE/v1/zones/{zoneUuid}/backup-storage/{backupStorageUuid}
+```
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/zones/cb571dd2f60740de9fea4d9003a9f33f/backup-storage/8cbfbfd5b24a4d01aaa7da5a6fc96169?
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|backupStorageUuid|String|url|镜像存储UUID| |0.6|
+|zoneUuid|String|url|数据中心UUID| |0.6|
+|systemTags \(可选\)|List|body|系统标签| |0.6|
+|userTags \(可选\)|List|body|用户标签| |0.6|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "name": "My Backup Storage",
+    "description": "Public Backup Storage",
+    "totalCapacity": 1073741824.0,
+    "availableCapacity": 968884224.0,
+    "type": "Ceph",
+    "state": "Enabled",
+    "status": "Connected",
+    "createDate": "Jun 7, 2017 9:20:21 PM",
+    "lastOpDate": "Jun 7, 2017 9:20:21 PM",
+    "attachedZoneUuids": [
+      "c57c33405b544ee580e6892a796cff96"
+    ]
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_ggq_zl1_n1b)|0.6|
+|inventory|BackupStorageInventory|详情参考[inventory](#p_wpf_1m1_n1b)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|name|String|资源名称|0.6|
+|url|String| |0.6|
+|description|String|资源的详细描述|0.6|
+|totalCapacity|Long| |0.6|
+|availableCapacity|Long| |0.6|
+|type|String| |0.6|
+|state|String| |0.6|
+|status|String| |0.6|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+|attachedZoneUuids|List| |0.6|
+
+## SDK示例
+Java SDK
+
+```
+DetachBackupStorageFromZoneAction action = new DetachBackupStorageFromZoneAction();
+action.backupStorageUuid = "a1b0bc9a79984c43bbf04da9d3ae6a4d";
+action.zoneUuid = "c2be518dc66a4f3cb513d0cda54e9e96";
+action.sessionId = "6256e305d8eb4d969dc244ae0b8fc7cb";
+DetachBackupStorageFromZoneAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DetachBackupStorageFromZoneAction action = DetachBackupStorageFromZoneAction()
+action.backupStorageUuid = "86342d8a57fb42c19113ff5311947874"
+action.zoneUuid = "c33c4fb6a91d4c13a75014262256bfbd"
+action.sessionId = "0b9369db754a4e01b6ab28bc1140bebc"
+DetachBackupStorageFromZoneAction.Result res = action.call()
+```

@@ -1,0 +1,63 @@
+---
+title: 'Cluster Basic Operations'
+---
+
+You can understand the basic operations supported by clusters from the perspective of CRUD (Create, Read, Update, Delete).
+
+-   [Create a Cluster](#section_zsp_f2n_vyb)
+-   [Edit a Cluster](#section_xbg_g2n_vyb)
+-   [View Cluster Capacity Information](#section_yyb_h2n_vyb)
+-   [Delete a Cluster](#section_ohf_xmn_vyb)
+
+## Create a Cluster
+The platform provides multiple entry points for creating clusters. You can create a cluster from the following two main entry points:
+
+-   In the navigation bar on the left side of the platform page, right-click the target data center and click **New Cluster**.
+-   In the navigation bar on the left side of the platform page, select the target data center. Then, on the right side of the platform page, click **Actions** &gt; **New Cluster**, or on the **Cluster and Host** sub-page, click **New Cluster**.
+
+ZSvirt supports the following major categories of information configuration:
+
+**Basic Information Configuration**: Includes name and description, associated data center, CPU architecture, and dynamic resource scheduling configuration
+
+-   **Name**: Name of the cluster
+-   **Description**: Description of the cluster
+-   **Data Center**: Data center where the cluster is located
+-   **CPU Architecture**: Supports creating x86 or aarch architecture clusters. The architecture of hosts added to the cluster must match that of the cluster.
+-   **DRS**: Monitors CPU/memory load of all hosts in the cluster and dynamically adjusts the virtual machine services running on hosts based on scheduling policies. This feature is disabled by default. If enabled, manual scheduling and automatic scheduling are supported. For details, refer to [Cluster DRS](/en/docs/user-guide/compute/cluster/dynamic-resource-scheduling)
+
+**Advanced Configuration**: Includes cluster networking, cluster over-provisioning, host settings within the cluster, and virtual machine settings within the cluster:
+
+-   **Cluster Network**: Configure dedicated VDI network CIDR and VM migration network CIDR for the cluster. If not set or ineffective, the management network is used by default.
+-   **Cluster Overcommitment**: Controls the number of virtual CPUs and the amount of virtual memory allocated to virtual machines:
+    -   Allocatable Virtual CPUs = Physical CPU Total Threads in the Cluster × CPU Overcommit Ratio
+    -   Allocatable Virtual Memory Capacity = (Physical Memory Capacity − Reserved Capacity) × Memory Overcommit Ratio
+-   **Host Settings**: Customize host characteristics within the cluster:
+    -   **Host CPU Model Check**: Whether the system checks for consistency between the CPU model of the source host and the CPU models of hosts in the current cluster during live migration or host addition. Default is disabled. If enabled, inconsistent models prevent the corresponding operation.
+    -   **ignore\_msrs Option**: Whether the ignore\_msrs option is enabled in the host KVM kernel module. Default is disabled.
+    -   **Host Zero Copy**: Whether the host CPU enables Zero Copy. Default is not enabled. Enabling reduces the number of copies of data between kernel space and user space, reducing CPU usage time and improving virtual NIC performance.
+    -   **Huge Pages**: Whether hosts in the cluster enable huge pages (each page is 2MB) and allocate huge page space to virtual machines. Default is not enabled.
+    -   **Host Reserved Memory**: The amount of memory reserved on the KVM host to ensure the host system can run normally. When huge pages are enabled in the cluster, hosts must reserve at least 4GB of memory.
+-   **Virtual Machine Settings**: Customize virtual machine characteristics within the cluster:
+    -   **VM HA**: Automatic restart mechanism for virtual machines after shutdown. Default is enabled. [VM HA](/en/docs/user-guide/compute/vm/high-availability).
+    -   **VM Cross-Cluster HA**: In shared storage (NFS, SAN, and distributed storage) scenarios, whether high availability migration across clusters is supported when changing hosts or when hosts enter maintenance mode.
+    -   **VM CPU Model**: Whether the virtual machine CPU model is set to match the host CPU model, inheriting some or all of the host's CPU features to meet different business needs. Default is unset (none) for x86\_64 architecture, and passthrough for aarch architecture.
+    -   **Hyper-V Virtualization**: Whether the virtual machine enables Hyper-V emulation functionality. Default is disabled. Mainly used for nested virtualization scenarios with Windows systems.
+    -   **Video Card Type on Boot**: The default graphics card type used when starting virtual machines, providing basic/high-definition/high-performance video functionality. Default is vga for x86 architecture; virtio is the default and only option for aarch architecture.
+    -   **vNIC Multi-queue Upgrading**: Uses multiple queues for virtual machine NICs to receive and transmit network packets to improve network PPS and bandwidth performance.
+
+After clicking **OK**, the cluster will be created.
+
+## Edit a Cluster
+If you need to modify the name or description of an existing cluster, you can do so on the target cluster page by clicking **Actions****Edit Name and Description**. In the dialog box that appears, you can modify the corresponding information.
+
+If you need to modify advanced settings of an existing cluster, such as cluster networking settings, over-provisioning settings, host settings within the cluster, or virtual machine settings, you can do so on the target cluster page by clicking **Actions****Modify Configuration**, or on the **Advanced Settings** sub-page.
+
+## View Cluster Capacity Information
+If you need to check the usage and allocation of physical CPU and memory resources for the cluster, as well as the usage and allocation of all sub-resources under the cluster, go to the Overview details page. For more information, please refer to Capacity Monitoring.
+
+## Delete a Cluster
+If you need to delete an existing cluster, you can do so on the target cluster page by clicking **Actions****Delete**. You can also delete clusters in bulk on the **Cluster and Host** page within the data center resources.
+
+<Callout type="info">
+Deleting a cluster deletes all hosts within the cluster. If local storage is loaded, it will also delete all virtual machines and snapshots on the hosts. Proceed with caution.
+</Callout>

@@ -1,0 +1,109 @@
+---
+title: "Get Unadded Mini Hosts"
+---
+
+<APIPage method="GET" path="/v1/mini-clusters/candidate-hosts">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/mini-clusters/candidate-hosts?local=false&configure=false
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|local \(Optional\)|boolean|query| | |3.6.0|
+|systemTags \(Optional\)|List|query| | |3.6.0|
+|userTags \(Optional\)|List|query| | |3.6.0|
+|configure \(Optional\)|boolean|query| | |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "hosts": [
+    {
+      "hostName": "zstack-mini-07311a",
+      "ipv4Address": "172.20.26.21",
+      "ipv6Address": "fe80::ae1f:6bff:fe93:9a72",
+      "ipv4Interface": "br_bond0_26",
+      "ipv6Interface": "br_bond0_26",
+      "manufacturer": "ZStack",
+      "product": "ZOHCN05",
+      "sn": "RD-BJD-001-07311A"
+    },
+    {
+      "hostName": "zstack-mini-07311b",
+      "ipv4Address": "172.20.26.22",
+      "ipv6Address": "fe80::ae1f:6bff:fe92:8a7a",
+      "ipv4Interface": "br_bond0_26",
+      "ipv6Interface": "br_bond0_26",
+      "manufacturer": "ZStack",
+      "product": "ZOHCN05",
+      "sn": "RD-BJD-001-07311B"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. For details, see [error](#p_zgv_23x_r2c)|3.6.0|
+|hosts|List|For details, see [hosts](#p_tvy_f3x_r2c)|3.6.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief summary of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause: the source error that triggered the current error. If there is no original error, this field is null|0.6|
+
+### hosts
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|hostName|String|Hostname|3.6.0|
+|ipv4Address|String|IPv4 address|3.6.0|
+|ipv6Address|String|IPv6 address|3.6.0|
+|ipv4Interface|String|IPv4 interface|3.6.0|
+|ipv6Interface|String|IPv6 interface|3.6.0|
+|manufacturer|String|Manufacturer|3.6.0|
+|product|String|Model|3.6.0|
+|sn|String|SN code|3.6.0|
+
+## SDK Examples
+Java SDK
+
+```
+GetCandidateMiniHostsAction action = new GetCandidateMiniHostsAction();
+action.local = false;
+action.configure = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetCandidateMiniHostsAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetCandidateMiniHostsAction action = GetCandidateMiniHostsAction()
+action.local = false
+action.configure = false
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetCandidateMiniHostsAction.Result res = action.call()
+```
+
+</APIPage>

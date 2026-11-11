@@ -1,0 +1,92 @@
+---
+title: "注册许可请求应用"
+---
+
+<APIPage method="POST" path="/v1/licenses/applications">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "licenseRequestCode": "example request code"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"licenseRequestCode":"example request code"}}' \
+http://localhost:8080/zstack/v1/licenses/applications
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|licenseRequestCode|String|body\(包含在`params`结构中\)| | |0.6|
+|clientPubKey \(可选\)|String|body\(包含在`params`结构中\)| | |0.6|
+|systemTags \(可选\)|List|body|系统标签| |0.6|
+|userTags \(可选\)|List|body|用户标签| |0.6|
+
+## API返回
+返回示例
+
+```
+{
+  "appId": "6568cda2a0863a4188a26fbdb740681e"
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|appId|String| |0.6|
+|servicePubKey|String| |0.6|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_ixc_lsq_zdb)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+RegisterLicenseRequestedApplicationAction action = new RegisterLicenseRequestedApplicationAction();
+action.licenseRequestCode = "example request code";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RegisterLicenseRequestedApplicationAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+RegisterLicenseRequestedApplicationAction action = RegisterLicenseRequestedApplicationAction()
+action.licenseRequestCode = "example request code"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+RegisterLicenseRequestedApplicationAction.Result res = action.call()
+```
+
+</APIPage>

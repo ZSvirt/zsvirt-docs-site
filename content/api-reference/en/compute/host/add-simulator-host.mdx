@@ -1,0 +1,222 @@
+---
+title: "Add Simulator Host"
+---
+
+<APIPage method="POST" path="/v1/hosts/simulators">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "memoryCapacity": 1000000000,
+    "cpuCapacity": 1000000000,
+    "name": "simulator",
+    "managementIp": "127.0.0.1",
+    "clusterUuid": "d8d3b37f047f3d04b089e5b9e7e878a9"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, `systemTags` and `userTags` fields can be omitted. They are listed to show that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \-X POST -d '{"params":{"memoryCapacity":1000000000,"cpuCapacity":1000000000,"name":"simulator","managementIp":"127.0.0.1","clusterUuid":"d8d3b37f047f3d04b089e5b9e7e878a9"}}' \
+http://localhost:8080/zstack/v1/hosts/simulators
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|memoryCapacity|long|body \(contained in the `params` structure\)| | |0.6|
+|cpuCapacity|long|body \(contained in the `params` structure\)| | |0.6|
+|name|String|body \(contained in the `params` structure\)|Resource name| |0.6|
+|description \(Optional\)|String|body \(contained in the `params` structure\)|Resource description| |0.6|
+|managementIp|String|body \(contained in the `params` structure\)| | |0.6|
+|clusterUuid|String|body \(contained in the `params` structure\)|Cluster UUID| |0.6|
+|resourceUuid \(Optional\)|String|body \(contained in the `params` structure\)| | |0.6|
+|systemTags \(Optional\)|List|body|System Tags| |0.6|
+|userTags \(Optional\)|List|body|User Tags| |0.6|
+|tagUuids \(Optional\)|List|body \(contained in the `params` structure\)|Tag UUID list| |3.4.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "zoneUuid": "24b761ab09f7349684387fdf822aaee7",
+    "name": "example",
+    "uuid": "f893fe1c941939738a0ec271880d8e53",
+    "clusterUuid": "4191157f33ab34d0a55b8e30444a1367",
+    "description": "example",
+    "managementIp": "192.168.0.1",
+    "hypervisorType": "KVM",
+    "state": "Enabled",
+    "status": "Connected",
+    "totalCpuCapacity": 4,
+    "availableCpuCapacity": 2,
+    "totalMemoryCapacity": 4,
+    "availableMemoryCapacity": 4
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See [error](#p_blf_4hw_rcb) for details|0.6|
+|inventory|HostInventory|See [inventory](#p_bgd_d5g_mhc) for details|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. Globally unique identifier of the error, for example SYS.1000, HOST.1001.|0.6|
+|description|String|Brief error description|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause error. The error that caused the current error. If there is no original error, this field is null.|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|zoneUuid|String|Data Center UUID|0.6|
+|name|String|Resource name|0.6|
+|uuid|String|UUID of the resource. Uniquely identifies the resource.|0.6|
+|clusterUuid|String|Cluster UUID|0.6|
+|description|String|Resource description|0.6|
+|managementIp|String| |0.6|
+|hypervisorType|String| |0.6|
+|state|String| |0.6|
+|status|String| |0.6|
+|totalCpuCapacity|Long| |0.6|
+|availableCpuCapacity|Long| |0.6|
+|cpuSockets|Integer|Physical CPU socket count|0.6|
+|totalMemoryCapacity|Long| |0.6|
+|availableMemoryCapacity|Long| |0.6|
+|cpuNum|Integer|Logical CPU count|0.6|
+|ipmiAddress|String|IPMI address|0.6|
+|ipmiUsername|String|IPMI username|0.6|
+|ipmiPort|Integer|IPMI port|0.6|
+|ipmiPowerStatus|String|IPMI power status|0.6|
+|architecture|String| |0.6|
+|nqn|String|NVMe qualified name|4.10.6|
+|hostname|String|Host name|4.10.20|
+|createDate|Timestamp|Create time|0.6|
+|lastOpDate|Timestamp|Last update time|0.6|
+|cpuStatus|HwMonitorStatus|See [cpuStatus](#p_wvd_kkm_lhc) for details|4.10.0|
+|memoryStatus|HwMonitorStatus|See [memoryStatus](#p_nhh_kkm_lhc) for details|4.10.0|
+|diskStatus|HwMonitorStatus|See [diskStatus](#p_esk_kkm_lhc) for details|4.10.0|
+|nicStatus|HwMonitorStatus|See [nicStatus](#p_n24_kkm_lhc) for details|4.10.0|
+|gpuStatus|HwMonitorStatus|See [gpuStatus](#p_zgr_kkm_lhc) for details|4.10.0|
+|powerSupplyStatus|HwMonitorStatus|See [powerSupplyStatus](#p_o35_kkm_lhc) for details|4.10.0|
+|fanStatus|HwMonitorStatus|See [fanStatus](#p_m2x_kkm_lhc) for details|4.10.0|
+|raidStatus|HwMonitorStatus|See [raidStatus](#p_oc1_lkm_lhc) for details|4.10.0|
+|temperatureStatus|HwMonitorStatus|See [temperatureStatus](#p_cyd_lkm_lhc) for details|4.10.0|
+
+### cpuStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### memoryStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### diskStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### nicStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### gpuStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### powerSupplyStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### fanStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### raidStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+### temperatureStatus
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Normal|HwMonitorStatus|Normal|4.10.0|
+|Error|HwMonitorStatus|Error|4.10.0|
+|Unknown|HwMonitorStatus|Unknown|4.10.0|
+
+## SDK Examples
+Java SDK
+
+```
+AddSimulatorHostAction action = new AddSimulatorHostAction();
+action.memoryCapacity = 1000000000;
+action.cpuCapacity = 1000000000;
+action.name = "simulator";
+action.managementIp = "127.0.0.1";
+action.clusterUuid = "d8d3b37f047f3d04b089e5b9e7e878a9";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddSimulatorHostAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = AddSimulatorHostAction()
+action.memoryCapacity = 1000000000
+action.cpuCapacity = 1000000000
+action.name = "simulator"
+action.managementIp = "127.0.0.1"
+action.clusterUuid = "d8d3b37f047f3d04b089e5b9e7e878a9"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

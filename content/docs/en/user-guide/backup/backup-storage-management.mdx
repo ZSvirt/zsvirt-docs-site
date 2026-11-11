@@ -1,0 +1,79 @@
+---
+title: 'Backup Storage Management'
+---
+
+You can perform the following operations on backup storage:
+
+-   [Enable/Disable/Reconnect Backup Storage](#section_y4l_jlx_dcc)
+-   [Scan Backup Data](#section_eyb_mlx_dcc)
+-   [Clean Up Backup Storage Data](#section_pyc_nlx_dcc)
+-   [Edit Name and Description](#section_qfp_nlx_dcc)
+-   [Modify Backup Storage Configuration](#section_rv5_4lx_dcc)
+-   [Update Backup Storage Password](#section_fhk_plx_dcc)
+-   [Delete Backup Storage](#section_rky_plx_dcc)
+
+## Enable/Disable/Reconnect Backup Storage
+You can flexibly manage the status of backup storage, including enabling, disabling, and reconnecting.
+
+Disabling backup storage may affect the execution of backup plans. Note that:
+
+-   If a backup plan specifies only one backup storage, disabling that backup storage will cause the backup plan to fail.
+-   If a backup plan specifies two backup storages, disabling one of the backup storages (primary) will cause the backup plan to automatically switch to the other backup storage (secondary) for backup execution.
+
+**Procedure**
+
+1.  In the navigation pane, choose **Data Protection** &gt; **Backup Storage**.
+2.  On the Backup Storage page, select the target data storage, then click **Actions** &gt; **Enable/Disable/Reconnect**.
+
+## Scan Backup Data
+You can scan the backup data in the backup storage that has not been deleted. Deleted backup data cannot be recovered through scanning. Alternatively, if you have manually added backup data to the backup storage and wish to use this backup data, you can also scan the backup data on the backup storage.
+
+**Procedure**
+
+1.  In the navigation pane, choose **Data Protection** &gt; **Backup Storage**.
+2.  On the Backup Storage page, select the target data storage, then click **Actions** &gt; **Scan Backup Data**.
+
+## Clean Up Backup Storage Data
+You can clean up invalid backup data that has been completely deleted from the backup storage to free up storage space.
+
+**Procedure**
+
+1.  In the navigation pane, choose **Data Protection** &gt; **Backup Storage**.
+2.  On the Backup Storage page, select the target data storage, then click **Actions** &gt; **Cleanup Data**.
+
+## Edit Name and Description
+You can modify the name or description of a backup storage at any time.
+
+**Procedure**
+
+1.  In the navigation pane, choose **Data Protection** &gt; **Backup Storage**.
+2.  On the Backup Storage page, select the target data storage, then click **Actions** &gt; **Edit Name and Description**.
+3.  In the Edit Name and Description dialog, enter the new name or description, then click **OK**.
+
+## Modify Backup Storage Configuration
+You can modify the configuration information of an added backup storage.
+
+**Procedure**
+
+1.  In the navigation pane, choose **Data Protection** &gt; **Backup Storage**.
+2.  On the Backup Storage page, select the target data storage, then click **Actions** &gt; **Modify Configuration**.
+3.  In the Modify Configuration dialog, modify the basic information or configuration information as needed.
+4.  Review the configuration and click **OK**.
+
+## Update Backup Storage Password
+You can modify the password of an added backup storage.
+
+**Procedure**
+
+1.  In the navigation pane, choose **Data Protection** &gt; **Backup Storage**.
+2.  On the Backup Storage page, select the target data storage, then click **Actions** &gt; **Update Password**.
+3.  In the Update Password dialog, enter the new password.
+4.  Review the configuration and click **OK**.
+
+## Delete Backup Storage
+Deleting backup storage is a high-risk operation that will stop all related backup plans on the backup storage, and related backup data will no longer be accessible.
+
+**Procedure**
+
+1.  In the navigation pane, choose **Data Protection** &gt; **Backup Storage**.
+2.  On the Backup Storage page, select the target data storage, then click **Actions** &gt; **Delete**.

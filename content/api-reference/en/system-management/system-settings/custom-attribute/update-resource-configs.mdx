@@ -1,0 +1,136 @@
+---
+title: "Batch Update Resource Custom Attributes"
+---
+
+<APIPage method="POST" path="/v1/resource-configurations/{resourceUuid}/resource-configs/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "resourceConfigs": [
+      {
+        "category": "vm",
+        "name": "cleanTraffic",
+        "value": "true"
+      }
+    ]
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the **systemTags** and **userTags** fields are optional. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"resourceConfigs":[{"category":"vm","name":"cleanTraffic","value":"true"}]}}' \
+http://localhost:8080/zstack/v1/resource-configurations/f4f8970eba3536a69fc2139456f383ae/resource-configs/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|resourceUuid|String|url|Resource UUID of the configuration| |4.7.0|
+|resourceConfigs|List|body \(Included in the `params` structure\)|The list of resource custom attributes| |4.7.0|
+|systemTags \(Optional\)|List|body|System tags| |4.7.0|
+|userTags \(Optional\)|List|body|User tags| |4.7.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "value": "10",
+      "effectiveConfigs": [
+        {
+          "uuid": "9d7aeba3ff604f46b419475c0ade1538",
+          "resourceUuid": "378c6a50c9ee415baa4688fcd19f023a",
+          "resourceType": "ClusterVO",
+          "name": "cpu.overProvisioning.ratio",
+          "category": "host",
+          "value": "10",
+          "createDate": "Nov 14, 2017 2:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+        }
+      ],
+      "name": "cpu.overProvisioning.ratio"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.7.0|
+|inventories|List|See [inventories](#p_kcq_c52_s2c) for details|4.7.0|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_ij2_mml_zgb) for details|4.7.0|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|value|String| |4.7.0|
+|name|String| |4.7.0|
+|effectiveConfigs|List|See [effectiveConfigs](#p_vxc_c52_s2c) for details|4.7.0|
+
+### effectiveConfigs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource, uniquely identifying the resource|3.4.0|
+|resourceUuid|String|The resource UUID associated with the configuration|3.4.0|
+|resourceType|String|The resource type associated with the configuration|3.4.0|
+|name|String|Configuration name|3.4.0|
+|description|String|The detailed description of the configuration|3.4.0|
+|category|String|Configuration category|3.4.0|
+|value|String|The configuration value|3.4.0|
+|createDate|Timestamp|Creation time|3.4.0|
+|lastOpDate|Timestamp|Last modification time|3.4.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|3.4.0|
+|description|String|A brief description of the error|3.4.0|
+|details|String|The detailed error information|3.4.0|
+|elaboration|String|Reserved field. Default is null|3.4.0|
+|opaque|LinkedHashMap|Reserved field. Default is null|3.4.0|
+|cause|ErrorCode|The root error that caused the current error. If no root error exists, this field is null|3.4.0|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateResourceConfigsAction action = new UpdateResourceConfigsAction();
+action.resourceUuid = "f4f8970eba3536a69fc2139456f383ae";
+action.resourceConfigs = asList([category:vm, name:cleanTraffic, value:true]);
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateResourceConfigsAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateResourceConfigsAction action = UpdateResourceConfigsAction()
+action.resourceUuid = "f4f8970eba3536a69fc2139456f383ae"
+action.resourceConfigs = [[category:vm, name:cleanTraffic, value:true]]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateResourceConfigsAction.Result res = action.call()
+```
+
+</APIPage>

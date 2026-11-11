@@ -1,0 +1,12 @@
+{
+  "title": "Docs",
+  "pages": [
+    "index",
+    "quick-start",
+    "user-guide",
+    "install-zsvirt",
+    "terraform-for-zsvirt",
+    "vmware-migration-guide",
+    "faq"
+  ]
+}

@@ -1,0 +1,102 @@
+---
+title: "查询虚拟机调度历史"
+---
+
+## API请求
+URLs
+
+```
+GET zstack//v1/vm/sched-history
+```
+
+```
+GET zstack//v1/vm/sched-history/{vmInstanceUuid}
+```
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm/sched-history?q=vmInstanceUuid=15b5b8ab631d300592bf83d66331f914
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm/sched-history/{vmInstanceUuid}?q=vmInstanceUuid=4240a319fabf3728960d1d7639f3fc0f
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryVmSchedHistory`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+```
+{
+  "inventories": [
+    {
+      "id": 0.0,
+      "vmInstanceUuid": "ec8fe40b4b0a38bc8f195bfc8bfc72e9",
+      "accountUuid": "b07dda064256343c894cecfa5d50b42c",
+      "schedType": "VMHA",
+      "success": true,
+      "lastHostUuid": "d4d26f65cfff3fafb98d3da284290455",
+      "destHostUuid": "bc001bb4d762395db4b2ed97c6d6dae3"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版|
+|---|---|---|---|
+|success|boolean| |0.6|
+|inventories|List|详情参考[inventories](#p_yw2_ydf_h5b)|4.4.24|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_zrl_t2z_1sb)|0.6|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|vmInstanceUuid|String|虚拟机UUID|4.4.24|
+|accountUuid|String|账户UUID|4.4.24|
+|schedType|String| |4.4.24|
+|success|Boolean| |4.4.24|
+|lastHostUuid|String| |4.4.24|
+|destHostUuid|String| |4.4.24|
+|createDate|Timestamp|创建时间|4.4.24|
+|lastOpDate|Timestamp|最后一次修改时间|4.4.24|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|4.4.24|
+|description|String|错误的概要描述|4.4.24|
+|details|String|错误的详细信息|4.4.24|
+|elaboration|String|保留字段，默认为null|4.4.24|
+|opaque|LinkedHashMap|保留字段，默认为null|4.4.24|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|4.4.24|
+
+## SDK示例
+Java SDK
+
+```
+QueryVmSchedHistoryAction action = new QueryVmSchedHistoryAction();
+action.conditions = asList("vmInstanceUuid=b35d14e4af4c3f4c8f745e73df083020");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryVmSchedHistoryAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryVmSchedHistoryAction action = QueryVmSchedHistoryAction()
+action.conditions = ["vmInstanceUuid=f9bd0652c3843cb285c2e7b8c9f4561b"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryVmSchedHistoryAction.Result res = action.call()
+```

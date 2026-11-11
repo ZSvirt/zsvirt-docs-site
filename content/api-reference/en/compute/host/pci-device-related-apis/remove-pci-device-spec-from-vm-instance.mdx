@@ -1,0 +1,64 @@
+---
+title: "Remove PCI Device Spec from VM Instance"
+---
+
+<APIPage method="DELETE" path="/v1/pci-device-specs/{pciSpecUuid}/vm-instances/{vmInstanceUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/pci-device-specs/1c8f91c1699c35bfbb1847d2c20f7371/vm-instances/422fe51c278930f085e1323b0e858e3f
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|pciSpecUuid|String|url|PCI device spec UUID| |3.5.0|
+|vmInstanceUuid|String|url|Virtual Machine UUID| |3.5.0|
+|systemTags \(Optional\)|List|body|System tags| |3.5.0|
+|userTags \(Optional\)|List|body|User tags| |3.5.0|
+
+## API Response
+This API returns an empty JSON structure `{}` on success. On error, the returned JSON contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+RemovePciDeviceSpecFromVmInstanceAction action = new RemovePciDeviceSpecFromVmInstanceAction();
+action.pciSpecUuid = "1c8f91c1699c35bfbb1847d2c20f7371";
+action.vmInstanceUuid = "422fe51c278930f085e1323b0e858e3f";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RemovePciDeviceSpecFromVmInstanceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+RemovePciDeviceSpecFromVmInstanceAction action = RemovePciDeviceSpecFromVmInstanceAction()
+action.pciSpecUuid = "1c8f91c1699c35bfbb1847d2c20f7371"
+action.vmInstanceUuid = "422fe51c278930f085e1323b0e858e3f"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+RemovePciDeviceSpecFromVmInstanceAction.Result res = action.call()
+```
+
+</APIPage>

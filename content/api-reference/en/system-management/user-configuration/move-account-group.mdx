@@ -1,0 +1,101 @@
+---
+title: "Move Account Group"
+---
+
+<APIPage method="PUT" path="/v1/account-groups/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "moveAccountGroup": {
+    "parentUuid": "996c8a1d6f273903b750254a69ec5a7b"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, the **systemTags** and **userTags** fields are optional. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"moveAccountGroup":{"parentUuid":"996c8a1d6f273903b750254a69ec5a7b"}}' \
+http://localhost:8080/zstack/v1/account-groups/efdbcd5b10ee3b9aa6b61f2ec4a0efcb/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Account group UUID| |4.10.0|
+|parentUuid \(Optional\)|String|body \(contained in the `moveAccountGroup` structure\)|Parent account group UUID| |4.10.0|
+|systemTags \(Optional\)|List|body|System tags| |4.10.0|
+|userTags \(Optional\)|List|body|User tags| |4.10.0|
+
+## API Response
+Response example
+
+```
+{
+  "inventory": {
+    "uuid": "c4f2348db99a4d64ac5319abecff4427",
+    "name": "my-group",
+    "description": "my-group-description",
+    "rootGroupUuid": "c4f2348db99a4d64ac5319abecff4427",
+    "createDate": "Nov 14, 2017 2:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean|Whether the request is successful|4.10.0|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null on success. For details, see [error](#p_dtv_4l5_m1b)|4.10.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, e.g., SYS.1000, HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Default is null|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null|0.6|
+|cause|ErrorCode|The root error that caused the current error. This field is null if there is no root cause|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+MoveAccountGroupAction action = new MoveAccountGroupAction();
+action.uuid = "efdbcd5b10ee3b9aa6b61f2ec4a0efcb";
+action.parentUuid = "996c8a1d6f273903b750254a69ec5a7b";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+MoveAccountGroupAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+MoveAccountGroupAction action = MoveAccountGroupAction()
+action.uuid = "efdbcd5b10ee3b9aa6b61f2ec4a0efcb"
+action.parentUuid = "996c8a1d6f273903b750254a69ec5a7b"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+MoveAccountGroupAction.Result res = action.call()
+
+```
+
+</APIPage>

@@ -1,0 +1,61 @@
+---
+title: "Delete VM HA Level"
+---
+
+<APIPage method="DELETE" path="/v1/instances/{uuid}/ha-levels">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/vm-instances/76d39c6862b840a3aa4568d83db99022/ha-levels?
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Virtual Machine resource UUID| |0.6|
+|systemTags \(Optional\)|List|body|System Tags| |0.6|
+|userTags \(Optional\)|List|body|User Tags| |0.6|
+
+## API Response
+On success, this API returns an empty JSON structure **`{}`**. On error, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DeleteVmInstanceHaLevelAction action = new DeleteVmInstanceHaLevelAction();
+action.uuid = "76d39c6862b840a3aa4568d83db99022";
+action.sessionId = "0cc42e2185664cd6a762ea527075e9f9";
+DeleteVmInstanceHaLevelAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteVmInstanceHaLevelAction action = DeleteVmInstanceHaLevelAction()
+action.uuid = "76d39c6862b840a3aa4568d83db99022"
+action.sessionId = "55fbd55cda2a45f3abbd540620846039"
+DeleteVmInstanceHaLevelAction.Result res = action.call()
+```
+
+</APIPage>

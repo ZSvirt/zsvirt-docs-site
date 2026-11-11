@@ -1,0 +1,116 @@
+---
+title: "解析原生密钥提供程序导入内容"
+---
+
+<APIPage method="PUT" path="/v1/key-providers/nkp/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "parseNkpRestore": {
+    "contentBase64": "BASE64_ENCODED_NKP_BACKUP",
+    "password": "password"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"parseNkpRestore":{"contentBase64":"BASE64_ENCODED_NKP_BACKUP","password":"password"}}' \
+http://localhost:8080/zstack/v1/key-providers/nkp/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|contentBase64|String|body\(包含在`parseNkpRestore`结构中\)|导入内容（Base64 编码）| |5.0.0|
+|password \(可选\)|String|body\(包含在`parseNkpRestore`结构中\)|导入保护密码| |5.0.0|
+|systemTags \(可选\)|List|body|系统标签| |5.0.0|
+|userTags \(可选\)|List|body|用户标签| |5.0.0|
+
+## API返回
+返回示例
+
+```
+{
+  "restoreInfo": {
+    "uuid": "ff0415ff372f33b5b6b757d3b99ad900",
+    "name": "nkp-1",
+    "description": "example",
+    "kdf": "HKDF-SHA256",
+    "saltPolicy": "providerName",
+    "currentVersion": 1,
+    "backupTime": 1700000000000
+  },
+  "code": "KP.1000"
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|解析结果码|5.0.0|
+|reason|String|解析失败原因|5.0.0|
+|success|boolean| |5.0.0|
+|restoreInfo|NkpRestoreInfo|详情参考[restoreInfo](#p_shs_fw2_2jc)|5.0.0|
+|error|ErrorCode|详情参考[error](#p_t4f_pp2_2jc)|5.0.0|
+
+### restoreInfo
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|5.0.0|
+|name|String|资源名称|5.0.0|
+|description|String|资源的详细描述|5.0.0|
+|kdf|String|密钥派生函数|5.0.0|
+|saltPolicy|String|加盐策略|5.0.0|
+|currentVersion|Integer|当前版本|5.0.0|
+|backupTime|Long|备份时间（毫秒时间戳）|5.0.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+ParseNkpRestoreAction action = new ParseNkpRestoreAction();
+action.contentBase64 = "BASE64_ENCODED_NKP_BACKUP";
+action.password = "password";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ParseNkpRestoreAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = ParseNkpRestoreAction()
+action.contentBase64 = "BASE64_ENCODED_NKP_BACKUP"
+action.password = "password"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

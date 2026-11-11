@@ -1,0 +1,36 @@
+---
+title: 'VM QoS'
+---
+
+QoS (Quality of Service) resolves issues such as network latency and congestion by setting IO bandwidth thresholds. When the network is overloaded or congested, QoS ensures that traffic is not delayed or dropped, maintaining efficient network operation.
+
+You can set QoS to limit disk bandwidth and inbound and outbound network bandwidth, ensuring that IO bandwidth does not exceed the set threshold. If you do not configure QoS, there will be no restrictions on IO bandwidth. This section primarily describes how to set up disk QoS and network QoS:
+
+-   [Configure Disk QoS](#section_bvy_nzq_zyb)
+-   [Configure Network QoS](#section_adr_4zq_zyb)
+
+## Configure Disk QoS
+To set up disk QoS, follow these steps:
+
+1.  In the target virtual machine page, click **Modify Configuration**, then choose **Hardware Information** &gt; **Disk \{$n\}** &gt; **QoS**. Turn on the QoS switch to configure QoS for disk n (for example, Disk 1).
+
+    Disk QoS supports configuring bandwidth limits and IOPS limits. After turning on the switch, you must configure at least one of these limits:
+
+    -   **Bandwidth Limit**: Set the upper limit of read/write speed per second for the disk. Basic units include MB/s and GB/s. It is recommended not to set this value too low to avoid abnormal operation of the virtual machine.
+        -   **Total Speed**: Set the upper limit of total read/write speed for the disk.
+        -   **Read/Write Speed**: Set separate upper limits for read speed and write speed.
+    -   **IOPS Limit**: Set the upper limit of read/write operations per second for the disk.
+        -   **Total IOPS**: Set the upper limit of total read/write IOPS for the disk.
+        -   **Read/Write IOPS**: Set separate upper limits for read IOPS and write IOPS.
+2.  Click **OK** to complete the disk QoS configuration.
+
+## Configure Network QoS
+To configure network QoS, follow these steps:
+
+1.  In the target virtual machine page, click **Modify Configuration**, then choose **Hardware Information** &gt; **NIC \{$n\}** &gt; **QoS**. Turn on the QoS switch to configure QoS for NIC n (for example, NIC 1).
+
+    QoS supports configuring outbound and inbound bandwidth limits. Basic units include Kbps, Mbps, and Gbps. After turning on the switch, you must configure at least one of these bandwidth limits:
+
+    -   **Transmit Bandwidth**: The upper limit of upload bandwidth from the virtual machine.
+    -   **Receive Bandwidth**: The upper limit of download bandwidth to the virtual machine.
+2.  Click **OK** to complete the network QoS configuration.

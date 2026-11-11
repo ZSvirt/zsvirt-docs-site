@@ -1,0 +1,16 @@
+---
+title: 阿里云部署说明
+description: 将静态站、下载 Bucket、函数计算和 SLS 按国内站与国际站分开配置。
+---
+
+## 部署范围
+
+官网静态构建产物发布到国内和香港 OSS Bucket。下载资源使用独立 Bucket 和版本化文件名，`/api/track` 由函数计算 HTTP 触发器接收并写入对应 SLS Logstore。
+
+## 关键对象
+
+1. 主站静态产物。
+2. 文档站静态产物。
+3. 下载资源 Bucket。
+4. 函数计算 HTTP 触发器。
+5. SLS Logstore 与聚合看板。

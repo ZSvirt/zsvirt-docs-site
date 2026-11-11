@@ -1,0 +1,154 @@
+---
+title: "查询SCSI Lun"
+---
+
+## API请求
+查询Iscsi块设备和FC块设备。
+
+URLs
+
+```
+GET zstack/v1/storage-devices/scsi-lun/luns
+GET zstack/v1/storage-devices/scsi-lun/luns/{uuid}
+```
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/storage-devices/scsi-lun/luns
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/storage-devices/scsi-lun/luns/c4006c2a536f3617944e2b00aff74af6
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryScsiLun`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "name": "fc-lun-36b083fe000daf018000022905ba35d8f",
+      "uuid": "6f2428969262315488684c85e14eded2",
+      "wwid": "36b083fe000daf018000022905ba35d8f",
+      "vendor": "DELL",
+      "model": "MD32xx",
+      "wwn": "0x6f01faf000d5c3e7",
+      "serial": "6b083fe000daf018000015505abbe00a",
+      "type": "mpath",
+      "path": "pci-0000:05:00.0-fc-0x2012b083fedaf018-lun-11",
+      "size": 5497558138880.0,
+      "scsiLunHostRefs": [
+        {
+          "id": 1.0,
+          "scsiLunUuid": "6f2428969262315488684c85e14eded2",
+          "hostUuid": "0b756ca2d3843412860b7ec1b9315dd4",
+          "createDate": "Nov 14, 2017 10:20:57 PM"
+        }
+      ],
+      "scsiLunVmInstanceRefs": [],
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    },
+    {
+      "name": "iscsi-lun-scsi-14f504e46494c45524d5342436a6c2d4a4443672d30593032",
+      "uuid": "7bfde6b8e5503606849a4f3781bc02d7",
+      "wwid": "scsi-14f504e46494c45524d5342436a6c2d4a4443672d30593032",
+      "vendor": "OPNFILER",
+      "model": "VIRTUAL-DISK",
+      "serial": "4f504e46494c45524d5342436a6c2d4a4443672d30593032",
+      "type": "disk",
+      "path": "ip-10.0.104.213:3260-iscsi-iqn.2018-09.io.cloud:tsn.0000003-lun-0",
+      "size": 5497558138880.0,
+      "scsiLunHostRefs": [],
+      "scsiLunVmInstanceRefs": [],
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_ybp_53v_yfb)|3.2.0|
+|inventories|List|详情参考[inventories](#p_mj4_v3v_yfb)|3.2.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.2.0|
+|description|String|错误的概要描述|3.2.0|
+|details|String|错误的详细信息|3.2.0|
+|elaboration|String|保留字段，默认为null|3.2.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.2.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.2.0|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|name|String|资源名称|3.2.0|
+|uuid|String|资源的UUID，唯一标示该资源|3.2.0|
+|wwid|String|磁盘全局唯一表示|3.2.0|
+|vendor|String|磁盘供应商|3.2.0|
+|model|String|磁盘型号|3.2.0|
+|wwn|String|磁盘WWN|3.2.0|
+|serial|String|磁盘序列号|3.2.0|
+|type|String|磁盘类型|3.2.0|
+|path|String|磁盘路径|3.2.0|
+|state|String|磁盘启用状态|3.2.0|
+|size|Long|磁盘大小|3.2.0|
+|createDate|Timestamp|创建时间|3.2.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.2.0|
+|scsiLunHostRefs|List|详情参考[scsiLunHostRefs](#p_oww_w3v_yfb)|3.2.0|
+|scsiLunVmInstanceRefs|List|详情参考[scsiLunVmInstanceRefs](#p_myt_cjv_yfb)|3.2.0|
+
+### scsiLunHostRefs
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|scsiLunUuid|String|SCSI Lun UUID|3.2.0|
+|hostUuid|String|主机UUID|3.2.0|
+|createDate|Timestamp|创建时间|3.2.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.2.0|
+
+### scsiLunVmInstanceRefs
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|scsiLunUuid|String|SCSI Lun UUID|3.2.0|
+|vmInstanceUuid|String|虚拟机UUID|3.2.0|
+|createDate|Timestamp|创建时间|3.2.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.2.0|
+
+## SDK示例
+Java SDK
+
+```
+QueryScsiLunAction action = new QueryScsiLunAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryScsiLunAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryScsiLunAction action = QueryScsiLunAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryScsiLunAction.Result res = action.call()
+```

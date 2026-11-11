@@ -1,0 +1,66 @@
+---
+title: "Delete Database Backup"
+---
+
+<APIPage method="DELETE" path="/v1/exported-database-backup/{databaseBackupUuid}/backup-storage/{backupStorageUuid}">
+
+Delete the exported database backup.
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/exported-database-backup/341a599af82f3ecbab5d680e8dfb0276/backup-storage/737f27cb664c31a594f71080d481dddf?
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|backupStorageUuid|String|url|Image Storage UUID| |3.0.0|
+|databaseBackupUuid|String|url| | |3.0.0|
+|systemTags \(Optional\)|List|body| | |3.0.0|
+|userTags \(Optional\)|List|body| | |3.0.0|
+
+## API Response
+On success, this API returns an empty JSON structure **`{}`**. On failure, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DeleteExportedDatabaseBackupFromBackupStorageAction action = new DeleteExportedDatabaseBackupFromBackupStorageAction();
+action.backupStorageUuid = "737f27cb664c31a594f71080d481dddf";
+action.databaseBackupUuid = "341a599af82f3ecbab5d680e8dfb0276";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteExportedDatabaseBackupFromBackupStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteExportedDatabaseBackupFromBackupStorageAction action = DeleteExportedDatabaseBackupFromBackupStorageAction()
+action.backupStorageUuid = "737f27cb664c31a594f71080d481dddf"
+action.databaseBackupUuid = "341a599af82f3ecbab5d680e8dfb0276"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DeleteExportedDatabaseBackupFromBackupStorageAction.Result res = action.call()
+```
+
+</APIPage>

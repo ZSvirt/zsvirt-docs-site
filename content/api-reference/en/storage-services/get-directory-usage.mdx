@@ -1,0 +1,78 @@
+---
+title: "Get Directory Usage Information"
+---
+
+<APIPage method="GET" path="/v1/software-package/directory/usage">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/software-package/directory/usage?managementNodeUuid=ff000842a4673ab39dad7a3990df5300&directoryPath=/root/installPath/file
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|managementNodeUuid|String|query|Management Node UUID| |4.10.20|
+|directoryPath|String|query|Directory absolute path| |4.10.20|
+|systemTags \(Optional\)|List|query|System Tag| |4.10.20|
+|userTags \(Optional\)|List|query|User Tag| |4.10.20|
+
+## API Response
+Response Example
+
+```
+{
+  "totalCapacity": 1024,
+  "availableCapacity": 512
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|totalCapacity|long|Total capacity|4.10.20|
+|availableCapacity|long|Available capacity|4.10.20|
+|success|boolean|Returns true if the operation was successful, otherwise false|4.10.20|
+|error|ErrorCode|For details, see [error](#p_irn_1jx_r2c)|4.10.20|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief summary of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause: the source error that triggered the current error. If there is no original error, this field is null|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+GetDirectoryUsageAction action = new GetDirectoryUsageAction();
+action.managementNodeUuid = "ff000842a4673ab39dad7a3990df5300";
+action.directoryPath = "/root/installPath/file";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetDirectoryUsageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = GetDirectoryUsageAction()
+action.managementNodeUuid = "ff000842a4673ab39dad7a3990df5300"
+action.directoryPath = "/root/installPath/file"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

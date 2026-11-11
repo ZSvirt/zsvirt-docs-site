@@ -1,0 +1,145 @@
+---
+title: "创建虚拟机开机的定时任务"
+---
+
+<APIPage method="POST" path="/v1/vm-instances/{vmUuid}/schedulers/starting">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "schedulerName": "create-vm-scheduler",
+    "schedulerDescription": "for test create vm scheduler",
+    "type": "simple",
+    "interval": 5.0,
+    "repeatCount": 10.0,
+    "startTime": 0.0
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth: YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"schedulerName":"create-vm-scheduler","schedulerDescription":\
+"for test create vm scheduler","type":"simple","interval":5.0,"repeatCount":10.0,"startTime":0.0}}' \
+http://localhost:8080/zstack/v1/vm-instances/0a8a39e89a104282b0ff78446515d7f1/schedulers/starting
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|vmUuid|String|url|虚拟机uuid| |0.6|
+|clusterUuid \(可选\)|String|body\(包含在**____params**结构中\)|集群UUID| |0.6|
+|hostUuid \(可选\)|String|body\(包含在**params**结构中\)|主机UUID| |0.6|
+|schedulerName|String|body\(包含在**params**结构中\)|定时任务名称| |1.6|
+|schedulerDescription \(可选\)|String|body\(包含在**params**结构中\)|定时任务描述| |1.6|
+|type|String|body\(包含在**params**结构中\)|定时任务类型，simple或者cron|simplecron|1.6|
+|interval \(可选\)|Integer|body\(包含在**params**结构中\)|定时任务间隔，单位秒| |1.6|
+|repeatCount \(可选\)|Integer|body\(包含在**params**结构中\)|定时任务重复次数，仅针对simple类型的定时任务生效| |1.6|
+|startTime \(可选\)|Long|body\(包含在**params**结构中\)|定时任务启动时间，必须遵循unix timestamp格式，0为从立刻开始| |1.6|
+|cron \(可选\)|String|body\(包含在**params**结构中\)|cron表达式，需遵循Java Quartz组件cron格式标准| |1.6|
+|resourceUuid \(可选\)|String|body\(包含在**params**结构中\)|用户可指定创建Scheduler所使用的uuid| |0.6|
+|systemTags \(可选\)|List|body|系统标签| |0.6|
+|userTags \(可选\)|List|body|用户标签| |0.6|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "3e27a74894fb47b5a3c86c2b44409ccb",
+    "targetResourceUuid": "d596e0adcb2b49a8a9efd132f0e43a73",
+    "schedulerName": "Test",
+    "schedulerType": "simple",
+    "repeatCount": 10.0,
+    "startTime": "Apr 24, 2017 7:11:02 PM",
+    "createDate": "Apr 24, 2017 7:11:02 PM",
+    "lastOpDate": "Apr 24, 2017 7:11:02 PM",
+    "jobClassName": "CreateVolumeSnapshotJob",
+    "state": "Enabled"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_msg_dqz_zz)|1.6|
+|inventory|SchedulerInventory|详情参考[inventory](#p_nbm_dqz_zz)|1.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|targetResourceUuid|String| |0.6|
+|schedulerName|String| |0.6|
+|schedulerJob|String| |0.6|
+|schedulerType|String| |0.6|
+|schedulerInterval|Integer| |0.6|
+|repeatCount|Integer| |0.6|
+|cronScheduler|String| |0.6|
+|startTime|Timestamp| |0.6|
+|stopTime|Timestamp| |0.6|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+|state|String| |0.6|
+
+## SDK示例
+Java SDK
+
+```
+CreateStartVmInstanceSchedulerAction action = new CreateStartVmInstanceSchedulerAction();
+action.vmUuid = "7d86597d42eb4e31b2497a06361f710b";
+action.schedulerName = "create-vm-scheduler";
+action.schedulerDescription = "for test create vm scheduler";
+action.type = "simple";
+action.interval = 5.0;
+action.repeatCount = 10.0;
+action.startTime = 0.0;
+action.sessionId = "a5e890d5bd78487f979861dee02aaafe";
+CreateStartVmInstanceSchedulerAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateStartVmInstanceSchedulerAction action = CreateStartVmInstanceSchedulerAction()
+action.vmUuid = "26799d709f7e4794b33fb07cfd269373"
+action.schedulerName = "create-vm-scheduler"
+action.schedulerDescription = "for test create vm scheduler"
+action.type = "simple"
+action.interval = 5.0
+action.repeatCount = 10.0
+action.startTime = 0.0
+action.sessionId = "d5fcddc65c454f6f85625f954d9507e5"
+CreateStartVmInstanceSchedulerAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,43 @@
+---
+title: 'Manage VM Scheduling Policies and Related Resources'
+---
+
+This section uses the Virtual Machine Scheduling Policy A2, Virtual Machine Scheduling Group A2, and Host Scheduling Group A2 as examples to illustrate how to operate virtual machine scheduling policies and related resources.
+
+## VM Scheduling Policy
+After creating the virtual machine scheduling policy A2, it is enabled by default. You can control the enablement status of the scheduling policy using the **Enable** and **Disable** operations as needed. The execution state of the scheduling policy is associated with its enablement status:
+
+-   If the scheduling policy is disabled, then the scheduling state is **Inactive**. In this state, the scheduling policy does not take effect on the associated virtual machines.
+-   If the scheduling policy is enabled, then the scheduling policy may exist in one of the following two execution states:
+    -   Normal: All virtual machines associated with the virtual machine scheduling policy are running on hosts allocated according to the scheduling policy.
+    -   Conflict: Some of the virtual machines associated with the virtual machine scheduling policy are not running on hosts allocated according to the scheduling policy.
+
+If you need to modify basic information about the virtual machine scheduling policy A2, such as the name, description, or execution mechanism, you can click the **Modify Configuration** operation for the scheduling policy, and modify the corresponding information as needed. The changes will be successful upon saving.
+
+If you are sure you no longer need the scheduling policy, you can delete it by clicking the **Actions** &gt; **Delete** operation for the scheduling policy.
+
+<Callout type="info">
+After deleting a virtual machine scheduling policy, the associated virtual machines will no longer be scheduled according to that policy.
+</Callout>
+
+## VM Scheduling Group
+If you want to add more virtual machines to the virtual machine scheduling group A2 for scheduling or remove some virtual machines from the virtual machine scheduling group A2, you can do so in the virtual machine scheduling group main list by clicking the **Add Virtual Machine** or **Remove Virtual Machine** operation for the scheduling group.
+
+If you need to modify basic information about the virtual machine scheduling group A2, such as the name or description, you can click the **Edit Name and Description** operation for the scheduling group, and modify the corresponding information as needed. The changes will be successful upon saving.
+
+If you are sure you no longer need the scheduling group, you can delete it by clicking the **Delete** operation.
+
+<Callout type="info">
+After deleting a virtual machine scheduling group, the associated virtual machine scheduling policies will also be deleted. Please proceed with caution.
+</Callout>
+
+## Host Scheduling Group
+If you want to add more hosts to the host scheduling group A2 for scheduling or remove some hosts from the host scheduling group A2, you can do so in the host scheduling group main list by clicking the **Add Host** or **Remove Host** operation for the scheduling group.
+
+If you need to modify basic information about the host scheduling group A2, such as the name or description, you can click the **Edit Name and Description** operation for the scheduling group, and modify the corresponding information as needed. The changes will be successful upon saving.
+
+If you are sure you no longer need the scheduling group, you can delete it by clicking the **Delete** operation.
+
+<Callout type="info">
+After deleting a host scheduling group, the associated virtual machine scheduling policies will also be deleted. Please proceed with caution.
+</Callout>

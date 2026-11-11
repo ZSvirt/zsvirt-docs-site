@@ -1,0 +1,9 @@
+---
+title: "A dual-Management Node service is abnormal. How do I resolve this?"
+---
+
+## Cause
+The `keepalived.conf` configuration file is missing on one of the Management Nodes in a dual-Management Node deployment.
+
+## Solution
+-   Copy the `/etc/keepalived.conf` configuration file from the healthy Management Node to the failed Management Node.

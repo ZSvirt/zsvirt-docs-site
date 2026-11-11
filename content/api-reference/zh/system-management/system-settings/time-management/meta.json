@@ -1,0 +1,10 @@
+{
+  "title": "时间管理相关接口",
+  "pages": [
+    "check-network-reachable",
+    "get-chrony-servers",
+    "sync-chrony-servers",
+    "update-chrony-servers"
+  ],
+  "pagesIndex": "index"
+}

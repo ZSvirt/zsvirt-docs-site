@@ -1,0 +1,64 @@
+---
+title: "Delete Cluster"
+---
+
+<APIPage method="DELETE" path="/v1/clusters/{uuid}?deleteMode={deleteMode}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/clusters/a5bb7e5ca83f41748538d953709ba3c3?deleteMode=Permissive
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Resource UUID, uniquely identifies the resource| |0.6|
+|deleteMode \(optional\)|String|body|Delete mode| |0.6|
+|systemTags \(optional\)|List|body|System tag| |0.6|
+|userTags \(optional\)|List|body|User tag| |0.6|
+
+## API Response
+On success, this API returns an empty JSON structure **`{}`**. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DeleteClusterAction action = new DeleteClusterAction();
+action.uuid = "51b6e91ce692487ea582418f52835061";
+action.deleteMode = "Permissive";
+action.sessionId = "41695ae924854a3abfc1e681e092f744";
+DeleteClusterAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteClusterAction action = DeleteClusterAction()
+action.uuid = "2e9d94bbe3d240d3a660e86a7cd6aff8"
+action.deleteMode = "Permissive"
+action.sessionId = "386fba061d404eeb830a772e31fd4faf"
+DeleteClusterAction.Result res = action.call()
+```
+
+</APIPage>

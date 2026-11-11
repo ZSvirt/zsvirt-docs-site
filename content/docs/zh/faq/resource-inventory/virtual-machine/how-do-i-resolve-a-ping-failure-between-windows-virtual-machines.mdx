@@ -1,0 +1,17 @@
+---
+title: "Windows虚拟机互相Ping不通，如何解决？"
+---
+
+## 原因
+Windows未放开高级防火墙规则。
+
+## 解决方案
+1.  检查虚拟机网络配置是否正常。
+
+2.  以管理员身份，在cmd命令窗口中输入执行以下命令：
+
+    ```
+    C:\Users\1> netsh firewall set icmpsetting 8
+    ```
+
+3.  使用`Ping`命令检查网络是否正常。

@@ -1,0 +1,39 @@
+---
+title: 'Add LDAP SSO Server'
+---
+
+Make sure ZSvirt is installed with a valid Advanced Edition license.
+
+1.  In the navigation pane, choose **System Management** &gt; **Single Sign-On**.
+
+2.  On the Single Sign-On page, click **Add SSO Server**.
+
+3.  In the Add SSO Server dialog, set the following parameters:
+
+    **Basic Information**
+
+    -   **Name**: Set a name for the unified authentication server.
+    -   **Description**: Optionally fill in a description for the unified authentication server.
+    -   **Type**: Select **LDAP**.
+    **Server Information**
+
+    -   **SSL/TLS Encryption**: Choose whether to enable SSL/TLS encryption. This is enabled by default.
+
+        When enabled, port 636 is used by default, with support for custom modifications. When disabled, port 389 is used by default, with support for custom modifications.
+
+    -   **Primary Server IP/Domain**: Enter the primary server IP address or domain along with the corresponding port.
+    -   **Backup Server IP/Domain**: Enter the backup server IP address or domain along with the corresponding port.
+    **Configuration Information**
+
+    -   **Base DN**: Enter the base DN used to search for LDAP users' root nodes, defining the scope of synchronized LDAP users.
+    -   **User DN**: Enter the DN of a special user who has permission to query all users within the base DN scope. This user is used to log in to the LDAP server and retrieve relevant data.
+    -   **Password**: The password corresponding to the User DN for logging in.
+    -   **Filter Rule**: Enter the filter rule used when synchronizing user information to filter users within the base DN. By default, the `(objectClass=person)` rule is added.
+
+        <Callout type="info">
+        -   Filter rules can be set as single or combined rules, with syntax matching LDAP filter syntax.
+        -   You can control whether the filter acts as a allowlist or blocklist using the `!` symbol. With allowlist filtering, only the user information configured in the filter rules will be synchronized to the platform. With blocklist filtering, user information specified in the filter rules will not be synchronized.
+        -   The length of filter rules is subject to LDAP server configuration limits. Exceeding these limits may cause the filter rule to fail, so please confirm in advance.
+        </Callout>
+    -   **Login Attribute**: Specify the LDAP user attribute used for logging into the platform.
+4.  Review the configuration and click **OK**.

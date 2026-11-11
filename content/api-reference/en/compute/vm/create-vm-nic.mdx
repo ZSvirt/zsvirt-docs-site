@@ -1,0 +1,143 @@
+---
+title: "Create VM Nic"
+---
+
+<APIPage method="POST" path="/v1/nics">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "l3NetworkUuid": "cbb5d7cd7f51332cb18c124ea430863f"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"l3NetworkUuid":"cbb5d7cd7f51332cb18c124ea430863f"}}' http://localhost:8080/zstack/v1/nics
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|l3NetworkUuid|String|body\(contained in **params** structure\)|Distributed Port Group UUID| |4.0.0|
+|ip \(optional\)|String|body\(contained in **params** structure\)| | |4.0.0|
+|resourceUuid \(optional\)|String|body\(contained in **params** structure\)| | |4.0.0|
+|systemTags \(optional\)|List|body|System Tags| |4.0.0|
+|userTags \(optional\)|List|body|User Tags| |4.0.0|
+|tagUuids \(optional\)|List|body\(contained in **params** structure\)|Tag UUID List| |3.4.0|
+
+## API Response
+Return Example
+
+```
+{
+  "inventory": {
+    "uuid": "158c432596ab3418bbdd04583541d42d",
+    "usedIpUuid": "acfdb23e1b0e39e48b10ee02d10ed74f",
+    "l3NetworkUuid": "a1791966d2fd375bbb469dd0308d3be6",
+    "ip": "192.168.1.10",
+    "mac": "00:0c:29:bd:99:fc",
+    "hypervisorType": "KVM",
+    "netmask": "255.255.255.0",
+    "gateway": "192.168.1.1",
+    "deviceId": 0,
+    "state": "enable",
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. For details, see [error](#p_pvc_gz1_mjb)|4.0.0|
+|inventory|VmInstanceInventory|For details, see [inventory](#p_yn4_jxs_f4b)|4.0.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|4.0.0|
+|description|String|Brief description of the error|4.0.0|
+|details|String|Detailed error information|4.0.0|
+|elaboration|String|Reserved field, defaults to null|4.0.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|4.0.0|
+|cause|ErrorCode|Root cause: the source error that triggered the current error. If there is no original error, this field is null|4.0.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, a unique identifier for the resource|4.0.0|
+|vmInstanceUuid|String|Virtual Machine UUID|4.0.0|
+|l3NetworkUuid|String|Distributed Port Group UUID|4.0.0|
+|ip|String|IP Address|4.0.0|
+|mac|String|MAC Address|4.0.0|
+|hypervisorType|String|Virtualization Type|4.0.0|
+|netmask|String|Subnet Mask|4.0.0|
+|gateway|String|Gateway|4.0.0|
+|metaData|String| |4.0.0|
+|ipVersion|Integer|IP Address Version|4.0.0|
+|driverType|String| |4.7.13|
+|internalName|String| |4.7.13|
+|deviceId|Integer|Device ID|4.0.0|
+|type|String|NIC Type|4.0.0|
+|state|String|NIC Status|4.7.13|
+|createDate|Timestamp|Creation Time|4.0.0|
+|lastOpDate|Timestamp|Last Operation Date|4.0.0|
+|usedIps|List|For details, see [usedIps](#p_htv_jxs_f4b)|4.0.0|
+
+### usedIps
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, a unique identifier for the resource|4.0.0|
+|ipRangeUuid|String|IP Range UUID|4.0.0|
+|l3NetworkUuid|String|Distributed Port Group UUID|4.0.0|
+|ipVersion|Integer|IP Protocol Number|4.0.0|
+|ip|String|IP Address|4.0.0|
+|netmask|String|Network Mask|4.0.0|
+|gateway|String|Gateway Address|4.0.0|
+|usedFor|String| |4.0.0|
+|ipInLong|long| |4.0.0|
+|vmNicUuid|String|VM NIC UUID|4.0.0|
+|createDate|Timestamp|Creation Time|4.0.0|
+|lastOpDate|Timestamp|Last Operation Date|4.0.0|
+
+## SDK Examples
+Java SDK
+
+```
+CreateVmNicAction action = new CreateVmNicAction();
+action.l3NetworkUuid = "cbb5d7cd7f51332cb18c124ea430863f";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateVmNicAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = CreateVmNicAction()
+action.l3NetworkUuid = "cbb5d7cd7f51332cb18c124ea430863f"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

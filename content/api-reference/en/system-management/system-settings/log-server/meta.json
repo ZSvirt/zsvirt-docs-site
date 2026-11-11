@@ -1,0 +1,10 @@
+{
+  "title": "Log Server",
+  "pages": [
+    "add-log-configuration",
+    "delete-log-configuration",
+    "get-log-configuration",
+    "update-log-configuration"
+  ],
+  "pagesIndex": "index"
+}

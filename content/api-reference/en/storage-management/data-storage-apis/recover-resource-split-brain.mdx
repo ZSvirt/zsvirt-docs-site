@@ -1,0 +1,90 @@
+---
+title: "Recover Resource Split-Brain"
+---
+
+<APIPage method="PUT" path="/v1/primary-storage/mini/{resourceUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "recoverResourceSplitBrain": {
+    "hostUuid": "ff0192fa70113da886101145c084bd00",
+    "primaryStorageUuid": "ff0359abb8443d2f8077cc368afa7c00",
+    "forceRecover": true
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Examples
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"recoverResourceSplitBrain":{"hostUuid":"ff0192fa70113da886101145c084bd00","primaryStorageUuid":"ff0359abb8443d2f8077cc368afa7c00","forceRecover":true}}' \
+http://localhost:8080/zstack/v1/primary-storage/mini/ff0811edaad638d5893a0fb09f408300/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|resourceUuid|String|url|Resource UUID| |0.6|
+|hostUuid|String|body \(nested in `recoverResourceSplitBrain` structure\)|Host UUID| |0.6|
+|primaryStorageUuid \(optional\)|String|body \(nested in `recoverResourceSplitBrain` structure\)|Data Storage UUID| |0.6|
+|forceRecover \(optional\)|boolean|body \(nested in `recoverResourceSplitBrain` structure\)| | |0.6|
+|resourceType \(optional\)|String|body \(nested in `recoverResourceSplitBrain` structure\)| | |0.6|
+|systemTags \(optional\)|List|body|System tags| |0.6|
+|userTags \(optional\)|List|body|User tags| |0.6|
+
+## API Response
+When the API succeeds, it returns an empty JSON structure `{}`. When an error occurs, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+RecoverResourceSplitBrainAction action = new RecoverResourceSplitBrainAction();
+action.resourceUuid = "ff0811edaad638d5893a0fb09f408300";
+action.hostUuid = "ff0192fa70113da886101145c084bd00";
+action.primaryStorageUuid = "ff0359abb8443d2f8077cc368afa7c00";
+action.forceRecover = true;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RecoverResourceSplitBrainAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+RecoverResourceSplitBrainAction action = RecoverResourceSplitBrainAction()
+action.resourceUuid = "ff0811edaad638d5893a0fb09f408300"
+action.hostUuid = "ff0192fa70113da886101145c084bd00"
+action.primaryStorageUuid = "ff0359abb8443d2f8077cc368afa7c00"
+action.forceRecover = true
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+RecoverResourceSplitBrainAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,95 @@
+---
+title: "Get Management Node Directory Capacity"
+---
+
+<APIPage method="GET" path="/v1/zwatch/mn">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zwatch/mn?managementNodeUuids=33a2f11d59aa321aa4acfa78afe8f35a&managementNodeUuids=6bf0aca356a13cf787d87ceeb8fcba7f
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|managementNodeUuids \(optional\)|List|query|Management node UUIDs| |3.9.0|
+|systemTags \(optional\)|List|query|System tags| |3.9.0|
+|userTags \(optional\)|List|query|User tags| |3.9.0|
+
+## API Response
+Response Example
+
+```
+{
+  "result": {
+    "3b16bb23007634b3a0f35dec4cb10c28": [
+      {
+        "name": "total",
+        "size": "128000"
+      },
+      {
+        "name": "used",
+        "size": "127000"
+      }
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|result|Map|Detailed management node directory capacity information|3.9.0|
+|success|boolean| |3.9.0|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_mzz_ct5_llb)|3.9.0|
+|error|ErrorCode|For details, see [error](#p_o1f_dt5_llb)|3.9.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001.|3.9.0|
+|description|String|A brief description of the error|3.9.0|
+|details|String|Detailed information about the error|3.9.0|
+|elaboration|String|Reserved field. Default is null.|3.9.0|
+|opaque|LinkedHashMap|Reserved field. Default is null.|3.9.0|
+|cause|ErrorCode|The root error. The source error that caused the current error. If there is no root error, this field is null.|3.9.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001.|3.9.0|
+|description|String|A brief description of the error|3.9.0|
+|details|String|Detailed information about the error|3.9.0|
+|elaboration|String|Reserved field. Default is null.|3.9.0|
+|opaque|LinkedHashMap|Reserved field. Default is null.|3.9.0|
+|cause|ErrorCode|The root error. The source error that caused the current error. If there is no root error, this field is null.|3.9.0|
+
+## SDK Examples
+Java SDK
+
+```
+GetManagementNodeDirCapacityAction action = new GetManagementNodeDirCapacityAction();
+action.managementNodeUuids = asList("33a2f11d59aa321aa4acfa78afe8f35a","6bf0aca356a13cf787d87ceeb8fcba7f");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetManagementNodeDirCapacityAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetManagementNodeDirCapacityAction action = GetManagementNodeDirCapacityAction()
+action.managementNodeUuids = [33a2f11d59aa321aa4acfa78afe8f35a, 6bf0aca356a13cf787d87ceeb8fcba7f]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetManagementNodeDirCapacityAction.Result res = action.call()
+```
+
+</APIPage>

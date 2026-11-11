@@ -1,0 +1,99 @@
+---
+title: "Query Alarm Message Template"
+---
+
+<APIPage method="GET" path="/v1/zwatch/alarms/sns/text-templates" altPaths={["/v1/zwatch/alarms/sns/text-templates/{uuid}"]}>
+
+Query alarm message templates.
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zwatch/alarms/sns/text-templates?q=name=test
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zwatch/alarms/sns/text-templates/1dc97bd699e739c6968fb3e702ab4cb6
+```
+
+Queryable Fields
+
+Run the CLI command line tool, enter `QuerySNSTextTemplate` and press Tab to view all queryable fields and the resource names available for cross-table queries.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "c275ce35fae13a09bcd4c54a7406bd3e",
+      "name": "Test-SNS-Template",
+      "description": "sns text template",
+      "applicationPlatformType": "Email",
+      "template": "Alarm ${ALARM_NAME} status changed to ${ALARM_CURRENT_STATUS}",
+      "defaultTemplate": false,
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null on success. See [error](#p_yty_sd2_l2b)|2.3|
+|inventories|List|See [inventories](#p_lm4_5d2_l2b)|2.3|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, such as SYS.1000, HOST.1001|2.3|
+|description|String|A brief description of the error|2.3|
+|details|String|The detailed error information|2.3|
+|elaboration|String|Reserved field. Default is null|2.3|
+|opaque|LinkedHashMap|Reserved field. Default is null|2.3|
+|cause|ErrorCode|The root error. The source error that caused the current error. This field is null if there is no root error|2.3|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource|2.3|
+|name|String|The resource name|2.3|
+|description|String|The detailed description of the resource|2.3|
+|applicationPlatformType|String|The application platform type|2.3|
+|template|String|The template text|2.3|
+|defaultTemplate|Boolean|Whether it is the default template|2.3|
+|createDate|Timestamp|The creation time|2.3|
+|lastOpDate|Timestamp|The last modification time|2.3|
+
+## SDK Examples
+Java SDK
+
+```
+QuerySNSTextTemplateAction action = new QuerySNSTextTemplateAction();
+action.conditions = asList("name=test");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QuerySNSTextTemplateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QuerySNSTextTemplateAction action = QuerySNSTextTemplateAction()
+action.conditions = ["name=test"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QuerySNSTextTemplateAction.Result res = action.call()
+```
+
+</APIPage>

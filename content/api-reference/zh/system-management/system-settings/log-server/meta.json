@@ -1,0 +1,10 @@
+{
+  "title": "日志服务器相关接口",
+  "pages": [
+    "add-log-configuration",
+    "delete-log-configuration",
+    "get-log-configuration",
+    "update-log-configuration"
+  ],
+  "pagesIndex": "index"
+}

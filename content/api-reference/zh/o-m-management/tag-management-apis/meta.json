@@ -1,0 +1,17 @@
+{
+  "title": "标签相关接口",
+  "pages": [
+    "create-system-tag",
+    "query-system-tag",
+    "update-system-tag",
+    "create-user-tag",
+    "query-user-tag",
+    "delete-tag",
+    "create-tag",
+    "query-tag",
+    "update-tag",
+    "attach-tag-to-resources",
+    "detach-tag-from-resources"
+  ],
+  "pagesIndex": "index"
+}

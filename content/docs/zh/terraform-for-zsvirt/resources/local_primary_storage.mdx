@@ -1,0 +1,50 @@
+---
+title: 'zsphere_local_primary_storage'
+description: '管理 ZSvirt 本地主存储，用于存放云主机磁盘数据。'
+---
+
+<HistoricalNamingNote locale="zh" />
+
+
+# zsphere_local_primary_storage（资源）
+
+管理 ZSvirt 本地主存储，用于存放云主机磁盘数据。
+
+## 示例用法
+```terraform
+resource "zsphere_local_primary_storage" "local_storage" {
+  name            = "local-storage-from-terraform"
+  description     = "Add an example local primary storage from terraform"
+  datacenter_uuid = "datacenter-uuid-here"
+  cluster_uuid    = "cluster-uuid-here"
+  url             = "/vms_ds"
+}
+
+output "zsphere_local_primary_storage" {
+  value = zsphere_local_primary_storage.local_storage
+}
+```
+
+## 参数说明
+
+### 必填参数
+
+- `datacenter_uuid`（字符串）local所属数据中心 UUID primary storage
+- `name`（字符串）local名称 primary storage
+- `url`（字符串）local挂载路径 primary storage
+
+### 可选参数
+
+- `cluster_uuid`（字符串）Cluster UUID to attach the local primary storage to
+- `description`（字符串）本地主存储描述
+
+### 只读属性
+
+- `attached_cluster_uuids`（字符串列表）List of cluster UUIDs attached to the local primary storage
+- `available_capacity`（数字）Available capacity of the local primary storage
+- `mount_path`（字符串）local挂载路径 primary storage
+- `state`（字符串）State of the local primary storage
+- `status`（字符串）Status of the local primary storage
+- `total_capacity`（数字）Total capacity of the local primary storage
+- `type`（字符串）local类型 primary storage
+- `uuid`（字符串）本地主存储 UUID

@@ -1,0 +1,10 @@
+{
+  "title": "Resource Performance Monitoring",
+  "pages": [
+    "overview",
+    "capacity",
+    "view-charts",
+    "custom-charts"
+  ],
+  "pagesIndex": "overview"
+}

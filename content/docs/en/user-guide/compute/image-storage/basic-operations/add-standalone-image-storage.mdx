@@ -1,0 +1,61 @@
+---
+title: 'Add a Standalone Image Storage'
+---
+
+A standalone image storage stores image files through image slices and supports incremental storage.
+
+1.  In the navigation pane, choose **Inventory** &gt; **Image and Template**.
+
+2.  Right-click the target data center and choose **Add Image Storage**.
+
+3.  In the Select Image Storage Type dialog, choose **Standalone Image Storage**.
+
+4.  Click **Next**.
+
+5.  In the Add Image Storage dialog, set the following parameters to complete basic configurations:
+
+    1.  Set basic information.
+
+        -   **Name**: Image storage name.
+        -   **Description**: Image storage description.
+        -   **Type**: Displays standalone image storage.
+        -   **Data Center**: Current data center.
+    2.  Set image storage configurations.
+
+        -   **Image Storage IP**: IP address of the image storage server.
+        -   **SSH Port**: Default port is 22. Supports setting SSH port.
+        -   **Username**: Default is root user. Supports setting regular user.
+        -   **Password**: Password for the user.
+6.  Click **Next**.
+
+    The system will test connectivity to the image storage IP.
+
+7.  Set the following parameters to complete storage configuration:
+
+    1.  Set disk configurations.
+
+        -   **Addition Method**: Supports **Free Disk** and **Local Directory** addition methods.
+
+            When selecting **Free Disk**, configure the following parameter:
+
+            -   **Free Disk**: Add the unmounted or unpartitioned disks on image storage.
+
+                <Callout type="info">
+                Configuring a free disk will format the selected disk, completely clearing all partitions, file systems, and data on the disk.
+                </Callout>
+
+        -   **Mount Path**: Absolute path for mounting storage on image storage.
+
+            <Callout type="info">
+            Do not use system directories such as `/`, `/dev/`, `/proc/`, `/sys/`, `/usr/bin`, `/bin`. Using system directories might cause image storage unable to work properly.
+            </Callout>
+
+        -   **Retrieve Existing Images**: Default: disabled. If enabled, retrieves existing image files from the mount path in this image storage.
+        -   **Image Sync Network**: The network CIDR used for image synchronization between standalone image storage within the same management node. If not specified, the management network is used by default. If both the source and target image storage set this parameter, only the image sync network of the target image storage takes effect.
+        -   **Data Network**: The network CIDR used for data communication between compute nodes and the image storage. If not specified, the management network is used by default.
+    2.  Configure advanced settings.
+
+        -   **Reserved Capacity for Image Storage**: Default: 1 GB. The capacity reserved for use by the image storage.
+        -   **Image Blob Upload Concurrency**: Default: 1. Specify the blob upload concurrency when you upload an image. Valid range: 1 to 16.
+        -   **Image Blob Download Concurrency**: Default: 1. Specify the blob download concurrency when you download an image. Valid range: 1 to 16.
+8.  Review the configuration and click **OK**.

@@ -1,0 +1,70 @@
+---
+title: "Delete Resource Custom Attribute"
+---
+
+<APIPage method="DELETE" path="/v1/resource-configurations/{category}/{name}/{resourceUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/resource-configurations/host/cpu.overProvisioning.ratio/02bcf0b045e247e59bfd51630064443f
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|category|String|url|Configuration category| |3.4.0|
+|name|String|url|Configuration name| |3.4.0|
+|resourceUuid|String|url|Resource UUID| |3.4.0|
+|deleteMode \(Optional\)|String|body| | |3.4.0|
+|systemTags \(Optional\)|List|body| | |3.4.0|
+|userTags \(Optional\)|List|body| | |3.4.0|
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DeleteResourceConfigAction action = new DeleteResourceConfigAction();
+action.category = "host";
+action.name = "cpu.overProvisioning.ratio";
+action.resourceUuid = "763612d48d514b35a7df506cf1a23f57";
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteResourceConfigAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteResourceConfigAction action = DeleteResourceConfigAction()
+action.category = "host"
+action.name = "cpu.overProvisioning.ratio"
+action.resourceUuid = "4ac85edbee2c489ea58e3f26b53182de"
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DeleteResourceConfigAction.Result res = action.call()
+```
+
+</APIPage>

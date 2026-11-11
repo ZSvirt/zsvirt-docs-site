@@ -1,0 +1,18 @@
+---
+title: "The UI cannot be opened after a single Management Node starts. How do I resolve this?"
+---
+
+<HistoricalNamingNote locale="en" />
+
+## Symptom
+The UI cannot be opened and a **permission denied** error appears.
+
+## Cause
+The permissions on the Management Node configuration file are incorrect.
+
+## Solution
+-   Log in to the Management Node and run the following command to change the owner group of `zstack.properties` to zstack.
+
+    ```
+    [root@localhost ~]#  chown  zstack:zstack  /usr/local/zstack/apache-tomcat/webapps/zstack/WEB-INF/classes/zstack.properties
+    ```

@@ -1,0 +1,23 @@
+---
+title: 'Overview'
+---
+
+You can monitor ZSvirt resource data and receive alert messages pushed by ZSvirt through the Simple Network Management Protocol (SNMP) on a third-party platform.
+
+## Key Concepts
+-   **SNMP Protocol**: A protocol used for managing devices on a network.
+-   **Network Management System**: A system that monitors and manages network devices via SNMP. This system sends requests to the agent process on managed devices to query parameter values or receives Trap information sent proactively by the agent. In this feature, the network management system corresponds to the third-party monitoring platform.
+-   **SNMP Agent**: An agent process in managed objects that responds to requests from the network management system or sends Trap information proactively. In this feature, the ZSvirt management node undertakes the role of the SNMP Agent.
+-   **Managed Object**: In this feature, it refers to resources on ZSvirt.
+-   **MIB Library**: A database maintained by the SNMP Agent that defines a set of attributes for managed objects, including object names, statuses, access permissions, and data types. The third-party platform collects required resource monitoring data based on instructions in the MIB library or parses received alert messages. ZSvirt provides a dedicated MIB library that supports downloading and viewing.
+-   **SNMP Trap Receiver**: A third-party server that receives alarm messages from ZSvirt. It can be added as an endpoint and attached to an alarm to push specified alarm messages.
+
+## Notes
+The SNMP components has been updated at ZSvirt 4.10.25 version. If you have upgraded from a previous version and integrated with an external monitoring platform, you must:
+
+1.  Download the new MIB file.
+2.  Update the new MIB file to your external monitoring platform.
+
+<Callout type="info">
+Failure to update may result in missing or abnormal monitoring data, affecting business monitoring continuity.
+</Callout>

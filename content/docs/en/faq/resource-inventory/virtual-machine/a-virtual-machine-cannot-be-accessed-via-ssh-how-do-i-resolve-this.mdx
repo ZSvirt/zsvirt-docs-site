@@ -1,0 +1,13 @@
+---
+title: "A Virtual Machine cannot be accessed via SSH. How do I resolve this?"
+---
+
+## Solution
+-   Perform a network connectivity check. After confirming that the network and port are communicating normally, try the following steps:
+-   If the Linux security policy is configured with an account expiration mode, login may be blocked. Run `chage -l root` to check the account expiration date. Run `chage -E -1 root` to set the account to never expire.
+
+-   If the SHA encryption algorithm in the CRT tool is incompatible, SSH login fails. Modify the CRT configuration or the SSH configuration so they share a common algorithm.
+
+-   Set the value of UseDNS to no.
+
+-   Verify whether the cloud-init default settings disable password-based login.

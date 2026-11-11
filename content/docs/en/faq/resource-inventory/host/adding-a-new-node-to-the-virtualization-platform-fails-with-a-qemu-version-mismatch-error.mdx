@@ -1,0 +1,31 @@
+---
+title: "Adding a new node to the virtualization platform fails with a qemu version mismatch error"
+---
+
+<HistoricalNamingNote locale="en" />
+
+## Cause
+The platform was upgraded from an older version.
+
+## Solution
+1.  SSH into the Management Node.
+
+2.  Run the following command to start a zstack-cli session:
+
+    ```
+    [root@localhost ~]# zstack-cli
+    ```
+
+3.  Run the following command to log in to zstack-cli:
+
+    ```
+    admin >>> LogInByAccount accountName=admin password=$password  //Use the platform admin password
+    ```
+
+4.  Run the following command to upgrade the qemu version for the Cluster:
+
+    ```
+    admin >>> UpdateClusterOS uuid=$cluster_uuid updatepackage=qemu-kvm-ev
+    ```
+
+5.  Reconnect all hosts in the Cluster.

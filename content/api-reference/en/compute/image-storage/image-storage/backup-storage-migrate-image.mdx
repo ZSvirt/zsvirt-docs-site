@@ -1,0 +1,146 @@
+---
+title: "Migrate Image across Backup Storage"
+---
+
+<APIPage method="PUT" path="/v1/backup-storage/images/{imageUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "backupStorageMigrateImage": {
+    "srcBackupStorageUuid": "94a166b9be264f1cafc6de4373117711",
+    "dstBackupStorageUuid": "01e8e16d56f44880bfe00bdd22da37ed"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"backupStorageMigrateImage":{"srcBackupStorageUuid":"dc0d29bb93a93c9b859919c42b8ea583","dstBackupStorageUuid":"1a1c9bfe9f1d328c846e829339f91184"}}' \
+http://localhost:8080/zstack/v1/backup-storage/images/728c33a3e6a5319c9276fb43ae982de7/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|imageUuid|String|url|Image UUID| |2.2|
+|srcBackupStorageUuid|String|body \(contained in **backupStorageMigrateImage** structure\)|Source Backup Storage UUID| |2.2|
+|dstBackupStorageUuid|String|body \(contained in **backupStorageMigrateImage** structure\)|Destination Backup Storage UUID| |2.2|
+|systemTags \(Optional\)|List|body|System tags| |2.2|
+|userTags \(Optional\)|List|body|User tags| |2.2|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "5030c88a703e41b986d140880ad79bcd",
+    "name": "TinyLinux",
+    "url": "http://192.168.1.20/share/images/tinylinux.qcow2",
+    "mediaType": "RootVolumeTemplate",
+    "platform": "Linux",
+    "format": "qcow2",
+    "backupStorageRefs": [
+      {
+        "id": 0.0,
+        "imageUuid": "5030c88a703e41b986d140880ad79bcd",
+        "backupStorageUuid": "21df59afa9414a0aa405cb4c4fef2fee",
+        "installPath": "ceph://zs-images/f0b149e053b34c7eb7fe694b182ebffd",
+        "status": "Ready"
+      }
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_qzm_l4z_qbb)|2.2|
+|inventory|ImageInventory|See [inventory](#p_ufr_l4z_qbb)|2.2|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier, for example SYS.1000, HOST.1001|2.2|
+|description|String|Brief description of the error|2.2|
+|details|String|Detailed error information|2.2|
+|elaboration|String|Reserved field, defaults to null|2.2|
+|opaque|LinkedHashMap|Reserved field, defaults to null|2.2|
+|cause|ErrorCode|Root cause. The source error that triggered the current error. This field is null if there is no original error|2.2|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|2.2|
+|name|String|Resource name|2.2|
+|description|String|Detailed description of the resource|2.2|
+|state|String| |2.2|
+|status|String| |2.2|
+|size|Long| |2.2|
+|actualSize|Long| |2.2|
+|md5Sum|String| |2.2|
+|url|String| |2.2|
+|mediaType|String| |2.2|
+|guestOsType|String| |2.2|
+|type|String| |2.2|
+|platform|String| |2.2|
+|format|String| |2.2|
+|system|Boolean| |2.2|
+|createDate|Timestamp|Creation time|2.2|
+|lastOpDate|Timestamp|Last modification time|2.2|
+|backupStorageRefs|List|See [backupStorageRefs](#p_akv_l4z_qbb)|2.2|
+
+### backupStorageRefs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|imageUuid|String|Image UUID|2.2|
+|backupStorageUuid|String|Backup Storage UUID|2.2|
+|installPath|String| |2.2|
+|exportUrl|String| |2.2|
+|exportMd5Sum|String| |2.2|
+|status|String| |2.2|
+|createDate|Timestamp|Creation time|2.2|
+|lastOpDate|Timestamp|Last modification time|2.2|
+
+## SDK Examples
+Java SDK
+
+```
+BackupStorageMigrateImageAction action = new BackupStorageMigrateImageAction();
+action.imageUuid = "c128546f17ba4dfc92055232549fd335";
+action.srcBackupStorageUuid = "5346ba40a0d34caeb0b93f1b1a0db365";
+action.dstBackupStorageUuid = "1a2dd487461f403eb47ac8c976c129a2";
+action.sessionId = "c9fd105944334cddb33c03a1b3d3f423";
+BackupStorageMigrateImageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+BackupStorageMigrateImageAction action = BackupStorageMigrateImageAction()
+action.imageUuid = "ecda1a5ff835474897b59aedd04bee5e"
+action.srcBackupStorageUuid = "84242c5298634005b748140d01538d6a"
+action.dstBackupStorageUuid = "593ed6cba5b046aeb33b77a6ac1fa927"
+action.sessionId = "6a214423493146078b5a2c9b3f74b80d"
+BackupStorageMigrateImageAction.Result res = action.call()
+```
+
+</APIPage>

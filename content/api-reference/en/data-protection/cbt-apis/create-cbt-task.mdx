@@ -1,0 +1,121 @@
+---
+title: "Create a CBT Task"
+---
+
+<APIPage method="POST" path="/v1/cbt-task/create">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "My CDP Task",
+    "vmInstanceUuid": "89878e17496030ba9c062cbb18924335"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The `systemTags` and `userTags` fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"My CDP Task","vmInstanceUuid":"89878e17496030ba9c062cbb18924335"}}' \
+http://localhost:8080/zstack/v1/cbt-task/create
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|name|String|body \(included in the `params` structure\)|Resource name| |4.10.10|
+|description \(optional\)|String|body \(included in the `params` structure\)|Detailed description of the resource| |4.10.10|
+|taskType|String|body \(included in the `params` structure\)| | |4.10.10|
+|resourceUuids|List|body \(included in the `params` structure\)| | |4.10.10|
+|resourceUuid \(optional\)|String|body \(included in the `params` structure\)|Resource UUID| |4.10.10|
+|tagUuids \(optional\)|List|body \(included in the `params` structure\)|Tag UUID list| |4.10.10|
+|systemTags \(optional\)|List|body|System tags| |4.10.10|
+|userTags \(optional\)|List|body|User tags| |4.10.10|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "b70f4160919c38748f908f489ba306ce",
+    "name": "My Task",
+    "status": "Created"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |5.3.20|
+|inventory|CbtTaskInventory|For details, see [inventory](#p_fdk_fbr_dfc)|5.3.20|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_u3s_fbr_dfc)|5.3.20|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID. Uniquely identifies the resource|4.10.10|
+|name|String|Resource name|4.10.10|
+|description|String|Detailed description of the resource|4.10.10|
+|createDate|Timestamp|Creation time|4.10.10|
+|lastOpDate|Timestamp|Last modification time|4.10.10|
+|status|CbtTaskStatus|For details, see [status](#p_sc4_fbr_dfc)|4.10.10|
+
+### status
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|Created|CbtTaskStatus| |4.10.10|
+|Starting|CbtTaskStatus| |4.10.10|
+|Running|CbtTaskStatus| |4.10.10|
+|Stopped|CbtTaskStatus| |4.10.10|
+|Failed|CbtTaskStatus| |4.10.10|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. The globally unique identifier of the error, for example, SYS.1000 or HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Default is null|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null|0.6|
+|cause|ErrorCode|Root error. The source error that caused the current error. This field is null if there is no source error|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+CreateCbtTaskAction action = new CreateCbtTaskAction();
+action.name = "My CDP Task";
+action.vmInstanceUuid = "89878e17496030ba9c062cbb18924335";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateCbtTaskAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateCbtTaskAction action = CreateCbtTaskAction()
+action.name = "My CDP Task"
+action.vmInstanceUuid = "89878e17496030ba9c062cbb18924335"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateCbtTaskAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,129 @@
+---
+title: "创建裸金属网卡绑定"
+---
+
+<APIPage method="POST" path="/v1/baremetal/network/bondings">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "chassisUuid": "8a3fddc82d1536ad8f695d25d84404f2",
+    "name": "bond0",
+    "mode": 1,
+    "slaves": "[\"d4:ae:52:6e:d1:0d\", \"d4:ae:52:6e:d1:0e\"]",
+    "opts": "miimon=100"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"chassisUuid":"8a3fddc82d1536ad8f695d25d84404f2","name":"bond0","mode":1,"slaves":"[\"d4:ae:52:6e:d1:0d\", \"d4:ae:52:6e:d1:0e\"]","opts":"miimon=100"}}' \
+http://localhost:8080/zstack/v1/baremetal/network/bondings
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|chassisUuid|String|body\(包含在`params`结构中\)|裸金属设备UUID| |3.4.0|
+|name|String|body\(包含在`params`结构中\)|网卡绑定名称| |3.4.0|
+|mode|Integer|body\(包含在`params`结构中\)|网卡绑定模式| |3.4.0|
+|slaves|String|body\(包含在`params`结构中\)|网卡绑定Slaves MAC地址| |3.4.0|
+|opts \(可选\)|String|body\(包含在`params`结构中\)|网卡绑定选项| |3.4.0|
+|resourceUuid \(可选\)|String|body\(包含在`params`结构中\)|资源UUID| |3.4.0|
+|systemTags \(可选\)|List|body|系统标签| |3.4.0|
+|userTags \(可选\)|List|body|用户标签| |3.4.0|
+|tagUuids \(可选\)|List|body\(包含在`params`结构中\)|标签UUID列表| |3.4.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "badccdb49c6e4ad599696948457f5277",
+    "chassisUuid": "6442d12334e44aee96fc74c2fc8ea8f9",
+    "name": "bond0",
+    "mode": 1,
+    "slaves": "[\"d4:ae:52:6e:d1:0d\", \"d4:ae:52:6e:d1:0e\"]",
+    "opts": "miimon=100",
+    "createDate": "Aug 15, 2025 5:32:54 AM",
+    "lastOpDate": "Aug 15, 2025 5:32:54 AM"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_lvx_yyy_3gc)|3.4.0|
+|inventory|BaremetalBondingInventory|详情参考[inventory](#p_fqk_yzy_3gc)|3.4.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.4.0|
+|chassisUuid|String|裸金属设备UUID|3.4.0|
+|name|String|网卡绑定名称|3.4.0|
+|mode|Integer|网卡绑定模式|3.4.0|
+|slaves|String|Slave MAC地址，逗号分隔|3.4.0|
+|opts|String|网卡绑定选项|3.4.0|
+|createDate|Timestamp|创建时间|3.4.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.4.0|
+
+## SDK示例
+Java SDK
+
+```
+CreateBaremetalBondingAction action = new CreateBaremetalBondingAction();
+action.chassisUuid = "8a3fddc82d1536ad8f695d25d84404f2";
+action.name = "bond0";
+action.mode = 1;
+action.slaves = "["d4:ae:52:6e:d1:0d", "d4:ae:52:6e:d1:0e"]";
+action.opts = "miimon=100";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateBaremetalBondingAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = CreateBaremetalBondingAction()
+action.chassisUuid = "8a3fddc82d1536ad8f695d25d84404f2"
+action.name = "bond0"
+action.mode = 1
+action.slaves = "["d4:ae:52:6e:d1:0d", "d4:ae:52:6e:d1:0e"]"
+action.opts = "miimon=100"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

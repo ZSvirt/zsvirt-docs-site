@@ -1,0 +1,92 @@
+---
+title: 'Create a Distributed Switch'
+---
+
+1.  In the navigation pane, choose **Inventory** &gt; **Network Resource**.
+
+2.  In the resource tree, right-click a target data center and select **New Distributed Switch**.
+
+3.  In the New Distributed Switch dialog:
+
+    1.  Complete the basic information configuration.
+
+        -   **Name**: Enter a name for the distributed switch.
+        -   **Description**: Enter a brief description for the distributed switch.
+        -   **Data Center**: Displays the data center where the distributed switch resides.
+        -   **Cluster**: Select the target cluster for the distributed switch (virtualization cluster or bare metal cluster).
+    2.  Complete the network configuration.
+
+        This step only appears when you select a virtualization cluster.
+
+        -   **Addition Method**: Supports individual addition, batch aggregation, and specifying same network interface.
+
+            When selecting individual addition or batch aggregation, configure these parameters:
+
+            -   **Uplink Name**: Set a name for aggregated host physical ports connecting to physical switches.
+
+                <Callout type="info">
+                -   By default, naming follows the format "Uplink + suffix," with the suffix automatically incrementing as "1/2/3/..." to distinguish between resources. When the number of uplinks is 10 or more, the default naming format changes to "Up + suffix".
+                -   Custom uplink name must be within 1 to 10 characters and can only include English letters, numbers, and the special characters "-" and "\_". The name cannot start with a number.
+                </Callout>
+            -   **Bond Mode**: Select a bonding mode for physical ports.
+                -   LACP (mode 4): Bonded ports share the same speed and duplex settings. Network traffic is evenly distributed across all ports for load balancing. This mode supports 1 to 8 physical ports. We recommend bonding at least 2 ports.
+                -   Active-Backup (mode 1): Bonded ports work in active-backup mode. Normally, the active port handles all traffic. If active port fails, the backup port takes over automatically. This mode supports 1 to 8 physical ports. We recommend bonding 2 ports.
+            -   **Hash Policy**: When selecting LACP mode, you can configure the hash policy to determine network traffic egress.
+                -   layer 2+3: Picks out a NIC port to send data packets based on the hash computation on the source MAC address, destination MAC address, and IP address.
+                -   layer 3+4: Picks out a NIC port to send data packets based on the hash computation on the IP address and port. TCP/IP stacks are supported.
+                -   layer 2: Picks out a NIC port to send data packets based on the hash computation on the source MAC address and destination MAC address.
+            -   **Host NIC**: Select host ports to be bonded.
+                -   When creating host bonded ports individually, all selected ports on the same host must have the same speed.
+                -   When creating host bonded ports in bulk, you can only select ports with identical speeds.
+            When selecting specifying same network interface, configure these parameters:
+
+            -   **Network Interface Type**: Select the interface type, including Aggregated Interface and Non-Aggregated Interface.
+            -   **Bond**: Select ports to all hosts in the cluster that have matching ports.
+    3.  Complete the distributed port group configuration.
+
+        By default, the New Distributed Port Group checkbox is selected. You can choose whether to create a distributed port group on this distributed switch.
+
+        -   **Name**: Enter a name for the distributed port group.
+        -   **VLAN Type**: Select a VLAN type. When selecting Standard VLAN, you need to specify a VLAN ID.
+        -   **DHCP Service**: Choose whether to enable the automatic IP address assignment for platform resources.
+        -   **IP Address Management**: Choose whether to enable the IP address management. When enabled, you can add network ranges to this distributed port group. IP addresses in these ranges can be allocated via DHCP service (when enabled) to resources in the network.
+            -   **IP Address Type**: Supports IPv4 and IPv6.
+
+                When selecting IPv4, configure the following parameters:
+
+                -   **IP Allocation Policy**: After enabling the DHCP service, you can select one of the following policies to assign IP addresses.
+                    -   Random Allocation: The system randomly assigns IP addresses from the network range.
+                    -   Allocate in Order: The system assigns all available IP addresses from the network range in ascending order. Released IP addresses are assigned in the next allocation.
+
+                        Example: Assume that the network range is *192.168.0.101*～*192.168.0.120*, within which *192.168.0.101*～*192.168.0.108* are allocated. If *192.168.0.106* is released, it will be assigned first in the next allocation.
+
+                    -   Allocate in Cycle: The system assigns available IP addresses from the network range in ascending order. Released IP addresses are assigned when currently available IP addresses are used up.
+
+                        Example: Assume that the network range is *192.168.0.101*～*192.168.0.120*, within which *192.168.0.101*～*192.168.0.108* are allocated. If *192.168.0.106* is released, it will be assigned after *192.168.0.120* is used.
+
+                -   **Network Range Method**: Supports IP range and CIDR.
+                    -   For IP range, enter start IP, end IP, netmask, and gateway.
+
+                        <Callout type="info">
+                        Do not include gateway, broadcast address, or network addresses in the IP range.
+                        </Callout>
+
+                    -   For CIDR, enter CIDR Block and gateway. You can enter the first or last CIDR address for gateway. If left blank, the fist CIDR address will be used.
+                When selecting IPv6, configure the following parameters:
+
+                -   **Network Range Method**: Supports IP range and CIDR.
+                    -   For IP range, enter start IP, end IP, prefix length, and gateway.
+                    -   For CIDR, enter CIDR Block.
+                -   **IP Configuration Mode**: Select IPv6 address allocation method.
+                    -   Stateful-DHCP (Default): The interface address and other parameters are all configured through DHCP. The IP range method supports stateful DHCP.
+                    -   Stateless-DHCP: The interface address is automatically derived from the route advertisement prefix and the interface Mac address. Other parameters are configured through DHCP.
+                    -   SLAAC: The interface address is automatically derived from the prefix of the route advertisement that also contains other parameters.
+        -   **DHCP IP**: Specify an IP address used by the DHCP service.
+        -   **DNS**: Specify a DNS to provide DNS resolution service for the distributed port group.
+4.  Review the configuration and click **OK**.
+
+    <Callout type="info">
+    -   When adding either a single NIC or a bonded NIC to the distributed switch, the bridge names created by distributed port groups will all start with `br_dvs`.
+    -   If the management network address was originally configured on a physical NIC or sub-interface before adding the host, it will be moved to the `br_dvs{ID}_{VLAN ID}` bridge after addition. When removing the host, the management address will revert back to the physical NIC or sub-interface.
+    -   If the management network address was already on a `br` bridge (for example, a user-defined `br_{name}_{VLAN ID}`) before adding the host, the bridge name will remain unchanged. In scenarios where management and business networks share NICs, when the new distributed port group's VLAN differs from the management network VLAN, the created bridge will still follow the `br_dvs{ID}_{VLAN ID}` naming convention, but this will not affect the NIC hosting the management address.
+    </Callout>

@@ -1,0 +1,85 @@
+---
+title: "根据调度规则UUID以及调度状态获取虚拟机UUID"
+---
+
+<APIPage method="POST" path="/v1/list/vms/from/executeState">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "ruleUuid": "ff0e4855dd0f309f8b8e4914edbcbf00",
+    "executeStates": [
+      "SCHEDULED",
+      "EXECUTING"
+    ]
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"ruleUuid":"ff0e4855dd0f309f8b8e4914edbcbf00","executeStates":["SCHEDULED","EXECUTING"]}}' \
+http://localhost:8080/zstack/v1/list/vms/from/executeState
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|ruleUuid|String|body\(包含在`params`结构中\)|调度规则UUID| |4.6.0|
+|executeStates|List|body\(包含在`params`结构中\)|调度状态\(Conflict,Normal,Invalid\)| |4.6.0|
+|systemTags \(可选\)|List|body|系统标签| |4.6.0|
+|userTags \(可选\)|List|body|用户标签| |4.6.0|
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+ListVmsFromSchedulingStateAction action = new ListVmsFromSchedulingStateAction();
+action.ruleUuid = "ff0e4855dd0f309f8b8e4914edbcbf00";
+action.executeStates = asList("SCHEDULED","EXECUTING");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ListVmsFromSchedulingStateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+ListVmsFromSchedulingStateAction action = ListVmsFromSchedulingStateAction()
+action.ruleUuid = "ff0e4855dd0f309f8b8e4914edbcbf00"
+action.executeStates = [SCHEDULED, EXECUTING]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ListVmsFromSchedulingStateAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,13 @@
+{
+  "title": "Bare Metal Management",
+  "pages": [
+    "overview",
+    "prerequisites",
+    "quick-start",
+    "templates",
+    "clusters",
+    "devices",
+    "hosts"
+  ],
+  "pagesIndex": "overview"
+}

@@ -1,0 +1,117 @@
+---
+title: "Create an SNMP Endpoint"
+---
+
+<APIPage method="POST" path="/v1/sns/application-endpoints/snmp">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "name": "snmp endpoint",
+    "platformUuid": "c453382b049c3280b69157501914870d"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, the **systemTags** and **userTags** fields are optional. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"name":"snmp endpoint","platformUuid":"c453382b049c3280b69157501914870d"}}' \
+http://localhost:8080/zstack/v1/sns/application-endpoints/snmp
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|name|String|body \(contained in the **params** structure\)|Resource name| |4.10.0|
+|description \(optional\)|String|body \(contained in the **params** structure\)|Detailed description of the resource| |4.10.0|
+|platformUuid \(optional\)|String|body \(contained in the **params** structure\)| | |4.10.0|
+|resourceUuid \(optional\)|String|body \(contained in the **params** structure\)| | |4.10.0|
+|tagUuids \(optional\)|List|body \(contained in the **params** structure\)|Tag UUID list| |4.10.0|
+|systemTags \(optional\)|List|body|System tags| |4.10.0|
+|userTags \(optional\)|List|body|User tags| |4.10.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "name": "example",
+    "uuid": "917fe66f76b241f0843dfbd6be685fc1",
+    "description": "description example",
+    "type": "Email",
+    "state": "Enabled",
+    "platformUuid": "4eb0ceebf95b452585ebeacd647d9f35",
+    "createDate": "Dec 25, 2023 2:08:53 PM",
+    "lastOpDate": "Dec 25, 2023 2:08:53 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.10.0|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_jqc_j4w_jjb)|4.10.0|
+|inventory|SNSApplicationEndpointInventory|For details, see [inventory](#p_zv4_j4w_jjb)|4.10.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001.|4.10.0|
+|description|String|A brief description of the error|4.10.0|
+|details|String|Detailed information about the error|4.10.0|
+|elaboration|String|Reserved field. Default is null.|4.10.0|
+|opaque|LinkedHashMap|Reserved field. Default is null.|4.10.0|
+|cause|ErrorCode|The root error. The source error that caused the current error. If there is no root error, this field is null.|4.10.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|SNMP endpoint name|4.10.0|
+|uuid|String|The UUID of the SNMP endpoint. Uniquely identifies the resource.|4.10.0|
+|description|String|Detailed description of the SNMP endpoint|4.10.0|
+|type|String|SNMP endpoint type|4.10.0|
+|platformUuid|String|Application platform UUID|4.10.0|
+|createDate|Timestamp|Creation time|4.10.0|
+|lastOpDate|Timestamp|Last modification time|4.10.0|
+
+## SDK Examples
+Java SDK
+
+```
+CreateSNSSnmpEndpointAction action = new CreateSNSSnmpEndpointAction();
+action.name = "snmp endpoint";
+action.platformUuid = "c453382b049c3280b69157501914870d";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateSNSSnmpEndpointAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateSNSSnmpEndpointAction action = CreateSNSSnmpEndpointAction()
+action.name = "snmp endpoint"
+action.platformUuid = "c453382b049c3280b69157501914870d"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateSNSSnmpEndpointAction.Result res = action.call()
+```
+
+</APIPage>

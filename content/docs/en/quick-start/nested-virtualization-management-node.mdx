@@ -1,0 +1,179 @@
+---
+title: "Quickly Deploy ZSvirt from a Virtual Machine"
+---
+
+<HistoricalNamingNote locale="en" />
+
+This guide explains how to quickly deploy a ZSvirt management node or compute node from a qcow2 or OVA image on a virtual machine. It is intended for local labs, feature evaluation, and PoC setups.
+
+## Before You Begin
+
+Have the following ready:
+
+- A ZSvirt qcow2 or OVA image, for example:
+  - `ZSvirt-x86_64-<version>-h84r.qcow2`
+  - `ZSvirt-x86_64-<version>-h84r.ova`
+- A hypervisor that can run qcow2 or OVA images.
+- At least `8 vCPUs` and `8 GiB` of memory.
+- One virtual NIC attached to the management network.
+- An IP address, netmask, and gateway you can assign to the ZSvirt management node.
+
+<Callout type="info" title="Note">
+The management node runs ZSvirt control-plane services. If you only need this image as a compute node, skip the management-service initialization commands later in this guide.
+</Callout>
+
+<Steps>
+
+<Step>
+
+## 1. Download the Image
+
+Download the latest qcow2 or OVA image from the ZSvirt website. Filenames typically look like:
+
+```text
+ZSvirt-x86_64-<version>-h84r.qcow2
+ZSvirt-x86_64-<version>-h84r.ova
+```
+
+Pick the format that matches your hypervisor, and replace `<version>` with the actual version number.
+
+</Step>
+
+<Step>
+
+## 2. Create the VM
+
+Create a VM from the downloaded qcow2 or OVA image, using these resource guidelines:
+
+| Setting | Recommended |
+| --- | --- |
+| CPU | 8 vCPUs or more |
+| Memory | 8 GiB or more |
+| System disk | The downloaded qcow2 or OVA image |
+| NIC | At least one virtual NIC on the management network |
+
+<Callout type="warn" title="Note">
+On VMware, select **Expose hardware assisted virtualization to the guest OS** when you create or import the VM.
+</Callout>
+
+After the VM is created, power it on and open the console.
+
+</Step>
+
+<Step>
+
+## 3. Log In
+
+At the VM console, press `Ctrl+Alt+F2` to switch to a login terminal, then log in as `root`.
+
+The default password is:
+
+```text
+zsvirt.123
+```
+
+Change the `root` password as soon as you log in for the first time:
+
+```bash
+passwd
+```
+
+![Log in to the guest OS](/docs/quick-start/images/nested-01-login.png)
+
+</Step>
+
+<Step>
+
+## 4. Configure Networking and Start Services
+
+Choose the path that matches your network.
+
+### If the management network has DHCP
+
+If DHCP assigns addresses on the management network, first check the IP the NIC received:
+
+```bash
+ip addr
+```
+
+Once you have the management node IP, write it into the ZSvirt configuration and start the services:
+
+```bash
+zstack-ctl change_ip --ip <management-node-ip>
+zstack-ctl start
+```
+
+Replace `<management-node-ip>` with the address DHCP assigned to this VM.
+
+<img src="/docs/en/quick-start/images/nested-02-dhcp-ip.jpg" alt="Example of changing the management node IP" />
+
+<img src="/docs/en/quick-start/images/nested-03-dhcp-start.jpg" alt="Example of starting the management services" />
+
+### If the management network has no DHCP
+
+If DHCP is not available, create a bond on the management NIC and assign a static IP.
+
+Create `bond0`:
+
+```bash
+zs-bond-ab -c bond0
+```
+
+Add the management NIC to `bond0`:
+
+```bash
+zs-nic-to-bond -a bond0
+```
+
+Assign a static address to `bond0`:
+
+```bash
+zs-network-setting -i bond0 <management-node-ip> <netmask> <gateway>
+```
+
+Replace the placeholders with the values from your network plan.
+
+After networking is in place, write the management node IP into the ZSvirt configuration and start the services:
+
+<Callout type="info" title="Note">
+If you skip the next two commands, this node can be used directly as a compute node.
+</Callout>
+
+```bash
+zstack-ctl change_ip --ip <management-node-ip>
+zstack-ctl start
+```
+
+<img src="/docs/en/quick-start/images/nested-04-create-bond.jpg" alt="Example of creating a bond" />
+
+![Example of assigning a static address](/docs/quick-start/images/nested-05-static-network.png)
+
+<img src="/docs/en/quick-start/images/nested-06-static-start.jpg" alt="Example of starting the management services" />
+
+</Step>
+
+<Step>
+
+## 5. Open the ZSvirt UI
+
+After the services are up, open the management node in a browser:
+
+```text
+https://<management-node-ip>
+```
+
+Replace `<management-node-ip>` with the address you configured in step 4. Follow the on-screen wizard to finish platform initialization.
+
+</Step>
+
+</Steps>
+
+## Troubleshooting
+
+If the UI does not load, work through these checks:
+
+1. Confirm the VM is running and the management NIC is on the right network.
+2. Confirm the management node IP, netmask, and gateway are correct.
+3. Confirm you ran `zstack-ctl change_ip --ip <management-node-ip>`.
+4. Confirm you ran `zstack-ctl start` and waited for the services to come up.
+5. Confirm you can reach the management node IP from your workstation or another host on the same subnet.

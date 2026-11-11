@@ -1,0 +1,76 @@
+---
+title: "Clean Long Job"
+---
+
+<APIPage method="PUT" path="/v1/longjobs/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "cleanLongJob": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, the `systemTags` and `userTags` fields are optional. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"cleanLongJob":{}}' \
+http://localhost:8080/zstack/v1/longjobs/5733dce937ca3ecdb47adcb08c25a552/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|The UUID of the resource. Uniquely identifies the resource.| |4.3.0|
+|systemTags \(Optional\)|List|body|System tags| |4.3.0|
+|userTags \(Optional\)|List|body|User tags| |4.3.0|
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On failure, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+CleanLongJobAction action = new CleanLongJobAction();
+action.uuid = "5733dce937ca3ecdb47adcb08c25a552";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CleanLongJobAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CleanLongJobAction action = CleanLongJobAction()
+action.uuid = "5733dce937ca3ecdb47adcb08c25a552"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CleanLongJobAction.Result res = action.call()
+```
+
+</APIPage>

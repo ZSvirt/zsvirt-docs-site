@@ -1,0 +1,31 @@
+---
+title: "The virtual machine fails to start after the host restarts. What should I do?"
+---
+
+<HistoricalNamingNote locale="en" />
+
+## Symptom
+The virtual machine fails to start, and the Local Storage Data Storage is disconnected.
+
+## Cause
+After the host restarts, the Local Storage directory is not mounted to the corresponding disk.
+
+## Solution
+1.  Run the following commands in the virtual machine to manually mount the Local Storage to the corresponding directory:
+
+    ```
+    # Get disk UUID
+    [root@localhost ~]# ll /dev/disk/by-uuid/
+    # Mount the directory
+    [root@localhost ~]# mount /dev/disk/by-uuid/$disk_UUID /zstack_ps
+    ```
+
+2.  Run the following commands to configure automatic mounting:
+
+    ```
+    # Get disk UUID
+    [root@localhost ~]# echo sleep 5 >> /etc/rc.d/rc.local
+    [root@localhost ~]# echo mount /dev/disk/by-uuid/$disk_UUID /zstack_ps >> /etc/rc.d/rc.local
+    # Verify the mount
+    [root@localhost ~]# df -Th
+    ```

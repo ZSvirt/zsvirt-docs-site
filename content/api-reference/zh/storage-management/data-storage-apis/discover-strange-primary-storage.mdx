@@ -1,0 +1,82 @@
+---
+title: "发现集群主机上未受当前平台管控的数据存储"
+---
+
+<APIPage method="GET" path="/v1/primary-storage/stranger">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/primary-storage/stranger?clusterUuid=3f7c761b89a5384ebeb6c186012d0997
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|clusterUuid|String|query|集群UUID| |5.0.0|
+|systemTags \(可选\)|List|query|系统标签| |5.0.0|
+|userTags \(可选\)|List|query|用户标签| |5.0.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "name": "SharedBlockGroup-1",
+      "url": "/dev/vg_uuid",
+      "type": "SharedBlock",
+      "attachedClusterUuids": [
+        "7a8202c37ea63e1093acb2c8d1d03e97"
+      ]
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|inventories|List|发现的数据存储清单列表|5.0.0|
+|success|boolean|操作是否成功|5.0.0|
+|error|ErrorCode|详情参考[error](#p_qnb_1nf_2jc)|5.0.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+DiscoverStrangePrimaryStorageAction action = new DiscoverStrangePrimaryStorageAction();
+action.clusterUuid = "3f7c761b89a5384ebeb6c186012d0997";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DiscoverStrangePrimaryStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = DiscoverStrangePrimaryStorageAction()
+action.clusterUuid = "3f7c761b89a5384ebeb6c186012d0997"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

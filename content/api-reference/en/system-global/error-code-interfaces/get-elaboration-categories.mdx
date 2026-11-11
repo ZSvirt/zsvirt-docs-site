@@ -1,0 +1,88 @@
+---
+title: "Get Elaboration Categories"
+---
+
+<APIPage method="GET" path="/v1/errorcode/elaborations/categories">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/errorcode/elaborations/categories
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|systemTags \(Optional\)|List|query|System tags| |4.5.0|
+|userTags \(Optional\)|List|query|User tags| |4.5.0|
+
+## API Response
+Response example
+
+```
+{
+  "categories": [
+    {
+      "category": "ACCOUNT",
+      "num": 5.0
+    },
+    {
+      "category": "BS",
+      "num": 3.0
+    },
+    {
+      "category": "VM",
+      "num": 20.0
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_zhf_xkk_w3b)|4.5.0|
+|categories|List|For details, see [categories](#p_cwz_wkk_w3b)|4.5.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, such as SYS.1000, HOST.1001.|4.5.0|
+|description|String|A brief description of the error|4.5.0|
+|details|String|The detailed error information|4.5.0|
+|elaboration|String|A reserved field. Default is null.|4.5.0|
+|opaque|LinkedHashMap|A reserved field. Default is null.|4.5.0|
+|cause|ErrorCode|The root error. The source error that caused the current error. This field is null if there is no root error.|4.5.0|
+
+### categories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|category|String|Category name|4.5.0|
+|num|Integer|The number of error codes in this category|4.5.0|
+
+## SDK Examples
+Java SDK
+
+```
+GetElaborationCategoriesAction action = new GetElaborationCategoriesAction();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetElaborationCategoriesAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetElaborationCategoriesAction action = GetElaborationCategoriesAction()
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetElaborationCategoriesAction.Result res = action.call()
+```
+
+</APIPage>

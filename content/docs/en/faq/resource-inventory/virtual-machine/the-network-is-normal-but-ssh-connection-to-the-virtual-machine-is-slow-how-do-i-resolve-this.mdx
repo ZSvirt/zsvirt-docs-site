@@ -1,0 +1,48 @@
+---
+title: "The network is normal but SSH connection to the virtual machine is slow. How do I resolve this?"
+---
+
+## Symptom
+SSH connection to the virtual machine is slow even though the network is functioning normally.
+
+## Cause
+Possible causes include the following:
+
+-   SSH reverse DNS lookup is enabled. This lookup process takes a significant amount of time.
+-   GSS \(Generic Security Services\) authentication is enabled. This authentication process takes a significant amount of time.
+-   NSS \(Name Service Switch\) name resolution is slow.
+
+## Solution
+1.  Disable SSH reverse DNS lookup.
+
+    Run the following command to disable SSH reverse DNS lookup:
+
+    ```
+    [root@localhost~]#vi /etc/ssh/sshd_config
+    # Enter sshd_config edit mode and modify the following setting
+    UseDNS=no
+    ```
+
+2.  Disable GSS authentication.
+
+    Run the following command to disable GSS authentication:
+
+    ```
+    [root@localhost~]#vi /etc/ssh/sshd_config
+    # Enter sshd_config edit mode and modify the following setting
+    GSSAPIAuthentication no
+    ```
+
+    <Callout type="info">
+    When the GSS authentication method is set to `gssapi-with-mic`, every SSH connection to the virtual machine performs GSSAPI authentication, which takes a significant amount of time. Disabling GSS authentication improves SSH connection speed.
+    </Callout>
+
+3.  Edit the virtual machine nsswitch.conf file.
+
+    Run the following command to edit the virtual machine nsswitch.conf file:
+
+    ```
+    #vi /etc/nsswitch.conf
+    # Enter nsswitch.conf edit mode and modify the following setting
+    hosts: files
+    ```

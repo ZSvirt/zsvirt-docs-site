@@ -1,0 +1,14 @@
+{
+  "title": "Bare Metal Instance Related Interfaces",
+  "pages": [
+    "start-baremetal-instance",
+    "destroy-baremetal-instance",
+    "expunge-baremetal-instance",
+    "recover-baremetal-instance",
+    "update-baremetal-instance",
+    "stop-baremetal-instance",
+    "reboot-baremetal-instance",
+    "query-baremetal-instance"
+  ],
+  "pagesIndex": "start-baremetal-instance"
+}

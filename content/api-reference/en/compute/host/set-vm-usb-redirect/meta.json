@@ -1,0 +1,11 @@
+{
+  "title": "Set VM USB Redirect Switch",
+  "pages": [
+    "attach-usb-device-to-vm",
+    "detach-usb-device-from-vm",
+    "get-usb-device-candidates-for-attaching-vm",
+    "query-usb-device",
+    "update-usb-device"
+  ],
+  "pagesIndex": "index"
+}

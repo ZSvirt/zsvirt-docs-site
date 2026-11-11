@@ -1,0 +1,21 @@
+---
+title: "The Linux virtual machine internal monitoring port conflicts with a business port. What should I do?"
+---
+
+<HistoricalNamingNote locale="en" />
+
+## Cause
+The port used by the virtual machine's internal monitoring service conflicts with a business port.
+
+## Solution
+1.  Log in to the virtual machine and run the following command to edit the **collectdExporter.port** setting in the `conf.yaml` configuration file:
+
+    ```
+    [root@localhost ~]# vim /usr/local/zstack/zwatch-vm-agent/conf.yaml
+    ```
+
+2.  Run the following command to restart the **zwatch-vm-agent** service:
+
+    ```
+    [root@localhost ~]# service zwatch-vm-agent restart
+    ```

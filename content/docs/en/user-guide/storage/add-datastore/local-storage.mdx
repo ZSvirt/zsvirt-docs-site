@@ -1,0 +1,41 @@
+---
+title: 'Add a Local Storage'
+---
+
+If you wish to use the local hard disk directory of a host to create storage resources, you can refer to this section for instructions.
+
+-   Make sure to plan the mount path for the local storage on the host's disk in advance.
+-   Check the quantity and type limitations between the cluster and the data storage to the attached. For more information, see Cluster and Data Storage.
+
+1.  In the navigation pane, choose **Inventory** &gt; **Data Storage**.
+
+2.  Select the target data center and click **Actions** &gt; **Add Data Storage**.
+
+3.  In the Add Data Storage dialog, set the following parameters:
+
+    **Basic Information**
+
+    -   **Name**: Name of the local storage.
+    -   **Description**: Optional. You can add relevant information as a note.
+    -   **Type**: Select **Local Storage**.
+    -   **Data Center**: Location of the data center where the local storage resides.
+    **Configurations**
+
+    -   **Cluster**: The cluster where the local storage needs to be attached.
+    -   **Addition Method**: Supports **Free Disk** and **Local Directory** methods
+
+        If you choose **Free Disk**, you need to configure the following parameter:
+
+        -   **Host Disk**: Add unmounted or unpartitioned free disks on the host
+
+            <Callout type="info">
+            Configuring a free disk will format the selected disk, completely clearing all partitions, file systems, and data on the disk.
+            </Callout>
+
+    -   **Mount Path**: The mount path for the local storage on the host's disks
+
+        <Callout type="info">
+        System directories such as `/`, `/dev/`, `/proc/`, `/sys/`, `/usr/bin`, and `/bin` cannot be used. Using system directories might cause the hosts unable to work properly.
+        </Callout>
+
+4.  Review the configuration and click **OK**.

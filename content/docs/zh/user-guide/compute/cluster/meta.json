@@ -1,0 +1,9 @@
+{
+  "title": "集群",
+  "pages": [
+    "index",
+    "basic-operations",
+    "dynamic-resource-scheduling"
+  ],
+  "pagesIndex": "index"
+}

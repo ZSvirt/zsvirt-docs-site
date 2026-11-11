@@ -1,0 +1,9 @@
+{
+  "title": "资源关系",
+  "pages": [
+    "index",
+    "resource-table",
+    "cluster-datastore-image-storage"
+  ],
+  "pagesIndex": "index"
+}

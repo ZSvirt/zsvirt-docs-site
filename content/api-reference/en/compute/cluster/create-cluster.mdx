@@ -1,0 +1,386 @@
+---
+title: "Create Cluster"
+---
+
+<APIPage method="POST" path="/v1/clusters">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "zoneUuid": "d5629a75f0a24280ac669d93d38a7dcd",
+    "name": "cluster1",
+    "description": "test",
+    "hypervisorType": "KVM"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X POST -d '{"params":{"zoneUuid":"e1fb7d87073b397c857eaeeb16243103","name":"cluster1","description":"test","hypervisorType":"KVM"}}' \
+http://localhost:8080/zstack/v1/clusters
+```
+
+Parameter List
+
+<table id="table_npx_pxs_l1b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+zoneUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Data Center UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+name
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Resource name
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+description \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Resource description
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+hypervisorType
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Hypervisor type
+
+</td><td>
+
+-   KVM
+-   Simulator
+
+</td><td>
+
+4.0.0
+
+</td></tr><tr><td>
+
+type \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+Reserved field. Do not use.
+
+</td><td>
+
+-   zstack
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+resourceUuid \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+-   When resourceUuid is not null, the virtualization platform uses this value as the UUID of the resource being created;
+-   Otherwise, the virtualization platform automatically generates a UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+architecture \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+-   x86\_64
+-   aarch64
+-   mips64el
+
+</td><td>
+
+4.0.0
+
+</td></tr><tr><td>
+
+tagUuids \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body \(contained in **params** structure\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.0.0
+
+</td></tr><tr><td>
+
+systemTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tag
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+userTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tag
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "name": "cluster1",
+    "uuid": "dc7442bb39674d779d688369329ba845",
+    "description": "test",
+    "state": "Enabled",
+    "hypervisorType": "KVM",
+    "createDate": "Jun 7, 2017 9:20:31 PM",
+    "lastOpDate": "Jun 7, 2017 9:20:31 PM",
+    "zoneUuid": "342b68c14869412984d6327a58b18f9b",
+    "type": "zstack"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See details [error](#p_nxv_yys_l1b)|0.6|
+|inventory|ClusterInventory|See details [inventory](#p_ybb_zys_l1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, e.g. SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, default is null|0.6|
+|opaque|LinkedHashMap|Reserved field, default is null|0.6|
+|cause|ErrorCode|Root cause, the error that caused the current error. If there is no original error, this field is null|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name|0.6|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|description|String|Resource description|0.6|
+|state|String|Cluster state|0.6|
+|hypervisorType|String|Hypervisor type|0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+|zoneUuid|String|Data Center UUID|0.6|
+|type|String|Reserved field|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+CreateClusterAction action = new CreateClusterAction();
+action.zoneUuid = "70fd596da027478eb22ac9357aed23f4";
+action.name = "cluster1";
+action.description = "test";
+action.hypervisorType = "KVM";
+action.sessionId = "894477861bcc45488978b584908e4ee3";
+CreateClusterAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateClusterAction action = CreateClusterAction()
+action.zoneUuid = "cfe698802c87486986878daa2da7e02f"
+action.name = "cluster1"
+action.description = "test"
+action.hypervisorType = "KVM"
+action.sessionId = "0664130c5d36414bbb3a7a59ef87ea5a"
+CreateClusterAction.Result res = action.call()
+```
+
+</APIPage>

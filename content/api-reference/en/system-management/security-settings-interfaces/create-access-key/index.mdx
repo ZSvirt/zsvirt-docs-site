@@ -1,0 +1,128 @@
+---
+title: "Create AccessKey"
+---
+
+<APIPage method="POST" path="/v1/accesskeys">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "accountUuid": "db517023502d34ef9309e49674af88d0"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding example, the **systemTags** and **userTags** fields are optional. They are listed here to show that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"accountUuid":"db517023502d34ef9309e49674af88d0"}}' \
+http://localhost:8080/zstack/v1/accesskeys
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|accountUuid|String|body \(enclosed in the **params** structure\)|Account UUID| |4.0.0|
+|userUuid|String|body \(enclosed in the **params** structure\)|This value is deprecated| |4.0.0|
+|description \(Optional\)|String|body \(enclosed in the **params** structure\)|Detailed description of the resource| |4.0.0|
+|AccessKeyID \(Optional\)|String|body \(enclosed in the **params** structure\)|Generated AccessKeyID| |4.0.0|
+|AccessKeySecret \(Optional\)|String|body \(enclosed in the **params** structure\)|Generated AccessKeySecret| |4.0.0|
+|resourceUuid \(Optional\)|String|body \(enclosed in the **params** structure\)| | |4.0.0|
+|systemTags \(Optional\)|List|body| | |4.0.0|
+|userTags \(Optional\)|List|body| | |4.0.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "01f82a92a3f83136b3a5fa13b0f1dde6",
+    "accountUuid": "bc81e5aad7363ebaa904ee81edbfdd1f",
+    "userUuid": "bc81e5aad7363ebaa904ee81edbfdd1f",
+    "AccessKeyID": "1234567890abcdedfhij",
+    "AccessKeySecret": "YOUR_ACCESS_KEY_SECRET",
+    "state": "Enabled"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.0.0|
+|error|ErrorCode|Error code. If not null, the operation has failed. This field is null when the operation succeeds. For details, see [error](#p_zbk_nc5_zfb)|4.0.0|
+|inventory|AccessKeyInventory|For details, see [inventory](#p_z2s_nc5_zfb)|4.0.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. The globally unique identifier of the error, for example, SYS.1000 or HOST.1001.|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed information about the error|0.6|
+|elaboration|String|Reserved field. Default is null.|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null.|0.6|
+|cause|ErrorCode|Root error. The source error that caused the current error. This field is null if no root error exists.|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID. Uniquely identifies the resource.|4.0.0|
+|description|String|Detailed description of the resource|4.0.0|
+|accountUuid|String|Account UUID|4.0.0|
+|userUuid|String|This value is deprecated|4.0.0|
+|AccessKeyID|String| |4.0.0|
+|AccessKeySecret|String| |4.0.0|
+|createDate|Timestamp|Creation time|4.0.0|
+|lastOpDate|Timestamp|Last modification time|4.0.0|
+|state|AccessKeyState|For details, see [state](#p_xmy_nc5_zfb)|4.0.0|
+
+### state
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource name|4.0.0|
+|ordinal|int| |4.0.0|
+
+## SDK Examples
+Java SDK
+
+```
+CreateAccessKeyAction action = new CreateAccessKeyAction();
+action.accountUuid = "db517023502d34ef9309e49674af88d0";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateAccessKeyAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateAccessKeyAction action = CreateAccessKeyAction()
+action.accountUuid = "db517023502d34ef9309e49674af88d0"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateAccessKeyAction.Result res = action.call()
+```
+
+<Cards>
+  <Card title="Delete AccessKey" href="/en/docs/api-reference/system-management/security-settings-interfaces/create-access-key/delete-access-key" />
+  <Card title="Update Console Proxy Agent" href="/en/docs/api-reference/system-management/security-settings-interfaces/create-access-key/update-console-proxy-agent" />
+  <Card title="Query AccessKey" href="/en/docs/api-reference/system-management/security-settings-interfaces/create-access-key/query-access-key" />
+  <Card title="Enable or Disable AccessKey" href="/en/docs/api-reference/system-management/security-settings-interfaces/create-access-key/change-access-key-state" />
+</Cards>
+
+</APIPage>

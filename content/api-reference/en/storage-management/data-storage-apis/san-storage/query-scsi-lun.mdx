@@ -1,0 +1,154 @@
+---
+title: "Query SCSI Lun"
+---
+
+## API Request
+Query Iscsi block devices and FC block devices.
+
+URLs
+
+```
+GET zstack/v1/storage-devices/scsi-lun/luns
+GET zstack/v1/storage-devices/scsi-lun/luns/{uuid}
+```
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/storage-devices/scsi-lun/luns
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/storage-devices/scsi-lun/luns/c4006c2a536f3617944e2b00aff74af6
+```
+
+Queryable Fields
+
+Run the CLI command-line tool, enter `QueryScsiLun` and press Tab to see all queryable fields and resource names that can be queried across tables.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "name": "fc-lun-36b083fe000daf018000022905ba35d8f",
+      "uuid": "6f2428969262315488684c85e14eded2",
+      "wwid": "36b083fe000daf018000022905ba35d8f",
+      "vendor": "DELL",
+      "model": "MD32xx",
+      "wwn": "0x6f01faf000d5c3e7",
+      "serial": "6b083fe000daf018000015505abbe00a",
+      "type": "mpath",
+      "path": "pci-0000:05:00.0-fc-0x2012b083fedaf018-lun-11",
+      "size": 5497558138880.0,
+      "scsiLunHostRefs": [
+        {
+          "id": 1.0,
+          "scsiLunUuid": "6f2428969262315488684c85e14eded2",
+          "hostUuid": "0b756ca2d3843412860b7ec1b9315dd4",
+          "createDate": "Nov 14, 2017 10:20:57 PM"
+        }
+      ],
+      "scsiLunVmInstanceRefs": [],
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    },
+    {
+      "name": "iscsi-lun-scsi-14f504e46494c45524d5342436a6c2d4a4443672d30593032",
+      "uuid": "7bfde6b8e5503606849a4f3781bc02d7",
+      "wwid": "scsi-14f504e46494c45524d5342436a6c2d4a4443672d30593032",
+      "vendor": "OPNFILER",
+      "model": "VIRTUAL-DISK",
+      "serial": "4f504e46494c45524d5342436a6c2d4a4443672d30593032",
+      "type": "disk",
+      "path": "ip-10.0.104.213:3260-iscsi-iqn.2018-09.io.cloud:tsn.0000003-lun-0",
+      "size": 5497558138880.0,
+      "scsiLunHostRefs": [],
+      "scsiLunVmInstanceRefs": [],
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation is successful, this field is null. For details, see [error](#p_ybp_53v_yfb)|3.2.0|
+|inventories|List|For details, see [inventories](#p_mj4_v3v_yfb)|3.2.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, e.g. SYS.1000, HOST.1001|3.2.0|
+|description|String|Brief description of the error|3.2.0|
+|details|String|Detailed error information|3.2.0|
+|elaboration|String|Reserved field, defaults to null|3.2.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|3.2.0|
+|cause|ErrorCode|Root cause: the error that triggered the current error. If there is no original error, this field is null|3.2.0|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|Resource Name|3.2.0|
+|uuid|String|Resource UUID, uniquely identifies the resource|3.2.0|
+|wwid|String|Disk Globally Unique Identifier|3.2.0|
+|vendor|String|Disk Vendor|3.2.0|
+|model|String|Disk Model|3.2.0|
+|wwn|String|Disk WWN|3.2.0|
+|serial|String|Disk Serial Number|3.2.0|
+|type|String|Disk Type|3.2.0|
+|path|String|Disk Path|3.2.0|
+|state|String|Disk Enabled State|3.2.0|
+|size|Long|Disk Size|3.2.0|
+|createDate|Timestamp|Creation Time|3.2.0|
+|lastOpDate|Timestamp|Last Modification Time|3.2.0|
+|scsiLunHostRefs|List|For details, see [scsiLunHostRefs](#p_oww_w3v_yfb)|3.2.0|
+|scsiLunVmInstanceRefs|List|For details, see [scsiLunVmInstanceRefs](#p_myt_cjv_yfb)|3.2.0|
+
+### scsiLunHostRefs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|scsiLunUuid|String|SCSI Lun UUID|3.2.0|
+|hostUuid|String|Host UUID|3.2.0|
+|createDate|Timestamp|Creation Time|3.2.0|
+|lastOpDate|Timestamp|Last Modification Time|3.2.0|
+
+### scsiLunVmInstanceRefs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|scsiLunUuid|String|SCSI Lun UUID|3.2.0|
+|vmInstanceUuid|String|Virtual Machine UUID|3.2.0|
+|createDate|Timestamp|Creation Time|3.2.0|
+|lastOpDate|Timestamp|Last Modification Time|3.2.0|
+
+## SDK Examples
+Java SDK
+
+```
+QueryScsiLunAction action = new QueryScsiLunAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryScsiLunAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryScsiLunAction action = QueryScsiLunAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryScsiLunAction.Result res = action.call()
+```

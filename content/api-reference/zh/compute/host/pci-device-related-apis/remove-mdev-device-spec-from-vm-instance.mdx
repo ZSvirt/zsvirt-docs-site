@@ -1,0 +1,64 @@
+---
+title: "将MDEV设备规格从虚拟机卸载"
+---
+
+<APIPage method="DELETE" path="/v1/mdev-device-specs/{mdevSpecUuid}/vm-instances/{vmInstanceUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/mdev-device-specs/195f9b240d4a3f8b9946950694745fff/vm-instances/76ce5da88e383ee983955f3a24aea5cf?deleteMode=Permissive
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|mdevSpecUuid|String|url|MDEV设备规格UUID| |3.5.0|
+|vmInstanceUuid|String|url|虚拟机UUID| |3.5.0|
+|systemTags \(可选\)|List|body|系统标签| |3.5.0|
+|userTags \(可选\)|List|body|用户标签| |3.5.0|
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+RemoveMdevDeviceSpecFromVmInstanceAction action = new RemoveMdevDeviceSpecFromVmInstanceAction();
+action.mdevSpecUuid = "195f9b240d4a3f8b9946950694745fff";
+action.vmInstanceUuid = "76ce5da88e383ee983955f3a24aea5cf";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RemoveMdevDeviceSpecFromVmInstanceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+RemoveMdevDeviceSpecFromVmInstanceAction action = RemoveMdevDeviceSpecFromVmInstanceAction()
+action.mdevSpecUuid = "195f9b240d4a3f8b9946950694745fff"
+action.vmInstanceUuid = "76ce5da88e383ee983955f3a24aea5cf"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+RemoveMdevDeviceSpecFromVmInstanceAction.Result res = action.call()
+```
+
+</APIPage>

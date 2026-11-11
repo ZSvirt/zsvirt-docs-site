@@ -1,0 +1,17 @@
+---
+title: "SAN存储加载集群失败，怎么办？"
+---
+
+## 原因
+SAN存储映射的LUN无法被集群内所有主机识别。
+
+## 解决方案
+-   执行以下命令，确保集群内所有主机都能识别到映射的LUN：
+
+    ```
+    [root@localhost ~]# multipath -ll 
+    ```
+
+    如[Figure 1](#fig_ork_scs_45b)所示：
+
+    ![识别映射LUN](/docs/faq/images/ZStack_FAQ_Summary_0013_3_1.png)

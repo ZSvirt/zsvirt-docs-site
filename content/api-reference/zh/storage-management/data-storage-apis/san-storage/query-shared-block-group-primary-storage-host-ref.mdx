@@ -1,0 +1,101 @@
+---
+title: "查询连接状态"
+---
+
+<APIPage method="GET" path="/v1/sharedblock-group/host-refs" altPaths={["/v1/sharedblock-group/{primaryStorageUuid}/host-refs"]}>
+
+查询SAN存储主机连接状态。
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/sharedblock-group/host-refs
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/sharedblock-group/{primaryStorageUuid}/host-refs
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QuerySharedBlock`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "primaryStorageUuid": "a9e96e98cc2c3a3baa23e31503fc93e6",
+      "hostUuid": "7c5510f255663a3cbfd53367c0172507",
+      "hostId": 100.0,
+      "status": "Connected",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_g53_mvk_n2b)|2.3.2|
+|inventories|List|详情参考[inventories](#p_cfs_qvk_n2b)|2.3.2|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|2.3.2|
+|description|String|错误的概要描述|2.3.2|
+|details|String|错误的详细信息|2.3.2|
+|elaboration|String|保留字段，默认为null|2.3.2|
+|opaque|LinkedHashMap|保留字段，默认为null|2.3.2|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|2.3.2|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|primaryStorageUuid|String|数据存储UUID|2.3.2|
+|hostUuid|String|主机UUID|2.3.2|
+|hostId|Integer|主机ID|2.3.2|
+|createDate|Timestamp|创建时间|2.3.2|
+|lastOpDate|Timestamp|最后一次修改时间|2.3.2|
+|status|PrimaryStorageHostStatus|详情参考[status](#p_egz_rvk_n2b)|2.3.2|
+
+### status
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|name|String|资源名称|2.3.2|
+|ordinal|int| |2.3.2|
+
+## SDK示例
+Java SDK
+
+```
+QuerySharedBlockGroupPrimaryStorageHostRefAction action = new QuerySharedBlockGroupPrimaryStorageHostRefAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QuerySharedBlockGroupPrimaryStorageHostRefAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QuerySharedBlockGroupPrimaryStorageHostRefAction action = QuerySharedBlockGroupPrimaryStorageHostRefAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QuerySharedBlockGroupPrimaryStorageHostRefAction.Result res = action.call()
+```
+
+</APIPage>

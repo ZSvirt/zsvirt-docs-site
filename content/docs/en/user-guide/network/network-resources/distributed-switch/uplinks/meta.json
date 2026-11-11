@@ -1,0 +1,10 @@
+{
+  "title": "Distributed Switch Uplink",
+  "pages": [
+    "index",
+    "modify-uplink",
+    "manage-hosts",
+    "configure-host-uplink"
+  ],
+  "pagesIndex": "index"
+}

@@ -1,0 +1,17 @@
+---
+title: "主机内存占用过大，怎么办？"
+---
+
+## 原因
+buffer/cache值过大，未进行释放。
+
+## 解决方案
+1.  使用`sync`命令将存于buffer中的数据强制写入硬盘。
+
+2.  在主机系统内依次执行以下命令，释放缓存空间：
+
+    ```
+    [root@localhost ~]# echo 1 > /proc/sys/vm/drop_caches;
+    [root@localhost ~]# echo 2 > /proc/sys/vm/drop_caches;
+    [root@localhost ~]# echo 3 > /proc/sys/vm/drop_caches
+    ```

@@ -1,0 +1,38 @@
+---
+title: 'Add a Custom Template'
+---
+
+Upload UTF-8 encoded custom bare metal template files for complex unattended deployment scenarios.
+
+-   Custom template file size must not exceed 50 KB.
+-   Custom template files must strictly follow syntax rules for their template type. For more information, see [Template Syntax Rules](/en/docs/user-guide/bare-metal/templates/syntax-rules).
+
+1.  In the navigation pane, choose **Inventory** &gt; **Bare Metal Management**.
+
+2.  Select the root node.
+
+3.  On the root node details page, click **Customized Configuration**.
+
+4.  On the Customized Configuration tab, click **Add Bare Metal Template**.
+
+5.  On the Add Bare Metal Template dialog, set the following parameters:
+
+    -   **Name**: Set a name for the bare metal template.
+    -   **Description**: Optional. Enter a description.
+    -   **Operating System**: Select the operating system for unattended deployment.
+
+        Supports both custom platform OS and mainstream Linux distributions, including RHEL/CentOS series, Debian/Ubuntu series, and SUSE/openSUSE series.
+
+    -   **Template Type**: Select template type matching the OS.
+        -   Custom platform-optimized OS: Select kickstart.
+        -   RHEL/CentOS series: Select kickstart.
+        -   Debian/Ubuntu series: Select preseed.
+        -   Ubuntu Live: Select autoinstall.
+        -   SUSE/openSUSE series: Select autoyast.
+    -   **Template Import**: Upload an UTF-8 encoded custom template file.
+
+        <Callout type="info">
+        Custom bare metal templates must strictly follow the syntax rules of the corresponding selected template type.
+        </Callout>
+
+6.  Review the configuration and click **OK**.

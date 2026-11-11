@@ -1,0 +1,81 @@
+---
+title: "Set L3 Network MTU Value"
+---
+
+<APIPage method="POST" path="/v1/l3-networks/{l3NetworkUuid}/mtu">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "mtu": 9216.0
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the preceding sample, **systemTags** and **userTags** are optional. These two fields can be included in the body structure.
+</Callout>
+
+Curl Sample
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"mtu":9216.0}}' \
+http://localhost:8080/zstack/v1/l3-networks/817672c1bb903264a9a41c34332c3145/mtu
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|l3NetworkUuid|String|url|The L3 Network UUID.| |2.1|
+|mtu|Integer|body\(contained in the **params** structure\)| | |2.1|
+|systemTags \(Optional\)|List|body| | |2.1|
+|userTags \(Optional\)|List|body| | |2.1|
+
+## API Response
+On success, the API returns an empty JSON structure **`{}`**. On failure, the API returns a JSON structure with an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Sample
+Java SDK
+
+```
+SetL3NetworkMtuAction action = new SetL3NetworkMtuAction();
+action.l3NetworkUuid = "b19ce058b0f54c6d83c14078c0079c2c";
+action.mtu = 9216.0;
+action.sessionId = "b441c616886c4183a51ba044e35c7d66";
+SetL3NetworkMtuAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+SetL3NetworkMtuAction action = SetL3NetworkMtuAction()
+action.l3NetworkUuid = "67dc01887dfc4142aabe4221675c1b98"
+action.mtu = 9216.0
+action.sessionId = "d5188e0801994e3a9dfb3d3ebc2f7a39"
+SetL3NetworkMtuAction.Result res = action.call()
+```
+
+</APIPage>

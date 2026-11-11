@@ -1,0 +1,169 @@
+---
+title: "增加报警动作"
+---
+
+<APIPage method="POST" path="/v1/zwatch/alarms/{alarmUuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "actionUuid": "a48c9fa0454238a4b731279b92d8bad1",
+    "actionType": "sns"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"actionUuid":"a48c9fa0454238a4b731279b92d8bad1","actionType":"sns"}}' http://localhost:8080/zstack/v1/zwatch/alarms/3edde2bd29493568a2640f75d218ed05/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|alarmUuid|String|url|报警器UUID| |2.3|
+|actionUuid|String|body\(包含在**params**结构中\)|报警动作UUID| |2.3|
+|actionType|String|body\(包含在**params**结构中\)|报警动作类型| |2.3|
+|systemTags \(可选\)|List|body|系统标签| |2.3|
+|userTags \(可选\)|List|body|用户标签| |2.3|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "6b9ce7e8a6c04476aa22ce6c851a7f80",
+    "name": "VM CPU Alarm",
+    "comparisonOperator": "LessThanOrEqualTo",
+    "period": 60.0,
+    "namespace": "ZStack/VM",
+    "metricName": "org.zstack.zwatch.datatype.Metric@565e1ebe",
+    "threshold": 30.0,
+    "repeatInterval": 1800.0,
+    "status": "Alarm",
+    "state": "Enabled",
+    "createDate": "Jul 6, 2018 1:50:39 PM",
+    "lastOpDate": "Jul 6, 2018 1:50:39 PM",
+    "labels": [
+      {
+        "uuid": "f183fec66c3d40938621568943f4c0bf",
+        "key": "VMUuid",
+        "operator": "=",
+        "value": "7d46ab7f0f104ad0908f23d648bcaa9e"
+      }
+    ],
+    "actions": [
+      {
+        "alarmUuid": "7379b3951c9f4c82a0571cc55ebc98b3",
+        "actionType": "sns",
+        "actionUuid": "27e18067eb614fd4bcb047c008e3a4c0"
+      }
+    ]
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_pht_55j_p2b)|2.3|
+|inventory|AlarmInventory|详情参考[inventory](#p_ebd_w5j_p2b)|2.3|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|2.3|
+|description|String|错误的概要描述|2.3|
+|details|String|错误的详细信息|2.3|
+|elaboration|String|保留字段，默认为null|2.3|
+|opaque|LinkedHashMap|保留字段，默认为null|2.3|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|2.3|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|2.3|
+|name|String|资源名称|2.3|
+|description|String|资源的详细描述|2.3|
+|period|Integer|阈值持续时间|2.3|
+|namespace|String|名字空间|2.3|
+|metricName|String|监控项名称|2.3|
+|threshold|Double|阈值|2.3|
+|repeatInterval|Integer|报警重复时间|2.3|
+|createDate|Timestamp|创建时间|2.3|
+|lastOpDate|Timestamp|最后一次修改时间|2.3|
+|comparisonOperator|ComparisonOperator|详情参考[comparisonOperator](#p_wsk_x5j_p2b)|2.3|
+|status|AlarmStatus|详情参考[status](#p_mnq_y5j_p2b)|2.3|
+|labels|List|详情参考[labels](#p_fws_z5j_p2b)|2.3|
+|actions|List|详情参考[actions](#p_ebr_1vj_p2b)|2.3|
+
+### comparisonOperator
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|name|String|资源名称|2.3|
+|ordinal|int| |2.3|
+
+### status
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|OK|AlarmStatus|监控中|2.3|
+|Alarm|AlarmStatus|已触发|2.3|
+|InsufficientData|AlarmStatus|数据不足|2.3|
+
+### labels
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|2.3|
+|key|String|标签键|2.3|
+|operator|String|比较符|2.3|
+|value|String|标签值|2.3|
+
+### actions
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|alarmUuid|String|报警器UUID|2.3|
+|actionType|String|报警动作类型|2.3|
+|actionUuid|String|报警动作UUID|2.3|
+
+## SDK示例
+Java SDK
+
+```
+AddActionToAlarmAction action = new AddActionToAlarmAction();
+action.alarmUuid = "3edde2bd29493568a2640f75d218ed05";
+action.actionUuid = "a48c9fa0454238a4b731279b92d8bad1";
+action.actionType = "sns";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddActionToAlarmAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddActionToAlarmAction action = AddActionToAlarmAction()
+action.alarmUuid = "3edde2bd29493568a2640f75d218ed05"
+action.actionUuid = "a48c9fa0454238a4b731279b92d8bad1"
+action.actionType = "sns"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddActionToAlarmAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,97 @@
+---
+title: "Get Task Progress"
+---
+
+<APIPage method="GET" path="/v1/task-progresses/{apiId}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/task-progresses/7b016e3d2b4647e9abe3183728f77e57?all=false
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|apiId \(Optional\)|String|url|The API ID of the task| |1.11|
+|all \(Optional\)|boolean|query|Specify to get all progress information| |1.11|
+|systemTags \(Optional\)|List|query|System tags| |1.11|
+|userTags \(Optional\)|List|query|User tags| |1.11|
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "taskUuid": "931102503f64436ea649939ff3957406",
+      "taskName": "org.zstack.header.vm.APICreateVmInstanceMsg",
+      "type": "Task",
+      "content": "Choose backup storage for downloading the image",
+      "time": 1510669257141.0
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_dyp_ssw_wbb) for details|0.6|
+|inventories|List|See [inventories](#p_qst_ssw_wbb) for details|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|0.6|
+|description|String|A brief description of the error|0.6|
+|details|String|The detailed error information|0.6|
+|elaboration|String|Reserved field. Default is null|0.6|
+|opaque|LinkedHashMap|Reserved field. Default is null|0.6|
+|cause|ErrorCode|The root error that caused the current error. If no root error exists, this field is null|0.6|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|taskUuid|String| |0.6|
+|taskName|String| |0.6|
+|parentUuid|String| |0.6|
+|type|String| |0.6|
+|content|String| |0.6|
+|opaque|LinkedHashMap| |0.6|
+|time|Long| |0.6|
+|totalSteps|Integer| |0.6|
+|currentStep|Integer| |0.6|
+|subTasks|List|See subTasks for details|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+GetTaskProgressAction action = new GetTaskProgressAction();
+action.apiId = "00c035b586634edeb3bfb21f17e02b40";
+action.all = false;
+action.sessionId = "dea874a205c04a838e46ff6f48294add";
+GetTaskProgressAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetTaskProgressAction action = GetTaskProgressAction()
+action.apiId = "82f5efb211394297b1d6a4f8d5e5618e"
+action.all = false
+action.sessionId = "2100b95ab4064c81acc5db473b2a1ef6"
+GetTaskProgressAction.Result res = action.call()
+```
+
+</APIPage>

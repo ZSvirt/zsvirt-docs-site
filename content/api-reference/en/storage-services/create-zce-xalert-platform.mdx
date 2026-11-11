@@ -1,0 +1,127 @@
+---
+title: "Create ZCE-X Alert Platform"
+---
+
+<APIPage method="POST" path="/v1/zce-x-plugin/{uuid}/alert-platform">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{}}' \
+http://localhost:8080/zstack/v1/zce-x-plugin/77e1393bf5aa4536a018b4c0c4e29c72/alert-platform
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|ZCE-X information UUID, uniquely identifies the resource| |4.10.6|
+|resourceUuid \(Optional\)|String|body \(included in `params` structure\)|Resource UUID| |4.10.6|
+|tagUuids \(Optional\)|List|body \(included in `params` structure\)|Tag UUID list| |4.10.6|
+|systemTags \(Optional\)|List|body|System Tag| |4.10.6|
+|userTags \(Optional\)|List|body|User Tag| |4.10.6|
+
+## API Response
+Response Example
+
+```
+{
+  "thirdPartyPlatform": {
+    "uuid": "eec32b6fe11a464790641439f1d7c754",
+    "name": "xsky-172.20.11.24",
+    "type": "XSKY",
+    "url": "http://172.20.11.24:8086/alerts/?token=YOUR_PLATFORM_TOKEN",
+    "template": "{\n    \"product\":\"XSKY\",\n    \"service\":\"XSKY\",\n    \"message\":\"${resource_type + '[' + resource_name+'] ' + group + ' ' + alert_value}\",\n    \"metric\":\"${resource_type + '::' + group}\",\n    \"alertLevel\":\"${level == 'info' ? 'Normal' : level == 'warning' ? 'Important' : 'Emergent'}\",\n    \"alertTime\":\"${create}\",\n    \"dimensions\":\"{'resource_name':'${resource_name}'}\",\n    \"dataSource\":\"xsky-172.20.196.185\"\n}",
+    "description": "desc",
+    "lastSyncDate": "Feb 18, 2025 7:52:39 AM",
+    "lastOpDate": "Feb 18, 2025 7:52:39 AM",
+    "createDate": "Feb 18, 2025 7:52:39 AM"
+  },
+  "inventory": {
+    "zceXUuid": "77e1393bf5aa4536a018b4c0c4e29c72",
+    "thirdPartyPlatformUuid": "eec32b6fe11a464790641439f1d7c754",
+    "createDate": "Nov 14, 2017 2:20:57 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean|Whether the addition was successful|4.10.6|
+|thirdPartyPlatform|ThirdpartyPlatformInventory|For details, see [thirdPartyPlatform](#p_r5h_llt_q2c)|4.10.6|
+|inventory|ZceXThirdPartyPlatformAlertRefInventory|For details, see [inventory](#p_mtr_vkt_q2c)|4.10.6|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. For details, see [error](#p_bcl_x1v_m1b)|4.10.6|
+
+### thirdPartyPlatform
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Platform UUID|3.10|
+|name|String|Platform name|3.10|
+|type|String|Platform type|3.10|
+|url|String|Platform address|3.10|
+|template|String|Message transformation template|3.10|
+|state|String|Platform state|3.10|
+|description|String|Platform detailed description|3.10|
+|lastSyncDate|Timestamp|Last sync time|3.10|
+|lastOpDate|Timestamp|Last modification time|3.10|
+|createDate|Timestamp|Creation time|3.10|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|zceXUuid|String|ZCE-X resource UUID|4.10.6|
+|thirdPartyPlatformUuid|String|Associated third-party alert platform UUID|4.10.6|
+|createDate|Timestamp|Creation time|4.10.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, for example SYS.1000, HOST.1001|4.10.0|
+|description|String|Brief summary of the error|4.10.0|
+|details|String|Detailed error information|4.10.0|
+|elaboration|String|Reserved field, defaults to null|4.10.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|4.10.0|
+|cause|ErrorCode|Root cause: the source error that triggered the current error. If there is no original error, this field is null|4.10.0|
+
+## SDK Examples
+Java SDK
+
+```
+CreateZceXAlertPlatformAction action = new CreateZceXAlertPlatformAction();
+action.uuid = "77e1393bf5aa4536a018b4c0c4e29c72";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateZceXAlertPlatformAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateZceXAlertPlatformAction action = CreateZceXAlertPlatformAction()
+action.uuid = "77e1393bf5aa4536a018b4c0c4e29c72"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateZceXAlertPlatformAction.Result res = action.call()
+```
+
+</APIPage>

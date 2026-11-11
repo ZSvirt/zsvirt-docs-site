@@ -1,0 +1,45 @@
+---
+title: "CentOS虚拟机无法进入系统，长时间处于黑屏，怎么解决？"
+---
+
+## 现象
+CentOS虚拟机无法进入系统，长时间处于黑屏。
+
+## 原因
+libselinux.so.1 被误删。
+
+## 解决方案
+1.  在故障虚拟机详情页中，点击**修改配置** &gt; **光驱**，进入光驱界面。点击**镜像文件** &gt; **加载ISO**，为虚拟机加载CentOS ISO文件。
+
+2.  点击**高级设置** &gt; **引导选项** &gt; **启动顺序**，进入设置启动顺序界面，修改虚拟机启动顺序为光驱启动。
+
+3.  进入安装页面，选择Troubleshooting。
+
+    如[Figure 1](#fig_vbt_rj3_5xb)所示：
+
+    ![选择Troubleshooting](/docs/faq/images/ZStack_FAQ_Summary_0012_102_1.png)
+
+4.  选择Rescue a CentOS system进入救援模式。
+
+    如[Figure 2](#fig_gs1_gk3_5xb)所示：
+
+    ![进入救援模式](/docs/faq/images/ZStack_FAQ_Summary_0012_102_2.png)
+
+5.  在救援模式界面输入1，以读写模式将系统根文件系统挂载到`/mnt/sysimage`目录下。如果想要把`/mnt/sysimage`目录切换为根目录，执行`chroot /mnt/sysimage`命令。
+
+    如[Figure 3](#fig_osk_rk3_5xb)所示：
+
+    ![以读写模式挂载系统根文件](/docs/faq/images/ZStack_FAQ_Summary_0012_102_3.png)
+
+    <Callout type="info">
+    在救援模式中，进行任意操作均会触发以下报错：
+    ```
+    ls : error while loading shared libraries: libselinux.so.1: cannot open shared object file: No such file or directory  
+    ```
+    </Callout>
+
+6.  执行`chroot /mnt/sysimage`命令以挂载系统。
+
+7.  执行`cp /lib64/libc.so.6 /mnt/sysimage/lib64`将libc.so.6文件拷贝到系统目录下。
+
+8.  重启虚拟机可正常进入系统。

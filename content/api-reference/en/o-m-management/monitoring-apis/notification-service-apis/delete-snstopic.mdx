@@ -1,0 +1,64 @@
+---
+title: "Delete SNS Topic"
+---
+
+<APIPage method="DELETE" path="/v1/sns/topics/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/sns/topics/2e5e362e1a7836618d6cce49fba21e78
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|The UUID of the resource, which uniquely identifies the resource| |2.3|
+|deleteMode \(Optional\)|String|body| | |5.0.0|
+|systemTags \(Optional\)|List|body|System tags| |2.3|
+|userTags \(Optional\)|List|body|User tags| |2.3|
+
+## API Response
+This API returns an empty JSON structure **`{}`** on success. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DeleteSNSTopicAction action = new DeleteSNSTopicAction();
+action.uuid = "2e5e362e1a7836618d6cce49fba21e78";
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteSNSTopicAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteSNSTopicAction action = DeleteSNSTopicAction()
+action.uuid = "2e5e362e1a7836618d6cce49fba21e78"
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DeleteSNSTopicAction.Result res = action.call()
+```
+
+</APIPage>

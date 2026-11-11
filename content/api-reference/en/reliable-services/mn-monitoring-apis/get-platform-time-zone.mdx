@@ -1,0 +1,71 @@
+---
+title: "Get Management Node Time Zone Information"
+---
+
+<APIPage method="GET" path="/v1/management-nodes/platform-timezone">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" -X GET http://localhost:8080/zstack/v1/management-nodes/platform-timezone?
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|systemTags \(Optional\)|List|body|System tags| |4.1.0|
+|userTags \(Optional\)|List|body|User tags| |4.1.0|
+
+## API Response
+Response Example
+
+```
+{
+  "timezone": "Asia/Shanghai",
+  "offset": "+8:00"
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|timezone|String|The time zone name|4.1.0|
+|offset|String|The time offset from GMT|4.1.0|
+|success|boolean| |4.1.0|
+|error|ErrorCode|The error code. If not null, the operation has failed. This field is null when the operation succeeds. For details, see [error](#p_d5v_pfk_l1b)|4.1.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001.|4.1.0|
+|description|String|A brief description of the error.|4.1.0|
+|details|String|The detailed error information.|4.1.0|
+|elaboration|String|A reserved field. Default is null.|4.1.0|
+|opaque|LinkedHashMap|A reserved field. Default is null.|4.1.0|
+|cause|ErrorCode|The root error. The source error that caused the current error. If there is no root error, this field is null.|4.1.0|
+
+## SDK Examples
+Java SDK
+
+```
+GetPlatformTimeZoneAction action = new GetPlatformTimeZoneAction();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetPlatformTimeZoneAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetPlatformTimeZoneAction action = GetPlatformTimeZoneAction()
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetPlatformTimeZoneAction.Result res = action.call()
+```
+
+</APIPage>

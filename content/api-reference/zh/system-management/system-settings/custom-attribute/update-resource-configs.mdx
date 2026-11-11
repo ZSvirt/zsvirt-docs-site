@@ -1,0 +1,136 @@
+---
+title: "批量更新资源高级设置"
+---
+
+<APIPage method="POST" path="/v1/resource-configurations/{resourceUuid}/resource-configs/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "resourceConfigs": [
+      {
+        "category": "vm",
+        "name": "cleanTraffic",
+        "value": "true"
+      }
+    ]
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X POST -d '{"params":{"resourceConfigs":[{"category":"vm","name":"cleanTraffic","value":"true"}]}}' \
+http://localhost:8080/zstack/v1/resource-configurations/f4f8970eba3536a69fc2139456f383ae/resource-configs/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|resourceUuid|String|url|设置的资源UUID| |4.7.0|
+|resourceConfigs|List|body\(包含在`params`结构中\)|资源的高级配置列表| |4.7.0|
+|systemTags \(可选\)|List|body|系统标签| |4.7.0|
+|userTags \(可选\)|List|body|用户标签| |4.7.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "value": "10",
+      "effectiveConfigs": [
+        {
+          "uuid": "9d7aeba3ff604f46b419475c0ade1538",
+          "resourceUuid": "378c6a50c9ee415baa4688fcd19f023a",
+          "resourceType": "ClusterVO",
+          "name": "cpu.overProvisioning.ratio",
+          "category": "host",
+          "value": "10",
+          "createDate": "Nov 14, 2017 2:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+        }
+      ],
+      "name": "cpu.overProvisioning.ratio"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.7.0|
+|inventories|List|详情参考[inventories](#p_kcq_c52_s2c)|4.7.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_ij2_mml_zgb)|4.7.0|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|value|String| |4.7.0|
+|name|String| |4.7.0|
+|effectiveConfigs|List|详情参考[effectiveConfigs](#p_vxc_c52_s2c)|4.7.0|
+
+### effectiveConfigs
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.4.0|
+|resourceUuid|String|设置对应的资源UUID|3.4.0|
+|resourceType|String|设置对应的资源类型|3.4.0|
+|name|String|设置名称|3.4.0|
+|description|String|设置的详细描述|3.4.0|
+|category|String|设置类别|3.4.0|
+|value|String|设置的值|3.4.0|
+|createDate|Timestamp|创建时间|3.4.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.4.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.4.0|
+|description|String|错误的概要描述|3.4.0|
+|details|String|错误的详细信息|3.4.0|
+|elaboration|String|保留字段，默认为null|3.4.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.4.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.4.0|
+
+## SDK示例
+Java SDK
+
+```
+UpdateResourceConfigsAction action = new UpdateResourceConfigsAction();
+action.resourceUuid = "f4f8970eba3536a69fc2139456f383ae";
+action.resourceConfigs = asList([category:vm, name:cleanTraffic, value:true]);
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateResourceConfigsAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateResourceConfigsAction action = UpdateResourceConfigsAction()
+action.resourceUuid = "f4f8970eba3536a69fc2139456f383ae"
+action.resourceConfigs = [[category:vm, name:cleanTraffic, value:true]]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateResourceConfigsAction.Result res = action.call()
+```
+
+</APIPage>

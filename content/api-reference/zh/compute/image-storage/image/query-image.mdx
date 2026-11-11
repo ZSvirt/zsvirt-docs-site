@@ -1,0 +1,89 @@
+---
+title: "查询镜像"
+---
+
+<APIPage method="GET" path="/v1/images" altPaths={["/v1/images/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/images?q=uuid=0538611eb03a48e0bbcfd08e528f0aa1
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/images/21897673f8274d319c4aeba92e8e4c73
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryImage`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "actualSize": 7995392,
+      "backupStorageRefs": [
+        {
+          "backupStorageUuid": "bbc730b63081460198c1c7cb63025255",
+          "createDate": "Mar 10, 2018 2:35:09 PM",
+          "imageUuid": "2402b660b6f1582bb65246597b2f47f2",
+          "installPath": "zstore://2402b660b6f1582bb65246597b2f47f2/2ab567b512cc696f2207cf0e3260baa4982e1c02",
+          "lastOpDate": "Mar 10, 2018 2:35:09 PM",
+          "status": "Ready"
+        }
+      ],
+      "createDate": "Mar 10, 2018 2:35:09 PM",
+      "description": "",
+      "format": "qcow2",
+      "lastOpDate": "Mar 10, 2018 2:35:10 PM",
+      "md5Sum": "f0fde821df71aaec63063bef1fb0a46a231e5a3fbb37ed5671eabee7563eb3f8",
+      "mediaType": "RootVolumeTemplate",
+      "name": "Image-1",
+      "platform": "Linux",
+      "size": 12682240,
+      "state": "Enabled",
+      "status": "Ready",
+      "system": false,
+      "type": "zstack",
+      "url": "file:///opt/zstack-dvd/zstack-image-1.4.qcow2",
+      "uuid": "2402b660b6f1582bb65246597b2f47f2"
+    }
+  ],
+  "success": true
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+QueryImageAction action = new QueryImageAction();
+action.conditions = asList("uuid=02928c0d94a847b0b785bc9830f931c6");
+action.sessionId = "512102357b3e44c7a1704240176c8661";
+QueryImageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryImageAction action = QueryImageAction()
+action.conditions = ["uuid=4d4b95071b09499e9e15a206714d1586"]
+action.sessionId = "893c8fe44f5b4b799b095c54ee7ae075"
+QueryImageAction.Result res = action.call()
+```
+
+</APIPage>

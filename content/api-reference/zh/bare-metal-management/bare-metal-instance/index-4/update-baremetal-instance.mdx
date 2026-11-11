@@ -1,0 +1,340 @@
+---
+title: "更新裸金属主机"
+---
+
+<APIPage method="PUT" path="/v1/baremetal/instances/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateBaremetalInstance": {
+    "name": "BM-1-RENAMED"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateBaremetalInstance":{"name":"BM-1-RENAMED"}}' \
+http://localhost:8080/zstack/v1/baremetal/instances/eb538a2a8f17342697593ac468b93d1a/actions
+```
+
+参数列表
+
+<table id="table_q3n_4fz_3gc"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+资源的UUID，唯一标示该资源
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.6.0
+
+</td></tr><tr><td>
+
+name \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`updateBaremetalInstance`结构中\)
+
+</td><td>
+
+资源名称
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.6.0
+
+</td></tr><tr><td>
+
+description \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`updateBaremetalInstance`结构中\)
+
+</td><td>
+
+资源的详细描述
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.6.0
+
+</td></tr><tr><td>
+
+password \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`updateBaremetalInstance`结构中\)
+
+</td><td>
+
+系统ROOT密码
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.6.0
+
+</td></tr><tr><td>
+
+platform \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`updateBaremetalInstance`结构中\)
+
+</td><td>
+
+系统平台
+
+</td><td>
+
+-   Linux
+
+</td><td>
+
+2.6.0
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.6.0
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+2.6.0
+
+</td></tr></tbody>
+</table>
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "30073bc1b10e3b5eba5db9e54436b1dd",
+    "name": "BM-1",
+    "description": "This is a baremetal instance.",
+    "zoneUuid": "99b8c0883a563feb849fe7c6b0b0b97d",
+    "clusterUuid": "38324d028b28352fad5236f861ba7aeb",
+    "chassisUuid": "692781dfb73d32d5907ef33199d97db6",
+    "imageUuid": "a54bab6133d83045a8941368520eff77",
+    "platform": "Linux",
+    "state": "Stopped",
+    "status": "Provisioned",
+    "createDate": "Nov 14, 2017 2:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 2:20:57 PM",
+    "bmNics": [
+      {
+        "uuid": "5233971bebdd352c9d708617a23311a4",
+        "baremetalInstanceUuid": "30073bc1b10e3b5eba5db9e54436b1dd",
+        "l3NetworkUuid": "dce0c157a45d38209afbb615743435aa",
+        "mac": "6c:b3:11:1b:0b:1e",
+        "ip": "192.168.0.10",
+        "netmask": "255.255.255.0",
+        "gateway": "192.168.0.1",
+        "pxe": false
+      }
+    ]
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_lvx_yyy_3gc)|2.6.0|
+|inventory|BaremetalInstanceInventory|详情参考[inventory](#p_nsv_ffz_3gc)|2.6.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|2.6.0|
+|name|String|资源名称|2.6.0|
+|description|String|资源的详细描述|2.6.0|
+|zoneUuid|String|数据中心UUID|2.6.0|
+|clusterUuid|String|集群UUID|2.6.0|
+|pxeServerUuid|String| |3.1.1|
+|chassisUuid|String|裸机设备UUID|2.6.0|
+|imageUuid|String|镜像UUID|2.6.0|
+|platform|String|系统平台|2.6.0|
+|state|String| |2.6.0|
+|status|String| |2.6.0|
+|createDate|Timestamp|创建时间|2.6.0|
+|lastOpDate|Timestamp|最后一次修改时间|2.6.0|
+|bmNics|List|详情参考[bmNics](#p_ifq_ffz_3gc)|2.6.0|
+
+### bmNics
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|2.6.0|
+|baremetalInstanceUuid|String|裸机实例UUID|2.6.0|
+|l3NetworkUuid|String|分布式端口组UUID|2.6.0|
+|baremetalBondingUuid|String|BOND UUID|3.4.0|
+|mac|String|网卡MAC|2.6.0|
+|ip|String|IP地址|2.6.0|
+|netmask|String|子网掩码|2.6.0|
+|gateway|String|网关|2.6.0|
+|metadata|String| |2.6.0|
+|pxe|Boolean|是否PXE启动网卡|2.6.0|
+|createDate|Timestamp|创建时间|2.6.0|
+|lastOpDate|Timestamp|最后一次修改时间|2.6.0|
+
+## SDK示例
+Java SDK
+
+```
+UpdateBaremetalInstanceAction action = new UpdateBaremetalInstanceAction();
+action.uuid = "eb538a2a8f17342697593ac468b93d1a";
+action.name = "BM-1-RENAMED";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateBaremetalInstanceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = UpdateBaremetalInstanceAction()
+action.uuid = "eb538a2a8f17342697593ac468b93d1a"
+action.name = "BM-1-RENAMED"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

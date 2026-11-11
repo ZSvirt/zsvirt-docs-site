@@ -1,0 +1,80 @@
+---
+title: "Power On Host"
+---
+
+<APIPage method="PUT" path="/v1/hosts/power/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "powerOnHost": {
+    "returnEarly": false
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"powerOnHost":{"returnEarly":false}}' //localhost:8080/zstack/v1/hosts/power/494e84c334963183bfeef342e38bf4b4/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Resource UUID, uniquely identifies the resource| |4.7.0|
+|returnEarly \(optional\)|boolean|body \(contained in **powerOnHost** structure\)|Whether to return early| |4.7.0|
+|systemTags \(optional\)|List|body|System tag| |4.7.0|
+|userTags \(optional\)|List|body|User tag| |4.7.0|
+
+## API Response
+On success, this API returns an empty JSON structure **`{}`**. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+PowerOnHostAction action = new PowerOnHostAction();
+action.uuid = "494e84c334963183bfeef342e38bf4b4";
+action.returnEarly = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+PowerOnHostAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+PowerOnHostAction action = PowerOnHostAction()
+action.uuid = "494e84c334963183bfeef342e38bf4b4"
+action.returnEarly = false
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+PowerOnHostAction.Result res = action.call()
+```
+
+</APIPage>

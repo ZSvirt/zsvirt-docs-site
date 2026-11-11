@@ -1,0 +1,146 @@
+---
+title: "Recover Image"
+---
+
+<APIPage method="PUT" path="/v1/images/{imageUuid}/actions">
+
+Recover an Image that has been deleted \(but not completely removed\).
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "recoverImage": {
+    "backupStorageUuids": [
+      "b63989ade2194ce8b8f1823083395681"
+    ]
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the above example, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"recoverImage":{"backupStorageUuids":["29849ef8f0fe3abeb8fff5e6d947d002"]}}' \
+http://localhost:8080/zstack/v1/images/e55bb56eee93338cad8d7d1048a6b0c3/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|imageUuid|String|url|Image UUID| |0.6|
+|backupStorageUuids \(Optional\)|List|body \(contained in **params** structure\)|Image Storage UUID List| |0.6|
+|systemTags \(Optional\)|List|body|System Tags| |0.6|
+|userTags \(Optional\)|List|body|User Tags| |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "c019173f2b5742868058049be43033a1",
+    "name": "TinyLinux",
+    "url": "http://192.168.1.20/share/images/tinylinux.qcow2",
+    "mediaType": "RootVolumeTemplate",
+    "platform": "Linux",
+    "format": "qcow2",
+    "backupStorageRefs": [
+      {
+        "id": 0.0,
+        "imageUuid": "c019173f2b5742868058049be43033a1",
+        "backupStorageUuid": "609d29fb59ee414f90cedbc3a71038c6",
+        "installPath": "ceph://zs-images/f0b149e053b34c7eb7fe694b182ebffd",
+        "status": "Ready"
+      }
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_ldh_yqd_l1b)|0.6|
+|inventory|ImageInventory|See [inventory](#p_wyn_yqd_l1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier for the error, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause. The source error that triggered the current error. This field is null if there is no original error|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|name|String|Resource name|0.6|
+|description|String|Detailed description of the resource|0.6|
+|state|String|Image boot state|0.6|
+|status|String|Image ready state|0.6|
+|size|Long|Image size|0.6|
+|actualSize|Long|Image actual capacity|0.6|
+|md5Sum|String|Image md5 value|0.6|
+|url|String|Image URL address|0.6|
+|mediaType|String|Image type|0.6|
+|guestOsType|String|Guest Operating System type corresponding to the Image|0.6|
+|type|String|Internal use field|0.6|
+|platform|String|Image system platform|0.6|
+|format|String|Image format, for example: raw|0.6|
+|system|Boolean|Indicates whether it is a system Image|0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+|backupStorageRefs|List|See [backupStorageRefs](#p_pct_yqd_l1b)|0.6|
+
+### backupStorageRefs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|imageUuid|String|Image UUID|0.6|
+|backupStorageUuid|String|Image Storage UUID|0.6|
+|installPath|String|Installation path on the Image Storage|0.6|
+|exportUrl|String|Export Image URL|0.6|
+|exportMd5Sum|String|Export Image md5 value|0.6|
+|status|String|Image ready state|0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+RecoverImageAction action = new RecoverImageAction();
+action.imageUuid = "3220b5ea2ae24883a4eb847634e3e349";
+action.backupStorageUuids = asList("ad4dcd853b894362bfd18c06779ed758");
+action.sessionId = "66ba41da8526424d9ab70ed0072b8d22";
+RecoverImageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+RecoverImageAction action = RecoverImageAction()
+action.imageUuid = "7f8bb365b8d3413ab5d09f6d381552c3"
+action.backupStorageUuids = [14d99a1ade5a431ea254902c808d7319]
+action.sessionId = "044d56deddd849a092ff02ae54386cf1"
+RecoverImageAction.Result res = action.call()
+```
+
+</APIPage>

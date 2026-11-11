@@ -1,0 +1,63 @@
+---
+title: "Query SMS Endpoint"
+---
+
+<APIPage method="GET" path="/v1/sns/sms-endpoints" altPaths={["/v1/sns/sms-endpoints/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/sns/sms-endpoints?q=name=SmsEndpoint
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/sns/sms-endpoints/5efca3a7d67031fbba5bc512e52a4798
+```
+
+Queryable Fields
+
+Run the CLI tool, enter `QuerySNSSmsEndpoint` and press Tab to view all queryable fields and cross-table queryable resource names.
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On error, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+QuerySNSSmsEndpointAction action = new QuerySNSSmsEndpointAction();
+action.conditions = asList("name=SmsEndpoint");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QuerySNSSmsEndpointAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QuerySNSSmsEndpointAction action = QuerySNSSmsEndpointAction()
+action.conditions = ["name=SmsEndpoint"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QuerySNSSmsEndpointAction.Result res = action.call()
+```
+
+</APIPage>

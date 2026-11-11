@@ -1,0 +1,34 @@
+---
+title: 'Backup Policy'
+---
+
+## Backup Policy
+**Backup Cycle**
+
+The backup cycle determines the frequency of backup execution. ZSvirt provides three options for platform database backups: weekly, daily, and hourly backups.
+
+**Execution Time**
+
+If the backup cycle is set to weekly or daily, you can set a more granular execution time, down to the minute level.
+
+-   Backup by Week: If you set the execution time to 00:00 on Sunday and Tuesday of each week, the incremental backup is executed at 00:00:00 on Sunday and Tuesday of each week.
+-   Backup by Day: If you set the execution time to 00:30, the incremental backup is executed at 00:30:00 every day.
+
+**Start Time**
+
+The backup plan begins at the start time and executes backups according to the configured backup cycle and execution time.
+
+## Retention Policy
+Each successful backup generates a set of backup data used to restore the platform database data to a previous point in time. To control the amount of backup data, you must specify a retention policy. Based on the backup scenario, ZSvirt can set separate retention policies for local backup data and remote backup data.
+
+-   Local Retention Policy:
+    -   Retain by quantity: Retain a minimum of 1 local backup data.
+    -   Retain by time: Retain a minimum of 1 day of local backup data.
+-   Remote Retention Policy:
+    -   Retain permanently: Remote backup data will not be automatically cleaned up.
+    -   Retain by quantity: Retain a minimum of 1 remote backup data.
+    -   Retain by time: Retain a minimum of 1 day of remote backup data.
+
+<Callout type="info">
+For data generated beyond the retention policy, only the backup records are deleted, which does not affect the data security.
+</Callout>

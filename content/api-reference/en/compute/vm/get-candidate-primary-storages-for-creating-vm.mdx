@@ -1,0 +1,152 @@
+---
+title: "Get Candidate Data Storages for Creating VM"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/candidate-storages">
+
+Get candidate data storages for creating a VM. You can specify VM parameters to retrieve the available data storages for the given parameters.
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/candidate-storages?imageUuid=5f977e1354aa300bb27e0584d52bb09a&l3NetworkUuids=0276c5ffc04731d6b671c972272bd10a&dataDiskOfferingUuids=0b2b7ff196113ed79dad6bf815a6033e&dataDiskOfferingUuids=cfad76f5d345387d9215773fcd5389c5&clusterUuid=90fac86c000b335396f995bef052fb41
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|imageUuid|String|query|Image UUID| |2.1|
+|l3NetworkUuids|List|query|Distributed Port Group UUID| |2.1|
+|rootDiskOfferingUuid \(Optional\)|String|query|Disk offering UUID for the root disk. Optional and required when the image type is ISO.| |2.1|
+|rootDiskSize \(Optional\)|Long|query|Custom root disk size. Required only when the image specified by `imageUuid` is ISO and `rootDiskOfferingUuid` is empty.| |4.3.12|
+|dataDiskOfferingUuids \(Optional\)|List|query|Disk offering UUID for data disks| |2.1|
+|dataDiskSizes \(Optional\)|List|query|Custom data disk sizes| |4.3.12|
+|zoneUuid \(Optional\)|String|query|Data Center UUID| |2.1|
+|clusterUuid \(Optional\)|String|query|Cluster UUID| |2.1|
+|defaultL3NetworkUuid \(Optional\)|String|query|Default Distributed Port Group UUID| |2.1|
+|systemTags \(Optional\)|List|query|System tags| |2.1|
+|userTags \(Optional\)|List|query|User tags| |2.1|
+
+## API Response
+Response Example
+
+```
+{
+  "rootVolumePrimaryStorages": [
+    {
+      "uuid": "90087c635c70381baf16eb6dd5f8cfdc",
+      "name": "example",
+      "url": "/zstack_ps",
+      "description": "example",
+      "totalCapacity": 322122547200,
+      "availableCapacity": 214748364800,
+      "totalPhysicalCapacity": 322122547200,
+      "availablePhysicalCapacity": 214748364800,
+      "type": "LocalStorage",
+      "state": "Enabled",
+      "status": "Connected",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM",
+      "attachedClusterUuids": [
+        "f1d9f91b4b8b35f7b4435f86b79793be"
+      ]
+    }
+  ],
+  "dataVolumePrimaryStorages": {
+    "d180546cd56b3677bffd7d338ba2666c": [
+      {
+        "uuid": "b5e92f8dbf223a1eac8fd101f63112b6",
+        "name": "example",
+        "url": "/opt/zstack/nfsprimarystorage/prim-b5e92f8dbf223a1eac8fd101f63112b6",
+        "description": "example",
+        "totalCapacity": 322122547200,
+        "availableCapacity": 214748364800,
+        "totalPhysicalCapacity": 322122547200,
+        "availablePhysicalCapacity": 214748364800,
+        "type": "NFS",
+        "state": "Enabled",
+        "status": "Connected",
+        "createDate": "Nov 14, 2017 10:20:57 PM",
+        "lastOpDate": "Nov 14, 2017 10:20:57 PM",
+        "attachedClusterUuids": [
+          "1d76e995472839f989472c71dbb450c0"
+        ]
+      }
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|dataVolumePrimaryStorages|Map|Candidate data storages for data disks, corresponding to each disk offering \(since 2.1\) or custom data disk size \(since 4.3.12\)|2.1|
+|success|boolean|Whether the operation succeeded|2.1|
+|rootVolumePrimaryStorages|List|For details, see [rootVolumePrimaryStorages](#p_nlh_rsf_vbb)|2.1|
+|error|ErrorCode|For details, see [error](#p_sg4_rsf_vbb)|2.1|
+
+### rootVolumePrimaryStorages
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource. Uniquely identifies the resource.|2.1|
+|zoneUuid|String|Data Center UUID|2.1|
+|name|String|Resource name|2.1|
+|url|String| |2.1|
+|description|String|Detailed description of the resource|2.1|
+|totalCapacity|Long| |2.1|
+|availableCapacity|Long| |2.1|
+|totalPhysicalCapacity|Long| |2.1|
+|availablePhysicalCapacity|Long| |2.1|
+|systemUsedCapacity|Long| |2.1|
+|type|String| |2.1|
+|state|String| |2.1|
+|status|String| |2.1|
+|mountPath|String| |2.1|
+|createDate|Timestamp|Creation time|2.1|
+|lastOpDate|Timestamp|Last modification time|2.1|
+|attachedClusterUuids|List| |2.1|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. A globally unique identifier for the error, e.g., SYS.1000, HOST.1001.|2.1|
+|description|String|Brief description of the error|2.1|
+|details|String|Detailed information about the error|2.1|
+|elaboration|String|Reserved field. Defaults to null.|2.1|
+|opaque|LinkedHashMap|Reserved field. Defaults to null.|2.1|
+|cause|ErrorCode|Root error. The source error that caused the current error. This field is null if there is no root cause.|2.1|
+
+## SDK Examples
+Java SDK
+
+```
+GetCandidatePrimaryStoragesForCreatingVmAction action = new GetCandidatePrimaryStoragesForCreatingVmAction();
+action.imageUuid = "5f977e1354aa300bb27e0584d52bb09a";
+action.l3NetworkUuids = asList("0276c5ffc04731d6b671c972272bd10a");
+action.dataDiskOfferingUuids = asList("0b2b7ff196113ed79dad6bf815a6033e","cfad76f5d345387d9215773fcd5389c5");
+action.clusterUuid = "90fac86c000b335396f995bef052fb41";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetCandidatePrimaryStoragesForCreatingVmAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetCandidatePrimaryStoragesForCreatingVmAction action = GetCandidatePrimaryStoragesForCreatingVmAction()
+action.imageUuid = "5f977e1354aa300bb27e0584d52bb09a"
+action.l3NetworkUuids = [0276c5ffc04731d6b671c972272bd10a]
+action.dataDiskOfferingUuids = [0b2b7ff196113ed79dad6bf815a6033e, cfad76f5d345387d9215773fcd5389c5]
+action.clusterUuid = "90fac86c000b335396f995bef052fb41"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetCandidatePrimaryStoragesForCreatingVmAction.Result res = action.call()
+```
+
+</APIPage>

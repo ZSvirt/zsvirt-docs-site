@@ -1,0 +1,29 @@
+---
+title: "How to configure multiple NTP servers for a host"
+---
+
+<HistoricalNamingNote locale="en" />
+
+## Solution
+1.  Follow these steps to configure multiple NTP servers for a host:
+2.  Log in to the Management Node and edit the `zstack.properties` configuration file to add the following parameters specifying the NTP server IP addresses:
+
+    ```
+    [root@localhost ~]# vim /usr/local/zstack/apache-tomcat/webapps/zstack/WEB-INF/classes/zstack.properties
+    ...
+    chrony.serverIp.0 = X.X.X.X
+    chrony.serverIp.1 = X.X.X.X
+    chrony.serverIp.2 = X.X.X.X       //X.X.X.X is the IP address of each NTP server
+    ```
+
+3.  Restart the Management Node service to apply the configuration:
+
+    ```
+    [root@localhost ~]# zstack-ctl restart_node
+    ```
+
+4.  Verify time synchronization. An asterisk \(\*\) in the output indicates successful synchronization:
+
+    ```
+    [root@localhost ~]# chronyc sources -v
+    ```

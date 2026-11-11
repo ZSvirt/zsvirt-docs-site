@@ -1,0 +1,33 @@
+---
+title: 'Add a Distributed Image Storage'
+---
+
+A distributed image storage stores image files through distributed block storage.
+
+1.  In the navigation pane, choose **Inventory** &gt; **Image and Template**.
+
+2.  Right-click the target data center and choose **Add Image Storage**.
+
+3.  In the Select Image Storage Type dialog, choose **Distributed Image Storage**.
+
+4.  Click **Next**.
+
+5.  In the Add Image Storage dialog, set the following parameters:
+
+    1.  Set basic information.
+
+        -   **Name**: Image storage name.
+        -   **Description**: Image storage description.
+        -   **Type**: Displays distributed image storage.
+        -   **Data Center**: Current data center.
+    2.  Set image storage configurations.
+
+        -   **Monitoring Node**: Add a monitoring node by specifying the monitoring node IP, SSH port, username, and password.
+        -   **Image Storage Pool**: You can create a storage pool in the distributed storage cluster in advance and enter the UUID of the pool. If left blank, a default image storage pool is created automatically.
+        -   **Data Network**: The network CIDR used for data communication between compute nodes and the image storage. If left blank, the management network is used by default.
+    3.  Configure advanced settings.
+
+        -   **Reserved Capacity for Image Storage**: Default: 1 GB. The capacity reserved for use by the image storage.
+        -   **Image Blob Upload Concurrency**: Default: 1. Specify the blob upload concurrency when you upload an image. Valid range: 1 to 16.
+        -   **Image Blob Download Concurrency**: Default: 1. Specify the blob download concurrency when you download an image. Valid range: 1 to 16.
+6.  Review the configuration and click **OK**.

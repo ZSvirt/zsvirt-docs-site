@@ -1,0 +1,54 @@
+---
+title: "Building and Testing"
+description: "Build the ZSvirt Terraform provider locally and run integration tests."
+---
+
+<HistoricalNamingNote locale="en" />
+
+## Build prerequisites
+
+- Go 1.25 or higher
+- Git
+
+## Build steps
+
+```bash
+# Clone the repository
+git clone https://github.com/ZStack-Robot/terraform-provider-zstack.git
+cd terraform-provider-zstack
+
+# Build the provider
+go build -o terraform-provider-zsphere
+
+# Install the provider for local use
+mkdir -p ~/.terraform.d/plugins/local/zstack/zsphere/1.0.0/linux_amd64
+mv terraform-provider-zsphere ~/.terraform.d/plugins/local/zstack/zsphere/1.0.0/linux_amd64/
+```
+
+## Test prerequisites
+
+Set the following environment variables before running tests:
+
+```bash
+export TF_VAR_zsphere_host="your-zstack-host"
+export TF_VAR_zsphere_access_key_id="your-access-key-id"
+export TF_VAR_zsphere_access_key_secret="your-access-key-secret"
+export TF_VAR_image_uuid="your-image-uuid"
+export TF_VAR_l3_network_uuid="your-l3-network-uuid"
+```
+
+## Examples
+
+The provider repository includes working examples for:
+
+- Basic VM creation from image
+- Batch deployment through image and CSV
+- VM creation from template
+
+See the [provider repository examples directory](https://github.com/ZStack-Robot/terraform-provider-zstack/tree/main/examples) for complete configurations.
+
+## Contributing
+
+Contributions are welcome. See the [contributing guidelines](https://github.com/ZStack-Robot/terraform-provider-zstack/blob/main/CONTRIBUTING.md) in the provider repository.
+
+If you encounter issues or have feature requests, [open an issue on GitHub](https://github.com/ZStack-Robot/terraform-provider-zstack/issues/new).

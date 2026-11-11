@@ -1,0 +1,9 @@
+{
+  "title": "Change Data Storage",
+  "pages": [
+    "index",
+    "san-to-san-hot",
+    "san-to-san-cold"
+  ],
+  "pagesIndex": "index"
+}

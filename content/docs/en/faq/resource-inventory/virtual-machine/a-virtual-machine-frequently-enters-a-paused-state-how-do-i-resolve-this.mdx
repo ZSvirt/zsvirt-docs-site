@@ -1,0 +1,12 @@
+---
+title: "A Virtual Machine frequently enters a paused state. How do I resolve this?"
+---
+
+## Cause
+The Data Storage, the System Disk of the Host where the Virtual Machine resides, or the Virtual Machine's root disk or data disk may be full, causing the Virtual Machine to enter a paused state.
+
+## Solution
+-   Expand the disk capacity using one of the following methods:
+-   In the platform, go to **Resource Inventory** &gt; **Hosts and Virtual Machines**, select the Virtual Machine, click **Modify Configuration**, locate the disk, and enter the appropriate capacity.
+
+-   Inside the Virtual Machine operating system, extend the file system to include the newly added capacity.

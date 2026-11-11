@@ -1,0 +1,84 @@
+---
+title: "获取数据存储容量"
+---
+
+<APIPage method="GET" path="/v1/primary-storage/capacities">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/primary-storage/capacities?primaryStorageUuids=c8fd0638491c4c4ea70762c51d8445b5&all=false
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|zoneUuids \(可选\)|List|query|数据中心UUID列表| |0.6|
+|clusterUuids \(可选\)|List|query|集群UUID列表| |0.6|
+|primaryStorageUuids \(可选\)|List|query|数据存储UUID列表| |0.6|
+|all \(可选\)|boolean|query|当数据存储UUID列表为空时，该项为真表示查询系统中所有的数据存储。| |0.6|
+|systemTags \(可选\)|List|query|系统标签| |0.6|
+|userTags \(可选\)|List|query|用户标签| |0.6|
+
+## API返回
+返回示例
+
+```
+{
+  "totalCapacity": 1073741824.0,
+  "availableCapacity": 973078528.0,
+  "totalPhysicalCapacity": 1073741824.0,
+  "availablePhysicalCapacity": 973078528.0
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|totalCapacity|long| |0.6|
+|availableCapacity|long| |0.6|
+|totalPhysicalCapacity|long| |0.6|
+|availablePhysicalCapacity|long| |0.6|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_wlq_ck1_n1b)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+GetPrimaryStorageCapacityAction action = new GetPrimaryStorageCapacityAction();
+action.primaryStorageUuids = asList("9e151bee519044c0b19bdfc12d8d24ab");
+action.all = false;
+action.sessionId = "79627053d567472eaed5de6b16fcdb91";
+GetPrimaryStorageCapacityAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetPrimaryStorageCapacityAction action = GetPrimaryStorageCapacityAction()
+action.primaryStorageUuids = [f78f7e2087ff437da395fb308db84300]
+action.all = false
+action.sessionId = "112ffe3fbad14be49c896feb9076dc10"
+GetPrimaryStorageCapacityAction.Result res = action.call()
+```
+
+</APIPage>

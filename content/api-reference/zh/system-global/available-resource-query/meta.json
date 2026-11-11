@@ -1,0 +1,9 @@
+{
+  "title": "查询可用资源相关接口",
+  "pages": [
+    "get-cpu-memory-capacity",
+    "get-external-services",
+    "reload-external-service"
+  ],
+  "pagesIndex": "index"
+}

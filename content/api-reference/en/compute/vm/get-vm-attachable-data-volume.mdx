@@ -1,0 +1,78 @@
+---
+title: "Get VM Attachable Data Volume List"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/{vmInstanceUuid}/data-volume-candidates">
+
+Get the list of Data Volumes that can be attached to a Virtual Machine.
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/1e56eb544ac746d0ac275894d8e46cf7/data-volume-candidates
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|vmInstanceUuid|String|url|Virtual Machine UUID| |0.6|
+|systemTags \(optional\)|List|query|System Tags| |0.6|
+|userTags \(optional\)|List|query|User Tags| |0.6|
+
+## API Response
+Return Example
+
+```
+{
+    "inventories": [
+        {
+            "actualSize": 0,
+            "createDate": "Feb 11, 2018 3:16:43 PM",
+            "description": "",
+            "diskOfferingUuid": "7342651134824ae4b0b8ccf2c3d6ff80",
+            "format": "raw",
+            "installPath": "ceph://pool-0dae37a4ed4845f9bd0b1135e39e32f1/265455ab64634a108c62b887e46cdb86",
+            "isShareable": true,
+            "lastOpDate": "Mar 13, 2018 3:45:20 PM",
+            "name": "host-lc-2",
+            "primaryStorageUuid": "3fb1fe025dd843a088f63638d759faaa",
+            "size": 21474836480,
+            "state": "Enabled",
+            "status": "Ready",
+            "type": "Data",
+            "uuid": "265455ab64634a108c62b887e46cdb86"
+        },
+    ],
+    "success": true
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+GetVmAttachableDataVolumeAction action = new GetVmAttachableDataVolumeAction();
+action.vmInstanceUuid = "c754b7c60a0d487ba321c747e8864319";
+action.sessionId = "d67ef888a4964f328bf754183a1b66c1";
+GetVmAttachableDataVolumeAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetVmAttachableDataVolumeAction action = GetVmAttachableDataVolumeAction()
+action.vmInstanceUuid = "d0f7a36665ae4875a6124e9babf7c4c9"
+action.sessionId = "974281316f914ffea0a48c2b9e1569d1"
+GetVmAttachableDataVolumeAction.Result res = action.call()
+```
+
+</APIPage>

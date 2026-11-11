@@ -1,0 +1,30 @@
+---
+title: 'Import a Bare Metal Chassis from a Template'
+---
+
+Use a CSV configuration file. Enter bare metal chassis information in the specified format and upload the file to import bare metal chassis.
+
+-   Make sure bare metal chassis are connected according to the planned network topology. For more information, see [Preparation](/en/docs/user-guide/bare-metal/prerequisites).
+-   The template includes a header row and an example row. Delete or overwrite the example row when editing.
+-   Parameters marked with \* are required.
+-   You can enter a single IPMI address or IPMI range.
+
+    For IP ranges, use commas to separate addresses and use ^ to exclude a range. Example: 127.0.0.1-127.0.0.10,^127.0.0.2-127.0.0.3
+
+-   Bare metal reboot option:
+    -   Auto-reboot to obtain hardware information: Enter YES/Yes/yes/Y/y.
+    -   Manual reboot: Enter NO/No/no/N/n or leave blank.
+
+1.  In the navigation pane, choose **Inventory** &gt; **Bare Metal Management**.
+
+2.  Right-click the target bare metal cluster and choose **Add Bare Metal Chassis**.
+
+3.  In the Select Bare Metal Chassis Addition Type dialog, select **Template Import**.
+
+4.  Click **Next**.
+
+5.  In the Add Bare Metal Chassis dialog, set the following parameters:
+
+    -   **Template**: Click **Download Template** and fill in bare metal chassis configuration according to the required format.
+    -   **Upload Template File**: Upload the file.
+6.  Click **OK**.

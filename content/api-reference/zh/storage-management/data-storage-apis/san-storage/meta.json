@@ -1,0 +1,18 @@
+{
+  "title": "SAN存储相关接口",
+  "pages": [
+    "add-shared-block-group-primary-storage",
+    "query-shared-block-group-primary-storage-host-ref",
+    "query-shared-block-group-primary-storage",
+    "add-shared-block-to-shared-block-group",
+    "get-shared-block-candidate",
+    "refresh-sharedblock-device-capacity",
+    "query-shared-block",
+    "query-scsi-lun",
+    "detach-scsi-lun-from-host",
+    "iscsi-server",
+    "fc-storage",
+    "nvme-storage"
+  ],
+  "pagesIndex": "index"
+}

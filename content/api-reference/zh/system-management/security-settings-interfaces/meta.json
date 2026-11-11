@@ -1,0 +1,14 @@
+{
+  "title": "安全设置相关接口",
+  "pages": [
+    "console-proxy-interfaces",
+    "create-access-key",
+    "ip-blocklist-allowlist",
+    "add-access-control-list-redirect-rule",
+    "change-access-control-list-redirect-rule",
+    "get-login-procedures",
+    "unlock-identity",
+    "validate-password"
+  ],
+  "pagesIndex": "index"
+}

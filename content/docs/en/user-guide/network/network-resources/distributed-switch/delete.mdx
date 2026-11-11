@@ -1,0 +1,17 @@
+---
+title: 'Delete a Distributed Switch'
+---
+
+-   You cannot delete the default distributed switch while it still has joined hosts.
+-   You cannot delete a distributed switch if distributed pot groups in the distributed switch are referenced by a VM memory snapshot.
+-   You cannot delete a distributed switch if distributed port groups in the distributed switch are associated with Kernel adapters.
+
+1.  In the navigation pane, choose **Inventory** &gt; **Network Resource**.
+
+2.  In the resource tree, select a target distributed switch.
+
+3.  On the target distributed switch's details page, click **Actions** &gt; **Delete**.
+
+    <Callout type="info">
+    Deleting a distributed switch deletes all its distributed port groups and detaches associated VM NICs. Proceed with caution.
+    </Callout>

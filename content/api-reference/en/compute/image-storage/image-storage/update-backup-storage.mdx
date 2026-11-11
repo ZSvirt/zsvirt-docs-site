@@ -1,0 +1,122 @@
+---
+title: "Update Backup Storage"
+---
+
+<APIPage method="PUT" path="/v1/backup-storage/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateBackupStorage": {
+    "name": "New Name"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateBackupStorage":{"name":"New Name"}}' \
+http://localhost:8080/zstack/v1/backup-storage/72f0f262f3323515b177d148ad1efb66/actions
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|UUID of the target backup storage| |0.6|
+|name \(Optional\)|String|body \(contained in **updateBackupStorage** structure\)|New name of the backup storage| |0.6|
+|description \(Optional\)|String|body \(contained in **updateBackupStorage** structure\)|New detailed description of the backup storage| |0.6|
+|systemTags \(Optional\)|List|body|System tags| |0.6|
+|userTags \(Optional\)|List|body|User tags| |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "name": "New Name",
+    "description": "Public Backup Storage",
+    "totalCapacity": 1073741824.0,
+    "availableCapacity": 968884224.0,
+    "type": "Ceph",
+    "state": "Enabled",
+    "status": "Connected",
+    "createDate": "Jun 7, 2017 9:20:36 PM",
+    "lastOpDate": "Jun 7, 2017 9:20:36 PM",
+    "attachedZoneUuids": [
+      "90b2283f6c454453923dcf2f8e188330"
+    ]
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_gpr_h41_n1b)|0.6|
+|inventory|BackupStorageInventory|See [inventory](#p_af5_341_n1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier, for example SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, defaults to null|0.6|
+|opaque|LinkedHashMap|Reserved field, defaults to null|0.6|
+|cause|ErrorCode|Root cause. The source error that triggered the current error. This field is null if there is no original error|0.6|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|name|String|Resource name|0.6|
+|url|String| |0.6|
+|description|String|Detailed description of the resource|0.6|
+|totalCapacity|Long| |0.6|
+|availableCapacity|Long| |0.6|
+|type|String| |0.6|
+|state|String| |0.6|
+|status|String| |0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+|attachedZoneUuids|List| |0.6|
+
+## SDK Examples
+Java SDK
+
+```
+UpdateBackupStorageAction action = new UpdateBackupStorageAction();
+action.uuid = "2fe89c39bc2442aba58d5666d447b7c8";
+action.name = "New Name";
+action.sessionId = "1c2edd7a86564567ad34b7960808654e";
+UpdateBackupStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateBackupStorageAction action = UpdateBackupStorageAction()
+action.uuid = "f85f3310a70e4e01be84364aeb2caa42"
+action.name = "New Name"
+action.sessionId = "4176bd78f5754872b4963e0d3ddbc529"
+UpdateBackupStorageAction.Result res = action.call()
+```
+
+</APIPage>

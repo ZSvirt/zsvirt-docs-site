@@ -1,0 +1,99 @@
+---
+title: "查询虚拟机优先级配置"
+---
+
+<APIPage method="GET" path="/v1/vm-priority-config" altPaths={["/v1/vm-priority-config/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-priority-config?q=uuid=b095e162c1d9318bb0eaccd649d3c33f
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-priority-config/93521ba5b6203bebb6eb3bdba7fa6f32
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryVmPriorityConfig`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "0fcf4c7560d63bf58a4c47a5c37c2f1f",
+      "level": "Normal",
+      "cpuShares": 2,
+      "oomScoreAdj": 100
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_cbq_zfd_kjb)|3.7.0|
+|inventories|List|详情参考[inventories](#p_hcw_zfd_kjb)|3.7.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.7.0|
+|description|String|错误的概要描述|3.7.0|
+|details|String|错误的详细信息|3.7.0|
+|elaboration|String|保留字段，默认为null|3.7.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.7.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.7.0|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.7.0|
+|accountUuid|String|账户UUID|3.7.0|
+|cpuShares|int| |3.7.0|
+|oomScoreAdj|int| |3.7.0|
+|createDate|Timestamp|创建时间|3.7.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.7.0|
+|level|VmPriorityLevel|详情参考[level](#p_qjc_1gd_kjb)|3.7.0|
+
+### level
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|VmPriorityLevel| |3.7.0|
+|High|VmPriorityLevel| |3.7.0|
+
+## SDK示例
+Java SDK
+
+```
+QueryVmPriorityConfigAction action = new QueryVmPriorityConfigAction();
+action.conditions = asList("uuid=97e90d00e03b3529b1c218405cc6346b");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryVmPriorityConfigAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryVmPriorityConfigAction action = QueryVmPriorityConfigAction()
+action.conditions = ["uuid=c68b427cb1963529aa1d003cd7f1c1af"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryVmPriorityConfigAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,111 @@
+---
+title: "Add PCI Device Spec to VM Instance"
+---
+
+<APIPage method="POST" path="/v1/pci-device-specs/{pciSpecUuid}/vm-instances/{vmInstanceUuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "pciDeviceNumber": 1
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+systemTags and userTags fields can be omitted in the above example. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"pciDeviceNumber":1}}' \
+http://localhost:8080/zstack/v1/pci-device-specs/ace129cb77d93012bf47f839b9429881/vm-instances/16ecb900082437e8aaf554ce19620030
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|pciSpecUuid|String|url|PCI device spec UUID| |3.5.0|
+|vmInstanceUuid|String|url|Virtual Machine UUID| |3.5.0|
+|pciDeviceNumber \(Optional\)|Integer|body\(inside the **params** structure\)| | |3.5.0|
+|systemTags \(Optional\)|List|body|System tags| |3.5.0|
+|userTags \(Optional\)|List|body|User tags| |3.5.0|
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "vmInstanceUuid": "ac37ee1208aa4a9582a9b4efc95b5456",
+    "pciSpecUuid": "5cfc996fdab140d086e2fa51cb2882e6",
+    "pciDeviceNumber": 1,
+    "createDate": "Nov 14, 2017 10:20:57 PM",
+    "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_wg3_hhg_xhb)|3.5.0|
+|inventory|VmInstancePciDeviceSpecRefInventory|See [inventory](#p_s5c_hhg_xhb)|3.5.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code, a globally unique identifier of the error, e.g. SYS.1000, HOST.1001|3.5.0|
+|description|String|Brief description of the error|3.5.0|
+|details|String|Detailed error information|3.5.0|
+|elaboration|String|Reserved field, defaults to null|3.5.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|3.5.0|
+|cause|ErrorCode|Root cause, the source error that caused the current error, null if no original error|3.5.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|vmInstanceUuid|String|Virtual Machine UUID|3.5.0|
+|pciSpecUuid|String|PCI device spec UUID|3.5.0|
+|pciDeviceNumber|Integer|Number of PCI devices matching the device spec to attach to the VM, defaults to 1|3.5.0|
+|createDate|Timestamp|Create date|3.5.0|
+|lastOpDate|Timestamp|Last update date|3.5.0|
+
+## SDK Examples
+Java SDK
+
+```
+AddPciDeviceSpecToVmInstanceAction action = new AddPciDeviceSpecToVmInstanceAction();
+action.pciSpecUuid = "ace129cb77d93012bf47f839b9429881";
+action.vmInstanceUuid = "16ecb900082437e8aaf554ce19620030";
+action.pciDeviceNumber = 1;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddPciDeviceSpecToVmInstanceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddPciDeviceSpecToVmInstanceAction action = AddPciDeviceSpecToVmInstanceAction()
+action.pciSpecUuid = "ace129cb77d93012bf47f839b9429881"
+action.vmInstanceUuid = "16ecb900082437e8aaf554ce19620030"
+action.pciDeviceNumber = 1
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddPciDeviceSpecToVmInstanceAction.Result res = action.call()
+```
+
+</APIPage>

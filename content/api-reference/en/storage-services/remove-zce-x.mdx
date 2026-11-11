@@ -1,0 +1,64 @@
+---
+title: "Remove ZCE-X"
+---
+
+<APIPage method="DELETE" path="/v1/zce-x-plugin/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/zce-x-plugin/77e1393bf5aa4536a018b4c0c4e29c72
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|ZCE-X UUID, uniquely identifies the resource| |4.10.6|
+|deleteMode \(Optional\)|String|body|Delete mode \(Permissive / Enforcing, Permissive\)| |4.10.6|
+|systemTags \(Optional\)|List|body|System Tag| |4.10.6|
+|userTags \(Optional\)|List|body|User Tag| |4.10.6|
+
+## API Response
+This API returns an empty JSON structure `{}` on success, and a JSON structure containing an error field on failure, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+RemoveZceXAction action = new RemoveZceXAction();
+action.uuid = "77e1393bf5aa4536a018b4c0c4e29c72";
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RemoveZceXAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+RemoveZceXAction action = RemoveZceXAction()
+action.uuid = "77e1393bf5aa4536a018b4c0c4e29c72"
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+RemoveZceXAction.Result res = action.call()
+```
+
+</APIPage>

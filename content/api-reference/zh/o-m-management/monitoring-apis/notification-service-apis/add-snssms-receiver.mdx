@@ -1,0 +1,336 @@
+---
+title: "添加短信接收者"
+---
+
+<APIPage method="POST" path="/v1/sns/sms-endpoints/receivers">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "phoneNumber": "13333333333",
+    "endpointUuid": "467e77c4cc42492f9794429e689a9874",
+    "type": "AliyunSms",
+    "description": "description"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"phoneNumber":"13333333333","endpointUuid":"467e77c4cc42492f9794429e689a9874","type":"AliyunSms","description":"description"}}' \
+http://localhost:8080/zstack/v1/sns/sms-endpoints/receivers
+```
+
+参数列表
+
+<table id="table_ycs_ylw_jjb"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+phoneNumber
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+短信接收号码
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.7.0
+
+</td></tr><tr><td>
+
+endpointUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+短信接收端Uuid
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.7.0
+
+</td></tr><tr><td>
+
+type
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+短信接收端类型
+
+</td><td>
+
+-   AliyunSms
+
+</td><td>
+
+3.7.0
+
+</td></tr><tr><td>
+
+description \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+短信接收者描述
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.7.0
+
+</td></tr><tr><td>
+
+resourceUuid \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.7.0
+
+</td></tr><tr><td>
+
+tagUuids \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body\(包含在**params**结构中\)
+
+</td><td>
+
+标签UUID列表
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.7.0
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.7.0
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.7.0
+
+</td></tr></tbody>
+</table>
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "fac44d00d50f41fda7c74b753ad4298e",
+    "phoneNumber": "18912345678",
+    "endpointUuid": "97c6a427da0e4c67ade85f488ddada53",
+    "type": "AliyunSms",
+    "description": "description",
+    "createDate": "Mar 26, 2024 2:46:22 AM",
+    "lastOpDate": "Mar 26, 2024 2:46:22 AM"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |5.0.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_ymd_4mw_jjb)|3.7.0|
+|inventory|SNSSmsReceiverInventory|详情参考[inventory](#p_erx_nmw_jjb)|3.7.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.7.0|
+|phoneNumber|String|短信接收号码|3.7.0|
+|endpointUuid|String|短信接收端Uuid|3.7.0|
+|description|String|短信接收者描述|3.7.0|
+|createDate|Timestamp|创建时间|3.7.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.7.0|
+|type|SmsReceiverType|详情参考[type](#p_p1r_nmw_jjb)|3.7.0|
+
+### type
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|AliyunSms|SmsReceiverType|阿里云短信|3.7.0|
+
+## SDK示例
+Java SDK
+
+```
+AddSNSSmsReceiverAction action = new AddSNSSmsReceiverAction();
+action.phoneNumber = "13333333333";
+action.endpointUuid = "467e77c4cc42492f9794429e689a9874";
+action.type = "AliyunSms";
+action.description = "description";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddSNSSmsReceiverAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddSNSSmsReceiverAction action = AddSNSSmsReceiverAction()
+action.phoneNumber = "13333333333"
+action.endpointUuid = "467e77c4cc42492f9794429e689a9874"
+action.type = "AliyunSms"
+action.description = "description"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddSNSSmsReceiverAction.Result res = action.call()
+```
+
+</APIPage>

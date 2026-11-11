@@ -1,0 +1,12 @@
+---
+title: "主机SSH失败，如何解决？"
+---
+
+## 现象
+主机SSH失败，出现`This key is not known by any other names`报错。
+
+## 原因
+重装主机或主机重新生成密钥，导致密钥发生改变。
+
+## 解决方案
+-   进入`/root/.ssh/known_hosts`配置文件内，找到对应的主机记录并删除，即可正常SSH连接。

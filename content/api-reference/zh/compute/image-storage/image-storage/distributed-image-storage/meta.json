@@ -1,0 +1,11 @@
+{
+  "title": "分布式镜像仓库相关接口",
+  "pages": [
+    "add-ceph-backup-storage",
+    "query-ceph-backup-storage",
+    "update-ceph-backup-storage-mon",
+    "add-mon-to-ceph-backup-storage",
+    "remove-mon-from-ceph-backup-storage"
+  ],
+  "pagesIndex": "index"
+}

@@ -1,0 +1,10 @@
+{
+  "title": "VM Performance",
+  "pages": [
+    "index",
+    "resource-contention",
+    "cpu-features",
+    "qos"
+  ],
+  "pagesIndex": "index"
+}

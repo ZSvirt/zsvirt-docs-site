@@ -1,0 +1,113 @@
+---
+title: "更新企业微信@用户"
+---
+
+<APIPage method="PUT" path="/v1/sns/application-endpoints/we-com/at-persons/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateAtPersonOfAtWeComEndpoint": {
+    "endpointUuid": "4aec8a68c63439f197df9623ec89cda6",
+    "userId": "zhang.san",
+    "remark": "jack"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateAtPersonOfAtWeComEndpoint":{"endpointUuid":"4aec8a68c63439f197df9623ec89cda6","userId":"zhang.san","remark":"jack"}}' \
+http://localhost:8080/zstack/v1/sns/application-endpoints/we-com/at-persons/87df59c09f0336c2817d318a468f717c/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |4.2.0|
+|endpointUuid|String|body\(包含在**updateAtPersonOfAtWeComEndpoint**结构中\)|企业微信终端UUID| |4.2.0|
+|userId\(可选\)|String|body\(包含在**updateAtPersonOfAtWeComEndpoint**结构中\)|企业微信用户ID| |4.2.0|
+|systemTags \(可选\)|List|body|系统标签| |4.2.0|
+|userTags \(可选\)|List|body|用户标签| |4.2.0|
+|remark \(可选\)|String|body\(包含在**updateAtPersonOfAtWeComEndpoint**结构中\)|备注| |4.2.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "30a039832d40439da2c499cba7f1f866",
+    "userId": "18988887777",
+    "endpointUuid": "acb286c4425f4a7cbbd21afbf5303447",
+    "remark": "jack"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.2.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_q55_jnx_bdb)|4.2.0|
+|inventory|SNSWeComAtPersonInventory|详情参考[inventory](#p_amz_jnx_bdb)|4.2.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|5.0.0|
+|description|String|错误的概要描述|5.0.0|
+|details|String|错误的详细信息|5.0.0|
+|elaboration|String|保留字段，默认为null|5.0.0|
+|opaque|LinkedHashMap|保留字段，默认为null|5.0.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|5.0.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.2.0|
+|userId|String|企业微信用户id|4.2.0|
+|endpointUuid|String|企业微信endpoint uuid|4.2.0|
+
+## SDK示例
+Java SDK
+
+```
+UpdateAtPersonOfAtWeComEndpointAction action = new UpdateAtPersonOfAtWeComEndpointAction();
+action.uuid = "87df59c09f0336c2817d318a468f717c";
+action.endpointUuid = "4aec8a68c63439f197df9623ec89cda6";
+action.userId = "zhang.san";
+action.remark = "jack";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateAtPersonOfAtWeComEndpointAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateAtPersonOfAtWeComEndpointAction action = UpdateAtPersonOfAtWeComEndpointAction()
+action.uuid = "87df59c09f0336c2817d318a468f717c"
+action.endpointUuid = "4aec8a68c63439f197df9623ec89cda6"
+action.userId = "zhang.san"
+action.remark = "jack"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateAtPersonOfAtWeComEndpointAction.Result res = action.call()
+```
+
+</APIPage>

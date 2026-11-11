@@ -1,0 +1,126 @@
+---
+title: "获取资源的高级设置"
+---
+
+<APIPage method="GET" path="/v1/resource-configurations/{resourceUuid}/{category}/{name}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X GET http://localhost:8080/zstack/v1/resource-configurations/77663dd5ff84460bbf1817aa3c59d125/host/cpu.overProvisioning.ratio
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|category|String|url|设置类型| |3.4.0|
+|name|String|url|设置名称| |3.4.0|
+|resourceUuid|String|url|资源UUID| |3.4.0|
+|systemTags \(可选\)|List|query| | |3.4.0|
+|userTags \(可选\)|List|query| | |3.4.0|
+
+## API返回
+返回示例
+
+```
+{
+  "value": "5",
+  "effectiveConfigs": [
+    {
+      "uuid": "dae9aeb6d74e4f44823f2e0c4f1cc79f",
+      "resourceUuid": "46597de31eac41539c4e6eda52885769",
+      "resourceType": "HostVO",
+      "name": "cpu.overProvisioning.ratio",
+      "category": "host",
+      "value": "5",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    },
+    {
+      "uuid": "5c3c94a73d7b4a95a1818241f2e427ae",
+      "resourceUuid": "371519310f344695854de27bb9743121",
+      "resourceType": "ClusterVO",
+      "name": "cpu.overProvisioning.ratio",
+      "category": "host",
+      "value": "10",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|value|String|配置的值|3.4.0|
+|success|boolean| |3.4.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_gzs_vjl_zgb)|3.4.0|
+|effectiveConfigs|List|生效的设置列表，按优先级从高到低排序，详情参考[effectiveConfigs](#p_kxx_vjl_zgb)|3.4.0|
+|error|ErrorCode|详情参考[error](#p_rtd_wjl_zgb)|3.4.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.4.0|
+|description|String|错误的概要描述|3.4.0|
+|details|String|错误的详细信息|3.4.0|
+|elaboration|String|保留字段，默认为null|3.4.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.4.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.4.0|
+
+### effectiveConfigs
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|3.4.0|
+|resourceUuid|String|配置对应的资源UUID|3.4.0|
+|resourceType|String|配置对应的资源类型|3.4.0|
+|name|String|配置名称|3.4.0|
+|description|String|配置的详细描述|3.4.0|
+|category|String|配置类别|3.4.0|
+|value|String|配置的值|3.4.0|
+|createDate|Timestamp|创建时间|3.4.0|
+|lastOpDate|Timestamp|最后一次修改时间|3.4.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|3.4.0|
+|description|String|错误的概要描述|3.4.0|
+|details|String|错误的详细信息|3.4.0|
+|elaboration|String|保留字段，默认为null|3.4.0|
+|opaque|LinkedHashMap|保留字段，默认为null|3.4.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|3.4.0|
+
+## SDK示例
+Java SDK
+
+```
+GetResourceConfigAction action = new GetResourceConfigAction();
+action.category = "host";
+action.name = "cpu.overProvisioning.ratio";
+action.resourceUuid = "70fdcc564f564c29af98e48e78be56e4";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetResourceConfigAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetResourceConfigAction action = GetResourceConfigAction()
+action.category = "host"
+action.name = "cpu.overProvisioning.ratio"
+action.resourceUuid = "b1ea1d424bf04a50b15b33bcd0f8a80d"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetResourceConfigAction.Result res = action.call()
+```
+
+</APIPage>

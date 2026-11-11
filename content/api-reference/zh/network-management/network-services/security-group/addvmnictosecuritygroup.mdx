@@ -1,0 +1,83 @@
+---
+title: "添加虚拟机网卡到安全组"
+---
+
+<APIPage method="POST" path="/v1/security-groups/{securityGroupUuid}/vm-instances/nics">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+**Body**
+
+```
+{
+  "params": {
+    "vmNicUuids": [
+      "8432b2608a8a4f639cc56a8c65ee42ef"
+    ]
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"vmNicUuids":["c37875cec7133f41adbeb336cdd33ef8"]}}' \
+http://localhost:8080/zstack/v1/security-groups/f52566f939f635629a43cd3e27f78dd9/vm-instances/nics
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|securityGroupUuid|String|url|安全组UUID| |0.6|
+|vmNicUuids|List|body\(包含在**params**结构中\)|虚拟机网卡的uuid列表| |0.6|
+|systemTags \(可选\)|List|body|系统标签| |0.6|
+|userTags \(可选\)|List|body|用户标签| |0.6|
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+AddVmNicToSecurityGroupAction action = new AddVmNicToSecurityGroupAction();
+action.securityGroupUuid = "b651075ffcac475c91d3edaa5e9ade75";
+action.vmNicUuids = asList("ff0f6c13311b46ddb186a95c0d18350a");
+action.sessionId = "605fca0559284eff95d78e418508ff2f";
+AddVmNicToSecurityGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddVmNicToSecurityGroupAction action = AddVmNicToSecurityGroupAction()
+action.securityGroupUuid = "2da1519b9b39451e8742aadaa9241952"
+action.vmNicUuids = [bda4ceec2917426cb9ee20b3bcb20653]
+action.sessionId = "863d503abfbc4334846d67c1eac375f9"
+AddVmNicToSecurityGroupAction.Result res = action.call()
+```
+
+</APIPage>

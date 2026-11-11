@@ -1,0 +1,334 @@
+---
+title: "Mount Disk to Mount Point"
+---
+
+<APIPage method="POST" path="/v1/host/mount-block-device">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "username": "username",
+    "password": "password",
+    "sshPort": 22,
+    "hostName": "192.168.1.1",
+    "path": "/dev/vdb",
+    "mountPoint": "/root/data",
+    "filesystemType": "xfs"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Examples
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"username":"username","password":"password","sshPort":22,"hostName":"192.168.1.1","path":"/dev/vdb","mountPoint":"/root/data","filesystemType":"xfs"}}' \
+http://localhost:8080/zstack/v1/host/mount-block-device
+```
+
+Parameter List
+
+<table id="table_cvw_1s1_n1b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+username
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(nested in `params` structure\)
+
+</td><td>
+
+Username
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+password \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(nested in `params` structure\)
+
+</td><td>
+
+Password
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+sshPort
+
+</td><td>
+
+Integer
+
+</td><td>
+
+body \(nested in `params` structure\)
+
+</td><td>
+
+SSH Port
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+hostName
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(nested in `params` structure\)
+
+</td><td>
+
+Host IP
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+path
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(nested in `params` structure\)
+
+</td><td>
+
+Absolute path of the disk \(for example: `/dev/vdb`\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+mountPoint
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(nested in `params` structure\)
+
+</td><td>
+
+Mount point
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+filesystemType \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(nested in `params` structure\)
+
+</td><td>
+
+File system type
+
+</td><td>
+
+-   ext4
+-   xfs
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+systemTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr><tr><td>
+
+userTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.3.0
+
+</td></tr></tbody>
+</table>
+
+## **API Response**
+When the API succeeds, it returns an empty JSON structure `{}`. When an error occurs, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+MountBlockDeviceAction action = new MountBlockDeviceAction();
+action.username = "username";
+action.password = "password";
+action.sshPort = 22;
+action.hostName = "192.168.1.1";
+action.path = "/dev/vdb";
+action.mountPoint = "/root/data";
+action.filesystemType = "xfs";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+MountBlockDeviceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = MountBlockDeviceAction()
+action.username = "username"
+action.password = "password"
+action.sshPort = 22
+action.hostName = "192.168.1.1"
+action.path = "/dev/vdb"
+action.mountPoint = "/root/data"
+action.filesystemType = "xfs"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

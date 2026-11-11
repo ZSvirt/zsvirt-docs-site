@@ -1,0 +1,23 @@
+{
+  "title": "报警器",
+  "pages": [
+    "create-alarm",
+    "delete-alarm",
+    "update-alarm",
+    "update-subscribe-event",
+    "add-action-to-alarm",
+    "remove-action-from-alarm",
+    "add-label-to-alarm",
+    "update-alarm-label",
+    "remove-label-from-alarm",
+    "change-alarm-state",
+    "query-alarm",
+    "get-alarm-data",
+    "update-alarm-data",
+    "get-zwatch-alert-histogram",
+    "query-alarm-record",
+    "update-active-alarm-template",
+    "change-event-subscription-state"
+  ],
+  "pagesIndex": "index"
+}

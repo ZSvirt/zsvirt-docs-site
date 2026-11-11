@@ -1,0 +1,22 @@
+{
+  "title": "分布式交换机相关接口",
+  "pages": [
+    "createl2virtualswitch",
+    "deletel2network",
+    "updatel2network",
+    "updatevirtualswitchuplinkbondings",
+    "queryl2virtualswitchnetwork",
+    "getl2networktypes",
+    "attachl2networktocluster",
+    "detachl2networkfromcluster",
+    "getcandidateclustersforattachingl2network",
+    "getcandidatel2networksforattachingcluster",
+    "attachl2networktohost",
+    "detachl2networkfromhost",
+    "getvswitchtypes",
+    "queryuplinkgroup",
+    "updatevirtualswitchuplinkgroup",
+    "updatel2networkvirtualnetworkid"
+  ],
+  "pagesIndex": "createl2virtualswitch"
+}

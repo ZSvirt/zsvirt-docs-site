@@ -1,0 +1,21 @@
+---
+title: "Host addition fails with a \"libvirt/qemu version mismatch\" error"
+---
+
+<HistoricalNamingNote locale="en" />
+
+## Symptom
+Host addition fails with a `cannot be added to cluster because qemu/libvirt version does not match` or `no candidate host has version` error.
+
+## Cause
+The operating system versions of hosts in the Cluster are inconsistent.
+
+## Solution
+1.  Run the following command to reformat the host and reinstall the operating system:
+
+    ```
+    root@localhost ~]# yum --disablerepo=* --enablerepo=zstack-local install -y sudo
+    
+    ```
+
+2.  Add hosts running the same operating system version to the same Cluster.

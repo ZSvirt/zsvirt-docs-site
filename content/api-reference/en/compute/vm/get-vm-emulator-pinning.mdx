@@ -1,0 +1,73 @@
+---
+title: "Get VM Emulator Pinning Host CPU"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/{uuid}/emulator-pinning">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/1dd7af3a42403a1d9b3734f5ed573103/emulator-pinning
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|Resource UUID, uniquely identifies the resource| |0.6|
+|systemTags \(Optional\)|List|query| | |0.6|
+|userTags \(Optional\)|List|query| | |0.6|
+
+## API Response
+Response Example
+
+```
+{
+  "emulatorPinning": "1-4"
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|emulatorPinning|String|Host CPU number for VM Emulator Pinning|4.3.12|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. When the operation succeeds, this field is null. For details, see [error](#p_zrl_t2z_1sb)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, a globally unique identifier of the error, for example SYS.1000, HOST.1001|4.3.12|
+|description|String|Brief description of the error|4.3.12|
+|details|String|Detailed error information|4.3.12|
+|elaboration|String|Reserved field, defaults to null|4.3.12|
+|opaque|LinkedHashMap|Reserved field, defaults to null|4.3.12|
+|cause|ErrorCode|Root cause. The error that triggered the current error. If there is no original error, this field is null|4.3.12|
+
+## SDK Examples
+Java SDK
+
+```
+GetVmEmulatorPinningAction action = new GetVmEmulatorPinningAction();
+action.uuid = "ad79d9ba952336a39fdef094c8855799";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetVmEmulatorPinningAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetVmEmulatorPinningAction action = GetVmEmulatorPinningAction()
+action.uuid = "ad79d9ba952336a39fdef094c8855799"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetVmEmulatorPinningAction.Result res = action.call()
+```
+
+</APIPage>

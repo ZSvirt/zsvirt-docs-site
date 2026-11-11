@@ -1,0 +1,496 @@
+---
+title: "Create VM Scheduling Policy"
+---
+
+<APIPage method="POST" path="/v1/vmsSchedulingRule">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "rule": "AFFINITY",
+    "mode": "SOFT",
+    "vmGroupUuid": "814bca77193f3e7a871891b17f8e4122",
+    "hostGroupUuid": "e4241841b9083aed84726be7cbb966bf",
+    "name": "vm-scheduling-rule",
+    "description": "desc"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+The **systemTags** and **userTags** fields in the above example are optional. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"rule":"AFFINITY","mode":"SOFT","vmGroupUuid":"814bca77193f3e7a871891b17f8e4122","hostGroupUuid":"e4241841b9083aed84726be7cbb966bf","name":"vm-scheduling-rule","description":"desc"}}' http://localhost:8080/zstack/v1/vmsSchedulingRule
+```
+
+Parameter List
+
+<table id="table_i3d_2bb_3cb"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+rule
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+Rule
+
+</td><td>
+
+-   AFFINITY
+-   ANTIAFFINITY
+
+</td><td>
+
+4.6.0
+
+</td></tr><tr><td>
+
+mode
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+Enforcement level
+
+</td><td>
+
+-   SOFT
+-   HARD
+
+</td><td>
+
+4.6.0
+
+</td></tr><tr><td>
+
+vmGroupUuid
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+VM scheduling group UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.6.0
+
+</td></tr><tr><td>
+
+hostGroupUuid \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+Host scheduling group UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.6.0
+
+</td></tr><tr><td>
+
+name
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+Resource name
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.6.0
+
+</td></tr><tr><td>
+
+description \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+Detailed description of the resource
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.6.0
+
+</td></tr><tr><td>
+
+policy \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+-   antiSoft
+-   antiHard
+
+</td><td>
+
+4.6.0
+
+</td></tr><tr><td>
+
+type \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+host
+
+</td><td>
+
+4.6.0
+
+</td></tr><tr><td>
+
+zoneUuid \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+Data Center UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.6.0
+
+</td></tr><tr><td>
+
+subType \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.6.0
+
+</td></tr><tr><td>
+
+resourceUuid \(optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+Resource UUID
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.6.0
+
+</td></tr><tr><td>
+
+tagUuids \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body \(contained in the **params** structure\)
+
+</td><td>
+
+Tag UUID list
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.6.0
+
+</td></tr><tr><td>
+
+systemTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.6.0
+
+</td></tr><tr><td>
+
+userTags \(optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.6.0
+
+</td></tr></tbody>
+</table>
+
+## API Response
+Response Example
+
+```
+{
+  "inventory": {
+    "uuid": "d517b42f669b324288fe8977a7df2e4d",
+    "name": "affinity-group-test",
+    "description": "affinity group for test",
+    "policy": "ANTISOFT",
+    "version": "1.0",
+    "type": "HOST"
+  }
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.6.0|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](#p_w13_jcb_3cb)|4.6.0|
+|inventory|AffinityGroupInventory|For details, see [inventory](#p_fbm_jcb_3cb)|4.6.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|4.6.0|
+|description|String|Brief description of the error|4.6.0|
+|details|String|Detailed information about the error|4.6.0|
+|elaboration|String|Reserved field. Default is null|4.6.0|
+|opaque|LinkedHashMap|Reserved field. Default is null|4.6.0|
+|cause|ErrorCode|Root error. The source error that caused the current error. This field is null if no root error exists|4.6.0|
+
+### inventory
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource. Uniquely identifies the resource|4.6.0|
+|name|String|Resource name|4.6.0|
+|description|String|Detailed description of the resource|4.6.0|
+|policy|String| |4.6.0|
+|version|String| |4.6.0|
+|type|String| |4.6.0|
+|appliance|String| |4.6.0|
+|state|String| |4.6.0|
+|createDate|Timestamp|Creation time|4.6.0|
+|lastOpDate|Timestamp|Last modification time|4.6.0|
+|usages|List|For details, see [usages](#p_cyy_jcb_3cb)|4.6.0|
+
+### usages
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|UUID of the resource. Uniquely identifies the resource|4.6.0|
+|affinityGroupUuid|String| |4.6.0|
+|resourceUuid|String| |4.6.0|
+|resourceType|String| |4.6.0|
+|createDate|Timestamp|Creation time|4.6.0|
+|lastOpDate|Timestamp|Last modification time|4.6.0|
+
+## SDK Examples
+Java SDK
+
+```
+CreateVmSchedulingRuleAction action = new CreateVmSchedulingRuleAction();
+action.rule = "AFFINITY";
+action.mode = "SOFT";
+action.vmGroupUuid = "814bca77193f3e7a871891b17f8e4122";
+action.hostGroupUuid = "e4241841b9083aed84726be7cbb966bf";
+action.name = "vm-scheduling-rule";
+action.description = "desc";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+CreateVmSchedulingRuleAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+CreateVmSchedulingRuleAction action = CreateVmSchedulingRuleAction()
+action.rule = "AFFINITY"
+action.mode = "SOFT"
+action.vmGroupUuid = "814bca77193f3e7a871891b17f8e4122"
+action.hostGroupUuid = "e4241841b9083aed84726be7cbb966bf"
+action.name = "vm-scheduling-rule"
+action.description = "desc"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+CreateVmSchedulingRuleAction.Result res = action.call()
+```
+
+</APIPage>

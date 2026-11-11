@@ -1,0 +1,9 @@
+{
+  "title": "垃圾回收相关接口",
+  "pages": [
+    "trigger-gcjob",
+    "delete-gcjob",
+    "query-gcjob"
+  ],
+  "pagesIndex": "index"
+}

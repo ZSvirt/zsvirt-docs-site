@@ -1,0 +1,10 @@
+{
+  "title": "镜像存储基础操作篇",
+  "pages": [
+    "index",
+    "add-standalone-image-storage",
+    "add-distributed-image-storage",
+    "manage-image-storage"
+  ],
+  "pagesIndex": "index"
+}

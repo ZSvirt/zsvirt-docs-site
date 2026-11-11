@@ -1,0 +1,27 @@
+---
+title: 'Data Storage Cleanup & Deletion'
+---
+
+You can refer to the content in this section to clean up data storage space or delete data storage as needed.
+
+-   [Clean up Data Storage](#section_g4p_mw3_bzb)
+-   [Delete Data Storage](#section_yvm_nw3_bzb)
+
+## Clean up Data Storage
+You can also clean up the original data retained in the data storage due to cross-storage migration. On the Data Cleanup sub-page of the target data storage details page, click **Action** &gt; **Cleanup** to clean up the original data.
+
+<Callout type="info">
+Make sure that the migrated data is intact after the storage migration. The original data cannot be recovered after cleanup. Please proceed with caution.
+</Callout>
+
+## Delete Data Storage
+If you no longer need a particular data storage, you can delete it to save storage resources. Before deleting data storage, you need to unload it from the cluster, otherwise, deletion will not be possible.
+
+You can delete data storage through the following methods:
+
+-   Delete a single data storage: Navigate to the target data storage page and click **Actions** &gt; **Delete** to perform the deletion operation.
+-   Bulk delete data storage: Navigate to the **Data Center** &gt; **Data Storage** sub-page, select the data storages you want to delete. Then click **Bulk Action** &gt; **Delete** to perform the deletion operation.
+
+<Callout type="info">
+During deletion, all resources on the selected data storage, including virtual machines, hard disks, snapshots, etc., will be deleted. Please proceed with caution.
+</Callout>

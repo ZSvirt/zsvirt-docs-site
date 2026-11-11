@@ -1,0 +1,38 @@
+---
+title: 'Back Up the Native Key Provider'
+---
+
+The native key provider is stored only in ZSvirt. If ZSvirt fails or needs to be rebuilt, the key is lost and all encrypted virtual machines cannot be decrypted or started. Therefore, backing up the native key provider is necessary for disaster recovery. After you back it up, you can restore key services and remount encrypted virtual machines after you rebuild ZSvirt.
+
+1.  In the navigation pane, select **Inventory** &gt; **VM and Host**.
+
+2.  Select the root node.
+
+3.  On the root node details page, click **Key Providers**.
+
+4.  On the Key Providers tab, select the native key provider you want to back up.
+
+    For key providers that are not yet backed up, the status shows as "Not Backed Up".
+
+5.  Click **Actions** &gt; **Back Up**.
+
+6.  In the Back Up Key Provider dialog, select the backup mode as needed.
+
+    -   **Without Password Protection**
+
+        <Callout type="info">
+        Without password protection, the configuration data and the virtual machines encrypted with this key provider face potential security risks.
+        </Callout>
+
+    -   **Password Protection**: Enter and confirm the password.
+
+        <Callout type="info">
+        Store the password in a safe place. The platform cannot access or recover the password you set. Make sure this password is securely saved, as it will be required to restore the Native Key Provider configuration in case of disaster.
+        </Callout>
+        If you forget or lose the password:
+
+        -   You cannot restore the key provider.
+        -   You cannot access encrypted resources (such as TPM-enabled virtual machines and encrypted virtual machines) that depend on this key provider.
+7.  Click **OK**.
+
+    The backup file is downloaded through your browser. Save the backup file in a secure location.

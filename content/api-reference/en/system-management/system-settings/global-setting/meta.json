@@ -1,0 +1,10 @@
+{
+  "title": "Global Setting",
+  "pages": [
+    "query-global-config",
+    "update-global-config",
+    "reset-global-config",
+    "get-global-config-options"
+  ],
+  "pagesIndex": "index"
+}

@@ -1,0 +1,63 @@
+---
+title: "获取迁移本地存储主机"
+---
+
+<APIPage method="GET" path="/v1/volumes/{volumeUuid}/migration-target-hosts">
+
+检查哪些主机可以迁移本地存储上存放的硬盘。
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/volumes/ef7fe562459146d6bb13078821d451a8/migration-target-hosts?
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|volumeUuid|String|url|硬盘UUID| |0.6|
+|systemTags \(可选\)|List|query| | |0.6|
+|userTags \(可选\)|List|query| | |0.6|
+
+## **API返回**
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+LocalStorageGetVolumeMigratableHostsAction action = new LocalStorageGetVolumeMigratableHostsAction();
+action.volumeUuid = "dd15184d915c422686da18415b194ce9";
+action.sessionId = "1ce8dcd82213420ba5aea5c488834eba";
+LocalStorageGetVolumeMigratableHostsAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+LocalStorageGetVolumeMigratableHostsAction action = LocalStorageGetVolumeMigratableHostsAction()
+action.volumeUuid = "19a3d12dc45540f997ac0c6ad0cfb8d7"
+action.sessionId = "e6d54fe5d8424c45b723f65a1136d23e"
+LocalStorageGetVolumeMigratableHostsAction.Result res = action.call()
+```
+
+</APIPage>

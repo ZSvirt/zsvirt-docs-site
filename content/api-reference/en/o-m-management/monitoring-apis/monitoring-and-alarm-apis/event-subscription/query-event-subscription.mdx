@@ -1,0 +1,139 @@
+---
+title: "Query Event Subscription"
+---
+
+<APIPage method="GET" path="/v1/zwatch/events/subscriptions" altPaths={["/v1/zwatch/events/subscriptions/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zwatch/events/subscriptions?q=name=test
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zwatch/events/subscriptions/57618e9763ce3b7e990870c3a7ae8c53
+```
+
+Queryable Fields
+
+Run the CLI command line tool, enter `QueryEventSubscription` and press Tab to view all queryable fields and the resource names available for cross-table queries.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "9404fe697a6b4d7dbac98065af20dc57",
+      "namespace": "ZStack/VM",
+      "eventName": "org.zstack.zwatch.datatype.EventFamily@80723ca",
+      "state": "Enabled",
+      "actions": [
+        {
+          "subscriptionUuid": "650cf6a269284671a42f93631c87dfec",
+          "actionType": "sns",
+          "actionUuid": "fe296dcbc31c4afa9f76494b1930c8cc"
+        }
+      ],
+      "labels": [
+        {
+          "uuid": "d29fe54ca47540a9b20b308429f21434",
+          "key": "DestinationHostUuid",
+          "operator": "Equal",
+          "value": "733509c8c5684c678ffe99f59d4aba21"
+        }
+      ],
+      "lastOpDate": "Jul 6, 2018 1:51:00 PM",
+      "createDate": "Jul 6, 2018 1:51:00 PM"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null on success. See [error](#p_xlp_1wk_p2b)|2.3.1|
+|inventories|List|See [inventories](#p_tvd_cwk_p2b)|2.3.1|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, such as SYS.1000, HOST.1001|2.3.1|
+|description|String|A brief description of the error|2.3.1|
+|details|String|The detailed error information|2.3.1|
+|elaboration|String|Reserved field. Default is null|2.3.1|
+|opaque|LinkedHashMap|Reserved field. Default is null|2.3.1|
+|cause|ErrorCode|The root error. The source error that caused the current error. This field is null if there is no root error|2.3.1|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource|2.3.1|
+|name|String|The resource name|3.0.0|
+|namespace|String|The namespace|2.3.1|
+|eventName|String|The event name|2.3.1|
+|lastOpDate|Timestamp|The last modification time|2.3.1|
+|createDate|Timestamp|The creation time|2.3.1|
+|state|EventSubscriptionState|See [state](#p_esw_2wk_p2b)|2.3.1|
+|actions|List|See [actions](#p_vk1_gwk_p2b)|2.3.1|
+|labels|List|See [labels](#p_rk4_hwk_p2b)|2.3.1|
+
+### state
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|name|String|The resource name|2.3.1|
+|ordinal|int| |2.3.1|
+
+### actions
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|subscriptionUuid|String|The event subscription UUID|2.3.1|
+|actionType|String|The action type|2.3.1|
+|actionUuid|String|The action UUID|2.3.1|
+
+### labels
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource|2.3.1|
+|key|String|The label name|2.3.1|
+|value|String|The label value|2.3.1|
+|operator|Operator|See [operator](#p_bmw_3wk_p2b)|2.3.1|
+
+### operator
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|op|String| |2.3.1|
+|name|String|The resource name|2.3.1|
+|ordinal|int| |2.3.1|
+
+## SDK Examples
+Java SDK
+
+```
+QueryEventSubscriptionAction action = new QueryEventSubscriptionAction();
+action.conditions = asList("name=test");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryEventSubscriptionAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryEventSubscriptionAction action = QueryEventSubscriptionAction()
+action.conditions = ["name=test"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryEventSubscriptionAction.Result res = action.call()
+```
+
+</APIPage>

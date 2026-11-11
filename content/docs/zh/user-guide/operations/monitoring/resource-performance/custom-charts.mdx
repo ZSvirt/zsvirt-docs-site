@@ -1,0 +1,190 @@
+---
+title: "自定义监控图表"
+---
+
+您可以自定义监控图表，以查看更多监控数据。
+
+-   **详细信息**：将鼠标悬停在图表上方，即会显示相关数据点的详细信息。
+-   **自定义时间跨度**：默认展示 15 分钟内的监控数据。可选值：15 分钟、1 小时、6 小时、1 天、1 周、1 月、1 年、自定义。
+-   **自定义监控条目**：根据业务需求灵活选择您要关注的监控指标。如需了解完整监控条目，请参阅[监控条目附录](#监控条目附录)。
+-   **自定义监控对象**：展示全部或指定监控对象的数据。
+-   **自定义监控图表位置**：自由拖拽排列监控图表位置。
+
+## 监控条目附录
+
+<table class="doc-feature-table">
+  <thead>
+    <tr>
+      <th>对象</th>
+      <th>监控指标</th>
+      <th>监控条目及描述</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>集群</td>
+      <td>
+        <ul>
+          <li>CPU</li>
+          <li>内存</li>
+          <li>硬盘</li>
+          <li>网卡</li>
+        </ul>
+      </td>
+      <td>
+        <ul>
+          <li>全部 CPU 使用率</li>
+          <li>内存使用百分比</li>
+          <li>全部硬盘 IOPS（读/写）</li>
+          <li>全部网卡数据传输速度（发送/接收）</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td rowSpan="4">主机</td>
+      <td>CPU</td>
+      <td>
+        <ul>
+          <li><strong>CPU 使用率</strong>：CPU 处于非空闲状态的时间比例</li>
+          <li><strong>CPU 空闲率</strong>：CPU 处于空闲状态的时间比例</li>
+          <li><strong>CPU 系统进程占用率</strong>：CPU 运行在内核空间的时间比例，典型的内核操作有：分配内存、I/O 操作、创建子进程等</li>
+          <li><strong>CPU 用户进程占用率</strong>：CPU 运行在用户态空间的时间比例，典型的用户态空间程序有：Shells、数据库、Web 服务器等</li>
+          <li><strong>CPU 等待进程占用率</strong>：CPU 发起读写操作后，等待硬盘驱动器将数据读入内存的时间比例</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>内存</td>
+      <td><strong>内存使用量</strong>：资源内存的使用量和空闲量</td>
+    </tr>
+    <tr>
+      <td>硬盘</td>
+      <td>
+        <ul>
+          <li><strong>硬盘速度</strong>：资源硬盘读写速度</li>
+          <li><strong>硬盘 IOPS</strong>：资源硬盘读写 IOPS</li>
+          <li><strong>硬盘时延</strong>：资源硬盘时延</li>
+          <li><strong>主机全部硬盘使用率</strong>：主机全部硬盘已使用容量百分比</li>
+          <li><strong>主机全部硬盘使用量</strong>：主机全部硬盘已使用容量</li>
+          <li><strong>平台系统文件所占硬盘使用率</strong>：平台系统文件所占硬盘容量百分比</li>
+          <li><strong>平台系统文件所占硬盘使用量</strong>：平台系统文件所占硬盘容量</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>网卡</td>
+      <td>
+        <ul>
+          <li><strong>网卡数据速率</strong>：资源当前网卡的发送和接收速率</li>
+          <li><strong>网卡包速率</strong>：资源当前网卡的发送包和接收包速率</li>
+          <li><strong>网卡包丢弃速率</strong>：资源当前网卡的出包和入包丢弃速率</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td rowSpan="4">虚拟机</td>
+      <td>CPU</td>
+      <td>
+        <ul>
+          <li><strong>CPU 使用率</strong>：CPU 处于非空闲状态的时间比例</li>
+          <li><strong>CPU 空闲率</strong>：CPU 处于空闲状态的时间比例</li>
+          <li><strong>CPU 系统进程占用率</strong>：CPU 运行在内核空间的时间比例，典型的内核操作有：分配内存、I/O 操作、创建子进程等</li>
+          <li><strong>CPU 用户进程占用率</strong>：CPU 运行在用户态空间的时间比例，典型的用户态空间程序有：Shells、数据库、Web 服务器等</li>
+          <li><strong>CPU 等待进程占用率</strong>：CPU 发起读写操作后，等待硬盘驱动器将数据读入内存的时间比例</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>内存</td>
+      <td>
+        <ul>
+          <li><strong>内存使用量</strong>：资源内存的使用量和空闲量</li>
+          <li><strong>内存可用容量</strong>：资源内存的可使用量</li>
+          <li><strong>内存空闲量</strong>：资源内存的空闲容量</li>
+          <li><strong>内存总容量</strong>：资源内存的总容量</li>
+          <li><strong>内存空闲率</strong>：资源当前处于空闲状态的内存百分比</li>
+          <li><strong>内存使用率</strong>：资源已使用内存的百分比</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>硬盘</td>
+      <td>
+        <ul>
+          <li><strong>硬盘速度</strong>：资源硬盘读写速度</li>
+          <li><strong>硬盘 IOPS</strong>：资源硬盘读写 IOPS</li>
+          <li><strong>硬盘使用率</strong>：资源硬盘的已使用率</li>
+          <li><strong>硬盘空闲率</strong>：资源硬盘的空闲率</li>
+          <li><strong>硬盘使用量</strong>：资源已使用硬盘的容量</li>
+          <li><strong>硬盘空闲量</strong>：资源空闲硬盘的容量</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>网卡</td>
+      <td>
+        <ul>
+          <li><strong>网卡数据速率</strong>：资源当前网卡的发送和接收速率</li>
+          <li><strong>网卡包速率</strong>：资源当前网卡的发送包和接收包速率</li>
+          <li><strong>网卡包丢弃速率</strong>：资源当前网卡的出包和入包丢弃速率</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>数据存储</td>
+      <td>容量</td>
+      <td><strong>已用容量百分比</strong>：资源当前已使用的容量百分比</td>
+    </tr>
+    <tr>
+      <td>镜像存储-单机镜像仓库/分布式镜像仓库</td>
+      <td>容量</td>
+      <td><strong>已用容量百分比</strong>：资源当前已使用的容量百分比</td>
+    </tr>
+    <tr>
+      <td rowSpan="4">镜像存储-单机镜像仓库</td>
+      <td>CPU</td>
+      <td>
+        <ul>
+          <li><strong>CPU 使用率</strong>：CPU 处于非空闲状态的时间比例</li>
+          <li><strong>CPU 空闲率</strong>：CPU 处于空闲状态的时间比例</li>
+          <li><strong>CPU 系统进程占用率</strong>：CPU 运行在内核空间的时间比例，典型的内核操作有：分配内存、I/O 操作、创建子进程等</li>
+          <li><strong>CPU 用户进程占用率</strong>：CPU 运行在用户态空间的时间比例，典型的用户态空间程序有：Shells、数据库、Web 服务器等</li>
+          <li><strong>CPU 等待进程占用率</strong>：CPU 发起读写操作后，等待硬盘驱动器将数据读入内存的时间比例</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>硬盘</td>
+      <td>
+        <ul>
+          <li><strong>硬盘速度</strong>：资源硬盘读写速度</li>
+          <li><strong>硬盘 IOPS</strong>：资源硬盘读写 IOPS</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>内存</td>
+      <td><strong>内存使用量</strong>：资源内存的使用量和空闲量</td>
+    </tr>
+    <tr>
+      <td>网卡</td>
+      <td>
+        <ul>
+          <li><strong>网卡数据速率</strong>：资源当前网卡的发送和接收速率</li>
+          <li><strong>网卡包速率</strong>：资源当前网卡的发送包和接收包速率</li>
+          <li><strong>网卡包丢弃速率</strong>：资源当前网卡的出包和入包丢弃速率</li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>分布式端口组</td>
+      <td>IP</td>
+      <td>
+        <ul>
+          <li><strong>已用 IP 百分比（IPv4）</strong>：资源当前已使用的 IPv4 地址百分比</li>
+          <li><strong>可用 IP 百分比（IPv4）</strong>：资源当前剩余可用的 IPv4 地址百分比</li>
+        </ul>
+      </td>
+    </tr>
+  </tbody>
+</table>

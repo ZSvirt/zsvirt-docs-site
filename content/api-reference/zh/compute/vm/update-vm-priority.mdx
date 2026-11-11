@@ -1,0 +1,80 @@
+---
+title: "更改虚拟机优先级级别"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateVmPriority": {
+    "priority": "High"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateVmPriority":{"priority":"High"}}' http://localhost:8080/zstack/v1/vm-instances/f308c452113832df898fb62ea87b2afc/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |3.7.0|
+|priority|String|body\(包含在**updateVmPriority**结构中\)| | |3.7.0|
+|systemTags \(可选\)|List|body| | |3.7.0|
+|userTags \(可选\)|List|body| | |3.7.0|
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+UpdateVmPriorityAction action = new UpdateVmPriorityAction();
+action.uuid = "f308c452113832df898fb62ea87b2afc";
+action.priority = "High";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateVmPriorityAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateVmPriorityAction action = UpdateVmPriorityAction()
+action.uuid = "f308c452113832df898fb62ea87b2afc"
+action.priority = "High"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateVmPriorityAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,59 @@
+---
+title: "Query Shared Disk Attached VM Instances"
+---
+
+<APIPage method="GET" path="/v1/volumes/vm-instances/refs">
+
+Query VM instances attached to a shared disk
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/volumes/vm-instances/refs?q=0c917562d5954544b37bf5e0ed0735a6&q=cddc1c17e94a43b5b50e1df53e076d11&q=2&q=Jan 22, 2017 2:41:37 PM&q=Jan 22, 2017 2:43:18 PM
+```
+
+Queryable Fields
+
+Run the CLI tool, type `QueryShareableVolumeVmInstanceRef` and press Tab to view all queryable fields and cross-table queryable resource names.
+
+## API Response
+On success, this API returns an empty JSON structure **`{}`**. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+QueryShareableVolumeVmInstanceRefAction action = new QueryShareableVolumeVmInstanceRefAction();
+action.conditions = asList("0c917562d5954544b37bf5e0ed0735a6","cddc1c17e94a43b5b50e1df53e076d11","2","Jan 22, 2017 2:41:37 PM","Jan 22, 2017 2:43:18 PM");
+action.sessionId = "9fa1cf123ab04b1691ea509bf48c9071";
+QueryShareableVolumeVmInstanceRefAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryShareableVolumeVmInstanceRefAction action = QueryShareableVolumeVmInstanceRefAction()
+action.conditions = ["0c917562d5954544b37bf5e0ed0735a6","cddc1c17e94a43b5b50e1df53e076d11","2","Jan 22, 2017 2:41:37 PM","Jan 22, 2017 2:43:18 PM"]
+action.sessionId = "730ddea9ae3246a0ad483f7b6e3bb49f"
+QueryShareableVolumeVmInstanceRefAction.Result res = action.call()
+```
+
+</APIPage>

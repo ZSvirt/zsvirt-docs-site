@@ -1,0 +1,153 @@
+---
+title: "Query NVMe Target"
+---
+
+<APIPage method="GET" path="/v1/storage-devices/nvme/controllers" altPaths={["/v1/storage-devices/nvme", "/v1/storage-devices/nvme/controllers/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/storage-devices/nvme/controllers
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/storage-devices/nvme
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/storage-devices/nvme/controllers/de0f2549ed0130948f14b00916fbf9a0
+```
+
+Queryable Fields
+
+Run the CLI command tool, enter `QueryNvmeTarget` and press Tab to view all queryable fields and resource names that can be queried across tables.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "40ab069909633d4293c62f44efb26db8",
+      "state": "Enabled",
+      "nvmeLuns": [
+        {
+          "nvmeTargetUuid": "40ab069909633d4293c62f44efb26db8",
+          "nvmeLunHostRefs": [
+            {
+              "id": 1,
+              "nvmeLunUuid": "5690b46050623763a0335e753c347fa1",
+              "hostUuid": "d6f8a7ff0069304080b345c077c3aeb9",
+              "createDate": "Nov 14, 2017 10:20:57 PM",
+              "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+            }
+          ],
+          "name": "nvme-lun-36b083fe000daf018000022905ba35d8f",
+          "uuid": "5690b46050623763a0335e753c347fa1",
+          "wwid": "uuid.48daeab7-7f15-405e-8481-7152cb9b0aca",
+          "wwn": "uuid.48daeab7-7f15-405e-8481-7152cb9b0aca",
+          "serial": "3d87eca1686c1782",
+          "type": "disk",
+          "path": "nvme-uuid.48daeab7-7f15-405e-8481-7152cb9b0aca ",
+          "size": 5497558138880
+        }
+      ],
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.6.21|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. For details, see [error](#p_mwx_kwd_nfb)|4.6.21|
+|inventories|List|For details, see [inventories](#p_xhf_lwd_nfb)|4.6.21|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, for example SYS.1000, HOST.1001|4.6.21|
+|description|String|Brief summary of the error|4.6.21|
+|details|String|Detailed error information|4.6.21|
+|elaboration|String|Reserved field, defaults to null|4.6.21|
+|opaque|LinkedHashMap|Reserved field, defaults to null|4.6.21|
+|cause|ErrorCode|Root cause: the source error that triggered the current error. If there is no original error, this field is null|4.6.21|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|4.6.21|
+|name|String|Resource name|4.6.21|
+|nqn|String|NVMe Qualified Name|4.6.21|
+|state|String|State|4.6.21|
+|createDate|Timestamp|Creation time|4.6.21|
+|lastOpDate|Timestamp|Last modification time|4.6.21|
+|nvmeLuns|List|For details, see [nvmeLuns](#p_sdy_n3f_dxb)|4.6.21|
+
+### nvmeLuns
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|nvmeTargetUuid|String|NVMe device UUID|4.6.21|
+|name|String|Resource name|4.6.21|
+|uuid|String|Resource UUID, uniquely identifies the resource|4.6.21|
+|wwid|String|Global unique identifier|4.6.21|
+|vendor|String|Vendor|4.6.21|
+|model|String|Model|4.6.21|
+|wwn|String| |4.6.21|
+|serial|String|Serial number|4.6.21|
+|type|String|Type|4.6.21|
+|hctl|String| |4.6.21|
+|path|String|Path|4.6.21|
+|state|String|State|4.6.21|
+|size|Long|Size|4.6.21|
+|multipathDeviceUuid|String|Multipath device UUID|4.6.21|
+|source|String|Disk source, NVMe|4.6.21|
+|createDate|Timestamp|Creation time|4.6.21|
+|lastOpDate|Timestamp|Last modification time|4.6.21|
+|nvmeLunHostRefs|List|For details, see [nvmeLunHostRefs](#p_gxn_lwd_nfb)|4.6.21|
+
+### nvmeLunHostRefs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|nvmeLunUuid|List|NVMe disk UUID|4.6.21|
+|hostUuid|String|Host UUID|4.6.21|
+|path|String|Disk path|4.6.21|
+|hctl|String|Disk HCTL|4.6.21|
+|createDate|Timestamp|Creation time|4.6.21|
+|lastOpDate|Timestamp|Last modification time|4.6.21|
+
+## SDK Examples
+Java SDK
+
+```
+QueryNvmeTargetAction action = new QueryNvmeTargetAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryNvmeTargetAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryNvmeTargetAction action = QueryNvmeTargetAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryNvmeTargetAction.Result res = action.call()
+```
+
+</APIPage>

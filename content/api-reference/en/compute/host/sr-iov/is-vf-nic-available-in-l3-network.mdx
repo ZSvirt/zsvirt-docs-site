@@ -1,0 +1,75 @@
+---
+title: "Check VF NIC Availability in L3 Network"
+---
+
+<APIPage method="GET" path="/v1/l3-networks/{l3NetworkUuid}/hosts/{hostUuid}/vfnicavailable">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/l3-networks/443e156ec6883356974f97f803187310/hosts/037404d26b033e9d9fe0d3e7e4bbaa8b/vfnicavailable
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|l3NetworkUuid|String|url|Distributed Port Group UUID| |3.9.0|
+|hostUuid|String|url|Host UUID| |3.9.0|
+|systemTags \(Optional\)|List|query|System tags| |3.9.0|
+|userTags \(Optional\)|List|query|User tags| |3.9.0|
+
+## API Response
+Response Example
+
+```
+{
+  "vfNicAvailable": true
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|vfNicAvailable|boolean|Whether an available VF NIC exists|3.9.0|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_o3w_rbm_llb)|3.9.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code, a globally unique identifier of the error, e.g. SYS.1000, HOST.1001|3.9.0|
+|description|String|Brief description of the error|3.9.0|
+|details|String|Detailed error information|3.9.0|
+|elaboration|String|Reserved field, defaults to null|3.9.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|3.9.0|
+|cause|ErrorCode|Root cause, the source error that caused the current error, null if no original error|3.9.0|
+
+## SDK Examples
+Java SDK
+
+```
+IsVfNicAvailableInL3NetworkAction action = new IsVfNicAvailableInL3NetworkAction();
+action.l3NetworkUuid = "443e156ec6883356974f97f803187310";
+action.hostUuid = "037404d26b033e9d9fe0d3e7e4bbaa8b";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+IsVfNicAvailableInL3NetworkAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+IsVfNicAvailableInL3NetworkAction action = IsVfNicAvailableInL3NetworkAction()
+action.l3NetworkUuid = "443e156ec6883356974f97f803187310"
+action.hostUuid = "037404d26b033e9d9fe0d3e7e4bbaa8b"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+IsVfNicAvailableInL3NetworkAction.Result res = action.call()
+```
+
+</APIPage>

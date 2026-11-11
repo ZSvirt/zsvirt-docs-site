@@ -1,0 +1,71 @@
+---
+title: "GetL3NetworkTypes"
+---
+
+<APIPage method="GET" path="/v1/l3-networks/types">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Sample
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/l3-networks/types
+```
+
+Request Parameters
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|systemTags|List|query|Optional. The system tags.| |0.6|
+|userTags|List|query|Optional. The user tags.| |0.6|
+
+## API Response
+Sample Response
+
+```
+{
+  "l3NetworkTypes": [
+    "L3BasicNetwork"
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|types|List| |0.6|
+|error|ErrorCode|The error code. If not null, the operation fails, or vice versa. For more information, see [error](#p_b44_l5g_m1b).|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code, which is a numbered or alphanumeric code that specifies an error. For example, SYS.1000, HOST.1001.|0.6|
+|description|String|The brief description of the error.|0.6|
+|details|String|The details about the error.|0.6|
+|elaboration|String|The reserved field. Default value: null.|0.6|
+|opaque|LinkedHashMap|The reserved field. Default value: null.|0.6|
+|cause|ErrorCode|The root error, which is the associated root cause of the current error. If no root error exists, this parameter is null.|0.6|
+
+## SDK Sample
+Java SDK
+
+```
+GetL3NetworkTypesAction action = new GetL3NetworkTypesAction();
+action.sessionId = "9105437ebb27461fbae36ecb9336ceba";
+GetL3NetworkTypesAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetL3NetworkTypesAction action = GetL3NetworkTypesAction()
+action.sessionId = "a69bae9c3cad4209b042956b23c70af7"
+GetL3NetworkTypesAction.Result res = action.call()
+```
+
+</APIPage>

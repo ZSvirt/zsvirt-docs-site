@@ -1,0 +1,257 @@
+---
+title: "Share Resource"
+---
+
+<APIPage method="PUT" path="/v1/accounts/resources/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "shareResource": {
+    "resourceUuids": [
+      "62113cf71892442daf57fe1a21606e7b",
+      "e8d14f0a61d7497c83cf9451bdd392a3"
+    ],
+    "accountUuids": [
+      "17c6a138e5f04df4ad8938fa8bd06340",
+      "7063dc465e7c42739fdb5fd7d3e373f4"
+    ],
+    "toPublic": false
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, the **systemTags** and **userTags** fields are optional. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"shareResource":{"resourceUuids":["05c5cdd1a5693e53ad3212a69b808883","49c6493b8eaf3765806aeb17071e779f"],"accountUuids":["62c084e3a2053b089b8b95fe452856e7","194f8c7d98963e628b9967b0df7eecae"],"toPublic":false}}' \
+http://localhost:8080/zstack/v1/accounts/resources/actions
+```
+
+Parameter List
+
+<table id="table_ufg_cpl_l1b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+resourceUuids
+
+</td><td>
+
+List
+
+</td><td>
+
+body \(contained in the **shareResource** structure\)
+
+</td><td>
+
+Resource UUID list
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+accountUuids \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body \(contained in the **shareResource** structure\)
+
+</td><td>
+
+Account UUID list
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+toPublic \(Optional\)
+
+</td><td>
+
+boolean
+
+</td><td>
+
+body \(contained in the **shareResource** structure\)
+
+</td><td>
+
+Share globally**Note:** When the toPublic parameter is set to false, the account UUID list cannot be empty
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+permission \(Optional\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body \(contained in the **shareResource** structure\)
+
+</td><td>
+
+Sharing permission. WRITE indicates write permission; READ indicates read permission
+
+</td><td>
+
+ 
+
+</td><td>
+
+4.2.0
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr></tbody>
+</table>
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+ShareResourceAction action = new ShareResourceAction();
+action.resourceUuids = asList("05c5cdd1a5693e53ad3212a69b808883","49c6493b8eaf3765806aeb17071e779f");
+action.accountUuids = asList("62c084e3a2053b089b8b95fe452856e7","194f8c7d98963e628b9967b0df7eecae");
+action.toPublic = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ShareResourceAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+ShareResourceAction action = ShareResourceAction()
+action.resourceUuids = [05c5cdd1a5693e53ad3212a69b808883, 49c6493b8eaf3765806aeb17071e779f]
+action.accountUuids = [62c084e3a2053b089b8b95fe452856e7, 194f8c7d98963e628b9967b0df7eecae]
+action.toPublic = false
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+ShareResourceAction.Result res = action.call()
+
+```
+
+</APIPage>

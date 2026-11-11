@@ -1,0 +1,78 @@
+---
+title: "Failover Fault Tolerance Virtual Machine"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/fault-tolerance">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "failoverFaultToleranceVm": {
+    "faultToleranceVmUuid": "ff01ec80fd11327cba7519b66119d900"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, `systemTags` and `userTags` fields can be omitted. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"failoverFaultToleranceVm":{"faultToleranceVmUuid":"ff01ec80fd11327cba7519b66119d900"}}' \
+http://localhost:8080/zstack/v1/vm-instances/fault-tolerance
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|faultToleranceVmUuid|String|body\(included in the `failoverFaultToleranceVm` structure\)| | |0.6|
+|systemTags \(Optional\)|List|body|System Tag| |0.6|
+|userTags \(Optional\)|List|body|User Tag| |0.6|
+
+## API Response
+When the API succeeds, it returns an empty JSON structure `{}`. When an error occurs, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+FailoverFaultToleranceVmAction action = new FailoverFaultToleranceVmAction();
+action.faultToleranceVmUuid = "ff01ec80fd11327cba7519b66119d900";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+FailoverFaultToleranceVmAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+FailoverFaultToleranceVmAction action = FailoverFaultToleranceVmAction()
+action.faultToleranceVmUuid = "ff01ec80fd11327cba7519b66119d900"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+FailoverFaultToleranceVmAction.Result res = action.call()
+```
+
+</APIPage>

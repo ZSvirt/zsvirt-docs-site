@@ -1,0 +1,112 @@
+---
+title: "重新提交长任务"
+---
+
+<APIPage method="PUT" path="/v1/longjobs/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "cleanLongJob": {},
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"rerunLongJob":{}}' \
+http://localhost:8080/zstack/v1/longjobs/6b0baa24019d331fad1548dbd3ec3eb1/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |3.0.1|
+|systemTags \(可选\)|List|body|系统标签| |3.0.1|
+|userTags \(可选\)|List|body|用户标签| |3.0.1|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "bdff1ecf1cab3029ace943626708678a"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_wyz_cdb_r2c)|3.0.1|
+|inventory|LongJobInventory|详情参考[inventory](#p_rsw_3db_r2c)|3.0.1|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|2.2.4|
+|name|String|资源名称|2.2.4|
+|description|String|资源的详细描述|2.2.4|
+|apiId|String|用于关联TaskProgress的APIID|2.2.4|
+|jobName|String|任务名称|2.2.4|
+|jobData|String|任务数据|2.2.4|
+|jobResult|String|任务结果|2.2.4|
+|targetResourceUuid|String|目标资源UUID|2.2.4|
+|managementNodeUuid|String|管理节点UUID|2.2.4|
+|createDate|Timestamp|创建时间|2.2.4|
+|lastOpDate|Timestamp|最后一次修改时间|2.2.4|
+|state|LongJobState|详情参考[state](#p_iwm_hdb_r2c)|2.2.4|
+
+### state
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|name|String|资源名称|2.2.4|
+|ordinal|int| |2.2.4|
+
+## SDK示例
+Java SDK
+
+```
+RerunLongJobAction action = new RerunLongJobAction();
+action.uuid = "6b0baa24019d331fad1548dbd3ec3eb1";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RerunLongJobAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+RerunLongJobAction action = RerunLongJobAction()
+action.uuid = "6b0baa24019d331fad1548dbd3ec3eb1"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+RerunLongJobAction.Result res = action.call()
+```
+
+</APIPage>

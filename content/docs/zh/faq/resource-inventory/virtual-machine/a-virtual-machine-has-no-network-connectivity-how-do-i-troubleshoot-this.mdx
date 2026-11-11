@@ -1,0 +1,46 @@
+---
+title: "虚拟机网络不通，如何排查？"
+---
+
+## 解决方案
+-   请尝试参考以下内容进行排查：
+-   请检查虚拟机操作系统是否正常、网络配置（如：IP地址、子网掩码、网关、路由等）是否正常、网络服务状态是否正常、网关是否可达、同网段虚拟机是否可达、同主机上的虚拟机是否可达、ARP解析是否正常、IP地址是否冲突等。
+
+    -   Linux虚拟机需检查网卡配置文件。
+    -   Windows虚拟机需在**控制面板** &gt; **网络连接**检查网卡配置。
+    -   若IP地址冲突，可使用`arping`命令测试查找IP地址冲突的MAC地址，并在交换机MAC地址表中查找定位至冲突的终端，修改其中一个终端的IP地址以避免冲突。
+-   请检查虚拟机或网关是否禁止了`ping`命令，Linux虚拟机请检查iptables规则和firewalld状态，Windows虚拟机请检查系统内防火墙或iptables规则是否有相关限制。
+
+-   若Linux虚拟机同时开启了NetworkManager服务和network服务可能导致服务冲突，请关闭NetworkManager服务并重启网络服务测试。
+
+-   Windows虚拟机请检查网卡virtio驱动是否已更新至最新，在操作系统中右击**开始**，选择设备管理器，即可依次更新PCI简单通讯控制器、PCI设备、SCSI控制器。
+
+-   若虚拟机无法`ping`通远端服务器，请检查目标服务器是否有回程路由，回程路由匹配的网卡与目标服务器接收报文的网卡是否为同一张网卡。
+
+-   若两台虚拟机开启了高可用服务且虚拟IP地址访问不通，请检查是否开启了网卡防欺诈模式，需注意网卡反欺诈模式不能与虚拟机VRRP同时使用。
+
+-   若虚拟机分布式端口组未开启DHCP服务，但虚拟机网卡配置了DHCP模式，需要手动在虚拟机内部配置静态IP地址。
+
+-   若虚拟机配置多个网卡，使用非默认网卡通信的虚拟机可能需要手动配置静态路由。
+
+-   请检查虚拟机所在主机iptables及ebtables规则是否正常、虚拟设备之间连接是否正常，例如：Linux Bridge、Vnic、Tap、Tun等。若存在异常，可尝试重连主机恢复。
+
+-   请检查主机网络配置、网卡状态速率、bond所绑定的网卡状态是否正常。
+
+    -   使用`zs-show-network`命令在主机验证bond内是否存在网卡，且网卡设备状态是否为UP。
+    -   使用`ethtool bondX`命令查看bond速率。bond-lacp模式bond正常速率应为单张网卡的两倍，bond-ab模式bond正常速率应与单张网卡相同。
+    -   使用`cat /proc/net/bonding/bondX`命令查看bond协议状态，bond-lacp模式下双网卡正常状态显示应为`port state: 61`
+-   请检查交换机端口配置是否正常，例如：链路聚合模式、端口模式、VLAN放行是否正常，分布式端口组网关、子网掩码和路由配置是否正常。
+
+    -   服务器bond-ab模式双网卡对应的交换机双端口需独立配置，不能配置链路聚合。
+    -   服务器bond-lacp模式双网卡对应的交换机双端口必须配置链路聚合，需注意不同交换机厂商命名方式不同。
+        -   华为交换机：mode lacp（S系列）或mode lacp-static（CE系列）
+        -   盛科交换机：channel-group XX mode active
+        -   华三交换机：link-aggregation mode dynamic
+        -   思科交换机：channel-protocol lacp，channel-group XX mode active
+        -   锐捷交换机：port-group XX mode active
+    -   若分布式端口组对应的分布式交换机类型为L2NoVlanNetwork，请确认交换机对端接口是否放行了分布式交换机的VLAN ID。。
+        -   若交换机端口模式为Access，需配置Access分布式交换机的VLAN ID。
+        -   若交换机端口模式为Trunk，需配置Trunk PVID \(Native VLAN\) 为分布式交换机的VLAN ID。
+    -   若分布式端口组对应的分布式交换机类型为L2VlanNetwork，请确认交换机对端接口是否已配置为Trunk模式，且放行了 分布式交换机的VLAN ID。
+-   请检查交换机是否有ACL配置、是否有物理防火墙安全策略，可请网络工程师协助排查。

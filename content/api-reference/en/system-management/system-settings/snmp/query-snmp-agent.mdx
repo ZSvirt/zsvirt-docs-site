@@ -1,0 +1,105 @@
+---
+title: "Query SNMP Agent"
+---
+
+<APIPage method="GET" path="/v1/snmp/agent" altPaths={["/v1/snmp/agent/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/snmp/agent
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/snmp/agent/18c89b48e653385f83db6ecffb48763f
+```
+
+Queryable Fields
+
+Run the CLI tool, enter `QueryLdapServer` and press Tab to view all queryable fields and cross-table queryable resource names.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "f0ef8d847b573c6b86565e1d9111723b",
+      "version": "v3",
+      "userName": "zstack",
+      "authAlgorithm": "SHA512",
+      "authPassword": "auth_password",
+      "privacyAlgorithm": "DES",
+      "privacyPassword": "priv_password",
+      "port": 161,
+      "status": "Enable",
+      "securityLevel": "authPriv"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |4.10.0|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_bcl_x1v_m1b)|4.10.0|
+|inventories|List|See [inventories](#p_nqg_y1v_m1b)|4.10.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number. A globally unique identifier for the error, e.g., SYS.1000, HOST.1001|4.10.0|
+|description|String|Brief description of the error|4.10.0|
+|details|String|Detailed error information|4.10.0|
+|elaboration|String|Reserved field. Defaults to null|4.10.0|
+|opaque|LinkedHashMap|Reserved field. Defaults to null|4.10.0|
+|cause|ErrorCode|Root error. The source error that caused this error. Null if no root cause exists|4.10.0|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID. Uniquely identifies the resource|4.10.0|
+|version|String|SNMP agent protocol version|4.10.0|
+|readCommunity|String|Read community string \(used when version is v2c\)|4.10.0|
+|userName|String|Username \(used when version is v3\)|4.10.0|
+|authAlgorithm|String|Authentication algorithm|4.10.0|
+|authPassword|String|Authentication password|4.10.0|
+|privacyAlgorithm|String|Privacy algorithm|4.10.0|
+|privacyPassword|String|Privacy password|4.10.0|
+|port|int|Port|4.10.0|
+|status|String|Whether the SNMP agent is enabled|4.10.0|
+|securityLevel|String|Security level|4.10.0|
+|createDate|Timestamp|Creation time|4.10.0|
+|lastOpDate|Timestamp|Last modification time|4.10.0|
+
+## SDK Examples
+Java SDK
+
+```
+QuerySnmpAgentAction action = new QuerySnmpAgentAction();
+action.conditions = asList();
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QuerySnmpAgentAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QuerySnmpAgentAction action = QuerySnmpAgentAction()
+action.conditions = []
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QuerySnmpAgentAction.Result res = action.call()
+```
+
+</APIPage>

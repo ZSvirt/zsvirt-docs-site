@@ -1,0 +1,33 @@
+---
+title: "The DNS settings on a CentOS virtual machine revert to defaults after a restart. What should I do?"
+---
+
+## Symptom
+After restarting the CentOS virtual machine, the DNS settings revert to their defaults.
+
+## Cause
+When the `PEERDNS=no` setting is present in the network adapter configuration file, the network interface does not automatically configure a DNS server. In this case, the DNS server must be configured manually; otherwise the virtual machine cannot resolve domain names.
+
+## Solution
+-   If Cloud-init is installed on the virtual machine, configure DNS in the `/etc/reslove.conf` file.
+
+    ```
+    [root@localhost ~]# vim /etc/reslove.conf
+    #Add DNS configuration
+    servername 223.5.5.5
+    ```
+
+-   If Cloud-init is not installed on the virtual machine, configure the network adapter IP address and DNS address using the static method.
+
+    ```
+    [root@localhost ~]# vi /etc/sysconfig/network-scripts/ifcfg-eth0
+    #Configure IP address and DNS
+    DEVICE=eth0
+    ONBOOT=yes
+    BOOTPROTO=static
+    IPADDR=192.168.1.100
+    NETMASK=255.255.255.0
+    GATEWAY=192.168.1.1
+    DNS1=8.8.8.8
+    DNS2=8.8.4.4
+    ```

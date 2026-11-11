@@ -1,0 +1,10 @@
+{
+  "title": "系统参数相关接口",
+  "pages": [
+    "query-global-config",
+    "update-global-config",
+    "reset-global-config",
+    "get-global-config-options"
+  ],
+  "pagesIndex": "index"
+}

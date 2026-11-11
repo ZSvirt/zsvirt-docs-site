@@ -1,0 +1,89 @@
+---
+title: "Upgrade MN HA Environment"
+---
+
+<HistoricalNamingNote locale="en" />
+
+This section uses H84r as an example to introduce a step-by-step guide for upgrading a management node environment that has HA configured.
+
+## Procedure
+
+1.  Check the current environment version and the operating system version.
+
+    ```
+    [root@localhost ~]# zstack-ctl status
+    [root@localhost ~]# cat /etc/redhat-release
+    ```
+
+2.  Obtain the upgrade packages.
+
+    Download the zstack-upgrade script,ISO software package, upgrade packages, and the HA suite for management node as needed.
+
+3.  Disable the HA policy.
+
+    Before the upgrade, you need to disable the global switch for virtual machine high availability to avoid triggering it accidentally, which could affect the upgrade. After the upgrade is complete, manually enable the HA policy.
+
+    1.  Log in to ZSvirt.
+
+    2.  Click **Business Reliability** > **HA Policy** to enter the HA Policy page.
+
+    3.  Disable the HA policy switch.
+
+4.  Back up the database and upgrade script.
+
+    Log in to the management node system and then run the following commands to back up the database and upgrade script for emergency recovery:
+
+    ```
+    # Back up the database to the /var/lib/zstack/mysql-backup/ directory
+    [root@localhost ~]# zstack-ctl dump_mysql --file-name zstack-db-backup
+    
+    # Back up the upgrade script to the /root/ directory
+    [root@localhost ~]# cp /usr/local/bin/zstack-upgrade /root/zstack-upgrade-bk
+    ```
+
+5.  Obtain the IP address of the management node where the VIP is located.
+
+    Run the following command to obtain the IP address of the management node where the VIP is located. The node with VIP marked as yes in the returned results is the management node where the VIP is located:
+
+    ```
+    [root@localhost ~]# zsha2 status
+    ```
+
+6.  Import the HA suite and grant executable permission.
+
+    On the management node where the VIP is located, run the following commands in sequence to copy the HA suite from the local ISO repository and grant executable permissions to the `zsha2` and `zstack-hamon` files:
+
+    ```
+    # Copy the HA suite files from the local ISO repository
+    [root@localhost ~]# cp /opt/zstack-dvd/x86_64/h84r/zsha2_bins/* /root/
+
+    # Grant executable permissions
+    [root@localhost ~]# chmod +x zsha2 zstack-hamon
+    ```
+
+7.  Upgrade the HA suite.
+
+    On the management node where the VIP is located, run the following command to upgrade the HA suite:
+
+    ```
+    [root@localhost ~]# ./zsha2 upgrade-ha
+    ```
+
+8.  Run the `zsha2 version` command to check if the `commit id` matches the one in the latest version package.
+
+9.  Upgrade ZSvirt.
+
+    On the management node where the VIP is located, run the following command to upgrade the virtualization platform:
+
+    ```
+    zsha2 upgrade-mn -peerpass password ZSvirt-x86_64-DVD-1.0.0-h84r.iso
+    ```
+
+    **Note:** `-peerpass` is optional and can be set to the SSH login password for the peer management node.
+
+
+10. Clear the browser cache.
+
+    To ensure that the new features work properly, it is recommended that after the upgrade is complete, you log in to the UI management interface and manually clear the browser cache by pressing `Ctrl+F5` or `Ctrl+Shift+R`.
+
+11. Enable the HA policy.

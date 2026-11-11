@@ -1,0 +1,95 @@
+---
+title: "Query Data Center"
+---
+
+<APIPage method="GET" path="/v1/zones" altPaths={["/v1/zones/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zones?q=name=TestZone&q=state=Enabled
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zones/9276d05c7d7545d6b61bfc50f017b86c
+```
+
+Queryable Fields
+
+Run the CLI command tool, enter `QueryZone` and press Tab to view all queryable fields and resource names that can be queried across tables.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "a58fb4240ed04129a0896b565f24a9df",
+      "name": "TestZone",
+      "description": "Test",
+      "state": "Enabled",
+      "type": "zstack",
+      "createDate": "Jun 7, 2017 9:20:29 PM",
+      "lastOpDate": "Jun 7, 2017 9:20:29 PM"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|error|ErrorCode|Error code. If not null, the operation failed. If null, the operation succeeded. See details [error](#p_e3g_xts_l1b)|0.6|
+|inventories|List|See details [inventories](#p_snm_xts_l1b)|0.6|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code number, globally unique identifier of the error, e.g. SYS.1000, HOST.1001|0.6|
+|description|String|Brief description of the error|0.6|
+|details|String|Detailed error information|0.6|
+|elaboration|String|Reserved field, default is null|0.6|
+|opaque|LinkedHashMap|Reserved field, default is null|0.6|
+|cause|ErrorCode|Root cause, the error that caused the current error. If there is no original error, this field is null|0.6|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|Resource UUID, uniquely identifies the resource|0.6|
+|name|String|Resource name|0.6|
+|description|String|Resource description|0.6|
+|state|String| |0.6|
+|type|String| |0.6|
+|createDate|Timestamp|Creation time|0.6|
+|lastOpDate|Timestamp|Last modification time|0.6|
+
+## SDK Examples
+Java SDK
+
+```
+QueryZoneAction action = new QueryZoneAction();
+action.conditions = asList("name=TestZone","state=Enabled");
+action.sessionId = "608079b963b54e8a9aa3a2291adae89f";
+QueryZoneAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryZoneAction action = QueryZoneAction()
+action.conditions = ["name=TestZone","state=Enabled"]
+action.sessionId = "be89929b7fd34d25a5c1a7f47f4490cd"
+QueryZoneAction.Result res = action.call()
+```
+
+</APIPage>

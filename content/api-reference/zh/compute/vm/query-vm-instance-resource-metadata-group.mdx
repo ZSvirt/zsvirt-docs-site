@@ -1,0 +1,118 @@
+---
+title: "查询虚拟机设备地址组"
+---
+
+<APIPage method="GET" path="/v1/vmInstance/resource/metadata/group" altPaths={["/v1/vmInstance/resource/metadata/group/{uuid}"]}>
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vmInstance/resource/metadata/group?q=uuid=a4e2d7e087e63e14af4890acad6b2d5f
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vmInstance/resource/metadata/group/9e9e781ccf3931a39751c55a7f41ea07
+```
+
+可查询字段
+
+运行CLI命令行工具，输入`QueryVmInstanceResourceMetadataGroup`并按Tab键查看所有可查询字段以及可跨表查询的资源名。
+
+## API返回
+返回示例
+
+```
+{
+  "inventories": [
+    {
+      "uuid": "54cf17e0b4be38b59b43abb778c56379",
+      "resourceUuid": "688ee3ed522d33d9a4ec9d3740938972",
+      "createDate": "Nov 14, 2017 2:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 2:20:57 PM",
+      "addressList": [
+        {
+          "id": 1,
+          "resourceUuid": "fe925ba7d1a4342a8d86bd57dafe09ef",
+          "vmInstanceUuid": "7534a094abe63aa08ddf8b6d43ed451b",
+          "deviceAddress": "{\"bus\":\"00\",\"domain\":\"0000\",\"slot\":\"0d\",\"function\":\"0\"}",
+          "addressGroupUuid": "54cf17e0b4be38b59b43abb778c56379",
+          "metadata": "{\"uuid\":\"6b493e7c870d362d8dd75bf3cd3a26eb\",\"name\":\"Root-Volume-For-VM-7da78e9e53d9339fb2f034e19cc2e160\",\"primaryStorageUuid\":\"cc2e2c3954233a489648e9df8f90825c\",\"vmInstanceUuid\":\"7da78e9e53d9339fb2f034e19cc2e160\",\"diskOfferingUuid\":\"53a9fea90a9c38899367b0a2c338bc4a\",\"rootImageUuid\":\"6bf5558add1d3f6481940fb0575ce806\",\"installPath\":\"/zstack_ps/rootVolumes/acct-36c27e8ff05c4780bf6d2fa65700f22e/vol-6b493e7c870d362d8dd75bf3cd3a26eb/6b493e7c870d362d8dd75bf3cd3a26eb.qcow2\",\"type\":\"Root\",\"format\":\"qcow2\",\"size\":107374182400,\"actualSize\":21474836480,\"deviceId\":0,\"state\":\"Enabled\",\"status\":\"Ready\",\"createDate\":\"Nov 14, 2017 2:20:57 PM\",\"lastOpDate\":\"Nov 14, 2017 2:20:57 PM\"}",
+          "metadataClass": "org.zstack.header.vm.devices.VmInstanceResourceMetadataGroupInventory",
+          "createDate": "Nov 14, 2017 2:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 2:20:57 PM"
+        }
+      ]
+    }
+  ]
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean|请求是否成功|4.10.16|
+|inventories|List|详情参考[inventories](#p_tlh_1xv_dfc)|4.10.16|
+|error|ErrorCode|详情参考[error](#p_ir4_1xv_dfc)|4.10.16|
+
+### inventories
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.10.16|
+|resourceUuid|String|资源 UUID|4.10.16|
+|vmInstanceUuid|String|虚拟机 UUID|4.10.16|
+|createDate|Timestamp|创建时间|4.10.16|
+|lastOpDate|Timestamp|最后一次修改时间|4.10.16|
+|addressList|List|详情参考[addressList](#p_fxw_sjy_3gc)|4.10.16|
+
+### addressList
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|id|long| |4.10.16|
+|resourceUuid|String|资源 UUID|4.10.16|
+|vmInstanceUuid|String|虚拟机 UUID|4.10.16|
+|deviceAddress|String|设备地址|4.10.16|
+|addressGroupUuid|String| |4.10.16|
+|metadata|String| |4.10.16|
+|metadataClass|String| |4.10.16|
+|createDate|Timestamp|创建时间|4.10.16|
+|lastOpDate|Timestamp|最后一次修改时间|4.10.16|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+## SDK示例
+Java SDK
+
+```
+QueryVmInstanceResourceMetadataGroupAction action = new QueryVmInstanceResourceMetadataGroupAction();
+action.conditions = asList("uuid=c3189c8e616b31828a84dfbdfa521f66");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryVmInstanceResourceMetadataGroupAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = QueryVmInstanceResourceMetadataGroupAction()
+action.conditions = ["uuid=cce5160da0323ea28420e866318be200"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

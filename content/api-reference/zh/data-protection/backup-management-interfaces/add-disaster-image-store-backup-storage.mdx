@@ -1,0 +1,114 @@
+---
+title: "复用镜像存储为备份存储"
+---
+
+<APIPage method="POST" path="/v1/backup-storage/image-store/disaster">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "attachPoint": "/test-bs",
+    "endPoint": "test12345-snp99.cn-shanghai.nas.aliyuncs.com",
+    "hostname": "192.168.1.8",
+    "username": "admin",
+    "password": "admin%pass",
+    "sshPort": 22,
+    "url": "/data/imagestore",
+    "name": "ImageStore",
+    "importImages": false
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中`systemTags`、`userTags`字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"attachPoint":"/test-bs","endPoint":"test12345-snp99.cn-shanghai.nas.aliyuncs.com","hostname":"192.168.1.8","username":"admin","password":"admin%pass","sshPort":22,"url":"/data/imagestore","name":"ImageStore","importImages":false}}' \
+http://localhost:8080/zstack/v1/backup-storage/image-store/disaster
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|attachPoint \(可选\)|String|body\(包含在`params`结构中\)| | |0.6|
+|endPoint \(可选\)|String|body\(包含在`params`结构中\)| | |0.6|
+|hostname|String|body\(包含在`params`结构中\)| | |0.6|
+|username|String|body\(包含在`params`结构中\)| | |0.6|
+|password \(可选\)|String|body\(包含在`params`结构中\)| | |0.6|
+|sshPort \(可选\)|int|body\(包含在`params`结构中\)| | |0.6|
+|url|String|body\(包含在`params`结构中\)| | |0.6|
+|name|String|body\(包含在`params`结构中\)|资源名称| |0.6|
+|description \(可选\)|String|body\(包含在`params`结构中\)|资源的详细描述| |0.6|
+|type \(可选\)|String|body\(包含在`params`结构中\)| | |0.6|
+|importImages \(可选\)|boolean|body\(包含在`params`结构中\)| | |0.6|
+|resourceUuid \(可选\)|String|body\(包含在`params`结构中\)|资源UUID| |0.6|
+|tagUuids \(可选\)|List|body\(包含在`params`结构中\)|标签UUID列表| |3.4.0|
+|systemTags \(可选\)|List|body|系统标签| |0.6|
+|userTags \(可选\)|List|body|用户标签| |0.6|
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+AddDisasterImageStoreBackupStorageAction action = new AddDisasterImageStoreBackupStorageAction();
+action.attachPoint = "/test-bs";
+action.endPoint = "test12345-snp99.cn-shanghai.nas.aliyuncs.com";
+action.hostname = "192.168.1.8";
+action.username = "admin";
+action.password = "admin%pass";
+action.sshPort = 22;
+action.url = "/data/imagestore";
+action.name = "ImageStore";
+action.importImages = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddDisasterImageStoreBackupStorageAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+AddDisasterImageStoreBackupStorageAction action = AddDisasterImageStoreBackupStorageAction()
+action.attachPoint = "/test-bs"
+action.endPoint = "test12345-snp99.cn-shanghai.nas.aliyuncs.com"
+action.hostname = "192.168.1.8"
+action.username = "admin"
+action.password = "admin%pass"
+action.sshPort = 22
+action.url = "/data/imagestore"
+action.name = "ImageStore"
+action.importImages = false
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+AddDisasterImageStoreBackupStorageAction.Result res = action.call()
+```
+
+</APIPage>

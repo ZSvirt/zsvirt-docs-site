@@ -1,0 +1,179 @@
+---
+title: "向分布式端口组添加主机路由"
+---
+
+<APIPage method="POST" path="/v1/l3-networks/{l3NetworkUuid}/hostroute">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "params": {
+    "prefix": "169.254.169.254/32",
+    "nexthop": "192.168.1.254"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X POST -d '{"params":{"prefix":"169.254.169.254/32","nexthop":"192.168.1.254"}}' \
+http://localhost:8080/zstack/v1/l3-networks/45d86c07f10437c6bf3161bae9974bb7/hostroute
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|l3NetworkUuid|String|url|分布式端口组UUID| |2.3|
+|prefix|String|body\(包含在**params**结构中\)| | |2.3|
+|nexthop|String|body\(包含在**params**结构中\)| | |2.3|
+|systemTags \(可选\)|List|body| | |2.3|
+|userTags \(可选\)|List|body| | |2.3|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "name": "Test-L3Network",
+    "l2NetworkUuid": "7dfdf976ef1334fba5c3b475104011b2",
+    "dns": [
+      "8.8.8.8"
+    ],
+    "hostRoute": [
+      {
+        "prefix": "169.254.169.254/32",
+        "nexthop": "192.168.1.254"
+      }
+    ]
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_jyg_vyq_ndb)|2.3|
+|inventory|L3NetworkInventory|详情参考[inventory](#p_afq_5yq_ndb)|2.3|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|name|String|资源名称|0.6|
+|description|String|资源的详细描述|0.6|
+|type|String| |0.6|
+|zoneUuid|String|数据中心UUID|0.6|
+|l2NetworkUuid|String|端口组分布式交换机UUID|0.6|
+|state|String| |0.6|
+|dnsDomain|String| |0.6|
+|system|Boolean| |0.6|
+|category|String| |0.6|
+|ipVersion|Integer|ip协议号|3.1.0|
+|enableIPAM|Boolean|打开IP地址管理功能|4.10.16|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+|dns|List| |0.6|
+|ipRanges|List|详情参考[ipRanges](#p_zpk_5yq_ndb)|0.6|
+|networkServices|List|详情参考[networkServices](#p_jwf_5yq_ndb)|0.6|
+|hostRoute|List|详情参考[hostRoute](#p_qfz_tyq_ndb)|2.3|
+|reservedIpRanges|List|详情参考[reservedIpRanges](#p_ust_zqy_3gc)|4.10.16|
+
+### ipRanges
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|l3NetworkUuid|String|分布式端口组UUID|0.6|
+|name|String|资源名称|0.6|
+|description|String|资源的详细描述|0.6|
+|startIp|String| |0.6|
+|endIp|String| |0.6|
+|netmask|String| |0.6|
+|prefixLen|String|掩码长度|3.1.0|
+|gateway|String| |0.6|
+|networkCidr|String| |0.6|
+|ipVersion|Integer|ip协议号|3.1.0|
+|addressMode|String|IPv6地址分配模式|3.1.0|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+
+### networkServices
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|l3NetworkUuid|String|分布式端口组UUID|0.6|
+|networkServiceProviderUuid|String|网络服务提供模块UUID|0.6|
+|networkServiceType|String| |0.6|
+
+### hostRoute
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|id|Long| |2.3|
+|l3NetworkUuid|String|分布式端口组UUID|2.3|
+|prefix|String| |2.3|
+|nexthop|String| |2.3|
+|createDate|Timestamp|创建时间|2.3|
+|lastOpDate|Timestamp|最后一次修改时间|2.3|
+
+### reservedIpRanges
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.10.16|
+|l3NetworkUuid|String|分布式端口组UUID|4.10.16|
+|name|String|资源名称|4.10.16|
+|description|String|资源的详细描述|4.10.16|
+|startIp|String|起始IP\(包含在保留地址段内\)|4.10.16|
+|endIp|String|结束IP\(包含在保留地址段内\)|4.10.16|
+|ipVersion|Integer|ip协议号|4.10.16|
+|createDate|Timestamp|创建时间|4.10.16|
+|lastOpDate|Timestamp|最后一次修改时间|4.10.16|
+
+## SDK示例
+Java SDK
+
+```
+AddHostRouteToL3NetworkAction action = new AddHostRouteToL3NetworkAction();
+action.l3NetworkUuid = "45d86c07f10437c6bf3161bae9974bb7";
+action.prefix = "169.254.169.254/32";
+action.nexthop = "192.168.1.254";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+AddHostRouteToL3NetworkAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = AddHostRouteToL3NetworkAction()
+action.l3NetworkUuid = "45d86c07f10437c6bf3161bae9974bb7"
+action.prefix = "169.254.169.254/32"
+action.nexthop = "192.168.1.254"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

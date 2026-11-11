@@ -1,0 +1,181 @@
+---
+title: "删除日志服务器配置"
+---
+
+<APIPage method="DELETE" path="/v1/log/configurations/log4j2">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth b86c9016b4f24953a9edefb53ca0678c" \
+-X DELETE http://localhost:8080/zstack/v1/log/configurations/log4j2?deleteMode=Permissive
+```
+
+参数列表
+
+<table id="table_crr_mwx_g2b"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+configId
+
+</td><td>
+
+Long
+
+</td><td>
+
+body
+
+</td><td>
+
+配置id
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.10.0
+
+</td></tr><tr><td>
+
+deleteMode \(可选\)
+
+</td><td>
+
+String
+
+</td><td>
+
+body
+
+</td><td>
+
+删除模式，默认为Permissive
+
+</td><td>
+
+-   Enforcing
+-   Permissive
+
+</td><td>
+
+3.10.0
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.10.0
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+3.10.0
+
+</td></tr></tbody>
+</table>
+
+## API返回
+该API成功时返回一个空的JSON结构`{}`，出错时返回的JSON结构包含一个error字段，例如：
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK示例
+Java SDK
+
+```
+DeleteLogConfigurationAction action = new DeleteLogConfigurationAction();
+action.configId = 0.0;
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteLogConfigurationAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteLogConfigurationAction action = DeleteLogConfigurationAction()
+action.configId = 0.0
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DeleteLogConfigurationAction.Result res = action.call()
+```
+
+</APIPage>

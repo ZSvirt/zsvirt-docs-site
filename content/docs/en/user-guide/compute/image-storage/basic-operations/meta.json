@@ -1,0 +1,10 @@
+{
+  "title": "Image Storage Basic Operations",
+  "pages": [
+    "index",
+    "add-standalone-image-storage",
+    "add-distributed-image-storage",
+    "manage-image-storage"
+  ],
+  "pagesIndex": "index"
+}

@@ -1,0 +1,115 @@
+---
+title: "更新飞书@用户"
+---
+
+<APIPage method="PUT" path="/v1/sns/application-endpoints/feishu/at-persons/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateAtPersonOfAtFeiShuEndpoint": {
+    "endpointUuid": "60274b11ffdc3ea080be205b964848d2",
+    "userId": "zhang.san",
+    "remark": "jack"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"updateAtPersonOfAtFeiShuEndpoint":{"endpointUuid":"60274b11ffdc3ea080be205b964848d2","userId":"zhang.san","remark":"jack"}}' \
+http://localhost:8080/zstack/v1/sns/application-endpoints/feishu/at-persons/399ba943200638c2a63b65f002b6e180/actions
+```
+
+参数列表
+
+|名字|类型|位置|描述|可选值|起始版本|
+|---|---|---|---|---|----|
+|uuid|String|url|资源的UUID，唯一标示该资源| |4.2.0|
+|endpointUuid|String|body\(包含在**updateAtPersonOfAtFeiShuEndpoint**结构中\)|飞书endpoint uuid| |4.2.0|
+|userId\(可选\)|String|body\(包含在**updateAtPersonOfAtFeiShuEndpoint**结构中\)|飞书用户id| |4.2.0|
+|systemTags \(可选\)|List|body|系统标签| |4.2.0|
+|userTags \(可选\)|List|body|用户标签| |4.2.0|
+|remark|String|body\(包含在**updateAtPersonOfAtFeiShuEndpoint**结构中\)|备注| |4.2.0|
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "uuid": "68149d96f5464a54b19538f157aecf21",
+    "userId": "18988887777",
+    "endpointUuid": "902fb77eff144c15970a298072e1918f",
+    "createDate": "Mar 26, 2024 2:45:15 AM",
+    "lastOpDate": "Mar 26, 2024 2:45:15 AM",
+    "remark": "jack"
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |4.2.0|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_q55_jnx_bdb)|4.2.0|
+|inventory|SNSFeiShuAtPersonInventory|详情参考[inventory](#p_amz_jnx_bdb)|4.2.0|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|5.0.0|
+|description|String|错误的概要描述|5.0.0|
+|details|String|错误的详细信息|5.0.0|
+|elaboration|String|保留字段，默认为null|5.0.0|
+|opaque|LinkedHashMap|保留字段，默认为null|5.0.0|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|5.0.0|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|uuid|String|资源的UUID，唯一标示该资源|4.2.0|
+|userId|String|飞书用户id|4.2.0|
+|endpointUuid|String|飞书endpoint uuid|4.2.0|
+
+## SDK示例
+Java SDK
+
+```
+UpdateAtPersonOfAtFeiShuEndpointAction action = new UpdateAtPersonOfAtFeiShuEndpointAction();
+action.uuid = "399ba943200638c2a63b65f002b6e180";
+action.endpointUuid = "60274b11ffdc3ea080be205b964848d2";
+action.userId = "zhang.san";
+action.remark = "jack";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateAtPersonOfAtFeiShuEndpointAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateAtPersonOfAtFeiShuEndpointAction action = UpdateAtPersonOfAtFeiShuEndpointAction()
+action.uuid = "399ba943200638c2a63b65f002b6e180"
+action.endpointUuid = "60274b11ffdc3ea080be205b964848d2"
+action.userId = "zhang.san"
+action.remark = "jack"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateAtPersonOfAtFeiShuEndpointAction.Result res = action.call()
+```
+
+</APIPage>

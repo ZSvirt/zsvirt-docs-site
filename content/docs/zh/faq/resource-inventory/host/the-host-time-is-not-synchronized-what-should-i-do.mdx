@@ -1,0 +1,33 @@
+---
+title: "主机时间不同步，怎么办？"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+## 原因
+主机未配置时间源或时间源时间不正确。
+
+## 解决方案
+1.  若使用内部NTP时间服务器，内网环境可使用管理节点作为内部时间源。此设置需确保管理节点时间准确，若时间不同步，可使用`date`命令更新时间源时间，其他节点将自动同步。请依次执行以下命令：
+
+    ```
+    # 检查时间源节点
+    [root@localhost ~]# zstack-ctl show_configuration | grep chrony
+    # 假定修改时间为2022年7月25日21:00
+    [root@localhost ~]# date -s "2022-07-25 21:00:00"
+    ```
+
+2.  若使用外部NTP时间服务器，推荐管理节点同步外部时间源，集群内其他主机统一向管理节点同步时钟。设置外部NTP服务器时需与管理节点网络互通，若使用域名方式同步管理节点需配置DNS。请依次执行以下命令：
+
+    ```
+    # 检查时间源节点
+    [root@localhost ~]# zstack-ctl show_configuration | grep chrony
+    # 登录时间源节点，在chrony.conf文件添加外部NTP地址
+    [root@localhost ~]# vim /etc/chrony.conf
+    server 172.31.250.111 iburst
+    allow 0.0.0.0/0
+    # 重启chronyd服务
+    [root@localhost ~]# systemctl restart chronyd.service
+    # 检查时间同步是否生效
+    [root@localhost ~]# chronyc sources -v
+    ```

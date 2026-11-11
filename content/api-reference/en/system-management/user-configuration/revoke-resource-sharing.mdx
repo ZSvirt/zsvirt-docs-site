@@ -1,0 +1,260 @@
+---
+title: "Revoke Resource Sharing"
+---
+
+<APIPage method="PUT" path="/v1/accounts/resources/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "revokeResourceSharing": {
+    "resourceUuids": [
+      "6551ce5374243f14875351219cdb69ba",
+      "18501632374c331692e10ab976f56e28"
+    ],
+    "toPublic": false,
+    "accountUuids": [
+      "9a0c56a8bcbd31edbd384b28b8ffeffc",
+      "3627b63ad55939cf8df5fa4848abd6f2"
+    ],
+    "all": false
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, the **systemTags** and **userTags** fields are optional. They are listed to indicate that these two fields can be included in the body.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"revokeResourceSharing":{"resourceUuids":["6551ce5374243f14875351219cdb69ba","18501632374c331692e10ab976f56e28"],"toPublic":false,"accountUuids":["9a0c56a8bcbd31edbd384b28b8ffeffc","3627b63ad55939cf8df5fa4848abd6f2"],"all":false}}' \
+http://localhost:8080/zstack/v1/accounts/resources/actions
+```
+
+Parameter List
+
+<table id="table_zzp_rm5_m1b"><thead><tr><th>
+
+Name
+
+</th><th>
+
+Type
+
+</th><th>
+
+Location
+
+</th><th>
+
+Description
+
+</th><th>
+
+Allowed Values
+
+</th><th>
+
+Starting Version
+
+</th></tr></thead><tbody><tr><td>
+
+resourceUuids
+
+</td><td>
+
+List
+
+</td><td>
+
+body \(contained in the **revokeResourceSharing** structure\)
+
+</td><td>
+
+Resource UUID list
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+toPublic \(Optional\)
+
+</td><td>
+
+boolean
+
+</td><td>
+
+body \(contained in the structure\)
+
+</td><td>
+
+Share globally
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+accountUuids \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body \(contained in the **revokeResourceSharing** structure\)**Note:** When the all parameter is set to false, the account UUID list cannot be empty
+
+</td><td>
+
+Account UUID list
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+all \(Optional\)
+
+</td><td>
+
+boolean
+
+</td><td>
+
+body \(contained in the **revokeResourceSharing** structure\)
+
+</td><td>
+
+ 
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+systemTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+System tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+userTags \(Optional\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+User tags
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr></tbody>
+</table>
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On failure, the returned JSON structure contains an error field, for example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+RevokeResourceSharingAction action = new RevokeResourceSharingAction();
+action.resourceUuids = asList("6551ce5374243f14875351219cdb69ba","18501632374c331692e10ab976f56e28");
+action.toPublic = false;
+action.accountUuids = asList("9a0c56a8bcbd31edbd384b28b8ffeffc","3627b63ad55939cf8df5fa4848abd6f2");
+action.all = false;
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+RevokeResourceSharingAction.Result res = action.call();
+
+```
+
+Python SDK
+
+```
+RevokeResourceSharingAction action = RevokeResourceSharingAction()
+action.resourceUuids = [6551ce5374243f14875351219cdb69ba, 18501632374c331692e10ab976f56e28]
+action.toPublic = false
+action.accountUuids = [9a0c56a8bcbd31edbd384b28b8ffeffc, 3627b63ad55939cf8df5fa4848abd6f2]
+action.all = false
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+RevokeResourceSharingAction.Result res = action.call()
+
+```
+
+</APIPage>

@@ -1,0 +1,28 @@
+---
+title: "虚拟化平台无法识别USB设备，怎么办？"
+---
+
+<HistoricalNamingNote locale="zh" />
+
+## 原因
+USB设备的iSerial字段过长，导致虚拟化平台无法识别设备。
+
+## 解决方案
+1.  执行以下命令，查询所有USB设备详情信息，判断主机是否识别USB设备：
+
+    ```
+    [root@localhost ~]# lsusb.py -u
+    ```
+
+2.  执行以下命令，查看单个USB设备详情信息，检查iSerial字段是否过长：
+
+    ```
+    [root@localhost ~]# lsusb -v -d  1908:1320
+    ```
+
+3.  执行以下命令，调整数据库中**UsbDeviceVO**的iSerial字段字符串长度：
+
+    ```
+    [root@localhost ~]# mysql -uroot -pzstack.mysql.password
+    MariaDB [(none)]> ALTER TABLE `zstack`.`UsbDeviceVO` modify column iSerial varchar(1024) DEFAULT NULL;
+    ```

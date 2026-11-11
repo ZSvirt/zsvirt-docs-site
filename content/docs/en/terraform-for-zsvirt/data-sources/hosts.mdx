@@ -1,0 +1,77 @@
+---
+title: 'zsphere_hosts'
+description: 'Fetches a list of hosts and their associated attributes from the ZSvirt environment.'
+---
+
+<HistoricalNamingNote locale="en" />
+
+# zsphere_hosts (Data Source)
+
+Fetches a list of hosts and their associated attributes from the ZSvirt environment.
+
+## Example Usage
+
+```terraform
+data "zsphere_hosts" "test" {
+}
+
+output "zstack_secs" {
+  value = data.zsphere_hosts.test
+}
+
+# example output:
+# zstack_secs = {
+#   "filter" = tolist([])
+#   "hosts" = tolist([
+#     {
+#       "architecture" = "x86_64"
+#       "cluster_uuid" = "5568b28dbaed465daf768b533b1fe72d"
+#       "managementip" = "172.26.52.90"
+#       "name" = "Host-1"
+#       "state" = "Enabled"
+#       "status" = "Connected"
+#       "type" = "KVM"
+#       "uuid" = "d1058cff5c864a84848e0ab896736578"
+#       "zone_uuid" = "86643f5442164890b8b71de5b582dc9f"
+#     },
+#   ])
+#   "name" = tostring(null)
+#   "name_pattern" = tostring(null)
+# }
+```
+
+## Schema
+
+### Optional
+
+- `filter` (Block List) Filter resources based on any field in the schema. For example, to filter by status, use `name = "status"` and `values = ["Ready"]`. (see [below for nested schema](#nestedblock--filter))
+- `name` (String) Exact name for searching hosts
+- `name_pattern` (String) Pattern for fuzzy name search, similar to MySQL LIKE. Use % for multiple characters and _ for exactly one character.
+
+### Read-Only
+
+- `hosts` (Attributes List) List of host entries matching the specified filters (see [below for nested schema](#nestedatt--hosts))
+
+<a id="nestedblock--filter"></a>
+### Nested Schema for `filter`
+
+Required:
+
+- `name` (String) Name of the field to filter by (e.g., status, state).
+- `values` (Set of String) Values to filter by. Multiple values will be treated as an OR condition.
+
+
+<a id="nestedatt--hosts"></a>
+### Nested Schema for `hosts`
+
+Read-Only:
+
+- `architecture` (String) CPU architecture of the host (e.g., x86_64, arm64)
+- `cluster_uuid` (String) UUID of the cluster to which the host belongs
+- `managementip` (String) Current management operation status on the host (e.g., Pending, Completed)
+- `name` (String) Name of the host
+- `state` (String) State of the host (e.g., Enabled, Disabled)
+- `status` (String) Operational status of the host (e.g., Connected, Disconnected)
+- `type` (String) Type of the host (e.g., bare metal, virtualized)
+- `uuid` (String) UUID Unique identifier of the host
+- `zone_uuid` (String) UUID of the zone to which the host belongs

@@ -1,0 +1,96 @@
+---
+title: "Query VM Instance and PCI Device Spec Mapping"
+---
+
+<APIPage method="GET" path="/v1/vm-instances/{vmInstanceUuid}/pci-device-specs">
+
+```
+GET zstack/v1/vm-instances/{vmInstanceUuid}/pci-device-specs/{pciSpecUuid}
+```
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/{vmInstanceUuid}/pci-device-specs?q=vmInstanceUuid=e58abf7fd2d0332bb18ba348195be863
+```
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/vm-instances/{vmInstanceUuid}/pci-device-specs/{pciSpecUuid}?q=vmInstanceUuid=34ff56e0fd1e3cd789a30d66fd4bf3aa
+```
+
+Queryable Fields
+
+Run the CLI command tool, enter `QueryVmInstancePciDeviceSpecRef` and press Tab to view all queryable fields and cross-resource names.
+
+## API Response
+Response Example
+
+```
+{
+  "inventories": [
+    {
+      "vmInstanceUuid": "bf5c475cc0954616adacebb9b2b2a9e2",
+      "pciSpecUuid": "260464ce341043588f0cc30dde70ed42",
+      "pciDeviceNumber": 1,
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+    }
+  ]
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|success|boolean| |0.6|
+|error|ErrorCode|Error code. If not null, the operation failed. This field is null when the operation succeeds. See [error](#p_pq4_lwg_xhb)|3.5.0|
+|inventories|List|See [inventories](#p_y3k_lwg_xhb)|3.5.0|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|Error code, a globally unique identifier of the error, e.g. SYS.1000, HOST.1001|3.5.0|
+|description|String|Brief description of the error|3.5.0|
+|details|String|Detailed error information|3.5.0|
+|elaboration|String|Reserved field, defaults to null|3.5.0|
+|opaque|LinkedHashMap|Reserved field, defaults to null|3.5.0|
+|cause|ErrorCode|Root cause, the source error that caused the current error, null if no original error|3.5.0|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|vmInstanceUuid|String|Virtual Machine UUID|3.5.0|
+|pciSpecUuid|String|PCI device spec UUID|3.5.0|
+|pciDeviceNumber|Integer|Number of PCI devices matching the device spec to attach to the VM, defaults to 1|3.5.0|
+|createDate|Timestamp|Create date|3.5.0|
+|lastOpDate|Timestamp|Last update date|3.5.0|
+
+## SDK Examples
+Java SDK
+
+```
+QueryVmInstancePciDeviceSpecRefAction action = new QueryVmInstancePciDeviceSpecRefAction();
+action.conditions = asList("vmInstanceUuid=67c3ebbb1c683373a52310b218164181");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryVmInstancePciDeviceSpecRefAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryVmInstancePciDeviceSpecRefAction action = QueryVmInstancePciDeviceSpecRefAction()
+action.conditions = ["vmInstanceUuid=aef75bdacefd33349d9f15eb0f96fe89"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryVmInstancePciDeviceSpecRefAction.Result res = action.call()
+```
+
+</APIPage>

@@ -1,0 +1,57 @@
+---
+title: "Query Audit Data"
+---
+
+<APIPage method="GET" path="/v1/zwatch/audit-records">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/zwatch/audit-records?q=resourceUuid=ed54196e3439329489f39c78337ae8b0
+```
+
+Queryable Fields
+
+Run the CLI command line tool, enter `QueryAudit` and press Tab to view all queryable fields and the resource names available for cross-table queries.
+
+## API Response
+This API returns an empty JSON structure `{}` on success. On failure, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+QueryAuditAction action = new QueryAuditAction();
+action.conditions = asList("resourceUuid=8705e96cf85d314dbec2e0a4ec8038c9");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+QueryAuditAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+QueryAuditAction action = QueryAuditAction()
+action.conditions = ["resourceUuid=f2561dbe12b13b1a849eb1db696d3bec"]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+QueryAuditAction.Result res = action.call()
+```
+
+</APIPage>

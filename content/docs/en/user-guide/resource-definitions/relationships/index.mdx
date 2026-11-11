@@ -1,0 +1,25 @@
+---
+title: 'Resource Relationship'
+---
+
+There are two types of relationships between platform resources:
+
+-   Subordinate Relationships: Analogous to interpersonal relationships in human society, these include parent-child, sibling, grandparent-grandchild, and friend relationships.
+
+    Specific definitions are as follows:
+
+    -   Parent-Child Relationship: Resource A is the parent or child of resource B. For example, clusters and hosts, hosts and virtual machines. In each pair, the latter runs within the former.
+    -   Sibling Relationship: Resources A and B have the same parent and thus are siblings. For example, clusters and distributed switches, clusters and data storage; both pairs share a common parent, which is the data center.
+    -   Grandparent-Grandchild Relationship: Resource A is the direct grandparent or grandchild of resource B. For example, the data center is the parent of clusters, clusters are the parents of hosts, and hosts are the parents of virtual machines. Therefore, the data center is the grandparent of hosts, and clusters are the grandparents of virtual machines.
+    -   Friend Relationship: Resources A and B do not have any of the above three relationships but need to collaborate under certain circumstances. For example, data storage and image storage must work together to provide services for clusters.
+-   Quantitative Relationships: Similar to quantity limitation relationships in human society, these include 1:n (one-to-many), n:1 (many-to-one), and n:n (many-to-many).
+
+    Specific definitions are as follows:
+
+    -   **1:n**: Indicates that resource A can create/add/load multiple instances of resource B. For example, a cluster can add multiple hosts, and a distributed switch can load multiple clusters.
+    -   **n:1**: Indicates that multiple instances of resource A can create/add/load into one instance of resource B. For example, multiple hosts can be added to the same cluster, and multiple clusters can load the same distributed switch.
+    -   **n:n**: Indicates that resource A can create/add/load multiple instances of resource B, and at the same time, multiple instances of resource A can also create/add/load into one instance of resource B. For example, an image storage can load multiple data centers, and a data center can also load multiple image storages.
+
+-   **[Platform Resource Relationship](/en/docs/user-guide/resource-definitions/relationships/resource-table)**  
+
+-   **[Cluster|Data Storage|Image Storage Relationship](/en/docs/user-guide/resource-definitions/relationships/cluster-datastore-image-storage)**

@@ -1,0 +1,64 @@
+---
+title: "Delete Alarm"
+---
+
+<APIPage method="DELETE" path="/v1/zwatch/alarms/{uuid}">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X DELETE http://localhost:8080/zstack/v1/zwatch/alarms/2aae360b1240374696d79a0cca10bf24
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|uuid|String|url|The UUID of the resource. Uniquely identifies the resource.| |2.3|
+|deleteMode \(Optional\)|String|body| | |2.3|
+|systemTags \(Optional\)|List|body|System tags.| |2.3|
+|userTags \(Optional\)|List|body|User tags.| |2.3|
+
+## API Response
+On success, this API returns an empty JSON structure `{}`. On failure, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+DeleteAlarmAction action = new DeleteAlarmAction();
+action.uuid = "2aae360b1240374696d79a0cca10bf24";
+action.deleteMode = "Permissive";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+DeleteAlarmAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+DeleteAlarmAction action = DeleteAlarmAction()
+action.uuid = "2aae360b1240374696d79a0cca10bf24"
+action.deleteMode = "Permissive"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+DeleteAlarmAction.Result res = action.call()
+```
+
+</APIPage>

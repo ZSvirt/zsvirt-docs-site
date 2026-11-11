@@ -1,0 +1,325 @@
+---
+title: "更新主机启用状态"
+---
+
+<APIPage method="PUT" path="/v1/hosts/{uuid}/actions">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "changeHostState": {
+    "stateEvent": "enable"
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+上述示例中**systemTags**、**userTags**字段可以省略。列出是为了表示body中可以包含这两个字段。
+</Callout>
+
+Curl示例
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X PUT -d '{"changeHostState":{"stateEvent":"enable"}}' \
+http://localhost:8080/zstack/v1/hosts/70e37940fe263e858a151850a312143f/actions
+```
+
+参数列表
+
+<table id="table_vhs_yv5_m1b"><thead><tr><th>
+
+名字
+
+</th><th>
+
+类型
+
+</th><th>
+
+位置
+
+</th><th>
+
+描述
+
+</th><th>
+
+可选值
+
+</th><th>
+
+起始版本
+
+</th></tr></thead><tbody><tr><td>
+
+uuid
+
+</td><td>
+
+String
+
+</td><td>
+
+url
+
+</td><td>
+
+资源的UUID，唯一标示该资源
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+stateEvent
+
+</td><td>
+
+String
+
+</td><td>
+
+body\(包含在`changeHostState`结构中\)
+
+</td><td>
+
+期望的主机启用状态
+
+</td><td>
+
+-   enable
+-   disable
+-   maintain
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+systemTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+系统标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr><tr><td>
+
+userTags \(可选\)
+
+</td><td>
+
+List
+
+</td><td>
+
+body
+
+</td><td>
+
+用户标签
+
+</td><td>
+
+ 
+
+</td><td>
+
+0.6
+
+</td></tr></tbody>
+</table>
+
+## API返回
+返回示例
+
+```
+{
+  "inventory": {
+    "zoneUuid": "faf35db46f044232a96b1c9ac228f7a1",
+    "name": "example",
+    "uuid": "cf2e376062fe4a06bd5ab4d76cd88f5d",
+    "clusterUuid": "7f314660761a4899b5967b6f4aad88f3",
+    "description": "example",
+    "managementIp": "192.168.0.1",
+    "hypervisorType": "KVM",
+    "state": "Enabled",
+    "status": "Connected",
+    "totalCpuCapacity": 4.0,
+    "availableCpuCapacity": 2.0,
+    "totalMemoryCapacity": 4.0,
+    "availableMemoryCapacity": 4.0
+  }
+}
+```
+
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|success|boolean| |0.6|
+|error|ErrorCode|错误码，若不为null，则表示操作失败, 操作成功时该字段为null。 详情参考[error](#p_im3_qy5_m1b)|0.6|
+|inventory|HostInventory|详情参考[inventory](#p_asj_ry5_m1b)|0.6|
+
+### error
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|code|String|错误码号，错误的全局唯一标识，例如SYS.1000, HOST.1001|0.6|
+|description|String|错误的概要描述|0.6|
+|details|String|错误的详细信息|0.6|
+|elaboration|String|保留字段，默认为null|0.6|
+|opaque|LinkedHashMap|保留字段，默认为null|0.6|
+|cause|ErrorCode|根错误，引发当前错误的源错误，若无原错误，该字段为null|0.6|
+
+### inventory
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|zoneUuid|String|数据中心UUID|0.6|
+|name|String|资源名称|0.6|
+|uuid|String|资源的UUID，唯一标示该资源|0.6|
+|clusterUuid|String|集群UUID|0.6|
+|description|String|资源的详细描述|0.6|
+|managementIp|String| |0.6|
+|hypervisorType|String| |0.6|
+|state|String| |0.6|
+|status|String| |0.6|
+|totalCpuCapacity|Long| |0.6|
+|availableCpuCapacity|Long| |0.6|
+|cpuSockets|Integer|物理CPU插槽数量|0.6|
+|totalMemoryCapacity|Long| |0.6|
+|availableMemoryCapacity|Long| |0.6|
+|cpuNum|Integer|逻辑CPU数量|0.6|
+|ipmiAddress|String|IPMI地址|0.6|
+|ipmiUsername|String|IPMI用户名|0.6|
+|ipmiPort|Integer|IPMI端口|0.6|
+|ipmiPowerStatus|String|IPMI电源状态|0.6|
+|architecture|String| |0.6|
+|nqn|String|NVMe 限定名称|4.10.6|
+|hostname|String|主机名|4.10.20|
+|createDate|Timestamp|创建时间|0.6|
+|lastOpDate|Timestamp|最后一次修改时间|0.6|
+|cpuStatus|HwMonitorStatus|详情参考[cpuStatus](#p_wvd_kkm_lhc)|4.10.0|
+|memoryStatus|HwMonitorStatus|详情参考[memoryStatus](#p_nhh_kkm_lhc)|4.10.0|
+|diskStatus|HwMonitorStatus|详情参考[diskStatus](#p_esk_kkm_lhc)|4.10.0|
+|nicStatus|HwMonitorStatus|详情参考[nicStatus](#p_n24_kkm_lhc)|4.10.0|
+|gpuStatus|HwMonitorStatus|详情参考[gpuStatus](#p_zgr_kkm_lhc)|4.10.0|
+|powerSupplyStatus|HwMonitorStatus|详情参考[powerSupplyStatus](#p_o35_kkm_lhc)|4.10.0|
+|fanStatus|HwMonitorStatus|详情参考[fanStatus](#p_m2x_kkm_lhc)|4.10.0|
+|raidStatus|HwMonitorStatus|详情参考[raidStatus](#p_oc1_lkm_lhc)|4.10.0|
+|temperatureStatus|HwMonitorStatus|详情参考[temperatureStatus](#p_cyd_lkm_lhc)|4.10.0|
+
+### cpuStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|HwMonitorStatus|正常|4.10.0|
+|Error|HwMonitorStatus|异常|4.10.0|
+|Unknown|HwMonitorStatus|未知|4.10.0|
+
+### memoryStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|HwMonitorStatus|正常|4.10.0|
+|Error|HwMonitorStatus|异常|4.10.0|
+|Unknown|HwMonitorStatus|未知|4.10.0|
+
+### diskStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|HwMonitorStatus|正常|4.10.0|
+|Error|HwMonitorStatus|异常|4.10.0|
+|Unknown|HwMonitorStatus|未知|4.10.0|
+
+### nicStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|HwMonitorStatus|正常|4.10.0|
+|Error|HwMonitorStatus|异常|4.10.0|
+|Unknown|HwMonitorStatus|未知|4.10.0|
+
+### gpuStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|HwMonitorStatus|正常|4.10.0|
+|Error|HwMonitorStatus|异常|4.10.0|
+|Unknown|HwMonitorStatus|未知|4.10.0|
+
+### powerSupplyStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|HwMonitorStatus|正常|4.10.0|
+|Error|HwMonitorStatus|异常|4.10.0|
+|Unknown|HwMonitorStatus|未知|4.10.0|
+
+### fanStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|HwMonitorStatus|正常|4.10.0|
+|Error|HwMonitorStatus|异常|4.10.0|
+|Unknown|HwMonitorStatus|未知|4.10.0|
+
+### raidStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|HwMonitorStatus|正常|4.10.0|
+|Error|HwMonitorStatus|异常|4.10.0|
+|Unknown|HwMonitorStatus|未知|4.10.0|
+
+### temperatureStatus
+|名字|类型|描述|起始版本|
+|---|---|---|----|
+|Normal|HwMonitorStatus|正常|4.10.0|
+|Error|HwMonitorStatus|异常|4.10.0|
+|Unknown|HwMonitorStatus|未知|4.10.0|
+
+## SDK示例
+Java SDK
+
+```
+ChangeHostStateAction action = new ChangeHostStateAction();
+action.uuid = "70e37940fe263e858a151850a312143f";
+action.stateEvent = "enable";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+ChangeHostStateAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+action = ChangeHostStateAction()
+action.uuid = "70e37940fe263e858a151850a312143f"
+action.stateEvent = "enable"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+res = action.call()
+```
+
+</APIPage>

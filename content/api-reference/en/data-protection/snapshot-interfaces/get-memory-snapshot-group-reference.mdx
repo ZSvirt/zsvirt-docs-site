@@ -1,0 +1,127 @@
+---
+title: "Get Memory Snapshot Group Reference"
+---
+
+<APIPage method="GET" path="/v1/memory-snapshots/group/reference">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \
+-X GET http://localhost:8080/zstack/v1/memory-snapshots/group/reference?resourceUuid=293e9dd057c831608cf59cd377ba0d03&resourceType=L3NetworkVO
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|resourceUuid|String|query|Resource UUID| |4.4.24|
+|resourceType|String|query|Resource type| |4.4.24|
+|systemTags \(Optional\)|List|query|System tags| |4.4.24|
+|userTags \(Optional\)|List|query|User tags| |4.4.24|
+
+## API Response
+```
+{
+  "inventories": [
+    {
+      "uuid": "22f6a9534922339f95c15db177ac2c75",
+      "snapshotCount": 1.0,
+      "name": "group",
+      "vmInstanceUuid": "e5c0251850be3ffe85db33e7ecf12b75",
+      "createDate": "Nov 14, 2017 10:20:57 PM",
+      "lastOpDate": "Nov 14, 2017 10:20:57 PM",
+      "volumeSnapshotRefs": [
+        {
+          "volumeSnapshotUuid": "bfb9af2450753ac292c46c3afcadd7a6",
+          "volumeSnapshotGroupUuid": "22f6a9534922339f95c15db177ac2c75",
+          "deviceId": 0.0,
+          "snapshotDeleted": false,
+          "volumeUuid": "976ab88982753cc8951efd915b76573f",
+          "volumeName": "ROOT-volume",
+          "volumeType": "Root",
+          "volumeSnapshotInstallPath": "/zstack_ps/to/path/snap.qcow2",
+          "volumeSnapshotName": "group-ROOT-volume",
+          "createDate": "Nov 14, 2017 10:20:57 PM",
+          "lastOpDate": "Nov 14, 2017 10:20:57 PM"
+        }
+      ]
+    }
+  ],
+  "resourceUuid": "c8a0949c175c380db27cc5c78e8d01f7"
+}
+```
+
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|resourceUuid|String|Resource UUID|4.4.24|
+|success|boolean| |4.4.24|
+|inventories|List|For details, see [inventories](/en/docs/api-reference/data-protection/snapshot-interfaces/query-volume-snapshot-group)|4.4.24|
+|error|ErrorCode|The error code. If not null, the operation failed. This field is null when the operation succeeds. For details, see [error](/en/docs/api-reference/data-protection/snapshot-interfaces/query-volume-snapshot-group)|4.4.24|
+
+### inventories
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|uuid|String|The UUID of the resource. Uniquely identifies the resource|4.4.24|
+|snapshotCount|Integer|The number of snapshots in the group|4.4.24|
+|name|String|Resource name|4.4.24|
+|description|String|Detailed description of the resource|4.4.24|
+|vmInstanceUuid|String|Virtual Machine UUID|4.4.24|
+|createDate|Timestamp|Creation time|4.4.24|
+|lastOpDate|Timestamp|Last modification time|4.4.24|
+|volumeSnapshotRefs|List|For details, see [volumeSnapshotRefs](#p_hyf_x4g_x3b)|4.4.24|
+
+### volumeSnapshotRefs
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|volumeSnapshotUuid|String|Disk snapshot UUID|4.4.24|
+|volumeSnapshotGroupUuid|String|Snapshot group UUID|4.4.24|
+|deviceId|int|The device ID of the disk when the snapshot was taken|4.4.24|
+|snapshotDeleted|boolean|Whether the snapshot has been deleted|4.4.24|
+|volumeUuid|String|Disk UUID|4.4.24|
+|volumeName|String|Disk name|4.4.24|
+|volumeType|String|Disk type|4.4.24|
+|volumeSnapshotInstallPath|String|Snapshot install path|4.4.24|
+|volumeSnapshotName|String|Snapshot name|4.4.24|
+|createDate|Timestamp|Creation time|4.4.24|
+|lastOpDate|Timestamp|Last modification time|4.4.24|
+
+### error
+|Name|Type|Description|Starting Version|
+|----|----|-----------|----------------|
+|code|String|The error code number. A globally unique identifier for the error, for example, SYS.1000, HOST.1001|4.4.24|
+|description|String|A brief description of the error|4.4.24|
+|details|String|The detailed error information|4.4.24|
+|elaboration|String|A reserved field. The default value is null|4.4.24|
+|opaque|LinkedHashMap|A reserved field. The default value is null|4.4.24|
+|cause|ErrorCode|The root error. The source error that caused the current error. If no root error exists, this field is null|4.4.24|
+
+## SDK Examples
+Java SDK
+
+```
+GetMemorySnapshotGroupReferenceAction action = new GetMemorySnapshotGroupReferenceAction();
+action.resourceUuid = "293e9dd057c831608cf59cd377ba0d03";
+action.resourceType = "L3NetworkVO";
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+GetMemorySnapshotGroupReferenceAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+GetMemorySnapshotGroupReferenceAction action = GetMemorySnapshotGroupReferenceAction()
+action.resourceUuid = "293e9dd057c831608cf59cd377ba0d03"
+action.resourceType = "L3NetworkVO"
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+GetMemorySnapshotGroupReferenceAction.Result res = action.call()
+```
+
+</APIPage>

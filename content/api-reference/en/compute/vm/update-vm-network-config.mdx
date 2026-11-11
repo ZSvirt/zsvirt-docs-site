@@ -1,0 +1,82 @@
+---
+title: "Update VM Network Config"
+---
+
+<APIPage method="PUT" path="/v1/vm-instances/{vmInstanceUuid}/update-nic-config">
+
+Headers
+
+```
+Authorization: OAuth the-session-uuid
+```
+
+Body
+
+```
+{
+  "updateVmNetworkConfig": {
+    "vmNicUuids": [
+      "afb48d4bfd193c6b9d46b866cb29a767"
+    ]
+  },
+  "systemTags": [],
+  "userTags": []
+}
+```
+
+<Callout type="info">
+In the example above, **systemTags** and **userTags** fields can be omitted. They are listed to indicate that the body can contain these two fields.
+</Callout>
+
+Curl Example
+
+```
+curl -H "Content-Type: application/json;charset=UTF-8" \
+-H "Authorization: OAuth YOUR_SESSION_UUID" \-X PUT -d '{"updateVmNetworkConfig":{"vmNicUuids":["afb48d4bfd193c6b9d46b866cb29a767"]}}' \
+http://localhost:8080/zstack/v1/vm-instances/1c8470e916873fe6ae0251c3f592a6c4/update-nic-config
+```
+
+Parameter List
+
+|Name|Type|Location|Description|Allowed Values|Starting Version|
+|----|----|--------|-----------|--------------|----------------|
+|vmInstanceUuid|String|url|Virtual Machine UUID| |4.6.21|
+|vmNicUuids|List|body \(contained in **updateVmNetworkConfig** structure\)| | |4.6.21|
+|systemTags \(Optional\)|List|body|System Tags| |4.6.21|
+|userTags \(Optional\)|List|body|User Tags| |4.6.21|
+
+## API Response
+On success, this API returns an empty JSON structure **`{}`**. On error, the returned JSON structure contains an error field. For example:
+
+```
+{
+  "error": {
+    "code": "SYS.1001",
+    "description": "A message or a operation timeout",
+    "details": "Create VM on KVM timeout after 300s"
+  }
+}
+```
+
+## SDK Examples
+Java SDK
+
+```
+UpdateVmNetworkConfigAction action = new UpdateVmNetworkConfigAction();
+action.vmInstanceUuid = "1c8470e916873fe6ae0251c3f592a6c4";
+action.vmNicUuids = asList("afb48d4bfd193c6b9d46b866cb29a767");
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c";
+UpdateVmNetworkConfigAction.Result res = action.call();
+```
+
+Python SDK
+
+```
+UpdateVmNetworkConfigAction action = UpdateVmNetworkConfigAction()
+action.vmInstanceUuid = "1c8470e916873fe6ae0251c3f592a6c4"
+action.vmNicUuids = [afb48d4bfd193c6b9d46b866cb29a767]
+action.sessionId = "b86c9016b4f24953a9edefb53ca0678c"
+UpdateVmNetworkConfigAction.Result res = action.call()
+```
+
+</APIPage>

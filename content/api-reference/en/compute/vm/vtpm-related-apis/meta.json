@@ -1,0 +1,11 @@
+{
+  "title": "vTPM-related APIs",
+  "pages": [
+    "add-tpm",
+    "get-tpm-capability",
+    "query-tpm",
+    "remove-tpm",
+    "update-tpm"
+  ],
+  "pagesIndex": "index"
+}
