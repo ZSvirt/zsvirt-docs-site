@@ -2,7 +2,7 @@ import { createReadStream } from 'node:fs';
 import { Parser, x } from 'tar';
 import { assertRelativePath } from './artifact.mjs';
 
-export async function inspectArchive(file, { maximumBytes = 4 * 1024 ** 3, maximumFiles = 100000 } = {}) {
+export async function inspectArchive(file, { maximumBytes = 8 * 1024 ** 3, maximumFiles = 100000 } = {}) {
   const seen = new Set();
   let bytes = 0;
   // Accept a readable as well as a file so callers can enforce upstream bounds.

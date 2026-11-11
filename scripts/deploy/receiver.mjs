@@ -21,7 +21,7 @@ function parseCommand(command) {
     const size = Number(sizeText);
     const totalBytes = Number(bytesText);
     if (!DIGEST_PATTERN.test(digest) || !/^[1-9]\d*$/.test(sizeText) || !/^[1-9]\d*$/.test(bytesText)
-      || !Number.isSafeInteger(size) || size > 1024 ** 3 || !Number.isSafeInteger(totalBytes) || totalBytes > 4 * 1024 ** 3) {
+      || !Number.isSafeInteger(size) || size > 1024 ** 3 || !Number.isSafeInteger(totalBytes) || totalBytes > 8 * 1024 ** 3) {
       throw new Error('Invalid upload digest or byte limits');
     }
     return { action: 'upgrade', commit, digest, size, totalBytes };
@@ -93,7 +93,7 @@ async function main() {
     await receiveArchive(archive, command);
     await mkdir(candidate, { mode: 0o700 });
     candidateExists = true;
-    await extractArchive(archive, candidate, { maximumBytes: Math.min(4 * 1024 ** 3, command.totalBytes + 32 * 1024 ** 2) });
+    await extractArchive(archive, candidate, { maximumBytes: Math.min(8 * 1024 ** 3, command.totalBytes + 32 * 1024 ** 2) });
     const { manifest } = await verifyManifest(candidate, command.commit);
     if (manifest.totalBytes !== command.totalBytes) throw new Error('Uploaded manifest totalBytes mismatch');
     await normalizePermissions(candidate);
