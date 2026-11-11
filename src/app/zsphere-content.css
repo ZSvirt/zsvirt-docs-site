@@ -5,6 +5,44 @@
   color: var(--zsphere-copy);
 }
 
+/* Secondary contribution action, separated from page navigation. */
+.doc-edit-footer {
+  width: 100%;
+  margin-block: 32px 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--zsphere-border);
+  text-align: start;
+}
+
+.doc-edit-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  max-width: 100%;
+  border-radius: 4px;
+  color: var(--docs-muted);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 22px;
+  text-decoration: none;
+  text-underline-offset: 4px;
+  transition: color 160ms ease;
+}
+
+.doc-edit-link svg {
+  flex: none;
+}
+
+.doc-edit-link:is(:hover, :focus-visible) {
+  color: var(--docs-brand);
+}
+
+.doc-edit-link:hover span {
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+}
+
 #nd-page [data-card="true"]:hover {
   border-color: var(--docs-cloud);
   background: var(--docs-paper);

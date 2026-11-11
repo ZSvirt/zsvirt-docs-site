@@ -65,6 +65,9 @@ Canonical and alternate-language URLs use `https://docs.zsvirt.io`. Main-site na
 
 Use each page's GitHub edit link to edit its actual source file, including language and `index.mdx`. Public section names may differ from source directory names: `install-zsphere` maps to `install-zsvirt`, and `terraform-for-zsphere` maps to `terraform-for-zsvirt`. Preserve those mappings when editing links. Read [CONTRIBUTING.md](CONTRIBUTING.md) for the contribution workflow and [SECURITY.md](SECURITY.md) for private vulnerability reporting. Existing copyright and license notices must be retained.
 
+The shared `DocEditLink` renders the contribution action below each article in both languages and API references. Keep it left-aligned with the content, with a small edit icon, theme-aware hover and keyboard focus, and a divider before page navigation.
+GitHub edit links open in a new tab so readers can keep their place in the documentation. An external-link icon and localized screen-reader text announce this behavior; links use `rel="noopener noreferrer"`.
+
 The Terraform authoring tools accept an explicit provider checkout:
 
 ```sh

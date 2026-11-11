@@ -1,3 +1,4 @@
+import { DocEditLink } from '@/components/doc-edit-link';
 import { documentEditUrl, documentMetadata } from '@/lib/document-links';
 import { getMDXComponents } from '@/components/mdx';
 import { DocRedirect } from '@/components/doc-redirect';
@@ -65,7 +66,7 @@ export default async function Page(props: LocalizedDocsPageProps) {
             })}
           />
         </DocsBody>
-        <a href={documentEditUrl('docs', page)}>{'Edit this page on GitHub'}</a>
+        <DocEditLink locale={lang} href={documentEditUrl('docs', page)}>Edit this page on GitHub</DocEditLink>
       </DocsPage>
     </DocsLayout>
   );

@@ -1,3 +1,4 @@
+import { DocEditLink } from '@/components/doc-edit-link';
 import { documentEditUrl, documentMetadata } from '@/lib/document-links';
 import { getMDXComponents } from '@/components/mdx';
 import { DocRedirect } from '@/components/doc-redirect';
@@ -62,7 +63,7 @@ export default async function Page(props: DocsPageProps) {
             })}
           />
         </DocsBody>
-        <a href={documentEditUrl('docs', page)}>{'在 GitHub 上编辑此页'}</a>
+        <DocEditLink locale="zh" href={documentEditUrl('docs', page)}>在 GitHub 上编辑此页</DocEditLink>
       </DocsPage>
     </DocsLayout>
   );
