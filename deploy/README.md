@@ -4,9 +4,13 @@ The site is a static export plus a Node.js 22+ search service. Serve `out/` thro
 
 ## Official release workflow
 
-Pull requests run tests, type checks, a static build, and browser checks without deployment credentials. Changes merged into `main` run the same checks, package their exact commit, and publish the verified artifact to ECS. Manual workflow dispatch can rebuild and deploy `main`. There is no scheduled production deployment: changes should become visible after review, and scheduled GitHub workflows can be delayed or disabled after prolonged repository inactivity.
+Pull requests run tests, type checks, a static build, and browser checks without deployment credentials. Changes merged into `main` run the same checks, compare their complete output with the live release manifest, and upload only a delta archive plus release metadata to GitHub Actions artifacts. The deployment job downloads that delta and sends it to ECS. Manual workflow dispatch can rebuild and deploy `main`. There is no scheduled production deployment.
 
 A deployment runs on a GitHub-hosted runner. The production environment supplies `DOCS_DEPLOY_HOST`, `DOCS_DEPLOY_USER`, `DOCS_DEPLOY_PORT`, `DOCS_DEPLOY_KEY` and `DOCS_DEPLOY_KNOWN_HOSTS`. Credentials are never available to pull-request jobs. Repository maintainers protect `main` and the deployment environment.
+
+The baseline is fetched from the fixed HTTPS URL `https://docs.zsvirt.io/release-manifest.json`. Fetch or validation failures stop packaging; they do not silently trigger a full upload. The receiver binds the delta to the exact baseline manifest digest. If another release becomes current before activation, the delta is rejected and must be repackaged against the new baseline.
+
+This reduces GitHub artifact and ECS transfer volume, not build computation: every release still builds and validates the whole site. Shared navigation or assets can legitimately change files across multiple documentation domains.
 
 Local deployment uses the same client:
 
@@ -14,13 +18,21 @@ Local deployment uses the same client:
 pnpm test
 pnpm types:check
 DOC_SEARCH_SOURCE_COMMIT=<full-commit-sha> pnpm build
-pnpm release:package --commit <full-commit-sha>
-DOCS_DEPLOY_HOST=<host> DOCS_DEPLOY_USER=<user> DOCS_DEPLOY_PORT=22 \
-DOCS_DEPLOY_KEY_FILE=<private-key-file> DOCS_DEPLOY_KNOWN_HOSTS_FILE=<verified-known-hosts-file> \
+export DOCS_DEPLOY_HOST=<host> DOCS_DEPLOY_USER=<user> DOCS_DEPLOY_PORT=22
+export DOCS_DEPLOY_KEY_FILE=<private-key-file> DOCS_DEPLOY_KNOWN_HOSTS_FILE=<verified-known-hosts-file>
+pnpm run deploy -- prepare
 pnpm run deploy -- upgrade
 ```
 
 `check` verifies the current documentation and search. `rollback` restores the previous release recorded by the active deployment receipt. These commands use the same environment variables. Release packaging requires a clean checkout; the commit is recorded in the page manifest and search metadata. Host keys must be verified out of band; the client does not trust a fresh network key scan automatically.
+
+For offline packaging with an explicitly obtained baseline, use `pnpm release:package --commit <full-commit-sha> --base-manifest <manifest-path>`. Packaging without `--base-manifest` creates an explicit full archive for administrator provisioning or a deliberate full transfer. An empty server must first have a verified release and `current` initialized by its administrator; `prepare` and transactional upgrades reject a missing current release. Never replace a failed incremental deployment with an implicit full release. Source, baseline and release filesystem paths must use real directories without symbolic-link ancestors.
+
+The delta carries the complete target manifest and only new or changed files. ECS assembles a fresh candidate directory, copying unchanged files from the verified baseline. Files absent from the target manifest are not copied, so deletions take effect without modifying the running release. Candidate verification still covers every final file and the search identities before the existing atomic activation and rollback transaction runs. Copies are independent, not hard links between releases.
+
+Packaging and receiver logs report total output bytes, changed/reused file counts, compressed upload bytes and per-domain totals. Domain metrics group both languages by documentation section, split API reference by its next section, and list search index, search runtime and Next assets separately. The deployment receipt retains these metrics. Reusing independent copies preserves isolation between releases but does not reduce their expanded disk size.
+
+Before enabling this workflow, the infrastructure administrator must install the receiver built from the same incremental protocol version. Updating application artifacts does not update the root-owned receiver. Baseline snapshots, delta archives and receipts are version-bound; the client and receiver do not retain an older upload-protocol compatibility path.
 
 ## Receiver installation and permissions
 

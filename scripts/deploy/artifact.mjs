@@ -1,6 +1,6 @@
-import { createHash } from 'node:crypto';
+import { createHash, randomUUID } from 'node:crypto';
 import { createReadStream } from 'node:fs';
-import { lstat, readdir, readFile, writeFile } from 'node:fs/promises';
+import { lstat, mkdir, open, readdir, readFile, rename, unlink, writeFile } from 'node:fs/promises';
 import { join, resolve } from 'node:path';
 
 export const SOURCE_REPOSITORY = 'https://github.com/ZSvirt/zsvirt-docs-site';
@@ -27,6 +27,7 @@ export async function digestFile(path) {
 }
 
 export async function inventory(root) {
+  await assertSafePath(root, true);
   const files = [];
   async function visit(directory, prefix = '') {
     for (const name of (await readdir(directory)).sort()) {
@@ -64,8 +65,7 @@ export async function createManifest(root, commit) {
   return manifest;
 }
 
-export async function verifyManifest(root, expectedCommit) {
-  const manifest = JSON.parse(await readFile(join(root, 'release-manifest.json'), 'utf8'));
+export function validateManifest(manifest, expectedCommit) {
   assertCommit(manifest.sourceCommit);
   if (manifest.schemaVersion !== 1 || manifest.component !== 'doc-site'
     || manifest.sourceRepository !== SOURCE_REPOSITORY || manifest.releaseId !== manifest.sourceCommit
@@ -77,12 +77,60 @@ export async function verifyManifest(root, expectedCommit) {
   const expected = new Map();
   for (const file of manifest.files) {
     assertRelativePath(file.path);
-    if (file.path === 'release-manifest.json' || expected.has(file.path)
+    if (['release-manifest.json', 'release-transfer.json'].includes(file.path) || expected.has(file.path)
       || !Number.isSafeInteger(file.size) || file.size < 0 || !DIGEST_PATTERN.test(file.sha256 ?? '')) {
       throw new Error(`Invalid manifest entry: ${file.path}`);
     }
     expected.set(file.path, file);
   }
+  const total = manifest.files.reduce((sum, file) => sum + file.size, 0);
+  if (!Number.isSafeInteger(total) || total !== manifest.totalBytes) throw new Error('Release totalBytes mismatch');
+  return expected;
+}
+
+export async function assertSafePath(path, directory = false) {
+  const absolute = resolve(path);
+  const parts = absolute.split('/').filter(Boolean);
+  let current = '/';
+  for (let index = 0; index < parts.length; index++) {
+    current = join(current, parts[index]);
+    const info = await lstat(current);
+    if (info.isSymbolicLink() || (index < parts.length - 1 || directory ? !info.isDirectory() : !info.isFile())) {
+      throw new Error(`Unsafe filesystem path: ${current}`);
+    }
+  }
+}
+
+export async function writeBaseManifest(root, bytes) {
+  await assertSafePath(root, true);
+  const directory = join(root, 'artifacts');
+  try { await mkdir(directory); } catch (error) { if (error.code !== 'EEXIST') throw error; }
+  await assertSafePath(directory, true);
+  const destination = join(directory, 'base-manifest.json');
+  async function checkDestination() {
+    const info = await lstat(destination).catch((error) => { if (error.code === 'ENOENT') return null; throw error; });
+    if (info && !info.isFile()) throw new Error(`Unsafe baseline destination: ${destination}`);
+  }
+  await checkDestination();
+  const temporary = join(directory, `.base-manifest-${randomUUID()}.tmp`);
+  const handle = await open(temporary, 'wx', 0o600);
+  let renamed = false;
+  try {
+    try { await handle.writeFile(bytes); await handle.sync(); } finally { await handle.close(); }
+    await assertSafePath(directory, true);
+    await checkDestination();
+    await rename(temporary, destination);
+    renamed = true;
+  } finally {
+    if (!renamed) await unlink(temporary);
+  }
+  return destination;
+}
+
+export async function verifyManifest(root, expectedCommit) {
+  await assertSafePath(join(root, 'release-manifest.json'));
+  const manifest = JSON.parse(await readFile(join(root, 'release-manifest.json'), 'utf8'));
+  const expected = validateManifest(manifest, expectedCommit);
   const actual = (await inventory(root)).filter((file) => file.path !== 'release-manifest.json');
   if (actual.length !== expected.size) throw new Error('Unlisted or missing release files');
   let total = 0;

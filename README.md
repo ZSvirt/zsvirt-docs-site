@@ -39,7 +39,7 @@ pnpm test:search:e2e
 
 The build writes static HTML, RSC payloads, `_next` assets, images, `sitemap.xml` and `robots.txt` to `out/`. The combined bilingual search snapshot is emitted at `out/docs/search-index.json` and used by the runtime. `out/_doc-search/` contains the bundled `server.mjs`, `runtime.json` and `THIRD-PARTY-LICENSES.txt`. `.source/`, `.next/`, `out/` and `test-results/` are generated artifacts, not document sources.
 
-For a release build, set `DOC_SEARCH_SOURCE_COMMIT` to the full source Git SHA before `pnpm build`. This records provenance in search runtime metadata. Release packaging and verification are exposed as `pnpm release:package --commit <full-SHA>` and `pnpm release:verify --source out`; deployment operations use `pnpm run deploy -- check|upgrade|rollback`. See [deploy/README.md](deploy/README.md). Production credentials belong in deployment secrets, never in this repository or a public pull request.
+For a release build, set `DOC_SEARCH_SOURCE_COMMIT` to the full source Git SHA before `pnpm build`. This records provenance in search runtime metadata. Use `pnpm release:package --commit <full-SHA> --base-manifest <path>` to package only changed files against an explicit release manifest, and `pnpm release:verify --source out` to verify complete output. Deployment operations use `pnpm run deploy -- prepare|check|upgrade|rollback`; `prepare` obtains the live baseline over SSH and packages the local build. CI still builds the entire site but transfers only the delta through GitHub artifacts and ECS. See [deploy/README.md](deploy/README.md) for initial provisioning and the required receiver protocol update. Production credentials belong in deployment secrets, never in this repository or a public pull request.
 
 ## Search
 

@@ -45,13 +45,18 @@ jobs:
           node --input-type=module -e 'const until=Date.now()+45000; let last; while(Date.now()<until){try{const r=await fetch("http://127.0.0.1:4322/health"); if(r.ok){const h=await r.json(); if(h.ready) process.exit(0);} }catch(e){last=e;} await new Promise(r=>setTimeout(r,500));} throw new Error(`Preview did not become ready: ${last}`);'
           pnpm test:site:e2e
           pnpm test:search:e2e
-      - name: Package exact commit
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
-        run: pnpm release:package --commit "$GITHUB_SHA"
+      - name: Package changes against the live release
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && github.repository == 'ZSvirt/zsvirt-docs-site'
+        run: |
+          mkdir -p artifacts
+          curl --fail --silent --show-error --max-time 60 \
+            https://docs.zsvirt.io/release-manifest.json \
+            --output artifacts/base-manifest.json
+          pnpm release:package --commit "$GITHUB_SHA" --base-manifest artifacts/base-manifest.json
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main' && github.repository == 'ZSvirt/zsvirt-docs-site'
         with:
-          name: documentation-release
+          name: documentation-delta
           path: |
             artifacts/*.tgz
             artifacts/release.json
@@ -93,7 +98,7 @@ jobs:
       - uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093 # v4
         if: steps.current.outputs.deploy == 'true'
         with:
-          name: documentation-release
+          name: documentation-delta
           path: artifacts
       - name: Deploy and verify the packaged release
         if: steps.current.outputs.deploy == 'true'
